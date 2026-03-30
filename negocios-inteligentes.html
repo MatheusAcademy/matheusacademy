@@ -13,7 +13,7 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:15px;line-height:1.7;min-height:100vh}
 ::selection{background:rgba(232,168,56,.2);color:var(--wh)}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:3px}
-.header{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(8,9,12,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 20px;z-index:200;gap:14px}
+.header{position:fixed;top:32px;left:0;right:0;height:60px;background:rgba(8,9,12,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 20px;z-index:200;gap:14px}
 .logo{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--gold);white-space:nowrap}
 .logo span{color:var(--txt3);font-weight:400;font-size:.85rem}
 .search-box{flex:1;max-width:400px;margin:0 auto;position:relative}
@@ -218,9 +218,25 @@ body.hl-mode *{cursor:crosshair!important}
 /* Light mode override */
 .light{--bg:#f4f6fa;--bg2:#eaecf2;--bg3:#dde1ea;--card:#fff;--brd:#d0d6e0;--brd2:#bac2d0;--wh:#1a1f2e;--txt:#4a5468;--txt2:#7a8599;--txt3:#a0aab8}
 
+
+/* PORTAL NAV BAR */
+.portal-bar{position:fixed;top:0;left:0;right:0;height:32px;background:rgba(5,5,10,.95);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;gap:16px;z-index:9999;border-bottom:1px solid rgba(75,139,255,.15);font-family:'Outfit',sans-serif,system-ui}
+.portal-bar a{color:#9898b0;font-size:.62rem;font-weight:600;text-decoration:none;padding:4px 10px;border-radius:6px;transition:all .2s;letter-spacing:.03em}
+.portal-bar a:hover{color:#4b8bff;background:rgba(75,139,255,.08)}
+.portal-bar a.pb-main{color:#4b8bff;font-weight:700}
+.portal-bar a.pb-plan{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-weight:700;padding:4px 12px}
+.portal-bar a.pb-plan:hover{opacity:.9}
+@media(max-width:640px){.portal-bar{gap:6px;height:28px}.portal-bar a{font-size:.55rem;padding:3px 6px}}
 </style>
 </head>
 <body>
+<div class="portal-bar">
+<a href="index.html" class="pb-main">Matheus Academy</a>
+<a href="index.html" onclick="localStorage.setItem('ma_open_modal','login');return true">Login</a>
+<a href="index.html" onclick="localStorage.setItem('ma_open_modal','register');return true">Criar Conta</a>
+<a href="index.html" onclick="localStorage.setItem('ma_open_modal','plans');return true" class="pb-plan">Assinaturas</a>
+</div>
+
 <div id="app"></div>
 <div class="achievement" id="achToast"></div>
 <button class="hl-float" id="hlBtn">🖍️</button>
