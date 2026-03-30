@@ -17,7 +17,7 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);line-height:1
 mark.hl{background:rgba(255,245,157,.3);color:inherit;border-radius:1px;padding:0 1px}
 
 /* HEADER */
-.hdr{position:fixed;top:0;left:0;right:0;height:50px;background:var(--card);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 10px;z-index:300;gap:6px;transition:background .3s}
+.hdr{position:fixed;top:32px;left:0;right:0;height:50px;background:var(--card);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 10px;z-index:300;gap:6px;transition:background .3s}
 .logo{font-family:var(--serif);font-size:.85rem;font-weight:900;color:var(--dk);white-space:nowrap;cursor:pointer;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .logo span{color:var(--pri)}
 /* HAMBURGER MENU */
@@ -50,7 +50,7 @@ mark.hl{background:rgba(255,245,157,.3);color:inherit;border-radius:1px;padding:
 .hdr-r .hp b{color:var(--pri)}
 .thm-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--brd);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .2s;color:var(--txt2);flex-shrink:0}
 .thm-btn:hover{border-color:var(--pri);color:var(--pri)}
-.gbar{position:fixed;top:50px;left:0;right:0;height:2px;background:var(--bg3);z-index:299}
+.gbar{position:fixed;top:82px;left:0;right:0;height:2px;background:var(--bg3);z-index:299}
 .gfill{height:100%;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .8s}
 
 /* LOGIN */
@@ -74,7 +74,7 @@ mark.hl{background:rgba(255,245,157,.3);color:inherit;border-radius:1px;padding:
 .logout{position:fixed;bottom:12px;right:12px;background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:5px 12px;font-size:.68rem;color:var(--txt2);cursor:pointer;z-index:301;font-family:var(--font)}
 
 /* HOME */
-.home{margin-top:52px;padding:0 0 60px}
+.home{margin-top:84px;padding:0 0 60px}
 .hero{text-align:center;padding:40px 18px 20px}
 .hero .ey{font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--pri);margin-bottom:6px}
 .hero h1{font-family:var(--serif);font-size:2rem;font-weight:900;color:var(--dk);margin-bottom:6px}
@@ -114,7 +114,7 @@ mark.hl{background:rgba(255,245,157,.3);color:inherit;border-radius:1px;padding:
 .cc.done .bf{background:var(--grn)}
 
 /* MODULE VIEW */
-.mod-pg{margin-top:52px;max-width:800px;margin-left:auto;margin-right:auto;padding:20px 20px 80px;overflow-x:hidden}
+.mod-pg{margin-top:84px;max-width:800px;margin-left:auto;margin-right:auto;padding:20px 20px 80px;overflow-x:hidden}
 .mhdr{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--brd)}
 .mhdr .ey{font-size:.54rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pri);margin-bottom:3px}
 .mhdr h2{font-family:var(--serif);font-size:1.4rem;font-weight:900;color:var(--dk);margin-bottom:4px}
@@ -236,9 +236,25 @@ canvas#cc{display:none}
 @keyframes slideDown{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
 .mb{display:none;background:none;border:none;color:var(--dk);font-size:1.2rem;cursor:pointer}
 @media(max-width:768px){.mb{display:block}.hero h1{font-size:1.5rem}.mod-pg{padding:14px 10px 60px}.tbd{padding-left:12px;padding-right:4px}.abar{padding-left:12px}.cat-row{padding:4px 14px 10px}.cat-hd{padding:0 14px}.notes{padding:10px}.notes textarea{padding:10px;min-height:100px}}
+
+/* PORTAL NAV BAR */
+.portal-bar{position:fixed;top:0;left:0;right:0;height:32px;background:rgba(5,5,10,.95);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;gap:16px;z-index:9999;border-bottom:1px solid rgba(75,139,255,.15);font-family:'Outfit',sans-serif,system-ui}
+.portal-bar a{color:#9898b0;font-size:.62rem;font-weight:600;text-decoration:none;padding:4px 10px;border-radius:6px;transition:all .2s;letter-spacing:.03em}
+.portal-bar a:hover{color:#4b8bff;background:rgba(75,139,255,.08)}
+.portal-bar a.pb-main{color:#4b8bff;font-weight:700}
+.portal-bar a.pb-plan{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-weight:700;padding:4px 12px}
+.portal-bar a.pb-plan:hover{opacity:.9}
+@media(max-width:640px){.portal-bar{gap:6px;height:28px}.portal-bar a{font-size:.55rem;padding:3px 6px}}
 </style>
 </head>
 <body>
+<div class="portal-bar">
+<a href="index.html" class="pb-main">Matheus Academy</a>
+<a href="index.html" onclick="localStorage.setItem('ma_open_modal','login');return true">Login</a>
+<a href="index.html" onclick="localStorage.setItem('ma_open_modal','register');return true">Criar Conta</a>
+<a href="index.html" onclick="localStorage.setItem('ma_open_modal','plans');return true" class="pb-plan">Assinaturas</a>
+</div>
+
 <div id="app"></div>
 <div class="achievement" id="achToast"></div>
 <button class="hl-float" id="hlBtn">🖍️</button>
@@ -1507,7 +1523,7 @@ function genCert(name,cpf){
 
 function App(){
   // AUTH
-  const[auth,setAuth]=useState(()=>{try{const d=JSON.parse(localStorage.getItem('tp_auth')||'{}');var exp=d.expiry||3*365*24*60*60*1000;if(d.email&&d.code&&d.ts&&Date.now()-d.ts<exp)return d;return null}catch{return null}});
+  const[auth,setAuth]=useState(()=>{try{const d=JSON.parse(localStorage.getItem('tp_auth')||'{}');const exp=d.expiry||3*365*24*60*60*1000;if(d.email&&d.code&&d.ts&&Date.now()-d.ts<exp)return d;return null}catch(e){return null}});
   const[lStep,setLStep]=useState(1);const[lEmail,setLEmail]=useState('');const[lName,setLName]=useState('');const[lCity,setLCity]=useState('');const[lCode,setLCode]=useState('');const[lMsg,setLMsg]=useState(null);const[lLoad,setLLoad]=useState(false);
   async function genHash(email){const d=new TextEncoder().encode(email.toLowerCase().trim()+'TP_HENRY_2026_MASTER');const h=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,8).toUpperCase()}
   async function reqAccess(){
@@ -1538,14 +1554,14 @@ function App(){
   const[v,setV]=useState('home');const[mi,setMi]=useState(0);const[ot,setOt]=useState({});const[s,setS]=useState('');
   const preview=!auth;
   const[showPay,setShowPay]=useState(false);
-  const[dn,setDn]=useState(()=>{try{return JSON.parse(localStorage.getItem('tp3')||'{}')}catch{return{}}});
+  const[dn,setDn]=useState(()=>{try{return JSON.parse(localStorage.getItem('tp3')||'{}')}catch(e){return{}}});
   const[cn,setCn]=useState('');const[cpf,setCpf]=useState('');
   const[pl,setPl]=useState(null);const[spd,setSpd]=useState(1);const[vcs,setVcs]=useState([]);
   // QUIZ STATE
   const[quizAnswers,setQuizAnswers]=useState({});const[quizSubmitted,setQuizSubmitted]=useState({});
-  const[quizPassed,setQuizPassed]=useState(()=>{try{return JSON.parse(localStorage.getItem('tp_qp')||'{}')}catch{return{}}});
+  const[quizPassed,setQuizPassed]=useState(()=>{try{return JSON.parse(localStorage.getItem('tp_qp')||'{}')}catch(e){return{}}});
   // NOTES
-  const[notes,setNotes]=useState(()=>{try{return JSON.parse(localStorage.getItem('tp_notes')||'{}')}catch{return{}}});
+  const[notes,setNotes]=useState(()=>{try{return JSON.parse(localStorage.getItem('tp_notes')||'{}')}catch(e){return{}}});
   const[noteSaved,setNoteSaved]=useState(false);
   const noteTimer=useRef(null);
   const[menuOpen,setMenuOpen]=useState(false);
@@ -1565,7 +1581,7 @@ function App(){
   function go(i){if(preview&&i>0){setShowPay(true);return}if(!isUnlocked(i))return;stp();setMi(i);setV('module');setOt({});setQuizAnswers({});setQuizSubmitted({});localStorage.setItem('tp_last',i);window.scrollTo(0,0)}
   function tt(i){if(preview&&(mi>0||i>0)){setShowPay(true);return}setOt(p=>({...p,[i]:!p[i]}))}
   function gc(i){for(const c of CATS)if(i>=c.range[0]&&i<=c.range[1])return c.name;return''}
-  function gi(i){return React.createElement('img',{src:document.getElementById('logoData').value,alt:'MA',style:{width:'100%',height:'100%',objectFit:'cover'}})}
+  function gi(i){return React.createElement('img',{src:LOGO_URL,alt:'MA',style:{width:'100%',height:'100%',objectFit:'cover'}})}
   const catColors=['#3b82f6','#8b5cf6','#ec4899','#f97316','#10b981','#06b6d4','#6366f1','#eab308','#ef4444','#14b8a6','#f43f5e','#84cc16','#0ea5e9'];
   function gColor(i){for(let ci=0;ci<CATS.length;ci++){if(i>=CATS[ci].range[0]&&i<=CATS[ci].range[1])return catColors[ci%catColors.length]}return '#3b82f6'}
 
