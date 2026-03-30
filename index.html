@@ -424,10 +424,17 @@ var _scrollSpeed = 0.4; // px por frame (~24px/s a 60fps)
 function startContinuousScroll() {
   var track = document.getElementById('ebookTrack');
   if (!track) return;
+  var _baseSpeed = 0.4;
   function step() {
+    // Decai suavemente em direção à velocidade base (momentum)
+    if (Math.abs(_scrollSpeed - _baseSpeed) > 0.02) {
+      _scrollSpeed = _scrollSpeed * 0.94 + _baseSpeed * 0.06;
+    } else {
+      _scrollSpeed = _baseSpeed;
+    }
     _scrollX += _scrollSpeed;
-    if (_scrollX >= _scrollHalf) _scrollX = 0;
-    if (_scrollX < 0) _scrollX = _scrollHalf - 1;
+    if (_scrollHalf > 0 && _scrollX >= _scrollHalf) _scrollX -= _scrollHalf;
+    if (_scrollX < 0) _scrollX += (_scrollHalf > 0 ? _scrollHalf : 1000);
     track.style.transform = 'translateX(-' + _scrollX + 'px)';
     _scrollRAF = requestAnimationFrame(step);
   }
@@ -515,17 +522,8 @@ function buildEbooks() {
 
 
 function ebookGo(idx) { /* no-op: usando scroll contínuo */ }
-var _boostTimer = null;
-function _boostScroll(dir) {
-  // Aumenta velocidade por 1.5s ao clicar na seta
-  _scrollSpeed = dir > 0 ? 4 : -4;
-  if (_boostTimer) clearTimeout(_boostTimer);
-  _boostTimer = setTimeout(function() {
-    _scrollSpeed = 0.4; // volta ao normal
-  }, 1500);
-}
-function ebookNext() { _boostScroll(1); }
-function ebookPrev() { _boostScroll(-1); }
+function ebookNext() { _scrollSpeed = 6; }  // dispara momentum para frente
+function ebookPrev() { _scrollSpeed = -6; } // dispara momentum para trás
 function ebookStart() { /* scroll inicia via startContinuousScroll */ }
 function ebookReset() { /* no-op */ }
 
@@ -948,39 +946,77 @@ function upUI() {
 function addEbookTouchSwipe() {
   var track = document.getElementById('ebookTrack');
   if (!track) return;
-  var startX = 0, startY = 0, startScrollX = 0, dir = null;
 
-  // Touch (celular): horizontal arrasta carousel, vertical rola página — ambos passivos
+  // ── TOUCH com momentum real ──
+  var tStartX = 0, tStartY = 0, tStartScroll = 0;
+  var tLastX = 0, tLastTime = 0, tVelocity = 0;
+  var tDir = null;
+
   track.addEventListener('touchstart', function(e) {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    startScrollX = _scrollX;
-    dir = null;
+    // Frear momentum atual — congelar a roleta no ponto atual
+    _scrollSpeed = 0;
+    tStartX = e.touches[0].clientX;
+    tStartY = e.touches[0].clientY;
+    tStartScroll = _scrollX;
+    tLastX = tStartX; tLastTime = Date.now();
+    tVelocity = 0; tDir = null;
   }, {passive: true});
 
   track.addEventListener('touchmove', function(e) {
-    var dx = startX - e.touches[0].clientX;
-    var dy = startY - e.touches[0].clientY;
-    if (!dir) dir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
-    if (dir === 'h') {
-      _scrollX = startScrollX + dx;
-      if (_scrollX < 0) _scrollX = 0;
-      if (_scrollHalf > 0 && _scrollX >= _scrollHalf) _scrollX = _scrollHalf - 1;
+    var cx = e.touches[0].clientX;
+    var cy = e.touches[0].clientY;
+    var dx = tStartX - cx;
+    var dy = tStartY - cy;
+    if (!tDir) tDir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+    if (tDir === 'h') {
+      // Calcular velocidade instantânea (px/frame a 60fps)
+      var now = Date.now();
+      var dt = Math.max(1, now - tLastTime);
+      tVelocity = (tLastX - cx) / dt * 16; // normalizado para 16ms/frame
+      tLastX = cx; tLastTime = now;
+      // Mover carousel diretamente
+      _scrollX = tStartScroll + dx;
+      if (_scrollHalf > 0) {
+        while (_scrollX < 0) _scrollX += _scrollHalf;
+        while (_scrollX >= _scrollHalf) _scrollX -= _scrollHalf;
+      }
     }
   }, {passive: true});
 
-  track.addEventListener('touchend', function() { dir = null; }, {passive: true});
+  track.addEventListener('touchend', function() {
+    if (tDir === 'h') {
+      // Lançar com velocidade do swipe — decaimento cuida do resto
+      _scrollSpeed = tVelocity;
+      // Limitar velocidade máxima
+      if (_scrollSpeed > 30) _scrollSpeed = 30;
+      if (_scrollSpeed < -30) _scrollSpeed = -30;
+    }
+    tDir = null;
+  }, {passive: true});
 
-  // Mouse drag (desktop)
+  // ── MOUSE drag (desktop) ──
+  var mStartX = 0, mStartScroll = 0, mLastX = 0, mLastTime = 0, mVel = 0;
   track.addEventListener('mousedown', function(e) {
     if (e.button !== 0) return;
-    startX = e.clientX; startScrollX = _scrollX;
+    _scrollSpeed = 0;
+    mStartX = e.clientX; mStartScroll = _scrollX;
+    mLastX = mStartX; mLastTime = Date.now(); mVel = 0;
     var onMove = function(ev) {
-      _scrollX = startScrollX + (startX - ev.clientX);
-      if (_scrollX < 0) _scrollX = 0;
-      if (_scrollHalf > 0 && _scrollX >= _scrollHalf) _scrollX = _scrollHalf - 1;
+      var now = Date.now();
+      var dt = Math.max(1, now - mLastTime);
+      mVel = (mLastX - ev.clientX) / dt * 16;
+      mLastX = ev.clientX; mLastTime = now;
+      _scrollX = mStartScroll + (mStartX - ev.clientX);
+      if (_scrollHalf > 0) {
+        while (_scrollX < 0) _scrollX += _scrollHalf;
+        while (_scrollX >= _scrollHalf) _scrollX -= _scrollHalf;
+      }
     };
     var onUp = function() {
+      // Lançar momentum ao soltar o mouse
+      _scrollSpeed = mVel;
+      if (_scrollSpeed > 20) _scrollSpeed = 20;
+      if (_scrollSpeed < -20) _scrollSpeed = -20;
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onUp);
     };
