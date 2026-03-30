@@ -2268,7 +2268,7 @@ function genCertificate(name) {
 
 function App(){
   // AUTH
-  const[auth,setAuth]=useState(()=>{try{const d=JSON.parse(localStorage.getItem('ni_auth')||'{}');var exp=d.expiry||3*365*24*60*60*1000;if(d.email&&d.code&&d.ts&&Date.now()-d.ts<exp)return d;return null}catch{return null}});
+  const[auth,setAuth]=useState(()=>{try{const d=JSON.parse(localStorage.getItem('ni_auth')||'{}');const exp=d.expiry||3*365*24*60*60*1000;if(d.email&&d.code&&d.ts&&Date.now()-d.ts<exp)return d;return null}catch(e){return null}});
   const[lStep,setLStep]=useState(1);const[lEmail,setLEmail]=useState('');const[lName,setLName]=useState('');const[lCity,setLCity]=useState('');const[lCode,setLCode]=useState('');const[lMsg,setLMsg]=useState(null);const[lLoad,setLLoad]=useState(false);
   async function genHash(email,minuteToken){const d=new TextEncoder().encode(email.toLowerCase().trim()+'NI_HENRY_2026_MASTER'+String(minuteToken));const h=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,8).toUpperCase()}
   async function reqAccess(){
@@ -2302,14 +2302,14 @@ function App(){
   // COURSE STATE
   const[view,setView]=useState('home');const[modIdx,setModIdx]=useState(0);const[openT,setOpenT]=useState({});const[search,setSearch]=useState('');const[sb,setSb]=useState(false);
   const freeMode=!auth;const[showPaywall,setShowPaywall]=useState(false);
-  const[done,setDone]=useState(()=>{try{return JSON.parse(localStorage.getItem('ni_prog')||'{}')}catch{return{}}});
+  const[done,setDone]=useState(()=>{try{return JSON.parse(localStorage.getItem('ni_prog')||'{}')}catch(e){return{}}});
   const[certName,setCertName]=useState('');const[certCpf,setCertCpf]=useState('');
   const[pl,setPl]=useState(null);const[spd,setSpd]=useState(1);const[vcs,setVcs]=useState([]);
   // QUIZ STATE
   const[quizAnswers,setQuizAnswers]=useState({});const[quizSubmitted,setQuizSubmitted]=useState({});
-  const[quizPassed,setQuizPassed]=useState(()=>{try{return JSON.parse(localStorage.getItem('ni_qp')||'{}')}catch{return{}}});
+  const[quizPassed,setQuizPassed]=useState(()=>{try{return JSON.parse(localStorage.getItem('ni_qp')||'{}')}catch(e){return{}}});
   // NOTES
-  const[notes,setNotes]=useState(()=>{try{return JSON.parse(localStorage.getItem('ni_notes')||'{}')}catch{return{}}});
+  const[notes,setNotes]=useState(()=>{try{return JSON.parse(localStorage.getItem('ni_notes')||'{}')}catch(e){return{}}});
   const[noteSaved,setNoteSaved]=useState(false);
   const noteTimer=useRef(null);
 
