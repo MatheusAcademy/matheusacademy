@@ -62,7 +62,14 @@
 .ebook-btn.btn-paid:hover{background:var(--pri)}
 .ebook-dots{display:flex;justify-content:center;gap:6px;padding:12px 0 4px;background:var(--bg2)}.ebook-dot{width:6px;height:6px;border-radius:50%;background:var(--brd2);cursor:pointer;transition:all .3s}.ebook-dot.active{width:20px;border-radius:3px;background:var(--pri)}
 @media(max-width:767px){.ebook-card{flex:0 0 calc(50% - 8px);max-width:calc(50% - 8px)}.ebook-section{padding:16px 46px}}
-@media(max-width:480px){.ebook-card{flex:0 0 calc(50% - 5px);max-width:calc(50% - 5px)}.ebook-section{padding:12px 38px}}
+@media(max-width:480px){
+  .ebook-card{flex:0 0 calc(50% - 5px);max-width:calc(50% - 5px)}
+  .ebook-section{padding:12px 38px}
+  .nc-title{font-size:.62rem!important;letter-spacing:0}
+  .p-name-bar span{font-size:.52rem!important}
+  .ebook-btn{font-size:.6rem;padding:7px}
+  .p-badge{font-size:.42rem;padding:2px 6px}
+}
 /* ARROW BUTTONS — usadas em todas as roletas */
 .arr-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(14,14,22,.95);border:1.5px solid var(--brd2);color:var(--txt);font-size:1.4rem;cursor:pointer;z-index:50;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:0;line-height:1;pointer-events:all}
 .arr-btn:hover{background:var(--pri3);border-color:var(--neon);box-shadow:0 0 16px rgba(0,212,255,.4)}.arr-btn.ap{left:6px}.arr-btn.an{right:6px}
@@ -938,10 +945,56 @@ function upUI() {
 }
 
 // ═══════════════════════════════ INIT ═══════════════════════════════
+function addEbookTouchSwipe() {
+  var track = document.getElementById('ebookTrack');
+  if (!track) return;
+  var startX = 0, startY = 0, startScrollX = 0, dir = null;
+
+  // Touch (celular): horizontal arrasta carousel, vertical rola página — ambos passivos
+  track.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    startScrollX = _scrollX;
+    dir = null;
+  }, {passive: true});
+
+  track.addEventListener('touchmove', function(e) {
+    var dx = startX - e.touches[0].clientX;
+    var dy = startY - e.touches[0].clientY;
+    if (!dir) dir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+    if (dir === 'h') {
+      _scrollX = startScrollX + dx;
+      if (_scrollX < 0) _scrollX = 0;
+      if (_scrollHalf > 0 && _scrollX >= _scrollHalf) _scrollX = _scrollHalf - 1;
+    }
+  }, {passive: true});
+
+  track.addEventListener('touchend', function() { dir = null; }, {passive: true});
+
+  // Mouse drag (desktop)
+  track.addEventListener('mousedown', function(e) {
+    if (e.button !== 0) return;
+    startX = e.clientX; startScrollX = _scrollX;
+    var onMove = function(ev) {
+      _scrollX = startScrollX + (startX - ev.clientX);
+      if (_scrollX < 0) _scrollX = 0;
+      if (_scrollHalf > 0 && _scrollX >= _scrollHalf) _scrollX = _scrollHalf - 1;
+    };
+    var onUp = function() {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   setupEvents();
   buildEbooks();
   upUI();
+  // Swipe manual no ebook carousel (chamado após track ser populado)
+  setTimeout(addEbookTouchSwipe, 300);
 });
 </script>
 </body>
