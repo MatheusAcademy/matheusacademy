@@ -240,6 +240,9 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 @media(max-width:540px){.badge-grid{grid-template-columns:repeat(3,1fr)}.hero-pts-num{font-size:1.4rem}.page{padding:68px 0 80px}}
 @media(max-width:380px){.tabs{flex-wrap:wrap}.tab{min-width:45%}.xlv{font-size:.42rem}}
 </style>
+<style id="hide-floats">
+#mae-btn,#maeChatBtn,#maeChatWin,.ma-fpts,#maFpts,.points-badge,#fBadge,.f-badge{display:none!important}
+</style>
 </head>
 <body>
 
@@ -270,12 +273,14 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
     <a class="dd-mi green" href="ranking.html"><span class="dd-mi-i">🏆</span>Ranking</a>
     <a class="dd-mi gold" href="indicacoes.html"><span class="dd-mi-i">🔗</span>Indicações</a>
     <a class="dd-mi" href="perfil.html"><span class="dd-mi-i">👤</span>Meu Perfil</a>
+    <a class="dd-mi" href="trilhas.html"><span class="dd-mi-i">🛤️</span>Trilhas</a>
+    <a class="dd-mi gold" href="loja.html"><span class="dd-mi-i">🛒</span>Loja de XP</a>
+    <a class="dd-mi" href="mural.html"><span class="dd-mi-i">🏅</span>Mural</a>
   </div>
   <div class="dd-sec" id="tbAuthSec"></div>
 </div>
 
 <!-- Badge flutuante -->
-<a class="f-badge" id="fBadge" href="painel.html"><span class="f-badge-i">💰</span><div><span class="f-badge-lv" id="fBadgeLv">pts</span><span class="f-badge-n" id="fBadgeN">0</span></div></a>
 
 <!-- Toast -->
 <div class="toast-notif" id="toastNotif"><span class="tn-t" id="toastT"></span><span class="tn-s" id="toastS"></span></div>
@@ -802,13 +807,6 @@ document.addEventListener('DOMContentLoaded',function(){
 #mae-toast.complete{border-color:rgba(34,197,94,.45)}
 </style>
 
-<!-- FLOATING 🔥 BUTTON -->
-<button id="mae-btn" onclick="maeOpen()" title="Streak, Missões &amp; Progresso" aria-label="Abrir central do aluno">
-  🔥
-  <span class="mae-snum" id="maeStrBtn">0d</span>
-  <span class="mae-btn-timer" id="maeBtnTimer">00:00</span>
-  <span class="mae-badge-dot" id="maeMissionDot"></span>
-</button>
 
 <!-- TOAST -->
 <div id="mae-toast"></div>
@@ -2764,42 +2762,6 @@ document.addEventListener('DOMContentLoaded',function(){
 #maeMotivBanner .motiv-banner-close{position:absolute;right:12px;background:none;border:none;color:#44445a;cursor:pointer;font-size:.8rem}
 </style>
 
-<!-- ═══ CHAT IA ═══ -->
-<button id="maeChatBtn" onclick="maeChatToggle()" title="Chat com IA — Tire suas dúvidas">
-  💬
-  <span class="chat-btn-lbl">IA Chat</span>
-  <span class="chat-btn-badge" id="maeChatBadge">!</span>
-</button>
-
-<div id="maeChatWin">
-  <div class="mae-chat-hdr">
-    <span class="mae-chat-hdr-dot"></span>
-    <div style="flex:1">
-      <span class="mae-chat-hdr-title">Assistente IA</span>
-      <span class="mae-chat-hdr-sub" id="maeChatCourse">Matheus Academy</span>
-    </div>
-    <span class="mae-chat-quota" id="maeChatQuota">∞ perguntas</span>
-    <button class="mae-chat-close" onclick="maeChatClose()">✕</button>
-  </div>
-  <!-- WORKER CONFIG (admin only, hidden by default) -->
-  <div class="mae-chat-setup" id="maeChatSetup" style="display:none!important"></div>
-  <!-- UPGRADE -->
-  <div class="mae-chat-upgrade" id="maeChatUpgrade">
-    <div class="mae-chat-upgrade-icon">🚀</div>
-    <div class="mae-chat-upgrade-title">Limite diário atingido!</div>
-    <div class="mae-chat-upgrade-sub" id="maeChatUpgradeSub">Você usou todas as suas perguntas de hoje. Faça upgrade para ter mais perguntas por dia e continuar aprendendo!</div>
-    <button class="mae-chat-upgrade-btn" onclick="location.href='index.html'">💎 Ver Planos</button>
-    <div style="font-size:.62rem;color:#44445a;font-family:'Outfit',sans-serif;margin-top:4px">Reseta às meia-noite</div>
-  </div>
-  <!-- CHAT AREA -->
-  <div class="mae-chat-msgs" id="maeChatMsgs"></div>
-  <div class="mae-typing" id="maeChatTyping"><span></span><span></span><span></span></div>
-  <div class="mae-chat-footer" id="maeChatFooter">
-    <textarea class="mae-chat-input" id="maeChatInput" rows="1" placeholder="Tire sua dúvida sobre o conteúdo..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();maeChatSend()}"></textarea>
-    <button class="mae-chat-send" id="maeChatSendBtn" onclick="maeChatSend()">➤</button>
-  </div>
-</div>
-
 <!-- ═══ PLANO DE ESTUDOS ═══ -->
 <div id="maeSPModal">
   <div id="maeSPBox">
@@ -2837,19 +2799,6 @@ document.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <!-- ═══ FRASES MOTIVACIONAIS ═══ -->
-<div id="maeMotivWrap">
-  <div class="mae-motiv-card">
-    <span class="mae-motiv-emoji" id="maeMotivEmoji">🎉</span>
-    <div class="mae-motiv-title" id="maeMotivTitle">Parabéns!</div>
-    <div class="mae-motiv-sub" id="maeMotivSub">Continue evoluindo!</div>
-    <div class="mae-motiv-pts" id="maeMotivPts" style="display:none"></div>
-    <button class="mae-motiv-dismiss" onclick="maeMotivHide()">Continuar →</button>
-  </div>
-</div>
-<div id="maeMotivBanner">
-  <span id="maeMotivBannerText">🚀 Continue evoluindo!</span>
-  <button class="motiv-banner-close" onclick="document.getElementById('maeMotivBanner').classList.remove('show')">✕</button>
-</div>
 
 <script>
 /* ════════════════════════════════════════════════════════════
@@ -3277,16 +3226,13 @@ function _hookMotivEvents(){
   },2000);
 }
 
-/* WELCOME ON PAGE LOAD */
-function _welcomeMotiv(){
-  if(_shownWelcome)return;_shownWelcome=true;
-  var u=null;try{u=JSON.parse(localStorage.getItem('ma_user'));}catch(e){}
+function _welcomeMotiv(){};
   if(!u)return;
   // Show banner first, then full motiv after delay
   var streak=JSON.parse(localStorage.getItem('ma_streak2')||'{}');
   var sk=streak.current||0;
   if(sk>=7)_showBannerMotiv('🔥 '+sk+' dias seguidos! Você é incrível!');
-  else _showBannerMotiv('👋 Bem-vindo de volta, '+u.name.split(' ')[0]+'! Continue evoluindo!');
+  else // banner welcome on load: disabled
   setTimeout(function(){maeShowMotiv('welcome','','','','');},3000);
 }
 
@@ -3305,7 +3251,7 @@ document.addEventListener('DOMContentLoaded',function(){
   if(hasPlan){setTimeout(_renderDailyBanner,300);setTimeout(_renderWeekCard,400);}
   // Motivational
   setTimeout(_hookMotivEvents,100);
-  setTimeout(_welcomeMotiv,1500);
+  // welcome disabled
   // Study plan auto-mark when module complete
   var _origSP=window.maeSPMarkDone;
   window.MA_moduleComplete=window.MA_moduleComplete||function(){};
@@ -3320,5 +3266,150 @@ document.addEventListener('DOMContentLoaded',function(){
 </script>
 <!-- FIM MA ENGINE v4 -->
 
+<!-- ═══════════════ MA BUSCA GLOBAL v1 ═══════════════ -->
+<style>
+#maeSG-ov{position:fixed;inset:0;background:rgba(0,0,0,.84);backdrop-filter:blur(14px);z-index:29999;display:none;align-items:flex-start;justify-content:center;padding:56px 14px 20px}
+#maeSG-ov.sg-open{display:flex}
+#maeSG-box{background:#0d0d1c;border:1.5px solid #252540;border-radius:18px;width:100%;max-width:600px;max-height:calc(100vh - 80px);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.85);display:flex;flex-direction:column;animation:sgIn .2s cubic-bezier(.2,0,.3,1)}
+@keyframes sgIn{from{transform:scale(.92) translateY(-16px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.sg-top{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #1e1e35;flex-shrink:0}
+.sg-search-icon{font-size:.95rem;color:#5b7fff;flex-shrink:0}
+#maeSG-input{flex:1;background:transparent;border:none;outline:none;font-size:.92rem;color:#fff;font-family:'Outfit',sans-serif;caret-color:#5b7fff}
+#maeSG-input::placeholder{color:#44445a}
+.sg-esc{padding:3px 8px;border-radius:5px;background:#1e1e35;font-size:.52rem;color:#8888aa;font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;flex-shrink:0;border:none}
+.sg-results{flex:1;overflow-y:auto;padding:6px 0;min-height:60px}
+.sg-results::-webkit-scrollbar{width:3px}
+.sg-results::-webkit-scrollbar-thumb{background:#1e1e35}
+.sg-sect{padding:6px 16px 3px;font-size:.54rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#44445a;font-family:'Outfit',sans-serif}
+.sg-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;transition:background .12s;text-decoration:none;border:none;background:transparent;width:100%;text-align:left;font-family:'Outfit',sans-serif}
+.sg-item:hover,.sg-item.sg-sel{background:rgba(91,127,255,.09)}
+.sg-item-ic{width:30px;height:30px;border-radius:8px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0}
+.sg-item-body{flex:1;min-width:0}
+.sg-item-title{font-size:.76rem;font-weight:700;color:#e8e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sg-item-sub{font-size:.6rem;color:#8888aa;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sg-item-badge{padding:2px 7px;border-radius:5px;font-size:.5rem;font-weight:700;background:rgba(91,127,255,.1);color:#5b7fff;flex-shrink:0;font-family:'Outfit',sans-serif}
+.sg-empty{padding:32px 20px;text-align:center;font-size:.76rem;color:#44445a;font-family:'Outfit',sans-serif}
+.sg-footer{padding:7px 14px;border-top:1px solid #1e1e35;display:flex;align-items:center;justify-content:space-between;font-size:.52rem;color:#44445a;font-family:'Outfit',sans-serif;flex-shrink:0}
+.sg-footer-kbds{display:flex;gap:8px;align-items:center}
+.sg-kbd{padding:2px 6px;border-radius:3px;background:#1e1e35;color:#8888aa;font-size:.5rem}
+.sg-trigger-btn{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(17,17,34,.7);color:#8888aa;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s;text-decoration:none}
+.sg-trigger-btn:hover{border-color:#5b7fff;color:#5b7fff;background:rgba(91,127,255,.1)}
+</style>
+<div id="maeSG-ov" onclick="if(event.target===this)maeSGClose()">
+  <div id="maeSG-box">
+    <div class="sg-top">
+      <span class="sg-search-icon">🔍</span>
+      <input id="maeSG-input" type="text" placeholder="Buscar páginas, cursos e anotações..." autocomplete="off">
+      <button class="sg-esc" onclick="maeSGClose()">ESC</button>
+    </div>
+    <div class="sg-results" id="maeSG-results"><div class="sg-empty">⌨️ Digite para buscar</div></div>
+    <div class="sg-footer">
+      <div class="sg-footer-kbds">
+        <span class="sg-kbd">↑↓</span><span>navegar</span>
+        <span class="sg-kbd">↵</span><span>abrir</span>
+        <span class="sg-kbd">ESC</span><span>fechar</span>
+      </div>
+      <span>Ctrl+K</span>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+'use strict';
+var _SG_PAGES=[
+  {ic:'🏠',t:'Início / Portal',u:'index.html',c:'Páginas'},
+  {ic:'⭐',t:'Meu Painel',u:'painel.html',c:'Páginas'},
+  {ic:'🏆',t:'Ranking',u:'ranking.html',c:'Páginas'},
+  {ic:'🔗',t:'Indicações',u:'indicacoes.html',c:'Páginas'},
+  {ic:'👤',t:'Meu Perfil',u:'perfil.html',c:'Páginas'},
+  {ic:'🛤️',t:'Trilhas de Aprendizado',u:'trilhas.html',c:'Páginas'},
+  {ic:'🛒',t:'Loja de XP',u:'loja.html',c:'Páginas'},
+  {ic:'🏅',t:'Mural de Conquistas',u:'mural.html',c:'Páginas'},
+];
+var _SG_COURSES=[
+  {ic:'📊',t:'Dominando Tráfego Pago',u:'dominando-trafego-pago.html',c:'Cursos'},
+  {ic:'💼',t:'Negócios Inteligentes',u:'negocios-inteligentes.html',c:'Cursos'},
+  {ic:'🌍',t:'Geopolítica Avançada',u:'geopolitica-curso.html',c:'Cursos'},
+  {ic:'💡',t:'Nichos Lucrativos',u:'nichos-lucrativos.html',c:'Cursos'},
+  {ic:'🎯',t:'Mestre em Persuasão',u:'mestre-em-persuasao.html',c:'Cursos'},
+  {ic:'🏦',t:'Caso Banco Master',u:'caso-banco-master.html',c:'Cursos'},
+  {ic:'⚔️',t:'Guerra Israel x Irã',u:'guerra-israel-ira.html',c:'Cursos'},
+  {ic:'⚽',t:'Copa do Mundo 2026',u:'copa-do-mundo-2026.html',c:'Cursos'},
+];
+var _sgSel=0;
+function _sgH(){try{return JSON.parse(localStorage.getItem('maSG_hist')||'[]');}catch(e){return[];}}
+function _sgAH(q){if(!q.trim())return;var h=_sgH().filter(function(x){return x!==q;});h.unshift(q);h=h.slice(0,5);localStorage.setItem('maSG_hist',JSON.stringify(h));}
+function _sgN(){try{return JSON.parse(localStorage.getItem('mae_notes_v3')||'[]');}catch(e){return[];}}
+window.maeSGOpen=function(){
+  var ov=document.getElementById('maeSG-ov');if(!ov)return;
+  ov.classList.add('sg-open');document.body.style.overflow='hidden';
+  var inp=document.getElementById('maeSG-input');if(inp){inp.value='';inp.focus();}
+  _sgShow('');
+};
+window.maeSGClose=function(){
+  var ov=document.getElementById('maeSG-ov');if(ov)ov.classList.remove('sg-open');
+  document.body.style.overflow='';
+};
+function _sgItemHtml(ic,title,sub,u,badge){
+  return '<div class="sg-item" data-url="'+u+'" onclick="maeSGGo(\''+u+'\',\'\')">'
+    +'<div class="sg-item-ic">'+ic+'</div>'
+    +'<div class="sg-item-body"><div class="sg-item-title">'+title+'</div>'+(sub?'<div class="sg-item-sub">'+sub+'</div>':'')+'</div>'
+    +(badge?'<span class="sg-item-badge">'+badge+'</span>':'')
+    +'</div>';
+}
+function _sgShow(q){
+  var res=document.getElementById('maeSG-results');if(!res)return;
+  var ql=q.toLowerCase().trim();
+  _sgSel=0;
+  if(!ql){
+    var hist=_sgH();
+    if(!hist.length){res.innerHTML='<div class="sg-empty">⌨️ Digite para buscar páginas, cursos e anotações</div>';return;}
+    var h='<div class="sg-sect">🕐 Buscas recentes</div>';
+    hist.forEach(function(q2){h+='<div class="sg-item" onclick="document.getElementById(\'maeSG-input\').value=\''+q2.replace(/'/g,"\\'")+'\'';h+=';document.getElementById(\'maeSG-input\').dispatchEvent(new Event(\'input\'))"><div class="sg-item-ic">🕐</div><div class="sg-item-body"><div class="sg-item-title">'+q2+'</div></div></div>';});
+    res.innerHTML=h;return;
+  }
+  var html='';
+  var pgs=_SG_PAGES.filter(function(p){return p.t.toLowerCase().indexOf(ql)>=0;});
+  if(pgs.length){html+='<div class="sg-sect">📄 Páginas</div>';pgs.forEach(function(p){html+=_sgItemHtml(p.ic,p.t,'',p.u,'');});}
+  var crs=_SG_COURSES.filter(function(c){return c.t.toLowerCase().indexOf(ql)>=0;});
+  if(crs.length){html+='<div class="sg-sect">📚 Cursos</div>';crs.forEach(function(c){html+=_sgItemHtml(c.ic,c.t,'Acessar curso',c.u,'Curso');});}
+  var notes=_sgN().filter(function(n){return(n.content||'').toLowerCase().indexOf(ql)>=0||(n.moduleName||'').toLowerCase().indexOf(ql)>=0;}).slice(0,4);
+  if(notes.length){html+='<div class="sg-sect">📓 Anotações</div>';notes.forEach(function(n){var sn=(n.content||'').substring(0,70)+'…';html+=_sgItemHtml('📓',n.moduleName||'Anotação',sn,'painel.html',n.courseName||'');});}
+  if(!html)html='<div class="sg-empty">🔍 Nenhum resultado para "'+q.replace(/</g,'&lt;')+'"</div>';
+  res.innerHTML=html;
+}
+window.maeSGGo=function(u,q){if(q)_sgAH(q);maeSGClose();if(u&&u!=='#')location.href=u;};
+var _inp=null;
+document.addEventListener('DOMContentLoaded',function(){
+  _inp=document.getElementById('maeSG-input');
+  if(_inp)_inp.addEventListener('input',function(){_sgShow(this.value);});
+  // Injetar botão de busca na topbar
+  setTimeout(function(){
+    var btn=document.createElement('button');
+    btn.className='sg-trigger-btn';btn.title='Busca Global (Ctrl+K)';btn.innerHTML='🔍';
+    btn.addEventListener('click',maeSGOpen);
+    var tgt=document.querySelector('.ma-tb-menu-btn,.tb-menu-btn,.hdr-right');
+    if(tgt&&tgt.tagName!=='DIV')tgt.parentNode.insertBefore(btn,tgt);
+    else if(tgt){tgt.insertBefore(btn,tgt.firstChild);}
+  },200);
+});
+document.addEventListener('keydown',function(e){
+  if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();maeSGOpen();return;}
+  var ov=document.getElementById('maeSG-ov');if(!ov||!ov.classList.contains('sg-open'))return;
+  if(e.key==='Escape'){maeSGClose();return;}
+  var items=document.querySelectorAll('#maeSG-results .sg-item');
+  if(!items.length)return;
+  if(e.key==='ArrowDown'){e.preventDefault();_sgSel=(_sgSel+1)%items.length;}
+  else if(e.key==='ArrowUp'){e.preventDefault();_sgSel=(_sgSel-1+items.length)%items.length;}
+  else if(e.key==='Enter'){e.preventDefault();var u=items[_sgSel]&&items[_sgSel].getAttribute('data-url');if(u)maeSGGo(u,'');return;}
+  else return;
+  items.forEach(function(i,idx){i.classList.toggle('sg-sel',idx===_sgSel);});
+  if(items[_sgSel])items[_sgSel].scrollIntoView({block:'nearest'});
+});
+})();
+</script>
+<!-- FIM MA BUSCA GLOBAL -->
+
 </body>
+</html>
 </html>
