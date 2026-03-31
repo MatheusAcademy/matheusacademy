@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a1f'/%3E%3Ctext x='32' y='46' text-anchor='middle' fill='%234b8bff' font-family='Arial Black,Arial' font-weight='900' font-size='42'%3EM%3C/text%3E%3C/svg%3E">
+<title>Trilhas de Aprendizado — Matheus Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;--card:#14141f;--brd:#1e1e32;--brd2:#2a2a44;--pri:#4b8bff;--pri3:#2563eb;--txt:#e8e8ef;--txt2:#9898b0;--txt3:#5a5a76;--grn:#22c55e;--red:#ef4444;--orn:#f59e0b;--neon:#00d4ff;--font:'Outfit',sans-serif;--serif:'Playfair Display',serif}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+.ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999}
+.ma-tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.ma-tb-logo img{width:28px;height:28px;border-radius:7px}
+.ma-tb-brand{font-size:.76rem;font-weight:800;color:#fff;white-space:nowrap} .ma-tb-brand b{color:#5b7fff}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
+.ma-tb-course{font-size:.7rem;font-weight:800;color:#9898b0;white-space:nowrap;flex-shrink:0}
+.ma-tb-spacer{flex:1}
+.ma-pts-live{display:none;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(37,99,235,.2),rgba(124,58,237,.18));border:1px solid rgba(91,127,255,.3);border-radius:20px;padding:5px 12px;cursor:pointer;text-decoration:none;flex-shrink:0;transition:all .2s}
+.ma-pts-live.show{display:flex}
+.ma-pts-icon{font-size:.9rem;line-height:1}
+.ma-pts-num{font-size:.84rem;font-weight:900;color:#fff;line-height:1}
+.ma-pts-sublv{font-size:.44rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.05em}
+.ma-tb-icon-btn{width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:#8888a8;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;transition:all .2s}
+.ma-tb-icon-btn:hover{background:#161628;color:#e8e8f0}
+.ma-tb-menu-btn{width:34px;height:34px;border-radius:9px;border:1px solid #1e1e35;background:#111122;color:#8888a8;font-size:.88rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}.ma-menu-overlay.open{display:block}
+.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:232px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+.ma-mu-user{padding:14px 16px 0;border-bottom:1px solid #1e1e35}.ma-mu-name{font-size:.85rem;font-weight:800;color:#fff;display:block;margin-bottom:5px}
+.ma-menu-sec{padding:5px 0}.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
+.ma-mi:hover{background:#161628;color:#e8e8f0}.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.ma-mi.green{color:#22c55e}.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
+.ma-fpts{position:fixed;bottom:18px;right:16px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:50px;padding:7px 14px;display:none;align-items:center;gap:7px;z-index:9990;box-shadow:0 4px 18px rgba(91,127,255,.45);cursor:pointer;text-decoration:none;border:1px solid rgba(255,255,255,.1)}
+.ma-fpts-icon{font-size:.9rem}.ma-fpts-num{font-size:.85rem;font-weight:900;color:#fff}.ma-fpts-lv{font-size:.46rem;color:rgba(255,255,255,.65);display:block;text-transform:uppercase}
+.page{padding-top:70px;padding-bottom:80px;max-width:720px;margin:0 auto;padding-left:16px;padding-right:16px}
+h1{font-family:var(--serif);font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:6px}
+h1 span{color:var(--pri)}
+.page-sub{font-size:.84rem;color:var(--txt2);margin-bottom:28px;line-height:1.6}
+.trail-card{background:var(--card);border:1.5px solid var(--brd);border-radius:18px;padding:20px;margin-bottom:20px;transition:border-color .3s,box-shadow .3s}
+.trail-card:hover{border-color:rgba(91,127,255,.4);box-shadow:0 4px 24px rgba(91,127,255,.1)}
+.trail-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.trail-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.trail-info{flex:1}
+.trail-name{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:4px}
+.trail-desc{font-size:.72rem;color:var(--txt2);line-height:1.5}
+.trail-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:8px;font-size:.6rem;font-weight:700;margin-top:6px}
+.trail-courses{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.trail-course-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border:1px solid var(--brd);border-radius:10px}
+.tci-num{width:22px;height:22px;border-radius:50%;background:var(--pri3);color:#fff;font-size:.58rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tci-icon{font-size:1rem;flex-shrink:0}
+.tci-name{flex:1;font-size:.76rem;font-weight:700;color:var(--txt)}
+.tci-pct{font-size:.68rem;font-weight:800;color:var(--pri)}
+.tci-check{font-size:.75rem}
+.trail-progress{margin-bottom:14px}
+.tp-labels{display:flex;justify-content:space-between;font-size:.6rem;color:var(--txt3);margin-bottom:5px}
+.tp-bar{height:8px;background:var(--bg3);border-radius:10px;overflow:hidden}
+.tp-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--pri),#a855f7);transition:width .8s ease}
+.trail-footer{display:flex;align-items:center;justify-content:space-between}
+.trail-btn{padding:10px 20px;border-radius:10px;border:none;font-size:.76rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .2s}
+.trail-btn.start{background:var(--pri3);color:#fff}.trail-btn.start:hover{background:var(--pri)}
+.trail-btn.continue{background:linear-gradient(135deg,var(--pri3),#a855f7);color:#fff}
+.trail-badge-earned{background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:5px 12px;font-size:.64rem;font-weight:700;display:none}
+.trail-badge-earned.show{display:block}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,15,.96);border-top:1px solid var(--brd);display:flex;justify-content:space-around;padding:8px 0 10px;z-index:500}
+.bn{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.56rem;font-weight:600;color:var(--txt3);text-decoration:none;padding:4px 10px;border-radius:8px;transition:color .2s;min-width:52px}
+.bn:hover,.bn.active{color:var(--pri)}.bn-i{font-size:1.1rem}
+</style>
+</head>
+<body>
+<nav class="ma-topbar">
+  <a class="ma-tb-logo" href="index.html">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a1f'/%3E%3Ctext x='32' y='46' text-anchor='middle' fill='%234b8bff' font-family='Arial Black,Arial' font-weight='900' font-size='42'%3EM%3C/text%3E%3C/svg%3E" alt="MA">
+    <span class="ma-tb-brand">Matheus <b>Academy</b></span>
+  </a>
+  <span class="ma-tb-sep"></span>
+  <span class="ma-tb-course">🛤️ Trilhas</span>
+  <div class="ma-tb-spacer"></div>
+  <a class="ma-pts-live" id="maPtsLive" href="painel.html">
+    <span class="ma-pts-icon">💰</span>
+    <div><span class="ma-pts-num" id="maPtsNum">0</span><span class="ma-pts-sublv" id="maPtsLv">pts</span></div>
+  </a>
+  <a class="ma-tb-icon-btn" href="perfil.html" title="Perfil">👤</a>
+  <button class="ma-tb-menu-btn" onclick="toggleMaMenu()">☰</button>
+</nav>
+<div class="ma-menu-overlay" id="maMenuOverlay" onclick="closeMaMenu()"></div>
+<div class="ma-menu-dd" id="maMenuDd">
+  <div class="ma-mu-user"><span class="ma-mu-name" id="maMenuName">Visitante</span></div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">⭐</span>Meu Painel</a>
+    <a class="ma-mi green" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🔗</span>Indicações</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🛤️</span>Trilhas</a>
+    <a class="ma-mi gold" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">🏅</span>Mural</a>
+  </div>
+  <div class="ma-menu-sec" id="maMenuAuthSec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>
+  </div>
+</div>
+<a class="ma-fpts" id="maFpts" href="painel.html">
+  <span class="ma-fpts-icon">💰</span>
+  <div><span class="ma-fpts-lv" id="maFptsLv">pts</span><span class="ma-fpts-num" id="maFptsNum">0</span></div>
+</a>
+
+<div class="page">
+  <h1>🛤️ Trilhas de <span>Aprendizado</span></h1>
+  <p class="page-sub">Percursos estruturados que combinam cursos em sequência para dominar um tema do início ao fim. Complete uma trilha e ganhe um badge exclusivo.</p>
+
+  <div id="trilhasContainer"></div>
+</div>
+
+<nav class="bnav">
+  <a class="bn" href="index.html"><span class="bn-i">🏠</span>Início</a>
+  <a class="bn" href="painel.html"><span class="bn-i">⭐</span>Painel</a>
+  <a class="bn active" href="trilhas.html"><span class="bn-i">🛤️</span>Trilhas</a>
+  <a class="bn" href="ranking.html"><span class="bn-i">🏆</span>Ranking</a>
+  <a class="bn" href="perfil.html"><span class="bn-i">👤</span>Perfil</a>
+</nav>
+
+<script>
+var TRILHAS=[
+  {
+    id:'empreendedor',
+    icon:'💼',
+    color:'rgba(37,99,235,.15)',
+    borderColor:'rgba(91,127,255,.4)',
+    name:'Trilha Empreendedor Digital',
+    desc:'Do zero ao negócio digital lucrativo. Aprenda tráfego pago, negócios inteligentes e nichos lucrativos na sequência ideal para empreender online.',
+    badge:'🚀 Empreendedor Digital',
+    courses:[
+      {key:'tp',icon:'📊',name:'Dominando Tráfego Pago',file:'dominando-trafego-pago.html'},
+      {key:'ni',icon:'💼',name:'Negócios Inteligentes',file:'negocios-inteligentes.html'},
+      {key:'nl',icon:'💡',name:'Nichos Lucrativos',file:'nichos-lucrativos.html'}
+    ]
+  },
+  {
+    id:'estrategista',
+    icon:'🌍',
+    color:'rgba(34,197,94,.1)',
+    borderColor:'rgba(34,197,94,.35)',
+    name:'Trilha Estrategista Global',
+    desc:'Entenda o mundo como ele funciona e use esse conhecimento nos seus negócios. Geopolítica + Negócios Inteligentes para uma visão estratégica completa.',
+    badge:'🌍 Estrategista Global',
+    courses:[
+      {key:'gp',icon:'🌍',name:'Geopolítica Avançada',file:'geopolitica-curso.html'},
+      {key:'ni',icon:'💼',name:'Negócios Inteligentes',file:'negocios-inteligentes.html'}
+    ]
+  },
+  {
+    id:'completa',
+    icon:'👑',
+    color:'rgba(245,158,11,.1)',
+    borderColor:'rgba(245,158,11,.35)',
+    name:'Trilha Completa Matheus Academy',
+    desc:'O percurso definitivo. Todos os cursos principais em sequência lógica para quem quer dominar tráfego, negócios, geopolítica, persuasão e nichos.',
+    badge:'👑 Mestre Academy',
+    courses:[
+      {key:'tp',icon:'📊',name:'Dominando Tráfego Pago',file:'dominando-trafego-pago.html'},
+      {key:'ni',icon:'💼',name:'Negócios Inteligentes',file:'negocios-inteligentes.html'},
+      {key:'gp',icon:'🌍',name:'Geopolítica Avançada',file:'geopolitica-curso.html'},
+      {key:'nl',icon:'💡',name:'Nichos Lucrativos',file:'nichos-lucrativos.html'},
+      {key:'mp',icon:'🎯',name:'Mestre em Persuasão',file:'mestre-em-persuasao.html'}
+    ]
+  }
+];
+
+function getCourseProgress(key){
+  var done=0,total=0;
+  try{
+    for(var k in localStorage){
+      if(k.indexOf(key+'_mod_')===0||(key==='tp'&&k.indexOf('dt_mod_')===0)||(key==='gp'&&k.indexOf('geo_mod_')===0)){
+        total++;
+        var v=localStorage.getItem(k);
+        if(v==='done'||v==='true'||v==='1')done++;
+      }
+    }
+  }catch(e){}
+  return{done:done,total:total,pct:total>0?Math.min(100,Math.round(done/total*100)):0};
+}
+
+function getEarnedBadges(){try{return JSON.parse(localStorage.getItem('mae_trail_badges')||'[]');}catch(e){return[];}}
+
+function renderTrilhas(){
+  var earned=getEarnedBadges();
+  var html='';
+  TRILHAS.forEach(function(t){
+    var totalPct=0;
+    var courseItems='';
+    t.courses.forEach(function(c,i){
+      var p=getCourseProgress(c.key);
+      totalPct+=p.pct;
+      var isDone=p.pct===100;
+      courseItems+='<div class="trail-course-item">'
+        +'<div class="tci-num">'+(i+1)+'</div>'
+        +'<span class="tci-icon">'+c.icon+'</span>'
+        +'<span class="tci-name">'+c.name+'</span>'
+        +'<span class="tci-pct">'+p.pct+'%</span>'
+        +'<span class="tci-check">'+(isDone?'✅':'')+'</span>'
+        +'</div>';
+    });
+    var avgPct=Math.round(totalPct/t.courses.length);
+    var isComplete=avgPct===100;
+    var isEarned=earned.indexOf(t.id)>=0||isComplete;
+    if(isComplete&&!isEarned){
+      earned.push(t.id);
+      localStorage.setItem('mae_trail_badges',JSON.stringify(earned));
+      if(window.MA_addPoints)MA_addPoints('Trilha concluída: '+t.name,300);
+    }
+    html+='<div class="trail-card" style="border-color:'+(isEarned?t.borderColor:'var(--brd)')+';background:linear-gradient(135deg,'+t.color+',var(--card))">'
+      +'<div class="trail-top"><div class="trail-icon" style="background:'+t.color+'">'+t.icon+'</div>'
+      +'<div class="trail-info"><div class="trail-name">'+t.name+'</div><div class="trail-desc">'+t.desc+'</div>'
+      +'<span class="trail-badge" style="background:'+t.color+';color:#fff;border:1px solid '+t.borderColor+'">🏅 '+t.badge+'</span></div></div>'
+      +'<div class="trail-courses">'+courseItems+'</div>'
+      +'<div class="trail-progress"><div class="tp-labels"><span>Progresso geral</span><span>'+avgPct+'%</span></div>'
+      +'<div class="tp-bar"><div class="tp-fill" style="width:'+avgPct+'%;'+(isEarned?'background:linear-gradient(90deg,#22c55e,#16a34a)':'')+'"></div></div></div>'
+      +'<div class="trail-footer">'
+      +'<a class="trail-btn '+(avgPct>0?'continue':'start')+'" href="'+t.courses[0].file+'">'+(avgPct===100?'✅ Concluída':avgPct>0?'▶ Continuar Trilha':'🚀 Iniciar Trilha')+'</a>'
+      +'<span class="trail-badge-earned'+(isEarned?' show':'')+'">'+t.badge+' conquistado!</span>'
+      +'</div>'
+      +'</div>';
+  });
+  document.getElementById('trilhasContainer').innerHTML=html;
+}
+
+// Topbar pts
+(function(){
+  function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0};}catch(e){return{total:0};}}
+  function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
+  var u=gU(),p=gP();
+  var el=document.getElementById('maPtsLive');
+  if(u&&el){el.classList.add('show');document.getElementById('maPtsNum').textContent=p.total.toLocaleString('pt-BR');}
+  var fp=document.getElementById('maFpts');if(u&&fp)fp.style.display='flex';
+  if(fp){document.getElementById('maFptsNum').textContent=p.total.toLocaleString('pt-BR');}
+  var mn=document.getElementById('maMenuName');if(mn&&u)mn.textContent=u.name.split(' ')[0];
+})();
+
+function toggleMaMenu(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOverlay');d.classList.toggle('open');o.classList.toggle('open');}
+function closeMaMenu(){document.getElementById('maMenuDd').classList.remove('open');document.getElementById('maMenuOverlay').classList.remove('open');}
+
+document.addEventListener('DOMContentLoaded',renderTrilhas);
+</script>
+</body>
+</html>

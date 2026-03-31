@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a1f'/%3E%3Ctext x='32' y='46' text-anchor='middle' fill='%234b8bff' font-family='Arial Black,Arial' font-weight='900' font-size='42'%3EM%3C/text%3E%3C/svg%3E">
+<title>Loja de XP — Matheus Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;--card:#14141f;--brd:#1e1e32;--brd2:#2a2a44;--pri:#4b8bff;--pri3:#2563eb;--txt:#e8e8ef;--txt2:#9898b0;--txt3:#5a5a76;--grn:#22c55e;--red:#ef4444;--orn:#f59e0b;--neon:#00d4ff;--font:'Outfit',sans-serif;--serif:'Playfair Display',serif}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+.ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999}
+.ma-tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.ma-tb-logo img{width:28px;height:28px;border-radius:7px}
+.ma-tb-brand{font-size:.76rem;font-weight:800;color:#fff;white-space:nowrap}.ma-tb-brand b{color:#5b7fff}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
+.ma-tb-course{font-size:.7rem;font-weight:800;color:#9898b0;white-space:nowrap;flex-shrink:0}
+.ma-tb-spacer{flex:1}
+.ma-pts-live{display:none;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(37,99,235,.2),rgba(124,58,237,.18));border:1px solid rgba(91,127,255,.3);border-radius:20px;padding:5px 12px;cursor:pointer;text-decoration:none;flex-shrink:0;transition:all .2s}
+.ma-pts-live.show{display:flex}
+.ma-pts-icon{font-size:.9rem;line-height:1}.ma-pts-num{font-size:.84rem;font-weight:900;color:#fff;line-height:1}.ma-pts-sublv{font-size:.44rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.05em}
+.ma-tb-icon-btn{width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:#8888a8;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;transition:all .2s}
+.ma-tb-icon-btn:hover{background:#161628;color:#e8e8f0}
+.ma-tb-menu-btn{width:34px;height:34px;border-radius:9px;border:1px solid #1e1e35;background:#111122;color:#8888a8;font-size:.88rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}.ma-menu-overlay.open{display:block}
+.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:232px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+.ma-mu-user{padding:14px 16px 0;border-bottom:1px solid #1e1e35}.ma-mu-name{font-size:.85rem;font-weight:800;color:#fff;display:block;margin-bottom:5px}
+.ma-menu-sec{padding:5px 0}.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
+.ma-mi:hover{background:#161628;color:#e8e8f0}.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.ma-mi.green{color:#22c55e}.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
+.ma-fpts{position:fixed;bottom:18px;right:16px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:50px;padding:7px 14px;display:none;align-items:center;gap:7px;z-index:9990;box-shadow:0 4px 18px rgba(91,127,255,.45);cursor:pointer;text-decoration:none;border:1px solid rgba(255,255,255,.1)}
+.ma-fpts-icon{font-size:.9rem}.ma-fpts-num{font-size:.85rem;font-weight:900;color:#fff}.ma-fpts-lv{font-size:.46rem;color:rgba(255,255,255,.65);display:block;text-transform:uppercase}
+.page{padding-top:70px;padding-bottom:100px;max-width:720px;margin:0 auto;padding-left:16px;padding-right:16px}
+h1{font-family:var(--serif);font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:6px}
+h1 span{color:#f59e0b}
+.page-sub{font-size:.84rem;color:var(--txt2);margin-bottom:6px;line-height:1.6}
+.pts-banner{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(251,146,60,.08));border:1.5px solid rgba(245,158,11,.35);border-radius:14px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:14px}
+.pts-banner-val{font-size:2rem;font-weight:900;color:#f59e0b;font-family:var(--serif);line-height:1}
+.pts-banner-info{flex:1}.pts-banner-label{font-size:.58rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.pts-banner-sub{font-size:.72rem;color:var(--txt2);margin-top:2px}
+.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:480px){.shop-grid{grid-template-columns:1fr}}
+.shop-card{background:var(--card);border:1.5px solid var(--brd);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;transition:border-color .3s,transform .2s;position:relative}
+.shop-card:hover{border-color:rgba(245,158,11,.35);transform:translateY(-2px)}
+.shop-card.sold-out{opacity:.55}
+.shop-card.owned{border-color:rgba(34,197,94,.35)}
+.sc-badge{position:absolute;top:10px;right:10px;padding:2px 8px;border-radius:5px;font-size:.5rem;font-weight:700;text-transform:uppercase}
+.sc-badge.rare{background:rgba(168,85,247,.15);color:#a855f7;border:1px solid rgba(168,85,247,.3)}
+.sc-badge.owned{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25)}
+.sc-badge.soldout{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
+.sc-icon{font-size:2rem;text-align:center;margin-bottom:2px}
+.sc-name{font-size:.84rem;font-weight:800;color:#fff;font-family:var(--serif)}
+.sc-desc{font-size:.66rem;color:var(--txt2);line-height:1.45;flex:1}
+.sc-qty{font-size:.58rem;color:var(--txt3);margin-top:2px}
+.sc-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px}
+.sc-price{display:flex;align-items:center;gap:5px;font-size:.9rem;font-weight:900;color:#f59e0b;font-family:var(--serif)}
+.sc-price-icon{font-size:.85rem}
+.sc-btn{padding:8px 14px;border-radius:9px;border:none;font-size:.68rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .2s;white-space:nowrap}
+.sc-btn.buy{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff}
+.sc-btn.buy:hover{transform:scale(1.04)}
+.sc-btn.disabled{background:var(--bg3);color:var(--txt3);cursor:default}
+.sc-btn.owned{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25);cursor:default}
+.sc-need{font-size:.58rem;color:var(--red);margin-top:3px}
+.section-title{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff;margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--brd)}
+.my-items-grid{display:flex;flex-direction:column;gap:8px}
+.my-item{background:var(--card);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.my-item-icon{font-size:1.2rem}
+.my-item-name{flex:1;font-size:.78rem;font-weight:700;color:#e8e8f0}
+.my-item-date{font-size:.58rem;color:var(--txt3)}
+.empty-msg{text-align:center;padding:28px 20px;font-size:.76rem;color:var(--txt3)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:9900;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--brd);border-radius:20px;max-width:360px;width:100%;padding:28px;text-align:center}
+.modal-icon{font-size:3rem;display:block;margin-bottom:14px}
+.modal-title{font-family:var(--serif);font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:6px}
+.modal-sub{font-size:.78rem;color:var(--txt2);line-height:1.5;margin-bottom:20px}
+.modal-btn{padding:12px 28px;border-radius:12px;border:none;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--font);background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,15,.96);border-top:1px solid var(--brd);display:flex;justify-content:space-around;padding:8px 0 10px;z-index:500}
+.bn{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.56rem;font-weight:600;color:var(--txt3);text-decoration:none;padding:4px 10px;border-radius:8px;transition:color .2s;min-width:52px}
+.bn:hover,.bn.active{color:var(--pri)}.bn-i{font-size:1.1rem}
+</style>
+</head>
+<body>
+<nav class="ma-topbar">
+  <a class="ma-tb-logo" href="index.html">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a1f'/%3E%3Ctext x='32' y='46' text-anchor='middle' fill='%234b8bff' font-family='Arial Black,Arial' font-weight='900' font-size='42'%3EM%3C/text%3E%3C/svg%3E" alt="MA">
+    <span class="ma-tb-brand">Matheus <b>Academy</b></span>
+  </a>
+  <span class="ma-tb-sep"></span>
+  <span class="ma-tb-course">🛒 Loja de XP</span>
+  <div class="ma-tb-spacer"></div>
+  <a class="ma-pts-live" id="maPtsLive" href="painel.html">
+    <span class="ma-pts-icon">💰</span>
+    <div><span class="ma-pts-num" id="maPtsNum">0</span><span class="ma-pts-sublv" id="maPtsLv">pts</span></div>
+  </a>
+  <a class="ma-tb-icon-btn" href="perfil.html" title="Perfil">👤</a>
+  <button class="ma-tb-menu-btn" onclick="toggleMaMenu()">☰</button>
+</nav>
+<div class="ma-menu-overlay" id="maMenuOverlay" onclick="closeMaMenu()"></div>
+<div class="ma-menu-dd" id="maMenuDd">
+  <div class="ma-mu-user"><span class="ma-mu-name" id="maMenuName">Visitante</span></div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">⭐</span>Meu Painel</a>
+    <a class="ma-mi green" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🔗</span>Indicações</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🛤️</span>Trilhas</a>
+    <a class="ma-mi gold" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">🏅</span>Mural</a>
+  </div>
+  <div class="ma-menu-sec" id="maMenuAuthSec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>
+  </div>
+</div>
+<a class="ma-fpts" id="maFpts" href="painel.html">
+  <span class="ma-fpts-icon">💰</span>
+  <div><span class="ma-fpts-lv" id="maFptsLv">pts</span><span class="ma-fpts-num" id="maFptsNum">0</span></div>
+</a>
+
+<!-- Modal de resgate -->
+<div class="modal-bg" id="redeemModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <span class="modal-icon" id="modalIcon">🎉</span>
+    <div class="modal-title" id="modalTitle">Resgatado!</div>
+    <div class="modal-sub" id="modalSub">Seu item foi adicionado ao perfil.</div>
+    <button class="modal-btn" onclick="closeModal()">Continuar</button>
+  </div>
+</div>
+
+<div class="page">
+  <h1>🛒 Loja de <span>XP</span></h1>
+  <p class="page-sub">Use seus pontos para resgatar recompensas exclusivas. Quanto mais você estuda, mais pode resgatar!</p>
+
+  <div class="pts-banner" id="ptsBanner">
+    <div>
+      <div class="pts-banner-label">Seu saldo atual</div>
+      <div class="pts-banner-val" id="ptsBannerVal">0 pts</div>
+      <div class="pts-banner-sub">Ganhe mais estudando e completando missões</div>
+    </div>
+    <span style="font-size:2.5rem">💰</span>
+  </div>
+
+  <div class="shop-grid" id="shopGrid"></div>
+
+  <div class="section-title">🎒 Minhas Recompensas</div>
+  <div class="my-items-grid" id="myItemsGrid">
+    <div class="empty-msg" id="myItemsEmpty">Nenhuma recompensa ainda. Comece a resgatar!</div>
+  </div>
+</div>
+
+<nav class="bnav">
+  <a class="bn" href="index.html"><span class="bn-i">🏠</span>Início</a>
+  <a class="bn" href="painel.html"><span class="bn-i">⭐</span>Painel</a>
+  <a class="bn active" href="loja.html"><span class="bn-i">🛒</span>Loja</a>
+  <a class="bn" href="ranking.html"><span class="bn-i">🏆</span>Ranking</a>
+  <a class="bn" href="perfil.html"><span class="bn-i">👤</span>Perfil</a>
+</nav>
+
+<script>
+var SHOP_ITEMS=[
+  {id:'ebook_geo',icon:'📚',name:'Ebook: Geopolítica 2026',desc:'Guia exclusivo sobre os conflitos e tendências geopolíticas do mundo atual. PDF completo.',cost:500,qty:null,rare:false},
+  {id:'badge_dedicated',icon:'🔥',name:'Badge: Estudante Dedicado',desc:'Badge raro visível no ranking. Mostra que você é um dos alunos mais ativos.',cost:300,qty:null,rare:true},
+  {id:'module_premium',icon:'🎓',name:'Destaque Especial no Ranking',desc:'Seu perfil fica destacado em dourado no ranking por 7 dias.',cost:800,qty:50,rare:true},
+  {id:'ebook_ai',icon:'🤖',name:'Ebook: IA na Prática',desc:'Como usar Inteligência Artificial para ganhar dinheiro e aumentar produtividade.',cost:400,qty:null,rare:false},
+  {id:'badge_elite',icon:'👑',name:'Badge: Elite Academy',desc:'Badge exclusivo e ultra-raro. Símbolo dos maiores pontuadores da plataforma.',cost:2000,qty:10,rare:true},
+  {id:'ebook_persuasao',icon:'🎯',name:'Ebook: Copywriting Master',desc:'Os 50 gatilhos mentais mais poderosos para vendas e persuasão.',cost:350,qty:null,rare:false},
+];
+
+function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0};}catch(e){return{total:0};}}
+function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
+function getOwned(){try{return JSON.parse(localStorage.getItem('mae_shop_owned')||'[]');}catch(e){return[];}}
+function getStock(){try{return JSON.parse(localStorage.getItem('mae_shop_stock')||'{}');}catch(e){return{};}}
+
+function renderShop(){
+  var pts=gP().total;
+  var owned=getOwned();
+  var stock=getStock();
+  var u=gU();
+  
+  document.getElementById('ptsBannerVal').textContent=pts.toLocaleString('pt-BR')+' pts';
+  
+  var html='';
+  SHOP_ITEMS.forEach(function(item){
+    var isOwned=owned.find(function(o){return o.id===item.id;});
+    var remaining=item.qty?((item.qty-(stock[item.id]||0))):null;
+    var isSoldOut=remaining!==null&&remaining<=0;
+    var canAfford=pts>=item.cost;
+    
+    var badgeHtml='';
+    if(isOwned)badgeHtml='<span class="sc-badge owned">✓ Seu</span>';
+    else if(isSoldOut)badgeHtml='<span class="sc-badge soldout">Esgotado</span>';
+    else if(item.rare)badgeHtml='<span class="sc-badge rare">Raro</span>';
+    
+    var btnHtml='';
+    if(isOwned){btnHtml='<button class="sc-btn owned">✅ Resgatado</button>';}
+    else if(isSoldOut){btnHtml='<button class="sc-btn disabled">Esgotado</button>';}
+    else if(!u){btnHtml='<button class="sc-btn disabled" onclick="location.href=\'index.html\'">Faça login</button>';}
+    else if(!canAfford){btnHtml='<button class="sc-btn disabled" title="Faltam '+(item.cost-pts)+' pts">Faltam '+(item.cost-pts)+' pts</button>';}
+    else{btnHtml='<button class="sc-btn buy" onclick="buyItem(\''+item.id+'\')">Resgatar</button>';}
+    
+    html+='<div class="shop-card'+(isOwned?' owned':isSoldOut?' sold-out':'')+'">'
+      +badgeHtml
+      +'<div class="sc-icon">'+item.icon+'</div>'
+      +'<div class="sc-name">'+item.name+'</div>'
+      +'<div class="sc-desc">'+item.desc+'</div>'
+      +(remaining!==null?'<div class="sc-qty">Disponível: '+(isSoldOut?0:remaining)+' unidades</div>':'')
+      +'<div class="sc-footer"><div class="sc-price"><span class="sc-price-icon">💰</span>'+item.cost.toLocaleString('pt-BR')+'</div>'
+      +btnHtml+'</div>'
+      +'</div>';
+  });
+  document.getElementById('shopGrid').innerHTML=html;
+  renderMyItems();
+}
+
+function buyItem(id){
+  var u=gU();if(!u){location.href='index.html';return;}
+  var pts=gP().total;
+  var item=SHOP_ITEMS.find(function(x){return x.id===id;});
+  if(!item||pts<item.cost)return;
+  var owned=getOwned();
+  if(owned.find(function(o){return o.id===id;}))return;
+  
+  // Deduct points
+  var p=gP();
+  p.total-=item.cost;
+  if(!p.history)p.history=[];
+  p.history.unshift({source:'Loja: '+item.name,pts:-item.cost,date:new Date().toLocaleDateString('pt-BR')});
+  localStorage.setItem('ma_points',JSON.stringify(p));
+  
+  // Add to owned
+  owned.push({id:id,name:item.name,icon:item.icon,date:new Date().toLocaleDateString('pt-BR'),ts:Date.now()});
+  localStorage.setItem('mae_shop_owned',JSON.stringify(owned));
+  
+  // Update stock
+  var stock=getStock();
+  stock[id]=(stock[id]||0)+1;
+  localStorage.setItem('mae_shop_stock',JSON.stringify(stock));
+  
+  // Show modal
+  document.getElementById('modalIcon').textContent=item.icon;
+  document.getElementById('modalTitle').textContent=item.name+' resgatado!';
+  document.getElementById('modalSub').textContent='−'+item.cost+' pts. Saldo restante: '+p.total.toLocaleString('pt-BR')+' pts. O item foi adicionado em Minhas Recompensas.';
+  document.getElementById('redeemModal').classList.add('open');
+  
+  renderShop();
+}
+
+function closeModal(){document.getElementById('redeemModal').classList.remove('open');}
+
+function renderMyItems(){
+  var owned=getOwned();
+  var el=document.getElementById('myItemsGrid');
+  var empty=document.getElementById('myItemsEmpty');
+  if(!owned.length){if(empty)empty.style.display='block';return;}
+  if(empty)empty.style.display='none';
+  el.innerHTML=owned.map(function(o){
+    return '<div class="my-item"><span class="my-item-icon">'+o.icon+'</span><span class="my-item-name">'+o.name+'</span><span class="my-item-date">'+o.date+'</span></div>';
+  }).join('');
+}
+
+(function(){
+  var u=gU(),p=gP();
+  var ptsEl=document.getElementById('maPtsLive');
+  if(u&&ptsEl){ptsEl.classList.add('show');document.getElementById('maPtsNum').textContent=p.total.toLocaleString('pt-BR');}
+  var fp=document.getElementById('maFpts');if(u&&fp)fp.style.display='flex';
+  if(fp){document.getElementById('maFptsNum').textContent=p.total.toLocaleString('pt-BR');}
+  var mn=document.getElementById('maMenuName');if(mn&&u)mn.textContent=u.name.split(' ')[0];
+})();
+
+function toggleMaMenu(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOverlay');d.classList.toggle('open');o.classList.toggle('open');}
+function closeMaMenu(){document.getElementById('maMenuDd').classList.remove('open');document.getElementById('maMenuOverlay').classList.remove('open');}
+
+document.addEventListener('DOMContentLoaded',renderShop);
+</script>
+</body>
+</html>

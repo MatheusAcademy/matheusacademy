@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a1f'/%3E%3Ctext x='32' y='46' text-anchor='middle' fill='%234b8bff' font-family='Arial Black,Arial' font-weight='900' font-size='42'%3EM%3C/text%3E%3C/svg%3E">
+<title>Mural de Conquistas — Matheus Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;--card:#14141f;--brd:#1e1e32;--brd2:#2a2a44;--pri:#4b8bff;--pri3:#2563eb;--txt:#e8e8ef;--txt2:#9898b0;--txt3:#5a5a76;--grn:#22c55e;--red:#ef4444;--orn:#f59e0b;--neon:#00d4ff;--font:'Outfit',sans-serif;--serif:'Playfair Display',serif}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+.ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999}
+.ma-tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.ma-tb-logo img{width:28px;height:28px;border-radius:7px}
+.ma-tb-brand{font-size:.76rem;font-weight:800;color:#fff;white-space:nowrap}.ma-tb-brand b{color:#5b7fff}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
+.ma-tb-course{font-size:.7rem;font-weight:800;color:#9898b0;white-space:nowrap;flex-shrink:0}
+.ma-tb-spacer{flex:1}
+.ma-pts-live{display:none;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(37,99,235,.2),rgba(124,58,237,.18));border:1px solid rgba(91,127,255,.3);border-radius:20px;padding:5px 12px;cursor:pointer;text-decoration:none;flex-shrink:0;transition:all .2s}
+.ma-pts-live.show{display:flex}
+.ma-pts-icon{font-size:.9rem;line-height:1}.ma-pts-num{font-size:.84rem;font-weight:900;color:#fff;line-height:1}.ma-pts-sublv{font-size:.44rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.05em}
+.ma-tb-icon-btn{width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:#8888a8;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;transition:all .2s}
+.ma-tb-icon-btn:hover{background:#161628;color:#e8e8f0}
+.ma-tb-menu-btn{width:34px;height:34px;border-radius:9px;border:1px solid #1e1e35;background:#111122;color:#8888a8;font-size:.88rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}.ma-menu-overlay.open{display:block}
+.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:232px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+.ma-mu-user{padding:14px 16px 0;border-bottom:1px solid #1e1e35}.ma-mu-name{font-size:.85rem;font-weight:800;color:#fff;display:block;margin-bottom:5px}
+.ma-menu-sec{padding:5px 0}.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
+.ma-mi:hover{background:#161628;color:#e8e8f0}.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.ma-mi.green{color:#22c55e}.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
+.ma-fpts{position:fixed;bottom:18px;right:16px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:50px;padding:7px 14px;display:none;align-items:center;gap:7px;z-index:9990;box-shadow:0 4px 18px rgba(91,127,255,.45);cursor:pointer;text-decoration:none;border:1px solid rgba(255,255,255,.1)}
+.ma-fpts-icon{font-size:.9rem}.ma-fpts-num{font-size:.85rem;font-weight:900;color:#fff}.ma-fpts-lv{font-size:.46rem;color:rgba(255,255,255,.65);display:block;text-transform:uppercase}
+.page{padding-top:70px;padding-bottom:100px;max-width:720px;margin:0 auto;padding-left:16px;padding-right:16px}
+h1{font-family:var(--serif);font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:6px}
+h1 span{color:#f59e0b}
+.page-sub{font-size:.84rem;color:var(--txt2);margin-bottom:20px;line-height:1.6}
+.mural-hero{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(255,80,0,.06));border:1px solid rgba(245,158,11,.25);border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+.mural-hero-num{font-size:2.8rem;font-weight:900;color:#f59e0b;font-family:var(--serif);line-height:1}
+.mural-hero-info{flex:1}
+.mural-hero-label{font-size:.56rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.mural-hero-sub{font-size:.72rem;color:var(--txt2);margin-top:3px}
+.mural-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.mf-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--brd);background:transparent;color:var(--txt2);font-size:.62rem;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .2s}
+.mf-btn:hover,.mf-btn.active{border-color:var(--pri);color:var(--pri);background:rgba(75,139,255,.08)}
+.mural-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:480px){.mural-grid{grid-template-columns:1fr}}
+.mural-card{background:var(--card);border:1.5px solid var(--brd);border-radius:16px;padding:16px;transition:border-color .3s,transform .2s;position:relative}
+.mural-card:hover{border-color:rgba(245,158,11,.3);transform:translateY(-2px)}
+.mc-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mc-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0;font-family:var(--serif)}
+.mc-info{flex:1;min-width:0}
+.mc-name{font-size:.82rem;font-weight:800;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mc-city{font-size:.6rem;color:var(--txt3)}
+.mc-course-badge{padding:4px 10px;border-radius:8px;font-size:.58rem;font-weight:700;background:rgba(91,127,255,.1);color:var(--pri);border:1px solid rgba(91,127,255,.2);display:inline-block;margin-bottom:6px}
+.mc-date{font-size:.58rem;color:var(--txt3);display:block;margin-bottom:10px}
+.mc-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mc-share{padding:6px 12px;border-radius:8px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);color:#25d366;font-size:.62rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .2s;text-decoration:none}
+.mc-share:hover{background:rgba(37,211,102,.2)}
+.mc-trophy{font-size:1.1rem}
+.my-card{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(255,80,0,.06));border-color:rgba(245,158,11,.3)}
+.add-btn{width:100%;padding:12px;border-radius:12px;border:1.5px dashed var(--brd2);background:transparent;color:var(--txt2);font-size:.76rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .2s;margin-bottom:16px}
+.add-btn:hover{border-color:var(--pri);color:var(--pri)}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,15,.96);border-top:1px solid var(--brd);display:flex;justify-content:space-around;padding:8px 0 10px;z-index:500}
+.bn{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.56rem;font-weight:600;color:var(--txt3);text-decoration:none;padding:4px 10px;border-radius:8px;transition:color .2s;min-width:52px}
+.bn:hover,.bn.active{color:var(--pri)}.bn-i{font-size:1.1rem}
+</style>
+</head>
+<body>
+<nav class="ma-topbar">
+  <a class="ma-tb-logo" href="index.html">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a1f'/%3E%3Ctext x='32' y='46' text-anchor='middle' fill='%234b8bff' font-family='Arial Black,Arial' font-weight='900' font-size='42'%3EM%3C/text%3E%3C/svg%3E" alt="MA">
+    <span class="ma-tb-brand">Matheus <b>Academy</b></span>
+  </a>
+  <span class="ma-tb-sep"></span>
+  <span class="ma-tb-course">🏅 Mural</span>
+  <div class="ma-tb-spacer"></div>
+  <a class="ma-pts-live" id="maPtsLive" href="painel.html">
+    <span class="ma-pts-icon">💰</span>
+    <div><span class="ma-pts-num" id="maPtsNum">0</span><span class="ma-pts-sublv" id="maPtsLv">pts</span></div>
+  </a>
+  <a class="ma-tb-icon-btn" href="perfil.html" title="Perfil">👤</a>
+  <button class="ma-tb-menu-btn" onclick="toggleMaMenu()">☰</button>
+</nav>
+<div class="ma-menu-overlay" id="maMenuOverlay" onclick="closeMaMenu()"></div>
+<div class="ma-menu-dd" id="maMenuDd">
+  <div class="ma-mu-user"><span class="ma-mu-name" id="maMenuName">Visitante</span></div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">⭐</span>Meu Painel</a>
+    <a class="ma-mi green" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🔗</span>Indicações</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🛤️</span>Trilhas</a>
+    <a class="ma-mi gold" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">🏅</span>Mural</a>
+  </div>
+  <div class="ma-menu-sec" id="maMenuAuthSec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>
+  </div>
+</div>
+<a class="ma-fpts" id="maFpts" href="painel.html">
+  <span class="ma-fpts-icon">💰</span>
+  <div><span class="ma-fpts-lv" id="maFptsLv">pts</span><span class="ma-fpts-num" id="maFptsNum">0</span></div>
+</a>
+
+<div class="page">
+  <h1>🏅 Mural de <span>Conquistas</span></h1>
+  <p class="page-sub">Alunos que concluíram cursos e tiveram a coragem de compartilhar sua conquista. Você está aqui?</p>
+
+  <div class="mural-hero">
+    <div>
+      <div class="mural-hero-label">Total de conquistas</div>
+      <div class="mural-hero-num" id="muralCount">0</div>
+    </div>
+    <div class="mural-hero-info">
+      <div class="mural-hero-sub">alunos já concluíram cursos na Matheus Academy e compartilharam no mural. Faça parte!</div>
+    </div>
+    <span style="font-size:2.5rem">🏆</span>
+  </div>
+
+  <button class="add-btn" id="addToMuralBtn" onclick="addMyConquest()">
+    + Aparecer no Mural (concluí um curso!)
+  </button>
+
+  <div class="mural-filters" id="muralFilters">
+    <button class="mf-btn active" onclick="filterMural('all',this)">Todos</button>
+    <button class="mf-btn" onclick="filterMural('tp',this)">Tráfego Pago</button>
+    <button class="mf-btn" onclick="filterMural('ni',this)">Negócios</button>
+    <button class="mf-btn" onclick="filterMural('gp',this)">Geopolítica</button>
+    <button class="mf-btn" onclick="filterMural('nl',this)">Nichos</button>
+  </div>
+
+  <div class="mural-grid" id="muralGrid"></div>
+</div>
+
+<nav class="bnav">
+  <a class="bn" href="index.html"><span class="bn-i">🏠</span>Início</a>
+  <a class="bn" href="painel.html"><span class="bn-i">⭐</span>Painel</a>
+  <a class="bn active" href="mural.html"><span class="bn-i">🏅</span>Mural</a>
+  <a class="bn" href="ranking.html"><span class="bn-i">🏆</span>Ranking</a>
+  <a class="bn" href="perfil.html"><span class="bn-i">👤</span>Perfil</a>
+</nav>
+
+<script>
+// Dados iniciais do mural (exemplos para preencher o mural)
+var INITIAL_MURAL=[
+  {id:'m1',name:'João Almeida',city:'São Paulo - SP',course:'Dominando Tráfego Pago',courseKey:'tp',date:'15/01/2026',av:'#4b8bff'},
+  {id:'m2',name:'Ana Souza',city:'Belo Horizonte - MG',course:'Negócios Inteligentes',courseKey:'ni',date:'22/01/2026',av:'#a855f7'},
+  {id:'m3',name:'Carlos Mendes',city:'Rio de Janeiro - RJ',course:'Geopolítica Avançada',courseKey:'gp',date:'30/01/2026',av:'#22c55e'},
+  {id:'m4',name:'Fernanda Costa',city:'Salvador - BA',course:'Nichos Lucrativos',courseKey:'nl',date:'08/02/2026',av:'#f59e0b'},
+  {id:'m5',name:'Rafael Santos',city:'Porto Alegre - RS',course:'Dominando Tráfego Pago',courseKey:'tp',date:'14/02/2026',av:'#0ea5e9'},
+  {id:'m6',name:'Juliana Reis',city:'Fortaleza - CE',course:'Negócios Inteligentes',courseKey:'ni',date:'28/02/2026',av:'#e879f9'},
+];
+
+var COURSE_NAMES={tp:'Dominando Tráfego Pago',ni:'Negócios Inteligentes',gp:'Geopolítica Avançada',nl:'Nichos Lucrativos',mp:'Mestre em Persuasão'};
+var _filter='all';
+
+function getMural(){
+  var stored=[];
+  try{stored=JSON.parse(localStorage.getItem('mae_mural')||'[]');}catch(e){}
+  return INITIAL_MURAL.concat(stored);
+}
+
+function renderMural(){
+  var all=getMural();
+  var filtered=_filter==='all'?all:all.filter(function(m){return m.courseKey===_filter;});
+  document.getElementById('muralCount').textContent=all.length;
+  var u=null;try{u=JSON.parse(localStorage.getItem('ma_user'));}catch(e){}
+  var html='';
+  filtered.forEach(function(m){
+    var isMe=u&&(m.userId===u.email||m.name===u.name);
+    var waMsg=encodeURIComponent('🏅 Concluí o curso '+m.course+' na Matheus Academy! Agora faço parte do Mural de Conquistas! 🎉\n\nVeja minha conquista: https://matheusacademy.github.io/academy/mural.html');
+    html+='<div class="mural-card'+(isMe?' my-card':'')+'">'
+      +'<div class="mc-top"><div class="mc-av" style="background:'+m.av+'">'+m.name.charAt(0)+'</div><div class="mc-info"><div class="mc-name">'+m.name+'</div><div class="mc-city">'+m.city+'</div></div></div>'
+      +'<div class="mc-course-badge">'+m.course+'</div>'
+      +'<span class="mc-date">📅 '+m.date+'</span>'
+      +'<div class="mc-footer"><a class="mc-share" href="https://wa.me/?text='+waMsg+'" target="_blank">📱 Compartilhar</a><span class="mc-trophy">🏆</span></div>'
+      +'</div>';
+  });
+  if(!filtered.length)html='<div style="grid-column:1/-1;text-align:center;padding:40px;font-size:.78rem;color:#44445a">Nenhuma conquista neste filtro ainda.</div>';
+  document.getElementById('muralGrid').innerHTML=html;
+}
+
+window.filterMural=function(key,btn){
+  _filter=key;
+  document.querySelectorAll('.mf-btn').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  renderMural();
+};
+
+window.addMyConquest=function(){
+  var u=null;try{u=JSON.parse(localStorage.getItem('ma_user'));}catch(e){}
+  if(!u){alert('Faça login para aparecer no mural!');location.href='index.html';return;}
+  // Check if any course completed
+  var bestCourse=null,bestKey='tp';
+  var keys=['tp','ni','gp','nl','mp'];
+  var prefixes={tp:'dt_',ni:'ni_',gp:'geo_',nl:'nl_',mp:'mp_'};
+  keys.forEach(function(k){
+    var done=0,total=0;
+    var pref=prefixes[k]||k+'_';
+    try{for(var ls in localStorage){if(ls.indexOf(pref+'mod_')===0){total++;var v=localStorage.getItem(ls);if(v==='done'||v==='true'||v==='1')done++;}}}catch(e){}
+    if(done>0&&(!bestCourse||done>bestCourse.done)){bestCourse={key:k,name:COURSE_NAMES[k]||k,done:done,total:total};bestKey=k;}
+  });
+  if(!confirm('🏅 Quer aparecer no Mural de Conquistas?\n\n'+(bestCourse?'Curso: '+bestCourse.name:'Acesso ao portal')+'?\n\nSeu nome ficará visível publicamente.')){return;}
+  var stored=[];try{stored=JSON.parse(localStorage.getItem('mae_mural')||'[]');}catch(e){}
+  if(stored.find(function(m){return m.userId===u.email;})){alert('Você já está no mural! 🎉');renderMural();return;}
+  var colors=['#4b8bff','#a855f7','#22c55e','#f59e0b','#ef4444','#0ea5e9','#e879f9'];
+  var av=colors[Math.floor(Math.random()*colors.length)];
+  stored.push({id:'u_'+Date.now(),userId:u.email,name:u.name,city:u.city||'Brasil',course:bestCourse?bestCourse.name:'Matheus Academy',courseKey:bestKey,date:new Date().toLocaleDateString('pt-BR'),av:av});
+  localStorage.setItem('mae_mural',JSON.stringify(stored));
+  if(window.MA_addPoints)MA_addPoints('Mural de Conquistas',50);
+  alert('🎉 Você foi adicionado ao Mural! +50 pts ganhos!');
+  renderMural();
+};
+
+(function(){
+  var u=null,p={total:0};try{u=JSON.parse(localStorage.getItem('ma_user'));}catch(e){}try{p=JSON.parse(localStorage.getItem('ma_points'))||{total:0};}catch(e){}
+  var ptsEl=document.getElementById('maPtsLive');if(u&&ptsEl){ptsEl.classList.add('show');document.getElementById('maPtsNum').textContent=p.total.toLocaleString('pt-BR');}
+  var fp=document.getElementById('maFpts');if(u&&fp)fp.style.display='flex';
+  if(fp){document.getElementById('maFptsNum').textContent=p.total.toLocaleString('pt-BR');}
+  var mn=document.getElementById('maMenuName');if(mn&&u)mn.textContent=u.name.split(' ')[0];
+})();
+function toggleMaMenu(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOverlay');d.classList.toggle('open');o.classList.toggle('open');}
+function closeMaMenu(){document.getElementById('maMenuDd').classList.remove('open');document.getElementById('maMenuOverlay').classList.remove('open');}
+
+document.addEventListener('DOMContentLoaded',renderMural);
+</script>
+</body>
+</html>
