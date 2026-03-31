@@ -102,6 +102,15 @@
 .plans-grid{display:flex;flex-direction:column;gap:12px;margin-top:14px}.plan{background:var(--bg2);border:1.5px solid var(--brd);border-radius:12px;padding:16px;position:relative}.plan.pop{border-color:var(--orn)}.plan .pop-tag{position:absolute;top:-8px;right:12px;background:var(--orn);color:#fff;font-size:.5rem;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase}.plan h4{font-size:.9rem;font-weight:700;color:#fff}.plan .price{font-size:1.4rem;font-weight:800;color:var(--pri)}.plan .price small{font-size:.65rem;font-weight:400;color:var(--txt2)}.plan .pdesc{font-size:.68rem;color:var(--txt2);margin-top:4px;line-height:1.4}
 .pbtn{display:block;margin-top:10px;padding:10px;border-radius:8px;text-align:center;font-size:.75rem;font-weight:700;text-decoration:none;border:none;width:100%;cursor:pointer;font-family:var(--font)}.pbtn-pri{background:var(--orn);color:#fff}.pbtn-sec{background:var(--pri3);color:#fff}
 .plan-div{text-align:center;font-size:.68rem;color:var(--txt3);padding:4px 0}.plan-indiv{background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:14px;text-align:center}.plan-indiv p{font-size:.72rem;color:var(--txt2);margin-bottom:8px}
+/* MINI PAINEL DE PONTOS */
+.points-badge{position:fixed;bottom:20px;right:16px;background:linear-gradient(135deg,var(--pri3),#7c3aed);border:1.5px solid rgba(255,255,255,.15);border-radius:50px;padding:8px 16px;display:flex;align-items:center;gap:8px;z-index:900;box-shadow:0 4px 20px rgba(75,139,255,.4);cursor:pointer;transition:all .25s;user-select:none}
+.points-badge:hover{transform:scale(1.06);box-shadow:0 6px 28px rgba(75,139,255,.6)}
+.points-icon{font-size:1rem;line-height:1}
+.points-label{font-size:.58rem;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:.08em;display:block}
+.points-value{font-size:1rem;font-weight:900;color:#fff;line-height:1;display:block}
+.points-badge.bump{animation:bump .3s ease}
+@keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
+@media(max-width:480px){.points-badge{bottom:16px;right:12px;padding:7px 12px}.points-value{font-size:.88rem}.points-label{font-size:.52rem}}
 .footer{border-top:1px solid var(--brd);padding:28px 24px;text-align:center;margin-top:24px}.footer-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.footer-links a{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:8px;font-size:.7rem;font-weight:600;text-decoration:none;border:1px solid var(--brd);color:inherit}.footer-links a:hover{border-color:var(--pri)}.footer-links .tg{color:#0088cc}.footer-links .ig{color:#e1306c}.footer-brand{font-size:.6rem;color:var(--txt3)}.footer-brand b{color:var(--txt2)}
 @media(max-width:1400px){.cc{min-width:calc((min(100vw,1400px) - 200px)/4);max-width:calc((min(100vw,1400px) - 200px)/4)}}
 @media(max-width:1023px){.cc{min-width:calc((100vw - 120px)/3);max-width:calc((100vw - 120px)/3)}.row-wrap{padding:0}.row-wrap .arr-btn{display:none!important}.row-inner{padding:12px 16px 18px}}
@@ -192,11 +201,21 @@
 
 <footer class="footer">
   <div class="footer-links">
+    <a href="indicacoes.html" style="display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:8px;font-size:.7rem;font-weight:600;text-decoration:none;border:1px solid var(--brd);color:#a855f7;" title="Indique e ganhe cursos grátis">🔗 Indicações</a>
     <a href="https://t.me/+u07BKIwOsxEwNmIx" target="_blank" class="tg">&#9992;&#65039; Grupo VIP Telegram</a>
     <a href="https://www.instagram.com/_matheusacademy?igsh=MW15ZWE3eTJyNjYy" target="_blank" class="ig">&#128248; @_matheusacademy</a>
   </div>
   <div class="footer-brand"><b>Matheus Academy</b> · Conhecimento que transforma</div>
 </footer>
+
+<!-- MINI PAINEL DE PONTOS -->
+<div class="points-badge" id="pointsBadge" style="display:none" onclick="location.href='painel.html'">
+  <span class="points-icon">&#11088;</span>
+  <div>
+    <span class="points-label" id="pointsLvLabel">Iniciante</span>
+    <span class="points-value" id="pointsValue">0</span>
+  </div>
+</div>
 </div>
 
 <!-- MODAIS -->
@@ -940,6 +959,7 @@ function upUI() {
     ca.style.display = 'none';
   }
   rC();
+  updatePointsBadge();
 }
 
 // ═══════════════════════════════ INIT ═══════════════════════════════
@@ -1025,12 +1045,102 @@ function addEbookTouchSwipe() {
   });
 }
 
+// ═══════════════════════════════════════════════════════════
+// SISTEMA DE PONTOS
+// Estrutura localStorage: ma_points = { total, history: [{source, pts, date, question}] }
+// ═══════════════════════════════════════════════════════════
+function getPoints() {
+  try { return JSON.parse(localStorage.getItem('ma_points')) || {total:0, history:[]}; }
+  catch(e) { return {total:0, history:[]}; }
+}
+
+function addPoints(source, pts, question) {
+  if (!gU()) return; // só pontua se logado
+  var p = getPoints();
+  p.total += pts;
+  p.history.unshift({
+    source: source,
+    pts: pts,
+    question: question,
+    date: new Date().toLocaleDateString('pt-BR')
+  });
+  localStorage.setItem('ma_points', JSON.stringify(p));
+  updatePointsBadge();
+  // Animação de bump
+  var badge = document.getElementById('pointsBadge');
+  if (badge) { badge.classList.remove('bump'); void badge.offsetWidth; badge.classList.add('bump'); }
+}
+
+function updatePointsBadge() {
+  var badge = document.getElementById('pointsBadge');
+  var val = document.getElementById('pointsValue');
+  var lvLabel = document.getElementById('pointsLvLabel');
+  if (!badge || !val) return;
+  var user = gU();
+  if (!user) { badge.style.display = 'none'; return; }
+  badge.style.display = 'flex';
+  var p = getPoints();
+  val.textContent = p.total.toLocaleString('pt-BR');
+  if (lvLabel) {
+    var LEVELS=[{name:'Iniciante',min:0},{name:'Aprendiz',min:1000},{name:'Profissional',min:3000},{name:'Especialista',min:7000},{name:'Elite',min:15000}];
+    var lv=LEVELS[0];for(var i=LEVELS.length-1;i>=0;i--){if(p.total>=LEVELS[i].min){lv=LEVELS[i];break;}}
+    lvLabel.textContent = lv.name;
+  }
+}
+
+function showPointsDetail() {
+  var p = getPoints();
+  var user = gU();
+  if (!user) return;
+  var last = p.history.slice(0,5).map(function(h) {
+    return h.date + ' — +' + h.pts + ' pts — ' + h.source;
+  }).join('\n') || 'Nenhuma pontuação ainda.';
+  alert('⭐ Total: ' + p.total + ' pontos\n\nÚltimas conquistas:\n' + last);
+}
+
+// Expor globalmente para os cursos chamarem
+window.MA_addPoints = addPoints;
+window.MA_getPoints = getPoints;
+
+
+// ─── CAPTURAR REFERRAL ───
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var ref=params.get('ref');
+  if(ref){var mc=localStorage.getItem('ma_ref_code');if(!mc||mc!==ref.toUpperCase())localStorage.setItem('indicadoPor',ref.toUpperCase());}
+})();
+
+// ─── RASTREAMENTO DE SESSÃO ───
+(function(){
+  var _start = Date.now();
+  function save(){
+    var dur = Math.floor((Date.now()-_start)/60000);
+    var sess;
+    try{ sess = JSON.parse(localStorage.getItem('ma_sessions')) || {}; }catch(e){ sess = {}; }
+    sess.count = (sess.count||0) + 1;
+    sess.lastDuration = dur;
+    sess.lastDate = new Date().toLocaleDateString('pt-BR');
+    var today = new Date().toLocaleDateString('pt-BR');
+    var yesterday = new Date(Date.now()-86400000).toLocaleDateString('pt-BR');
+    if(sess.lastStudyDate === yesterday){ sess.streak = (sess.streak||0)+1; }
+    else if(sess.lastStudyDate !== today){ sess.streak = 1; }
+    sess.lastStudyDate = today;
+    localStorage.setItem('ma_sessions', JSON.stringify(sess));
+  }
+  window.addEventListener('beforeunload', save);
+  window.addEventListener('pagehide', save);
+  // Processar fila de pontos pendentes dos cursos
+  try{
+    var q = JSON.parse(localStorage.getItem('ma_pts_queue')||'[]');
+    if(q.length){ localStorage.removeItem('ma_pts_queue'); }
+  }catch(e){}
+})();
 document.addEventListener('DOMContentLoaded', function() {
   setupEvents();
   buildEbooks();
   upUI();
-  // Swipe manual no ebook carousel (chamado após track ser populado)
   setTimeout(addEbookTouchSwipe, 300);
+  updatePointsBadge();
 });
 </script>
 </body>
