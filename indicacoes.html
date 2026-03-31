@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Indicações — Matheus Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06060c;--bg2:#0e0e1a;--bg3:#161625;--card:#111120;--brd:#1c1c30;--brd2:#252540;--pri:#5b7fff;--acc:#f59e0b;--grn:#22c55e;--red:#ef4444;--pur:#a855f7;--neon:#00d4ff;--txt:#e8e8f0;--txt2:#8888a8;--txt3:#44445a;--font:'Outfit',sans-serif;--serif:'Playfair Display',serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+::selection{background:var(--pri);color:#fff}
+body::before{content:'';position:fixed;top:-30%;left:-20%;width:80%;height:80%;background:radial-gradient(ellipse,rgba(91,127,255,.06) 0%,transparent 65%);pointer-events:none;z-index:0}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
+
+/* PORTAL BAR */
+
+
+/* LAYOUT */
+.page{padding:68px 16px 80px;max-width:900px;margin:0 auto;position:relative;z-index:1}
+
+/* HERO */
+.hero{text-align:center;padding:32px 20px 28px;background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--brd);border-radius:20px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(91,127,255,.1),transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;background:rgba(91,127,255,.12);border:1px solid rgba(91,127,255,.25);font-size:.62rem;font-weight:700;color:var(--pri);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.hero h1{font-family:var(--serif);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:8px;line-height:1.2}
+.hero h1 span{background:linear-gradient(135deg,var(--acc),var(--red));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:.88rem;color:var(--txt2);max-width:500px;margin:0 auto 20px;line-height:1.6}
+.hero-stats{display:flex;justify-content:center;gap:28px;padding-top:16px;border-top:1px solid var(--brd)}
+.hs{text-align:center}.hs b{font-size:1.6rem;font-weight:900;color:var(--pri);display:block;line-height:1}
+.hs span{font-size:.56rem;color:var(--txt2);text-transform:uppercase;letter-spacing:.1em}
+
+/* LINK CARD */
+.link-card{background:var(--card);border:1.5px solid var(--pri);border-radius:18px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden}
+.link-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pri),var(--pur),var(--neon))}
+.lc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.lc-title{font-size:.9rem;font-weight:800;color:#fff}
+.lc-sub{font-size:.65rem;color:var(--txt2)}
+.lc-steps{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:var(--bg2);border:1px solid var(--brd);font-size:.62rem;color:var(--txt2)}
+.step-n{width:18px;height:18px;border-radius:50%;background:var(--pri);color:#fff;font-size:.52rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.link-wrap{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.link-box{flex:1;padding:12px 16px;background:var(--bg2);border:1.5px solid var(--brd2);border-radius:10px;font-size:.78rem;color:var(--pri);font-weight:600;font-family:'Courier New',monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;transition:border-color .2s}
+.link-box:hover{border-color:var(--pri)}
+.btn-copy{padding:12px 18px;border:none;border-radius:10px;background:var(--pri);color:#fff;font-family:var(--font);font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.btn-copy:hover{background:#4b7af7;transform:scale(1.02)}
+.btn-copy.copied{background:var(--grn)!important}
+.share-row{display:flex;gap:8px;flex-wrap:wrap}
+.share-btn{padding:9px 14px;border-radius:8px;border:1px solid var(--brd2);background:var(--bg2);color:var(--txt2);font-family:var(--font);font-size:.65rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.share-btn.wa{border-color:rgba(37,211,102,.3);color:#25d366}.share-btn.wa:hover{background:rgba(37,211,102,.1)}
+.share-btn.tg{border-color:rgba(0,136,204,.3);color:#0088cc}.share-btn.tg:hover{background:rgba(0,136,204,.1)}
+.share-btn.cp{border-color:var(--brd2);color:var(--txt2)}.share-btn.cp:hover{border-color:var(--pri);color:var(--pri)}
+.code-display{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(91,127,255,.08);border:1px solid rgba(91,127,255,.2);border-radius:8px;font-size:.78rem;color:var(--pri);font-weight:700;font-family:'Courier New',monospace;margin-top:8px}
+.code-display .cd-label{font-size:.55rem;font-weight:600;color:var(--txt2);font-family:var(--font);text-transform:uppercase;letter-spacing:.06em}
+
+/* STATS CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:18px;text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.stat-card:hover{border-color:var(--brd2)}
+.stat-card.active{border-color:var(--pri);background:rgba(91,127,255,.05)}
+.sc-num{font-size:2rem;font-weight:900;display:block;line-height:1;margin-bottom:4px}
+.sc-label{font-size:.6rem;color:var(--txt2);text-transform:uppercase;letter-spacing:.08em;display:block}
+.sc-sub{font-size:.58rem;color:var(--txt3);margin-top:4px;display:block}
+
+/* BONUS ALERT */
+.bonus-alert{display:none;background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(91,127,255,.06));border:1.5px solid rgba(34,197,94,.3);border-radius:14px;padding:18px;margin-bottom:20px;text-align:center}
+.bonus-alert.show{display:block}
+.ba-title{font-size:.95rem;font-weight:800;color:var(--grn);margin-bottom:6px}
+.ba-sub{font-size:.72rem;color:var(--txt2);margin-bottom:14px;line-height:1.5}
+.course-select{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.course-opt{padding:12px;border-radius:10px;border:1.5px solid var(--brd);background:var(--bg2);cursor:pointer;font-size:.72rem;font-weight:600;color:var(--txt2);transition:all .2s;text-align:left}
+.course-opt:hover{border-color:var(--pri);color:var(--pri)}
+.course-opt.sel{border-color:var(--grn);background:rgba(34,197,94,.08);color:var(--grn)}
+.claim-btn{padding:12px 28px;border:none;border-radius:10px;background:var(--grn);color:#fff;font-family:var(--font);font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;width:100%}
+.claim-btn:hover{background:#16a34a;transform:scale(1.02)}
+
+/* REFERRALS TABLE */
+.table-card{background:var(--card);border:1px solid var(--brd);border-radius:16px;padding:20px;margin-bottom:20px}
+.tc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.tc-hdr h3{font-size:.88rem;font-weight:800;color:#fff}
+.tc-hdr p{font-size:.62rem;color:var(--txt2)}
+.ref-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--brd)}
+.ref-item:last-child{border-bottom:none}
+.ri-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--pur));display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:#fff;flex-shrink:0}
+.ri-info{flex:1}.ri-name{font-size:.78rem;font-weight:700;color:var(--txt)}.ri-date{font-size:.58rem;color:var(--txt3);margin-top:1px}
+.ri-status{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.status-badge{padding:3px 9px;border-radius:5px;font-size:.55rem;font-weight:700;text-transform:uppercase}
+.sb-pending{background:rgba(245,158,11,.12);color:var(--acc)}
+.sb-confirmed{background:rgba(34,197,94,.12);color:var(--grn)}
+.sb-bonus{background:rgba(91,127,255,.12);color:var(--pri)}
+.empty-state{text-align:center;padding:28px;color:var(--txt2)}
+.empty-icon{font-size:2.5rem;display:block;margin-bottom:8px}
+.empty-title{font-size:.82rem;font-weight:700;color:var(--txt);margin-bottom:4px}
+.empty-sub{font-size:.68rem;line-height:1.5}
+
+/* HOW IT WORKS */
+.how-card{background:var(--card);border:1px solid var(--brd);border-radius:16px;padding:20px;margin-bottom:20px}
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.how-step{padding:16px;border-radius:12px;border:1px solid var(--brd2);background:var(--bg2);position:relative}
+.hw-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--pur));color:#fff;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.hw-title{font-size:.78rem;font-weight:800;color:#fff;margin-bottom:4px}
+.hw-text{font-size:.65rem;color:var(--txt2);line-height:1.5}
+.hw-icon{position:absolute;top:12px;right:12px;font-size:1.3rem}
+
+/* RULES */
+.rules-card{background:linear-gradient(135deg,rgba(239,68,68,.06),rgba(245,158,11,.04));border:1px solid rgba(239,68,68,.2);border-radius:14px;padding:18px;margin-bottom:20px}
+.rule-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:.72rem;color:var(--txt2);line-height:1.4}
+.rule-item:last-child{margin-bottom:0}
+.rule-item.ok .ri-icon{color:var(--grn)}.rule-item.bad .ri-icon{color:var(--red)}
+.ri-icon{flex-shrink:0;margin-top:1px}
+
+/* INPUT REFERRAL */
+.ref-input-card{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:18px;margin-bottom:20px}
+.ref-input-row{display:flex;gap:8px;margin-top:10px}
+.ri{flex:1;padding:10px 14px;background:var(--bg);border:1.5px solid var(--brd);border-radius:8px;color:var(--txt);font-family:var(--font);font-size:.82rem;outline:none;text-transform:uppercase;letter-spacing:.1em}
+.ri:focus{border-color:var(--pri)}
+.ri-btn{padding:10px 18px;border:none;border-radius:8px;background:var(--acc);color:#000;font-family:var(--font);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;flex-shrink:0}
+.ri-btn:hover{background:var(--acc2)}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--brd);border-radius:20px;max-width:420px;width:100%;padding:28px;position:relative;text-align:center;animation:popIn .35s cubic-bezier(.2,0,.3,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.modal-x{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--txt3);font-size:1.2rem;cursor:pointer;padding:4px}
+.m-icon{font-size:3rem;display:block;margin-bottom:10px;animation:bounceIn .5s}
+@keyframes bounceIn{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.m-title{font-family:var(--serif);font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:6px}
+.m-text{font-size:.78rem;color:var(--txt2);line-height:1.6;margin-bottom:16px}
+.m-btn{width:100%;padding:12px;border:none;border-radius:10px;background:var(--pri);color:#fff;font-family:var(--font);font-size:.82rem;font-weight:700;cursor:pointer;transition:background .2s}
+.m-btn:hover{background:#4b7af7}.m-btn.grn{background:var(--grn)}
+
+/* NOTIF */
+.notif-stack{position:fixed;top:52px;right:16px;z-index:9990;display:flex;flex-direction:column;gap:8px;max-width:300px;width:calc(100vw - 32px)}
+.notif{background:var(--card);border-left:3px solid var(--pri);border-radius:10px;padding:10px 14px;transform:translateX(120%);opacity:0;transition:all .4s cubic-bezier(.2,0,.3,1);box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.notif.show{transform:translateX(0);opacity:1}
+.notif.grn{border-color:var(--grn)}.notif.acc{border-color:var(--acc)}
+.nt{font-size:.75rem;font-weight:700;color:#fff}.ns{font-size:.62rem;color:var(--txt2)}
+
+@media(max-width:600px){.hero h1{font-size:1.6rem}.stats-grid{grid-template-columns:1fr 1fr}.how-grid{grid-template-columns:1fr}.course-select{grid-template-columns:1fr}}
+@media(max-width:400px){.stats-grid{grid-template-columns:1fr}.link-wrap{flex-direction:column}.page{padding:56px 12px 80px}}
+
+/* ══ MA TOPBAR GLOBAL ══ */
+.ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd,#1e1e32);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999;font-family:var(--font,'Outfit',sans-serif)}
+.ma-tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.ma-tb-logo img{width:28px;height:28px;border-radius:7px;flex-shrink:0}
+.ma-tb-brand{font-size:.76rem;font-weight:800;color:#fff;white-space:nowrap;line-height:1}
+.ma-tb-brand b{color:#5b7fff}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
+.ma-tb-course{font-size:.7rem;font-weight:800;color:#9898b0;white-space:nowrap;flex-shrink:0}
+.ma-tb-spacer{flex:1;min-width:0}
+/* Pontos ao vivo */
+.ma-pts-live{display:none;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(37,99,235,.2),rgba(124,58,237,.18));border:1px solid rgba(91,127,255,.3);border-radius:20px;padding:5px 12px;cursor:pointer;text-decoration:none;flex-shrink:0;transition:all .2s}
+.ma-pts-live.show{display:flex}
+.ma-pts-live:hover{border-color:#5b7fff;transform:scale(1.04)}
+.ma-pts-live.bump{animation:ma-cbump .4s cubic-bezier(.2,0,.3,1)}
+@keyframes ma-cbump{0%{transform:scale(1)}40%{transform:scale(1.18)}70%{transform:scale(.96)}100%{transform:scale(1)}}
+.ma-pts-icon{font-size:.9rem;line-height:1;flex-shrink:0}
+.ma-pts-col{display:flex;flex-direction:column;align-items:flex-end}
+.ma-pts-num{font-size:.84rem;font-weight:900;color:#fff;line-height:1;font-variant-numeric:tabular-nums;min-width:24px}
+.ma-pts-sublv{font-size:.44rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.05em;line-height:1;margin-top:2px}
+/* Botões ícone */
+.ma-tb-icon-btn{width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:#8888a8;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;transition:all .2s}
+.ma-tb-icon-btn:hover{background:#161628;color:#e8e8f0}
+.ma-tb-menu-btn{width:34px;height:34px;border-radius:9px;border:1px solid #1e1e35;background:#111122;color:#8888a8;font-size:.88rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.ma-tb-menu-btn:hover{border-color:#5b7fff;color:#5b7fff}
+/* ══ DROPDOWN MENU ══ */
+.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}
+.ma-menu-overlay.open{display:block}
+.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:232px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.03);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+/* Seção usuário */
+.ma-menu-user{padding:14px 16px 0;border-bottom:1px solid #1e1e35}
+.ma-mu-name{font-size:.85rem;font-weight:800;color:#fff;display:block;margin-bottom:5px}
+.ma-mu-level{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:10px;font-size:.64rem;font-weight:700}
+.ma-lv-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.ma-lvc0{background:rgba(180,83,9,.18);color:#b45309}.ma-lvc0 .ma-lv-dot{background:#b45309}
+.ma-lvc1{background:rgba(75,139,255,.18);color:#4b8bff}.ma-lvc1 .ma-lv-dot{background:#4b8bff}
+.ma-lvc2{background:rgba(168,85,247,.18);color:#a855f7}.ma-lvc2 .ma-lv-dot{background:#a855f7}
+.ma-lvc3{background:rgba(245,158,11,.18);color:#f59e0b}.ma-lvc3 .ma-lv-dot{background:#f59e0b}
+.ma-lvc4{background:rgba(239,68,68,.18);color:#ef4444}.ma-lvc4 .ma-lv-dot{background:#ef4444}
+.ma-mu-pts{font-size:.63rem;color:#8888a8;margin-top:6px;margin-bottom:10px}
+.ma-mu-pts b{color:#5b7fff}
+.ma-mu-next{font-size:.58rem;color:#44445a;margin-left:4px}
+/* Barra XP */
+.ma-mu-xp{padding:0 16px 10px}
+.ma-xp-labels{display:flex;justify-content:space-between;font-size:.54rem;color:#44445a;margin-bottom:4px}
+.ma-xp-bg{height:5px;background:#161628;border-radius:10px;overflow:hidden}
+.ma-xp-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#5b7fff,#a855f7);transition:width .8s ease}
+/* Items */
+.ma-menu-sec{padding:5px 0}
+.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font,'Outfit',sans-serif);width:100%;text-align:left;transition:background .15s}
+.ma-mi:hover{background:#161628;color:#e8e8f0}
+.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.ma-mi.green{color:#22c55e}.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
+/* Badge flutuante */
+.ma-fpts{position:fixed;bottom:18px;right:16px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:50px;padding:7px 14px;display:none;align-items:center;gap:7px;z-index:9990;box-shadow:0 4px 18px rgba(91,127,255,.45);cursor:pointer;text-decoration:none;border:1px solid rgba(255,255,255,.1);transition:transform .2s}
+.ma-fpts:hover{transform:scale(1.06)}.ma-fpts-icon{font-size:.9rem}
+.ma-fpts-lv{font-size:.46rem;color:rgba(255,255,255,.65);display:block;text-transform:uppercase;letter-spacing:.05em;line-height:1}
+.ma-fpts-num{font-size:.85rem;font-weight:900;color:#fff;line-height:1}
+@keyframes mafb{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}.ma-fpts.bump{animation:mafb .3s ease}
+</style>
+</head>
+<body>
+
+
+
+<!-- NOTIF STACK -->
+<div class="notif-stack" id="notifStack"></div>
+
+<!-- MODAL SUCESSO -->
+<div class="modal-bg" id="modal-ok">
+  <div class="modal"><button class="modal-x" onclick="closeModal('ok')">×</button>
+    <span class="m-icon">🎉</span>
+    <div class="m-title" id="modalTitle">Pronto!</div>
+    <div class="m-text" id="modalText">Operação realizada com sucesso.</div>
+    <button class="m-btn" onclick="closeModal('ok')">Ótimo!</button>
+  </div>
+</div>
+
+<!-- MODAL BONUS -->
+<div class="modal-bg" id="modal-bonus">
+  <div class="modal"><button class="modal-x" onclick="closeModal('bonus')">×</button>
+    <span class="m-icon">🏆</span>
+    <div class="m-title">Bônus Liberado!</div>
+    <div class="m-text">Seu bônus foi registrado e o código de acesso será enviado pelo Matheus no WhatsApp em até 24h.</div>
+    <a href="https://wa.me/5511951006917?text=Oi+Matheus!+Quero+resgatar+meu+b%C3%B4nus+de+indica%C3%A7%C3%A3o+da+Matheus+Academy." target="_blank" class="m-btn grn" style="display:block;text-decoration:none;margin-bottom:8px">📲 Notificar Matheus via WhatsApp</a>
+    <button class="m-btn" style="background:var(--bg3);border:1px solid var(--brd)" onclick="closeModal('bonus')">Fechar</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">🔗 Sistema de Indicações</div>
+    <h1>Indique e Ganhe<br><span>Cursos Grátis</span></h1>
+    <p>Compartilhe seu link. Quando um amigo comprar qualquer plano, você ganha um curso grátis escolhido por você — e ele ganha bônus também!</p>
+    <div class="hero-stats">
+      <div class="hs"><b id="hsTotalRef">0</b><span>Indicados</span></div>
+      <div class="hs"><b id="hsConfirmed" style="color:var(--grn)">0</b><span>Compras</span></div>
+      <div class="hs"><b id="hsBonus" style="color:var(--acc)">0</b><span>Bônus Ganhos</span></div>
+    </div>
+  </div>
+
+  <!-- NOT LOGGED WARNING -->
+  <div id="notLoggedWarn" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:12px;padding:14px;margin-bottom:16px;text-align:center;font-size:.78rem;color:var(--txt2)">
+    ⚠️ <b style="color:#fff">Faça login na Matheus Academy</b> para gerar seu link de indicação pessoal.
+    <a href="index.html" style="color:var(--pri);font-weight:700;text-decoration:none;margin-left:6px">Ir para o site →</a>
+  </div>
+
+  <!-- LINK CARD -->
+  <div class="link-card" id="linkCard">
+    <div class="lc-top">
+      <div><div class="lc-title">🔗 Seu Link de Indicação</div><div class="lc-sub">Compartilhe este link. Cada compra gerada te dá 1 curso grátis.</div></div>
+    </div>
+    <div class="lc-steps">
+      <div class="step"><span class="step-n">1</span>Copie seu link</div>
+      <div class="step"><span class="step-n">2</span>Compartilhe com amigos</div>
+      <div class="step"><span class="step-n">3</span>Amigo compra</div>
+      <div class="step"><span class="step-n">4</span>Você ganha curso grátis</div>
+    </div>
+    <div class="link-wrap">
+      <div class="link-box" id="linkDisplay" onclick="copyLink()" title="Clique para copiar">Carregando...</div>
+      <button class="btn-copy" id="copyBtn" onclick="copyLink()">📋 Copiar</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <span style="font-size:.65rem;color:var(--txt2)">Seu código:</span>
+      <div class="code-display"><span class="cd-label">Código</span><span id="codeDisplay">—</span></div>
+    </div>
+    <div class="share-row">
+      <button class="share-btn wa" onclick="shareWA()">📱 WhatsApp</button>
+      <button class="share-btn tg" onclick="shareTG()">✈️ Telegram</button>
+      <button class="share-btn cp" onclick="shareMsg()">💬 Copiar mensagem pronta</button>
+    </div>
+  </div>
+
+  <!-- BONUS ALERT -->
+  <div class="bonus-alert" id="bonusAlert">
+    <div class="ba-title">🎁 Você tem bônus disponível!</div>
+    <div class="ba-sub">Uma indicação sua resultou em compra confirmada! Escolha 1 curso gratuito para receber:</div>
+    <div class="course-select" id="courseSelect"></div>
+    <button class="claim-btn" onclick="claimBonus()" id="claimBonusBtn">🏆 Resgatar Curso Grátis</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card" onclick="switchView('todos')">
+      <span class="sc-num" id="scTotal" style="color:var(--pri)">0</span>
+      <span class="sc-label">Total Indicados</span>
+      <span class="sc-sub">Link acessado</span>
+    </div>
+    <div class="stat-card" onclick="switchView('confirmados')">
+      <span class="sc-num" id="scConfirmed" style="color:var(--grn)">0</span>
+      <span class="sc-label">Compras Confirmadas</span>
+      <span class="sc-sub">Pagamento verificado</span>
+    </div>
+    <div class="stat-card" onclick="switchView('bonus')">
+      <span class="sc-num" id="scBonus" style="color:var(--acc)">0</span>
+      <span class="sc-label">Bônus Disponíveis</span>
+      <span class="sc-sub">Cursos a resgatar</span>
+    </div>
+  </div>
+
+  <!-- REFERRALS TABLE -->
+  <div class="table-card">
+    <div class="tc-hdr">
+      <div>
+        <h3>Minhas Indicações</h3>
+        <p>Histórico de pessoas que você indicou</p>
+      </div>
+      <button onclick="addTestRef()" style="padding:6px 12px;border:1px solid var(--brd2);border-radius:7px;background:transparent;color:var(--txt2);font-family:var(--font);font-size:.58rem;cursor:pointer;display:none" id="testBtn">+ Simular indicação</button>
+    </div>
+    <div id="refList"></div>
+  </div>
+
+  <!-- MANUAL REFERRAL INPUT (se alguém chegou com código mas ainda não registrado) -->
+  <div class="ref-input-card" id="manualRefCard" style="display:none">
+    <div style="font-size:.82rem;font-weight:800;color:#fff;margin-bottom:4px">📨 Fui indicado por alguém</div>
+    <div style="font-size:.65rem;color:var(--txt2)">Se alguém te mandou um código de indicação, insira-o aqui:</div>
+    <div class="ref-input-row">
+      <input class="ri" type="text" id="refCodeInput" placeholder="EX: JOAO1234" maxlength="10">
+      <button class="ri-btn" onclick="applyRefCode()">Registrar</button>
+    </div>
+    <div id="refCodeMsg" style="font-size:.65rem;margin-top:6px"></div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-card">
+    <div style="font-size:.9rem;font-weight:800;color:#fff">🧭 Como funciona</div>
+    <div style="font-size:.65rem;color:var(--txt2);margin-top:2px">Simples, rápido e lucrativo para você</div>
+    <div class="how-grid">
+      <div class="how-step"><div class="hw-num">1</div><span class="hw-icon">🔗</span><div class="hw-title">Copie seu link</div><div class="hw-text">Cada aluno recebe um link único com seu código. Qualquer pessoa que acessar o site pelo seu link é associada a você.</div></div>
+      <div class="how-step"><div class="hw-num">2</div><span class="hw-icon">📲</span><div class="hw-title">Compartilhe</div><div class="hw-text">Envie para amigos, grupos de WhatsApp, Telegram, Instagram, Stories — qualquer canal onde seu público esteja.</div></div>
+      <div class="how-step"><div class="hw-num">3</div><span class="hw-icon">💰</span><div class="hw-title">Amigo compra</div><div class="hw-text">Quando seu indicado comprar qualquer plano da Matheus Academy, o sistema identifica que veio da sua indicação.</div></div>
+      <div class="how-step"><div class="hw-num">4</div><span class="hw-icon">🎁</span><div class="hw-title">Você ganha!</div><div class="hw-text">1 compra = 1 curso grátis para você escolher. Sem limite! 3 indicações = 3 cursos. E o comprador ganha +20 pontos de bônus.</div></div>
+    </div>
+  </div>
+
+  <!-- REGRAS -->
+  <div class="rules-card">
+    <div style="font-size:.82rem;font-weight:800;color:#fff;margin-bottom:10px">⚠️ Regras do programa</div>
+    <div class="rule-item ok"><span class="ri-icon">✅</span>Bônus liberado somente após pagamento confirmado pelo Matheus</div>
+    <div class="rule-item ok"><span class="ri-icon">✅</span>1 bônus por compra válida — sem acúmulo duplo na mesma venda</div>
+    <div class="rule-item ok"><span class="ri-icon">✅</span>O indicado também ganha +20 pontos ao comprar pelo seu link</div>
+    <div class="rule-item ok"><span class="ri-icon">✅</span>Cursos disponíveis como bônus: todos os cursos individuais da plataforma</div>
+    <div class="rule-item bad"><span class="ri-icon">❌</span>Não é permitido se indicar (mesmo e-mail não conta)</div>
+    <div class="rule-item bad"><span class="ri-icon">❌</span>Contas criadas apenas para indicação serão invalidadas</div>
+    <div class="rule-item bad"><span class="ri-icon">❌</span>Bônus expira em 90 dias após a compra confirmada</div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+// ═══════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════
+var BASE_URL = window.location.origin + (window.location.pathname.replace(/\/[^\/]*$/, '/') || '/');
+var COURSES_LIST = [
+  'Dominando Tráfego Pago','Negócios Inteligentes','Geopolítica Avançada',
+  'Nichos Lucrativos','Mestre em Persuasão','Caso Banco Master + Guerra Israel x Irã + Copa 2026'
+];
+
+// ═══════════════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════════════
+function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
+function getRefs(){try{return JSON.parse(localStorage.getItem('ma_referrals'))||[];}catch(e){return[];}}
+function saveRefs(r){localStorage.setItem('ma_referrals',JSON.stringify(r));}
+function getBonusState(){try{return JSON.parse(localStorage.getItem('ma_ref_bonus'))||{available:0,claimed:0,courses:[]};}catch(e){return{available:0,claimed:0,courses:[]};}}
+function saveBonusState(b){localStorage.setItem('ma_ref_bonus',JSON.stringify(b));}
+
+// ═══════════════════════════════════════════════
+// GENERATE USER CODE
+// ═══════════════════════════════════════════════
+function generateCode(name, email) {
+  // e.g. JOAO1234
+  var base = (name||'ALUNO').replace(/\s.*/,'').toUpperCase().replace(/[^A-Z]/g,'').substring(0,5);
+  var suffix = email ? Math.abs(email.split('').reduce(function(a,c){return a+c.charCodeAt(0);},0)%10000).toString().padStart(4,'0') : '0001';
+  return base + suffix;
+}
+function getMyCode(){
+  var u=gU();
+  if(!u)return null;
+  var saved=localStorage.getItem('ma_ref_code');
+  if(saved)return saved;
+  var code=generateCode(u.name,u.email);
+  localStorage.setItem('ma_ref_code',code);
+  return code;
+}
+
+// ═══════════════════════════════════════════════
+// CAPTURE REFERRAL FROM URL
+// ═══════════════════════════════════════════════
+(function captureRef(){
+  var params=new URLSearchParams(window.location.search);
+  var ref=params.get('ref');
+  if(ref){
+    var myCode=localStorage.getItem('ma_ref_code');
+    if(!myCode||myCode!==ref.toUpperCase()){
+      localStorage.setItem('indicadoPor',ref.toUpperCase());
+    }
+  }
+})();
+
+// ═══════════════════════════════════════════════
+// LINK FUNCTIONS
+// ═══════════════════════════════════════════════
+function getMyLink(){
+  var code=getMyCode();
+  if(!code)return null;
+  return BASE_URL + 'index.html?ref=' + code;
+}
+
+function copyLink(){
+  var link=getMyLink();
+  if(!link){notify('Faça login primeiro','Para gerar seu link, entre na sua conta.','');return;}
+  navigator.clipboard.writeText(link).then(function(){
+    var btn=document.getElementById('copyBtn');
+    btn.textContent='✅ Copiado!';btn.classList.add('copied');
+    setTimeout(function(){btn.textContent='📋 Copiar';btn.classList.remove('copied');},2000);
+    notify('Link copiado!','Agora compartilhe com seus amigos.','grn');
+  }).catch(function(){
+    var el=document.getElementById('linkDisplay');
+    el.select&&el.select();
+    notify('Copie manualmente','Selecione o link e copie (Ctrl+C).','');
+  });
+}
+
+function shareWA(){
+  var link=getMyLink();if(!link)return;
+  var u=gU();var name=u?u.name.split(' ')[0]:'eu';
+  var msg='🎓 *'+name+' te indicou para a Matheus Academy!*\n\n'
+    +'Aprenda sobre tráfego pago, negócios, geopolítica e muito mais com quizzes, ranking e certificados.\n\n'
+    +'🔗 Acesse pelo meu link e ganhe +20 pts de bônus:\n'+link+'\n\n'
+    +'💡 Quanto mais você aprende, mais cresce!';
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+  trackShare('whatsapp');
+}
+
+function shareTG(){
+  var link=getMyLink();if(!link)return;
+  var u=gU();var name=u?u.name.split(' ')[0]:'eu';
+  var msg=name+' te indicou para a Matheus Academy! Cursos incríveis + sistema de pontos + ranking. Acesse: '+link;
+  window.open('https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(msg),'_blank');
+  trackShare('telegram');
+}
+
+function shareMsg(){
+  var link=getMyLink();if(!link)return;
+  var u=gU();var name=u?u.name.split(' ')[0]:'eu';
+  var msg='🎓 '+name+' te indicou para a Matheus Academy!\n\nCursos de tráfego pago, negócios, geopolítica e mais. Sistema de pontos, ranking e certificados.\n\n🔗 Acesse com bônus: '+link;
+  navigator.clipboard.writeText(msg).then(function(){
+    notify('Mensagem copiada!','Cole no WhatsApp, Instagram ou onde preferir.','grn');
+  });
+}
+
+function trackShare(platform){
+  var refs=getRefs();
+  refs.unshift({type:'share',platform:platform,date:new Date().toLocaleDateString('pt-BR'),status:'compartilhado'});
+  saveRefs(refs);
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════
+// NOTIFY PURCHASE (when referred user confirms payment)
+// ═══════════════════════════════════════════════
+function notifyReferralPurchase(buyerName, buyerEmail){
+  var myCode=getMyCode();var u=gU();
+  if(!myCode||!u)return;
+  // Add to referrals list as pending
+  var refs=getRefs();
+  refs.unshift({
+    name:buyerName||'Novo Aluno',
+    email:buyerEmail||'',
+    date:new Date().toLocaleDateString('pt-BR'),
+    status:'pending',
+    myCode:myCode
+  });
+  saveRefs(refs);
+  // WhatsApp notification to Matheus
+  var msg='🔗 *Nova Indicação — Matheus Academy*\n\n'
+    +'👤 *Indicador:* '+u.name+'\n'
+    +'📧 *E-mail indicador:* '+u.email+'\n'
+    +'🔑 *Código de indicação:* '+myCode+'\n'
+    +'💰 *Comprador:* '+(buyerName||'Não informado')+'\n'
+    +'📅 *Data:* '+new Date().toLocaleDateString('pt-BR')+'\n\n'
+    +'Por favor confirme e libere o bônus!';
+  window.open('https://wa.me/5511951006917?text='+encodeURIComponent(msg),'_blank');
+  renderAll();
+}
+window.MA_notifyReferralPurchase=notifyReferralPurchase;
+
+// ═══════════════════════════════════════════════
+// APPLY REFERRAL CODE (when someone enters a code they received)
+// ═══════════════════════════════════════════════
+function applyRefCode(){
+  var code=document.getElementById('refCodeInput').value.trim().toUpperCase();
+  var msg=document.getElementById('refCodeMsg');
+  if(code.length<5){msg.style.color='var(--red)';msg.textContent='Código inválido. Mínimo 5 caracteres.';return;}
+  var myCode=getMyCode();
+  if(myCode&&code===myCode){msg.style.color='var(--red)';msg.textContent='Você não pode usar seu próprio código!';return;}
+  localStorage.setItem('indicadoPor',code);
+  msg.style.color='var(--grn)';msg.textContent='✅ Código registrado! Ao comprar, seu indicador será recompensado.';
+  notify('Código registrado!','Código "'+code+'" salvo com sucesso.','grn');
+  // Notify on WhatsApp
+  var u=gU();
+  if(u){
+    var waMsg='📨 *Registro de Indicação — Matheus Academy*\n\n'
+      +'👤 *Usuário:* '+u.name+'\n'
+      +'📧 *E-mail:* '+u.email+'\n'
+      +'🔑 *Código de quem indicou:* '+code+'\n'
+      +'📅 *Data:* '+new Date().toLocaleDateString('pt-BR');
+    setTimeout(function(){
+      if(confirm('Deseja notificar o Matheus sobre sua indicação?\n(Recomendado para garantir seu bônus ao comprar)')){
+        window.open('https://wa.me/5511951006917?text='+encodeURIComponent(waMsg),'_blank');
+      }
+    },500);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// CONFIRM PURCHASE (admin confirms via WhatsApp reply code)
+// User calls this when they receive confirmation
+// ═══════════════════════════════════════════════
+function confirmReferral(refIdx){
+  var refs=getRefs();
+  if(refs[refIdx])refs[refIdx].status='confirmed';
+  saveRefs(refs);
+  var bonus=getBonusState();
+  bonus.available=(bonus.available||0)+1;
+  saveBonusState(bonus);
+  renderAll();
+  notify('Compra confirmada!','Bônus liberado — escolha seu curso!','grn');
+}
+window.MA_confirmReferral=confirmReferral;
+
+// Simulate receiving confirmation (for testing/demo)
+function addTestRef(){
+  var refs=getRefs();
+  var names=['Carlos Mendes','Ana Lima','Pedro Costa','Fernanda Souza','Rafael Alves'];
+  var n=names[Math.floor(Math.random()*names.length)];
+  refs.unshift({name:n,date:new Date().toLocaleDateString('pt-BR'),status:Math.random()>0.5?'confirmed':'pending',myCode:getMyCode()||'TEST'});
+  saveRefs(refs);
+  if(refs[0].status==='confirmed'){var b=getBonusState();b.available=(b.available||0)+1;saveBonusState(b);}
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════
+// CLAIM BONUS
+// ═══════════════════════════════════════════════
+var _selectedCourse='';
+function selectCourse(name){
+  _selectedCourse=name;
+  document.querySelectorAll('.course-opt').forEach(function(el){el.classList.toggle('sel',el.dataset.name===name);});
+}
+function claimBonus(){
+  if(!_selectedCourse){notify('Selecione um curso','Escolha qual curso deseja receber.','');return;}
+  var bonus=getBonusState();
+  if(bonus.available<=0){notify('Nenhum bônus disponível','Confirme uma indicação primeiro.','');return;}
+  bonus.available--;bonus.claimed=(bonus.claimed||0)+1;
+  bonus.courses=(bonus.courses||[]);bonus.courses.push({course:_selectedCourse,date:new Date().toLocaleDateString('pt-BR')});
+  saveBonusState(bonus);
+  // Add to points
+  try{var p=JSON.parse(localStorage.getItem('ma_points')||'{"total":0,"history":[]}');p.total+=50;p.history.unshift({source:'Bônus indicação: '+_selectedCourse,pts:50,date:new Date().toLocaleDateString('pt-BR')});localStorage.setItem('ma_points',JSON.stringify(p));}catch(e){}
+  renderAll();
+  closeModal('bonus');
+  openModal('bonus');
+  notify('Bônus resgatado!','Você escolheu: '+_selectedCourse,'grn');
+  _selectedCourse='';
+}
+
+// ═══════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════
+function renderAll(){
+  var u=gU(),code=getMyCode(),link=getMyLink(),refs=getRefs(),bonus=getBonusState();
+  // Not logged
+  document.getElementById('notLoggedWarn').style.display=u?'none':'block';
+  document.getElementById('linkCard').style.opacity=u?'1':'.5';
+  if(document.getElementById('testBtn'))document.getElementById('testBtn').style.display=u?'block':'none';
+  // Show manual ref input if not logged or no indicadoPor
+  document.getElementById('manualRefCard').style.display=u&&!localStorage.getItem('indicadoPor')?'block':'none';
+  // Code & link
+  document.getElementById('codeDisplay').textContent=code||'—';
+  document.getElementById('linkDisplay').textContent=link||'Faça login para gerar seu link';
+  // Stats
+  var total=refs.filter(function(r){return r.status==='pending'||r.status==='confirmed';}).length;
+  var confirmed=refs.filter(function(r){return r.status==='confirmed';}).length;
+  var availBonus=bonus.available||0;
+  ['hsTotalRef','scTotal'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=total;});
+  ['hsConfirmed','scConfirmed'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=confirmed;});
+  ['hsBonus','scBonus'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=availBonus;});
+  // Bonus alert
+  var ba=document.getElementById('bonusAlert');
+  if(availBonus>0){
+    ba.classList.add('show');
+    ba.querySelector('.ba-sub').textContent='Você tem '+availBonus+' bônus'+(availBonus>1?' disponíveis':' disponível')+'! Escolha o curso que quer receber gratuitamente:';
+    var cs=document.getElementById('courseSelect');
+    cs.innerHTML=COURSES_LIST.map(function(c){return '<div class="course-opt" data-name="'+c+'" onclick="selectCourse(\''+c.replace(/'/g,"\\'")+'\')">'+(c.length>35?c.substring(0,35)+'...':c)+'</div>';}).join('');
+  }else{ba.classList.remove('show');}
+  // Ref list
+  var rl=document.getElementById('refList');
+  if(!refs.length){
+    rl.innerHTML='<div class="empty-state"><span class="empty-icon">🔗</span><div class="empty-title">Nenhuma indicação ainda</div><div class="empty-sub">Compartilhe seu link e acompanhe aqui quando alguém acessar ou comprar.</div></div>';
+  }else{
+    var html='';
+    refs.slice(0,10).forEach(function(r,i){
+      var isCom=r.status==='confirmed';
+      var statusCls=isCom?'sb-confirmed':r.status==='bonus'?'sb-bonus':'sb-pending';
+      var statusTxt=isCom?'✅ Confirmado':r.status==='bonus'?'🎁 Bônus':'⏳ Aguardando';
+      html+='<div class="ref-item">'
+        +'<div class="ri-av">'+(r.name?r.name.charAt(0):(r.platform?'📤':'?'))+'</div>'
+        +'<div class="ri-info"><div class="ri-name">'+(r.name||'Compartilhamento — '+(r.platform||'link'))+'</div><div class="ri-date">'+r.date+'</div></div>'
+        +'<div class="ri-status"><span class="status-badge '+statusCls+'">'+statusTxt+'</span>'
+        +(isCom&&!bonus.claimed?'<button onclick="claimBonus()" style="font-size:.5rem;padding:2px 7px;border:1px solid var(--grn);border-radius:4px;background:transparent;color:var(--grn);cursor:pointer;margin-top:2px">Resgatar</button>':'')
+        +'</div></div>';
+    });
+    rl.innerHTML=html;
+  }
+}
+
+// ═══════════════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════════════
+function notify(title,sub,type){
+  var stack=document.getElementById('notifStack');
+  var el=document.createElement('div');el.className='notif '+(type||'');
+  el.innerHTML='<div class="nt">'+title+'</div><div class="ns">'+sub+'</div>';
+  stack.appendChild(el);
+  setTimeout(function(){el.classList.add('show');},50);
+  setTimeout(function(){el.classList.remove('show');setTimeout(function(){el.remove();},400);},4000);
+}
+function openModal(id){document.getElementById('modal-'+id).classList.add('show');}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('show');}
+document.querySelectorAll('.modal-bg').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show');});});
+function switchView(type){/* future filter */}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',function(){
+  renderAll();
+  // Show referral info if arriving with ref param
+  var ref=localStorage.getItem('indicadoPor');
+  if(ref&&!gU()){
+    notify('Chegou via indicação!','Você foi indicado com código: '+ref+'. Cadastre-se para continuar!','acc');
+  }
+  // Prompt registered buyer to notify referral
+  if(ref&&gU()){
+    document.getElementById('manualRefCard').style.display='none';
+  }
+});
+</script>
+
+<script>
+/* ══ MA TOPBAR JS ══ */
+function playCashSound(){try{var c=new(window.AudioContext||window.webkitAudioContext)();function t(f,s,d,v,tp){var o=c.createOscillator(),g=c.createGain();o.type=tp||'sine';o.frequency.value=f;g.gain.setValueAtTime(0,c.currentTime+s);g.gain.linearRampToValueAtTime(v,c.currentTime+s+.01);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+s+d);o.connect(g);g.connect(c.destination);o.start(c.currentTime+s);o.stop(c.currentTime+s+d);}t(1200,0,.04,.3,'square');t(880,.05,.08,.25);t(1100,.1,.1,.3);t(1320,.17,.12,.35);t(1760,.26,.18,.4);t(660,.3,.06,.15,'triangle');t(780,.34,.06,.12,'triangle');t(550,.38,.06,.1,'triangle');}catch(e){}}
+function toggleMaMenu(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOverlay');d.classList.toggle('open');o.classList.toggle('open');}
+function closeMaMenu(){document.getElementById('maMenuDd').classList.remove('open');document.getElementById('maMenuOverlay').classList.remove('open');}
+function maLogout(){localStorage.removeItem('ma_user');closeMaMenu();location.href='index.html';}
+(function(){
+  var LVS=[{n:'Iniciante',c:'ma-lvc0',m:0,max:1000},{n:'Aprendiz',c:'ma-lvc1',m:1000,max:3000},{n:'Profissional',c:'ma-lvc2',m:3000,max:7000},{n:'Especialista',c:'ma-lvc3',m:7000,max:15000},{n:'Elite',c:'ma-lvc4',m:15000,max:99999}];
+  function gLv(t){for(var i=LVS.length-1;i>=0;i--)if(t>=LVS[i].m)return LVS[i];return LVS[0];}
+  function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};}catch(e){return{total:0,history:[]};}}
+  function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
+  window.updTopbar=function(){
+    var u=gU(),p=gP(),lv=gLv(p.total);
+    var pEl=document.getElementById('maPtsLive'),pN=document.getElementById('maPtsNum'),pL=document.getElementById('maPtsSubLv');
+    var badge=document.getElementById('maFpts'),bN=document.getElementById('maFptsNum'),bL=document.getElementById('maFptsLv');
+    if(u){if(pEl){pEl.classList.add('show');if(pN)pN.textContent=p.total.toLocaleString('pt-BR');if(pL)pL.textContent=lv.n;}if(badge){badge.style.display='flex';if(bN)bN.textContent=p.total.toLocaleString('pt-BR');if(bL)bL.textContent=lv.n;}}
+    else{if(pEl)pEl.classList.remove('show');if(badge)badge.style.display='none';}
+    var uS=document.getElementById('maMenuUserSec'),aS=document.getElementById('maMenuAuthSec');
+    if(!uS||!aS)return;
+    if(u){
+      var next=LVS[LVS.indexOf(lv)+1];
+      var pct=next?Math.max(0,Math.min(100,Math.round((p.total-lv.m)/(lv.max-lv.m)*100))):100;
+      uS.innerHTML='<div class="ma-menu-user"><span class="ma-mu-name">'+u.name.split(' ')[0]+'</span>'
+        +'<span class="ma-mu-level '+lv.c+'"><span class="ma-lv-dot"></span>'+lv.n+'</span>'
+        +'<div class="ma-mu-pts"><b>'+p.total.toLocaleString('pt-BR')+'</b> pontos'+(next?'<span class="ma-mu-next">· faltam '+(next.m-p.total).toLocaleString('pt-BR')+' p/ '+next.n+'</span>':'')+'</div></div>'
+        +'<div class="ma-mu-xp"><div class="ma-xp-labels"><span>'+lv.n+'</span>'+(next?'<span>'+next.n+'</span>':'<span>Máximo!</span>')+'</div><div class="ma-xp-bg"><div class="ma-xp-fill" style="width:'+pct+'%"></div></div></div>';
+      aS.innerHTML='<button class="ma-mi red" onclick="maLogout()"><span class="ma-mi-icon">🚪</span>Sair da conta</button>';
+    }else{
+      uS.innerHTML='<div class="ma-menu-user"><span class="ma-mu-name" style="color:#8888a8">Visitante</span><span style="font-size:.6rem;color:#44445a;display:block;margin-bottom:10px">Faça login para pontuar</span></div>';
+      aS.innerHTML='<a class="ma-mi" href="index.html" onclick="localStorage.setItem(\'ma_open_modal\',\'login\');return true"><span class="ma-mi-icon">🔑</span>Entrar</a>'
+        +'<a class="ma-mi" href="index.html" onclick="localStorage.setItem(\'ma_open_modal\',\'register\');return true"><span class="ma-mi-icon">📝</span>Criar Conta</a>'
+        +'<a class="ma-mi gold" href="index.html" onclick="localStorage.setItem(\'ma_open_modal\',\'plans\');return true"><span class="ma-mi-icon">💎</span>Ver Planos</a>';
+    }
+  };
+  window.MA_addPoints=window.MA_addPoints||function(src,pts){
+    if(!gU())return 0;var p=gP();p.total+=pts;p.history.unshift({source:src,pts:pts,question:'',date:new Date().toLocaleDateString('pt-BR')});
+    localStorage.setItem('ma_points',JSON.stringify(p));_bumpPts();return pts;
+  };
+  function _bumpPts(){playCashSound();var el=document.getElementById('maPtsLive');if(el){el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');}var b=document.getElementById('maFpts');if(b){b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');}window.updTopbar();}
+  var _lp=null;setInterval(function(){var p=gP();if(_lp!==null&&p.total>_lp)_bumpPts();_lp=p.total;},1500);
+  (function(){var r=new URLSearchParams(window.location.search).get('ref');if(r){var mc=localStorage.getItem('ma_ref_code');if(!mc||mc!==r.toUpperCase())localStorage.setItem('indicadoPor',r.toUpperCase());}})();
+  (function(){if(!gU())return;var today=new Date().toLocaleDateString('pt-BR');var ms;try{ms=JSON.parse(localStorage.getItem('ma_missions'))||{};}catch(e){ms={};}if(!ms.done||ms.date!==today)ms={date:today,done:{}};if(!ms.done.aula){ms.done.aula=true;localStorage.setItem('ma_missions',JSON.stringify(ms));window.MA_addPoints('Missão: Acessou a plataforma',10);}})();
+  var _ss=Date.now();function _saveSess(){var dur=Math.floor((Date.now()-_ss)/60000);var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}s.count=(s.count||0)+1;s.lastDuration=dur;var today=new Date().toLocaleDateString('pt-BR'),yest=new Date(Date.now()-86400000).toLocaleDateString('pt-BR');if(s.lastStudyDate===yest)s.streak=(s.streak||0)+1;else if(s.lastStudyDate!==today)s.streak=1;s.lastStudyDate=today;localStorage.setItem('ma_sessions',JSON.stringify(s));}
+  window.addEventListener('beforeunload',_saveSess);window.addEventListener('pagehide',_saveSess);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',window.updTopbar);else window.updTopbar();
+})();
+</script>
+</body>
+</html>
