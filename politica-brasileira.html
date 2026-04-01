@@ -1,0 +1,2456 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Política Brasileira — Do Zero ao Avançado | Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231e293b'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='serif' font-weight='bold' font-size='20' fill='%233B82F6'%3EM%3C/text%3E%3C/svg%3E"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --accent: #3B82F6;
+  --accent-dark: #1D4ED8;
+  --accent-light: #93C5FD;
+  --accent-glow: rgba(59,130,246,0.18);
+  --bg: #0a0f1e;
+  --bg2: #0f172a;
+  --bg3: #1e293b;
+  --bg4: #253047;
+  --card: #131c2e;
+  --border: rgba(59,130,246,0.18);
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --font: 'Outfit', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --transition: all 0.22s cubic-bezier(.4,0,.2,1);
+  --font-size-content: 16px;
+}
+[data-theme="light"] {
+  --bg: #f0f4ff;
+  --bg2: #e8eeff;
+  --bg3: #dde4f7;
+  --bg4: #ccd6f4;
+  --card: #ffffff;
+  --border: rgba(59,130,246,0.2);
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --shadow: 0 4px 24px rgba(59,130,246,0.08);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== PROGRESS BAR TOP ===== */
+#progress-bar-top {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  width: 0%; z-index: 9999;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* ===== PORTAL BAR (cabeçalho estilo index Matheus Academy) ===== */
+.portal-bar {
+  position: fixed; top: 3px; left: 0; right: 0; z-index: 1000;
+  background: rgba(10,15,30,0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px;
+}
+[data-theme="light"] .portal-bar { background: rgba(240,244,255,0.97); }
+
+.portal-bar-left { display: flex; align-items: center; gap: 10px; }
+.portal-logo-wrap { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.portal-logo-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid rgba(59,130,246,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif); font-weight: 700;
+  font-size: 16px; color: var(--accent);
+  flex-shrink: 0;
+}
+.portal-logo-text {
+  font-family: var(--font-serif);
+  font-size: 15px; font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.01em;
+  display: none;
+}
+@media (min-width: 480px) { .portal-logo-text { display: block; } }
+
+.nav-links {
+  display: none;
+  align-items: center; gap: 4px;
+}
+@media (min-width: 900px) { .nav-links { display: flex; } }
+.nav-link {
+  color: var(--text2); text-decoration: none;
+  font-size: 13px; padding: 5px 10px; border-radius: 6px;
+  transition: var(--transition); font-weight: 500;
+}
+.nav-link:hover { color: var(--text); background: var(--bg3); }
+
+.portal-bar-right { display: flex; align-items: center; gap: 6px; }
+.portal-btn {
+  background: none; border: 1px solid var(--border);
+  color: var(--text2); padding: 5px 12px;
+  border-radius: 20px; font-size: 12px;
+  font-family: var(--font); cursor: pointer;
+  transition: var(--transition); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 4px;
+  white-space: nowrap;
+}
+.portal-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.portal-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.portal-btn.primary:hover { background: var(--accent-dark); }
+
+#logged-bar { display: none; align-items: center; gap: 6px; }
+.user-name-btn {
+  background: none; border: none;
+  color: var(--accent); font-family: var(--font);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; padding: 4px 8px;
+  border-radius: 6px; transition: var(--transition);
+  max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.user-name-btn:hover { background: var(--accent-glow); }
+.xp-badge {
+  background: var(--accent-glow); color: var(--accent-light);
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  border: 1px solid rgba(59,130,246,0.3);
+  white-space: nowrap;
+}
+.three-dots-btn {
+  background: none; border: none; color: var(--text2);
+  cursor: pointer; font-size: 18px; padding: 4px 6px;
+  border-radius: 6px; transition: var(--transition);
+  line-height: 1;
+}
+.three-dots-btn:hover { background: var(--bg3); }
+.dots-menu {
+  display: none; position: absolute; top: 56px; right: 12px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 8px;
+  box-shadow: var(--shadow); min-width: 160px; z-index: 2000;
+}
+.dots-menu.open { display: block; }
+.dots-menu a {
+  display: block; padding: 9px 12px;
+  color: var(--text2); text-decoration: none;
+  font-size: 13px; border-radius: 6px;
+  transition: var(--transition);
+}
+.dots-menu a:hover { background: var(--bg3); color: var(--text); }
+.dots-menu .logout-item { color: var(--danger); }
+
+/* ===== COURSE HEADER (segunda linha) ===== */
+.course-header {
+  position: fixed; top: 55px; left: 0; right: 0; z-index: 900;
+  background: rgba(10,15,30,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; min-height: 46px;
+}
+[data-theme="light"] .course-header { background: rgba(240,244,255,0.95); }
+.header-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.hamburger {
+  background: none; border: none;
+  color: var(--text2); cursor: pointer; font-size: 20px;
+  padding: 4px; border-radius: 6px; transition: var(--transition);
+  flex-shrink: 0;
+}
+.hamburger:hover { color: var(--accent); }
+.course-title-header {
+  font-family: var(--font-serif);
+  font-size: 14px; font-weight: 700;
+  color: var(--text);
+  white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.search-wrap { position: relative; }
+.search-input {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text); padding: 6px 10px 6px 28px;
+  border-radius: 20px; font-size: 12px;
+  font-family: var(--font); width: 120px;
+  transition: var(--transition); outline: none;
+}
+@media (min-width: 600px) { .search-input { width: 160px; } }
+.search-input:focus { border-color: var(--accent); width: 180px; }
+.search-icon {
+  position: absolute; left: 8px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3); font-size: 12px; pointer-events: none;
+}
+.progress-global-wrap { display: none; align-items: center; gap: 6px; }
+@media (min-width: 700px) { .progress-global-wrap { display: flex; } }
+.progress-global-label { font-size: 12px; color: var(--text3); }
+.progress-global-bar {
+  width: 60px; height: 5px;
+  background: var(--bg3); border-radius: 3px; overflow: hidden;
+}
+.progress-global-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  border-radius: 3px; transition: width 0.5s ease;
+}
+.icon-btn {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text2); padding: 5px 9px;
+  border-radius: 8px; cursor: pointer; font-size: 14px;
+  transition: var(--transition); flex-shrink: 0;
+}
+.icon-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ===== LAYOUT ===== */
+.layout {
+  display: flex;
+  padding-top: 101px;
+  min-height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 270px; min-width: 270px;
+  position: fixed; top: 101px; left: 0; bottom: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; z-index: 800;
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  padding-bottom: 80px;
+  transform: translateX(-100%);
+}
+@media (min-width: 900px) { .sidebar { transform: translateX(0); } }
+.sidebar.mobile-open { transform: translateX(0) !important; }
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 799;
+  backdrop-filter: blur(2px);
+}
+.sidebar-overlay.active { display: block; }
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.sidebar-header {
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: var(--bg2); z-index: 2;
+}
+.sidebar-course-name {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 6px;
+}
+.sidebar-progress-info {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 5px;
+}
+.sidebar-progress-info span { font-size: 11px; color: var(--text2); }
+.sidebar-progress-bar {
+  height: 3px; background: var(--bg3); border-radius: 2px; overflow: hidden;
+}
+.sidebar-progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  border-radius: 2px; transition: width 0.5s ease;
+}
+.module-category {
+  padding: 8px 14px 3px;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--text3); text-transform: uppercase;
+}
+.module-item { border-bottom: 1px solid rgba(59,130,246,0.06); }
+.module-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 14px; cursor: pointer;
+  transition: var(--transition);
+}
+.module-header:hover { background: var(--bg3); }
+.module-header.active { background: var(--accent-glow); }
+.module-num {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--bg3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  flex-shrink: 0;
+}
+.module-num.done { background: var(--success); border-color: var(--success); color: #fff; }
+.module-num.active-num { background: var(--accent); border-color: var(--accent); color: #fff; }
+.module-title-sidebar {
+  font-size: 12px; font-weight: 500; color: var(--text2);
+  flex: 1; line-height: 1.3;
+}
+.module-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--text3); flex-shrink: 0;
+  transition: var(--transition);
+}
+.module-dot.done { background: var(--success); }
+.module-dot.active { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+.module-arrow { font-size: 10px; color: var(--text3); transition: transform 0.2s ease; }
+.module-arrow.open { transform: rotate(90deg); }
+.topics-list { display: none; }
+.topics-list.open { display: block; }
+.topic-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 14px 6px 28px; cursor: pointer;
+  transition: var(--transition);
+  font-size: 11px; color: var(--text3);
+}
+.topic-item:hover { background: var(--bg3); color: var(--text2); }
+.topic-item.active { background: var(--accent-glow); color: var(--accent); }
+.topic-check {
+  width: 12px; height: 12px; border-radius: 3px;
+  border: 1.5px solid var(--text3); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition); font-size: 8px;
+}
+.topic-check.done { background: var(--success); border-color: var(--success); color: #fff; }
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 16px 80px;
+  width: 100%;
+}
+@media (min-width: 900px) {
+  .main-content {
+    margin-left: 270px;
+    max-width: calc(100% - 270px);
+    padding: 28px 32px 80px;
+  }
+}
+
+/* ===== CAPA DO CURSO (SVG inline premium) ===== */
+.course-cover-wrapper {
+  border-radius: 16px; overflow: hidden;
+  margin-bottom: 24px; position: relative;
+  box-shadow: 0 8px 40px rgba(59,130,246,0.25);
+  border: 1px solid rgba(59,130,246,0.3);
+  cursor: pointer;
+}
+.course-cover-wrapper svg { display: block; width: 100%; height: auto; }
+
+/* ===== CONTENT SECTIONS ===== */
+.section { display: none; animation: fadeIn 0.3s ease; }
+.section.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TOPIC HEADER ===== */
+.topic-header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.topic-breadcrumb {
+  font-size: 11px; color: var(--text3);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 5px;
+  flex-wrap: wrap;
+}
+.topic-breadcrumb span { color: var(--accent); }
+.topic-title {
+  font-family: var(--font-serif);
+  font-size: clamp(18px, 4vw, 28px);
+  font-weight: 700; color: var(--text);
+  line-height: 1.3; margin-bottom: 10px;
+}
+.topic-meta {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.topic-meta-item {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 11px; color: var(--text3);
+  background: var(--bg3); padding: 3px 8px;
+  border-radius: 20px; border: 1px solid var(--border);
+}
+
+/* ===== CONTENT ===== */
+.content-body {
+  font-size: var(--font-size-content);
+  line-height: 1.85; color: var(--text2);
+  transition: font-size 0.2s ease;
+}
+.content-body h2 {
+  font-family: var(--font-serif);
+  font-size: 1.35em; font-weight: 700;
+  color: var(--text); margin: 32px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+.content-body h3 {
+  font-size: 1.1em; font-weight: 600;
+  color: var(--accent-light); margin: 24px 0 8px;
+}
+.content-body p { margin-bottom: 16px; }
+.content-body ul, .content-body ol { margin: 0 0 16px 20px; }
+.content-body li { margin-bottom: 6px; }
+.content-body strong { color: var(--text); font-weight: 600; }
+.content-body em { color: var(--accent-light); font-style: italic; }
+
+.highlight-box {
+  background: var(--accent-glow);
+  border: 1px solid rgba(59,130,246,0.3);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px; padding: 14px 18px;
+  margin: 20px 0; font-size: 0.9em;
+}
+.highlight-box .box-title {
+  font-weight: 700; color: var(--accent);
+  margin-bottom: 5px; font-size: 0.8em;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.example-box {
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.25);
+  border-left: 4px solid var(--success);
+  border-radius: 8px; padding: 14px 18px; margin: 20px 0;
+}
+.example-box .box-title { color: var(--success); font-weight: 700; margin-bottom: 5px; }
+.warn-box {
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-left: 4px solid var(--warning);
+  border-radius: 8px; padding: 14px 18px; margin: 20px 0;
+}
+.warn-box .box-title { color: var(--warning); font-weight: 700; margin-bottom: 5px; }
+
+/* ===== FONT SIZE CONTROLS ===== */
+.font-controls {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 16px; flex-wrap: wrap;
+}
+.font-size-label {
+  font-size: 11px; color: var(--text3); margin-right: 2px;
+}
+.font-btn {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text2); padding: 5px 12px;
+  border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;
+  font-family: var(--font); transition: var(--transition);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.font-btn:hover, .font-btn:active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.font-size-display {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--accent); padding: 5px 10px;
+  border-radius: 6px; font-size: 12px; font-weight: 600;
+  min-width: 44px; text-align: center;
+}
+
+/* ===== AUDIO BAR ===== */
+.audio-bar {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 14px;
+  margin-bottom: 20px; display: flex;
+  align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.audio-btn {
+  background: var(--accent); color: #fff; border: none;
+  padding: 8px 16px; border-radius: 8px; cursor: pointer;
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  transition: var(--transition); display: flex; align-items: center; gap: 5px;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none; touch-action: manipulation;
+}
+.audio-btn:hover, .audio-btn:active { background: var(--accent-dark); }
+.audio-btn.stop { background: var(--danger); }
+.audio-btn.stop:hover, .audio-btn.stop:active { background: #b91c1c; }
+.speed-btn {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text2); padding: 7px 10px;
+  border-radius: 8px; font-family: var(--font); font-size: 12px;
+  font-weight: 600; cursor: pointer; outline: none;
+  transition: var(--transition);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.speed-btn:hover, .speed-btn:active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.speed-btn.active-speed { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); }
+.audio-info {
+  font-size: 11px; color: var(--text3); flex: 1; min-width: 80px;
+}
+
+/* ===== HIGHLIGHTS ===== */
+.highlight-text { background: rgba(59,130,246,0.3); border-radius: 3px; cursor: pointer; }
+
+/* ===== DONE BUTTON ===== */
+.done-btn-wrap {
+  margin: 24px 0;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.done-btn {
+  background: var(--success); color: #fff;
+  border: none; padding: 11px 24px;
+  border-radius: 10px; cursor: pointer;
+  font-family: var(--font); font-size: 14px; font-weight: 600;
+  transition: var(--transition); display: flex; align-items: center; gap: 7px;
+  -webkit-tap-highlight-color: transparent;
+}
+.done-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16,185,129,0.3); }
+.done-btn.completed { background: var(--bg3); color: var(--text3); cursor: default; }
+.done-btn.completed:hover { transform: none; box-shadow: none; }
+
+/* ===== NOTES ===== */
+.notes-section {
+  margin-top: 24px; padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.notes-title {
+  font-size: 14px; font-weight: 600; color: var(--text2);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 5px;
+}
+.notes-textarea {
+  width: 100%; background: var(--bg3);
+  border: 1px solid var(--border); color: var(--text);
+  padding: 10px 14px; border-radius: 10px;
+  font-family: var(--font); font-size: 14px;
+  resize: vertical; min-height: 80px; outline: none;
+  transition: var(--transition); line-height: 1.6;
+}
+.notes-textarea:focus { border-color: var(--accent); }
+.notes-save-btn {
+  margin-top: 7px; background: var(--bg3);
+  border: 1px solid var(--border); color: var(--text2);
+  padding: 6px 14px; border-radius: 8px; cursor: pointer;
+  font-family: var(--font); font-size: 13px; transition: var(--transition);
+}
+.notes-save-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ===== NAV ARROWS ===== */
+.nav-arrows {
+  display: flex; justify-content: space-between;
+  margin-top: 28px; padding-top: 20px;
+  border-top: 1px solid var(--border);
+  gap: 10px; flex-wrap: wrap;
+}
+.nav-arrow-btn {
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text2); padding: 10px 16px;
+  border-radius: 10px; cursor: pointer;
+  font-family: var(--font); font-size: 13px;
+  transition: var(--transition); display: flex;
+  align-items: center; gap: 7px;
+  flex: 1; min-width: 120px; max-width: 48%;
+  text-align: left;
+}
+.nav-arrow-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.nav-arrow-btn .nav-label { font-size: 10px; color: inherit; opacity: 0.7; display: block; margin-bottom: 1px; }
+.nav-arrow-btn .nav-name { font-size: 12px; font-weight: 500; }
+
+/* ===== MODULE SUMMARY ===== */
+.module-summary {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px; margin: 24px 0;
+}
+.module-summary h3 {
+  font-family: var(--font-serif);
+  font-size: 18px; font-weight: 700;
+  color: var(--text); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.key-points { list-style: none; padding: 0; }
+.key-points li {
+  display: flex; align-items: flex-start; gap: 9px;
+  padding: 9px 0; border-bottom: 1px solid var(--border);
+  font-size: 13px; color: var(--text2); line-height: 1.5;
+}
+.key-points li:last-child { border-bottom: none; }
+.key-point-icon { color: var(--accent); margin-top: 2px; flex-shrink: 0; }
+
+/* ===== QUIZ ===== */
+.quiz-section {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px; margin: 24px 0;
+}
+.quiz-title {
+  font-family: var(--font-serif);
+  font-size: 20px; font-weight: 700;
+  color: var(--text); margin-bottom: 5px;
+}
+.quiz-subtitle { font-size: 13px; color: var(--text3); margin-bottom: 20px; }
+.quiz-question {
+  margin-bottom: 24px; padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.quiz-question:last-of-type { border-bottom: none; }
+.question-text {
+  font-size: 14px; font-weight: 600; color: var(--text);
+  margin-bottom: 12px; line-height: 1.5;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 7px; }
+.quiz-option {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 12px; border-radius: 8px;
+  border: 1px solid var(--border); cursor: pointer;
+  transition: var(--transition); font-size: 13px; color: var(--text2);
+  background: var(--bg3);
+}
+.quiz-option:hover { border-color: var(--accent); color: var(--text); }
+.quiz-option input { accent-color: var(--accent); }
+.quiz-option.correct { background: rgba(16,185,129,0.12); border-color: var(--success); color: var(--success); }
+.quiz-option.wrong { background: rgba(239,68,68,0.12); border-color: var(--danger); color: var(--danger); }
+.quiz-submit {
+  background: var(--accent); color: #fff; border: none;
+  padding: 11px 28px; border-radius: 10px; cursor: pointer;
+  font-family: var(--font); font-size: 14px; font-weight: 600;
+  transition: var(--transition); margin-top: 14px;
+  -webkit-tap-highlight-color: transparent;
+}
+.quiz-submit:hover { background: var(--accent-dark); transform: translateY(-2px); }
+.quiz-result {
+  margin-top: 14px; padding: 12px 16px;
+  border-radius: 10px; font-size: 14px; font-weight: 600; display: none;
+}
+.quiz-result.show { display: block; }
+.quiz-result.good { background: rgba(16,185,129,0.12); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
+.quiz-result.bad { background: rgba(239,68,68,0.12); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+
+/* ===== FLASHCARDS ===== */
+.flashcards-wrap { margin: 24px 0; }
+.flashcards-title {
+  font-size: 17px; font-weight: 700; color: var(--text);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 7px;
+}
+.flashcard-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+@media (max-width: 600px) { .flashcard-grid { grid-template-columns: 1fr; } }
+.flashcard {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px; cursor: pointer;
+  transition: var(--transition); min-height: 110px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.flashcard:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(59,130,246,0.15); }
+.flashcard-q { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+.flashcard-a {
+  font-size: 12px; color: var(--text2); display: none;
+  padding-top: 7px; border-top: 1px solid var(--border);
+}
+.flashcard.flipped .flashcard-a { display: block; }
+.flashcard-hint { font-size: 10px; color: var(--text3); margin-top: 6px; }
+
+/* ===== BONUS ===== */
+.bonus-section {
+  background: linear-gradient(135deg, var(--bg3), var(--card));
+  border: 1px solid var(--border); border-radius: 14px;
+  padding: 22px; margin: 24px 0; position: relative; overflow: hidden;
+}
+.bonus-lock {
+  position: absolute; inset: 0;
+  background: rgba(10,15,30,0.85); backdrop-filter: blur(4px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  border-radius: 14px; gap: 8px; z-index: 2;
+}
+.bonus-lock-icon { font-size: 36px; }
+.bonus-lock-text { font-size: 14px; color: var(--text2); font-weight: 600; }
+.bonus-lock-sub { font-size: 12px; color: var(--text3); }
+
+/* ===== CERTIFICATE ===== */
+.certificate-section {
+  text-align: center; padding: 32px 20px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; margin: 24px 0;
+}
+.certificate-icon { font-size: 44px; margin-bottom: 10px; }
+.certificate-title { font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 7px; }
+.certificate-desc { font-size: 13px; color: var(--text3); margin-bottom: 18px; }
+.certificate-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff; border: none; padding: 11px 28px;
+  border-radius: 10px; cursor: pointer; font-family: var(--font);
+  font-size: 14px; font-weight: 600; transition: var(--transition);
+}
+.certificate-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.3); }
+
+/* ===== SURPRISE BOX ===== */
+.surprise-btn {
+  background: linear-gradient(135deg, #7c3aed, #3B82F6);
+  color: #fff; border: none; padding: 9px 18px;
+  border-radius: 10px; cursor: pointer; font-family: var(--font);
+  font-size: 13px; font-weight: 600; transition: var(--transition);
+  display: flex; align-items: center; gap: 7px;
+  animation: glow-purple 3s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+@keyframes glow-purple {
+  0%, 100% { box-shadow: 0 0 10px rgba(124,58,237,0.3); }
+  50% { box-shadow: 0 0 20px rgba(59,130,246,0.4); }
+}
+.surprise-btn:hover { transform: scale(1.04); }
+
+/* ===== TOAST ===== */
+.toast-container {
+  position: fixed; top: 110px; right: 12px;
+  display: flex; flex-direction: column; gap: 7px;
+  z-index: 9998; max-width: 280px; pointer-events: none;
+}
+.toast {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 14px;
+  box-shadow: var(--shadow); display: flex;
+  align-items: center; gap: 9px;
+  animation: slideIn 0.3s ease;
+  font-size: 13px; color: var(--text);
+}
+.toast.success { border-color: var(--success); }
+.toast.accent { border-color: var(--accent); }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== LOCK OVERLAY ===== */
+.lock-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+  z-index: 9000; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.lock-overlay.show { display: flex; }
+.lock-modal {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 18px; padding: 28px 24px; max-width: 420px;
+  width: 100%; text-align: center; position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: popIn 0.3s cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+.lock-icon { font-size: 48px; margin-bottom: 14px; }
+.lock-title { font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 7px; }
+.lock-desc { font-size: 13px; color: var(--text3); line-height: 1.6; margin-bottom: 20px; }
+.lock-buy-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff; border: none; padding: 13px 28px;
+  border-radius: 12px; cursor: pointer; font-family: var(--font);
+  font-size: 15px; font-weight: 700; transition: var(--transition);
+  width: 100%; margin-bottom: 9px;
+}
+.lock-buy-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.4); }
+.lock-already-btn {
+  background: none; border: 1px solid var(--border);
+  color: var(--text3); padding: 9px 18px;
+  border-radius: 10px; cursor: pointer; font-family: var(--font);
+  font-size: 13px; transition: var(--transition); width: 100%;
+}
+.lock-already-btn:hover { border-color: var(--accent); color: var(--accent); }
+.lock-close {
+  position: absolute; top: 12px; right: 14px;
+  background: none; border: none; color: var(--text3);
+  cursor: pointer; font-size: 18px; transition: var(--transition);
+}
+.lock-close:hover { color: var(--text); }
+
+/* ===== CHAT ===== */
+.chat-bubble {
+  position: fixed; bottom: 80px; right: 16px;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--accent); color: #fff; border: none;
+  cursor: pointer; font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(59,130,246,0.4);
+  transition: var(--transition); z-index: 600;
+  -webkit-tap-highlight-color: transparent;
+}
+.chat-bubble:hover { transform: scale(1.1); background: var(--accent-dark); }
+.chat-panel {
+  display: none; position: fixed;
+  bottom: 136px; right: 16px;
+  width: min(320px, calc(100vw - 32px)); max-height: 420px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; box-shadow: var(--shadow);
+  z-index: 600; flex-direction: column; overflow: hidden;
+}
+.chat-panel.open { display: flex; }
+.chat-header {
+  padding: 12px 14px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg3);
+}
+.chat-header-title { font-size: 13px; font-weight: 700; color: var(--text); }
+.chat-header-sub { font-size: 10px; color: var(--text3); }
+.chat-close { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 15px; }
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 12px;
+  display: flex; flex-direction: column; gap: 9px; min-height: 160px;
+}
+.chat-msg {
+  max-width: 85%; font-size: 12px; line-height: 1.5;
+  padding: 8px 12px; border-radius: 12px;
+}
+.chat-msg.ai { background: var(--bg3); color: var(--text2); align-self: flex-start; border-radius: 12px 12px 12px 2px; }
+.chat-msg.user { background: var(--accent); color: #fff; align-self: flex-end; border-radius: 12px 12px 2px 12px; }
+.chat-input-wrap {
+  padding: 10px; border-top: 1px solid var(--border);
+  display: flex; gap: 7px;
+}
+.chat-input {
+  flex: 1; background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text); padding: 7px 11px; border-radius: 8px;
+  font-family: var(--font); font-size: 12px; outline: none;
+  transition: var(--transition);
+}
+.chat-input:focus { border-color: var(--accent); }
+.chat-send {
+  background: var(--accent); color: #fff; border: none;
+  padding: 7px 13px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; transition: var(--transition);
+}
+.chat-send:hover { background: var(--accent-dark); }
+.chat-remaining { font-size: 10px; color: var(--text3); padding: 0 14px 7px; text-align: right; }
+
+/* ===== BALÃO FLUTUANTE DE STATS ===== */
+.stats-bubble {
+  position: fixed; bottom: 136px; left: 16px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #3B82F6);
+  color: #fff; border: none; cursor: pointer;
+  font-size: 20px; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+  transition: var(--transition); z-index: 600;
+  -webkit-tap-highlight-color: transparent;
+  animation: pulse-stats 3s ease-in-out infinite;
+}
+@keyframes pulse-stats {
+  0%, 100% { box-shadow: 0 4px 16px rgba(124,58,237,0.4); }
+  50% { box-shadow: 0 4px 28px rgba(59,130,246,0.6); }
+}
+.stats-bubble:hover { transform: scale(1.1); }
+
+.stats-panel {
+  display: none; position: fixed;
+  bottom: 190px; left: 16px;
+  width: min(300px, calc(100vw - 32px));
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 18px; box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  z-index: 650; overflow: hidden;
+  animation: popIn 0.25s cubic-bezier(.175,.885,.32,1.275);
+}
+.stats-panel.open { display: block; }
+.stats-panel-header {
+  background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(59,130,246,0.2));
+  padding: 14px 16px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.stats-panel-title {
+  font-family: var(--font-serif); font-size: 15px; font-weight: 700; color: var(--text);
+  display: flex; align-items: center; gap: 7px;
+}
+.stats-close { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 14px; }
+.stats-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.stats-row {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 12px;
+}
+.stats-row-icon { font-size: 20px; flex-shrink: 0; }
+.stats-row-info { flex: 1; min-width: 0; }
+.stats-row-label { font-size: 10px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+.stats-row-value { font-size: 15px; font-weight: 700; color: var(--text); }
+.stats-medals { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+.stats-medal {
+  background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3);
+  color: var(--warning); padding: 3px 8px; border-radius: 20px;
+  font-size: 10px; font-weight: 700;
+}
+.timer-inside-stats {
+  display: flex; align-items: center; gap: 7px;
+  background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 10px; padding: 8px 12px;
+}
+.timer-dot-green {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--success); animation: pulse 2s infinite; flex-shrink: 0;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.timer-label { font-size: 10px; color: var(--success); font-weight: 600; }
+.timer-value { font-size: 18px; font-weight: 800; color: var(--success); font-variant-numeric: tabular-nums; }
+.stats-progress-bar {
+  height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; margin-top: 4px;
+}
+.stats-progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  border-radius: 3px; transition: width 0.5s;
+}
+.meta-row {
+  display: flex; gap: 6px;
+}
+.meta-item {
+  flex: 1; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 6px; text-align: center;
+}
+.meta-item-label { font-size: 9px; color: var(--text3); margin-bottom: 2px; }
+.meta-item-value { font-size: 14px; font-weight: 700; color: var(--accent); }
+
+/* ===== LOGOUT ===== */
+.logout-corner {
+  position: fixed; bottom: 16px; left: 16px;
+  font-size: 11px; color: var(--text3); cursor: pointer;
+  transition: var(--transition); z-index: 600;
+  background: none; border: none; font-family: var(--font); display: none;
+}
+.logout-corner:hover { color: var(--danger); }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 16px; margin-top: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+}
+@media (min-width: 900px) { footer { margin-left: 270px; } }
+.footer-links { display: flex; gap: 14px; flex-wrap: wrap; }
+.footer-links a {
+  font-size: 12px; color: var(--text3); text-decoration: none;
+  transition: var(--transition); display: flex; align-items: center; gap: 4px;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-copy { font-size: 11px; color: var(--text3); }
+
+/* ===== SEARCH RESULTS ===== */
+.search-results {
+  display: none; position: absolute; top: 36px; left: 0;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; box-shadow: var(--shadow);
+  width: 260px; max-height: 260px; overflow-y: auto; z-index: 500;
+}
+.search-results.open { display: block; }
+.search-result-item {
+  padding: 9px 12px; cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px; color: var(--text2); transition: var(--transition);
+}
+.search-result-item:hover { background: var(--bg3); color: var(--text); }
+.search-result-item .sr-module { font-size: 9px; color: var(--text3); }
+
+/* ===== CANVAS CERT ===== */
+#cert-canvas { display: none; }
+
+/* ===== MOTIVATION ===== */
+.motivation-toast {
+  display: none; position: fixed;
+  bottom: 70px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff; padding: 10px 20px; border-radius: 20px;
+  font-size: 13px; font-weight: 600; z-index: 9990;
+  box-shadow: 0 8px 30px rgba(59,130,246,0.4);
+  animation: slideUp 0.4s ease; white-space: nowrap;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ===== REVIEW MODE BTN ===== */
+.review-mode-btn {
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  color: #fff; border: none; padding: 9px 18px;
+  border-radius: 10px; cursor: pointer; font-family: var(--font);
+  font-size: 13px; font-weight: 600; transition: var(--transition);
+  display: flex; align-items: center; gap: 7px;
+}
+.review-mode-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,130,246,0.3); }
+
+/* ===== HIGHLIGHT TOOLBAR ===== */
+.highlight-toolbar {
+  display: none; position: fixed;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 5px 9px; gap: 5px;
+  box-shadow: var(--shadow); z-index: 800;
+  align-items: center;
+}
+.highlight-toolbar.show { display: flex; }
+.hl-btn {
+  background: rgba(59,130,246,0.2); border: none; color: var(--text);
+  padding: 4px 9px; border-radius: 6px; cursor: pointer;
+  font-size: 12px; font-family: var(--font); transition: var(--transition);
+}
+.hl-btn:hover { background: var(--accent); color: #fff; }
+
+/* ===== TÓPICOS CARROSSEL ===== */
+.topics-carousel-wrap {
+  margin-bottom: 24px;
+}
+.topics-carousel-title {
+  font-size: 13px; font-weight: 700; color: var(--text2);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.topics-carousel {
+  display: flex; gap: 8px;
+  overflow-x: auto; padding-bottom: 8px;
+  scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+.topics-carousel::-webkit-scrollbar { height: 3px; }
+.topics-carousel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.topic-card {
+  flex-shrink: 0; width: 130px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 10px;
+  cursor: pointer; transition: var(--transition);
+  scroll-snap-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+.topic-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.topic-card.done-card { border-color: var(--success); }
+.topic-card-num {
+  font-size: 9px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;
+}
+.topic-card-name {
+  font-size: 11px; font-weight: 500; color: var(--text2);
+  line-height: 1.3;
+}
+.topic-card-check { font-size: 12px; margin-top: 5px; }
+
+/* ===== MODULE GRID ===== */
+.module-grid-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px; cursor: pointer;
+  transition: var(--transition); position: relative; overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.module-grid-item:hover {
+  border-color: var(--accent); transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(59,130,246,0.15);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 899px) {
+  .nav-arrows { flex-direction: column; }
+  .nav-arrow-btn { max-width: 100%; }
+  .stats-panel { left: 8px; right: 8px; width: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR TOP -->
+<div id="progress-bar-top"></div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- MOTIVATION TOAST -->
+<div class="motivation-toast" id="motivationToast"></div>
+
+<!-- HIGHLIGHT TOOLBAR -->
+<div class="highlight-toolbar" id="highlightToolbar">
+  <span style="font-size:11px;color:var(--text3)">Destacar</span>
+  <button class="hl-btn" onclick="applyHighlight()">🔵</button>
+  <button class="hl-btn" onclick="removeHighlight()">✕</button>
+</div>
+
+<!-- LOCK OVERLAY -->
+<div class="lock-overlay" id="lockOverlay">
+  <div class="lock-modal">
+    <button class="lock-close" onclick="closeLock()">✕</button>
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">Conteúdo Exclusivo</div>
+    <div class="lock-desc">Este conteúdo faz parte do acesso exclusivo.<br>Desbloqueie agora para continuar estudando.</div>
+    <button class="lock-buy-btn" onclick="closeLock()">🚀 Comprar acesso</button>
+    <button class="lock-already-btn" onclick="checkSubscriber()">Já sou assinante</button>
+  </div>
+</div>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ===== PORTAL BAR ===== -->
+<div class="portal-bar">
+  <div class="portal-bar-left">
+    <a href="index.html" class="portal-logo-wrap">
+      <div class="portal-logo-icon">M</div>
+      <span class="portal-logo-text">Matheus Academy</span>
+    </a>
+    <nav class="nav-links">
+      <a href="painel.html" class="nav-link">📊 Painel</a>
+      <a href="perfil.html" class="nav-link">👤 Perfil</a>
+      <a href="ranking.html" class="nav-link">🏆 Ranking</a>
+    </nav>
+  </div>
+  <div class="portal-bar-right" id="guest-bar">
+    <a href="login.html" class="portal-btn">Login</a>
+    <a href="cadastro.html" class="portal-btn">Conta</a>
+    <a href="assinaturas.html" class="portal-btn primary">Assinar</a>
+  </div>
+  <div class="portal-bar-right" id="logged-bar" style="position:relative;">
+    <button class="user-name-btn" id="userNameBtn" onclick="goToProfile()"></button>
+    <div class="xp-badge" id="xpBadge">0 XP</div>
+    <button class="three-dots-btn" onclick="toggleDotsMenu()">⋯</button>
+    <div class="dots-menu" id="dotsMenu">
+      <a href="painel.html">📊 Painel</a>
+      <a href="perfil.html">👤 Perfil</a>
+      <a href="ranking.html">🏆 Ranking</a>
+      <a href="trilhas.html">🗺️ Trilhas</a>
+      <a href="assinaturas.html">⭐ Assinaturas</a>
+      <a href="#" onclick="doLogout()" class="logout-item">🚪 Sair</a>
+    </div>
+  </div>
+</div>
+
+<!-- COURSE HEADER -->
+<div class="course-header">
+  <div class="header-left">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <div class="course-title-header">Política Brasileira</div>
+  </div>
+  <div class="header-right">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" placeholder="Buscar..." id="searchInput" oninput="doSearch(this.value)" onfocus="showSearchResults()" />
+      <div class="search-results" id="searchResults"></div>
+    </div>
+    <div class="progress-global-wrap">
+      <span class="progress-global-label" id="progressLabel">0%</span>
+      <div class="progress-global-bar">
+        <div class="progress-global-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+    <button class="icon-btn" onclick="toggleTheme()" title="Tema" id="themeBtn">🌙</button>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-course-name">🏛️ Política Brasileira</div>
+      <div class="sidebar-progress-info">
+        <span id="sidebarProgressText">0 de 119 tópicos</span>
+        <span id="sidebarProgressPct">0%</span>
+      </div>
+      <div class="sidebar-progress-bar">
+        <div class="sidebar-progress-fill" id="sidebarProgressFill" style="width:0%"></div>
+      </div>
+    </div>
+    <div id="moduleList"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content" id="mainContent">
+
+    <!-- HOME / CAPA -->
+    <div class="section active" id="section-home">
+
+      <!-- CAPA PREMIUM SVG -->
+      <div class="course-cover-wrapper" onclick="showSection('section-m1t0')">
+        <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" style="border-radius:16px;">
+          <defs>
+            <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#030712"/>
+              <stop offset="35%" style="stop-color:#0a1628"/>
+              <stop offset="70%" style="stop-color:#0f1e3d"/>
+              <stop offset="100%" style="stop-color:#071020"/>
+            </linearGradient>
+            <linearGradient id="greenGold" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#009c3b"/>
+              <stop offset="50%" style="stop-color:#FFDF00"/>
+              <stop offset="100%" style="stop-color:#009c3b"/>
+            </linearGradient>
+            <linearGradient id="blueAcc" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#3B82F6"/>
+              <stop offset="100%" style="stop-color:#93C5FD"/>
+            </linearGradient>
+            <radialGradient id="glow1" cx="75%" cy="30%" r="50%">
+              <stop offset="0%" style="stop-color:rgba(59,130,246,0.25)"/>
+              <stop offset="100%" style="stop-color:rgba(59,130,246,0)"/>
+            </radialGradient>
+            <radialGradient id="glow2" cx="20%" cy="70%" r="40%">
+              <stop offset="0%" style="stop-color:rgba(0,156,59,0.2)"/>
+              <stop offset="100%" style="stop-color:rgba(0,156,59,0)"/>
+            </radialGradient>
+            <filter id="glow-filter">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <clipPath id="roundedClip">
+              <rect width="800" height="420" rx="16"/>
+            </clipPath>
+          </defs>
+          <g clip-path="url(#roundedClip)">
+            <!-- BG -->
+            <rect width="800" height="420" fill="url(#bgGrad)"/>
+            <rect width="800" height="420" fill="url(#glow1)"/>
+            <rect width="800" height="420" fill="url(#glow2)"/>
+
+            <!-- GRID LINES -->
+            <g stroke="rgba(59,130,246,0.08)" stroke-width="1">
+              <line x1="0" y1="60" x2="800" y2="60"/>
+              <line x1="0" y1="120" x2="800" y2="120"/>
+              <line x1="0" y1="180" x2="800" y2="180"/>
+              <line x1="0" y1="240" x2="800" y2="240"/>
+              <line x1="0" y1="300" x2="800" y2="300"/>
+              <line x1="0" y1="360" x2="800" y2="360"/>
+              <line x1="100" y1="0" x2="100" y2="420"/>
+              <line x1="200" y1="0" x2="200" y2="420"/>
+              <line x1="400" y1="0" x2="400" y2="420"/>
+              <line x1="600" y1="0" x2="600" y2="420"/>
+              <line x1="700" y1="0" x2="700" y2="420"/>
+            </g>
+
+            <!-- BRASÃO DO BRASIL (simplified decorative) -->
+            <!-- Círculo externo verde -->
+            <circle cx="640" cy="210" r="130" fill="none" stroke="#009c3b" stroke-width="2" opacity="0.5"/>
+            <!-- Círculo azul do brasão -->
+            <circle cx="640" cy="210" r="95" fill="rgba(0,0,50,0.4)" stroke="#3B82F6" stroke-width="1.5" opacity="0.6"/>
+            <!-- Estrelas ao redor -->
+            <g filter="url(#glow-filter)" opacity="0.7">
+              <text x="640" y="100" text-anchor="middle" font-size="12" fill="#FFDF00">★</text>
+              <text x="700" y="120" text-anchor="middle" font-size="10" fill="#FFDF00">★</text>
+              <text x="740" y="160" text-anchor="middle" font-size="11" fill="#FFDF00">★</text>
+              <text x="750" y="215" text-anchor="middle" font-size="10" fill="#FFDF00">★</text>
+              <text x="740" y="265" text-anchor="middle" font-size="11" fill="#FFDF00">★</text>
+              <text x="700" y="305" text-anchor="middle" font-size="10" fill="#FFDF00">★</text>
+              <text x="640" y="325" text-anchor="middle" font-size="12" fill="#FFDF00">★</text>
+              <text x="580" y="305" text-anchor="middle" font-size="10" fill="#FFDF00">★</text>
+              <text x="538" y="265" text-anchor="middle" font-size="11" fill="#FFDF00">★</text>
+              <text x="528" y="215" text-anchor="middle" font-size="10" fill="#FFDF00">★</text>
+              <text x="540" y="160" text-anchor="middle" font-size="11" fill="#FFDF00">★</text>
+              <text x="580" y="120" text-anchor="middle" font-size="10" fill="#FFDF00">★</text>
+            </g>
+            <!-- Símbolo central -->
+            <text x="640" y="200" text-anchor="middle" font-size="52" fill="rgba(59,130,246,0.3)">🏛️</text>
+            <text x="640" y="240" text-anchor="middle" font-size="14" fill="rgba(255,223,0,0.6)" font-weight="bold">BRASIL</text>
+
+            <!-- GRÁFICO DE BARRAS decorativo -->
+            <g transform="translate(30,280)">
+              <rect x="0" y="30" width="18" height="30" fill="rgba(59,130,246,0.4)" rx="2"/>
+              <rect x="24" y="15" width="18" height="45" fill="rgba(59,130,246,0.5)" rx="2"/>
+              <rect x="48" y="5" width="18" height="55" fill="rgba(59,130,246,0.6)" rx="2"/>
+              <rect x="72" y="20" width="18" height="40" fill="rgba(59,130,246,0.45)" rx="2"/>
+              <rect x="96" y="0" width="18" height="60" fill="url(#blueAcc)" rx="2"/>
+              <line x1="0" y1="60" x2="125" y2="60" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+              <text x="62" y="78" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.4)">ANÁLISE POLÍTICA</text>
+            </g>
+
+            <!-- LINHA DO TEMPO decorativa -->
+            <g transform="translate(30,80)">
+              <line x1="0" y1="0" x2="110" y2="0" stroke="rgba(59,130,246,0.4)" stroke-width="1.5"/>
+              <circle cx="0" cy="0" r="4" fill="#009c3b"/>
+              <circle cx="27" cy="0" r="3" fill="#3B82F6"/>
+              <circle cx="55" cy="0" r="3" fill="#3B82F6"/>
+              <circle cx="82" cy="0" r="3" fill="#3B82F6"/>
+              <circle cx="110" cy="0" r="4" fill="#FFDF00"/>
+              <text x="0" y="14" font-size="7" fill="rgba(255,255,255,0.5)" text-anchor="middle">1500</text>
+              <text x="27" y="14" font-size="7" fill="rgba(255,255,255,0.5)" text-anchor="middle">1822</text>
+              <text x="55" y="14" font-size="7" fill="rgba(255,255,255,0.5)" text-anchor="middle">1964</text>
+              <text x="82" y="14" font-size="7" fill="rgba(255,255,255,0.5)" text-anchor="middle">1985</text>
+              <text x="110" y="14" font-size="7" fill="rgba(255,223,0,0.7)" text-anchor="middle">2024</text>
+            </g>
+
+            <!-- OVERLAY GRADIENTE ESQUERDO para texto -->
+            <linearGradient id="textOverlay" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:rgba(3,7,18,0.98)"/>
+              <stop offset="60%" style="stop-color:rgba(3,7,18,0.85)"/>
+              <stop offset="100%" style="stop-color:rgba(3,7,18,0)"/>
+            </linearGradient>
+            <rect width="800" height="420" fill="url(#textOverlay)"/>
+
+            <!-- FAIXA VERDE AMARELA BRASIL (topo) -->
+            <rect x="0" y="0" width="800" height="4" fill="url(#greenGold)" opacity="0.8"/>
+            <!-- FAIXA AZUL (base) -->
+            <rect x="0" y="416" width="800" height="4" fill="url(#blueAcc)" opacity="0.7"/>
+
+            <!-- BADGE "NOVO CURSO" -->
+            <rect x="20" y="20" width="80" height="22" rx="11" fill="#3B82F6"/>
+            <text x="60" y="35" text-anchor="middle" font-size="9" fill="white" font-weight="700" letter-spacing="0.08em">NOVO CURSO</text>
+
+            <!-- TAG MATHEUS ACADEMY -->
+            <text x="20" y="76" font-size="11" fill="rgba(147,197,253,0.9)" font-weight="600" letter-spacing="0.04em">MATHEUS ACADEMY</text>
+            <line x1="20" y1="80" x2="200" y2="80" stroke="rgba(59,130,246,0.4)" stroke-width="0.5"/>
+
+            <!-- TITULO PRINCIPAL -->
+            <text x="20" y="128" font-size="38" fill="white" font-weight="800" font-family="Georgia, serif" letter-spacing="-0.01em">Política</text>
+            <text x="20" y="178" font-size="38" fill="white" font-weight="800" font-family="Georgia, serif" letter-spacing="-0.01em">Brasileira</text>
+            <!-- SUBTITULO -->
+            <text x="22" y="208" font-size="14" fill="rgba(147,197,253,0.85)" font-weight="500">Do Zero ao Avançado</text>
+
+            <!-- LINHA DIVISÓRIA -->
+            <rect x="20" y="222" width="60" height="2" fill="url(#blueAcc)" rx="1"/>
+
+            <!-- DESCRIÇÃO -->
+            <text x="20" y="248" font-size="11" fill="rgba(226,232,240,0.7)">Compreenda o sistema político do Brasil de forma</text>
+            <text x="20" y="264" font-size="11" fill="rgba(226,232,240,0.7)">profunda, crítica e estratégica. Da formação histórica</text>
+            <text x="20" y="280" font-size="11" fill="rgba(226,232,240,0.7)">ao cenário atual — com visão prática e analítica.</text>
+
+            <!-- STATS ROW -->
+            <rect x="20" y="308" width="360" height="36" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(59,130,246,0.2)" stroke-width="1"/>
+            <!-- Módulos -->
+            <text x="48" y="324" font-size="10" fill="rgba(148,163,184,0.8)">🏛️</text>
+            <text x="64" y="324" font-size="11" fill="white" font-weight="700">17</text>
+            <text x="79" y="324" font-size="9" fill="rgba(148,163,184,0.7)">Módulos</text>
+            <line x1="120" y1="314" x2="120" y2="336" stroke="rgba(59,130,246,0.25)" stroke-width="1"/>
+            <!-- Tópicos -->
+            <text x="130" y="324" font-size="10" fill="rgba(148,163,184,0.8)">📖</text>
+            <text x="146" y="324" font-size="11" fill="white" font-weight="700">119</text>
+            <text x="166" y="324" font-size="9" fill="rgba(148,163,184,0.7)">Tópicos</text>
+            <line x1="210" y1="314" x2="210" y2="336" stroke="rgba(59,130,246,0.25)" stroke-width="1"/>
+            <!-- Quizzes -->
+            <text x="220" y="324" font-size="10" fill="rgba(148,163,184,0.8)">🧠</text>
+            <text x="236" y="324" font-size="11" fill="white" font-weight="700">17</text>
+            <text x="251" y="324" font-size="9" fill="rgba(148,163,184,0.7)">Quizzes</text>
+            <line x1="290" y1="314" x2="290" y2="336" stroke="rgba(59,130,246,0.25)" stroke-width="1"/>
+            <!-- Cert -->
+            <text x="300" y="324" font-size="10" fill="rgba(148,163,184,0.8)">🎓</text>
+            <text x="316" y="324" font-size="9" fill="rgba(148,163,184,0.7)">Certificado</text>
+
+            <!-- CTA -->
+            <rect x="20" y="362" width="140" height="36" rx="10" fill="url(#blueAcc)"/>
+            <text x="90" y="384" text-anchor="middle" font-size="12" fill="white" font-weight="700">▶ Começar Agora</text>
+
+            <!-- DECORATIVE DOTS -->
+            <circle cx="790" cy="10" r="2" fill="rgba(59,130,246,0.5)"/>
+            <circle cx="780" cy="20" r="1.5" fill="rgba(59,130,246,0.4)"/>
+            <circle cx="795" cy="25" r="1" fill="rgba(59,130,246,0.3)"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- BOTÕES DE AÇÃO -->
+      <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;">
+        <button onclick="continueWhere()" style="background:var(--accent);color:#fff;border:none;padding:11px 22px;border-radius:10px;cursor:pointer;font-family:var(--font);font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px;transition:all 0.2s;-webkit-tap-highlight-color:transparent;" onmouseover="this.style.background='var(--accent-dark)'" onmouseout="this.style.background='var(--accent)'">
+          ▶ Continuar de onde parou
+        </button>
+        <button onclick="showSection('section-m1t0')" style="background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:11px 22px;border-radius:10px;cursor:pointer;font-family:var(--font);font-size:14px;transition:all 0.2s;-webkit-tap-highlight-color:transparent;">
+          🚀 Começar do início
+        </button>
+        <button class="surprise-btn" onclick="surpriseBox()">🎁 Surpresa</button>
+      </div>
+
+      <!-- MÓDULOS GRID -->
+      <div style="margin-bottom:14px;">
+        <h2 style="font-family:var(--font-serif);font-size:20px;font-weight:700;color:var(--text);margin-bottom:5px;">Grade de Módulos</h2>
+        <p style="font-size:13px;color:var(--text3);">Clique em qualquer módulo para acessar o conteúdo.</p>
+      </div>
+      <div id="moduleGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:36px;"></div>
+
+      <!-- CERTIFICATE -->
+      <div class="certificate-section" id="certSection" style="display:none;">
+        <div class="certificate-icon">🎓</div>
+        <div class="certificate-title">Parabéns! Curso Concluído!</div>
+        <div class="certificate-desc">Você completou 100% do curso Política Brasileira. Clique abaixo para gerar seu certificado.</div>
+        <button class="certificate-btn" onclick="generateCertificate()">📜 Gerar Certificado</button>
+      </div>
+      <canvas id="cert-canvas" width="900" height="600"></canvas>
+    </div>
+
+    <!-- DYNAMIC SECTIONS -->
+    <div id="dynamic-sections"></div>
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="https://t.me/matheusacademy" target="_blank">📱 Telegram</a>
+    <a href="https://instagram.com/matheusacademy" target="_blank">📷 Instagram</a>
+    <a href="index.html">🏠 Matheus Academy</a>
+  </div>
+  <div class="footer-copy">© 2025 Matheus Academy. Todos os direitos reservados.</div>
+</footer>
+
+<!-- BALÃO DE STATS FLUTUANTE -->
+<button class="stats-bubble" id="statsBubble" onclick="toggleStats()" title="Meu progresso">📊</button>
+<div class="stats-panel" id="statsPanel">
+  <div class="stats-panel-header">
+    <div class="stats-panel-title">🏆 Meu Progresso</div>
+    <button class="stats-close" onclick="toggleStats()">✕</button>
+  </div>
+  <div class="stats-body">
+    <!-- Timer embutido -->
+    <div class="timer-inside-stats">
+      <div class="timer-dot-green"></div>
+      <div style="flex:1">
+        <div class="timer-label">⏱ TEMPO DE ESTUDO HOJE</div>
+        <div class="timer-value" id="timerDisplay">00:00</div>
+      </div>
+    </div>
+    <!-- XP e Pontos -->
+    <div class="stats-row">
+      <div class="stats-row-icon">⚡</div>
+      <div class="stats-row-info">
+        <div class="stats-row-label">Pontos XP</div>
+        <div class="stats-row-value" id="statsXP">0 XP</div>
+        <div class="stats-progress-bar"><div class="stats-progress-fill" id="statsXPBar" style="width:0%"></div></div>
+      </div>
+    </div>
+    <!-- Progresso do curso -->
+    <div class="stats-row">
+      <div class="stats-row-icon">📚</div>
+      <div class="stats-row-info">
+        <div class="stats-row-label">Progresso do Curso</div>
+        <div class="stats-row-value" id="statsProgress">0 de 119 tópicos (0%)</div>
+        <div class="stats-progress-bar"><div class="stats-progress-fill" id="statsProgressBar" style="width:0%"></div></div>
+      </div>
+    </div>
+    <!-- Cursos em andamento -->
+    <div class="stats-row">
+      <div class="stats-row-icon">🎯</div>
+      <div class="stats-row-info">
+        <div class="stats-row-label">Curso Atual</div>
+        <div class="stats-row-value" style="font-size:12px">Política Brasileira</div>
+      </div>
+    </div>
+    <!-- Meta diária -->
+    <div class="meta-row">
+      <div class="meta-item">
+        <div class="meta-item-label">Meta Diária</div>
+        <div class="meta-item-value" id="statsDailyGoal">3 tópicos</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-item-label">Hoje</div>
+        <div class="meta-item-value" id="statsTodayDone">0</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-item-label">Módulos OK</div>
+        <div class="meta-item-value" id="statsModsDone">0</div>
+      </div>
+    </div>
+    <!-- Medalhas -->
+    <div class="stats-row">
+      <div class="stats-row-icon">🏅</div>
+      <div class="stats-row-info">
+        <div class="stats-row-label">Medalhas</div>
+        <div class="stats-medals" id="statsMedals">
+          <span class="stats-medal">🔰 Iniciante</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<button class="chat-bubble" onclick="toggleChat()">💬</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div>
+      <div class="chat-header-title">🤖 IA do Curso</div>
+      <div class="chat-header-sub">Política Brasileira</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg ai">Olá! Sou a IA deste curso. Pergunte qualquer coisa sobre Política Brasileira! 🏛️</div>
+  </div>
+  <div class="chat-remaining" id="chatRemaining">10 perguntas restantes</div>
+  <div class="chat-input-wrap">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Sua pergunta..." onkeypress="if(event.key==='Enter')sendChat()"/>
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- LOGOUT -->
+<button class="logout-corner" id="logoutCorner" onclick="doLogout()">Sair</button>
+
+<script>
+// ============================================================
+// COURSE DATA
+// ============================================================
+const COURSE_KEY = 'politica-brasileira';
+const PREFIX = 'POL_';
+const SALT = 'politicaBR_2024#MathAcad!xZ9';
+const COURSE_NAME = 'Política Brasileira — Do Zero ao Avançado';
+const TOTAL_TOPICS = 119;
+
+const modules = [
+  { id:1,  emoji:'🔰', title:'Fundamentos da Política',        category:'FUNDAMENTOS',    topics:['O que é política e por que ela existe','A importância da política na sociedade','Diferença entre política, governo e Estado','Como a política afeta sua vida diariamente','Poder, autoridade e legitimidade','Sistemas políticos no mundo','Introdução à política brasileira'] },
+  { id:2,  emoji:'🏛️', title:'Formação do Estado Brasileiro',  category:'HISTÓRIA',       topics:['Brasil Colônia e estrutura de poder','Brasil Império: organização política','A Proclamação da República','Primeira República e coronelismo','Era Vargas e centralização do poder','Ditadura militar no Brasil','Redemocratização e Constituição de 1988'] },
+  { id:3,  emoji:'⚖️', title:'Constituição Brasileira',        category:'DIREITO & ESTADO',topics:['O que é uma Constituição','Estrutura da Constituição de 1988','Direitos e garantias fundamentais','Separação dos poderes','Princípios da República','Cidadania e democracia','Como a Constituição impacta sua vida'] },
+  { id:4,  emoji:'🏛️', title:'Os Três Poderes',               category:'DIREITO & ESTADO',topics:['Poder Executivo: Presidente, Governadores, Prefeitos','Poder Legislativo: Deputados e Senadores','Poder Judiciário: Juízes e tribunais','Funções de cada poder','Equilíbrio e independência','Conflitos entre poderes','Casos reais no Brasil'] },
+  { id:5,  emoji:'🗳️', title:'Sistema Eleitoral Brasileiro',   category:'ELEIÇÕES',       topics:['Como funcionam as eleições','Voto obrigatório e facultativo','Sistema proporcional e majoritário','Partidos políticos','Campanhas eleitorais','Fake news e manipulação política','Como analisar um candidato'] },
+  { id:6,  emoji:'🏢', title:'Partidos Políticos',             category:'ELEIÇÕES',       topics:['O que são partidos','Ideologias políticas: direita, esquerda, centro','Como surgem partidos no Brasil','Funcionamento interno dos partidos','Financiamento partidário','Coligações e alianças','Influência dos partidos no poder'] },
+  { id:7,  emoji:'💰', title:'Economia e Política',            category:'ECONOMIA',       topics:['Relação entre política e economia','Impostos e arrecadação','Orçamento público','Gastos do governo','Dívida pública','Política fiscal e monetária','Impacto na vida do cidadão'] },
+  { id:8,  emoji:'📊', title:'Gestão Pública',                 category:'ECONOMIA',       topics:['O que é gestão pública','Administração do Estado','Eficiência vs burocracia','Políticas públicas','Saúde, educação e segurança','Planejamento governamental','Avaliação de resultados'] },
+  { id:9,  emoji:'⚖️', title:'Corrupção e Transparência',      category:'CIDADANIA',      topics:['O que é corrupção','Tipos de corrupção','Casos históricos no Brasil','Como funciona o combate à corrupção','Órgãos fiscalizadores','Lei da transparência','Como o cidadão pode fiscalizar'] },
+  { id:10, emoji:'📺', title:'Mídia e Política',               category:'SOCIEDADE',      topics:['Influência da mídia na política','Manipulação de informação','Redes sociais na política','Opinião pública','Marketing político','Fake news na era digital','Como se proteger da manipulação'] },
+  { id:11, emoji:'🌎', title:'Política Internacional',         category:'MUNDO',          topics:['Relações exteriores do Brasil','Diplomacia brasileira','Organizações internacionais','Geopolítica e o Brasil','Comércio internacional','Conflitos globais e impacto no Brasil','O Brasil no cenário mundial'] },
+  { id:12, emoji:'🏙️', title:'Política Local',                category:'CIDADANIA',      topics:['Prefeituras e governos estaduais','Câmara de vereadores','Assembleias legislativas','Leis municipais','Problemas locais e soluções políticas','Como participar da política local','Fiscalização do poder local'] },
+  { id:13, emoji:'📢', title:'Participação Popular',           category:'CIDADANIA',      topics:['Direito de participação','Plebiscito e referendo','Iniciativa popular','Conselhos municipais','Movimentos sociais','Orçamento participativo','Como ser um cidadão ativo'] },
+  { id:14, emoji:'🔍', title:'Análise Política Crítica',       category:'AVANÇADO',       topics:['Como analisar discursos políticos','Populismo e demagogia','Pensamento político crítico','Checagem de fatos','Fontes confiáveis','Viés midiático','Formando sua própria opinião'] },
+  { id:15, emoji:'⚡', title:'Crises e Instabilidades',        category:'AVANÇADO',       topics:['O que é crise política','Impeachment no Brasil','Golpe de estado x democracia','Polarização política','Crises econômicas e política','Resiliência democrática','Aprendizados das crises brasileiras'] },
+  { id:16, emoji:'🚀', title:'Futuro da Política Brasileira',  category:'AVANÇADO',       topics:['Tendências políticas mundiais','Tecnologia e democracia','E-democracy','Nova geração política','Desafios do Brasil','Oportunidades para mudança','Construindo um Brasil melhor'] },
+  { id:17, emoji:'🎓', title:'Conclusão e Visão Estratégica',  category:'CONCLUSÃO',      topics:['Síntese do curso','Como aplicar o conhecimento','Leitura obrigatória','Fontes para continuar estudando','Avaliação final','Projeto pessoal de cidadania','Seu próximo passo'] }
+];
+
+// ============================================================
+// FONT SIZE — GLOBAL (5px a 30px)
+// ============================================================
+let fontSize = ls('font_size', 16);
+
+function applyFontSize() {
+  document.documentElement.style.setProperty('--font-size-content', fontSize + 'px');
+  document.querySelectorAll('.content-body').forEach(el => el.style.fontSize = fontSize + 'px');
+  document.querySelectorAll('.font-size-display').forEach(el => el.textContent = fontSize + 'px');
+}
+
+function changeFontSize(delta) {
+  fontSize = Math.min(30, Math.max(5, fontSize + delta));
+  applyFontSize();
+  lsSet('font_size', fontSize);
+  showToast('Tamanho: ' + fontSize + 'px', 'accent', 1500);
+}
+
+// ============================================================
+// AUDIO — velocidade via botões (não select)
+// ============================================================
+let currentSpeed = 1.0;
+const speeds = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
+let currentSpeedIdx = 2; // começa em 1.0
+
+function setSpeed(idx) {
+  currentSpeedIdx = Math.max(0, Math.min(speeds.length - 1, idx));
+  currentSpeed = speeds[currentSpeedIdx];
+  // Atualiza todos os botões de velocidade na página
+  document.querySelectorAll('.speed-btn').forEach(btn => {
+    btn.classList.toggle('active-speed', parseFloat(btn.dataset.speed) === currentSpeed);
+  });
+  showToast('Velocidade: ' + currentSpeed + 'x', 'accent', 1200);
+}
+
+function increaseSpeed() {
+  setSpeed(currentSpeedIdx + 1);
+}
+function decreaseSpeed() {
+  setSpeed(currentSpeedIdx - 1);
+}
+
+function speakCurrentSection() {
+  const activeSection = document.querySelector('.section.active');
+  if (!activeSection) return;
+  const body = activeSection.querySelector('.content-body');
+  if (!body) return;
+  speakText(body.innerText || body.textContent, currentSpeed);
+}
+
+function speakText(text, speed) {
+  if (!window.speechSynthesis) {
+    showToast('Áudio não suportado neste navegador', 'accent');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'pt-BR';
+  utt.rate = parseFloat(speed) || currentSpeed;
+  // Tenta voz PT-BR
+  const trySpeak = () => {
+    const voices = window.speechSynthesis.getVoices();
+    const ptVoice = voices.find(v => v.lang.startsWith('pt')) || voices[0];
+    if (ptVoice) utt.voice = ptVoice;
+    window.speechSynthesis.speak(utt);
+  };
+  if (window.speechSynthesis.getVoices().length > 0) {
+    trySpeak();
+  } else {
+    window.speechSynthesis.onvoiceschanged = trySpeak;
+  }
+}
+
+function stopAudio() {
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+    showToast('Áudio pausado', 'accent', 1200);
+  }
+}
+
+// ============================================================
+// QUIZZES
+// ============================================================
+function getQuizzes(modId) {
+  const base = {
+    questions: [
+      { q: `Qual é o principal tema do Módulo ${modId}?`, options: [modules[modId-1].title, 'Outro tema', 'Tema aleatório', 'Nenhum dos anteriores'], correct: 0 },
+      { q: 'Quando foi promulgada a Constituição Cidadã?', options: ['1964', '1985', '1988', '2002'], correct: 2 },
+      { q: 'Quais são os três poderes do Estado brasileiro?', options: ['Executivo, Militar, Judiciário', 'Executivo, Legislativo, Judiciário', 'Presidente, Congresso, STF', 'Federal, Estadual, Municipal'], correct: 1 },
+      { q: 'O que é democracia representativa?', options: ['Sistema de partido único', 'Sistema onde cidadãos votam diretamente em leis', 'Sistema onde cidadãos elegem representantes', 'Governo militar com apoio popular'], correct: 2 },
+      { q: 'O que é o federalismo brasileiro?', options: ['O Brasil é governado apenas pelo presidente', 'Existe autonomia entre União, estados e municípios', 'O governo federal controla todos os estados', 'Os estados podem se separar do Brasil'], correct: 1 }
+    ]
+  };
+  return base;
+}
+
+// ============================================================
+// FLASHCARDS
+// ============================================================
+const flashcards = {
+  1: [
+    { q:'O que é política?', a:'Processo de tomada de decisões coletivas e gestão do poder em uma sociedade.' },
+    { q:"Quem afirmou que o homem é um 'animal político'?", a:'Aristóteles, filósofo grego do século IV a.C.' },
+    { q:'Qual a diferença entre Estado e Governo?', a:'Estado é a estrutura permanente de poder; Governo é quem ocupa temporariamente o poder.' },
+    { q:'O que é legitimidade política?', a:'O reconhecimento pela população do direito de um governo de exercer o poder.' },
+    { q:'O que é patrimonialismo?', a:'Tendência de tratar o Estado como extensão dos interesses privados dos governantes.' }
+  ]
+};
+for (let i = 2; i <= 17; i++) {
+  flashcards[i] = [
+    { q:`Qual o principal tema do Módulo ${i}?`, a: modules[i-1].title },
+    { q:'Quando foi promulgada a Constituição Cidadã?', a:'Em 5 de outubro de 1988, após o fim da ditadura militar.' },
+    { q:'Quais são os três poderes do Estado brasileiro?', a:'Executivo, Legislativo e Judiciário, independentes e harmônicos entre si.' },
+    { q:'O que é democracia representativa?', a:'Sistema onde os cidadãos elegem representantes para tomar decisões políticas em seu nome.' },
+    { q:'O que é coronelismo?', a:'Sistema de poder oligárquico no qual grandes proprietários rurais controlavam a política local.' }
+  ];
+}
+
+// ============================================================
+// NAV STRUCTURE
+// ============================================================
+const navStructure = [];
+modules.forEach(mod => {
+  mod.topics.forEach((topic, ti) => {
+    navStructure.push({ modId: mod.id, topicIdx: ti, sectionId:`section-m${mod.id}t${ti}`, title:topic, modTitle:mod.title });
+  });
+  navStructure.push({ modId:mod.id, topicIdx:'summary', sectionId:`section-m${mod.id}summary`, title:`Resumo — ${mod.title}`, modTitle:mod.title });
+  navStructure.push({ modId:mod.id, topicIdx:'quiz', sectionId:`section-m${mod.id}quiz`, title:`Quiz — ${mod.title}`, modTitle:mod.title });
+});
+
+// ============================================================
+// UTILS
+// ============================================================
+function ls(key, def) { try { const v = localStorage.getItem(PREFIX+key); return v!==null?JSON.parse(v):def; } catch(e){return def;} }
+function lsSet(key, val) { try { localStorage.setItem(PREFIX+key, JSON.stringify(val)); } catch(e){} }
+
+function isUnlocked(modId, topicIdx) {
+  const tier = ls('tier','free');
+  if (tier==='premium'||tier==='pro') return true;
+  if (modId===1&&(topicIdx===0||topicIdx==='quiz')) return true;
+  return false;
+}
+
+function showToast(msg, type='success', duration=3000) {
+  const tc = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  const icons = {success:'✅',accent:'🎯',xp:'⚡',surprise:'🎁'};
+  t.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+  tc.appendChild(t);
+  setTimeout(()=>t.remove(), duration);
+}
+
+function showMotivation(msg) {
+  const m = document.getElementById('motivationToast');
+  m.textContent = msg;
+  m.style.display = 'block';
+  setTimeout(()=>m.style.display='none', 3500);
+}
+
+function addXP(pts) {
+  let xp = ls('xp',0)+pts;
+  lsSet('xp', xp);
+  try { let gx=parseInt(localStorage.getItem('ma_xp')||'0')+pts; localStorage.setItem('ma_xp', gx); } catch(e){}
+  document.getElementById('xpBadge').textContent = ls('xp',0)+' XP';
+  showToast(`+${pts} XP ganhos!`, 'accent');
+  updateStatsPanel();
+}
+
+// ============================================================
+// TIMER (embutido no stats panel)
+// ============================================================
+let timerInterval, timerSeconds = ls('timer_seconds',0), timerRunning = false;
+let todayKey = 'timer_today_' + new Date().toDateString();
+let todaySeconds = ls(todayKey, 0);
+
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    todaySeconds++;
+    lsSet('timer_seconds', timerSeconds);
+    lsSet(todayKey, todaySeconds);
+    const m = String(Math.floor(timerSeconds/60)).padStart(2,'0');
+    const s = String(timerSeconds%60).padStart(2,'0');
+    const display = document.getElementById('timerDisplay');
+    if (display) display.textContent = `${m}:${s}`;
+  }, 1000);
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { clearInterval(timerInterval); timerRunning=false; }
+  else startTimer();
+});
+
+// ============================================================
+// STATS PANEL
+// ============================================================
+function toggleStats() {
+  const panel = document.getElementById('statsPanel');
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open')) updateStatsPanel();
+}
+
+function updateStatsPanel() {
+  const {count, pct} = getProgress();
+  const xp = ls('xp', 0);
+  document.getElementById('statsXP').textContent = xp + ' XP';
+  document.getElementById('statsXPBar').style.width = Math.min(100, xp/10) + '%';
+  document.getElementById('statsProgress').textContent = `${count} de ${TOTAL_TOPICS} tópicos (${pct}%)`;
+  document.getElementById('statsProgressBar').style.width = pct + '%';
+  // Today done
+  const done = ls('completed', {});
+  const today = new Date().toDateString();
+  const todayDoneKey = 'today_done_' + today;
+  const todayDone = ls(todayDoneKey, 0);
+  document.getElementById('statsTodayDone').textContent = todayDone;
+  // Mods done
+  const modsDone = modules.filter(m => m.topics.every((_,ti) => done[`section-m${m.id}t${ti}`])).length;
+  document.getElementById('statsModsDone').textContent = modsDone;
+  // Medals
+  const medals = [];
+  if (xp >= 1) medals.push('🔰 Iniciante');
+  if (xp >= 50) medals.push('⭐ Explorador');
+  if (xp >= 200) medals.push('🏆 Estudante');
+  if (xp >= 500) medals.push('🎓 Expert');
+  if (count >= TOTAL_TOPICS) medals.push('💎 Mestre');
+  document.getElementById('statsMedals').innerHTML = medals.map(m=>`<span class="stats-medal">${m}</span>`).join('');
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+function checkAuth() {
+  const user = localStorage.getItem('ma_user');
+  if (user) {
+    document.getElementById('guest-bar').style.display = 'none';
+    document.getElementById('logged-bar').style.display = 'flex';
+    document.getElementById('userNameBtn').textContent = user;
+    document.getElementById('xpBadge').textContent = ls('xp',0)+' XP';
+    document.getElementById('logoutCorner').style.display = 'block';
+  }
+}
+function goToProfile() { window.location.href = 'perfil.html'; }
+function toggleDotsMenu() { document.getElementById('dotsMenu').classList.toggle('open'); }
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.three-dots-btn') && !e.target.closest('.dots-menu'))
+    document.getElementById('dotsMenu').classList.remove('open');
+  const sr = document.getElementById('searchResults');
+  if (!e.target.closest('.search-wrap')) sr.classList.remove('open');
+  const ht = document.getElementById('highlightToolbar');
+  if (!e.target.closest('.highlight-toolbar') && !window.getSelection()?.toString())
+    setTimeout(()=>ht.classList.remove('show'), 200);
+  const sp = document.getElementById('statsPanel');
+  if (!e.target.closest('.stats-panel') && !e.target.closest('.stats-bubble') && sp.classList.contains('open'))
+    sp.classList.remove('open');
+});
+function doLogout() {
+  localStorage.removeItem('ma_user'); localStorage.removeItem('ma_email'); localStorage.removeItem('ma_tier');
+  window.location.reload();
+}
+function checkSubscriber() {
+  const user = localStorage.getItem('ma_user');
+  if (user) { closeLock(); showToast('Verificando assinatura...','accent'); }
+  else window.location.href='login.html';
+}
+
+// ============================================================
+// LOCK
+// ============================================================
+function openLock() { document.getElementById('lockOverlay').classList.add('show'); }
+function closeLock() { document.getElementById('lockOverlay').classList.remove('show'); }
+
+// ============================================================
+// THEME
+// ============================================================
+function toggleTheme() {
+  const html = document.documentElement;
+  const cur = html.getAttribute('data-theme');
+  const next = cur==='dark'?'light':'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('themeBtn').textContent = next==='dark'?'🌙':'☀️';
+  lsSet('theme', next);
+}
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+}
+
+// ============================================================
+// HIGHLIGHT
+// ============================================================
+function applyHighlight() {
+  const sel = window.getSelection();
+  if (!sel||!sel.toString()) return;
+  try {
+    const range = sel.getRangeAt(0);
+    const span = document.createElement('span');
+    span.className = 'highlight-text';
+    range.surroundContents(span);
+    sel.removeAllRanges();
+    document.getElementById('highlightToolbar').classList.remove('show');
+    showToast('Texto destacado!','accent',2000);
+  } catch(e){}
+}
+function removeHighlight() {
+  document.querySelectorAll('.highlight-text').forEach(el=>{
+    const p=el.parentNode;
+    while(el.firstChild) p.insertBefore(el.firstChild,el);
+    p.removeChild(el);
+  });
+  document.getElementById('highlightToolbar').classList.remove('show');
+}
+document.addEventListener('mouseup', ()=>{
+  const sel = window.getSelection();
+  if (sel&&sel.toString().length>2) {
+    const ht = document.getElementById('highlightToolbar');
+    const rect = sel.getRangeAt(0).getBoundingClientRect();
+    ht.style.top = (rect.top+window.scrollY-44)+'px';
+    ht.style.left = (rect.left+rect.width/2-60)+'px';
+    ht.classList.add('show');
+  }
+});
+
+// ============================================================
+// SEARCH
+// ============================================================
+const allTopics = [];
+modules.forEach(mod => {
+  mod.topics.forEach((t,ti) => {
+    allTopics.push({ title:t, modTitle:mod.title, modId:mod.id, topicIdx:ti, sectionId:`section-m${mod.id}t${ti}` });
+  });
+});
+function doSearch(q) {
+  const sr = document.getElementById('searchResults');
+  if (!q||q.length<2) { sr.classList.remove('open'); return; }
+  const results = allTopics.filter(t=>t.title.toLowerCase().includes(q.toLowerCase())||t.modTitle.toLowerCase().includes(q.toLowerCase())).slice(0,8);
+  sr.innerHTML = results.map(r=>`<div class="search-result-item" onclick="showSection('${r.sectionId}')"><div class="sr-module">${r.modTitle}</div>${r.title}</div>`).join('')||'<div class="search-result-item">Nenhum resultado</div>';
+  sr.classList.add('open');
+}
+function showSearchResults() {
+  const q = document.getElementById('searchInput').value;
+  if (q&&q.length>=2) doSearch(q);
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function getProgress() {
+  const done = ls('completed',{});
+  const count = Object.keys(done).filter(k=>done[k]).length;
+  return { count, pct: Math.round(count/TOTAL_TOPICS*100) };
+}
+function updateProgressUI() {
+  const {count,pct} = getProgress();
+  document.getElementById('progressLabel').textContent = pct+'%';
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progress-bar-top').style.width = pct+'%';
+  document.getElementById('sidebarProgressText').textContent = `${count} de ${TOTAL_TOPICS} tópicos`;
+  document.getElementById('sidebarProgressPct').textContent = pct+'%';
+  document.getElementById('sidebarProgressFill').style.width = pct+'%';
+  if (pct===100) document.getElementById('certSection').style.display='block';
+  updateSidebarDots();
+  updateStatsPanel();
+}
+
+function markDone(sectionId, modId, topicIdx) {
+  const done = ls('completed',{});
+  done[sectionId] = true;
+  lsSet('completed', done);
+  lsSet('last', sectionId);
+  // Today counter
+  const todayDoneKey2 = 'today_done_' + new Date().toDateString();
+  lsSet(todayDoneKey2, (ls(todayDoneKey2,0)+1));
+  addXP(10);
+  updateProgressUI();
+  const btn = document.getElementById('doneBtn_'+sectionId);
+  if (btn) { btn.textContent='✅ Concluído'; btn.className='done-btn completed'; }
+  const check = document.getElementById(`check_m${modId}t${topicIdx}`);
+  if (check) { check.className='topic-check done'; check.textContent='✓'; }
+  // Atualiza card de tópico no carrossel
+  const card = document.getElementById(`tcard_${sectionId}`);
+  if (card) card.classList.add('done-card');
+}
+
+// ============================================================
+// NOTES
+// ============================================================
+function saveNote(sectionId) {
+  const ta = document.getElementById('note_'+sectionId);
+  if (ta) { lsSet('note_'+sectionId, ta.value); showToast('Anotação salva!','success',2000); }
+}
+function loadNote(sectionId) {
+  const ta = document.getElementById('note_'+sectionId);
+  if (ta) ta.value = ls('note_'+sectionId,'');
+}
+
+// ============================================================
+// QUIZ
+// ============================================================
+function submitQuiz(modId) {
+  const q = getQuizzes(modId);
+  let score = 0;
+  q.questions.forEach((qu,qi) => {
+    const selected = document.querySelector(`input[name="quiz${modId}_${qi}"]:checked`);
+    const opts = document.querySelectorAll(`.quiz-opt-${modId}-${qi}`);
+    opts.forEach((opt,oi) => {
+      if (oi===qu.correct) opt.classList.add('correct');
+      else if (selected&&parseInt(selected.value)===oi) opt.classList.add('wrong');
+    });
+    if (selected&&parseInt(selected.value)===qu.correct) score++;
+  });
+  const res = document.getElementById('quizResult_'+modId);
+  const pct = Math.round(score/q.questions.length*100);
+  if (pct>=60) {
+    res.className='quiz-result show good';
+    res.textContent=`🎉 Parabéns! ${score}/${q.questions.length} corretas (${pct}%). Excelente!`;
+    addXP(50);
+    showMotivation('🏆 Módulo dominado!');
+    setTimeout(()=>showFlashcards(modId),1500);
+  } else {
+    res.className='quiz-result show bad';
+    res.textContent=`📚 ${score}/${q.questions.length} corretas (${pct}%). Revise e tente novamente.`;
+  }
+  document.querySelectorAll(`input[name^="quiz${modId}_"]`).forEach(r=>r.disabled=true);
+  const subBtn = document.querySelector(`[onclick="submitQuiz(${modId})"]`);
+  if (subBtn) subBtn.disabled=true;
+}
+
+// ============================================================
+// FLASHCARDS
+// ============================================================
+function showFlashcards(modId) {
+  const fw = document.getElementById('flashwrap_'+modId);
+  if (fw) { fw.style.display='block'; showToast('Flashcards desbloqueados! 🃏','accent'); }
+}
+function flipCard(el) { el.classList.toggle('flipped'); }
+
+// ============================================================
+// SURPRISE
+// ============================================================
+function surpriseBox() {
+  const prizes=[5,10,15,25,50];
+  const pts=prizes[Math.floor(Math.random()*prizes.length)];
+  addXP(pts);
+  showToast(`🎁 Caixa Surpresa! +${pts} XP!`,'surprise');
+}
+
+// ============================================================
+// CERTIFICATE
+// ============================================================
+function generateCertificate() {
+  const canvas = document.getElementById('cert-canvas');
+  const ctx = canvas.getContext('2d');
+  const name = localStorage.getItem('ma_user')||'Estudante';
+  const now = new Date().toLocaleDateString('pt-BR');
+  ctx.fillStyle='#0a0f1e'; ctx.fillRect(0,0,900,600);
+  ctx.strokeStyle='#3B82F6'; ctx.lineWidth=8; ctx.strokeRect(20,20,860,560);
+  ctx.strokeStyle='rgba(59,130,246,0.3)'; ctx.lineWidth=2; ctx.strokeRect(30,30,840,540);
+  ctx.fillStyle='#3B82F6'; ctx.font='bold 18px serif'; ctx.textAlign='center';
+  ctx.fillText('MATHEUS ACADEMY',450,80);
+  ctx.fillStyle='#e2e8f0'; ctx.font='bold 36px serif';
+  ctx.fillText('CERTIFICADO DE CONCLUSÃO',450,160);
+  ctx.fillStyle='#94a3b8'; ctx.font='18px sans-serif';
+  ctx.fillText('Este certificado é conferido a',450,230);
+  ctx.fillStyle='#93C5FD'; ctx.font='bold 40px serif';
+  ctx.fillText(name,450,290);
+  ctx.fillStyle='#94a3b8'; ctx.font='18px sans-serif';
+  ctx.fillText('pela conclusão com êxito do curso',450,340);
+  ctx.fillStyle='#e2e8f0'; ctx.font='bold 22px serif';
+  ctx.fillText('Política Brasileira — Do Zero ao Avançado',450,390);
+  ctx.fillStyle='#64748b'; ctx.font='14px sans-serif';
+  ctx.fillText(`Emitido em ${now}`,450,450);
+  canvas.style.display='block';
+  const link=document.createElement('a');
+  link.download=`certificado-politica-brasileira-${name}.png`;
+  link.href=canvas.toDataURL();
+  link.click();
+  canvas.style.display='none';
+  showToast('🎓 Certificado gerado!','success');
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+let currentSection = 'section-home';
+function showSection(id) {
+  const match = id.match(/section-m(\d+)t(\d+)/);
+  if (match) { const m=parseInt(match[1]),t=parseInt(match[2]); if (!isUnlocked(m,t)){ openLock(); return; } }
+  const matchS = id.match(/section-m(\d+)summary/);
+  if (matchS&&!isUnlocked(parseInt(matchS[1]),1)){ openLock(); return; }
+  const matchQ = id.match(/section-m(\d+)quiz/);
+  if (matchQ&&parseInt(matchQ[1])!==1&&!isUnlocked(parseInt(matchQ[1]),1)){ openLock(); return; }
+
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('active');
+    currentSection = id;
+    lsSet('last', id);
+    window.scrollTo({top:0,behavior:'smooth'});
+    loadNote(id);
+    // sidebar active
+    document.querySelectorAll('.module-header').forEach(h=>h.classList.remove('active'));
+    document.querySelectorAll('.topic-item').forEach(ti=>ti.classList.remove('active'));
+    const am = id.match(/section-m(\d+)/);
+    if (am) {
+      const mId = parseInt(am[1]);
+      const mh = document.getElementById('modHeader_'+mId);
+      if (mh) mh.classList.add('active');
+      const at = document.getElementById('topicItem_'+id);
+      if (at) at.classList.add('active');
+      const tl = document.getElementById('topicList_'+mId);
+      if (tl) { tl.classList.add('open'); const arrow=document.getElementById('arrow_'+mId); if(arrow)arrow.classList.add('open'); }
+    }
+    if (window.innerWidth<900) closeSidebar();
+    // Aplica font size
+    applyFontSize();
+    // Atualiza botões de velocidade
+    document.querySelectorAll('.speed-btn').forEach(btn => {
+      btn.classList.toggle('active-speed', parseFloat(btn.dataset.speed) === currentSpeed);
+    });
+  }
+}
+
+function continueWhere() {
+  const last = ls('last', null);
+  if (last&&document.getElementById(last)) showSection(last);
+  else showSection('section-m1t0');
+}
+
+// ============================================================
+// SIDEBAR BUILD
+// ============================================================
+function updateSidebarDots() {
+  const done = ls('completed',{});
+  modules.forEach(mod => {
+    const modDone = mod.topics.every((_,ti)=>done[`section-m${mod.id}t${ti}`]);
+    const numEl = document.getElementById('modNum_'+mod.id);
+    const dotEl = document.getElementById('modDot_'+mod.id);
+    if (numEl) { numEl.className = modDone?'module-num done':(currentSection.includes(`m${mod.id}`)?'module-num active-num':'module-num'); numEl.textContent=modDone?'✓':mod.id; }
+    if (dotEl) dotEl.className = modDone?'module-dot done':(currentSection.includes(`m${mod.id}`)?'module-dot active':'module-dot');
+    mod.topics.forEach((_,ti)=>{
+      const check = document.getElementById(`check_m${mod.id}t${ti}`);
+      if (check&&done[`section-m${mod.id}t${ti}`]){ check.className='topic-check done'; check.textContent='✓'; }
+    });
+  });
+}
+
+function buildSidebar() {
+  const ml = document.getElementById('moduleList');
+  let lastCat = '';
+  ml.innerHTML = '';
+  modules.forEach(mod => {
+    if (mod.category!==lastCat) {
+      const cat = document.createElement('div');
+      cat.className = 'module-category';
+      cat.textContent = mod.category;
+      ml.appendChild(cat);
+      lastCat = mod.category;
+    }
+    const item = document.createElement('div');
+    item.className = 'module-item';
+    item.innerHTML = `
+      <div class="module-header" id="modHeader_${mod.id}" onclick="toggleAccordion(${mod.id})">
+        <div class="module-num" id="modNum_${mod.id}">${mod.id}</div>
+        <div class="module-title-sidebar">${mod.emoji} ${mod.title}</div>
+        <div class="module-dot" id="modDot_${mod.id}"></div>
+        <div class="module-arrow" id="arrow_${mod.id}">›</div>
+      </div>
+      <div class="topics-list" id="topicList_${mod.id}">
+        ${mod.topics.map((t,ti)=>`
+          <div class="topic-item" id="topicItem_section-m${mod.id}t${ti}" onclick="showSection('section-m${mod.id}t${ti}')">
+            <div class="topic-check" id="check_m${mod.id}t${ti}"></div>
+            <span>${t}</span>
+          </div>
+        `).join('')}
+        <div class="topic-item" onclick="showSection('section-m${mod.id}summary')">
+          <div class="topic-check"></div><span>📋 Resumo</span>
+        </div>
+        <div class="topic-item" onclick="showSection('section-m${mod.id}quiz')">
+          <div class="topic-check"></div><span>🧠 Quiz</span>
+        </div>
+      </div>`;
+    ml.appendChild(item);
+  });
+}
+
+function toggleAccordion(modId) {
+  const tl = document.getElementById('topicList_'+modId);
+  const arrow = document.getElementById('arrow_'+modId);
+  tl.classList.toggle('open');
+  if (arrow) arrow.classList.toggle('open');
+}
+
+// ============================================================
+// MODULE GRID
+// ============================================================
+function buildModuleGrid() {
+  const grid = document.getElementById('moduleGrid');
+  const done = ls('completed',{});
+  grid.innerHTML = modules.map(mod => {
+    const topicsDone = mod.topics.filter((_,ti)=>done[`section-m${mod.id}t${ti}`]).length;
+    const pct = Math.round(topicsDone/mod.topics.length*100);
+    const isLocked = !isUnlocked(mod.id,1)&&mod.id!==1;
+    return `
+      <div class="module-grid-item" onclick="showSection('section-m${mod.id}t0')">
+        <div style="font-size:26px;margin-bottom:8px">${mod.emoji}</div>
+        <div style="font-size:10px;color:var(--text3);font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px">Módulo ${mod.id}</div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.3">${mod.title}</div>
+        <div style="height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-bottom:4px">
+          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--accent),var(--accent-light));border-radius:2px;transition:width 0.5s"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text3)">${topicsDone}/${mod.topics.length} · ${pct}%</div>
+        ${isLocked?'<div style="position:absolute;top:10px;right:10px;font-size:14px">🔒</div>':''}
+      </div>`;
+  }).join('');
+}
+
+// ============================================================
+// GENERATE CONTENT (rico)
+// ============================================================
+function generateContent(modId, topicIdx, modTitle, topicTitle) {
+  const richContents = {
+    '1-0': `<h2>O que é política e por que ela existe</h2>
+<p>Política vem do grego <em>polis</em> (cidade-estado) e <em>politiká</em> (assuntos da cidade). Para Aristóteles, o ser humano é um <em>animal político</em> — somos, por natureza, seres sociais que precisamos viver em comunidade e, portanto, precisamos de regras, acordos e decisões coletivas para organizarmos nossa convivência.</p>
+<p>A política existe porque os recursos são escassos, as pessoas têm interesses diferentes e, sem alguma forma de organização coletiva, a convivência em sociedade seria impossível. É a política — entendida no sentido mais amplo — que define <strong>quem decide, como decide e em benefício de quem decide</strong>.</p>
+<div class="highlight-box"><div class="box-title">💡 Definição Essencial</div>Política é o processo pelo qual grupos humanos tomam decisões coletivas e administram conflitos de interesse, determinando a distribuição de poder, recursos e oportunidades em uma sociedade.</div>
+<h3>Por que a política importa para você</h3>
+<p>Tudo que o Estado faz — ou deixa de fazer — afeta diretamente a sua vida. Impostos, saúde, educação, segurança, infraestrutura, previdência social, leis trabalhistas: todas essas áreas são determinadas por decisões políticas. Quando você ignora a política, não significa que a política ignora você.</p>`,
+
+    '1-1': `<h2>A importância da política na sociedade</h2>
+<p>A política é o mecanismo pelo qual as sociedades resolvem conflitos, distribuem recursos e definem seus valores coletivos. Sem política, não há ordem social sustentável — apenas a lei do mais forte.</p>
+<div class="highlight-box"><div class="box-title">💡 Ponto Central</div>A política não é opcional. Toda sociedade tem política — a questão é se essa política é democrática e participativa ou autoritária e excludente.</div>
+<h3>Política e direitos</h3>
+<p>Os direitos que você tem hoje — voto, saúde, educação, trabalho com carteira assinada — foram conquistados por meio de lutas políticas ao longo de décadas. Nada disso surgiu espontaneamente: foi fruto de movimentos, pressão popular e decisões políticas concretas.</p>`,
+
+    '1-2': `<h2>Diferença entre política, governo e Estado</h2>
+<p>Esses três conceitos são frequentemente confundidos, mas têm significados distintos e precisos.</p>
+<h3>Estado</h3>
+<p>O <strong>Estado</strong> é a estrutura permanente e soberana de poder de uma nação. Ele é composto por território, povo, soberania e governo. O Estado brasileiro existe independentemente de quem governa — ele é a instituição permanente.</p>
+<h3>Governo</h3>
+<p>O <strong>Governo</strong> é o conjunto de pessoas e instituições que, em um dado momento, exercem o poder de Estado. Governos mudam — o Estado permanece. O governo Lula, o governo Bolsonaro, o governo FHC são formas temporárias de ocupação do aparato estatal.</p>
+<h3>Política</h3>
+<p>A <strong>Política</strong> é o processo dinâmico de competição, negociação e tomada de decisões que determina quem governa e como o poder é exercido. É um processo contínuo que envolve partidos, eleições, movimentos sociais, mídia, cidadãos e muito mais.</p>
+<div class="example-box"><div class="box-title">📌 Analogia Prática</div>Pense no Estado como uma empresa permanente, o Governo como a diretoria atual e a Política como o processo de escolha e gestão dessa diretoria.</div>`,
+
+    '1-3': `<h2>Como a política afeta sua vida diariamente</h2>
+<p>Muitas pessoas pensam que a política é algo distante, restrita a Brasília ou aos palácios de governo. Mas a verdade é que praticamente tudo em sua vida cotidiana é moldado por decisões políticas.</p>
+<h3>No seu bolso</h3>
+<p>Os impostos que você paga, o valor do combustível, o preço dos alimentos, a taxa de juros do seu financiamento — tudo isso é resultado de políticas econômicas e fiscais definidas por governos eleitos (ou não) em todos os níveis.</p>
+<h3>Na sua saúde</h3>
+<p>O SUS existe porque foi uma decisão política inscrita na Constituição de 1988. O orçamento da saúde, os medicamentos disponíveis, a qualidade dos hospitais públicos — tudo depende de decisões políticas tomadas por governantes que você elege (ou não).</p>
+<div class="highlight-box"><div class="box-title">💡 Reflexão</div>Se você não se interessa pela política, a política vai se interessar por você — e não necessariamente do jeito que você gostaria.</div>`,
+
+    '1-4': `<h2>Poder, autoridade e legitimidade</h2>
+<p>Para entender política é essencial compreender três conceitos fundamentais: poder, autoridade e legitimidade. Embora relacionados, eles têm significados distintos.</p>
+<h3>Poder</h3>
+<p>O <strong>poder</strong> é a capacidade de um ator (pessoa, grupo, Estado) de fazer com que outro ator aja de acordo com sua vontade, mesmo contra a resistência desse ator. O sociólogo alemão Max Weber definiu o poder como "toda probabilidade de impor a própria vontade numa relação social".</p>
+<h3>Autoridade</h3>
+<p>A <strong>autoridade</strong> é o poder legítimo — ou seja, o poder que é reconhecido como justo e adequado por aqueles sobre quem é exercido. Um policial tem autoridade para aplicar a lei; um ladrão tem poder mas não autoridade.</p>
+<h3>Legitimidade</h3>
+<p>A <strong>legitimidade</strong> é o reconhecimento pela população de que um governo tem o direito de exercer o poder. Segundo Weber, há três tipos de legitimidade: tradicional (baseada em costumes e tradições), carismática (baseada na personalidade extraordinária do líder) e legal-racional (baseada em normas e procedimentos legais — o modelo das democracias modernas).</p>
+<div class="example-box"><div class="box-title">📌 No Brasil</div>A legitimidade do governo brasileiro é legal-racional: baseia-se nas eleições, na Constituição e nas leis. Um presidente eleito tem legitimidade; um golpista tem poder mas não legitimidade.</div>`
+  };
+
+  const key = `${modId}-${topicIdx}`;
+  if (richContents[key]) return richContents[key];
+
+  // Conteúdo genérico rico para todos os outros tópicos
+  return `
+<h2>${topicTitle}</h2>
+<p>Este tópico aborda um dos aspectos fundamentais do Módulo <strong>${modId} — ${modTitle}</strong>. Compreender <em>${topicTitle}</em> é essencial para construir uma visão crítica e aprofundada da política brasileira e seus desdobramentos históricos, institucionais e sociais.</p>
+<h3>Contexto e relevância</h3>
+<p>Para entender a política brasileira em profundidade, é necessário dominar os conceitos e dinâmicas que este tópico apresenta. O Brasil é um país de enorme complexidade política, marcado por contrastes históricos, sociais e regionais que tornam cada tema ainda mais rico e multidimensional.</p>
+<div class="highlight-box">
+  <div class="box-title">💡 Conceito Central</div>
+  <strong>${topicTitle}</strong> é um elemento essencial para compreender como o sistema político brasileiro funciona na prática — não apenas na teoria, mas em sua aplicação cotidiana na vida dos cidadãos.
+</div>
+<h3>Dimensões e aspectos principais</h3>
+<p>Este tema pode ser analisado em diferentes dimensões: histórica (como surgiu e evoluiu), institucional (como funciona dentro do sistema), social (como afeta diferentes grupos da sociedade) e prática (como impacta a vida cotidiana do cidadão brasileiro).</p>
+<p>A compreensão desses aspectos permite ao estudante não apenas memorizar informações, mas desenvolver a capacidade analítica necessária para interpretar eventos políticos contemporâneos com autonomia e senso crítico.</p>
+<div class="example-box">
+  <div class="box-title">📌 Aplicação Prática</div>
+  Ao compreender profundamente este tópico, você será capaz de analisar notícias, discursos políticos e decisões governamentais com muito mais clareza e precisão — tornando-se um cidadão mais informado e participativo.
+</div>
+<h3>Conexões com outros temas</h3>
+<p>Este tópico se conecta diretamente com os demais módulos do curso, formando uma rede de conhecimento integrado sobre o sistema político brasileiro. A política não pode ser entendida em fragmentos isolados — é um sistema dinâmico onde cada parte influencia as demais.</p>
+<p>Continue avançando no curso para aprofundar seu entendimento e construir uma visão cada vez mais completa e estratégica da política brasileira.</p>`;
+}
+
+// ============================================================
+// BUILD SECTIONS
+// ============================================================
+function buildSections() {
+  const container = document.getElementById('dynamic-sections');
+  const allSections = [];
+
+  modules.forEach(mod => {
+    // Tópicos
+    mod.topics.forEach((topic, ti) => {
+      const sId = `section-m${mod.id}t${ti}`;
+      const navIdx = navStructure.findIndex(n=>n.sectionId===sId);
+      const prev = navIdx>0?navStructure[navIdx-1]:null;
+      const next = navIdx<navStructure.length-1?navStructure[navIdx+1]:null;
+      const done = ls('completed',{});
+      const isDone = done[sId];
+
+      // Carrossel de tópicos do módulo
+      const topicsCarousel = `
+        <div class="topics-carousel-wrap">
+          <div class="topics-carousel-title">📚 Módulo ${mod.id} · ${mod.title}</div>
+          <div class="topics-carousel">
+            ${mod.topics.map((t,ti2)=>{
+              const sid2 = `section-m${mod.id}t${ti2}`;
+              const isDone2 = done[sid2];
+              return `<div class="topic-card ${isDone2?'done-card':''}" id="tcard_${sid2}" onclick="showSection('${sid2}')">
+                <div class="topic-card-num">Tópico ${ti2+1}</div>
+                <div class="topic-card-name">${t}</div>
+                <div class="topic-card-check">${isDone2?'✅':''}</div>
+              </div>`;
+            }).join('')}
+            <div class="topic-card" onclick="showSection('section-m${mod.id}summary')" style="background:rgba(59,130,246,0.06)">
+              <div class="topic-card-num">Resumo</div>
+              <div class="topic-card-name">📋 Resumo do Módulo</div>
+            </div>
+            <div class="topic-card" onclick="showSection('section-m${mod.id}quiz')" style="background:rgba(59,130,246,0.06)">
+              <div class="topic-card-num">Quiz</div>
+              <div class="topic-card-name">🧠 Quiz do Módulo</div>
+            </div>
+          </div>
+        </div>`;
+
+      allSections.push(`
+        <div class="section" id="${sId}">
+          ${topicsCarousel}
+          <div class="font-controls">
+            <span class="font-size-label">Tamanho:</span>
+            <button class="font-btn" onclick="changeFontSize(-1)" title="Diminuir fonte">A−</button>
+            <span class="font-size-display">${fontSize}px</span>
+            <button class="font-btn" onclick="changeFontSize(1)" title="Aumentar fonte">A+</button>
+          </div>
+          <div class="audio-bar">
+            <button class="audio-btn" onclick="speakCurrentSection()" title="Ouvir o conteúdo">🔊 Ouvir</button>
+            <button class="audio-btn stop" onclick="stopAudio()" title="Parar áudio">⏹ Parar</button>
+            <button class="speed-btn ${currentSpeed===0.5?'active-speed':''}" data-speed="0.5" onclick="setSpeed(0)">0.5×</button>
+            <button class="speed-btn ${currentSpeed===0.75?'active-speed':''}" data-speed="0.75" onclick="setSpeed(1)">0.75×</button>
+            <button class="speed-btn ${currentSpeed===1.0?'active-speed':''}" data-speed="1" onclick="setSpeed(2)">1×</button>
+            <button class="speed-btn ${currentSpeed===1.25?'active-speed':''}" data-speed="1.25" onclick="setSpeed(3)">1.25×</button>
+            <button class="speed-btn ${currentSpeed===1.5?'active-speed':''}" data-speed="1.5" onclick="setSpeed(4)">1.5×</button>
+            <button class="speed-btn ${currentSpeed===2.0?'active-speed':''}" data-speed="2" onclick="setSpeed(6)">2×</button>
+            <span class="audio-info">velocidade atual: ${currentSpeed}×</span>
+          </div>
+          <div class="topic-header">
+            <div class="topic-breadcrumb">Módulo ${mod.id} <span>›</span> ${mod.title} <span>›</span> Tópico ${ti+1}</div>
+            <h1 class="topic-title">${topic}</h1>
+            <div class="topic-meta">
+              <div class="topic-meta-item">📖 ~5 min</div>
+              <div class="topic-meta-item">⭐ +10 XP</div>
+              <div class="topic-meta-item">${mod.emoji} ${mod.title}</div>
+            </div>
+          </div>
+          <div class="content-body" id="body_${sId}" style="font-size:${fontSize}px">
+            ${generateContent(mod.id, ti, mod.title, topic)}
+          </div>
+          <div class="done-btn-wrap">
+            <button class="done-btn ${isDone?'completed':''}" id="doneBtn_${sId}" onclick="${isDone?'':'markDone(\''+sId+'\','+mod.id+','+ti+')'}">
+              ${isDone?'✅ Concluído':'✓ Marcar como concluído'}
+            </button>
+            <button class="surprise-btn" onclick="surpriseBox()">🎁 Surpresa</button>
+          </div>
+          <div class="notes-section">
+            <div class="notes-title">📝 Minhas Anotações</div>
+            <textarea class="notes-textarea" id="note_${sId}" placeholder="Escreva suas anotações sobre este tópico..."></textarea>
+            <button class="notes-save-btn" onclick="saveNote('${sId}')">Salvar anotação</button>
+          </div>
+          <div class="nav-arrows">
+            ${prev?`<button class="nav-arrow-btn" onclick="showSection('${prev.sectionId}')"><span>←</span><div><span class="nav-label">Anterior</span><span class="nav-name">${prev.title}</span></div></button>`:'<div></div>'}
+            ${next?`<button class="nav-arrow-btn" style="margin-left:auto" onclick="showSection('${next.sectionId}')"><div style="text-align:right"><span class="nav-label">Próximo</span><span class="nav-name">${next.title}</span></div><span>→</span></button>`:'<div></div>'}
+          </div>
+        </div>`);
+    });
+
+    // Resumo
+    const sSumId = `section-m${mod.id}summary`;
+    allSections.push(`
+      <div class="section" id="${sSumId}">
+        <div class="topic-header">
+          <div class="topic-breadcrumb">Módulo ${mod.id} <span>›</span> ${mod.title}</div>
+          <h1 class="topic-title">📋 Resumo — ${mod.title}</h1>
+        </div>
+        <div class="module-summary">
+          <h3>📌 Pontos-Chave do Módulo</h3>
+          <ul class="key-points">
+            ${mod.topics.map(t=>`<li><span class="key-point-icon">→</span>${t}: conceito fundamental para entender a política brasileira neste contexto.</li>`).join('')}
+          </ul>
+        </div>
+        <div class="done-btn-wrap">
+          <button class="audio-btn" onclick="speakText('Resumo do módulo ${mod.title.replace(/'/g,"\\'")}. ' + Array.from(document.querySelectorAll('#${sSumId} .key-points li')).map(li=>li.textContent).join('. '), currentSpeed); addXP(20); showToast('+20 XP por ouvir o resumo','accent')">🔊 Ouvir Resumo (+20 XP)</button>
+        </div>
+        <button onclick="showSection('section-m${mod.id}quiz')" style="background:var(--accent);color:#fff;border:none;padding:11px 24px;border-radius:10px;cursor:pointer;font-family:var(--font);font-size:14px;font-weight:600;margin-top:14px;">🧠 Ir para o Quiz</button>
+        <div class="nav-arrows" style="margin-top:24px">
+          <button class="nav-arrow-btn" onclick="showSection('section-m${mod.id}t${mod.topics.length-1}')"><span>←</span><div><span class="nav-label">Último tópico</span><span class="nav-name">${mod.topics[mod.topics.length-1]}</span></div></button>
+          <button class="nav-arrow-btn" style="margin-left:auto" onclick="showSection('section-m${mod.id}quiz')"><div style="text-align:right"><span class="nav-label">Próximo</span><span class="nav-name">Quiz do Módulo</span></div><span>→</span></button>
+        </div>
+      </div>`);
+
+    // Quiz
+    const sQuizId = `section-m${mod.id}quiz`;
+    const quiz = getQuizzes(mod.id);
+    allSections.push(`
+      <div class="section" id="${sQuizId}">
+        <div class="topic-header">
+          <div class="topic-breadcrumb">Módulo ${mod.id} <span>›</span> ${mod.title}</div>
+          <h1 class="topic-title">🧠 Quiz — ${mod.title}</h1>
+        </div>
+        <div class="quiz-section">
+          <div class="quiz-title">Teste seus Conhecimentos</div>
+          <div class="quiz-subtitle">Responda todas as questões e clique em "Verificar Respostas". +50 XP ao acertar 60% ou mais.</div>
+          ${quiz.questions.map((q,qi)=>`
+            <div class="quiz-question">
+              <div class="question-text">${qi+1}. ${q.q}</div>
+              <div class="quiz-options">
+                ${q.options.map((opt,oi)=>`
+                  <label class="quiz-option quiz-opt-${mod.id}-${qi}">
+                    <input type="radio" name="quiz${mod.id}_${qi}" value="${oi}"/> ${opt}
+                  </label>`).join('')}
+              </div>
+            </div>`).join('')}
+          <button class="quiz-submit" onclick="submitQuiz(${mod.id})">✓ Verificar Respostas</button>
+          <div class="quiz-result" id="quizResult_${mod.id}"></div>
+        </div>
+        <div class="flashcards-wrap" id="flashwrap_${mod.id}" style="display:none">
+          <div class="flashcards-title">🃏 Flashcards de Revisão</div>
+          <div class="flashcard-grid">
+            ${(flashcards[mod.id]||[]).map(fc=>`
+              <div class="flashcard" onclick="flipCard(this)">
+                <div class="flashcard-q">${fc.q}</div>
+                <div class="flashcard-a">${fc.a}</div>
+                <div class="flashcard-hint">Clique para revelar</div>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-lock">
+            <div class="bonus-lock-icon">🎁</div>
+            <div class="bonus-lock-text">Conteúdo Bônus</div>
+            <div class="bonus-lock-sub">Conclua 100% do curso para desbloquear</div>
+          </div>
+          <h3 style="color:var(--text)">Material Bônus — ${mod.title}</h3>
+          <p style="color:var(--text3)">Conteúdo exclusivo com análises avançadas e casos práticos.</p>
+        </div>
+        <div class="nav-arrows">
+          <button class="nav-arrow-btn" onclick="showSection('${sSumId}')"><span>←</span><div><span class="nav-label">Anterior</span><span class="nav-name">Resumo do Módulo</span></div></button>
+          ${mod.id<17?`<button class="nav-arrow-btn" style="margin-left:auto" onclick="showSection('section-m${mod.id+1}t0')"><div style="text-align:right"><span class="nav-label">Próximo Módulo</span><span class="nav-name">${modules[mod.id].title}</span></div><span>→</span></button>`:`<button class="nav-arrow-btn" style="margin-left:auto" onclick="showSection('section-home')"><div style="text-align:right"><span class="nav-label">Parabéns!</span><span class="nav-name">Ver Certificado</span></div><span>🎓</span></button>`}
+        </div>
+      </div>`);
+  });
+
+  container.innerHTML = allSections.join('');
+}
+
+// ============================================================
+// CHAT
+// ============================================================
+let chatCount = ls('chat_count', 10);
+function toggleChat() { document.getElementById('chatPanel').classList.toggle('open'); }
+function updateChatRemaining() {
+  document.getElementById('chatRemaining').textContent = chatCount>0?`${chatCount} perguntas restantes`:'⚠️ Limite atingido.';
+}
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  if (chatCount<=0) { showToast('Limite de perguntas atingido!','accent'); return; }
+  input.value = '';
+  addChatMsg(msg,'user');
+  chatCount--;
+  lsSet('chat_count', chatCount);
+  updateChatRemaining();
+  const thinking = addChatMsg('Pensando...','ai');
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:1000,
+        messages:[{role:'user', content:`Você é uma IA especialista em política brasileira. Responda de forma clara, objetiva e educativa, sempre em português. Pergunta: ${msg}`}]
+      })
+    });
+    const data = await res.json();
+    thinking.textContent = data.content?.[0]?.text||'Não consegui processar. Tente novamente.';
+  } catch(e) {
+    thinking.textContent = 'Erro ao conectar. Tente novamente.';
+  }
+}
+function addChatMsg(text, role) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `chat-msg ${role}`;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = ls('theme','dark');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeBtn').textContent = savedTheme==='dark'?'🌙':'☀️';
+
+  buildSidebar();
+  buildSections();
+  buildModuleGrid();
+  checkAuth();
+  updateProgressUI();
+  startTimer();
+  updateChatRemaining();
+  applyFontSize();
+  updateStatsPanel();
+
+  // Abre primeiro módulo no accordion
+  document.getElementById('topicList_1').classList.add('open');
+  document.getElementById('arrow_1').classList.add('open');
+
+  // Sincroniza progresso com páginas principais (painel, ranking)
+  try {
+    const {count, pct} = getProgress();
+    localStorage.setItem('ma_course_pol_progress', JSON.stringify({ count, pct, total: TOTAL_TOPICS, name: COURSE_NAME, key: COURSE_KEY, updatedAt: Date.now() }));
+    localStorage.setItem('ma_xp', ls('xp',0));
+  } catch(e){}
+});
+</script>
+</body>
+</html>
