@@ -204,10 +204,29 @@ var MA_COURSES = [
    *   active: true
    * }
    * ──────────────────────────────────────────
-   */
-];
+   */,
 
-var MA_CATS = [
+  {
+    id: 'ss',
+    name: 'Segurança & Sociedade 2026 — A Crise que Vai Definir as Eleições',
+    desc: 'A crise que vai definir as eleições. Violência, segurança pública e o que ninguém te conta.',
+    file: 'seguranca-sociedade-2025.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 9,
+    topics: 54,
+    hours: 8,
+    quizzes: 9,
+    salt: 'SEG_HENRY_2026_MASTER',
+    ak: 'seg_auth',
+    storagePrefix: 'seg_',
+    icon: '🎓',
+    color: '#3b82f6',
+    free: true,
+    addedTs: 1775080731517,
+    active: true
+  }
+];
+ar MA_CATS = [
   {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?'], isSpecial:true},
   {name:'Negócios', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:[]},
   {name:'Geopolítica', sub:'Entenda o mundo como ele realmente funciona, além das notícias', courses:[], soon:['Relações Internacionais']},
