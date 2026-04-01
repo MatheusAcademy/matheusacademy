@@ -15,7 +15,7 @@ var MA_COURSES = [
     icon: '📊',
     color: '#5b7fff',
     addedTs: 1741996800000,
-    active: true
+    active: false
   },
   {
     id: 'ni',
