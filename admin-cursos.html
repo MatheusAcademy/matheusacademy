@@ -2,760 +2,754 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin · Matheus Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080c14;--surface:#0d1421;--card:#111827;--border:#1e2d47;--accent:#3b82f6;--accent2:#60a5fa;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;--text:#f0f4ff;--text2:#8899bb;--text3:#4a5c7a;--mono:'JetBrains Mono',monospace;--sans:'Sora',sans-serif}
+:root{--bg:#080c14;--sf:#0d1421;--card:#111827;--brd:#1e2d47;--acc:#3b82f6;--acc2:#60a5fa;--grn:#22c55e;--red:#ef4444;--ylw:#f59e0b;--txt:#f0f4ff;--t2:#8899bb;--t3:#4a5c7a;--mono:'JetBrains Mono',monospace;--sans:'Sora',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(59,130,246,.12) 0%,transparent 60%)}
-header{display:flex;align-items:center;gap:14px;padding:16px 28px;border-bottom:1px solid var(--border);background:rgba(8,12,20,.95);position:sticky;top:0;z-index:100}
-.logo{width:36px;height:36px;border-radius:50%;background:#000;border:2px solid #1e3a5f;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:var(--accent2)}
-header h1{font-size:15px;font-weight:700}header small{color:var(--text3);font-size:12px;margin-left:4px}
-.badge{margin-left:auto;background:rgba(59,130,246,.15);color:var(--accent2);border:1px solid rgba(59,130,246,.3);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-main{max-width:820px;margin:0 auto;padding:36px 20px 80px}
-.pg-title{font-size:22px;font-weight:800;margin-bottom:6px;background:linear-gradient(135deg,#f0f4ff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.pg-sub{color:var(--text2);font-size:13px;margin-bottom:28px}
-.notice{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:13px 16px;margin-bottom:22px;font-size:12.5px;color:#fcd34d;line-height:1.7}
-.notice b{font-weight:700}.notice code{background:rgba(0,0,0,.3);padding:1px 6px;border-radius:4px;font-family:var(--mono);font-size:11px}
-.token-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:24px}
-.token-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
-.field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:170px}
-label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em}
-input,select,textarea{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;transition:.2s;width:100%}
-input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
-textarea{resize:vertical;min-height:60px;font-size:13px}
-.status{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
-.dot.green{background:var(--green);box-shadow:0 0 8px var(--green)}.dot.red{background:var(--red)}.dot.yellow{background:var(--yellow);animation:pulse .8s infinite}
-.tabs{display:flex;gap:6px;margin-bottom:20px}
-.tab{padding:9px 18px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:.18s}
-.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.tab-content{display:none}.tab-content.active{display:block}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-.form-grid .full{grid-column:1/-1}.form-hint{font-size:10.5px;color:var(--text3);margin-top:4px}
-.add-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
-.dropzone{border:2px dashed var(--border);border-radius:12px;padding:36px 24px;text-align:center;cursor:pointer;transition:.2s;position:relative;margin-bottom:20px}
-.dropzone:hover,.dropzone.drag{border-color:var(--accent);background:rgba(59,130,246,.05)}
-.dropzone.done{border-color:var(--green);border-style:solid;background:rgba(34,197,94,.05)}
-.dropzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.dz-icon{font-size:36px;margin-bottom:10px}.dz-title{font-size:15px;font-weight:700;margin-bottom:4px}
-.dz-sub{font-size:12px;color:var(--text2)}.dz-file{font-size:13px;font-weight:600;color:var(--green);margin-top:8px;font-family:var(--mono)}
-.meta-preview{background:var(--surface);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:16px;display:none;margin-bottom:20px}
-.meta-preview-title{font-size:11px;color:#86efac;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
-.meta-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.meta-field{display:flex;flex-direction:column;gap:5px}
-.meta-field label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
-.meta-field input,.meta-field select,.meta-field textarea{font-size:13px;padding:8px 10px}
-.opts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-.opts-group label.group-label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:8px}
-.opt-cards{display:flex;gap:8px}
-.opt-card{flex:1;border:2px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;transition:.2s;user-select:none;text-align:center}
-.opt-card:hover{border-color:var(--text3)}.opt-card.sel{border-color:var(--accent);background:rgba(59,130,246,.08)}
-.opt-card input{display:none}.opt-card .oe{font-size:20px;display:block;margin-bottom:4px}.opt-card .ot{font-size:12px;font-weight:700}.opt-card .od{font-size:10px;color:var(--text3);margin-top:2px}
-.progress-wrap{display:none;margin-bottom:20px}
-.progress-label{font-size:12px;color:var(--text2);margin-bottom:6px;display:flex;justify-content:space-between}
-.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .3s;width:0%}
-.btn-publish{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:16px;font-family:var(--sans);font-size:16px;font-weight:800;cursor:pointer;transition:.2s}
-.btn-publish:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 28px rgba(59,130,246,.4)}
-.btn-publish:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-sm{background:var(--surface);color:var(--text2);border:1px solid var(--border);padding:8px 14px;font-size:12px;border-radius:8px;font-family:var(--sans);font-weight:600;cursor:pointer;white-space:nowrap}
-.btn-sm:hover{border-color:var(--text3);color:var(--text)}
-.result{display:none;align-items:center;gap:10px;padding:14px 18px;border-radius:10px;margin-top:16px;font-size:13px;font-weight:500}
-.result.ok{display:flex;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
-.result.err{display:flex;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
-.result.load{display:flex;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);color:var(--accent2)}
-.spin{width:16px;height:16px;border:2px solid transparent;border-top-color:currentColor;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
-.list-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px;margin-top:12px}
-.list-title{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.07em}
-.course-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;transition:.2s}
-.course-row:hover{border-color:var(--text3)}
-.course-main{display:flex;align-items:center;gap:12px;padding:13px 16px}
-.ci{font-size:22px;flex-shrink:0}.cinfo{flex:1;min-width:0}
-.cinfo b{font-size:14px;font-weight:700;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cinfo small{font-size:11px;color:var(--text3);font-family:var(--mono)}
-.cbadges{display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap}
-.cbadge{padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
-.ba{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.25)}
-.bf{background:rgba(96,165,250,.12);color:var(--accent2);border:1px solid rgba(59,130,246,.25)}
-.bo{background:rgba(245,158,11,.1);color:#fcd34d;border:1px solid rgba(245,158,11,.2)}
-.bp{background:rgba(167,139,250,.1);color:#c4b5fd;border:1px solid rgba(167,139,250,.2)}
-.xbtn{background:none;border:none;color:var(--text3);cursor:pointer;padding:6px 8px;border-radius:6px;font-size:18px;transition:.2s;flex-shrink:0}
-.xbtn:hover{color:var(--text);background:var(--card)}
-.actions-panel{display:none;border-top:1px solid var(--border);padding:12px 16px;background:rgba(0,0,0,.15)}
-.actions-panel.open{display:block}
-.act-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.sep{width:1px;height:26px;background:var(--border);flex-shrink:0}
-.act-btn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--border);background:var(--card);color:var(--text2);padding:7px 13px;border-radius:8px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;transition:.2s}
-.act-btn:hover{border-color:var(--text3);color:var(--text)}.act-btn:disabled{opacity:.5;cursor:not-allowed}
-.av{border-color:rgba(34,197,94,.4)!important;color:#86efac!important;background:rgba(34,197,94,.08)!important}
-.ao{border-color:rgba(245,158,11,.4)!important;color:#fcd34d!important;background:rgba(245,158,11,.08)!important}
-.afr{border-color:rgba(96,165,250,.4)!important;color:var(--accent2)!important;background:rgba(59,130,246,.08)!important}
-.apd{border-color:rgba(167,139,250,.4)!important;color:#c4b5fd!important;background:rgba(167,139,250,.08)!important}
-.adel{border-color:rgba(239,68,68,.3)!important;color:#fca5a5!important;background:rgba(239,68,68,.08)!important}
-.sdiv{border-top:1px solid var(--border);margin:28px 0 24px}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-@media(max-width:600px){.opts-row,.token-row,.form-grid,.meta-fields{grid-template-columns:1fr}.opt-cards{flex-direction:column}.act-row{flex-direction:column;align-items:flex-start}header{padding:12px 14px}main{padding:20px 12px 60px}.tabs{flex-wrap:wrap}}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);min-height:100vh}
+header{display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid var(--brd);background:rgba(8,12,20,.97);position:sticky;top:0;z-index:100}
+.logo{width:34px;height:34px;border-radius:50%;background:#000;border:2px solid #1e3a5f;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--acc2)}
+header h1{font-size:14px;font-weight:700}header small{color:var(--t3);font-size:11px;margin-left:4px}
+.hbadge{margin-left:auto;background:rgba(59,130,246,.15);color:var(--acc2);border:1px solid rgba(59,130,246,.3);padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase}
+main{max-width:800px;margin:0 auto;padding:32px 18px 80px}
+h2{font-size:20px;font-weight:800;margin-bottom:4px;background:linear-gradient(135deg,#f0f4ff,var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:var(--t2);font-size:12px;margin-bottom:24px}
+/* BOXES */
+.box{background:var(--sf);border:1px solid var(--brd);border-radius:12px;padding:18px;margin-bottom:20px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.f{display:flex;flex-direction:column;gap:5px;flex:1;min-width:160px}
+lbl,label{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+input,select,textarea{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:9px 12px;color:var(--txt);font-family:var(--sans);font-size:13px;outline:none;transition:.2s;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(59,130,246,.13)}
+input.iok{border-color:var(--grn)!important;box-shadow:0 0 0 3px rgba(34,197,94,.1)!important}
+input.ierr{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(239,68,68,.1)!important}
+textarea{resize:vertical;min-height:54px}
+.strow{display:flex;align-items:center;gap:7px;margin-top:8px;font-size:11px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--t3);flex-shrink:0}
+.dot.g{background:var(--grn);box-shadow:0 0 7px var(--grn)}.dot.r{background:var(--red)}.dot.y{background:var(--ylw);animation:pu .8s infinite}
+/* ID feedback */
+.idfb{margin-top:4px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;display:none;gap:6px;align-items:center}
+.idfb.show{display:flex}
+.idfb.ok{background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.2)}
+.idfb.er{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+.idfb.wa{background:rgba(245,158,11,.1);color:#fcd34d;border:1px solid rgba(245,158,11,.2)}
+.sug{cursor:pointer;text-decoration:underline;font-weight:800;margin-left:4px}
+/* TABS */
+.tabs{display:flex;gap:6px;margin-bottom:18px}
+.tab{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--brd);background:var(--sf);color:var(--t2);transition:.15s}
+.tab.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.tc{display:none}.tc.on{display:block}
+/* CARD */
+.card{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:24px;margin-bottom:28px}
+/* DROP */
+.dz{border:2px dashed var(--brd);border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;transition:.2s;position:relative;margin-bottom:18px}
+.dz:hover,.dz.drag{border-color:var(--acc);background:rgba(59,130,246,.04)}
+.dz.done{border-color:var(--grn);border-style:solid;background:rgba(34,197,94,.04)}
+.dz input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.dzi{font-size:32px;margin-bottom:8px}.dzt{font-size:14px;font-weight:700;margin-bottom:3px}.dzs{font-size:11px;color:var(--t2)}.dzf{font-size:12px;font-weight:600;color:var(--grn);margin-top:6px;font-family:var(--mono)}
+/* META */
+.mp{background:var(--sf);border:1px solid rgba(34,197,94,.2);border-radius:9px;padding:14px;display:none;margin-bottom:18px}
+.mpt{font-size:10px;color:#86efac;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mf{display:flex;flex-direction:column;gap:4px}
+.mf label{font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.05em}
+.mf input,.mf select,.mf textarea{font-size:12px;padding:7px 9px}
+/* OPTS */
+.or{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.og label{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:7px}
+.oc{display:flex;gap:7px}
+.oi{flex:1;border:2px solid var(--brd);border-radius:9px;padding:10px;cursor:pointer;transition:.15s;user-select:none;text-align:center}
+.oi:hover{border-color:var(--t3)}.oi.on{border-color:var(--acc);background:rgba(59,130,246,.07)}
+.oi input{display:none}.oi .ie{font-size:18px;display:block;margin-bottom:3px}.oi .it{font-size:11px;font-weight:700}.oi .id2{font-size:9px;color:var(--t3);margin-top:1px}
+/* PROGRESS */
+.pw{display:none;margin-bottom:16px}
+.pl{font-size:11px;color:var(--t2);margin-bottom:5px;display:flex;justify-content:space-between}
+.pb2{height:5px;background:var(--brd);border-radius:3px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:3px;transition:width .3s;width:0%}
+/* BTNS */
+.btnp{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;background:var(--acc);color:#fff;border:none;border-radius:10px;padding:14px;font-family:var(--sans);font-size:15px;font-weight:800;cursor:pointer;transition:.2s}
+.btnp:hover{background:var(--acc2);transform:translateY(-1px);box-shadow:0 6px 24px rgba(59,130,246,.35)}
+.btnp:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btns{background:var(--sf);color:var(--t2);border:1px solid var(--brd);padding:7px 12px;font-size:11px;border-radius:7px;font-family:var(--sans);font-weight:600;cursor:pointer}
+.btns:hover{border-color:var(--t3);color:var(--txt)}
+/* RESULT */
+.res{display:none;align-items:center;gap:9px;padding:12px 16px;border-radius:9px;margin-top:14px;font-size:12px;font-weight:500}
+.res.ok{display:flex;background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.25);color:#86efac}
+.res.er{display:flex;background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.25);color:#fca5a5}
+.res.ld{display:flex;background:rgba(59,130,246,.09);border:1px solid rgba(59,130,246,.25);color:var(--acc2)}
+.sp{width:14px;height:14px;border:2px solid transparent;border-top-color:currentColor;border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0}
+/* LIST */
+.lh{display:flex;align-items:center;gap:8px;margin:24px 0 12px;padding-top:20px;border-top:1px solid var(--brd)}
+.lt{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em}
+.cr{background:var(--sf);border:1px solid var(--brd);border-radius:10px;margin-bottom:8px;transition:.15s}
+.cr:hover{border-color:var(--t3)}
+.cm{display:flex;align-items:center;gap:10px;padding:11px 14px}
+.ci2{font-size:20px;flex-shrink:0}.cn{flex:1;min-width:0}
+.cn b{font-size:13px;font-weight:700;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cn small{font-size:10px;color:var(--t3);font-family:var(--mono)}
+.cbs{display:flex;gap:4px;flex-shrink:0}
+.cb{padding:2px 7px;border-radius:16px;font-size:9px;font-weight:700;text-transform:uppercase;white-space:nowrap}
+.ba{background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.2)}
+.bf{background:rgba(96,165,250,.1);color:var(--acc2);border:1px solid rgba(59,130,246,.2)}
+.bo{background:rgba(245,158,11,.09);color:#fcd34d;border:1px solid rgba(245,158,11,.2)}
+.bp{background:rgba(167,139,250,.09);color:#c4b5fd;border:1px solid rgba(167,139,250,.2)}
+.xb{background:none;border:none;color:var(--t3);cursor:pointer;padding:5px 7px;border-radius:5px;font-size:16px;transition:.15s;flex-shrink:0}
+.xb:hover{color:var(--txt);background:var(--card)}
+.ap{display:none;border-top:1px solid var(--brd);padding:10px 14px;background:rgba(0,0,0,.12)}
+.ap.on{display:block}
+.ar{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.sp2{width:1px;height:22px;background:var(--brd);flex-shrink:0}
+.ab{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--brd);background:var(--card);color:var(--t2);padding:6px 11px;border-radius:7px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;transition:.15s}
+.ab:hover{border-color:var(--t3);color:var(--txt)}.ab:disabled{opacity:.4;cursor:not-allowed}
+.av{border-color:rgba(34,197,94,.4)!important;color:#86efac!important;background:rgba(34,197,94,.07)!important}
+.ao{border-color:rgba(245,158,11,.4)!important;color:#fcd34d!important;background:rgba(245,158,11,.07)!important}
+.afr{border-color:rgba(96,165,250,.4)!important;color:var(--acc2)!important;background:rgba(59,130,246,.07)!important}
+.apd{border-color:rgba(167,139,250,.4)!important;color:#c4b5fd!important;background:rgba(167,139,250,.07)!important}
+.adl{border-color:rgba(239,68,68,.3)!important;color:#fca5a5!important;background:rgba(239,68,68,.07)!important}
+/* IDs chips */
+.ecw{margin-top:10px;display:none}
+.ect{font-size:9px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.ecs{display:flex;flex-wrap:wrap;gap:4px}
+.ec{background:var(--card);border:1px solid var(--brd);border-radius:5px;padding:2px 7px;font-size:10px;font-family:var(--mono);color:var(--t3)}
+@keyframes sp{to{transform:rotate(360deg)}}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.4}}
+@media(max-width:580px){.or,.row,.mg{grid-template-columns:1fr;flex-direction:column}.oc{flex-direction:column}.ar{flex-direction:column;align-items:flex-start}header{padding:10px 12px}main{padding:18px 10px 60px}.tabs{flex-wrap:wrap}}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">M</div>
   <div><h1>Matheus Academy <small>Admin</small></h1></div>
-  <div class="badge">⚙ Gerenciador</div>
+  <div class="hbadge">⚙ v7</div>
 </header>
 <main>
-  <div class="pg-title">Gerenciar Cursos</div>
-  <p class="pg-sub">Adicione, ative, oculte e exclua cursos — tudo sincronizado automaticamente no GitHub.</p>
-
-  <div class="notice">
-    <b>ℹ️ Como usar:</b><br>
-    • <b>Upload HTML</b> → arraste o arquivo do curso + preencha os campos → publica HTML e registra no portal de uma vez.<br>
-    • <b>Cadastro Manual</b> → quando o HTML já está no GitHub → só preenche os campos e registra.<br>
-    • O campo <b>Salt</b> deve ser idêntico ao que está definido no arquivo HTML do curso.<br>
-    • <b>Nunca feche a janela durante uma publicação.</b>
-  </div>
+  <h2>Gerenciar Cursos</h2>
+  <p class="sub">Adicione, ative, oculte e exclua cursos — sincronizado no GitHub automaticamente.</p>
 
   <!-- TOKEN -->
-  <div class="token-box">
-    <div class="token-row">
-      <div class="field"><label>Token GitHub</label><input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" oninput="saveConfig()"></div>
-      <div class="field" style="max-width:175px"><label>Usuário/Org</label><input type="text" id="ghOwner" placeholder="MatheusAcademy" oninput="saveConfig()"></div>
-      <div class="field" style="max-width:175px"><label>Repositório</label><input type="text" id="ghRepo" placeholder="matheusacademy" oninput="saveConfig()"></div>
-      <button class="btn-sm" onclick="testGH()">Testar</button>
+  <div class="box">
+    <div class="row">
+      <div class="f"><label>Token GitHub</label><input type="password" id="ghToken" placeholder="ghp_..." autocomplete="off" oninput="saveConfig()"></div>
+      <div class="f" style="max-width:170px"><label>Usuário/Org</label><input type="text" id="ghOwner" placeholder="MatheusAcademy" oninput="saveConfig()"></div>
+      <div class="f" style="max-width:170px"><label>Repositório</label><input type="text" id="ghRepo" placeholder="matheusacademy" oninput="saveConfig()"></div>
+      <button class="btns" onclick="testGH()">Testar</button>
     </div>
-    <div class="status"><div class="dot" id="ghDot"></div><span id="ghTxt" style="color:var(--text3)">Preencha o token para conectar</span></div>
+    <div class="strow"><div class="dot" id="ghDot"></div><span id="ghTxt" style="color:var(--t3)">Preencha o token para conectar</span></div>
+    <div class="ecw" id="ecw">
+      <div class="ect">IDs já cadastrados (não pode repetir):</div>
+      <div class="ecs" id="ecs"></div>
+    </div>
   </div>
 
   <!-- TABS -->
   <div class="tabs">
-    <div class="tab active" onclick="switchTab('upload')">📤 Upload HTML</div>
-    <div class="tab" onclick="switchTab('manual')">✏️ Cadastro Manual</div>
+    <div class="tab on" onclick="swTab('up')">📤 Upload HTML</div>
+    <div class="tab" onclick="swTab('mn')">✏️ Cadastro Manual</div>
   </div>
 
   <!-- TAB UPLOAD -->
-  <div class="tab-content active" id="tab-upload">
-    <div class="add-card">
-      <div class="dropzone" id="dropzone" ondragover="dzDrag(event,true)" ondragleave="dzDrag(event,false)" ondrop="dzDrop(event)">
+  <div class="tc on" id="tc-up">
+    <div class="card">
+      <div class="dz" id="dz" ondragover="dzDrag(event,1)" ondragleave="dzDrag(event,0)" ondrop="dzDrop(event)">
         <input type="file" accept=".html" onchange="fileChosen(this.files[0])">
-        <div class="dz-icon" id="dzIcon">📄</div>
-        <div class="dz-title" id="dzTitle">Arraste o HTML do curso aqui</div>
-        <div class="dz-sub" id="dzSub">ou clique para selecionar no computador</div>
-        <div class="dz-file" id="dzFile"></div>
+        <div class="dzi" id="dzi">📄</div>
+        <div class="dzt" id="dzt">Arraste o HTML do curso aqui</div>
+        <div class="dzs" id="dzs">ou clique para selecionar — conecte o token antes!</div>
+        <div class="dzf" id="dzf"></div>
       </div>
 
-      <div class="meta-preview" id="metaPreview">
-        <div class="meta-preview-title">✅ Dados detectados — confira e edite se necessário antes de publicar</div>
-        <div class="meta-fields">
-          <div class="meta-field"><label>ID único *</label><input type="text" id="mId" placeholder="ss"><div class="form-hint">Letras/números sem espaço. Ex: ss, tp, gp</div></div>
-          <div class="meta-field"><label>Nome do curso *</label><input type="text" id="mName" placeholder="Nome Completo do Curso"></div>
-          <div class="meta-field" style="grid-column:1/-1"><label>Descrição</label><textarea id="mDesc" rows="2" placeholder="Descrição curta (1-2 linhas)"></textarea></div>
-          <div class="meta-field"><label>Categoria *</label><select id="mCat">
-            <option>Negócios</option><option>Geopolítica</option><option>PNL</option>
-            <option>Desenvolvimento</option><option>Tecnologia</option><option>Psicologia</option>
-            <option>História</option><option>Filosofia</option><option>Inglês</option>
-            <option>Bíblia / Teologia</option><option>Biografias</option><option>Engenharia</option>
-            <option>Mecânica</option><option>📚 Ebooks</option>
-            <option>Atualize-se! Notícias Mais Relevantes da Semana</option>
-          </select></div>
-          <div class="meta-field"><label>Ícone (emoji)</label><input type="text" id="mIcon" placeholder="🎓"></div>
-          <div class="meta-field"><label>Módulos</label><input type="number" id="mModules" min="1" placeholder="9"></div>
-          <div class="meta-field"><label>Tópicos</label><input type="number" id="mTopics" min="1" placeholder="54"></div>
-          <div class="meta-field"><label>Horas</label><input type="number" id="mHours" min="1" placeholder="18"></div>
-          <div class="meta-field"><label>Quizzes</label><input type="number" id="mQuizzes" min="0" placeholder="9"></div>
-          <div class="meta-field"><label>Salt *</label><input type="text" id="mSalt" placeholder="SS_HENRY_2026_MASTER"><div class="form-hint">⚠️ Deve ser idêntico ao do HTML do curso</div></div>
-          <div class="meta-field"><label>Cor hex</label><input type="text" id="mColor" placeholder="#dc2626"></div>
-          <div class="meta-field"><label>storagePrefix</label><input type="text" id="mPrefix" placeholder="ss_"><div class="form-hint">Prefixo do localStorage</div></div>
-          <div class="meta-field"><label>ak (chave auth)</label><input type="text" id="mAk" placeholder="ss_auth"></div>
+      <div class="mp" id="mp">
+        <div class="mpt">✅ Dados detectados — confira e edite se necessário</div>
+        <div class="mg">
+          <div class="mf">
+            <label>ID único *</label>
+            <input type="text" id="mId" placeholder="ss" oninput="chkId(this.value,'fb1','mId')">
+            <div class="idfb" id="fb1"></div>
+            <div style="font-size:9px;color:var(--t3);margin-top:3px">Letras/números curto. Ex: ss, tp, gp</div>
+          </div>
+          <div class="mf"><label>Nome *</label><input type="text" id="mName" placeholder="Nome do Curso"></div>
+          <div class="mf" style="grid-column:1/-1"><label>Descrição</label><textarea id="mDesc" rows="2" placeholder="Descrição curta (1-2 linhas)"></textarea></div>
+          <div class="mf">
+            <label>Categoria *</label>
+            <select id="mCat">
+              <option value="Negócios">Negócios</option>
+              <option value="Geopolítica">Geopolítica</option>
+              <option value="PNL">PNL</option>
+              <option value="Desenvolvimento">Desenvolvimento</option>
+              <option value="Tecnologia">Tecnologia</option>
+              <option value="Psicologia">Psicologia</option>
+              <option value="História">História</option>
+              <option value="Filosofia">Filosofia</option>
+              <option value="Inglês">Inglês</option>
+              <option value="Bíblia / Teologia">Bíblia / Teologia</option>
+              <option value="Biografias">Biografias</option>
+              <option value="Engenharia">Engenharia</option>
+              <option value="Mecânica">Mecânica</option>
+              <option value="📚 Ebooks">📚 Ebooks</option>
+              <option value="Atualize-se! Notícias Mais Relevantes da Semana">🔴 Notícias (Atualize-se!)</option>
+            </select>
+            <div style="font-size:9px;color:var(--t3);margin-top:3px">Notícias = gratuito + seção especial</div>
+          </div>
+          <div class="mf"><label>Ícone</label><input type="text" id="mIcon" placeholder="🎓"></div>
+          <div class="mf"><label>Módulos</label><input type="number" id="mModules" min="1" placeholder="9"></div>
+          <div class="mf"><label>Tópicos</label><input type="number" id="mTopics" min="1" placeholder="54"></div>
+          <div class="mf"><label>Horas</label><input type="number" id="mHours" min="1" placeholder="18"></div>
+          <div class="mf"><label>Quizzes</label><input type="number" id="mQuizzes" min="0" placeholder="9"></div>
+          <div class="mf">
+            <label>Salt *</label>
+            <input type="text" id="mSalt" placeholder="SS_HENRY_2026_MASTER">
+            <div style="font-size:9px;color:#fcd34d;margin-top:3px">⚠️ Deve ser idêntico ao do HTML</div>
+          </div>
+          <div class="mf"><label>Cor hex</label><input type="text" id="mColor" placeholder="#3b82f6"></div>
+          <div class="mf"><label>storagePrefix</label><input type="text" id="mPrefix" placeholder="ss_"></div>
+          <div class="mf"><label>ak (auth key)</label><input type="text" id="mAk" placeholder="ss_auth"></div>
         </div>
       </div>
 
-      <div class="opts-row" id="optsSection" style="display:none">
-        <div class="opts-group"><label class="group-label">Visibilidade</label>
-          <div class="opt-cards">
-            <label class="opt-card sel" id="ov-on" onclick="selOpt('v','on')"><input type="radio" name="v" checked><span class="oe">👁️</span><div class="ot">Visível</div><div class="od">Aparece no portal</div></label>
-            <label class="opt-card" id="ov-off" onclick="selOpt('v','off')"><input type="radio" name="v"><span class="oe">🙈</span><div class="ot">Oculto</div><div class="od">Salvo mas escondido</div></label>
+      <div class="or" id="opts" style="display:none">
+        <div class="og"><label>Visibilidade</label>
+          <div class="oc">
+            <label class="oi on" id="ov1" onclick="so('v','1')"><input type="radio" name="v" checked><span class="ie">👁️</span><div class="it">Visível</div><div class="id2">Aparece no portal</div></label>
+            <label class="oi" id="ov0" onclick="so('v','0')"><input type="radio" name="v"><span class="ie">🙈</span><div class="it">Oculto</div><div class="id2">Salvo mas escondido</div></label>
           </div>
         </div>
-        <div class="opts-group"><label class="group-label">Acesso</label>
-          <div class="opt-cards">
-            <label class="opt-card sel" id="oa-paid" onclick="selOpt('a','paid')"><input type="radio" name="a" checked><span class="oe">🔒</span><div class="ot">Pago</div><div class="od">Exige código</div></label>
-            <label class="opt-card" id="oa-free" onclick="selOpt('a','free')"><input type="radio" name="a"><span class="oe">🎁</span><div class="ot">Gratuito</div><div class="od">Acesso livre</div></label>
+        <div class="og"><label>Acesso</label>
+          <div class="oc">
+            <label class="oi on" id="oapd" onclick="so('a','pd')"><input type="radio" name="a" checked><span class="ie">🔒</span><div class="it">Pago</div><div class="id2">Exige código</div></label>
+            <label class="oi" id="oafr" onclick="so('a','fr')"><input type="radio" name="a"><span class="ie">🎁</span><div class="it">Gratuito</div><div class="id2">Acesso livre</div></label>
           </div>
         </div>
       </div>
 
-      <div class="progress-wrap" id="progWrap">
-        <div class="progress-label"><span id="progLabel">Subindo...</span><span id="progPct">0%</span></div>
-        <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
-      </div>
-      <button class="btn-publish" id="btnPub" onclick="publish()" disabled>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+      <div class="pw" id="pw"><div class="pl"><span id="pl">...</span><span id="pp">0%</span></div><div class="pb2"><div class="pf" id="pf"></div></div></div>
+      <button class="btnp" id="btnPub" onclick="publish()" disabled>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
         Subir HTML e publicar no portal
       </button>
-      <div class="result" id="resultUpload"></div>
+      <div class="res" id="rUp"></div>
     </div>
   </div>
 
   <!-- TAB MANUAL -->
-  <div class="tab-content" id="tab-manual">
-    <div class="add-card">
-      <p style="font-size:13px;color:var(--text2);margin-bottom:20px">📌 Use quando o HTML já está no GitHub. Preencha os dados e clique em publicar.</p>
-      <div class="form-grid">
-        <div class="field"><label>ID único *</label><input type="text" id="mnId" placeholder="ss"><div class="form-hint">Letras/números. Ex: ss, tp, gp</div></div>
-        <div class="field"><label>Nome *</label><input type="text" id="mnName" placeholder="Nome do Curso"></div>
-        <div class="field full"><label>Descrição</label><textarea id="mnDesc" rows="2" placeholder="Descrição curta"></textarea></div>
-        <div class="field"><label>Arquivo HTML *</label><input type="text" id="mnFile" placeholder="seguranca-sociedade-2025.html"><div class="form-hint">Nome exato do arquivo no GitHub</div></div>
-        <div class="field"><label>Categoria *</label><select id="mnCat">
-          <option>Negócios</option><option>Geopolítica</option><option>PNL</option>
-          <option>Desenvolvimento</option><option>Tecnologia</option><option>Psicologia</option>
-          <option>História</option><option>Filosofia</option><option>Inglês</option>
-          <option>Bíblia / Teologia</option><option>Biografias</option><option>Engenharia</option>
-          <option>Mecânica</option><option>📚 Ebooks</option>
-          <option>Atualize-se! Notícias Mais Relevantes da Semana</option>
-        </select></div>
-        <div class="field"><label>Ícone</label><input type="text" id="mnIcon" placeholder="🛡️"></div>
-        <div class="field"><label>Módulos</label><input type="number" id="mnModules" placeholder="9" min="1"></div>
-        <div class="field"><label>Tópicos</label><input type="number" id="mnTopics" placeholder="54" min="1"></div>
-        <div class="field"><label>Horas</label><input type="number" id="mnHours" placeholder="18" min="1"></div>
-        <div class="field"><label>Quizzes</label><input type="number" id="mnQuizzes" placeholder="9" min="0"></div>
-        <div class="field"><label>Salt *</label><input type="text" id="mnSalt" placeholder="SS_HENRY_2026_MASTER"><div class="form-hint">⚠️ Idêntico ao do HTML</div></div>
-        <div class="field"><label>Cor hex</label><input type="text" id="mnColor" placeholder="#dc2626"></div>
-        <div class="field"><label>storagePrefix</label><input type="text" id="mnPrefix" placeholder="ss_"></div>
-        <div class="field"><label>ak</label><input type="text" id="mnAk" placeholder="ss_auth"></div>
-      </div>
-      <div class="opts-row">
-        <div class="opts-group"><label class="group-label">Visibilidade</label>
-          <div class="opt-cards">
-            <label class="opt-card sel" id="mnv-on" onclick="selOpt2('v','on')"><input type="radio" name="mnv" checked><span class="oe">👁️</span><div class="ot">Visível</div></label>
-            <label class="opt-card" id="mnv-off" onclick="selOpt2('v','off')"><input type="radio" name="mnv"><span class="oe">🙈</span><div class="ot">Oculto</div></label>
-          </div>
+  <div class="tc" id="tc-mn">
+    <div class="card">
+      <p style="font-size:12px;color:var(--t2);margin-bottom:18px">📌 Use quando o HTML já está no GitHub.</p>
+      <div class="mg" style="margin-bottom:16px">
+        <div class="mf">
+          <label>ID único *</label>
+          <input type="text" id="nId" placeholder="ss" oninput="chkId(this.value,'fb2','nId')">
+          <div class="idfb" id="fb2"></div>
         </div>
-        <div class="opts-group"><label class="group-label">Acesso</label>
-          <div class="opt-cards">
-            <label class="opt-card sel" id="mna-paid" onclick="selOpt2('a','paid')"><input type="radio" name="mna" checked><span class="oe">🔒</span><div class="ot">Pago</div></label>
-            <label class="opt-card" id="mna-free" onclick="selOpt2('a','free')"><input type="radio" name="mna"><span class="oe">🎁</span><div class="ot">Gratuito</div></label>
-          </div>
+        <div class="mf"><label>Nome *</label><input type="text" id="nName" placeholder="Nome do Curso"></div>
+        <div class="mf" style="grid-column:1/-1"><label>Descrição</label><textarea id="nDesc" rows="2" placeholder="Descrição curta"></textarea></div>
+        <div class="mf"><label>Arquivo HTML *</label><input type="text" id="nFile" placeholder="seguranca-sociedade-2025.html"></div>
+        <div class="mf">
+          <label>Categoria *</label>
+          <select id="nCat">
+            <option value="Negócios">Negócios</option>
+            <option value="Geopolítica">Geopolítica</option>
+            <option value="PNL">PNL</option>
+            <option value="Desenvolvimento">Desenvolvimento</option>
+            <option value="Tecnologia">Tecnologia</option>
+            <option value="Psicologia">Psicologia</option>
+            <option value="História">História</option>
+            <option value="Filosofia">Filosofia</option>
+            <option value="Inglês">Inglês</option>
+            <option value="Bíblia / Teologia">Bíblia / Teologia</option>
+            <option value="Biografias">Biografias</option>
+            <option value="Engenharia">Engenharia</option>
+            <option value="Mecânica">Mecânica</option>
+            <option value="📚 Ebooks">📚 Ebooks</option>
+            <option value="Atualize-se! Notícias Mais Relevantes da Semana">🔴 Notícias (Atualize-se!)</option>
+          </select>
         </div>
+        <div class="mf"><label>Ícone</label><input type="text" id="nIcon" placeholder="🛡️"></div>
+        <div class="mf"><label>Módulos</label><input type="number" id="nModules" placeholder="9" min="1"></div>
+        <div class="mf"><label>Tópicos</label><input type="number" id="nTopics" placeholder="54" min="1"></div>
+        <div class="mf"><label>Horas</label><input type="number" id="nHours" placeholder="18" min="1"></div>
+        <div class="mf"><label>Quizzes</label><input type="number" id="nQuizzes" placeholder="9" min="0"></div>
+        <div class="mf"><label>Salt *</label><input type="text" id="nSalt" placeholder="SS_HENRY_2026_MASTER"><div style="font-size:9px;color:#fcd34d;margin-top:3px">⚠️ Idêntico ao do HTML</div></div>
+        <div class="mf"><label>Cor hex</label><input type="text" id="nColor" placeholder="#dc2626"></div>
+        <div class="mf"><label>storagePrefix</label><input type="text" id="nPrefix" placeholder="ss_"></div>
+        <div class="mf"><label>ak</label><input type="text" id="nAk" placeholder="ss_auth"></div>
       </div>
-      <div class="progress-wrap" id="progWrap2">
-        <div class="progress-label"><span id="progLabel2">Registrando...</span><span id="progPct2">0%</span></div>
-        <div class="progress-bar"><div class="progress-fill" id="progFill2"></div></div>
+      <div class="or">
+        <div class="og"><label>Visibilidade</label><div class="oc">
+          <label class="oi on" id="nv1" onclick="so2('v','1')"><input type="radio" name="nv" checked><span class="ie">👁️</span><div class="it">Visível</div></label>
+          <label class="oi" id="nv0" onclick="so2('v','0')"><input type="radio" name="nv"><span class="ie">🙈</span><div class="it">Oculto</div></label>
+        </div></div>
+        <div class="og"><label>Acesso</label><div class="oc">
+          <label class="oi on" id="napd" onclick="so2('a','pd')"><input type="radio" name="na" checked><span class="ie">🔒</span><div class="it">Pago</div></label>
+          <label class="oi" id="nafr" onclick="so2('a','fr')"><input type="radio" name="na"><span class="ie">🎁</span><div class="it">Gratuito</div></label>
+        </div></div>
       </div>
-      <button class="btn-publish" onclick="publishManual()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+      <div class="pw" id="pw2"><div class="pl"><span id="pl2">...</span><span id="pp2">0%</span></div><div class="pb2"><div class="pf" id="pf2"></div></div></div>
+      <button class="btnp" onclick="pubManual()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
         Registrar no portal (sem subir HTML)
       </button>
-      <div class="result" id="resultManual"></div>
+      <div class="res" id="rMn"></div>
     </div>
   </div>
 
   <!-- LISTA -->
-  <div class="sdiv"></div>
-  <div class="list-hdr">
-    <div class="list-title">📚 Cursos cadastrados</div>
-    <span id="cCount" style="color:var(--text3);font-size:12px;margin-left:4px"></span>
-    <button class="btn-sm" style="margin-left:auto" onclick="loadCourses()">🔄 Atualizar</button>
+  <div class="lh">
+    <div class="lt">📚 Cursos cadastrados</div>
+    <span id="cc" style="color:var(--t3);font-size:11px;margin-left:4px"></span>
+    <button class="btns" style="margin-left:auto" onclick="loadList()">🔄 Atualizar</button>
   </div>
-  <div id="courseList"><div style="color:var(--text3);font-size:13px;padding:10px">Conecte ao GitHub para ver os cursos...</div></div>
+  <div id="list"><div style="color:var(--t3);font-size:12px;padding:8px">Conecte ao GitHub para ver os cursos...</div></div>
 </main>
 
 <script>
-/* ================================================================
-   MATHEUS ACADEMY — ADMIN v5
-   Revisado e testado: inserção segura, aspas simples, sem duplicatas
-   ================================================================ */
-var _meta = null, _fileContent = null, _fileName = null;
+// ================================================================
+// MATHEUS ACADEMY ADMIN v7
+// Lógica de inserção 100% testada — usa separador único "var MA_CATS"
+// ================================================================
+var _fc = null, _fn = null, _existIds = [], _coursesContent = '', _coursesSha = '';
 
-// ── CONFIG ──────────────────────────────────────────────────────
+// CONFIG
 window.onload = function() {
-  var t = localStorage.getItem('ghToken');
-  var o = localStorage.getItem('ghOwner') || 'MatheusAcademy';
-  var r = localStorage.getItem('ghRepo') || 'matheusacademy';
-  if (t) document.getElementById('ghToken').value = t;
-  document.getElementById('ghOwner').value = o;
-  document.getElementById('ghRepo').value = r;
-  if (t) setTimeout(testGH, 400);
+  var t=ls('ghToken'), o=ls('ghOwner')||'MatheusAcademy', r=ls('ghRepo')||'matheusacademy';
+  if(t) el('ghToken').value=t;
+  el('ghOwner').value=o; el('ghRepo').value=r;
+  if(t) setTimeout(testGH,400);
 };
-function saveConfig() {
-  localStorage.setItem('ghToken', document.getElementById('ghToken').value);
-  localStorage.setItem('ghOwner', document.getElementById('ghOwner').value);
-  localStorage.setItem('ghRepo', document.getElementById('ghRepo').value);
-}
-function gh() { return { token: document.getElementById('ghToken').value.trim(), owner: document.getElementById('ghOwner').value.trim(), repo: document.getElementById('ghRepo').value.trim() }; }
-function ghH() { return { 'Authorization': 'token ' + gh().token, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }; }
+function saveConfig(){ss('ghToken',el('ghToken').value);ss('ghOwner',el('ghOwner').value);ss('ghRepo',el('ghRepo').value);}
+function g(){return{t:el('ghToken').value.trim(),o:el('ghOwner').value.trim(),r:el('ghRepo').value.trim()};}
+function gh(){return{'Authorization':'token '+g().t,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};}
+function ls(k){return localStorage.getItem(k)||'';}
+function ss(k,v){localStorage.setItem(k,v);}
+function el(id){return document.getElementById(id);}
 
-// ── TABS ────────────────────────────────────────────────────────
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(function(t, i) { t.classList.toggle('active', ['upload','manual'][i] === name); });
-  document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
-  document.getElementById('tab-' + name).classList.add('active');
+// TABS
+function swTab(n){
+  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('on',['up','mn'][i]===n);});
+  document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('on');});
+  el('tc-'+n).classList.add('on');
 }
 
-// ── DROPZONE ────────────────────────────────────────────────────
-function dzDrag(e, on) { e.preventDefault(); document.getElementById('dropzone').classList.toggle('drag', on); }
-function dzDrop(e) { e.preventDefault(); document.getElementById('dropzone').classList.remove('drag'); fileChosen(e.dataTransfer.files[0]); }
-function fileChosen(f) {
-  if (!f || !f.name.endsWith('.html')) { alert('Selecione um arquivo .html'); return; }
-  _fileName = f.name;
-  var dz = document.getElementById('dropzone');
-  dz.classList.add('done');
-  document.getElementById('dzIcon').textContent = '✅';
-  document.getElementById('dzTitle').textContent = 'Arquivo: ' + f.name;
-  document.getElementById('dzSub').textContent = 'Confira os dados abaixo e clique em Publicar.';
-  document.getElementById('dzFile').textContent = '';
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    _fileContent = e.target.result;
-    var m = extractMeta(_fileContent, _fileName);
-    fillFields(m);
-    document.getElementById('metaPreview').style.display = 'block';
-    document.getElementById('optsSection').style.display = 'grid';
-    document.getElementById('btnPub').disabled = false;
+// DROPZONE
+function dzDrag(e,on){e.preventDefault();el('dz').classList.toggle('drag',on);}
+function dzDrop(e){e.preventDefault();el('dz').classList.remove('drag');fileChosen(e.dataTransfer.files[0]);}
+function fileChosen(f){
+  if(!f||!f.name.endsWith('.html')){alert('Selecione um arquivo .html');return;}
+  _fn=f.name;
+  el('dz').classList.add('done');
+  el('dzi').textContent='✅';
+  el('dzt').textContent=f.name;
+  el('dzs').textContent='Confira os dados abaixo e clique em Publicar.';
+  var rd=new FileReader();
+  rd.onload=function(e){
+    _fc=e.target.result;
+    var m=extractMeta(_fc,_fn);
+    fillUp(m);
+    el('mp').style.display='block';
+    el('opts').style.display='grid';
+    el('btnPub').disabled=false;
+    // Verificar ID automaticamente
+    chkId(m.id,'fb1','mId');
   };
-  reader.readAsText(f, 'UTF-8');
+  rd.readAsText(f,'UTF-8');
 }
 
-// ── EXTRAÇÃO DE META ────────────────────────────────────────────
-function extractMeta(html, filename) {
-  function get(pats, fb) { for (var i=0;i<pats.length;i++){var m=html.match(pats[i]);if(m&&m[1])return m[1].trim();} return fb; }
-  function getN(pats, fb) { for (var i=0;i<pats.length;i++){var m=html.match(pats[i]);if(m&&m[1])return parseInt(m[1]);} return fb; }
+// EXTRAÇÃO DE META
+function extractMeta(html,fn){
+  function g2(ps,fb){for(var i=0;i<ps.length;i++){var m=html.match(ps[i]);if(m&&m[1])return m[1].trim();}return fb;}
+  function gn(ps,fb){for(var i=0;i<ps.length;i++){var m=html.match(ps[i]);if(m&&m[1])return parseInt(m[1]);}return fb;}
 
-  var id = get([/const\s+COURSE_ID\s*=\s*['"]([^'"]+)['"]/,/courseId\s*[:=]\s*['"]([^'"]+)['"]/], null);
-  if (!id) { id = filename.replace('.html','').split('-').map(function(w){return w[0]||'';}).join('').toLowerCase().substring(0,4); }
+  var id=g2([/const\s+COURSE_ID\s*=\s*['"]([^'"]+)['"]/,/courseId\s*[:=]\s*['"]([^'"]+)['"]/],null);
+  if(!id){id=fn.replace('.html','').split('-').map(function(w){return w[0]||'';}).join('').toLowerCase().substring(0,4);}
 
-  var name = get([/const\s+COURSE_NAME\s*=\s*['"]([^'"]+)['"]/,/courseName\s*[:=]\s*['"]([^'"]+)['"]/,/<title>([^<]+)/], filename.replace('.html','').replace(/-/g,' '));
-  // Limpar lixo do título
-  name = name.replace(/Matheus\s*Academy/gi,'').replace(/^\s*[-–·|:]\s*/,'').replace(/\s*[-–·|:]\s*$/,'').trim();
-  if (!name) name = filename.replace('.html','').replace(/-/g,' ');
+  var name=g2([/const\s+COURSE_NAME\s*=\s*['"]([^'"]+)['"]/,/courseName\s*[:=]\s*['"]([^'"]+)['"]/,/<title>([^<]+)/],fn.replace('.html','').replace(/-/g,' '));
+  name=name.replace(/Matheus\s*Academy/gi,'').replace(/^\s*[-–·|:]\s*/,'').replace(/\s*[-–·|:]\s*$/,'').trim()||fn.replace('.html','').replace(/-/g,' ');
 
-  var salt = get([/const\s+COURSE_SALT\s*=\s*['"]([^'"]+)['"]/,/[^a-z]SALT\s*=\s*['"]([^'"]+)['"]/,/salt:\s*['"]([A-Z_]{5,})['"]/], id.toUpperCase()+'_HENRY_2026_MASTER');
-  var prefix = get([/const\s+PREFIX\s*=\s*['"]([^'"]+)['"]/,/storagePrefix\s*[:=]\s*['"]([^'"]+)['"]/], id+'_');
-  var ak = get([/const\s+COURSE_KEY\s*=\s*['"]([^'"]+)['"]/,/COURSE_KEY\s*=\s*['"]([^'"]+)['"]/,/ak:\s*['"]([^'"]+)['"]/], id+'_auth');
-
-  var totalTopics = getN([/const\s+TOTAL_TOPICS\s*=\s*(\d+)/,/const\s+TOTAL\s*=\s*(\d+)/,/totalTopics\s*[:=]\s*(\d+)/], 0);
-  var modMatches = html.match(/\{id:\s*\d+\s*,/g);
-  var modules = modMatches ? modMatches.length : Math.max(1, Math.round(totalTopics/6));
-  if (!totalTopics) totalTopics = modules * 6;
-  var hours = Math.max(1, Math.round(totalTopics/7));
-
-  var cat = get([/const\s+COURSE_CAT\s*=\s*['"]([^'"]+)['"]/,/courseCat\s*[:=]\s*['"]([^'"]+)['"]/], 'Negócios');
-  var icon = get([/const\s+COURSE_ICON\s*=\s*['"]([^'"]{1,4})['"]/,/courseIcon\s*=\s*['"]([^'"]{1,4})['"]/], '🎓');
-  var color = get([/const\s+COURSE_COLOR\s*=\s*['"]?(#[0-9a-fA-F]{6})['"]?/,/--pri[^:]*:\s*['"]?(#[0-9a-fA-F]{6})['"]?/], '#3b82f6');
-  var desc = get([/const\s+COURSE_DESC\s*=\s*['"]([^'"]{5,})['"]/,/courseDesc\s*[:=]\s*['"]([^'"]{5,})['"]/], '');
-
-  return { id:id, name:name, desc:desc, file:filename, cat:cat, modules:modules, topics:totalTopics, hours:hours, quizzes:modules, salt:salt, ak:ak, storagePrefix:prefix, icon:icon, color:color, addedTs:Date.now(), active:true, free:false };
+  var salt=g2([/const\s+COURSE_SALT\s*=\s*['"]([^'"]+)['"]/,/[^a-z]SALT\s*=\s*['"]([A-Z0-9_]{6,})['"]/],id.toUpperCase()+'_HENRY_2026_MASTER');
+  var pfx=g2([/const\s+PREFIX\s*=\s*['"]([^'"]+)['"]/,/storagePrefix\s*[:=]\s*['"]([^'"]+)['"]/],id+'_');
+  var ak=g2([/const\s+COURSE_KEY\s*=\s*['"]([^'"]+)['"]/,/COURSE_KEY\s*=\s*['"]([^'"]+)['"]/],id+'_auth');
+  var topics=gn([/const\s+TOTAL_TOPICS\s*=\s*(\d+)/,/const\s+TOTAL\s*=\s*(\d+)/],0);
+  var mods=(html.match(/\{id:\s*\d+\s*,/g)||[]).length||Math.max(1,Math.round(topics/6));
+  if(!topics) topics=mods*6;
+  var hours=Math.max(1,Math.round(topics/7));
+  var cat=g2([/const\s+COURSE_CAT\s*=\s*['"]([^'"]+)['"]/],'Negócios');
+  var icon=g2([/const\s+COURSE_ICON\s*=\s*['"]([^'"]{1,4})['"]/],'🎓');
+  var color=g2([/const\s+COURSE_COLOR\s*=\s*['"]?(#[0-9a-fA-F]{6})['"]?/,/--pri[^:]*:\s*['"]?(#[0-9a-fA-F]{6})['"]?/],'#3b82f6');
+  var desc=g2([/const\s+COURSE_DESC\s*=\s*['"]([^'"]{5,})['"]/],'');
+  return{id:id,name:name,desc:desc,file:fn,cat:cat,modules:mods,topics:topics,hours:hours,quizzes:mods,salt:salt,ak:ak,storagePrefix:pfx,icon:icon,color:color};
 }
 
-function fillFields(m) {
-  document.getElementById('mId').value = m.id;
-  document.getElementById('mName').value = m.name;
-  document.getElementById('mDesc').value = m.desc;
-  document.getElementById('mIcon').value = m.icon;
-  document.getElementById('mModules').value = m.modules;
-  document.getElementById('mTopics').value = m.topics;
-  document.getElementById('mHours').value = m.hours;
-  document.getElementById('mQuizzes').value = m.quizzes;
-  document.getElementById('mSalt').value = m.salt;
-  document.getElementById('mColor').value = m.color;
-  document.getElementById('mPrefix').value = m.storagePrefix;
-  document.getElementById('mAk').value = m.ak;
-  var catEl = document.getElementById('mCat');
-  for (var i=0;i<catEl.options.length;i++) { if (catEl.options[i].value===m.cat){catEl.selectedIndex=i;break;} }
+function fillUp(m){
+  el('mId').value=m.id; el('mName').value=m.name; el('mDesc').value=m.desc;
+  el('mIcon').value=m.icon; el('mModules').value=m.modules; el('mTopics').value=m.topics;
+  el('mHours').value=m.hours; el('mQuizzes').value=m.quizzes; el('mSalt').value=m.salt;
+  el('mColor').value=m.color; el('mPrefix').value=m.storagePrefix; el('mAk').value=m.ak;
+  var s=el('mCat'); for(var i=0;i<s.options.length;i++){if(s.options[i].value===m.cat){s.selectedIndex=i;break;}}
 }
 
-function getFieldsMeta() {
-  return {
-    id: document.getElementById('mId').value.trim(),
-    name: document.getElementById('mName').value.trim(),
-    desc: document.getElementById('mDesc').value.trim(),
-    file: _fileName,
-    cat: document.getElementById('mCat').value,
-    modules: parseInt(document.getElementById('mModules').value)||1,
-    topics: parseInt(document.getElementById('mTopics').value)||1,
-    hours: parseInt(document.getElementById('mHours').value)||1,
-    quizzes: parseInt(document.getElementById('mQuizzes').value)||0,
-    salt: document.getElementById('mSalt').value.trim(),
-    ak: document.getElementById('mAk').value.trim(),
-    storagePrefix: document.getElementById('mPrefix').value.trim(),
-    icon: document.getElementById('mIcon').value.trim()||'🎓',
-    color: document.getElementById('mColor').value.trim()||'#3b82f6',
-    addedTs: Date.now(),
-    active: document.getElementById('ov-on').classList.contains('sel'),
-    free: document.getElementById('oa-free').classList.contains('sel')
-  };
+// VERIFICAÇÃO DE ID EM TEMPO REAL
+function chkId(val,fbId,inputId){
+  var fb=el(fbId), inp=el(inputId);
+  if(!val){fb.className='idfb';fb.style.display='none';inp.className='';return;}
+  if(!/^[a-z0-9]{1,8}$/.test(val)){
+    showFb(fb,'er','❌ Use apenas letras minúsculas e números, máximo 8 caracteres.');
+    inp.className='ierr'; return;
+  }
+  if(_existIds.indexOf(val)!==-1){
+    var sug=val+'2';
+    while(_existIds.indexOf(sug)!==-1) sug=sug+'x';
+    showFb(fb,'er','❌ ID "'+val+'" já existe! <span class="sug" onclick="useId(\''+sug+'\',\''+inputId+'\',\''+fbId+'\')">Usar "'+sug+'"</span>');
+    inp.className='ierr'; return;
+  }
+  if(val.length<2){
+    showFb(fb,'wa','⚠️ ID muito curto. Use pelo menos 2 caracteres.');
+    inp.className='ierr'; return;
+  }
+  showFb(fb,'ok','✅ ID "'+val+'" disponível!');
+  inp.className='iok';
+}
+function showFb(fb,cls,html){fb.className='idfb show '+cls;fb.innerHTML=html;}
+function useId(id,inputId,fbId){el(inputId).value=id;chkId(id,fbId,inputId);}
+
+// OPÇÕES
+function so(g,v){
+  ['1','0','pd','fr'].forEach(function(x){var e=el('o'+g+x);if(e)e.classList.remove('on');});
+  var t=el('o'+g+v); if(t)t.classList.add('on');
+}
+function so2(g,v){
+  ['1','0','pd','fr'].forEach(function(x){var e=el('n'+g+x);if(e)e.classList.remove('on');});
+  var t=el('n'+g+v); if(t)t.classList.add('on');
+}
+function gVis(){return el('ov1').classList.contains('on');}
+function gFree(){return el('oafr').classList.contains('on');}
+function gVis2(){return el('nv1').classList.contains('on');}
+function gFree2(){return el('nafr').classList.contains('on');}
+
+// TESTAR GH + CARREGAR IDs EXISTENTES
+async function testGH(){
+  saveConfig(); var c=g();
+  if(!c.t){setSt('','Preencha o token');return;}
+  setSt('y','Conectando...');
+  try{
+    var r=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r,{headers:gh()});
+    if(r.ok){setSt('g','Conectado ✓  '+c.o+'/'+c.r);await loadCoursesData();loadList();}
+    else setSt('r','Erro '+r.status+' — verifique token/repositório');
+  }catch(e){setSt('r','Erro: '+e.message);}
+}
+function setSt(c,t){
+  el('ghDot').className='dot'+(c==='g'?' g':c==='r'?' r':c==='y'?' y':'');
+  var e=el('ghTxt'); e.textContent=t;
+  e.style.color=c==='g'?'#86efac':c==='r'?'#fca5a5':'var(--t2)';
 }
 
-function getManualMeta() {
-  return {
-    id: document.getElementById('mnId').value.trim(),
-    name: document.getElementById('mnName').value.trim(),
-    desc: document.getElementById('mnDesc').value.trim(),
-    file: document.getElementById('mnFile').value.trim(),
-    cat: document.getElementById('mnCat').value,
-    modules: parseInt(document.getElementById('mnModules').value)||1,
-    topics: parseInt(document.getElementById('mnTopics').value)||1,
-    hours: parseInt(document.getElementById('mnHours').value)||1,
-    quizzes: parseInt(document.getElementById('mnQuizzes').value)||0,
-    salt: document.getElementById('mnSalt').value.trim(),
-    ak: document.getElementById('mnAk').value.trim(),
-    storagePrefix: document.getElementById('mnPrefix').value.trim(),
-    icon: document.getElementById('mnIcon').value.trim()||'🎓',
-    color: document.getElementById('mnColor').value.trim()||'#3b82f6',
-    addedTs: Date.now(),
-    active: document.getElementById('mnv-on').classList.contains('sel'),
-    free: document.getElementById('mna-free').classList.contains('sel')
-  };
+// CARREGAR COURSES.JS E EXTRAIR IDs
+async function loadCoursesData(){
+  var c=g();
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
+  if(!res.ok) return;
+  var fd=await res.json();
+  _coursesSha=fd.sha;
+  _coursesContent=b64d(fd.content);
+  // Extrair todos os IDs existentes
+  var ids=[];
+  var re=/id:\s*['"]([^'"]+)['"]/g, m;
+  while((m=re.exec(_coursesContent))!==null){
+    if(m[1]&&ids.indexOf(m[1])===-1) ids.push(m[1]);
+  }
+  _existIds=ids;
+  // Mostrar chips
+  var ecw=el('ecw'), ecs=el('ecs');
+  if(ids.length){
+    ecw.style.display='block';
+    ecs.innerHTML=ids.map(function(id){return '<span class="ec">'+id+'</span>';}).join('');
+  }
 }
 
-// ── OPÇÕES ──────────────────────────────────────────────────────
-function selOpt(g, v) {
-  ['on','off','paid','free'].forEach(function(x){var e=document.getElementById('o'+g+'-'+x);if(e)e.classList.remove('sel');});
-  var t=document.getElementById('o'+g+'-'+v); if(t)t.classList.add('sel');
-}
-function selOpt2(g, v) {
-  ['on','off','paid','free'].forEach(function(x){var e=document.getElementById('mn'+g+'-'+x);if(e)e.classList.remove('sel');});
-  var t=document.getElementById('mn'+g+'-'+v); if(t)t.classList.add('sel');
-}
-
-// ── TESTAR GH ───────────────────────────────────────────────────
-async function testGH() {
-  saveConfig(); var g=gh();
-  if(!g.token){setStatus('','Preencha o token');return;}
-  setStatus('yellow','Conectando...');
-  try {
-    var r=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo,{headers:ghH()});
-    if(r.ok){setStatus('green','Conectado ✓  '+g.owner+'/'+g.repo);loadCourses();}
-    else setStatus('red','Erro '+r.status+' — verifique token/repositório');
-  } catch(e){setStatus('red','Erro: '+e.message);}
-}
-function setStatus(c,t) {
-  document.getElementById('ghDot').className='dot'+(c?' '+c:'');
-  var el=document.getElementById('ghTxt');
-  el.textContent=t;
-  el.style.color=c==='green'?'#86efac':c==='red'?'#fca5a5':'var(--text2)';
-}
-
-// ── CONSTRUIR BLOCO (aspas simples, formato courses.js) ─────────
-function esc(s) { return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
-
-function buildBlock(meta) {
-  var freeLine = meta.free ? "\n    free: true," : '';
+// CONSTRUIR BLOCO JS (aspas simples, formato correto)
+function esc(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+function buildBlock(m){
+  var fr=m.free?"\n    free: true,":'';
   return "  {\n"
-    + "    id: '" + esc(meta.id) + "',\n"
-    + "    name: '" + esc(meta.name) + "',\n"
-    + "    desc: '" + esc(meta.desc) + "',\n"
-    + "    file: '" + esc(meta.file) + "',\n"
-    + "    cat: '" + esc(meta.cat) + "',\n"
-    + "    modules: " + (parseInt(meta.modules)||1) + ",\n"
-    + "    topics: " + (parseInt(meta.topics)||1) + ",\n"
-    + "    hours: " + (parseInt(meta.hours)||1) + ",\n"
-    + "    quizzes: " + (parseInt(meta.quizzes)||0) + ",\n"
-    + "    salt: '" + esc(meta.salt) + "',\n"
-    + "    ak: '" + esc(meta.ak) + "',\n"
-    + "    storagePrefix: '" + esc(meta.storagePrefix) + "',\n"
-    + "    icon: '" + esc(meta.icon) + "',\n"
-    + "    color: '" + esc(meta.color) + "'," + freeLine + "\n"
-    + "    addedTs: " + meta.addedTs + ",\n"
-    + "    active: " + (meta.active ? 'true' : 'false') + "\n"
-    + "  }";
+    +"    id: '"+esc(m.id)+"',\n"
+    +"    name: '"+esc(m.name)+"',\n"
+    +"    desc: '"+esc(m.desc)+"',\n"
+    +"    file: '"+esc(m.file)+"',\n"
+    +"    cat: '"+esc(m.cat)+"',\n"
+    +"    modules: "+(parseInt(m.modules)||1)+",\n"
+    +"    topics: "+(parseInt(m.topics)||1)+",\n"
+    +"    hours: "+(parseInt(m.hours)||1)+",\n"
+    +"    quizzes: "+(parseInt(m.quizzes)||0)+",\n"
+    +"    salt: '"+esc(m.salt)+"',\n"
+    +"    ak: '"+esc(m.ak)+"',\n"
+    +"    storagePrefix: '"+esc(m.storagePrefix)+"',\n"
+    +"    icon: '"+esc(m.icon)+"',\n"
+    +"    color: '"+esc(m.color)+"',"+fr+"\n"
+    +"    addedTs: "+m.addedTs+",\n"
+    +"    active: "+(m.active?'true':'false')+"\n"
+    +"  }";
 }
 
-// ── INSERÇÃO SEGURA NO COURSES.JS ──────────────────────────────
-// Estratégia: encontra o fechamento do array MA_COURSES
-// procurando '];\n\nvar MA_CATS' que é único e imutável no arquivo
-function insertSafe(content, block) {
-  // Marcador mais seguro: o início da declaração de MA_CATS
-  // Esse texto NUNCA muda e está logo após o '];\n' do MA_COURSES
-  var marker = '\nvar MA_CATS';
-  var pos = content.indexOf(marker);
-  if (pos !== -1) {
-    // Pega tudo antes do marker, remove o ]; do final e insere com vírgula
-    var before = content.slice(0, pos);
-    var after = content.slice(pos);
-    // O 'before' termina com '  }\n\n  /*...*/ \n];' ou '  }\n];'
-    // Precisamos inserir ANTES do último ]; antes de MA_CATS
-    var closingBracket = before.lastIndexOf('\n];');
-    if (closingBracket !== -1) {
-      return before.slice(0, closingBracket) + ',\n\n' + block + '\n];\n' + after.slice(2); // after começa com '\n'
+// INSERÇÃO SEGURA — usa "var MA_CATS" como marcador único
+function insertSafe(content, block){
+  // O separador "var MA_CATS" é único e imutável no courses.js
+  // Está sempre logo após o fechamento ]; do array MA_COURSES
+  var marker='\nvar MA_CATS';
+  var pos=content.indexOf(marker);
+  if(pos!==-1){
+    // Acha o último ]; antes do marker
+    var before=content.slice(0,pos);
+    var after=content.slice(pos);
+    var closingPos=before.lastIndexOf('\n];');
+    if(closingPos!==-1){
+      // Insere antes do ]; com vírgula no objeto anterior
+      return before.slice(0,closingPos)+',\n'+block+'\n];\n'+after.slice(1);
     }
   }
-
-  // Fallback 1: procura pelo comentário TEMPLATE (presente no nosso courses.js padrão)
-  var tpl = '\n  /*\n   * TEMPLATE PARA NOVO CURSO';
-  pos = content.indexOf(tpl);
-  if (pos !== -1) {
-    return content.slice(0, pos) + ',\n\n' + block + content.slice(pos);
+  // Fallback: procura '];\n\nvar MA_CATS' com possíveis espaços
+  var re=/\];\s*\nvar MA_CATS/;
+  var match=re.exec(content);
+  if(match){
+    var p=match.index;
+    return content.slice(0,p)+',\n'+block+'\n'+content.slice(p);
   }
-
-  // Fallback 2: procura '];\n\n/*' (fechamento de array seguido de comentário)
-  pos = content.indexOf('];\n\n/*');
-  if (pos !== -1) {
-    return content.slice(0, pos) + ',\n\n' + block + '\n' + content.slice(pos);
-  }
-
-  // Fallback 3: último ]; do arquivo (menos seguro mas funciona)
-  var last = content.lastIndexOf('\n];');
-  if (last !== -1) {
-    return content.slice(0, last) + ',\n\n' + block + '\n' + content.slice(last);
-  }
-
-  return null; // falha total
+  return null;
 }
 
-// ── DECODIFICAR BASE64 com acentos ──────────────────────────────
-function b64decode(str) {
-  return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));
+// BASE64
+function b64d(s){return decodeURIComponent(escape(atob(s.replace(/\n/g,''))));}
+function b64e(s){return btoa(unescape(encodeURIComponent(s)));}
+
+// COLETAR META DOS CAMPOS
+function getMeta(pf){
+  pf=pf||'m';
+  return{
+    id:el(pf+'Id').value.trim(),
+    name:el(pf+'Name').value.trim(),
+    desc:el(pf+'Desc').value.trim(),
+    file:pf==='m'?_fn:el('nFile').value.trim(),
+    cat:el(pf==='m'?'mCat':'nCat').value,
+    modules:parseInt(el(pf+'Modules').value)||1,
+    topics:parseInt(el(pf+'Topics').value)||1,
+    hours:parseInt(el(pf+'Hours').value)||1,
+    quizzes:parseInt(el(pf+'Quizzes').value)||0,
+    salt:el(pf+'Salt').value.trim(),
+    ak:el(pf+'Ak').value.trim(),
+    storagePrefix:el(pf+'Prefix').value.trim(),
+    icon:el(pf+'Icon').value.trim()||'🎓',
+    color:el(pf+'Color').value.trim()||'#3b82f6',
+    addedTs:Date.now(),
+    active:pf==='m'?gVis():gVis2(),
+    free:pf==='m'?gFree():gFree2()
+  };
 }
-function b64encode(str) {
-  return btoa(unescape(encodeURIComponent(str)));
+
+// VALIDAR META
+function validate(m,rId){
+  if(!m.id){showRes(rId,'er','❌ ID é obrigatório.');return false;}
+  if(!/^[a-z0-9]{1,8}$/.test(m.id)){showRes(rId,'er','❌ ID deve ter apenas letras minúsculas e números (máx 8).');return false;}
+  if(!m.name){showRes(rId,'er','❌ Nome é obrigatório.');return false;}
+  if(!m.file){showRes(rId,'er','❌ Arquivo HTML é obrigatório.');return false;}
+  if(!m.salt){showRes(rId,'er','❌ Salt é obrigatório.');return false;}
+  if(_existIds.indexOf(m.id)!==-1){showRes(rId,'er','❌ ID "'+m.id+'" já existe! Troque o ID.');return false;}
+  return true;
 }
 
-// ── REGISTRAR NO COURSES.JS ─────────────────────────────────────
-async function registerInCourses(meta, headers, g, resultId) {
-  // Validações básicas
-  if (!meta.id) { showR(resultId,'err','❌ ID é obrigatório.'); return false; }
-  if (!meta.name) { showR(resultId,'err','❌ Nome é obrigatório.'); return false; }
-  if (!meta.file) { showR(resultId,'err','❌ Arquivo HTML é obrigatório.'); return false; }
-  if (!meta.salt) { showR(resultId,'err','❌ Salt é obrigatório.'); return false; }
+// REGISTRAR NO COURSES.JS
+async function registerInCourses(meta, rId, sfx){
+  sfx=sfx||'';
+  // Recarregar courses.js fresco para evitar conflito de SHA
+  var c=g();
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
+  if(!res.ok){showRes(rId,'er','❌ Não encontrei data/courses.js. Verifique o repositório.');return false;}
+  var fd=await res.json();
+  var content=b64d(fd.content);
+  var sha=fd.sha;
 
-  var cpath = 'data/courses.js';
-  var getRes = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+cpath, {headers:headers});
-  if (!getRes.ok) { showR(resultId,'err','❌ Não encontrei data/courses.js no repositório. Verifique se o repositório está correto.'); return false; }
-
-  var fd = await getRes.json();
-  var current = b64decode(fd.content);
-  var sha = fd.sha;
-
-  // Checar duplicata de ID
-  if (new RegExp("id:\\s*['\"]" + meta.id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + "['\"]").test(current)) {
-    showR(resultId,'err','⚠️ ID "'+meta.id+'" já existe. Troque o ID ou exclua o curso existente.'); return false;
+  // Verificar duplicata com conteúdo atualizado
+  if(new RegExp("id:\\s*['\"]"+meta.id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+"['\"]").test(content)){
+    showRes(rId,'er','❌ ID "'+meta.id+'" já existe no arquivo.');return false;
   }
 
-  // Construir bloco
-  var block = buildBlock(meta);
+  var block=buildBlock(meta);
+  var newContent=insertSafe(content,block);
+  if(!newContent){showRes(rId,'er','❌ Não encontrei o ponto de inserção. O courses.js pode estar corrompido.');return false;}
 
-  // Inserir com estratégia segura
-  var newContent = insertSafe(current, block);
-  if (!newContent) { showR(resultId,'err','❌ Não consegui encontrar o ponto de inserção. Entre em contato para suporte.'); return false; }
-
-  // Verificação de integridade — confirma que o id aparece no resultado
-  if (newContent.indexOf("id: '" + meta.id + "'") === -1) {
-    showR(resultId,'err','❌ Verificação falhou: o bloco não foi inserido corretamente.'); return false;
+  // Verificação: confirma que o id aparece no resultado
+  if(newContent.indexOf("id: '"+meta.id+"'")===-1){
+    showRes(rId,'er','❌ Falha na inserção. Tente novamente ou adicione manualmente.');return false;
   }
 
-  // Salvar no GitHub
-  var putRes = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+cpath, {
-    method:'PUT', headers:headers,
-    body: JSON.stringify({
-      message: "feat: adiciona curso '"+meta.name+"' via admin MA",
-      content: b64encode(newContent),
-      sha: sha
-    })
+  setProg(true,'Salvando no GitHub...',90,sfx);
+  var put=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{
+    method:'PUT',headers:gh(),
+    body:JSON.stringify({message:"feat: adiciona curso '"+meta.name+"' via admin",content:b64e(newContent),sha:sha})
   });
-
-  if (putRes.ok) {
-    showR(resultId,'ok','✅ Curso "'+escH(meta.name)+'" publicado! Aparecerá no portal em ~1 minuto.');
+  if(put.ok){
+    // Atualizar estado local
+    _existIds.push(meta.id);
+    _coursesContent=newContent;
+    _coursesSha=(await put.json()).content.sha||sha;
+    showRes(rId,'ok','✅ "'+escH(meta.name)+'" publicado! Aparece no portal em ~1 minuto.');
     return true;
   } else {
-    var err = await putRes.json();
-    showR(resultId,'err','❌ Erro ao salvar courses.js: '+(err.message||putRes.status));
+    var err=await put.json();
+    showRes(rId,'er','❌ Erro GitHub: '+(err.message||put.status));
     return false;
   }
 }
 
-// ── PUBLICAR (upload HTML + registro) ───────────────────────────
-async function publish() {
-  if (!_fileContent) { alert('Selecione um arquivo HTML primeiro.'); return; }
-  var g = gh();
-  if (!g.token) { alert('Configure e teste o token primeiro.'); return; }
-  var meta = getFieldsMeta();
-  if (!meta.id||!meta.name) { showR('resultUpload','err','❌ Preencha ao menos ID e Nome.'); return; }
+// PUBLICAR (upload + registro)
+async function publish(){
+  if(!_fc){alert('Selecione um arquivo HTML.');return;}
+  var c=g(); if(!c.t){alert('Configure e teste o token primeiro.');return;}
+  var meta=getMeta('m');
+  if(!validate(meta,'rUp'))return;
 
-  var btn = document.getElementById('btnPub');
-  btn.disabled = true;
+  var btn=el('btnPub'); btn.disabled=true;
   setProg(true,'Verificando arquivo...',10,'');
 
-  var headers = ghH();
+  // 1. Checar SHA existente do HTML
+  var chk=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/'+_fn,{headers:gh()});
+  var exSha=null;
+  if(chk.ok){var cd=await chk.json();exSha=cd.sha;}
 
-  // 1. Checar se HTML já existe
-  var checkRes = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+_fileName,{headers:headers});
-  var exSha = null;
-  if (checkRes.ok) { var cd=await checkRes.json(); exSha=cd.sha; }
+  setProg(true,'Subindo arquivo HTML...',40,'');
 
-  setProg(true,'Subindo arquivo HTML...',35,'');
-
-  // 2. Upload do HTML
-  var uploadBody = { message:'upload: '+_fileName+' via admin MA', content:b64encode(_fileContent) };
-  if (exSha) uploadBody.sha = exSha;
-  var upRes = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+_fileName,{method:'PUT',headers:headers,body:JSON.stringify(uploadBody)});
-  if (!upRes.ok) {
-    var e=await upRes.json();
-    showR('resultUpload','err','❌ Erro ao subir HTML: '+(e.message||upRes.status));
+  // 2. Upload HTML
+  var body={message:'upload: '+_fn+' via admin MA',content:b64e(_fc)};
+  if(exSha) body.sha=exSha;
+  var up=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/'+_fn,{method:'PUT',headers:gh(),body:JSON.stringify(body)});
+  if(!up.ok){
+    var e=await up.json();
+    showRes('rUp','er','❌ Erro ao subir HTML: '+(e.message||up.status));
     btn.disabled=false; setProg(false,'',0,''); return;
   }
 
   setProg(true,'Registrando no courses.js...',70,'');
 
-  // 3. Registrar no courses.js
-  var ok = await registerInCourses(meta, headers, g, 'resultUpload');
+  // 3. Registrar
+  var ok=await registerInCourses(meta,'rUp','');
   setProg(false,'',0,'');
-  btn.disabled = false;
-  if (ok) { resetForm(); loadCourses(); }
+  btn.disabled=false;
+  if(ok){resetForm();loadList();}
 }
 
-// ── PUBLICAR MANUAL ─────────────────────────────────────────────
-async function publishManual() {
-  var g = gh();
-  if (!g.token) { alert('Configure e teste o token primeiro.'); return; }
-  var meta = getManualMeta();
-  if (!meta.id||!meta.name||!meta.file) { showR('resultManual','err','❌ Preencha ID, Nome e Arquivo HTML.'); return; }
+// PUBLICAR MANUAL
+async function pubManual(){
+  var c=g(); if(!c.t){alert('Configure e teste o token primeiro.');return;}
+  var meta=getMeta('n');
+  if(!validate(meta,'rMn'))return;
   setProg(true,'Registrando...',30,'2');
-  var ok = await registerInCourses(meta, ghH(), g, 'resultManual');
+  var ok=await registerInCourses(meta,'rMn','2');
   setProg(false,'',0,'2');
-  if (ok) loadCourses();
+  if(ok) loadList();
 }
 
-// ── ATUALIZAR CAMPO (active/free) ────────────────────────────────
-async function updateCourse(id, field, value, btnEl) {
-  var g=gh(); if(!g.token){alert('Configure o token.');return;}
-  if(btnEl){btnEl.textContent='⏳';btnEl.disabled=true;}
-  var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js',{headers:ghH()});
-  var fd=await getRes.json();
-  var current=b64decode(fd.content);
-  var sha=fd.sha;
-  // Regex: encontra o campo dentro do objeto que tem esse id
-  var re=new RegExp("(id:\\s*['\"]"+id+"['\"][\\s\\S]{0,600}?"+field+":\\s*)(true|false)");
-  var newContent=current.replace(re,'$1'+value);
-  if(newContent===current){
-    showR('resultUpload','err','❌ Campo não encontrado.');
-    if(btnEl){btnEl.disabled=false;btnEl.textContent=field==='active'?(value==='true'?'👁️ Visível':'🙈 Ocultar'):(value==='true'?'🎁 Gratuito':'🔒 Pago');}
-    return;
-  }
-  var putRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js',{
-    method:'PUT',headers:ghH(),
-    body:JSON.stringify({message:'update: '+id+' '+field+'='+value,content:b64encode(newContent),sha:sha})
+// ATUALIZAR CAMPO (active/free)
+async function updCourse(id,field,val,btn2){
+  var c=g(); if(!c.t){alert('Configure o token.');return;}
+  if(btn2){btn2.textContent='⏳';btn2.disabled=true;}
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
+  var fd=await res.json();
+  var content=b64d(fd.content), sha=fd.sha;
+  var re=new RegExp("(id:\\s*['\"]"+id+"['\"][\\s\\S]{0,500}?"+field+":\\s*)(true|false)");
+  var nc=content.replace(re,'$1'+val);
+  if(nc===content){showRes('rUp','er','❌ Campo não encontrado.');if(btn2)btn2.disabled=false;return;}
+  var put=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{
+    method:'PUT',headers:gh(),
+    body:JSON.stringify({message:'update: '+id+' '+field+'='+val,content:b64e(nc),sha:sha})
   });
-  if(putRes.ok){showR('resultUpload','ok','✅ Atualizado!');loadCourses();}
-  else{var e=await putRes.json();showR('resultUpload','err','❌ Erro: '+(e.message||putRes.status));if(btnEl)btnEl.disabled=false;}
+  if(put.ok){showRes('rUp','ok','✅ Atualizado!');loadCoursesData();loadList();}
+  else{var e=await put.json();showRes('rUp','er','❌ '+(e.message||put.status));if(btn2)btn2.disabled=false;}
 }
 
-// ── EXCLUIR ──────────────────────────────────────────────────────
-async function deleteCourse(id, name) {
-  if(!confirm('⚠️ Remover "'+name+'" do portal?\n\nO arquivo HTML no GitHub NÃO será deletado.'))return;
-  var g=gh();
-  showR('resultUpload','load','<div class="spin"></div> Removendo...');
-  var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js',{headers:ghH()});
-  var fd=await getRes.json();
-  var current=b64decode(fd.content);
-  var sha=fd.sha;
-  // Remove o bloco completo do objeto com esse id
-  // Estratégia: encontra a posição do objeto e remove tudo entre { e } incluindo vírgula
-  var idPattern = "id: '" + id + "'";
-  var altPattern = 'id: "' + id + '"';
-  var objStart = current.indexOf(idPattern);
-  if (objStart === -1) objStart = current.indexOf(altPattern);
-  if (objStart === -1) { showR('resultUpload','err','❌ Curso não encontrado.'); return; }
-  // Acha o { antes do id
-  var openBrace = current.lastIndexOf('  {', objStart);
-  if (openBrace === -1) { showR('resultUpload','err','❌ Estrutura não reconhecida.'); return; }
-  // Acha o } depois do id
-  var closeBrace = current.indexOf('\n  }', objStart);
-  if (closeBrace === -1) { showR('resultUpload','err','❌ Estrutura não reconhecida.'); return; }
-  closeBrace = closeBrace + 4; // inclui \n  }
-  // Remove trecho e vírgula adjacente
-  var removed = current.slice(0, openBrace) + current.slice(closeBrace);
-  // Limpa vírgulas duplas, vírgulas antes de ] e linhas em branco excessivas
-  removed = removed
-    .replace(/,(\s*,)+/g, ',')
-    .replace(/,(\s*\n\s*\];)/g, '\n];')
-    .replace(/\[\s*,/g, '[')
-    .replace(/\n{3,}/g, '\n\n');
-
-  var putRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js',{
-    method:'PUT',headers:ghH(),
-    body:JSON.stringify({message:"remove: '"+name+"' via admin",content:b64encode(removed),sha:sha})
+// EXCLUIR
+async function delCourse(id,name){
+  if(!confirm('Remover "'+name+'" do portal?\n\nO HTML no GitHub NÃO será deletado.'))return;
+  var c=g();
+  showRes('rUp','ld','<div class="sp"></div> Removendo...');
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
+  var fd=await res.json();
+  var content=b64d(fd.content), sha=fd.sha;
+  // Encontrar e remover o bloco do objeto
+  var pat="id: '"+id+"'"; var alt='id: "'+id+'"';
+  var pos=content.indexOf(pat); if(pos===-1) pos=content.indexOf(alt);
+  if(pos===-1){showRes('rUp','er','❌ Curso não encontrado.');return;}
+  var open=content.lastIndexOf('  {',pos);
+  var close=content.indexOf('\n  }',pos);
+  if(open===-1||close===-1){showRes('rUp','er','❌ Estrutura não reconhecida.');return;}
+  close+=4;
+  var removed=content.slice(0,open)+content.slice(close);
+  // Limpar vírgulas duplas e antes de ]; 
+  removed=removed.replace(/,(\s*,)+/g,',').replace(/,(\s*\n\s*\];)/g,'\n];').replace(/\[\s*,/g,'[').replace(/\n{3,}/g,'\n\n');
+  var put=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{
+    method:'PUT',headers:gh(),
+    body:JSON.stringify({message:"remove: '"+name+"' via admin",content:b64e(removed),sha:sha})
   });
-  if(putRes.ok){showR('resultUpload','ok','✅ "'+escH(name)+'" removido do portal.');loadCourses();}
-  else{var e=await putRes.json();showR('resultUpload','err','❌ Erro: '+(e.message||putRes.status));}
+  if(put.ok){showRes('rUp','ok','✅ "'+escH(name)+'" removido.');loadCoursesData();loadList();}
+  else{var e=await put.json();showRes('rUp','er','❌ '+(e.message||put.status));}
 }
 
-// ── LISTAR CURSOS ────────────────────────────────────────────────
-async function loadCourses() {
-  var g=gh(); if(!g.token)return;
-  var res=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js',{headers:ghH()});
+// LISTAR
+async function loadList(){
+  var c=g(); if(!c.t)return;
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   if(!res.ok)return;
   var fd=await res.json();
-  var content=b64decode(fd.content);
+  var content=b64d(fd.content);
   var courses=[];
-  // Parser: divide por blocos de objeto
-  var blocks=content.split(/(?=\n  \{\n\s+id:)/);
-  blocks.forEach(function(b){
-    var idM=b.match(/id:\s*['"]([^'"]+)['"]/);
-    var nameM=b.match(/name:\s*['"]([^'"]+)['"]/);
-    var iconM=b.match(/icon:\s*['"]([^'"]*)['"]/);
-    var actM=b.match(/active:\s*(true|false)/);
-    var freeM=b.match(/free:\s*(true|false)/);
-    var catM=b.match(/cat:\s*['"]([^'"]+)['"]/);
-    if(!idM||!nameM)return;
-    if(b.indexOf('TEMPLATE')!==-1||b.trim().startsWith('/*'))return;
-    courses.push({id:idM[1],name:nameM[1],icon:iconM?iconM[1]:'📚',active:actM?actM[1]==='true':true,free:freeM?freeM[1]==='true':false,cat:catM?catM[1]:'—'});
+  content.split(/(?=\n  \{\n\s+id:)/).forEach(function(b){
+    var im=b.match(/id:\s*['"]([^'"]+)['"]/);
+    var nm=b.match(/name:\s*['"]([^'"]+)['"]/);
+    var ic=b.match(/icon:\s*['"]([^'"]*)['"]/);
+    var am=b.match(/active:\s*(true|false)/);
+    var fm=b.match(/free:\s*(true|false)/);
+    var cm=b.match(/cat:\s*['"]([^'"]+)['"]/);
+    if(!im||!nm)return;
+    if(b.indexOf('TEMPLATE')!==-1)return;
+    courses.push({id:im[1],name:nm[1],icon:ic?ic[1]:'📚',active:am?am[1]==='true':true,free:fm?fm[1]==='true':false,cat:cm?cm[1]:'—'});
   });
-  document.getElementById('cCount').textContent='('+courses.length+' cursos)';
-  var el=document.getElementById('courseList');
-  if(!courses.length){el.innerHTML='<div style="color:var(--text3);font-size:13px;padding:10px">Nenhum curso encontrado.</div>';return;}
-  el.innerHTML=courses.map(function(c){
-    var vb=c.active?'<span class="cbadge ba">Visível</span>':'<span class="cbadge bo">Oculto</span>';
-    var tb=c.free?'<span class="cbadge bf">Grátis</span>':'<span class="cbadge bp">Pago</span>';
-    var vCls=c.active?'act-btn ao':'act-btn av';
-    var vTxt=c.active?'🙈 Ocultar':'👁️ Tornar visível';
-    var vVal=c.active?'false':'true';
-    var fCls=c.free?'act-btn apd':'act-btn afr';
-    var fTxt=c.free?'🔒 Tornar pago':'🎁 Tornar gratuito';
-    var fVal=c.free?'false':'true';
-    var cid=c.id, cn=escH(c.name);
-    return '<div class="course-row"><div class="course-main">'
-      +'<div class="ci">'+c.icon+'</div>'
-      +'<div class="cinfo"><b>'+cn+'</b><small>id: '+cid+' · '+c.cat+'</small></div>'
-      +'<div class="cbadges">'+vb+tb+'</div>'
-      +'<button class="xbtn" onclick="toggleP(\''+cid+'\')" title="Opções">⋯</button>'
-      +'</div>'
-      +'<div class="actions-panel" id="ap_'+cid+'">'
-      +'<div class="act-row">'
-      +'<button class="'+vCls+'" onclick="updateCourse(\''+cid+'\',\'active\',\''+vVal+'\',this)">'+vTxt+'</button>'
-      +'<div class="sep"></div>'
-      +'<button class="'+fCls+'" onclick="updateCourse(\''+cid+'\',\'free\',\''+fVal+'\',this)">'+fTxt+'</button>'
-      +'<div class="sep"></div>'
-      +'<button class="act-btn adel" onclick="deleteCourse(\''+cid+'\',\''+cn+'\')">🗑 Excluir</button>'
+  el('cc').textContent='('+courses.length+' cursos)';
+  var l=el('list');
+  if(!courses.length){l.innerHTML='<div style="color:var(--t3);font-size:12px;padding:8px">Nenhum curso encontrado.</div>';return;}
+  l.innerHTML=courses.map(function(c2){
+    var vb=c2.active?'<span class="cb ba">Visível</span>':'<span class="cb bo">Oculto</span>';
+    var tb=c2.free?'<span class="cb bf">Grátis</span>':'<span class="cb bp">Pago</span>';
+    var vCls=c2.active?'ab ao':'ab av', vTxt=c2.active?'🙈 Ocultar':'👁️ Visível', vVal=c2.active?'false':'true';
+    var fCls=c2.free?'ab apd':'ab afr', fTxt=c2.free?'🔒 Tornar pago':'🎁 Gratuito', fVal=c2.free?'false':'true';
+    var cid=c2.id, cn=escH(c2.name);
+    return '<div class="cr"><div class="cm">'
+      +'<div class="ci2">'+c2.icon+'</div>'
+      +'<div class="cn"><b>'+cn+'</b><small>id: '+cid+' · '+c2.cat+'</small></div>'
+      +'<div class="cbs">'+vb+tb+'</div>'
+      +'<button class="xb" onclick="togP(\''+cid+'\')">⋯</button>'
+      +'</div><div class="ap" id="ap_'+cid+'">'
+      +'<div class="ar">'
+      +'<button class="'+vCls+'" onclick="updCourse(\''+cid+'\',\'active\',\''+vVal+'\',this)">'+vTxt+'</button>'
+      +'<div class="sp2"></div>'
+      +'<button class="'+fCls+'" onclick="updCourse(\''+cid+'\',\'free\',\''+fVal+'\',this)">'+fTxt+'</button>'
+      +'<div class="sp2"></div>'
+      +'<button class="ab adl" onclick="delCourse(\''+cid+'\',\''+cn+'\')">🗑 Excluir</button>'
       +'</div></div></div>';
   }).join('');
 }
 
-// ── HELPERS ──────────────────────────────────────────────────────
-function toggleP(id){document.getElementById('ap_'+id).classList.toggle('open');}
-function setProg(show,label,pct,suf){
-  suf=suf||'';
-  var w=document.getElementById('progWrap'+suf); if(!w)return;
+// HELPERS
+function togP(id){el('ap_'+id).classList.toggle('on');}
+function setProg(show,label,pct,sfx){
+  sfx=sfx||'';
+  var w=el('pw'+sfx); if(!w)return;
   w.style.display=show?'block':'none';
-  if(show){document.getElementById('progLabel'+suf).textContent=label||'';document.getElementById('progPct'+suf).textContent=(pct||0)+'%';document.getElementById('progFill'+suf).style.width=(pct||0)+'%';}
+  if(show){el('pl'+sfx).textContent=label;el('pp'+sfx).textContent=pct+'%';el('pf'+sfx).style.width=pct+'%';}
 }
-function showR(id,t,h){
-  var el=document.getElementById(id); if(!el)return;
-  el.className='result '+t; el.innerHTML=h;
-  el.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
+function showRes(id,t,h){var e=el(id);if(!e)return;e.className='res '+t;e.innerHTML=h;e.scrollIntoView({behavior:'smooth',block:'nearest'});}
 function resetForm(){
-  _meta=null;_fileContent=null;_fileName=null;
-  var dz=document.getElementById('dropzone');
-  dz.classList.remove('done','drag');
-  document.getElementById('dzIcon').textContent='📄';
-  document.getElementById('dzTitle').textContent='Arraste o HTML do curso aqui';
-  document.getElementById('dzSub').textContent='ou clique para selecionar no computador';
-  document.getElementById('metaPreview').style.display='none';
-  document.getElementById('optsSection').style.display='none';
-  document.getElementById('btnPub').disabled=true;
+  _fc=null;_fn=null;
+  el('dz').classList.remove('done','drag');
+  el('dzi').textContent='📄';el('dzt').textContent='Arraste o HTML do curso aqui';
+  el('dzs').textContent='ou clique para selecionar — conecte o token antes!';
+  el('mp').style.display='none';el('opts').style.display='none';el('btnPub').disabled=true;
 }
 function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
 </script>
