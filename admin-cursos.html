@@ -140,10 +140,10 @@ input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59
   <!-- TOKEN -->
   <div class="token-box">
     <div class="token-row">
-      <div class="field"><label>Token GitHub</label><input type="password" id="ghToken" placeholder="ghp_..." autocomplete="off" oninput="saveConfig()"></div>
+      <div class="field"><label>Token GitHub</label><input type="password" id="ghToken" placeholder="ghp_..." autocomplete="off" oninput="saveConfig()" onpaste="onTokenPaste(this)" onchange="onTokenPaste(this)"></div>
       <div class="field" style="max-width:175px"><label>Usuário/Org</label><input type="text" id="ghOwner" placeholder="MatheusAcademy" oninput="saveConfig()"></div>
       <div class="field" style="max-width:175px"><label>Repositório</label><input type="text" id="ghRepo" placeholder="matheusacademy" oninput="saveConfig()"></div>
-      <button class="btn-sm" onclick="testGH()">Testar</button>
+      <button class="btn-sm" onclick="saveConfig();testGH()">Testar</button>
     </div>
     <div class="status"><div class="dot" id="ghDot"></div><span id="ghTxt" style="color:var(--text3)">Preencha o token</span></div>
   </div>
@@ -221,13 +221,6 @@ input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59
 <script>
 var _meta=null, _fileContent=null, _fileName=null;
 
-
-// ── HELPER UTF-8 SEGURO ──────────────────────────────────────
-// atob() nativo quebra acentos UTF-8. Esta função decodifica corretamente.
-function _b64decode(str){
-  var b=atob(str.replace(/\n/g,''));
-  try{return decodeURIComponent(escape(b));}catch(e){return b;}
-}
 // ── CONFIG ──────────────────────────────────────────────────
 window.onload=function(){
   var t=localStorage.getItem('ghToken');
@@ -242,6 +235,12 @@ function saveConfig(){
   localStorage.setItem('ghToken',document.getElementById('ghToken').value);
   localStorage.setItem('ghOwner',document.getElementById('ghOwner').value);
   localStorage.setItem('ghRepo',document.getElementById('ghRepo').value);
+}
+function onTokenPaste(el){
+  setTimeout(function(){
+    saveConfig();
+    if(el.value.trim().length > 10) testGH();
+  }, 100);
 }
 function gh(){return{token:document.getElementById('ghToken').value.trim(),owner:document.getElementById('ghOwner').value.trim(),repo:document.getElementById('ghRepo').value.trim()};}
 function ghH(){return{'Authorization':'token '+gh().token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};}
@@ -369,7 +368,7 @@ async function publish(){
   var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+cpath,{headers:headers});
   if(!getRes.ok){showResult('err','❌ Não encontrei data/courses.js.');btn.disabled=false;setProgress(false);return;}
   var fd=await getRes.json();
-  var current=_b64decode(fd.content);
+  var current=atob(fd.content.replace(/\n/g,''));
   var sha=fd.sha;
 
   if(new RegExp("id:\\s*['\"]"+_meta.id+"['\"]").test(current)){
@@ -439,10 +438,10 @@ async function updateCourse(id,field,value,btnEl){
   var path='data/courses.js';
   var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:ghH()});
   var fd=await getRes.json();
-  var current=_b64decode(fd.content);
+  var current=atob(fd.content.replace(/\n/g,''));
   var sha=fd.sha;
   var newContent=current.replace(
-    new RegExp('(id:\\s*[\'\"]+id+'[\'\"]+[\\s\\S]{0,800}?'+field+':\\s*)(true|false)'),
+    new RegExp('(id:\\s*[\'"]'+id+'[\'"][\\s\\S]*?'+field+':\\s*)(true|false)'),
     '$1'+value
   );
   if(newContent===current){showResult('err','❌ Campo não encontrado.');if(btnEl){btnEl.disabled=false;}return;}
@@ -450,33 +449,8 @@ async function updateCourse(id,field,value,btnEl){
     method:'PUT',headers:ghH(),
     body:JSON.stringify({message:'update: curso id='+id+' '+field+'='+value,content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
   });
-  if(putRes.ok){
-    await _bustIndexCache(g,field==='active'?('Curso '+id+' '+(value==='false'?'ocultado':'visível')):null);
-    showResult('ok','✅ Curso atualizado! Mudança imediata no portal.');
-    loadCourses();
-  } else {
-    var err=await putRes.json();
-    showResult('err','❌ Erro: '+(err.message||putRes.status));
-    if(btnEl){btnEl.disabled=false;}
-  }
-}
-
-// ── CACHE-BUST DO INDEX.HTML ─────────────────────────────────
-async function _bustIndexCache(g,motivo){
-  try{
-    var ipath='index.html';
-    var iRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+ipath,{headers:ghH()});
-    if(!iRes.ok)return;
-    var ifd=await iRes.json();
-    var ic=_b64decode(ifd.content);
-    var ts=Date.now();
-    var iNew=ic.replace(/courses\.js\?v=[^"']+/g,'courses.js?v='+ts);
-    if(iNew===ic)return;
-    await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+ipath,{
-      method:'PUT',headers:ghH(),
-      body:JSON.stringify({message:'cache-bust: '+(motivo||'update')+' v='+ts,content:btoa(unescape(encodeURIComponent(iNew))),sha:ifd.sha})
-    });
-  }catch(e){}
+  if(putRes.ok){showResult('ok','✅ Curso atualizado!');loadCourses();}
+  else{var err=await putRes.json();showResult('err','❌ Erro: '+(err.message||putRes.status));if(btnEl){btnEl.disabled=false;}}
 }
 
 // ── EXCLUIR ──────────────────────────────────────────────────
@@ -487,7 +461,7 @@ async function deleteCourse(id,name){
   var path='data/courses.js';
   var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:ghH()});
   var fd=await getRes.json();
-  var current=_b64decode(fd.content);
+  var current=atob(fd.content.replace(/\n/g,''));
   var sha=fd.sha;
   var re=new RegExp('\\s*\\{[^{}]*?id:\\s*[\'"]'+id+'[\'"][\\s\\S]*?\\}\\s*,?','');
   var newContent=current.replace(re,'');
@@ -496,7 +470,7 @@ async function deleteCourse(id,name){
     method:'PUT',headers:ghH(),
     body:JSON.stringify({message:'remove: curso "'+name+'" via admin',content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
   });
-  if(putRes.ok){showResult('ok','✅ Curso "'+escHtml(name)+'" excluído! Mudança imediata no portal.');_bustIndexCache(g,'excluiu: '+name);loadCourses();}
+  if(putRes.ok){showResult('ok','✅ Curso "'+escHtml(name)+'" excluído.');loadCourses();}
   else{var err=await putRes.json();showResult('err','❌ Erro: '+(err.message||putRes.status));}
 }
 
@@ -506,7 +480,7 @@ async function loadCourses(){
   var res=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js',{headers:ghH()});
   if(!res.ok)return;
   var fd=await res.json();
-  var content=_b64decode(fd.content);
+  var content=atob(fd.content.replace(/\n/g,''));
   var courses=[];
   content.split(/(?=\s*\{[^{}]*id:\s*['"])/).forEach(function(b){
     var idM=b.match(/id:\s*['"]([^'"]+)['"]/);
