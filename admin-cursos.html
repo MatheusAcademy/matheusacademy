@@ -6,465 +6,518 @@
 <title>Admin · Matheus Academy</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#080c14;--surface:#0d1421;--card:#111827;--border:#1e2d47;
-  --accent:#3b82f6;--accent2:#60a5fa;--green:#22c55e;--red:#ef4444;
-  --text:#f0f4ff;--text2:#8899bb;--text3:#4a5c7a;
-  --mono:'JetBrains Mono',monospace;--sans:'Sora',sans-serif;
-}
+:root{--bg:#080c14;--surface:#0d1421;--card:#111827;--border:#1e2d47;--accent:#3b82f6;--accent2:#60a5fa;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;--text:#f0f4ff;--text2:#8899bb;--text3:#4a5c7a;--mono:'JetBrains Mono',monospace;--sans:'Sora',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;
-  background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(59,130,246,.12) 0%,transparent 60%)}
-header{display:flex;align-items:center;gap:14px;padding:16px 28px;
-  border-bottom:1px solid var(--border);background:rgba(8,12,20,.95);
-  position:sticky;top:0;z-index:100}
-.logo{width:36px;height:36px;border-radius:50%;background:#000;border:2px solid #1e3a5f;
-  display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:var(--accent2)}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(59,130,246,.12) 0%,transparent 60%)}
+header{display:flex;align-items:center;gap:14px;padding:16px 28px;border-bottom:1px solid var(--border);background:rgba(8,12,20,.95);position:sticky;top:0;z-index:100}
+.logo{width:36px;height:36px;border-radius:50%;background:#000;border:2px solid #1e3a5f;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:var(--accent2)}
 header h1{font-size:15px;font-weight:700}
 header small{color:var(--text3);font-size:12px;margin-left:4px}
-.badge{margin-left:auto;background:rgba(59,130,246,.15);color:var(--accent2);
-  border:1px solid rgba(59,130,246,.3);padding:4px 12px;border-radius:20px;
-  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.badge{margin-left:auto;background:rgba(59,130,246,.15);color:var(--accent2);border:1px solid rgba(59,130,246,.3);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+main{max-width:800px;margin:0 auto;padding:36px 20px 80px}
+.pg-title{font-size:22px;font-weight:800;margin-bottom:6px;background:linear-gradient(135deg,#f0f4ff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pg-sub{color:var(--text2);font-size:13px;margin-bottom:28px}
 
-main{max-width:760px;margin:0 auto;padding:36px 20px 80px}
-
-.section-title{font-size:22px;font-weight:800;margin-bottom:6px;
-  background:linear-gradient(135deg,#f0f4ff,var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.section-sub{color:var(--text2);font-size:13px;margin-bottom:28px}
-
-/* CONFIG TOKEN */
-.token-box{background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:18px 20px;margin-bottom:24px}
+/* TOKEN */
+.token-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:24px}
 .token-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
-.token-row .field{flex:1;min-width:220px}
-label{display:block;font-size:11px;font-weight:700;color:var(--text2);
-  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-input,select{background:var(--card);border:1px solid var(--border);border-radius:8px;
-  padding:10px 14px;color:var(--text);font-family:var(--sans);font-size:14px;
-  outline:none;transition:.2s;width:100%}
+.field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:170px}
+label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em}
+input,select{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;transition:.2s;width:100%}
 input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
-input[type=password]{font-family:var(--mono)}
 .status{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--text3)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
 .dot.green{background:var(--green);box-shadow:0 0 8px var(--green)}
 .dot.red{background:var(--red)}
-.dot.yellow{background:#f59e0b;animation:pulse .8s infinite}
+.dot.yellow{background:var(--yellow);animation:pulse .8s infinite}
 
-/* CARD PRINCIPAL */
-.add-card{background:var(--card);border:1px solid var(--border);
-  border-radius:16px;padding:28px;margin-bottom:32px}
-.step{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
-.step:last-child{margin-bottom:0}
-.step-num{width:32px;height:32px;border-radius:50%;background:rgba(59,130,246,.15);
-  border:1px solid rgba(59,130,246,.3);color:var(--accent2);
-  font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-.step-body{flex:1}
-.step-body h3{font-size:15px;font-weight:700;margin-bottom:4px}
-.step-body p{font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.5}
-.file-input-wrap{display:flex;gap:10px;align-items:center}
-.file-input-wrap input{flex:1}
+/* ADD CARD */
+.add-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
 
-/* BOTÕES */
-.btn{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:10px;
-  padding:12px 22px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(59,130,246,.4)}
-.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.btn-sm{background:var(--surface);color:var(--text2);border:1px solid var(--border);
-  padding:8px 14px;font-size:12px;border-radius:8px;font-family:var(--sans);font-weight:600;cursor:pointer}
+/* DROP ZONE */
+.dropzone{border:2px dashed var(--border);border-radius:12px;padding:36px 24px;text-align:center;cursor:pointer;transition:.2s;position:relative;margin-bottom:20px}
+.dropzone:hover,.dropzone.drag{border-color:var(--accent);background:rgba(59,130,246,.05)}
+.dropzone.done{border-color:var(--green);border-style:solid;background:rgba(34,197,94,.05)}
+.dropzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.dz-icon{font-size:36px;margin-bottom:10px}
+.dz-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.dz-sub{font-size:12px;color:var(--text2)}
+.dz-file{font-size:13px;font-weight:600;color:var(--green);margin-top:8px;font-family:var(--mono)}
+
+/* META PREVIEW */
+.meta-preview{background:var(--surface);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:14px;display:none;margin-bottom:20px}
+.meta-preview-title{font-size:11px;color:#86efac;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.meta-item{background:var(--card);border-radius:7px;padding:8px 12px}
+.meta-item .mk{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.meta-item .mv{font-size:13px;font-weight:600;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* OPÇÕES */
+.opts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.opts-group label.group-label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:8px}
+.opt-cards{display:flex;gap:8px}
+.opt-card{flex:1;border:2px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;transition:.2s;user-select:none;text-align:center}
+.opt-card:hover{border-color:var(--text3)}
+.opt-card.sel{border-color:var(--accent);background:rgba(59,130,246,.08)}
+.opt-card input{display:none}
+.opt-card .oe{font-size:20px;display:block;margin-bottom:4px}
+.opt-card .ot{font-size:12px;font-weight:700}
+.opt-card .od{font-size:10px;color:var(--text3);margin-top:2px}
+
+/* PROGRESS */
+.progress-wrap{display:none;margin-bottom:20px}
+.progress-label{font-size:12px;color:var(--text2);margin-bottom:6px;display:flex;justify-content:space-between}
+.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .3s;width:0%}
+
+/* BTN */
+.btn-publish{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:16px;font-family:var(--sans);font-size:16px;font-weight:800;cursor:pointer;transition:.2s;letter-spacing:.01em}
+.btn-publish:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 28px rgba(59,130,246,.4)}
+.btn-publish:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-sm{background:var(--surface);color:var(--text2);border:1px solid var(--border);padding:8px 14px;font-size:12px;border-radius:8px;font-family:var(--sans);font-weight:600;cursor:pointer;white-space:nowrap}
 .btn-sm:hover{border-color:var(--text3);color:var(--text)}
-.btn-danger{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.25);
-  padding:6px 12px;font-size:11px;border-radius:7px;font-family:var(--sans);font-weight:700;cursor:pointer;transition:.2s}
-.btn-danger:hover{background:rgba(239,68,68,.25)}
 
 /* RESULT */
-.result{display:none;align-items:center;gap:10px;padding:14px 18px;
-  border-radius:10px;margin-top:16px;font-size:13px;font-weight:500}
+.result{display:none;align-items:center;gap:10px;padding:14px 18px;border-radius:10px;margin-top:16px;font-size:13px;font-weight:500}
 .result.ok{display:flex;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
 .result.err{display:flex;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
 .result.load{display:flex;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);color:var(--accent2)}
-
-/* SPINNER */
-.spin{width:16px;height:16px;border:2px solid transparent;border-top-color:currentColor;
-  border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+.spin{width:16px;height:16px;border:2px solid transparent;border-top-color:currentColor;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 
 /* LISTA */
-.list-title{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;
-  letter-spacing:.07em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.course-row{display:flex;align-items:center;gap:12px;padding:12px 16px;
-  background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;transition:.2s}
+.list-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.list-title{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.07em}
+.course-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;transition:.2s}
 .course-row:hover{border-color:var(--text3)}
-.ci{font-size:20px}
-.cinfo{flex:1}
-.cinfo b{font-size:14px;font-weight:600;display:block}
+.course-main{display:flex;align-items:center;gap:12px;padding:13px 16px}
+.ci{font-size:22px;flex-shrink:0}
+.cinfo{flex:1;min-width:0}
+.cinfo b{font-size:14px;font-weight:700;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cinfo small{font-size:11px;color:var(--text3);font-family:var(--mono)}
-.cbadge{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
-  text-transform:uppercase;letter-spacing:.05em}
+.cbadges{display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap}
+.cbadge{padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
 .ba{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.25)}
 .bf{background:rgba(96,165,250,.12);color:var(--accent2);border:1px solid rgba(59,130,246,.25)}
-.bi{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+.bo{background:rgba(245,158,11,.1);color:#fcd34d;border:1px solid rgba(245,158,11,.2)}
+.bp{background:rgba(167,139,250,.1);color:#c4b5fd;border:1px solid rgba(167,139,250,.2)}
+.xbtn{background:none;border:none;color:var(--text3);cursor:pointer;padding:6px 8px;border-radius:6px;font-size:18px;transition:.2s;flex-shrink:0}
+.xbtn:hover{color:var(--text);background:var(--card)}
 
-/* META preview */
-.meta-preview{background:var(--surface);border:1px solid var(--border);
-  border-radius:10px;padding:14px;margin-top:12px;display:none}
-.meta-preview-title{font-size:11px;color:var(--text3);font-weight:600;
-  text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
-.meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
-.meta-item{background:var(--card);border-radius:7px;padding:8px 12px}
-.meta-item .mk{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-.meta-item .mv{font-size:13px;font-weight:600;margin-top:2px}
+/* ACTIONS */
+.actions-panel{display:none;border-top:1px solid var(--border);padding:12px 16px;background:rgba(0,0,0,.15)}
+.actions-panel.open{display:block}
+.act-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sep{width:1px;height:26px;background:var(--border);flex-shrink:0}
+.act-btn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--border);background:var(--card);color:var(--text2);padding:7px 13px;border-radius:8px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;transition:.2s}
+.act-btn:hover{border-color:var(--text3);color:var(--text)}
+.act-btn:disabled{opacity:.5;cursor:not-allowed}
+.av{border-color:rgba(34,197,94,.4)!important;color:#86efac!important;background:rgba(34,197,94,.08)!important}
+.av:hover{background:rgba(34,197,94,.15)!important}
+.ao{border-color:rgba(245,158,11,.4)!important;color:#fcd34d!important;background:rgba(245,158,11,.08)!important}
+.ao:hover{background:rgba(245,158,11,.15)!important}
+.afr{border-color:rgba(96,165,250,.4)!important;color:var(--accent2)!important;background:rgba(59,130,246,.08)!important}
+.afr:hover{background:rgba(59,130,246,.15)!important}
+.apd{border-color:rgba(167,139,250,.4)!important;color:#c4b5fd!important;background:rgba(167,139,250,.08)!important}
+.apd:hover{background:rgba(167,139,250,.15)!important}
+.adel{border-color:rgba(239,68,68,.3)!important;color:#fca5a5!important;background:rgba(239,68,68,.08)!important}
+.adel:hover{background:rgba(239,68,68,.2)!important}
 
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-@media(max-width:540px){.token-row,.file-input-wrap{flex-direction:column}header{padding:12px 14px}main{padding:20px 12px 60px}}
+@media(max-width:560px){.opts-row,.token-row{flex-direction:column;grid-template-columns:1fr}.opt-cards{flex-direction:column}.act-row{flex-direction:column;align-items:flex-start}header{padding:12px 14px}main{padding:20px 12px 60px}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo">M</div>
   <div><h1>Matheus Academy <small>Admin</small></h1></div>
   <div class="badge">⚙ Gerenciador</div>
 </header>
-
 <main>
-  <div class="section-title">Gerenciar Cursos</div>
-  <p class="section-sub">Suba o HTML do curso no GitHub e cole o nome do arquivo aqui — o resto é automático.</p>
+  <div class="pg-title">Gerenciar Cursos</div>
+  <p class="pg-sub">Arraste o HTML do curso ou clique para selecionar — sobe no GitHub e cadastra automaticamente.</p>
 
   <!-- TOKEN -->
   <div class="token-box">
     <div class="token-row">
-      <div class="field">
-        <label>Token GitHub</label>
-        <input type="password" id="ghToken" placeholder="ghp_..." autocomplete="off" oninput="saveConfig()">
-      </div>
-      <div class="field" style="max-width:190px">
-        <label>Usuário/Org</label>
-        <input type="text" id="ghOwner" placeholder="MatheusAcademy" oninput="saveConfig()">
-      </div>
-      <div class="field" style="max-width:190px">
-        <label>Repositório</label>
-        <input type="text" id="ghRepo" placeholder="matheusacademy" oninput="saveConfig()">
-      </div>
-      <button class="btn-sm" onclick="testGH()" style="white-space:nowrap;flex-shrink:0">Testar</button>
+      <div class="field"><label>Token GitHub</label><input type="password" id="ghToken" placeholder="ghp_..." autocomplete="off" oninput="saveConfig()"></div>
+      <div class="field" style="max-width:175px"><label>Usuário/Org</label><input type="text" id="ghOwner" placeholder="MatheusAcademy" oninput="saveConfig()"></div>
+      <div class="field" style="max-width:175px"><label>Repositório</label><input type="text" id="ghRepo" placeholder="matheusacademy" oninput="saveConfig()"></div>
+      <button class="btn-sm" onclick="testGH()">Testar</button>
     </div>
-    <div class="status">
-      <div class="dot" id="ghDot"></div>
-      <span id="ghTxt" style="color:var(--text3)">Preencha o token</span>
-    </div>
+    <div class="status"><div class="dot" id="ghDot"></div><span id="ghTxt" style="color:var(--text3)">Preencha o token</span></div>
   </div>
 
-  <!-- ADICIONAR CURSO -->
+  <!-- ADD CARD -->
   <div class="add-card">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <h3>Suba o arquivo HTML do curso no GitHub</h3>
-        <p>Vá no repositório → clique em "Add file" → "Upload files" → suba o arquivo HTML do curso. Anote o nome exato do arquivo.</p>
-      </div>
+
+    <!-- DROP ZONE -->
+    <div class="dropzone" id="dropzone" ondragover="dzDrag(event,true)" ondragleave="dzDrag(event,false)" ondrop="dzDrop(event)">
+      <input type="file" accept=".html" onchange="fileChosen(this.files[0])">
+      <div class="dz-icon" id="dzIcon">📄</div>
+      <div class="dz-title" id="dzTitle">Arraste o arquivo HTML aqui</div>
+      <div class="dz-sub" id="dzSub">ou clique para selecionar no computador</div>
+      <div class="dz-file" id="dzFile"></div>
     </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <h3>Cole o nome do arquivo aqui</h3>
-        <p>Só o nome, com o <code style="background:var(--surface);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:11px">.html</code> no final. Ex: <code style="background:var(--surface);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:11px">marketing-digital.html</code></p>
-        <div class="file-input-wrap">
-          <input type="text" id="fFile" placeholder="nome-do-curso.html" oninput="onFileInput()">
-          <button class="btn-sm" onclick="fetchMeta()" id="btnFetch">🔍 Ler dados</button>
+
+    <!-- META PREVIEW -->
+    <div class="meta-preview" id="metaPreview">
+      <div class="meta-preview-title">✅ Dados lidos automaticamente</div>
+      <div class="meta-grid" id="metaGrid"></div>
+    </div>
+
+    <!-- OPÇÕES -->
+    <div class="opts-row" id="optsSection" style="display:none">
+      <div class="opts-group">
+        <label class="group-label">Visibilidade</label>
+        <div class="opt-cards">
+          <label class="opt-card sel" id="ov-on" onclick="selOpt('v','on')">
+            <input type="radio" name="v" value="on" checked>
+            <span class="oe">👁️</span><div class="ot">Visível</div><div class="od">Aparece no portal</div>
+          </label>
+          <label class="opt-card" id="ov-off" onclick="selOpt('v','off')">
+            <input type="radio" name="v" value="off">
+            <span class="oe">🙈</span><div class="ot">Oculto</div><div class="od">Salvo mas escondido</div>
+          </label>
         </div>
-        <div id="metaPreview" class="meta-preview">
-          <div class="meta-preview-title">Dados lidos do arquivo ✓</div>
-          <div class="meta-grid" id="metaGrid"></div>
+      </div>
+      <div class="opts-group">
+        <label class="group-label">Tipo de acesso</label>
+        <div class="opt-cards">
+          <label class="opt-card sel" id="oa-paid" onclick="selOpt('a','paid')">
+            <input type="radio" name="a" value="paid" checked>
+            <span class="oe">🔒</span><div class="ot">Pago</div><div class="od">Exige código Kiwify</div>
+          </label>
+          <label class="opt-card" id="oa-free" onclick="selOpt('a','free')">
+            <input type="radio" name="a" value="free">
+            <span class="oe">🎁</span><div class="ot">Gratuito</div><div class="od">Acesso livre</div>
+          </label>
         </div>
       </div>
     </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <h3>Adicione ao portal</h3>
-        <p>Clique no botão abaixo — o curso aparece no portal imediatamente.</p>
-        <button class="btn btn-primary" onclick="saveCourse()" id="btnSave" disabled>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-          Publicar curso no portal
-        </button>
-        <div class="result" id="result"></div>
-      </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-wrap" id="progWrap">
+      <div class="progress-label"><span id="progLabel">Subindo arquivo...</span><span id="progPct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
     </div>
+
+    <!-- PUBLISH -->
+    <button class="btn-publish" id="btnPub" onclick="publish()" disabled>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+      Publicar curso no portal
+    </button>
+    <div class="result" id="result"></div>
   </div>
 
-  <!-- LISTA DE CURSOS -->
-  <div class="list-title">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-    Cursos no portal
-    <span id="cCount" style="color:var(--text3);font-weight:400"></span>
+  <!-- LISTA -->
+  <div class="list-hdr">
+    <div class="list-title">Cursos no portal</div>
+    <span id="cCount" style="color:var(--text3);font-size:12px"></span>
   </div>
   <div id="courseList"><div style="color:var(--text3);font-size:13px;padding:10px">Conecte ao GitHub para ver os cursos...</div></div>
 </main>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────
-var _meta = null;
+var _meta=null, _fileContent=null, _fileName=null;
 
-window.onload = function() {
-  var t = localStorage.getItem('ghToken');
-  var o = localStorage.getItem('ghOwner') || 'MatheusAcademy';
-  var r = localStorage.getItem('ghRepo')  || 'matheusacademy';
-  if(t) document.getElementById('ghToken').value = t;
-  document.getElementById('ghOwner').value = o;
-  document.getElementById('ghRepo').value  = r;
-  if(t) setTimeout(testGH, 300);
+// ── CONFIG ──────────────────────────────────────────────────
+window.onload=function(){
+  var t=localStorage.getItem('ghToken');
+  var o=localStorage.getItem('ghOwner')||'MatheusAcademy';
+  var r=localStorage.getItem('ghRepo')||'matheusacademy';
+  if(t) document.getElementById('ghToken').value=t;
+  document.getElementById('ghOwner').value=o;
+  document.getElementById('ghRepo').value=r;
+  if(t) setTimeout(testGH,300);
 };
-function saveConfig() {
-  localStorage.setItem('ghToken', document.getElementById('ghToken').value);
-  localStorage.setItem('ghOwner', document.getElementById('ghOwner').value);
-  localStorage.setItem('ghRepo',  document.getElementById('ghRepo').value);
+function saveConfig(){
+  localStorage.setItem('ghToken',document.getElementById('ghToken').value);
+  localStorage.setItem('ghOwner',document.getElementById('ghOwner').value);
+  localStorage.setItem('ghRepo',document.getElementById('ghRepo').value);
 }
-function gh() {
-  return {
-    token: document.getElementById('ghToken').value.trim(),
-    owner: document.getElementById('ghOwner').value.trim(),
-    repo:  document.getElementById('ghRepo').value.trim()
+function gh(){return{token:document.getElementById('ghToken').value.trim(),owner:document.getElementById('ghOwner').value.trim(),repo:document.getElementById('ghRepo').value.trim()};}
+function ghH(){return{'Authorization':'token '+gh().token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};}
+
+// ── DROPZONE ────────────────────────────────────────────────
+function dzDrag(e,on){e.preventDefault();document.getElementById('dropzone').classList.toggle('drag',on);}
+function dzDrop(e){e.preventDefault();document.getElementById('dropzone').classList.remove('drag');var f=e.dataTransfer.files[0];if(f) fileChosen(f);}
+
+function fileChosen(f){
+  if(!f||!f.name.endsWith('.html')){alert('Selecione um arquivo .html');return;}
+  _fileName=f.name;
+  var dz=document.getElementById('dropzone');
+  dz.classList.add('done');
+  document.getElementById('dzIcon').textContent='✅';
+  document.getElementById('dzTitle').textContent='Arquivo selecionado!';
+  document.getElementById('dzSub').textContent='Clique em "Publicar" quando estiver pronto.';
+  document.getElementById('dzFile').textContent=f.name;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    _fileContent=e.target.result;
+    _meta=extractMeta(_fileContent,_fileName);
+    showMetaPreview();
+    document.getElementById('optsSection').style.display='grid';
+    document.getElementById('btnPub').disabled=false;
   };
-}
-function ghHeaders() {
-  return { 'Authorization':'token '+gh().token, 'Accept':'application/vnd.github.v3+json', 'Content-Type':'application/json' };
+  reader.readAsText(f);
 }
 
-// ── TESTAR ─────────────────────────────────────────────────
-async function testGH() {
-  saveConfig();
-  var g = gh();
-  if(!g.token){ setStatus('','Preencha o token'); return; }
+function showMetaPreview(){
+  if(!_meta) return;
+  var grid=document.getElementById('metaGrid');
+  grid.innerHTML=[['ID',_meta.id],['Nome',_meta.name],['Categoria',_meta.cat],['Módulos',_meta.modules],['Tópicos',_meta.topics],['Horas',_meta.hours+'h'],['Ícone',_meta.icon]].map(function(p){
+    return '<div class="meta-item"><div class="mk">'+p[0]+'</div><div class="mv">'+String(p[1]).substring(0,38)+'</div></div>';
+  }).join('');
+  document.getElementById('metaPreview').style.display='block';
+}
+
+function extractMeta(html,filename){
+  function get(p,fb){var m=html.match(p);return m?m[1].trim():fb;}
+  function getN(p,fb){var m=html.match(p);return m?parseInt(m[1]):fb;}
+  var id=get(/const\s+COURSE_ID\s*=\s*['"]([^'"]+)['"]/,null);
+  var name=get(/const\s+COURSE_NAME\s*=\s*['"]([^'"]+)['"]/,null);
+  var salt=get(/const\s+COURSE_SALT\s*=\s*['"]([^'"]+)['"]/,'');
+  var prefix=get(/const\s+PREFIX\s*=\s*['"]([^'"]+)['"]/,id?id+'_':'');
+  var ak=get(/const\s+COURSE_KEY\s*=\s*['"]([^'"]+)['"]/,id?id+'_auth':'');
+  var totalTopics=getN(/const\s+TOTAL\s*=\s*(\d+)/,0);
+  var modMatches=html.match(/\{id:\d+,/g);
+  var modules=modMatches?modMatches.length:0;
+  var hours=Math.max(1,Math.round(totalTopics/7));
+  var cat=get(/cat:'([^']+)'/,get(/cat:"([^"]+)"/,'NEGÓCIOS'));
+  var icon=get(/emoji:'([^']+)'/,get(/emoji:"([^"]+)"/,'📚'));
+  var color=get(/color['":\s]+['"]?(#[0-9a-fA-F]{6})['"]?/,'#3b82f6');
+  if(!id){id=filename.replace('.html','').replace(/[^a-z0-9]/gi,'').substring(0,6).toLowerCase();}
+  if(!name){name=filename.replace('.html','').replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});}
+  return{id:id,name:name,desc:'',file:filename,cat:cat,modules:modules,topics:totalTopics,hours:hours,quizzes:modules,salt:salt||id.toUpperCase()+'_HENRY_2026_MASTER',ak:ak||id+'_auth',storagePrefix:prefix||id+'_',icon:icon,color:color,addedTs:Date.now(),active:true,free:false};
+}
+
+// ── OPÇÕES ──────────────────────────────────────────────────
+function selOpt(g,v){
+  ['on','off','paid','free'].forEach(function(x){var el=document.getElementById('o'+g+'-'+x);if(el) el.classList.remove('sel');});
+  var target=document.getElementById('o'+g+'-'+v);
+  if(target) target.classList.add('sel');
+}
+function getVis(){return document.getElementById('ov-on').classList.contains('sel');}
+function getFree(){return document.getElementById('oa-free').classList.contains('sel');}
+
+// ── TESTAR ──────────────────────────────────────────────────
+async function testGH(){
+  saveConfig();var g=gh();
+  if(!g.token){setStatus('','Preencha o token');return;}
   setStatus('yellow','Conectando...');
-  try {
-    var r = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo, { headers: ghHeaders() });
-    if(r.ok){ setStatus('green','Conectado ✓  '+g.owner+'/'+g.repo); loadCourses(); }
-    else setStatus('red','Erro '+r.status+' — verifique token e permissões');
-  } catch(e){ setStatus('red','Erro: '+e.message); }
+  try{
+    var r=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo,{headers:ghH()});
+    if(r.ok){setStatus('green','Conectado ✓  '+g.owner+'/'+g.repo);loadCourses();}
+    else setStatus('red','Erro '+r.status+' — verifique token');
+  }catch(e){setStatus('red','Erro: '+e.message);}
 }
-function setStatus(c,t) {
-  document.getElementById('ghDot').className = 'dot'+(c?' '+c:'');
-  var el = document.getElementById('ghTxt');
-  el.textContent = t;
-  el.style.color = c==='green'?'#86efac':c==='red'?'#fca5a5':'var(--text2)';
-}
-
-// ── LER META DO HTML ────────────────────────────────────────
-function onFileInput() {
-  _meta = null;
-  document.getElementById('btnSave').disabled = true;
-  document.getElementById('metaPreview').style.display = 'none';
+function setStatus(c,t){
+  document.getElementById('ghDot').className='dot'+(c?' '+c:'');
+  var el=document.getElementById('ghTxt');
+  el.textContent=t;
+  el.style.color=c==='green'?'#86efac':c==='red'?'#fca5a5':'var(--text2)';
 }
 
-async function fetchMeta() {
-  var file = document.getElementById('fFile').value.trim();
-  var g = gh();
-  if(!file){ alert('Cole o nome do arquivo primeiro.'); return; }
-  if(!g.token){ alert('Configure o token primeiro.'); return; }
+// ── PUBLICAR ────────────────────────────────────────────────
+async function publish(){
+  if(!_meta||!_fileContent){alert('Selecione um arquivo HTML primeiro.');return;}
+  var g=gh();
+  if(!g.token){alert('Configure o token.');return;}
 
-  var btn = document.getElementById('btnFetch');
-  btn.textContent = '⏳ Lendo...';
-  btn.disabled = true;
+  _meta.active=getVis();
+  _meta.free=getFree();
+  _meta.addedTs=Date.now();
 
-  try {
-    // Buscar o HTML do arquivo no GitHub
-    var res = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+file, { headers: ghHeaders() });
-    if(!res.ok){ alert('Arquivo "'+file+'" não encontrado no repositório. Suba o HTML primeiro.'); btn.textContent='🔍 Ler dados'; btn.disabled=false; return; }
-    var data = await res.json();
-    var html = atob(data.content.replace(/\n/g,''));
+  var btn=document.getElementById('btnPub');
+  btn.disabled=true;
+  setProgress(true,'Subindo arquivo HTML...',10);
 
-    // Extrair dados das constantes do arquivo
-    _meta = extractMeta(html, file);
+  var path=_fileName;
+  var headers=ghH();
 
-    if(!_meta){ alert('Não consegui ler os dados do arquivo. Certifique-se que o HTML foi criado por mim no padrão Matheus Academy.'); btn.textContent='🔍 Ler dados'; btn.disabled=false; return; }
+  // 1. Verificar se arquivo já existe (pegar sha)
+  var checkRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:headers});
+  var existingSha=null;
+  if(checkRes.ok){var cd=await checkRes.json();existingSha=cd.sha;}
 
-    // Mostrar preview
-    var grid = document.getElementById('metaGrid');
-    grid.innerHTML = [
-      ['ID', _meta.id], ['Nome', _meta.name], ['Categoria', _meta.cat],
-      ['Módulos', _meta.modules], ['Tópicos', _meta.topics], ['Horas', _meta.hours+'h'],
-      ['Ícone', _meta.icon], ['Gratuito', _meta.free ? 'Sim' : 'Não']
-    ].map(function(p){ return '<div class="meta-item"><div class="mk">'+p[0]+'</div><div class="mv">'+String(p[1]).substring(0,40)+'</div></div>'; }).join('');
-    document.getElementById('metaPreview').style.display = 'block';
-    document.getElementById('btnSave').disabled = false;
-  } catch(e){ alert('Erro: '+e.message); }
+  setProgress(true,'Subindo arquivo HTML...',35);
 
-  btn.textContent = '🔍 Ler dados';
-  btn.disabled = false;
-}
-
-function extractMeta(html, filename) {
-  function get(pattern, fallback) {
-    var m = html.match(pattern);
-    return m ? m[1].trim() : fallback;
-  }
-  function getN(pattern, fallback) {
-    var m = html.match(pattern);
-    return m ? parseInt(m[1]) : fallback;
-  }
-
-  // Tentar ler constantes do padrão MA
-  var id          = get(/const\s+COURSE_ID\s*=\s*['"]([^'"]+)['"]/, null);
-  var name        = get(/const\s+COURSE_NAME\s*=\s*['"]([^'"]+)['"]/, null);
-  var salt        = get(/const\s+COURSE_SALT\s*=\s*['"]([^'"]+)['"]/, '');
-  var prefix      = get(/const\s+PREFIX\s*=\s*['"]([^'"]+)['"]/, id ? id+'_' : '');
-  var ak          = get(/const\s+COURSE_KEY\s*=\s*['"]([^'"]+)['"]/, id ? id+'_auth' : '');
-  var totalTopics = getN(/const\s+TOTAL\s*=\s*(\d+)/, 0);
-
-  // Contar módulos no array
-  var modMatches = html.match(/\{id:\d+,/g);
-  var modules    = modMatches ? modMatches.length : 0;
-
-  // Estimar horas (1h por 7 tópicos aprox)
-  var hours = Math.max(1, Math.round(totalTopics / 7));
-
-  // Categoria: pegar do primeiro módulo cat ou default
-  var cat  = get(/cat:'([^']+)'/, get(/cat:"([^"]+)"/, 'NEGÓCIOS'));
-
-  // Ícone: pegar do primeiro módulo
-  var icon = get(/emoji:'([^']+)'/, get(/emoji:"([^"]+)"/, '📚'));
-
-  // Cor
-  var color = get(/color['":\s]+['"]?(#[0-9a-fA-F]{6})['"]?/, '#3b82f6');
-
-  // Se não tem COURSE_ID, tentar derivar do nome do arquivo
-  if(!id) {
-    id = filename.replace('.html','').replace(/[^a-z0-9]/gi,'').substring(0,6).toLowerCase();
-  }
-  if(!name) {
-    name = filename.replace('.html','').replace(/-/g,' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
-  }
-
-  return {
-    id: id, name: name, desc: '', file: filename, cat: cat,
-    modules: modules, topics: totalTopics, hours: hours, quizzes: modules,
-    salt: salt || id.toUpperCase()+'_HENRY_2026_MASTER',
-    ak: ak || id+'_auth',
-    storagePrefix: prefix || id+'_',
-    icon: icon, color: color,
-    addedTs: Date.now(), active: true, free: false
+  // 2. Upload do HTML
+  var uploadBody={
+    message:'upload: '+_fileName+' via admin',
+    content:btoa(unescape(encodeURIComponent(_fileContent)))
   };
-}
+  if(existingSha) uploadBody.sha=existingSha;
 
-// ── SALVAR ─────────────────────────────────────────────────
-async function saveCourse() {
-  if(!_meta){ alert('Leia os dados do arquivo primeiro.'); return; }
-  var g = gh();
-  if(!g.token){ alert('Configure o token.'); return; }
+  var upRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{
+    method:'PUT',headers:headers,body:JSON.stringify(uploadBody)
+  });
+  if(!upRes.ok){var e=await upRes.json();showResult('err','❌ Erro ao subir HTML: '+(e.message||upRes.status));btn.disabled=false;setProgress(false);return;}
 
-  var btn = document.getElementById('btnSave');
-  btn.disabled = true;
-  showResult('load','<div class="spin"></div> Publicando no portal...');
+  setProgress(true,'Registrando no courses.js...',70);
 
-  var path = 'data/courses.js';
-  var getRes = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path, { headers: ghHeaders() });
-  if(!getRes.ok){ showResult('err','❌ Não encontrei data/courses.js.'); btn.disabled=false; return; }
-  var fd = await getRes.json();
-  var current = atob(fd.content.replace(/\n/g,''));
-  var sha = fd.sha;
+  // 3. Atualizar courses.js
+  var cpath='data/courses.js';
+  var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+cpath,{headers:headers});
+  if(!getRes.ok){showResult('err','❌ Não encontrei data/courses.js.');btn.disabled=false;setProgress(false);return;}
+  var fd=await getRes.json();
+  var current=atob(fd.content.replace(/\n/g,''));
+  var sha=fd.sha;
 
-  // Verificar se ID já existe
   if(new RegExp("id:\\s*['\"]"+_meta.id+"['\"]").test(current)){
-    showResult('err','⚠️ Já existe um curso com o id "'+_meta.id+'" no portal. Verifique.');
-    btn.disabled=false; return;
+    setProgress(false);
+    showResult('err','⚠️ Já existe um curso com id "'+_meta.id+'". O HTML foi subido mas não foi adicionado ao portal. Verifique.');
+    btn.disabled=false;return;
   }
 
-  var block = '\n  ' + JSON.stringify(_meta, null, 2).replace(/\n/g,'\n  ') + ',';
-  var insertAt = current.lastIndexOf('];');
-  if(insertAt===-1){ showResult('err','❌ Estrutura do courses.js inválida.'); btn.disabled=false; return; }
+  var block='\n  '+JSON.stringify(_meta,null,2).replace(/\n/g,'\n  ')+',';
+  var insertAt=current.lastIndexOf('];');
+  var newContent=current.slice(0,insertAt)+block+'\n'+current.slice(insertAt);
 
-  var newContent = current.slice(0,insertAt) + block + '\n' + current.slice(insertAt);
-
-  var putRes = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path, {
-    method:'PUT', headers: ghHeaders(),
-    body: JSON.stringify({ message:'feat: adiciona curso "'+_meta.name+'" via admin', content: btoa(unescape(encodeURIComponent(newContent))), sha: sha })
+  var putRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+cpath,{
+    method:'PUT',headers:headers,
+    body:JSON.stringify({message:'feat: adiciona curso "'+_meta.name+'" via admin',content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
   });
 
+  setProgress(true,'Concluindo...',100);
+
   if(putRes.ok){
-    showResult('ok','✅ Curso <b>"'+escHtml(_meta.name)+'"</b> publicado! Aparece no portal em instantes.');
-    document.getElementById('fFile').value = '';
-    document.getElementById('metaPreview').style.display = 'none';
-    _meta = null;
-    loadCourses();
-  } else {
-    var err = await putRes.json();
-    showResult('err','❌ Erro: '+(err.message||putRes.status));
-    btn.disabled = false;
+    setTimeout(function(){
+      setProgress(false);
+      showResult('ok','✅ Curso <b>"'+escHtml(_meta.name)+'"</b> publicado com sucesso! ('+(getVis()?'Visível':'Oculto')+' · '+(getFree()?'Gratuito':'Pago')+')');
+      resetForm();
+      loadCourses();
+    },400);
+  }else{
+    var err=await putRes.json();
+    setProgress(false);
+    showResult('err','❌ Erro ao atualizar courses.js: '+(err.message||putRes.status));
+    btn.disabled=false;
   }
 }
 
-// ── EXCLUIR ────────────────────────────────────────────────
-async function deleteCourse(id, name) {
-  if(!confirm('⚠️ Excluir "'+name+'"?\n\nIsso remove do courses.js. O arquivo HTML não é deletado.')) return;
-  var g = gh();
+function setProgress(show,label,pct){
+  var wrap=document.getElementById('progWrap');
+  wrap.style.display=show?'block':'none';
+  if(show){
+    document.getElementById('progLabel').textContent=label||'';
+    document.getElementById('progPct').textContent=(pct||0)+'%';
+    document.getElementById('progFill').style.width=(pct||0)+'%';
+  }
+}
+
+function resetForm(){
+  _meta=null;_fileContent=null;_fileName=null;
+  var dz=document.getElementById('dropzone');
+  dz.classList.remove('done','drag');
+  document.getElementById('dzIcon').textContent='📄';
+  document.getElementById('dzTitle').textContent='Arraste o arquivo HTML aqui';
+  document.getElementById('dzSub').textContent='ou clique para selecionar no computador';
+  document.getElementById('dzFile').textContent='';
+  document.getElementById('metaPreview').style.display='none';
+  document.getElementById('optsSection').style.display='none';
+  document.getElementById('btnPub').disabled=true;
+  document.getElementById('ov-on').classList.add('sel');
+  document.getElementById('ov-off').classList.remove('sel');
+  document.getElementById('oa-paid').classList.add('sel');
+  document.getElementById('oa-free').classList.remove('sel');
+}
+
+// ── ATUALIZAR CURSO ──────────────────────────────────────────
+async function updateCourse(id,field,value,btnEl){
+  var g=gh();
+  if(!g.token){alert('Configure o token.');return;}
+  if(btnEl){btnEl.textContent='⏳';btnEl.disabled=true;}
+  var path='data/courses.js';
+  var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:ghH()});
+  var fd=await getRes.json();
+  var current=atob(fd.content.replace(/\n/g,''));
+  var sha=fd.sha;
+  var newContent=current.replace(
+    new RegExp('(id:\\s*[\'"]'+id+'[\'"][\\s\\S]*?'+field+':\\s*)(true|false)'),
+    '$1'+value
+  );
+  if(newContent===current){showResult('err','❌ Campo não encontrado.');if(btnEl){btnEl.disabled=false;}return;}
+  var putRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{
+    method:'PUT',headers:ghH(),
+    body:JSON.stringify({message:'update: curso id='+id+' '+field+'='+value,content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
+  });
+  if(putRes.ok){showResult('ok','✅ Curso atualizado!');loadCourses();}
+  else{var err=await putRes.json();showResult('err','❌ Erro: '+(err.message||putRes.status));if(btnEl){btnEl.disabled=false;}}
+}
+
+// ── EXCLUIR ──────────────────────────────────────────────────
+async function deleteCourse(id,name){
+  if(!confirm('⚠️ Excluir "'+name+'"?\n\nRemove do courses.js. O arquivo HTML no GitHub não é deletado.')) return;
+  var g=gh();
   showResult('load','<div class="spin"></div> Excluindo...');
-
-  var path = 'data/courses.js';
-  var getRes = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path, { headers: ghHeaders() });
-  var fd = await getRes.json();
-  var current = atob(fd.content.replace(/\n/g,''));
-  var sha = fd.sha;
-
-  var re = new RegExp('\\s*\\{[^{}]*?id:\\s*[\'"]'+id+'[\'"][\\s\\S]*?\\}\\s*,?','');
-  var newContent = current.replace(re,'');
-  if(newContent===current){ showResult('err','❌ Curso não encontrado.'); return; }
-
-  var putRes = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path, {
-    method:'PUT', headers: ghHeaders(),
-    body: JSON.stringify({ message:'remove: curso "'+name+'" via admin', content: btoa(unescape(encodeURIComponent(newContent))), sha: sha })
+  var path='data/courses.js';
+  var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:ghH()});
+  var fd=await getRes.json();
+  var current=atob(fd.content.replace(/\n/g,''));
+  var sha=fd.sha;
+  var re=new RegExp('\\s*\\{[^{}]*?id:\\s*[\'"]'+id+'[\'"][\\s\\S]*?\\}\\s*,?','');
+  var newContent=current.replace(re,'');
+  if(newContent===current){showResult('err','❌ Curso não encontrado.');return;}
+  var putRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{
+    method:'PUT',headers:ghH(),
+    body:JSON.stringify({message:'remove: curso "'+name+'" via admin',content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
   });
-
-  if(putRes.ok){
-    showResult('ok','✅ Curso "'+escHtml(name)+'" excluído.');
-    loadCourses();
-  } else {
-    var err = await putRes.json();
-    showResult('err','❌ Erro: '+(err.message||putRes.status));
-  }
+  if(putRes.ok){showResult('ok','✅ Curso "'+escHtml(name)+'" excluído.');loadCourses();}
+  else{var err=await putRes.json();showResult('err','❌ Erro: '+(err.message||putRes.status));}
 }
 
-// ── CARREGAR LISTA ──────────────────────────────────────────
-async function loadCourses() {
-  var g = gh();
-  if(!g.token) return;
-  var res = await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js', { headers: ghHeaders() });
-  if(!res.ok) return;
-  var fd = await res.json();
-  var content = atob(fd.content.replace(/\n/g,''));
-
-  var courses = [];
-  var blocks = content.split(/(?=\s*\{[^{}]*id:\s*['"])/);
-  blocks.forEach(function(b){
-    var idM   = b.match(/id:\s*['"]([^'"]+)['"]/);
-    var nameM = b.match(/name:\s*['"]([^'"]+)['"]/);
-    var iconM = b.match(/icon:\s*['"]([^'"]*)['"]/);
-    var actM  = b.match(/active:\s*(true|false)/);
-    var freeM = b.match(/free:\s*(true|false)/);
-    if(!idM||!nameM) return;
-    courses.push({ id:idM[1], name:nameM[1], icon:iconM?iconM[1]:'📚',
-      active: actM?actM[1]==='true':true, free: freeM?freeM[1]==='true':false });
+// ── LISTA ────────────────────────────────────────────────────
+async function loadCourses(){
+  var g=gh();if(!g.token)return;
+  var res=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js',{headers:ghH()});
+  if(!res.ok)return;
+  var fd=await res.json();
+  var content=atob(fd.content.replace(/\n/g,''));
+  var courses=[];
+  content.split(/(?=\s*\{[^{}]*id:\s*['"])/).forEach(function(b){
+    var idM=b.match(/id:\s*['"]([^'"]+)['"]/);
+    var nameM=b.match(/name:\s*['"]([^'"]+)['"]/);
+    var iconM=b.match(/icon:\s*['"]([^'"]*)['"]/);
+    var actM=b.match(/active:\s*(true|false)/);
+    var freeM=b.match(/free:\s*(true|false)/);
+    if(!idM||!nameM)return;
+    courses.push({id:idM[1],name:nameM[1],icon:iconM?iconM[1]:'📚',active:actM?actM[1]==='true':true,free:freeM?freeM[1]==='true':false});
   });
-
-  document.getElementById('cCount').textContent = '('+courses.length+')';
-  var el = document.getElementById('courseList');
-  if(!courses.length){ el.innerHTML='<div style="color:var(--text3);font-size:13px;padding:10px">Nenhum curso encontrado.</div>'; return; }
-  el.innerHTML = courses.map(function(c){
-    var badge = c.free ? '<span class="cbadge bf">Grátis</span>' : c.active ? '<span class="cbadge ba">Ativo</span>' : '<span class="cbadge bi">Inativo</span>';
-    return '<div class="course-row"><div class="ci">'+c.icon+'</div>'
-      +'<div class="cinfo"><b>'+escHtml(c.name)+'</b><small>id: '+c.id+'</small></div>'
-      +badge
-      +'<button class="btn-danger" onclick="deleteCourse(\''+c.id+'\',\''+escHtml(c.name)+'\')">🗑 Excluir</button>'
-      +'</div>';
+  document.getElementById('cCount').textContent='('+courses.length+' cursos)';
+  var el=document.getElementById('courseList');
+  if(!courses.length){el.innerHTML='<div style="color:var(--text3);font-size:13px;padding:10px">Nenhum curso.</div>';return;}
+  el.innerHTML=courses.map(function(c){
+    var vb=c.active?'<span class="cbadge ba">Visível</span>':'<span class="cbadge bo">Oculto</span>';
+    var tb=c.free?'<span class="cbadge bf">Grátis</span>':'<span class="cbadge bp">Pago</span>';
+    var vCls=c.active?'act-btn ao':'act-btn av';
+    var vTxt=c.active?'🙈 Ocultar':'👁️ Visível';
+    var vVal=c.active?'false':'true';
+    var fCls=c.free?'act-btn apd':'act-btn afr';
+    var fTxt=c.free?'🔒 Tornar pago':'🎁 Tornar gratuito';
+    var fVal=c.free?'false':'true';
+    var cid=c.id, cname=escHtml(c.name);
+    return '<div class="course-row"><div class="course-main">'
+      +'<div class="ci">'+c.icon+'</div>'
+      +'<div class="cinfo"><b>'+cname+'</b><small>id: '+cid+'</small></div>'
+      +'<div class="cbadges">'+vb+tb+'</div>'
+      +'<button class="xbtn" onclick="togglePanel(\''+cid+'\')" title="Opções">⋯</button>'
+      +'</div>'
+      +'<div class="actions-panel" id="ap_'+cid+'">'
+      +'<div class="act-row">'
+      +'<button class="'+vCls+'" onclick="updateCourse(\''+cid+'\',\'active\',\''+vVal+'\',this)">'+vTxt+'</button>'
+      +'<div class="sep"></div>'
+      +'<button class="'+fCls+'" onclick="updateCourse(\''+cid+'\',\'free\',\''+fVal+'\',this)">'+fTxt+'</button>'
+      +'<div class="sep"></div>'
+      +'<button class="act-btn adel" onclick="deleteCourse(\''+cid+'\',\''+cname+'\')">🗑 Excluir</button>'
+      +'</div></div></div>';
   }).join('');
 }
 
-function showResult(type,html){
-  var el=document.getElementById('result');
-  el.className='result '+type; el.innerHTML=html;
-  el.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;'); }
+function togglePanel(id){document.getElementById('ap_'+id).classList.toggle('open');}
+function showResult(t,h){var el=document.getElementById('result');el.className='result '+t;el.innerHTML=h;el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;');}
 </script>
 </body>
 </html>
