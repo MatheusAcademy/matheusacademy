@@ -721,10 +721,12 @@ async function loadCourses() {
       : c.active
         ? '<span class="course-badge badge-active">Ativo</span>'
         : '<span class="course-badge badge-inactive">Inativo</span>';
-    return '<div class="course-item"><div class="course-icon">' + c.icon + '</div>'
+    return '<div class="course-item" id="ci_' + c.id + '"><div class="course-icon">' + c.icon + '</div>'
       + '<div class="course-info"><b>' + escHtml(c.name) + '</b>'
       + '<small>id: ' + c.id + ' · storagePrefix: ' + c.id + '_</small></div>'
-      + badge + '</div>';
+      + badge
+      + '<button onclick="deleteCourse(\''+c.id+'\',\''+escHtml(c.name)+'\',\''+escHtml(c.icon)+'')" style="margin-left:8px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#fca5a5;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:.2s" onmouseover="this.style.background=\'rgba(239,68,68,.25)\'" onmouseout="this.style.background=\'rgba(239,68,68,.12)\'">🗑 Excluir</button>'
+      + '</div>';
   }).join('');
 }
 
@@ -748,6 +750,71 @@ function resetForm() {
   document.getElementById('resultBanner').className = 'result-banner';
   updatePreview();
 }
+
+// ── EXCLUIR CURSO ─────────────────────────────────────────
+async function deleteCourse(id, name, icon) {
+  if (!confirm('⚠️ Excluir o curso "' + name + '"?\n\nEsta ação remove o curso do courses.js. O arquivo HTML do curso não será deletado.')) return;
+
+  var token = document.getElementById('ghToken').value.trim();
+  var owner = document.getElementById('ghOwner').value.trim();
+  var repo  = document.getElementById('ghRepo').value.trim();
+  if (!token) { showResult('error', '❌ Configure o token do GitHub primeiro.'); return; }
+
+  showResult('loading', '<div class="spinner"></div> Excluindo curso...');
+
+  var path = 'data/courses.js';
+  var headers = {
+    'Authorization': 'token ' + token,
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json'
+  };
+
+  // 1. Buscar arquivo atual
+  var getRes = await fetch('https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + path, { headers });
+  if (!getRes.ok) { showResult('error', '❌ Não encontrei o arquivo data/courses.js.'); return; }
+  var fileData = await getRes.json();
+  var currentContent = atob(fileData.content.replace(/\n/g,''));
+  var sha = fileData.sha;
+
+  // 2. Remover o bloco do curso pelo id
+  // Estratégia: encontrar o objeto que contém id: 'XX' e remover
+  var idPattern = new RegExp(
+    '\\s*\\{[^{}]*?' +
+    'id:\\s*[\'"]' + id + '[\'"][^{}]*?' +
+    '\\}\\s*,?',
+    's'
+  );
+  var newContent = currentContent.replace(idPattern, '');
+
+  if (newContent === currentContent) {
+    showResult('error', '❌ Não encontrei o curso com id "' + id + '" no courses.js.');
+    return;
+  }
+
+  // 3. Commit
+  var body = JSON.stringify({
+    message: 'remove: curso "' + name + '" (id: ' + id + ') via admin',
+    content: btoa(unescape(encodeURIComponent(newContent))),
+    sha: sha
+  });
+
+  var putRes = await fetch('https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + path, {
+    method: 'PUT', headers, body
+  });
+
+  if (putRes.ok) {
+    showResult('success', '✅ Curso ' + icon + ' <b>"' + escHtml(name) + '"</b> excluído com sucesso!');
+    // Remove da lista visualmente
+    var el = document.getElementById('ci_' + id);
+    if (el) { el.style.opacity = '0'; el.style.transform = 'translateX(20px)'; el.style.transition = '.3s'; setTimeout(function(){ el.remove(); }, 350); }
+    // Atualiza contagem
+    setTimeout(loadCourses, 600);
+  } else {
+    var err = await putRes.json();
+    showResult('error', '❌ Erro ao excluir: ' + (err.message || putRes.status));
+  }
+}
+
 </script>
 </body>
 </html>
