@@ -1,53 +1,53 @@
 /**
  * ============================================================
- * MATHEUS ACADEMY Ã¢ÂÂ COURSES.JS
- * Fonte ÃÂºnica de verdade de todos os cursos da plataforma.
+ * MATHEUS ACADEMY — COURSES.JS
+ * Fonte única de verdade de todos os cursos da plataforma.
  *
  * COMO ADICIONAR UM NOVO CURSO:
  *   1. Copie um objeto do array abaixo
  *   2. Preencha todos os campos
  *   3. Defina active: true
- *   4. FaÃÂ§a push no GitHub
+ *   4. Faça push no GitHub
  *   Pronto! O curso aparece automaticamente em todo o portal.
  *
  * COMO DESATIVAR UM CURSO (sem apagar):
- *   Mude active: true  Ã¢ÂÂ  active: false
+ *   Mude active: true  →  active: false
  *
- * CAMPOS OBRIGATÃÂRIOS:
- *   id          Ã¢ÂÂ chave ÃÂºnica curta (ex: 'tp', 'ni', 'gp')
- *   name        Ã¢ÂÂ nome completo exibido na plataforma
- *   desc        Ã¢ÂÂ descriÃÂ§ÃÂ£o curta (1-2 linhas)
- *   file        Ã¢ÂÂ nome do arquivo HTML (ex: 'dominando-trafego-pago.html')
- *   cat         Ã¢ÂÂ categoria (deve bater com uma entrada em CATS abaixo)
- *   modules     Ã¢ÂÂ nÃÂºmero total de mÃÂ³dulos
- *   topics      Ã¢ÂÂ nÃÂºmero total de tÃÂ³picos
- *   hours       Ã¢ÂÂ carga horÃÂ¡ria estimada
- *   quizzes     Ã¢ÂÂ nÃÂºmero de quizzes
- *   salt        Ã¢ÂÂ salt do SHA-256 para autenticaÃÂ§ÃÂ£o (definido no arquivo do curso)
- *   ak          Ã¢ÂÂ chave de acesso no localStorage (ex: 'tp_auth')
- *   storagePrefix Ã¢ÂÂ prefixo usado pelo curso para salvar progresso (ex: 'dt_')
- *   icon        Ã¢ÂÂ emoji representativo do curso
- *   color       Ã¢ÂÂ cor principal em hex (usada em grÃÂ¡ficos e progresso)
- *   addedTs     Ã¢ÂÂ timestamp Unix em ms da data de lanÃÂ§amento
- *   active      Ã¢ÂÂ true = visÃÂ­vel | false = oculto em todo o portal
+ * CAMPOS OBRIGATÓRIOS:
+ *   id          → chave única curta (ex: 'tp', 'ni', 'gp')
+ *   name        → nome completo exibido na plataforma
+ *   desc        → descrição curta (1-2 linhas)
+ *   file        → nome do arquivo HTML (ex: 'dominando-trafego-pago.html')
+ *   cat         → categoria (deve bater com uma entrada em CATS abaixo)
+ *   modules     → número total de módulos
+ *   topics      → número total de tópicos
+ *   hours       → carga horária estimada
+ *   quizzes     → número de quizzes
+ *   salt        → salt do SHA-256 para autenticação (definido no arquivo do curso)
+ *   ak          → chave de acesso no localStorage (ex: 'tp_auth')
+ *   storagePrefix → prefixo usado pelo curso para salvar progresso (ex: 'dt_')
+ *   icon        → emoji representativo do curso
+ *   color       → cor principal em hex (usada em gráficos e progresso)
+ *   addedTs     → timestamp Unix em ms da data de lançamento
+ *   active      → true = visível | false = oculto em todo o portal
  *
  * CAMPOS OPCIONAIS:
- *   free        Ã¢ÂÂ true = acesso gratuito sem cÃÂ³digo (padrÃÂ£o: false)
+ *   free        → true = acesso gratuito sem código (padrão: false)
  * ============================================================
  */
 
 var MA_COURSES = [
 
-  /* Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
-     CURSOS PRINCIPAIS (requerem cÃÂ³digo de acesso)
-  Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
+  /* ──────────────────────────────────────────
+     CURSOS PRINCIPAIS (requerem código de acesso)
+  ────────────────────────────────────────── */
 
   {
     id: 'tp',
-    name: 'Dominando TrÃÂ¡fego Pago',
+    name: 'Dominando Tráfego Pago',
     desc: 'De zero a gestor de elite. Meta Ads, Google Ads, criativos e escala.',
     file: 'dominando-trafego-pago.html',
-    cat: 'NegÃÂ³cios',
+    cat: 'Negócios',
     modules: 117,
     topics: 819,
     hours: 234,
@@ -55,7 +55,7 @@ var MA_COURSES = [
     salt: 'TP_HENRY_2026_MASTER',
     ak: 'tp_auth',
     storagePrefix: 'dt_',
-    icon: 'Ã°ÂÂÂ',
+    icon: '📊',
     color: '#5b7fff',
     addedTs: 1741996800000,
     active: true
@@ -63,10 +63,10 @@ var MA_COURSES = [
 
   {
     id: 'ni',
-    name: 'NegÃÂ³cios Inteligentes',
-    desc: 'Mentalidade, marketing digital, vendas, dropshipping, IA e finanÃÂ§as.',
+    name: 'Negócios Inteligentes',
+    desc: 'Mentalidade, marketing digital, vendas, dropshipping, IA e finanças.',
     file: 'negocios-inteligentes.html',
-    cat: 'NegÃÂ³cios',
+    cat: 'Negócios',
     modules: 197,
     topics: 1379,
     hours: 462,
@@ -74,7 +74,7 @@ var MA_COURSES = [
     salt: 'NI_HENRY_2026_MASTER',
     ak: 'ni_auth',
     storagePrefix: 'ni_',
-    icon: 'Ã°ÂÂÂ¼',
+    icon: '💼',
     color: '#a855f7',
     addedTs: 1742256000000,
     active: true
@@ -82,10 +82,10 @@ var MA_COURSES = [
 
   {
     id: 'gp',
-    name: 'GeopolÃÂ­tica AvanÃÂ§ada',
+    name: 'Geopolítica Avançada',
     desc: 'Entenda o mundo como ele funciona. Teoria, conflitos e economia global.',
     file: 'geopolitica-curso.html',
-    cat: 'GeopolÃÂ­tica',
+    cat: 'Geopolítica',
     modules: 27,
     topics: 271,
     hours: 90,
@@ -93,7 +93,7 @@ var MA_COURSES = [
     salt: 'GP_HENRY_2026_MASTER',
     ak: 'gp_auth',
     storagePrefix: 'geo_',
-    icon: 'Ã°ÂÂÂ',
+    icon: '🌍',
     color: '#22c55e',
     addedTs: 1742688000000,
     active: true
@@ -104,7 +104,7 @@ var MA_COURSES = [
     name: 'Nichos Lucrativos',
     desc: 'O guia definitivo para encontrar e dominar nichos lucrativos.',
     file: 'nichos-lucrativos.html',
-    cat: 'NegÃÂ³cios',
+    cat: 'Negócios',
     modules: 97,
     topics: 679,
     hours: 165,
@@ -112,7 +112,7 @@ var MA_COURSES = [
     salt: 'NL_HENRY_2026_MASTER',
     ak: 'nl_auth',
     storagePrefix: 'nl_',
-    icon: 'Ã°ÂÂÂ¡',
+    icon: '💡',
     color: '#f59e0b',
     addedTs: 1743033600000,
     active: true
@@ -120,8 +120,8 @@ var MA_COURSES = [
 
   {
     id: 'mp',
-    name: 'Mestre em PersuasÃÂ£o',
-    desc: 'Domine a arte de influenciar. Psicologia, comunicaÃÂ§ÃÂ£o e copywriting.',
+    name: 'Mestre em Persuasão',
+    desc: 'Domine a arte de influenciar. Psicologia, comunicação e copywriting.',
     file: 'mestre-em-persuasao.html',
     cat: 'PNL',
     modules: 217,
@@ -131,7 +131,7 @@ var MA_COURSES = [
     salt: 'MP_HENRY_2026_MASTER',
     ak: 'mp_auth',
     storagePrefix: 'mp_',
-    icon: 'Ã°ÂÂÂ¯',
+    icon: '🎯',
     color: '#ec4899',
     addedTs: 1743206400000,
     active: true
@@ -139,10 +139,10 @@ var MA_COURSES = [
 
   {
     id: 'pb',
-    name: 'PolÃÂ­tica Brasileira',
-    desc: 'Do zero ao avanÃÂ§ado. Sistema polÃÂ­tico, ConstituiÃÂ§ÃÂ£o, eleiÃÂ§ÃÂµes, poderes e cenÃÂ¡rio atual.',
+    name: 'Política Brasileira',
+    desc: 'Do zero ao avançado. Sistema político, Constituição, eleições, poderes e cenário atual.',
     file: 'politica-brasileira.html',
-    cat: 'GeopolÃÂ­tica',
+    cat: 'Geopolítica',
     modules: 17,
     topics: 119,
     hours: 42,
@@ -150,22 +150,22 @@ var MA_COURSES = [
     salt: 'PB_HENRY_2026_MASTER',
     ak: 'pb_auth',
     storagePrefix: 'pb_',
-    icon: 'Ã°ÂÂÂÃ¯Â¸Â',
+    icon: '🏛️',
     color: '#3B82F6',
     addedTs: 1743400000000,
     active: true
   },
 
-  /* Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
-     NOTÃÂCIAS / CONTEÃÂDO GRATUITO
-  Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
+  /* ──────────────────────────────────────────
+     NOTÍCIAS / CONTEÚDO GRATUITO
+  ────────────────────────────────────────── */
 
   {
     id: 'bm',
     name: 'Caso Banco Master',
-    desc: 'A maior fraude bancÃÂ¡ria do Brasil. R$52bi, CPI e delaÃÂ§ÃÂ£o premiada.',
+    desc: 'A maior fraude bancária do Brasil. R$52bi, CPI e delação premiada.',
     file: 'caso-banco-master.html',
-    cat: 'Atualize-se! NotÃÂ­cias Mais Relevantes da Semana',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
     modules: 7,
     topics: 7,
     hours: 1,
@@ -173,7 +173,7 @@ var MA_COURSES = [
     salt: 'FREE',
     ak: 'free',
     storagePrefix: 'bm_',
-    icon: 'Ã°ÂÂÂ¦',
+    icon: '🏦',
     color: '#ef4444',
     free: true,
     addedTs: 1743264000000,
@@ -182,10 +182,10 @@ var MA_COURSES = [
 
   {
     id: 'ii',
-    name: 'Guerra Israel x IrÃÂ£',
-    desc: 'O conflito que mudou o mundo. De 2025 ÃÂ  escalada de 2026.',
+    name: 'Guerra Israel x Irã',
+    desc: 'O conflito que mudou o mundo. De 2025 à escalada de 2026.',
     file: 'guerra-israel-ira.html',
-    cat: 'Atualize-se! NotÃÂ­cias Mais Relevantes da Semana',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
     modules: 7,
     topics: 7,
     hours: 1,
@@ -193,7 +193,7 @@ var MA_COURSES = [
     salt: 'FREE',
     ak: 'free',
     storagePrefix: 'ii_',
-    icon: 'Ã¢ÂÂÃ¯Â¸Â',
+    icon: '⚔️',
     color: '#f97316',
     free: true,
     addedTs: 1743292800000,
@@ -203,9 +203,9 @@ var MA_COURSES = [
   {
     id: 'cp',
     name: 'Copa do Mundo 2026',
-    desc: 'Tudo sobre o maior evento esportivo do mundo. AnÃÂ¡lise completa.',
+    desc: 'Tudo sobre o maior evento esportivo do mundo. Análise completa.',
     file: 'copa-do-mundo-2026.html',
-    cat: 'Atualize-se! NotÃÂ­cias Mais Relevantes da Semana',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
     modules: 7,
     topics: 7,
     hours: 1,
@@ -213,7 +213,7 @@ var MA_COURSES = [
     salt: 'FREE',
     ak: 'free',
     storagePrefix: 'cp_',
-    icon: 'Ã¢ÂÂ½',
+    icon: '⚽',
     color: '#10b981',
     free: true,
     addedTs: 1743350400000,
@@ -221,15 +221,15 @@ var MA_COURSES = [
   }
 
   /*
-   * Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
-   * TEMPLATE PARA NOVO CURSO Ã¢ÂÂ copie e cole abaixo:
+   * ──────────────────────────────────────────
+   * TEMPLATE PARA NOVO CURSO — copie e cole abaixo:
    *
    * ,{
    *   id: 'xx',
    *   name: 'Nome do Curso',
-   *   desc: 'DescriÃÂ§ÃÂ£o curta e objetiva.',
+   *   desc: 'Descrição curta e objetiva.',
    *   file: 'nome-do-arquivo.html',
-   *   cat: 'NegÃÂ³cios',
+   *   cat: 'Negócios',
    *   modules: 0,
    *   topics: 0,
    *   hours: 0,
@@ -237,37 +237,37 @@ var MA_COURSES = [
    *   salt: 'XX_HENRY_2026_MASTER',
    *   ak: 'xx_auth',
    *   storagePrefix: 'xx_',
-   *   icon: 'Ã°ÂÂÂ',
+   *   icon: '🎓',
    *   color: '#4b8bff',
    *   addedTs: Date.now(),
    *   active: true
    * }
-   * Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+   * ──────────────────────────────────────────
    */
 ];
 
 /* ============================================================
    CATEGORIAS DO PORTAL
    Para adicionar nova categoria: copie um objeto e adicione no array.
-   O campo 'courses' ÃÂ© preenchido automaticamente Ã¢ÂÂ nÃÂ£o edite.
+   O campo 'courses' é preenchido automaticamente — não edite.
    soon[] = cursos futuros exibidos como "Em breve"
    ============================================================ */
 var MA_CATS = [
-  {name:'Atualize-se! NotÃÂ­cias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['EleiÃÂ§ÃÂµes 2026: Em Quem Votar?'], isSpecial:true},
-  {name:'NegÃÂ³cios', sub:'Aqui vocÃÂª encontra as aulas exclusivas do Matheus Academy', courses:[], soon:[]},
-  {name:'GeopolÃÂ­tica', sub:'Entenda o mundo como ele realmente funciona, alÃÂ©m das notÃÂ­cias', courses:[], soon:['RelaÃÂ§ÃÂµes Internacionais']},
-  {name:'PNL', sub:'Domine a arte de comunicar, persuadir e influenciar pessoas', courses:[], soon:['TÃÂ©cnicas de PersuasÃÂ£o','OratÃÂ³ria e ComunicaÃÂ§ÃÂ£o Assertiva','PNL Ã¢ÂÂ ProgramaÃÂ§ÃÂ£o NeurolinguÃÂ­stica']},
-  {name:'Desenvolvimento', sub:'Transforme sua mentalidade e atinja o prÃÂ³ximo nÃÂ­vel', courses:[], soon:['InteligÃÂªncia Emocional na PrÃÂ¡tica','Produtividade e GestÃÂ£o do Tempo','LideranÃÂ§a']},
-  {name:'Tecnologia', sub:'A tecnologia chegou para ficar Ã¢ÂÂ aprenda a lucrar com ela', courses:[], soon:['InteligÃÂªncia Artificial na PrÃÂ¡tica','ProgramaÃÂ§ÃÂ£o para Iniciantes','AutomaÃÂ§ÃÂ£o Digital']},
-  {name:'Psicologia', sub:'Compreenda o comportamento humano e use isso a seu favor', courses:[], soon:['Psicologia Comportamental','NeurociÃÂªncia e Comportamento','Psicologia das RelaÃÂ§ÃÂµes']},
-  {name:'HistÃÂ³ria', sub:'Quem nÃÂ£o conhece a histÃÂ³ria estÃÂ¡ condenado a repeti-la', courses:[], soon:['HistÃÂ³ria do Brasil Completa','Grandes CivilizaÃÂ§ÃÂµes Antigas','HistÃÂ³ria ContemporÃÂ¢nea']},
-  {name:'Filosofia', sub:'Pense melhor, decida melhor, viva melhor', courses:[], soon:['Filosofia para a Vida Real','Grandes FilÃÂ³sofos da HistÃÂ³ria','ÃÂtica e Pensamento CrÃÂ­tico']},
-  {name:'InglÃÂªs', sub:'O idioma que abre portas no mundo inteiro', courses:[], soon:['InglÃÂªs do Zero ao Fluente','Business English','InglÃÂªs para Viagens']},
-  {name:'BÃÂ­blia / Teologia', sub:'Aprofunde sua fÃÂ© com estudo sÃÂ©rio e contextualizado', courses:[], soon:['Estudo BÃÂ­blico Completo','Teologia SistemÃÂ¡tica','Panorama do Antigo Testamento']},
-  {name:'Biografias', sub:'Aprenda com quem construiu histÃÂ³ria e mudou o mundo', courses:[], soon:['LÃÂ­deres que Mudaram o Mundo','Empreendedores VisionÃÂ¡rios','GÃÂªnios da CiÃÂªncia']},
-  {name:'Engenharia', sub:'Conhecimento tÃÂ©cnico de alta precisÃÂ£o e aplicaÃÂ§ÃÂ£o real', courses:[], soon:['InstalaÃÂ§ÃÂµes HidrÃÂ¡ulicas e GÃÂ¡s','Fundamentos de Engenharia Civil','Projetos Estruturais']},
-  {name:'MecÃÂ¢nica', sub:'Do bÃÂ¡sico ao avanÃÂ§ado em manutenÃÂ§ÃÂ£o e diagnÃÂ³stico automotivo', courses:[], soon:['MecÃÂ¢nica BÃÂ¡sica Automotiva','DiagnÃÂ³stico e ManutenÃÂ§ÃÂ£o','ElÃÂ©trica Automotiva']},
-  {name:'Ã°ÂÂÂ Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x IrÃÂ£','Devocional 2026','Estamos PrÃÂ³ximos do Fim?'], isEbook:true}
+  {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?'], isSpecial:true},
+  {name:'Negócios', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:[]},
+  {name:'Geopolítica', sub:'Entenda o mundo como ele realmente funciona, além das notícias', courses:[], soon:['Relações Internacionais']},
+  {name:'PNL', sub:'Domine a arte de comunicar, persuadir e influenciar pessoas', courses:[], soon:['Técnicas de Persuasão','Oratória e Comunicação Assertiva','PNL — Programação Neurolinguística']},
+  {name:'Desenvolvimento', sub:'Transforme sua mentalidade e atinja o próximo nível', courses:[], soon:['Inteligência Emocional na Prática','Produtividade e Gestão do Tempo','Liderança']},
+  {name:'Tecnologia', sub:'A tecnologia chegou para ficar — aprenda a lucrar com ela', courses:[], soon:['Inteligência Artificial na Prática','Programação para Iniciantes','Automação Digital']},
+  {name:'Psicologia', sub:'Compreenda o comportamento humano e use isso a seu favor', courses:[], soon:['Psicologia Comportamental','Neurociência e Comportamento','Psicologia das Relações']},
+  {name:'História', sub:'Quem não conhece a história está condenado a repeti-la', courses:[], soon:['História do Brasil Completa','Grandes Civilizações Antigas','História Contemporânea']},
+  {name:'Filosofia', sub:'Pense melhor, decida melhor, viva melhor', courses:[], soon:['Filosofia para a Vida Real','Grandes Filósofos da História','Ética e Pensamento Crítico']},
+  {name:'Inglês', sub:'O idioma que abre portas no mundo inteiro', courses:[], soon:['Inglês do Zero ao Fluente','Business English','Inglês para Viagens']},
+  {name:'Bíblia / Teologia', sub:'Aprofunde sua fé com estudo sério e contextualizado', courses:[], soon:['Estudo Bíblico Completo','Teologia Sistemática','Panorama do Antigo Testamento']},
+  {name:'Biografias', sub:'Aprenda com quem construiu história e mudou o mundo', courses:[], soon:['Líderes que Mudaram o Mundo','Empreendedores Visionários','Gênios da Ciência']},
+  {name:'Engenharia', sub:'Conhecimento técnico de alta precisão e aplicação real', courses:[], soon:['Instalações Hidráulicas e Gás','Fundamentos de Engenharia Civil','Projetos Estruturais']},
+  {name:'Mecânica', sub:'Do básico ao avançado em manutenção e diagnóstico automotivo', courses:[], soon:['Mecânica Básica Automotiva','Diagnóstico e Manutenção','Elétrica Automotiva']},
+  {name:'📚 Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x Irã','Devocional 2026','Estamos Próximos do Fim?'], isEbook:true}
 ];
 
 /* ============================================================
@@ -279,49 +279,49 @@ var MA_CATS = [
 var MA_TRAILS = [
   {
     id: 'empreendedor',
-    icon: 'Ã°ÂÂÂ',
+    icon: '🚀',
     color: 'rgba(91,127,255,.1)',
     borderColor: 'rgba(91,127,255,.4)',
     name: 'Trilha Empreendedor Digital',
-    desc: 'Do zero ao negÃÂ³cio digital lucrativo. Aprenda trÃÂ¡fego pago, negÃÂ³cios inteligentes e nichos lucrativos na sequÃÂªncia ideal para empreender online.',
-    badge: 'Ã°ÂÂÂ Empreendedor Digital',
+    desc: 'Do zero ao negócio digital lucrativo. Aprenda tráfego pago, negócios inteligentes e nichos lucrativos na sequência ideal para empreender online.',
+    badge: '🚀 Empreendedor Digital',
     courseIds: ['tp', 'ni', 'nl']
   },
   {
     id: 'estrategista',
-    icon: 'Ã°ÂÂÂ',
+    icon: '🌍',
     color: 'rgba(34,197,94,.1)',
     borderColor: 'rgba(34,197,94,.35)',
     name: 'Trilha Estrategista Global',
-    desc: 'Entenda o mundo como ele funciona e use esse conhecimento nos seus negÃÂ³cios. GeopolÃÂ­tica + NegÃÂ³cios Inteligentes para uma visÃÂ£o estratÃÂ©gica completa.',
-    badge: 'Ã°ÂÂÂ Estrategista Global',
+    desc: 'Entenda o mundo como ele funciona e use esse conhecimento nos seus negócios. Geopolítica + Negócios Inteligentes para uma visão estratégica completa.',
+    badge: '🌍 Estrategista Global',
     courseIds: ['gp', 'ni']
   },
   {
     id: 'cidadao',
-    icon: 'Ã°ÂÂÂÃ¯Â¸Â',
+    icon: '🏛️',
     color: 'rgba(59,130,246,.1)',
     borderColor: 'rgba(59,130,246,.35)',
-    name: 'Trilha CidadÃÂ£o Consciente',
-    desc: 'Entenda como o Brasil funciona por dentro. PolÃÂ­tica Brasileira + GeopolÃÂ­tica AvanÃÂ§ada para uma visÃÂ£o crÃÂ­tica e estratÃÂ©gica do mundo e do seu paÃÂ­s.',
-    badge: 'Ã°ÂÂÂÃ¯Â¸Â CidadÃÂ£o Consciente',
+    name: 'Trilha Cidadão Consciente',
+    desc: 'Entenda como o Brasil funciona por dentro. Política Brasileira + Geopolítica Avançada para uma visão crítica e estratégica do mundo e do seu país.',
+    badge: '🏛️ Cidadão Consciente',
     courseIds: ['pb', 'gp']
   },
   {
     id: 'completa',
-    icon: 'Ã°ÂÂÂ',
+    icon: '👑',
     color: 'rgba(245,158,11,.1)',
     borderColor: 'rgba(245,158,11,.35)',
     name: 'Trilha Completa Matheus Academy',
-    desc: 'O percurso definitivo. Todos os cursos principais em sequÃÂªncia lÃÂ³gica para quem quer dominar trÃÂ¡fego, negÃÂ³cios, geopolÃÂ­tica, polÃÂ­tica, persuasÃÂ£o e nichos.',
-    badge: 'Ã°ÂÂÂ Mestre Academy',
+    desc: 'O percurso definitivo. Todos os cursos principais em sequência lógica para quem quer dominar tráfego, negócios, geopolítica, política, persuasão e nichos.',
+    badge: '👑 Mestre Academy',
     courseIds: ['tp', 'ni', 'gp', 'pb', 'nl', 'mp']
   }
 ];
 
 /* ============================================================
-   UTILITÃÂRIOS GLOBAIS
-   FunÃÂ§ÃÂµes auxiliares disponÃÂ­veis para todas as pÃÂ¡ginas.
+   UTILITÁRIOS GLOBAIS
+   Funções auxiliares disponíveis para todas as páginas.
    ============================================================ */
 
 /** Retorna apenas os cursos ativos */
@@ -334,7 +334,7 @@ function MA_getCourseById(id) {
   return MA_COURSES.find(function(c) { return c.id === id; }) || null;
 }
 
-/** Monta as categorias com os cursos ativos distribuÃÂ­dos */
+/** Monta as categorias com os cursos ativos distribuídos */
 function MA_buildCats() {
   var cats = MA_CATS.map(function(cat) {
     return { name: cat.name, sub: cat.sub, courses: [], soon: cat.soon || [], isSpecial: !!cat.isSpecial, isEbook: !!cat.isEbook };
@@ -349,47 +349,7 @@ function MA_buildCats() {
 /** Monta as trilhas resolvendo os cursos pelos ids */
 function MA_buildTrails() {
   return MA_TRAILS.map(function(trail) {
-    var resolved = [
-  {
-    "id": "seg",
-    "name": "SeguranÃ§a & Sociedade 2025 â A Crise que Vai Definir as EleiÃ§Ãµes",
-    "desc": "",
-    "file": "seguranca-sociedade-2025.html",
-    "cat": "DADOS E CONTEXTO",
-    "modules": 9,
-    "topics": 54,
-    "hours": 8,
-    "quizzes": 9,
-    "salt": "SEG_HENRY_2026_MASTER",
-    "ak": "seg_auth",
-    "storagePrefix": "seg_",
-    "icon": "ð",
-    "color": "#4a9eff",
-    "addedTs": 1775074811188,
-    "active": true,
-    "free": false
-  },
-
-  {
-    "id": "seg",
-    "name": "Segurança & Sociedade 2025 — A Crise que Vai Definir as Eleições",
-    "desc": "",
-    "file": "seguranca-sociedade-2025.html",
-    "cat": "DADOS E CONTEXTO",
-    "modules": 9,
-    "topics": 54,
-    "hours": 8,
-    "quizzes": 9,
-    "salt": "SEG_HENRY_2026_MASTER",
-    "ak": "seg_auth",
-    "storagePrefix": "seg_",
-    "icon": "📊",
-    "color": "#4a9eff",
-    "addedTs": 1775076444996,
-    "active": true,
-    "free": true
-  },
-];
+    var resolved = [];
     trail.courseIds.forEach(function(cid) {
       var c = MA_getCourseById(cid);
       if (c && c.active !== false) resolved.push({ key: c.id, icon: c.icon, name: c.name, file: c.file });
