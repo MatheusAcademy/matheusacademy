@@ -69,7 +69,7 @@ var MA_COURSES = [
     icon: '💡',
     color: '#f59e0b',
     addedTs: 1743033600000,
-    active: true
+    active: false
   },
   {
     id: 'mp',
