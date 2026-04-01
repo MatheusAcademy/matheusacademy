@@ -122,25 +122,6 @@ var MA_COURSES = [
   },
 
   {
-    id: 'ss',
-    name: 'Segurança & Sociedade 2025',
-    desc: 'A crise que vai definir as eleições. Violência, segurança pública e o que ninguém te conta.',
-    file: 'seguranca-sociedade-2025.html',
-    cat: 'Geopolítica',
-    modules: 9,
-    topics: 54,
-    hours: 18,
-    quizzes: 9,
-    salt: 'SS_HENRY_2026_MASTER',
-    ak: 'ss_auth',
-    storagePrefix: 'ss_',
-    icon: '🛡️',
-    color: '#dc2626',
-    addedTs: 1743552000000,
-    active: true
-  },
-
-  {
     id: 'bm',
     name: 'Caso Banco Master',
     desc: 'A maior fraude bancária do Brasil. R$52bi, CPI e delação premiada.',
