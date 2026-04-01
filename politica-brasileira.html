@@ -1549,24 +1549,31 @@ function changeFontSize(delta) {
 }
 
 // ============================================================
-// AUDIO — velocidade via botões
+// AUDIO — sistema robusto com chunking e rate garantido
 // ============================================================
 let currentSpeed = 1.0;
 const speeds = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
-let currentSpeedIdx = 2; // começa em 1.0
+let currentSpeedIdx = 2;
+let _audioChunks = [];
+let _audioIdx = 0;
+let _audioPlaying = false;
 
 function setSpeed(idx) {
   currentSpeedIdx = Math.max(0, Math.min(speeds.length - 1, idx));
   currentSpeed = speeds[currentSpeedIdx];
-  // Atualiza visual de todos os botões de velocidade na página
   document.querySelectorAll('.speed-btn').forEach(btn => {
     btn.classList.toggle('active-speed', parseFloat(btn.dataset.speed) === currentSpeed);
   });
-  // Atualiza label "velocidade atual"
   document.querySelectorAll('.audio-info').forEach(el => {
-    el.textContent = 'velocidade atual: ' + currentSpeed + '×';
+    el.textContent = 'velocidade: ' + currentSpeed + '×';
   });
   showToast('Velocidade: ' + currentSpeed + '×', 'accent', 1200);
+  // Se estiver tocando, reinicia com nova velocidade
+  if (_audioPlaying) {
+    const chunks = _audioChunks;
+    stopAudio();
+    setTimeout(() => _playChunks(chunks), 100);
+  }
 }
 
 function speakCurrentSection() {
@@ -1575,61 +1582,106 @@ function speakCurrentSection() {
   const body = activeSection.querySelector('.content-body');
   if (!body) return;
   const text = (body.innerText || body.textContent || '').trim();
-  if (!text) return;
-  _doSpeak(text, currentSpeed);
+  if (!text) { showToast('Sem texto para ler', 'accent', 1500); return; }
+  _startAudio(text);
 }
 
-function speakText(text, speed) {
-  // Usa currentSpeed como fallback — garante que nunca fica preso em 1
-  const rate = (typeof speed === 'number' && !isNaN(speed)) ? speed : currentSpeed;
-  _doSpeak(text, rate);
+function speakText(text) {
+  _startAudio(text);
 }
 
-function _doSpeak(text, rate) {
+// Quebra o texto em frases curtas — workaround para bug do Chrome que ignora rate em textos longos
+function _splitIntoChunks(text) {
+  // Divide por ponto final, exclamação, interrogação, parágrafo
+  const raw = text.replace(/\n+/g, ' ').split(/(?<=[.!?])\s+/);
+  const chunks = [];
+  let current = '';
+  for (const part of raw) {
+    if ((current + ' ' + part).length > 180) {
+      if (current.trim()) chunks.push(current.trim());
+      current = part;
+    } else {
+      current += (current ? ' ' : '') + part;
+    }
+  }
+  if (current.trim()) chunks.push(current.trim());
+  return chunks.filter(c => c.length > 0);
+}
+
+function _getVoice() {
+  const voices = window.speechSynthesis.getVoices();
+  return voices.find(v => v.lang === 'pt-BR')
+      || voices.find(v => v.lang.startsWith('pt'))
+      || voices[0]
+      || null;
+}
+
+function _makeUtt(text, rate) {
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang   = 'pt-BR';
+  utt.rate   = rate;    // <-- atribuição direta, sem parseFloat em cima
+  utt.pitch  = 1.0;
+  utt.volume = 1.0;
+  const voice = _getVoice();
+  if (voice) utt.voice = voice;
+  utt.rate = rate;      // reaplica após voice — alguns browsers resetam
+  return utt;
+}
+
+function _playChunks(chunks) {
+  _audioChunks  = chunks;
+  _audioIdx     = 0;
+  _audioPlaying = true;
+  _playNext();
+}
+
+function _playNext() {
+  if (!_audioPlaying || _audioIdx >= _audioChunks.length) {
+    _audioPlaying = false;
+    return;
+  }
+  const rate  = currentSpeed;   // captura no momento da reprodução
+  const chunk = _audioChunks[_audioIdx];
+  const utt   = _makeUtt(chunk, rate);
+  utt.onend = () => {
+    _audioIdx++;
+    _playNext();
+  };
+  utt.onerror = () => {
+    _audioIdx++;
+    _playNext();
+  };
+  window.speechSynthesis.speak(utt);
+}
+
+function _startAudio(text) {
   if (!window.speechSynthesis) {
     showToast('Áudio não suportado neste navegador', 'accent');
     return;
   }
-  // Cancela qualquer fala em andamento
-  window.speechSynthesis.cancel();
+  stopAudio();
+  const chunks = _splitIntoChunks(text);
+  if (chunks.length === 0) return;
 
-  // Aguarda um tick para garantir que o cancel foi processado
-  setTimeout(() => {
-    const utt = new SpeechSynthesisUtterance(text);
-    utt.lang  = 'pt-BR';
-    utt.rate  = parseFloat(rate) || 1.0;  // DEFINE A VELOCIDADE AQUI, antes de tudo
-    utt.pitch = 1.0;
-    utt.volume = 1.0;
-
-    const applyVoiceAndSpeak = () => {
-      const voices = window.speechSynthesis.getVoices();
-      // Prioridade: pt-BR > pt > qualquer voz
-      const ptVoice = voices.find(v => v.lang === 'pt-BR')
-                   || voices.find(v => v.lang.startsWith('pt'))
-                   || voices[0];
-      if (ptVoice) utt.voice = ptVoice;
-      // Reaplica rate depois de definir a voz (alguns browsers resetam)
-      utt.rate = parseFloat(rate) || 1.0;
-      window.speechSynthesis.speak(utt);
+  // Garante que vozes estão carregadas antes de começar
+  if (window.speechSynthesis.getVoices().length > 0) {
+    setTimeout(() => _playChunks(chunks), 80);
+  } else {
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.onvoiceschanged = null;
+      setTimeout(() => _playChunks(chunks), 80);
     };
-
-    const voices = window.speechSynthesis.getVoices();
-    if (voices.length > 0) {
-      applyVoiceAndSpeak();
-    } else {
-      window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.onvoiceschanged = null;
-        applyVoiceAndSpeak();
-      };
-    }
-  }, 50);
+  }
 }
 
 function stopAudio() {
+  _audioPlaying = false;
+  _audioChunks  = [];
+  _audioIdx     = 0;
   if (window.speechSynthesis) {
     window.speechSynthesis.cancel();
-    showToast('Áudio parado', 'accent', 1200);
   }
+  showToast('Áudio parado', 'accent', 1000);
 }
 
 // ============================================================
