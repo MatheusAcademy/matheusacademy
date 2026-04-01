@@ -431,31 +431,45 @@ Use emoji e cor accentHex que combine com "${tema}". Só o JSON.`;
   try{ estrutura = JSON.parse(raw1); }
   catch(e){ throw new Error('Estrutura inválida. Tente novamente.'); }
 
-  // ── CHAMADA 2: Módulos ──
+  // ── CHAMADA 2A: Primeiros módulos (metade) ──
   document.getElementById('genTitle').textContent = '📚 Criando módulos...';
-  const p2 = `Curso "${tema}" com ${nMods} módulos de ${nTopics} tópicos cada. Responda SOMENTE JSON:
-{"modules":[{"id":1,"emoji":"🔰","title":"Título","cat":"CATEGORIA","desc":"Descrição","topics":["T1","T2","T3"]}]}
-REGRAS: ${nMods} módulos exatos, ${nTopics} tópicos cada, último módulo Conclusão, 4-5 categorias em MAIÚSCULAS, só JSON.`;
+  const metade = Math.ceil(nMods/2);
+  const p2a = `Curso "${tema}": gere os módulos 1 a ${metade} com ${nTopics} tópicos cada. JSON:
+{"modules":[{"id":1,"emoji":"🔰","title":"Título","cat":"CATEGORIA","desc":"Descrição","topics":["T1","T2"]}]}
+Regras: ${nTopics} tópicos por módulo, categorias em MAIÚSCULAS, só JSON.`;
+  const raw2a = await callWorker(p2a);
+  let modData1;
+  try{ modData1 = JSON.parse(raw2a); }
+  catch(e){ throw new Error('Módulos inválidos na 1ª metade. Tente novamente.'); }
 
-  const raw2 = await callWorker(p2);
-  let modData;
-  try{ modData = JSON.parse(raw2); }
-  catch(e){ throw new Error('Módulos inválidos. Tente novamente.'); }
-  estrutura.modules = modData.modules || estrutura.modules || [];
+  // ── CHAMADA 2B: Segunda metade dos módulos ──
+  const p2b = `Curso "${tema}": gere os módulos ${metade+1} a ${nMods} com ${nTopics} tópicos cada. O último deve ser de Conclusão. JSON:
+{"modules":[{"id":${metade+1},"emoji":"📊","title":"Título","cat":"CATEGORIA","desc":"Descrição","topics":["T1","T2"]}]}
+Regras: ${nTopics} tópicos por módulo, categorias em MAIÚSCULAS, módulo ${nMods} = Conclusão, só JSON.`;
+  const raw2b = await callWorker(p2b);
+  let modData2;
+  try{ modData2 = JSON.parse(raw2b); }
+  catch(e){ modData2 = {modules:[]}; }
 
-  // ── CHAMADA 3: Quiz (apenas primeiros 5 módulos) ──
+  // Combina os módulos e garante IDs corretos
+  const todosModulos = [
+    ...(modData1.modules||[]),
+    ...(modData2.modules||[])
+  ].map((m,i)=>({...m, id:i+1}));
+  estrutura.modules = todosModulos.length > 0 ? todosModulos : [];
+  if(estrutura.modules.length === 0) throw new Error('Nenhum módulo gerado. Tente novamente.');
+
+  // ── CHAMADA 3: Quiz dos primeiros 4 módulos ──
   document.getElementById('genTitle').textContent = '🧠 Gerando quizzes...';
-  const mods5 = estrutura.modules.slice(0,5).map(m=>m.id+':'+m.title).join(',');
-  const p3 = `Quiz para o curso "${tema}". Módulos: ${mods5}. Responda SOMENTE JSON:
-{"quizzes":[{"modId":1,"questions":[{"q":"?","opts":["A","B","C","D"],"c":0}]}],"flashcards":[{"modId":1,"cards":[{"q":"?","a":"R"}]}]}
-REGRAS: ${nQuiz} perguntas por módulo, 3 flashcards por módulo, para TODOS os módulos listados, só JSON.`;
-
+  const mods4 = estrutura.modules.slice(0,4).map(m=>m.id+':'+m.title).join(',');
+  const p3 = `Quiz para "${tema}". Módulos: ${mods4}. JSON:
+{"quizzes":[{"modId":1,"questions":[{"q":"Pergunta?","opts":["A","B","C","D"],"c":0}]}],"flashcards":[{"modId":1,"cards":[{"q":"?","a":"R"}]}]}
+Regras: exatamente ${nQuiz} perguntas por módulo, 3 flashcards por módulo, para os 4 módulos, só JSON.`;
   const raw3 = await callWorker(p3);
   let quizData;
   try{ quizData = JSON.parse(raw3); }
   catch(e){ quizData = {quizzes:[],flashcards:[]}; }
 
-  // Rich content: gerado localmente para não estourar tokens
   const richData = {richContent:{}};
 
   // ── COMBINA TUDO ──
