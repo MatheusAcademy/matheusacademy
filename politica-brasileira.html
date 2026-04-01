@@ -609,7 +609,7 @@ header{
       <div class="user-menu" id="userMenu">
         <div class="user-menu-header">
           <div class="user-menu-name" id="menuUserName">Aluno</div>
-          <div class="user-menu-email" id="menuUserEmail">aluno@email.com</div>
+          <div class="user-menu-email" id="menuUserEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="741518011a1b341119151d185a171b19">[email&#160;protected]</a></div>
           <div class="user-menu-xp">
             <span style="font-size:16px">⚡</span>
             <div>
@@ -861,10 +861,14 @@ header{
 </div>
 
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ─── DADOS DO CURSO ───────────────────────────────────────────
-const PREFIX = 'POL_';
-const TOTAL  = 119;
+// Padrão Matheus Academy — não altere PREFIX nem COURSE_KEY
+const PREFIX      = 'pb_';          // storagePrefix do courses.js
+const COURSE_KEY  = 'pb_auth';      // chave de acesso no localStorage
+const COURSE_SALT = 'PB_HENRY_2026_MASTER'; // salt SHA-256
+const TOTAL       = 119;
+const COURSE_ID   = 'pb';
 const COURSE_NAME = 'Política Brasileira — Do Zero ao Avançado';
 
 const modules = [
@@ -894,8 +898,17 @@ let currentModId = 1;
 function ls(k,d){try{const v=localStorage.getItem(PREFIX+k);return v!==null?JSON.parse(v):d}catch(e){return d}}
 function lsSet(k,v){try{localStorage.setItem(PREFIX+k,JSON.stringify(v))}catch(e){}}
 function isUnlocked(modId){
-  const tier=ls('tier','free');
-  if(tier==='premium'||tier==='pro') return true;
+  // Padrão MA: verifica pb_auth (acesso via código) ou ma_access (plano master/monthly)
+  try{
+    const auth = localStorage.getItem(COURSE_KEY);
+    if(auth){ const a=JSON.parse(auth); if(!a.expiry||Date.now()<a.expiry) return true; }
+  }catch(e){}
+  try{
+    const ac = JSON.parse(localStorage.getItem('ma_access')||'{}');
+    if(ac.master && ac.masterTs && Date.now()-ac.masterTs<(ac.expiry||9460800000)) return true;
+    if(ac.monthly && ac.monthlyTs && Date.now()-ac.monthlyTs<2592000000) return true;
+  }catch(e){}
+  // Primeiro módulo sempre liberado
   if(modId===1) return true;
   return false;
 }
@@ -1225,6 +1238,12 @@ function openMod(modId, openTopicIdx=0){
   const mod=modules.find(m=>m.id===modId);
   if(!mod)return;
   lsSet('last_mod',{modId,ti:openTopicIdx});
+  // Registra no painel MA
+  try{
+    const mod2=modules.find(m=>m.id===modId);
+    if(window.maeSetLastModule&&mod2) window.maeSetLastModule(COURSE_ID,COURSE_NAME,'m'+modId+'t'+openTopicIdx,mod2.topics[openTopicIdx]||mod2.title,window.location.href);
+    if(window.maeAddRecent) window.maeAddRecent(COURSE_ID,COURSE_NAME);
+  }catch(e){}
   // Atualiza cabeçalho
   document.getElementById('modBadge').textContent='● '+mod.cat;
   document.getElementById('modHdrNum').textContent=`MÓDULO ${modId} DE ${modules.length}`;
@@ -1407,12 +1426,50 @@ function markDone(sId, modId, ti){
   const btn=document.getElementById('dbtn_'+sId);
   if(btn){btn.textContent='✅ Concluído';btn.className='done-btn completed'}
   updateSbDots();
-  // Sincroniza com páginas do portal
-  try{localStorage.setItem('ma_course_pol',JSON.stringify({n:Object.keys(done).filter(k=>done[k]).length,total:TOTAL,pct:Math.round(Object.keys(done).filter(k=>done[k]).length/TOTAL*100),updatedAt:Date.now()}))}catch(e){}
+
+  // ── Integração Painel Matheus Academy ──────────────────────
+  // 1. Marca módulo como done no padrão mod_ (lido pelo painel)
+  try{ localStorage.setItem(PREFIX+'mod_'+sId,'done'); }catch(e){}
+
+  // 2. Registra último módulo acessado (painel aba Recentes)
+  try{
+    if(window.maeSetLastModule){
+      const mod=modules.find(m=>m.id===modId);
+      window.maeSetLastModule(COURSE_ID,COURSE_NAME,sId,mod?mod.topics[ti]:sId,window.location.href);
+    }
+  }catch(e){}
+
+  // 3. Adiciona pontos XP no sistema global do portal
+  try{
+    if(window.MA_addPoints) window.MA_addPoints('Tópico concluído: '+COURSE_NAME,10);
+    else{
+      const p=JSON.parse(localStorage.getItem('ma_points')||'{"total":0,"history":[]}');
+      p.total=(p.total||0)+10;
+      if(!p.history)p.history=[];
+      p.history.unshift({source:'Tópico concluído: '+COURSE_NAME,pts:10,date:new Date().toLocaleDateString('pt-BR')});
+      localStorage.setItem('ma_points',JSON.stringify(p));
+    }
+  }catch(e){}
+
+  // 4. Sincroniza progresso geral do curso
+  try{
+    const n=Object.keys(done).filter(k=>done[k]).length;
+    localStorage.setItem('ma_course_pb',JSON.stringify({n:n,total:TOTAL,pct:Math.round(n/TOTAL*100),updatedAt:Date.now()}));
+  }catch(e){}
 }
 function saveNote(sId){
   const ta=document.getElementById('note_'+sId);
-  if(ta){lsSet('note_'+sId,ta.value);toast('Anotação salva!','success',1800)}
+  if(!ta)return;
+  lsSet('note_'+sId,ta.value);
+  toast('Anotação salva!','success',1800);
+  // Sincroniza com painel MA
+  try{
+    const mod=modules.find(m=>m.topics.some((_,ti)=>'m'+m.id+'t'+ti===sId));
+    if(window.maeAddNoteV3&&mod&&ta.value.trim()){
+      const ti=parseInt(sId.replace(/m\d+t/,''));
+      window.maeAddNoteV3(COURSE_ID,COURSE_NAME,sId,mod.topics[ti]||sId,ta.value.trim());
+    }
+  }catch(e){}
 }
 function surpriseBox(){
   const pts=[5,10,15,25,50][Math.floor(Math.random()*5)];
@@ -1664,15 +1721,4 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.body.setAttribute('data-theme',th);
   document.getElementById('themeBtn').textContent=th==='dark'?'🌙':'☀️';
   buildSidebar();
-  buildHomeGrid();
-  checkAuth();
-  updateProgressUI();
-  startTimer();
-  updateChatRem();
-  applyFS();
-  // Sincroniza XP global
-  try{const xp=ls('xp',0);localStorage.setItem('ma_xp',xp)}catch(e){}
-});
-</script>
-</body>
-</html>
+  bu
