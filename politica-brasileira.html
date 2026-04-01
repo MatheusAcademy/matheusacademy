@@ -1058,18 +1058,45 @@ function stopAudio(){
 }
 
 // ─── AUTH ─────────────────────────────────────────────────────
+function _parseName(raw){
+  if(!raw) return '';
+  // Se vier como JSON {"name":"...","email":"..."} extrai o nome
+  try {
+    const obj = JSON.parse(raw);
+    if(typeof obj === 'object' && obj !== null){
+      return obj.name || obj.Nome || obj.username || obj.user || Object.values(obj)[0] || raw;
+    }
+    // Se vier como string JSON simples "\"João\""
+    if(typeof obj === 'string') return obj;
+  } catch(e){}
+  // Se vier como texto puro
+  return raw;
+}
+function _parseEmail(raw){
+  if(!raw) return '';
+  try {
+    const obj = JSON.parse(raw);
+    if(typeof obj === 'object' && obj !== null){
+      return obj.email || obj.Email || Object.values(obj).find(v=>String(v).includes('@')) || '';
+    }
+    if(typeof obj === 'string') return obj;
+  } catch(e){}
+  return raw;
+}
 function checkAuth(){
-  const u=localStorage.getItem('ma_user');
-  const email=localStorage.getItem('ma_email')||'';
-  if(u){
+  const rawUser  = localStorage.getItem('ma_user');
+  const rawEmail = localStorage.getItem('ma_email')||'';
+  if(rawUser){
+    const name  = _parseName(rawUser)  || 'Aluno';
+    const email = _parseEmail(rawEmail)|| _parseEmail(rawUser) || 'aluno@matheusacademy.com';
+    const xp    = ls('xp',0);
     document.getElementById('guest-bar').style.display='none';
     document.getElementById('logged-bar').style.display='flex';
-    const xp=ls('xp',0);
-    document.getElementById('unameBtn').textContent=u;
-    document.getElementById('xpPill').textContent=xp+' XP';
-    document.getElementById('menuUserName').textContent=u;
-    document.getElementById('menuUserEmail').textContent=email||'aluno@matheusacademy.com';
-    document.getElementById('menuXP').textContent=xp+' XP';
+    document.getElementById('unameBtn').textContent = name;
+    document.getElementById('xpPill').textContent   = xp+' XP';
+    document.getElementById('menuUserName').textContent  = name;
+    document.getElementById('menuUserEmail').textContent = email;
+    document.getElementById('menuXP').textContent        = xp+' XP';
   }
 }
 function goProfile(){window.location.href='perfil.html'}
