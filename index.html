@@ -245,6 +245,9 @@
 <style id="hide-floats">
 #mae-btn,#maeChatBtn,#maeChatWin,.ma-fpts,#maFpts,.points-badge,#fBadge,.f-badge{display:none!important}
 </style>
+<!-- ═══ DADOS CENTRALIZADOS — não edite cursos aqui, edite em data/courses.js ═══ -->
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
 </head>
 <body>
 
@@ -434,40 +437,10 @@ var EXP_M = 3*365*24*3600000;
 var EXP_MO = 30*24*3600000;
 var EXP_I = 365*24*3600000;
 
-var COURSES = [
-  {id:'tp', name:'Dominando Tráfego Pago', desc:'De zero a gestor de elite. Meta Ads, Google Ads, criativos e escala.', file:'dominando-trafego-pago.html', cat:'Negócios', modules:117, topics:819, hours:234, quizzes:117, salt:'TP_HENRY_2026_MASTER', ak:'tp_auth', addedTs:1741996800000},
-  {id:'ni', name:'Negócios Inteligentes', desc:'Mentalidade, marketing digital, vendas, dropshipping, IA e finanças.', file:'negocios-inteligentes.html', cat:'Negócios', modules:197, topics:1379, hours:462, quizzes:197, salt:'NI_HENRY_2026_MASTER', ak:'ni_auth', addedTs:1742256000000},
-  {id:'gp', name:'Geopolítica Avançada', desc:'Entenda o mundo como ele funciona. Teoria, conflitos e economia global.', file:'geopolitica-curso.html', cat:'Geopolítica', modules:27, topics:271, hours:90, quizzes:27, salt:'GP_HENRY_2026_MASTER', ak:'gp_auth', addedTs:1742688000000},
-  {id:'nl', name:'Nichos Lucrativos', desc:'O guia definitivo para encontrar e dominar nichos lucrativos.', file:'nichos-lucrativos.html', cat:'Negócios', modules:97, topics:679, hours:165, quizzes:97, salt:'NL_HENRY_2026_MASTER', ak:'nl_auth', addedTs:1743033600000},
-  {id:'mp', name:'Mestre em Persuasão', desc:'Domine a arte de influenciar. Psicologia, comunicação e copywriting.', file:'mestre-em-persuasao.html', cat:'PNL', modules:217, topics:1522, hours:508, quizzes:217, salt:'MP_HENRY_2026_MASTER', ak:'mp_auth', addedTs:1743206400000},
-  {id:'pb', name:'Política Brasileira', desc:'Do zero ao avançado. Sistema político, Constituição, eleições, poderes e cenário atual.', file:'politica-brasileira.html', cat:'Geopolítica', modules:17, topics:119, hours:42, quizzes:17, salt:'PB_HENRY_2026_MASTER', ak:'pb_auth', addedTs:1743400000000},
-  {id:'bm', name:'Caso Banco Master', desc:'A maior fraude bancária do Brasil. R$52bi, CPI e delação premiada.', file:'caso-banco-master.html', cat:'Atualize-se! Notícias Mais Relevantes da Semana', modules:7, topics:7, hours:1, quizzes:0, salt:'FREE', ak:'free', free:true, addedTs:1743264000000},
-  {id:'ii', name:'Guerra Israel x Irã', desc:'O conflito que mudou o mundo. De 2025 à escalada de 2026.', file:'guerra-israel-ira.html', cat:'Atualize-se! Notícias Mais Relevantes da Semana', modules:7, topics:7, hours:1, quizzes:0, salt:'FREE', ak:'free', free:true, addedTs:1743292800000},
-  {id:'cp', name:'Copa do Mundo 2026', desc:'Tudo sobre o maior evento esportivo do mundo. Análise completa.', file:'copa-do-mundo-2026.html', cat:'Atualize-se! Notícias Mais Relevantes da Semana', modules:7, topics:7, hours:1, quizzes:0, salt:'FREE', ak:'free', free:true, addedTs:1743350400000}
-];
-
-var CATS = [
-  {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?'], isSpecial:true},
-  {name:'Negócios', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:[]},
-  {name:'Geopolítica', sub:'Entenda o mundo como ele realmente funciona, além das notícias', courses:[], soon:['Relações Internacionais']},
-  {name:'PNL', sub:'Domine a arte de comunicar, persuadir e influenciar pessoas', courses:[], soon:['Técnicas de Persuasão','Oratória e Comunicação Assertiva','PNL — Programação Neurolinguística']},
-  {name:'Desenvolvimento', sub:'Transforme sua mentalidade e atinja o próximo nível', courses:[], soon:['Inteligência Emocional na Prática','Produtividade e Gestão do Tempo','Liderança']},
-  {name:'Tecnologia', sub:'A tecnologia chegou para ficar — aprenda a lucrar com ela', courses:[], soon:['Inteligência Artificial na Prática','Programação para Iniciantes','Automação Digital']},
-  {name:'Psicologia', sub:'Compreenda o comportamento humano e use isso a seu favor', courses:[], soon:['Psicologia Comportamental','Neurociência e Comportamento','Psicologia das Relações']},
-  {name:'História', sub:'Quem não conhece a história está condenado a repeti-la', courses:[], soon:['História do Brasil Completa','Grandes Civilizações Antigas','História Contemporânea']},
-  {name:'Filosofia', sub:'Pense melhor, decida melhor, viva melhor', courses:[], soon:['Filosofia para a Vida Real','Grandes Filósofos da História','Ética e Pensamento Crítico']},
-  {name:'Inglês', sub:'O idioma que abre portas no mundo inteiro', courses:[], soon:['Inglês do Zero ao Fluente','Business English','Inglês para Viagens']},
-  {name:'Bíblia / Teologia', sub:'Aprofunde sua fé com estudo sério e contextualizado', courses:[], soon:['Estudo Bíblico Completo','Teologia Sistemática','Panorama do Antigo Testamento']},
-  {name:'Biografias', sub:'Aprenda com quem construiu história e mudou o mundo', courses:[], soon:['Líderes que Mudaram o Mundo','Empreendedores Visionários','Gênios da Ciência']},
-  {name:'Engenharia', sub:'Conhecimento técnico de alta precisão e aplicação real', courses:[], soon:['Instalações Hidráulicas e Gás','Fundamentos de Engenharia Civil','Projetos Estruturais']},
-  {name:'Mecânica', sub:'Do básico ao avançado em manutenção e diagnóstico automotivo', courses:[], soon:['Mecânica Básica Automotiva','Diagnóstico e Manutenção','Elétrica Automotiva']},
-  {name:'📚 Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x Irã','Devocional 2026','Estamos Próximos do Fim?'], isEbook:true}
-];
-
-// Distribuir cursos
-COURSES.forEach(function(c) {
-  CATS.forEach(function(cat) { if (cat.name === c.cat) cat.courses.push(c); });
-});
+// ═══ FONTE ÚNICA: dados vêm de data/courses.js ═══
+// Para adicionar/remover cursos, edite APENAS data/courses.js
+var COURSES = MA_getActiveCourses();
+var CATS = MA_buildCats();
 
 // Cover images (loaded from separate elements to avoid JS string issues)
 var COVERS = {};
@@ -1803,13 +1776,10 @@ function renderMissions(){
 }
 
 /* ── PROGRESS ── */
-var COURSES_DEF=[
-  {key:'dt_',name:'Dominando Tráfego Pago',icon:'📊',color:'#5b7fff'},
-  {key:'ni_',name:'Negócios Inteligentes',icon:'💼',color:'#a855f7'},
-  {key:'geo_',name:'Geopolítica Avançada',icon:'🌍',color:'#22c55e'},
-  {key:'nl_',name:'Nichos Lucrativos',icon:'💡',color:'#f59e0b'},
-  {key:'pb_',name:'Política Brasileira',icon:'🏛️',color:'#3B82F6'}
-];
+// ═══ Dados vêm de data/courses.js — não edite aqui ═══
+var COURSES_DEF = MA_getActiveCourses().filter(function(c){return !c.free;}).map(function(c){
+  return {key:c.storagePrefix, name:c.name, icon:c.icon, color:c.color};
+});
 
 function getCourseCompletion(prefix){
   var done=0,total=0;
@@ -3743,12 +3713,10 @@ function _updateChatQuotaFromServer(usage){
    PLANO DE ESTUDOS
    ═══════════════════════════════════════ */
 var _spHours=0;
-var SP_COURSES=[
-  {key:'dt',name:'Tráfego Pago',modules:['Introdução ao Tráfego Pago','Facebook Ads Básico','Google Ads','Criativos de Alta Conversão','Públicos e Segmentação','Retargeting','Escala de Campanhas','Análise de Métricas','Copywriting para Anúncios','Estratégia Avançada']},
-  {key:'ni',name:'Negócios Inteligentes',modules:['Fundamentos de Negócios','Fluxo de Caixa','Precificação','Marketing Digital','Gestão de Equipes','Vendas B2B','Produto Mínimo Viável','Expansão','Gestão Financeira','Liderança']},
-  {key:'geo',name:'Geopolítica',modules:['Introdução à Geopolítica','EUA e NATO','China e Ásia','Rússia','Oriente Médio','América Latina','BRICS','Conflitos Globais','Economia Mundial','Tendências 2025-2030']},
-  {key:'nl',name:'Nichos Lucrativos',modules:['O que é um Nicho','Como Validar','Pesquisa de Mercado','Copywriting','Funil de Vendas','Tráfego Orgânico','Produtos Digitais','Autoridade','Escala','Casos de Sucesso']}
-];
+// ═══ Plano de estudos — cursos vêm de data/courses.js ═══
+var SP_COURSES = MA_getActiveCourses().filter(function(c){return !c.free;}).map(function(c){
+  return {key:c.id, name:c.name, modules:[c.name+' — Módulo 1',c.name+' — Módulo 2',c.name+' — Módulo 3',c.name+' — Módulo 4',c.name+' — Módulo 5',c.name+' — Módulo 6',c.name+' — Módulo 7',c.name+' — Módulo 8',c.name+' — Módulo 9',c.name+' — Módulo 10']};
+});
 var DAYS=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
 var DAY_OFF_IDX=6; // Domingo = descanso
 
@@ -4068,16 +4036,10 @@ var _SG_PAGES=[
   {ic:'🛒',t:'Loja de XP',u:'loja.html',c:'Páginas'},
   {ic:'🏅',t:'Mural de Conquistas',u:'mural.html',c:'Páginas'},
 ];
-var _SG_COURSES=[
-  {ic:'📊',t:'Dominando Tráfego Pago',u:'dominando-trafego-pago.html',c:'Cursos'},
-  {ic:'💼',t:'Negócios Inteligentes',u:'negocios-inteligentes.html',c:'Cursos'},
-  {ic:'🌍',t:'Geopolítica Avançada',u:'geopolitica-curso.html',c:'Cursos'},
-  {ic:'💡',t:'Nichos Lucrativos',u:'nichos-lucrativos.html',c:'Cursos'},
-  {ic:'🎯',t:'Mestre em Persuasão',u:'mestre-em-persuasao.html',c:'Cursos'},
-  {ic:'🏦',t:'Caso Banco Master',u:'caso-banco-master.html',c:'Cursos'},
-  {ic:'⚔️',t:'Guerra Israel x Irã',u:'guerra-israel-ira.html',c:'Cursos'},
-  {ic:'⚽',t:'Copa do Mundo 2026',u:'copa-do-mundo-2026.html',c:'Cursos'},
-];
+// ═══ Busca global — cursos vêm de data/courses.js ═══
+var _SG_COURSES = MA_getActiveCourses().map(function(c){
+  return {ic:c.icon, t:c.name, u:c.file, c:'Cursos'};
+});
 var _sgSel=0;
 function _sgH(){try{return JSON.parse(localStorage.getItem('maSG_hist')||'[]');}catch(e){return[];}}
 function _sgAH(q){if(!q.trim())return;var h=_sgH().filter(function(x){return x!==q;});h.unshift(q);h=h.slice(0,5);localStorage.setItem('maSG_hist',JSON.stringify(h));}
