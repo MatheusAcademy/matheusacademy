@@ -29,6 +29,65 @@
   --sidebar-w: 280px;
   --header-h: 52px;
 }
+
+/* ── LIGHT THEME ── */
+[data-theme="light"]{
+  --bg:#f0f4ff;--bg2:#e8eeff;--bg3:#dde4f7;--bg4:#ccd6f4;
+  --card:#ffffff;--border:rgba(59,130,246,.15);--border2:rgba(59,130,246,.25);
+  --text:#0f172a;--text2:#334155;--text3:#64748b;
+}
+[data-theme="light"] header{background:rgba(240,244,255,.97)}
+[data-theme="light"] aside.sidebar{background:#e8eeff}
+[data-theme="light"] .sb-top{background:#e8eeff}
+[data-theme="light"] .topic-content,[data-theme="light"] .audio-bar,
+[data-theme="light"] .topic-actions,[data-theme="light"] .notes-wrap,
+[data-theme="light"] .quiz-section-wrap{background:#f8faff}
+
+/* ── CANETA FLUTUANTE ── */
+.pen-fab{
+  position:fixed;bottom:80px;right:20px;
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,#7c3aed,#4f46e5);
+  color:#fff;border:none;cursor:pointer;font-size:22px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 18px rgba(124,58,237,.5);
+  transition:.2s;z-index:700;-webkit-tap-highlight-color:transparent;
+}
+.pen-fab:hover{transform:scale(1.1)}
+.pen-fab.active-pen{box-shadow:0 0 0 3px #fff,0 0 0 5px #7c3aed}
+.pen-palette{
+  display:none;position:fixed;bottom:138px;right:14px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:10px 12px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);z-index:700;
+  flex-direction:column;gap:8px;align-items:center;
+}
+.pen-palette.open{display:flex}
+.pen-palette-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.pen-colors{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.pen-color{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:.15s;-webkit-tap-highlight-color:transparent}
+.pen-color:hover,.pen-color.selected{border-color:#fff;transform:scale(1.15);box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.pen-erase-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;font-family:var(--font);transition:.15s;width:100%}
+.pen-erase-btn:hover{background:var(--danger);color:#fff;border-color:var(--danger)}
+.pen-cursor-active *{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z' fill='%23FFD700'/%3E%3Cpath d='M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z' fill='%23FFA000'/%3E%3C/svg%3E") 0 24, text!important}
+.hl-yellow{background:rgba(255,230,0,.45)!important;border-radius:2px}
+.hl-blue{background:rgba(100,180,255,.45)!important;border-radius:2px}
+.hl-red{background:rgba(255,80,80,.4)!important;border-radius:2px}
+.hl-pink{background:rgba(255,100,200,.4)!important;border-radius:2px}
+
+/* ── CHAT PANEL (sem FAB, só via menu) ── */
+.chat-panel-modal{
+  display:none;position:fixed;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(400px,calc(100vw - 32px));max-height:80vh;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.6);
+  z-index:9100;flex-direction:column;overflow:hidden;
+}
+.chat-panel-modal.open{display:flex}
+.chat-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9099;backdrop-filter:blur(3px)}
+.chat-modal-backdrop.open{display:block}
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;min-height:100vh}
@@ -352,7 +411,7 @@ main{flex:1;min-width:0;padding:28px 40px 80px;width:100%}
 .sp-meta-val{font-size:14px;font-weight:700;color:var(--accent2)}
 
 /* ── CHAT ── */
-.chat-fab{position:fixed;bottom:76px;right:16px;width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(59,130,246,.4);transition:.2s;z-index:600}
+.chat-fab{display:none!important;position:fixed;bottom:76px;right:16px;width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(59,130,246,.4);transition:.2s;z-index:600}
 .chat-fab:hover{transform:scale(1.08);background:#1d4ed8}
 .chat-panel{display:none;position:fixed;bottom:132px;right:16px;width:min(320px,calc(100vw - 32px));max-height:420px;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 36px rgba(0,0,0,.45);z-index:600;flex-direction:column;overflow:hidden}
 .chat-panel.open{display:flex}
@@ -444,61 +503,130 @@ main{flex:1;min-width:0;padding:28px 40px 80px;width:100%}
 <!-- SIDEBAR OVERLAY -->
 <div class="sidebar-overlay" id="sbOverlay" onclick="closeSB()"></div>
 
-<!-- ═══════════════ HEADER ═══════════════ -->
+<!-- ═══════════════ HEADER REFATORADO ═══════════════ -->
+<style>
+/* Header novo — responsivo e limpo */
+header{
+  position:fixed;top:3px;left:0;right:0;height:52px;z-index:1000;
+  background:rgba(11,15,26,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 14px;gap:10px;
+}
+[data-theme="light"] header{background:rgba(240,244,255,.97)}
+.hdr-left{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+/* Logo */
+.logo-link{display:flex;align-items:center;gap:0;text-decoration:none;flex-shrink:0}
+.logo-svg{width:42px;height:42px;flex-shrink:0}
+/* Separador + nome curso: só desktop */
+.hdr-sep{width:1px;height:20px;background:var(--border);display:none}
+.hdr-course{font-size:12px;font-weight:600;color:var(--text3);white-space:nowrap;display:none}
+@media(min-width:640px){.hdr-sep,.hdr-course{display:block}}
+/* Hamburger sidebar */
+.ham-btn{background:none;border:none;color:var(--text2);cursor:pointer;font-size:19px;padding:4px 6px;border-radius:6px;transition:.2s;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.ham-btn:hover{background:var(--bg3);color:var(--text)}
+/* Botão tema */
+.theme-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.theme-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* XP pill no header */
+.hdr-xp{background:var(--accent-glow);color:var(--accent2);padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid var(--border2);white-space:nowrap;flex-shrink:0}
+/* Nome do aluno — clique abre dropdown menu completo */
+.hdr-user-btn{
+  display:flex;align-items:center;gap:6px;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:5px 11px;border-radius:20px;
+  cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;
+  transition:.2s;-webkit-tap-highlight-color:transparent;position:relative;
+  max-width:140px;
+}
+.hdr-user-btn:hover{background:var(--bg4);border-color:var(--border2)}
+.hdr-user-btn .uname-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px}
+.hdr-user-btn .uname-arrow{font-size:10px;color:var(--text3);flex-shrink:0;transition:transform .2s}
+.hdr-user-btn.menu-open .uname-arrow{transform:rotate(180deg)}
+/* Menu dropdown do usuário */
+.user-menu{
+  display:none;position:absolute;top:58px;right:14px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:8px;
+  box-shadow:0 12px 40px rgba(0,0,0,.55);min-width:200px;z-index:2000;
+}
+.user-menu.open{display:block}
+.user-menu-header{
+  padding:10px 12px 12px;border-bottom:1px solid var(--border);margin-bottom:6px;
+}
+.user-menu-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px}
+.user-menu-email{font-size:11px;color:var(--text3)}
+.user-menu-xp{display:flex;align-items:center;gap:6px;margin-top:8px;background:var(--bg3);border-radius:8px;padding:6px 10px}
+.user-menu-xp-val{font-size:13px;font-weight:800;color:var(--accent2)}
+.user-menu-xp-lbl{font-size:10px;color:var(--text3)}
+.umenu-a{display:flex;align-items:center;gap:8px;padding:9px 12px;color:var(--text2);text-decoration:none;font-size:13px;border-radius:8px;transition:.15s;cursor:pointer;background:none;border:none;width:100%;text-align:left;font-family:var(--font)}
+.umenu-a:hover{background:var(--bg3);color:var(--text)}
+.umenu-a.dng{color:var(--danger)}
+.umenu-divider{height:1px;background:var(--border);margin:5px 0}
+/* Guest buttons */
+#guest-bar{display:flex;align-items:center;gap:6px}
+.g-btn{background:none;border:1px solid var(--border2);color:var(--text2);padding:5px 12px;border-radius:20px;font-size:12px;font-family:var(--font);cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;white-space:nowrap}
+.g-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.g-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.g-btn.primary:hover{background:#1d4ed8}
+#logged-bar{display:none;align-items:center;gap:7px;position:relative}
+</style>
 <header>
+  <!-- ESQUERDA: hamburger + logo -->
   <div class="hdr-left">
-    <button class="ham-btn" onclick="toggleSB()">☰</button>
-
-    <!-- LOGO MATHEUS ACADEMY com SVG inline -->
-    <a href="index.html" class="logo-link">
-      <!-- Logo fiel à imagem: M branco + linha azul + ACADEMY -->
-      <svg class="logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="44" height="44" rx="6" fill="#000"/>
-        <!-- M branco bold -->
-        <text x="22" y="27" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="22" fill="#ffffff" letter-spacing="-1">M</text>
-        <!-- linha azul -->
-        <line x1="7" y1="31" x2="37" y2="31" stroke="#4a9eff" stroke-width="1.6"/>
-        <!-- ACADEMY azul -->
-        <text x="22" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-weight="600" font-size="6" fill="#4a9eff" letter-spacing="1.8">ACADEMY</text>
+    <button class="ham-btn" onclick="toggleSB()" aria-label="Menu">☰</button>
+    <a href="index.html" class="logo-link" title="Matheus Academy">
+      <svg class="logo-svg" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+        <rect width="42" height="42" rx="7" fill="#000"/>
+        <text x="21" y="26" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="21" fill="#ffffff">M</text>
+        <line x1="7" y1="30" x2="35" y2="30" stroke="#4a9eff" stroke-width="1.8"/>
+        <text x="21" y="39" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="5.8" fill="#4a9eff" letter-spacing="1.6">ACADEMY</text>
       </svg>
-      <span class="logo-name">Matheus Academy</span>
     </a>
-
-    <div class="logo-sep"></div>
-    <span class="course-name-hdr">Política Brasileira</span>
-
-    <nav class="nav-links">
-      <a href="painel.html" class="nav-a">📊 Painel</a>
-      <a href="perfil.html" class="nav-a">👤 Perfil</a>
-      <a href="ranking.html" class="nav-a">🏆 Ranking</a>
-    </nav>
+    <div class="hdr-sep"></div>
+    <span class="hdr-course">Política Brasileira</span>
   </div>
-  <div class="hdr-right">
-    <div class="search-wrap">
-      <span class="search-ico">🔍</span>
-      <input class="search-inp" id="searchInp" type="text" placeholder="Buscar..." oninput="doSearch(this.value)" onfocus="showSR()"/>
-      <div class="search-res" id="searchRes"></div>
-    </div>
-    <button class="icon-hbtn" onclick="toggleTheme()" id="themeBtn">🌙</button>
 
-    <!-- guest -->
+  <!-- DIREITA: tema + XP + nome/menu + guest -->
+  <div class="hdr-right">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Modo claro/escuro">🌙</button>
+
+    <!-- Guest (não logado) -->
     <div id="guest-bar">
-      <a href="login.html" class="hbtn">Login</a>
-      <a href="cadastro.html" class="hbtn" style="display:none" id="criarContaBtn">Conta</a>
-      <a href="assinaturas.html" class="hbtn primary">Assinar</a>
+      <a href="login.html" class="g-btn">Login</a>
+      <a href="assinaturas.html" class="g-btn primary">Assinar</a>
     </div>
-    <!-- logged -->
+
+    <!-- Logado: XP + botão nome (abre menu completo) -->
     <div id="logged-bar">
-      <button class="uname-btn" id="unameBtn" onclick="goProfile()"></button>
-      <span class="xp-pill" id="xpPill">0 XP</span>
-      <button class="dots-btn" onclick="toggleDots()">⋯</button>
-      <div class="dots-menu" id="dotsMenu">
-        <a href="painel.html">📊 Painel</a>
-        <a href="perfil.html">👤 Perfil</a>
-        <a href="ranking.html">🏆 Ranking</a>
-        <a href="trilhas.html">🗺️ Trilhas</a>
-        <a href="assinaturas.html">⭐ Assinaturas</a>
-        <a href="#" onclick="doLogout()" class="dng">🚪 Sair</a>
+      <span class="hdr-xp" id="xpPill">0 XP</span>
+      <button class="hdr-user-btn" id="userMenuBtn" onclick="toggleUserMenu()">
+        <span class="uname-txt" id="unameBtn">Aluno</span>
+        <span class="uname-arrow">▾</span>
+      </button>
+      <!-- MENU DROPDOWN COMPLETO -->
+      <div class="user-menu" id="userMenu">
+        <div class="user-menu-header">
+          <div class="user-menu-name" id="menuUserName">Aluno</div>
+          <div class="user-menu-email" id="menuUserEmail">aluno@email.com</div>
+          <div class="user-menu-xp">
+            <span style="font-size:16px">⚡</span>
+            <div>
+              <div class="user-menu-xp-val" id="menuXP">0 XP</div>
+              <div class="user-menu-xp-lbl">Pontuação total</div>
+            </div>
+          </div>
+        </div>
+        <a href="painel.html" class="umenu-a">📊 Painel</a>
+        <a href="perfil.html" class="umenu-a">👤 Meu Perfil</a>
+        <a href="ranking.html" class="umenu-a">🏆 Ranking</a>
+        <a href="trilhas.html" class="umenu-a">🗺️ Trilhas</a>
+        <a href="assinaturas.html" class="umenu-a">⭐ Assinaturas</a>
+        <div class="umenu-divider"></div>
+        <button class="umenu-a" onclick="openChatModal()">🤖 IA do Curso</button>
+        <div class="umenu-divider"></div>
+        <button class="umenu-a dng" onclick="doLogout()">🚪 Sair</button>
       </div>
     </div>
   </div>
@@ -699,20 +827,39 @@ main{flex:1;min-width:0;padding:28px 40px 80px;width:100%}
   </div>
 </div>
 
-<!-- Chat FAB -->
-<button class="chat-fab" onclick="toggleChat()">💬</button>
-<div class="chat-panel" id="chatPanel">
-  <div class="chat-hdr">
-    <div><div class="chat-hdr-t">🤖 IA do Curso</div><div class="chat-hdr-s">Política Brasileira</div></div>
-    <button class="chat-cls" onclick="toggleChat()">✕</button>
+<!-- CHAT MODAL (só via menu do usuário) -->
+<div class="chat-modal-backdrop" id="chatBackdrop" onclick="closeChatModal()"></div>
+<div class="chat-panel-modal" id="chatPanel">
+  <div class="chat-hdr" style="padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div style="font-size:14px;font-weight:700;color:var(--text)">🤖 IA do Curso</div>
+      <div style="font-size:10px;color:var(--text3)">Política Brasileira</div>
+    </div>
+    <button onclick="closeChatModal()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:2px 6px">✕</button>
   </div>
-  <div class="chat-msgs" id="chatMsgs"><div class="cmsg ai">Olá! Pergunte qualquer coisa sobre Política Brasileira! 🏛️</div></div>
-  <div class="chat-rem" id="chatRem">10 perguntas restantes</div>
-  <div class="chat-in-wrap">
-    <input class="chat-inp" id="chatInp" placeholder="Sua pergunta..." onkeypress="if(event.key==='Enter')sendChat()"/>
-    <button class="chat-send" onclick="sendChat()">➤</button>
+  <div class="chat-msgs" id="chatMsgs" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:200px">
+    <div class="cmsg ai" style="max-width:85%;font-size:13px;line-height:1.5;padding:9px 13px;border-radius:12px;background:var(--bg3);color:var(--text2);align-self:flex-start;border-radius:12px 12px 12px 2px">Olá! Pergunte qualquer coisa sobre Política Brasileira! 🏛️</div>
+  </div>
+  <div class="chat-rem" id="chatRem" style="font-size:10px;color:var(--text3);padding:0 14px 7px;text-align:right">10 perguntas restantes</div>
+  <div style="padding:10px;border-top:1px solid var(--border);display:flex;gap:7px">
+    <input class="chat-inp" id="chatInp" placeholder="Sua pergunta..." onkeypress="if(event.key==='Enter')sendChat()" style="flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-family:var(--font);font-size:13px;outline:none"/>
+    <button onclick="sendChat()" style="background:var(--accent);color:#fff;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:14px;transition:.15s">➤</button>
   </div>
 </div>
+
+<!-- ═══ CANETA FLUTUANTE ═══ -->
+<button class="pen-fab" id="penFab" onclick="togglePen()" title="Caneta de marcação">✏️</button>
+<div class="pen-palette" id="penPalette">
+  <div class="pen-palette-title">Marcador de texto</div>
+  <div class="pen-colors">
+    <div class="pen-color selected" data-cls="hl-yellow" style="background:#FFE040" onclick="selectPenColor(this)" title="Amarelo"></div>
+    <div class="pen-color" data-cls="hl-blue" style="background:#64B4FF" onclick="selectPenColor(this)" title="Azul"></div>
+    <div class="pen-color" data-cls="hl-red" style="background:#FF5050" onclick="selectPenColor(this)" title="Vermelho"></div>
+    <div class="pen-color" data-cls="hl-pink" style="background:#FF64C8" onclick="selectPenColor(this)" title="Rosa"></div>
+  </div>
+  <button class="pen-erase-btn" onclick="eraseHighlights()">🧹 Apagar marcações</button>
+</div>
+
 
 <script>
 // ─── DADOS DO CURSO ───────────────────────────────────────────
@@ -913,15 +1060,25 @@ function stopAudio(){
 // ─── AUTH ─────────────────────────────────────────────────────
 function checkAuth(){
   const u=localStorage.getItem('ma_user');
+  const email=localStorage.getItem('ma_email')||'';
   if(u){
     document.getElementById('guest-bar').style.display='none';
     document.getElementById('logged-bar').style.display='flex';
+    const xp=ls('xp',0);
     document.getElementById('unameBtn').textContent=u;
-    document.getElementById('xpPill').textContent=ls('xp',0)+' XP';
+    document.getElementById('xpPill').textContent=xp+' XP';
+    document.getElementById('menuUserName').textContent=u;
+    document.getElementById('menuUserEmail').textContent=email||'aluno@matheusacademy.com';
+    document.getElementById('menuXP').textContent=xp+' XP';
   }
 }
 function goProfile(){window.location.href='perfil.html'}
-function toggleDots(){document.getElementById('dotsMenu').classList.toggle('open')}
+function toggleUserMenu(){
+  const m=document.getElementById('userMenu');
+  const b=document.getElementById('userMenuBtn');
+  m.classList.toggle('open');
+  b.classList.toggle('menu-open');
+}
 function doLogout(){
   localStorage.removeItem('ma_user');localStorage.removeItem('ma_email');
   window.location.reload();
@@ -930,19 +1087,27 @@ function checkSub(){
   if(localStorage.getItem('ma_user')){closeLock();toast('Verificando...','accent')}
   else window.location.href='login.html';
 }
+// Chat modal
+function openChatModal(){
+  document.getElementById('chatPanel').classList.add('open');
+  document.getElementById('chatBackdrop').classList.add('open');
+  document.getElementById('userMenu').classList.remove('open');
+  document.getElementById('userMenuBtn').classList.remove('menu-open');
+}
+function closeChatModal(){
+  document.getElementById('chatPanel').classList.remove('open');
+  document.getElementById('chatBackdrop').classList.remove('open');
+}
+// Fecha menus ao clicar fora
 document.addEventListener('click',e=>{
-  if(!e.target.closest('.dots-btn')&&!e.target.closest('.dots-menu'))
-    document.getElementById('dotsMenu').classList.remove('open');
-  if(!e.target.closest('.search-wrap'))
-    document.getElementById('searchRes').classList.remove('open');
-  if(!e.target.closest('.hl-toolbar')&&!window.getSelection()?.toString())
-    setTimeout(()=>document.getElementById('hlToolbar').classList.remove('show'),200);
+  const m=document.getElementById('userMenu');
+  const b=document.getElementById('userMenuBtn');
+  if(m&&!e.target.closest('#userMenu')&&!e.target.closest('#userMenuBtn')){
+    m.classList.remove('open');b.classList.remove('menu-open');
+  }
   const sp=document.getElementById('statsPanel');
-  if(!e.target.closest('.stats-panel')&&!e.target.closest('.stats-fab')&&sp.classList.contains('open'))
+  if(sp&&!e.target.closest('.stats-panel')&&!e.target.closest('.stats-fab')&&sp.classList.contains('open'))
     sp.classList.remove('open');
-  const cp=document.getElementById('chatPanel');
-  if(!e.target.closest('.chat-panel')&&!e.target.closest('.chat-fab')&&cp.classList.contains('open'))
-    cp.classList.remove('open');
 });
 
 // ─── LOCK ─────────────────────────────────────────────────────
@@ -951,11 +1116,15 @@ function closeLock(){document.getElementById('lockOverlay').classList.remove('sh
 
 // ─── THEME ────────────────────────────────────────────────────
 function toggleTheme(){
-  const r=document.documentElement,c=r.getAttribute('data-theme')||'dark';
-  const n=c==='dark'?'light':'dark';
-  r.setAttribute('data-theme',n);
-  document.getElementById('themeBtn').textContent=n==='dark'?'🌙':'☀️';
-  lsSet('theme',n);
+  const html=document.documentElement;
+  const cur=html.getAttribute('data-theme')||'dark';
+  const next=cur==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.body.setAttribute('data-theme',next);
+  document.getElementById('themeBtn').textContent=next==='dark'?'🌙':'☀️';
+  lsSet('theme',next);
+  // Força repaint
+  document.body.style.background='';
 }
 
 // ─── SIDEBAR ──────────────────────────────────────────────────
@@ -1418,9 +1587,54 @@ function addCM(txt,role){
 }
 
 // ─── INIT ─────────────────────────────────────────────────────
+// ─── CANETA DE MARCAÇÃO ────────────────────────────────────────
+let _penActive=false;
+let _penColor='hl-yellow';
+function togglePen(){
+  _penActive=!_penActive;
+  const fab=document.getElementById('penFab');
+  const pal=document.getElementById('penPalette');
+  fab.classList.toggle('active-pen',_penActive);
+  pal.classList.toggle('open',_penActive);
+  document.body.classList.toggle('pen-cursor-active',_penActive);
+  if(_penActive)toast('Caneta ativa! Selecione o texto para marcar.','accent',2500);
+  else toast('Caneta desativada','accent',1200);
+}
+function selectPenColor(el){
+  document.querySelectorAll('.pen-color').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  _penColor=el.dataset.cls;
+}
+function eraseHighlights(){
+  document.querySelectorAll('.hl-yellow,.hl-blue,.hl-red,.hl-pink').forEach(el=>{
+    const p=el.parentNode;
+    while(el.firstChild)p.insertBefore(el.firstChild,el);
+    p.removeChild(el);
+  });
+  toast('Marcações apagadas!','accent',1800);
+}
+document.addEventListener('mouseup',()=>{
+  if(!_penActive)return;
+  const sel=window.getSelection();
+  if(!sel||!sel.toString().trim())return;
+  try{
+    const range=sel.getRangeAt(0);
+    // Só marca dentro de topic-body
+    const container=range.commonAncestorContainer;
+    const body=container.nodeType===1?container:container.parentElement;
+    if(!body.closest('.topic-body'))return;
+    const span=document.createElement('mark');
+    span.className=_penColor;
+    span.style.background='';// usa a classe
+    range.surroundContents(span);
+    sel.removeAllRanges();
+  }catch(e){}
+});
+
 document.addEventListener('DOMContentLoaded',()=>{
   const th=ls('theme','dark');
   document.documentElement.setAttribute('data-theme',th);
+  document.body.setAttribute('data-theme',th);
   document.getElementById('themeBtn').textContent=th==='dark'?'🌙':'☀️';
   buildSidebar();
   buildHomeGrid();
