@@ -151,17 +151,31 @@ var TRILHAS=[
     ]
   },
   {
+    id:'cidadao',
+    icon:'🏛️',
+    color:'rgba(59,130,246,.1)',
+    borderColor:'rgba(59,130,246,.35)',
+    name:'Trilha Cidadão Consciente',
+    desc:'Entenda como o Brasil funciona por dentro. Política Brasileira + Geopolítica Avançada para uma visão crítica e estratégica do mundo e do seu país.',
+    badge:'🏛️ Cidadão Consciente',
+    courses:[
+      {key:'pb',icon:'🏛️',name:'Política Brasileira',file:'politica-brasileira.html'},
+      {key:'gp',icon:'🌍',name:'Geopolítica Avançada',file:'geopolitica-curso.html'}
+    ]
+  },
+  {
     id:'completa',
     icon:'👑',
     color:'rgba(245,158,11,.1)',
     borderColor:'rgba(245,158,11,.35)',
     name:'Trilha Completa Matheus Academy',
-    desc:'O percurso definitivo. Todos os cursos principais em sequência lógica para quem quer dominar tráfego, negócios, geopolítica, persuasão e nichos.',
+    desc:'O percurso definitivo. Todos os cursos principais em sequência lógica para quem quer dominar tráfego, negócios, geopolítica, política, persuasão e nichos.',
     badge:'👑 Mestre Academy',
     courses:[
       {key:'tp',icon:'📊',name:'Dominando Tráfego Pago',file:'dominando-trafego-pago.html'},
       {key:'ni',icon:'💼',name:'Negócios Inteligentes',file:'negocios-inteligentes.html'},
       {key:'gp',icon:'🌍',name:'Geopolítica Avançada',file:'geopolitica-curso.html'},
+      {key:'pb',icon:'🏛️',name:'Política Brasileira',file:'politica-brasileira.html'},
       {key:'nl',icon:'💡',name:'Nichos Lucrativos',file:'nichos-lucrativos.html'},
       {key:'mp',icon:'🎯',name:'Mestre em Persuasão',file:'mestre-em-persuasao.html'}
     ]
@@ -172,7 +186,7 @@ function getCourseProgress(key){
   var done=0,total=0;
   try{
     for(var k in localStorage){
-      if(k.indexOf(key+'_mod_')===0||(key==='tp'&&k.indexOf('dt_mod_')===0)||(key==='gp'&&k.indexOf('geo_mod_')===0)){
+      if(k.indexOf(key+'_mod_')===0||(key==='tp'&&k.indexOf('dt_mod_')===0)||(key==='gp'&&k.indexOf('geo_mod_')===0)||(key==='pb'&&k.indexOf('pb_mod_')===0)){
         total++;
         var v=localStorage.getItem(k);
         if(v==='done'||v==='true'||v==='1')done++;
