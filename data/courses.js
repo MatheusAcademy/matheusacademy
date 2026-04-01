@@ -156,6 +156,25 @@ var MA_COURSES = [
     active: true
   },
 
+  {
+    id: 'ss',
+    name: 'Segurança & Sociedade 2025',
+    desc: 'A crise que vai definir as eleições. Violência, segurança pública e o que ninguém te conta.',
+    file: 'seguranca-sociedade-2025.html',
+    cat: 'Geopolítica',
+    modules: 9,
+    topics: 54,
+    hours: 18,
+    quizzes: 9,
+    salt: 'SS_HENRY_2026_MASTER',
+    ak: 'ss_auth',
+    storagePrefix: 'ss_',
+    icon: '🛡️',
+    color: '#dc2626',
+    addedTs: 1743552000000,
+    active: true
+  },
+
   /* ──────────────────────────────────────────
      NOTÍCIAS / CONTEÚDO GRATUITO
   ────────────────────────────────────────── */
@@ -303,9 +322,9 @@ var MA_TRAILS = [
     color: 'rgba(59,130,246,.1)',
     borderColor: 'rgba(59,130,246,.35)',
     name: 'Trilha Cidadão Consciente',
-    desc: 'Entenda como o Brasil funciona por dentro. Política Brasileira + Geopolítica Avançada para uma visão crítica e estratégica do mundo e do seu país.',
+    desc: 'Entenda como o Brasil funciona por dentro. Política Brasileira + Geopolítica Avançada + Segurança & Sociedade para uma visão crítica e estratégica completa.',
     badge: '🏛️ Cidadão Consciente',
-    courseIds: ['pb', 'gp']
+    courseIds: ['pb', 'gp', 'ss']
   },
   {
     id: 'completa',
@@ -313,9 +332,9 @@ var MA_TRAILS = [
     color: 'rgba(245,158,11,.1)',
     borderColor: 'rgba(245,158,11,.35)',
     name: 'Trilha Completa Matheus Academy',
-    desc: 'O percurso definitivo. Todos os cursos principais em sequência lógica para quem quer dominar tráfego, negócios, geopolítica, política, persuasão e nichos.',
+    desc: 'O percurso definitivo. Todos os cursos principais em sequência lógica para quem quer dominar tráfego, negócios, geopolítica, política, persuasão, nichos e segurança pública.',
     badge: '👑 Mestre Academy',
-    courseIds: ['tp', 'ni', 'gp', 'pb', 'nl', 'mp']
+    courseIds: ['tp', 'ni', 'gp', 'pb', 'ss', 'nl', 'mp']
   }
 ];
 
