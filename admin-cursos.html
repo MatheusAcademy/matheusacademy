@@ -383,7 +383,9 @@ async function publish(){
   setProgress(true,'Concluindo...',100);
 
   if(putRes.ok){
-    setTimeout(function(){
+    setTimeout(async function(){
+      // Invalida cache do index.html para que o novo curso apareça imediatamente
+      await _bustIndexCache(g, 'novo curso: '+_meta.name);
       setProgress(false);
       showResult('ok','✅ Curso <b>"'+escHtml(_meta.name)+'"</b> publicado com sucesso! ('+(getVis()?'Visível':'Oculto')+' · '+(getFree()?'Gratuito':'Pago')+')');
       resetForm();
@@ -434,17 +436,59 @@ async function updateCourse(id,field,value,btnEl){
   var fd=await getRes.json();
   var current=atob(fd.content.replace(/\n/g,''));
   var sha=fd.sha;
+
+  // Regex robusta: limita a busca ao bloco do curso (entre { e })
+  // Usa [\s\S]*? não-greedy, mas limitada a não ultrapassar o fechamento do objeto
   var newContent=current.replace(
-    new RegExp('(id:\\s*[\'"]'+id+'[\'"][\\s\\S]*?'+field+':\\s*)(true|false)'),
+    new RegExp('(id:\\s*[\'"]'+id+'[\'"][^}]*?'+field+':\\s*)(true|false)'),
     '$1'+value
   );
+  if(newContent===current){
+    // Fallback: tenta com [\s\S] se o campo ficou em linha diferente
+    newContent=current.replace(
+      new RegExp('(id:\\s*[\'"]'+id+'[\'"][\\s\\S]{0,800}?'+field+':\\s*)(true|false)'),
+      '$1'+value
+    );
+  }
   if(newContent===current){showResult('err','❌ Campo não encontrado.');if(btnEl){btnEl.disabled=false;}return;}
+
   var putRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{
     method:'PUT',headers:ghH(),
     body:JSON.stringify({message:'update: curso id='+id+' '+field+'='+value,content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
   });
-  if(putRes.ok){showResult('ok','✅ Curso atualizado!');loadCourses();}
-  else{var err=await putRes.json();showResult('err','❌ Erro: '+(err.message||putRes.status));if(btnEl){btnEl.disabled=false;}}
+  if(putRes.ok){
+    // Após atualizar courses.js, invalida o cache do index.html atualizando o timestamp CB_TS
+    await _bustIndexCache(g, field==='active' ? ('Curso '+id+' '+(value==='false'?'ocultado':'visível')) : null);
+    showResult('ok','✅ Curso atualizado! A mudança aparece imediatamente no portal.');
+    loadCourses();
+  } else {
+    var err=await putRes.json();
+    showResult('err','❌ Erro: '+(err.message||putRes.status));
+    if(btnEl){btnEl.disabled=false;}
+  }
+}
+
+// ── INVALIDAR CACHE DO INDEX.HTML ───────────────────────────
+// Atualiza o timestamp CB_TS no index.html para forçar recarga do courses.js
+async function _bustIndexCache(g, motivo){
+  try{
+    var ipath='index.html';
+    var iRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+ipath,{headers:ghH()});
+    if(!iRes.ok) return;
+    var ifd=await iRes.json();
+    var icontent=atob(ifd.content.replace(/\n/g,''));
+    var ts=Date.now();
+    var iNew=icontent.replace(/courses\.js\?v=[^"']+/g,'courses.js?v='+ts);
+    if(iNew===icontent) return; // nada a mudar
+    await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+ipath,{
+      method:'PUT',headers:ghH(),
+      body:JSON.stringify({
+        message:'cache-bust: '+(motivo||'atualiza courses.js')+' v='+ts,
+        content:btoa(unescape(encodeURIComponent(iNew))),
+        sha:ifd.sha
+      })
+    });
+  }catch(e){ /* silencioso — cache-bust é otimização, não crítico */ }
 }
 
 // ── EXCLUIR ──────────────────────────────────────────────────
@@ -464,7 +508,7 @@ async function deleteCourse(id,name){
     method:'PUT',headers:ghH(),
     body:JSON.stringify({message:'remove: curso "'+name+'" via admin',content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
   });
-  if(putRes.ok){showResult('ok','✅ Curso "'+escHtml(name)+'" excluído.');loadCourses();}
+  if(putRes.ok){showResult('ok','✅ Curso "'+escHtml(name)+'" excluído. A mudança aparece imediatamente no portal.');await _bustIndexCache(g,'curso excluído: '+name);loadCourses();}
   else{var err=await putRes.json();showResult('err','❌ Erro: '+(err.message||putRes.status));}
 }
 
