@@ -431,32 +431,35 @@ Use emoji e cor accentHex que combine com "${tema}". Só o JSON.`;
   try{ estrutura = JSON.parse(raw1); }
   catch(e){ throw new Error('Estrutura inválida. Tente novamente.'); }
 
-  // ── CHAMADA 2A: Primeiros módulos (metade) ──
+  // ── CHAMADA 2: Módulos em lotes de 5 ──
   document.getElementById('genTitle').textContent = '📚 Criando módulos...';
-  const metade = Math.ceil(nMods/2);
-  const p2a = `Curso "${tema}": gere os módulos 1 a ${metade} com ${nTopics} tópicos cada. JSON:
-{"modules":[{"id":1,"emoji":"🔰","title":"Título","cat":"CATEGORIA","desc":"Descrição","topics":["T1","T2"]}]}
-Regras: ${nTopics} tópicos por módulo, categorias em MAIÚSCULAS, só JSON.`;
-  const raw2a = await callWorker(p2a);
-  let modData1;
-  try{ modData1 = JSON.parse(raw2a); }
-  catch(e){ throw new Error('Módulos inválidos na 1ª metade. Tente novamente.'); }
+  let todosModulos = [];
+  const loteSize = 5;
+  const nLotes = Math.ceil(nMods / loteSize);
 
-  // ── CHAMADA 2B: Segunda metade dos módulos ──
-  const p2b = `Curso "${tema}": gere os módulos ${metade+1} a ${nMods} com ${nTopics} tópicos cada. O último deve ser de Conclusão. JSON:
-{"modules":[{"id":${metade+1},"emoji":"📊","title":"Título","cat":"CATEGORIA","desc":"Descrição","topics":["T1","T2"]}]}
-Regras: ${nTopics} tópicos por módulo, categorias em MAIÚSCULAS, módulo ${nMods} = Conclusão, só JSON.`;
-  const raw2b = await callWorker(p2b);
-  let modData2;
-  try{ modData2 = JSON.parse(raw2b); }
-  catch(e){ modData2 = {modules:[]}; }
+  for(let lote = 0; lote < nLotes; lote++){
+    const inicio = lote * loteSize + 1;
+    const fim = Math.min(inicio + loteSize - 1, nMods);
+    const isUltimo = fim === nMods;
+    const pLote = `Curso "${tema}": gere SOMENTE os módulos de ID ${inicio} até ${fim} com ${nTopics} tópicos cada.${isUltimo ? ' O último módulo deve ser de Conclusão.' : ''} JSON:
+{"modules":[{"id":${inicio},"emoji":"🔰","title":"Título do Módulo","cat":"CATEGORIA","desc":"Descrição breve","topics":["Tópico 1","Tópico 2","Tópico 3"]}]}
+Regras: IDs de ${inicio} a ${fim}, ${nTopics} tópicos por módulo, categorias em MAIÚSCULAS, só JSON sem mais nada.`;
+    const rawLote = await callWorker(pLote);
+    try{
+      const loteData = JSON.parse(rawLote);
+      todosModulos = [...todosModulos, ...(loteData.modules||[])];
+    }catch(e){
+      // Se falhar, gera módulos placeholder para não travar
+      for(let i=inicio; i<=fim; i++){
+        todosModulos.push({id:i,emoji:'📚',title:`Módulo ${i} — ${tema}`,cat:'GERAL',desc:'Conteúdo deste módulo.',topics:Array.from({length:nTopics},(_,j)=>`Tópico ${j+1} do Módulo ${i}`)});
+      }
+    }
+    // Atualiza progresso visual
+    document.getElementById('genTitle').textContent = `📚 Módulos ${inicio}-${fim} criados...`;
+  }
 
-  // Combina os módulos e garante IDs corretos
-  const todosModulos = [
-    ...(modData1.modules||[]),
-    ...(modData2.modules||[])
-  ].map((m,i)=>({...m, id:i+1}));
-  estrutura.modules = todosModulos.length > 0 ? todosModulos : [];
+  // Garante IDs sequenciais corretos
+  estrutura.modules = todosModulos.slice(0, nMods).map((m,i)=>({...m, id:i+1}));
   if(estrutura.modules.length === 0) throw new Error('Nenhum módulo gerado. Tente novamente.');
 
   // ── CHAMADA 3: Quiz dos primeiros 4 módulos ──
