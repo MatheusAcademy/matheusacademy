@@ -239,6 +239,27 @@ var MA_COURSES = [
     active: true
   }
 
+
+  {
+    id: 'seg',
+    name: 'Segurança & Sociedade 2025 — A Crise que Vai Definir as Eleições',
+    desc: 'Dados verificados das principais fontes sobre a crise de segurança pública em 2025',
+    file: 'seguranca-sociedade-2025.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 9,
+    topics: 54,
+    hours: 8,
+    quizzes: 9,
+    salt: 'SEG_HENRY_2026_MASTER',
+    ak: 'seg_auth',
+    storagePrefix: 'seg_',
+    icon: '📊',
+    color: '#4a9eff',
+    free: true,
+    addedTs: 1775079085373,
+    active: true
+  },
+
   /*
    * ──────────────────────────────────────────
    * TEMPLATE PARA NOVO CURSO — copie e cole abaixo:
