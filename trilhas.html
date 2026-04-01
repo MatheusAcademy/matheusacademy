@@ -67,6 +67,9 @@ h1 span{color:var(--pri)}
 .bn{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.56rem;font-weight:600;color:var(--txt3);text-decoration:none;padding:4px 10px;border-radius:8px;transition:color .2s;min-width:52px}
 .bn:hover,.bn.active{color:var(--pri)}.bn-i{font-size:1.1rem}
 </style>
+<!-- ═══ DADOS CENTRALIZADOS — não edite cursos aqui, edite em data/courses.js ═══ -->
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
 </head>
 <body>
 <nav class="ma-topbar">
@@ -122,71 +125,18 @@ h1 span{color:var(--pri)}
 </nav>
 
 <script>
-var TRILHAS=[
-  {
-    id:'empreendedor',
-    icon:'💼',
-    color:'rgba(37,99,235,.15)',
-    borderColor:'rgba(91,127,255,.4)',
-    name:'Trilha Empreendedor Digital',
-    desc:'Do zero ao negócio digital lucrativo. Aprenda tráfego pago, negócios inteligentes e nichos lucrativos na sequência ideal para empreender online.',
-    badge:'🚀 Empreendedor Digital',
-    courses:[
-      {key:'tp',icon:'📊',name:'Dominando Tráfego Pago',file:'dominando-trafego-pago.html'},
-      {key:'ni',icon:'💼',name:'Negócios Inteligentes',file:'negocios-inteligentes.html'},
-      {key:'nl',icon:'💡',name:'Nichos Lucrativos',file:'nichos-lucrativos.html'}
-    ]
-  },
-  {
-    id:'estrategista',
-    icon:'🌍',
-    color:'rgba(34,197,94,.1)',
-    borderColor:'rgba(34,197,94,.35)',
-    name:'Trilha Estrategista Global',
-    desc:'Entenda o mundo como ele funciona e use esse conhecimento nos seus negócios. Geopolítica + Negócios Inteligentes para uma visão estratégica completa.',
-    badge:'🌍 Estrategista Global',
-    courses:[
-      {key:'gp',icon:'🌍',name:'Geopolítica Avançada',file:'geopolitica-curso.html'},
-      {key:'ni',icon:'💼',name:'Negócios Inteligentes',file:'negocios-inteligentes.html'}
-    ]
-  },
-  {
-    id:'cidadao',
-    icon:'🏛️',
-    color:'rgba(59,130,246,.1)',
-    borderColor:'rgba(59,130,246,.35)',
-    name:'Trilha Cidadão Consciente',
-    desc:'Entenda como o Brasil funciona por dentro. Política Brasileira + Geopolítica Avançada para uma visão crítica e estratégica do mundo e do seu país.',
-    badge:'🏛️ Cidadão Consciente',
-    courses:[
-      {key:'pb',icon:'🏛️',name:'Política Brasileira',file:'politica-brasileira.html'},
-      {key:'gp',icon:'🌍',name:'Geopolítica Avançada',file:'geopolitica-curso.html'}
-    ]
-  },
-  {
-    id:'completa',
-    icon:'👑',
-    color:'rgba(245,158,11,.1)',
-    borderColor:'rgba(245,158,11,.35)',
-    name:'Trilha Completa Matheus Academy',
-    desc:'O percurso definitivo. Todos os cursos principais em sequência lógica para quem quer dominar tráfego, negócios, geopolítica, política, persuasão e nichos.',
-    badge:'👑 Mestre Academy',
-    courses:[
-      {key:'tp',icon:'📊',name:'Dominando Tráfego Pago',file:'dominando-trafego-pago.html'},
-      {key:'ni',icon:'💼',name:'Negócios Inteligentes',file:'negocios-inteligentes.html'},
-      {key:'gp',icon:'🌍',name:'Geopolítica Avançada',file:'geopolitica-curso.html'},
-      {key:'pb',icon:'🏛️',name:'Política Brasileira',file:'politica-brasileira.html'},
-      {key:'nl',icon:'💡',name:'Nichos Lucrativos',file:'nichos-lucrativos.html'},
-      {key:'mp',icon:'🎯',name:'Mestre em Persuasão',file:'mestre-em-persuasao.html'}
-    ]
-  }
-];
+// ═══ FONTE ÚNICA: trilhas e cursos vêm de data/courses.js ═══
+// Para editar trilhas ou adicionar cursos, edite APENAS data/courses.js
+var TRILHAS = MA_buildTrails();
 
 function getCourseProgress(key){
+  // Busca o storagePrefix correto em MA_COURSES pelo id do curso
+  var course = MA_getCourseById(key);
+  var prefix = course ? course.storagePrefix : (key + '_');
   var done=0,total=0;
   try{
     for(var k in localStorage){
-      if(k.indexOf(key+'_mod_')===0||(key==='tp'&&k.indexOf('dt_mod_')===0)||(key==='gp'&&k.indexOf('geo_mod_')===0)||(key==='pb'&&k.indexOf('pb_mod_')===0)){
+      if(k.indexOf(prefix+'mod_')===0){
         total++;
         var v=localStorage.getItem(k);
         if(v==='done'||v==='true'||v==='1')done++;
