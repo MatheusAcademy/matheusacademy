@@ -1,12 +1,4 @@
-/**
- * ============================================================
- * MATHEUS ACADEMY — COURSES.JS
- * Fonte única de verdade de todos os cursos da plataforma.
- * ============================================================
- */
-
 var MA_COURSES = [
-
   {
     id: 'tp',
     name: 'Dominando Tráfego Pago',
@@ -25,7 +17,6 @@ var MA_COURSES = [
     addedTs: 1741996800000,
     active: true
   },
-
   {
     id: 'ni',
     name: 'Negócios Inteligentes',
@@ -44,7 +35,6 @@ var MA_COURSES = [
     addedTs: 1742256000000,
     active: true
   },
-
   {
     id: 'gp',
     name: 'Geopolítica Avançada',
@@ -63,7 +53,6 @@ var MA_COURSES = [
     addedTs: 1742688000000,
     active: true
   },
-
   {
     id: 'nl',
     name: 'Nichos Lucrativos',
@@ -82,7 +71,6 @@ var MA_COURSES = [
     addedTs: 1743033600000,
     active: true
   },
-
   {
     id: 'mp',
     name: 'Mestre em Persuasão',
@@ -101,7 +89,6 @@ var MA_COURSES = [
     addedTs: 1743206400000,
     active: true
   },
-
   {
     id: 'pb',
     name: 'Política Brasileira',
@@ -120,7 +107,6 @@ var MA_COURSES = [
     addedTs: 1743400000000,
     active: true
   },
-
   {
     id: 'bm',
     name: 'Caso Banco Master',
@@ -140,7 +126,6 @@ var MA_COURSES = [
     addedTs: 1743264000000,
     active: true
   },
-
   {
     id: 'ii',
     name: 'Guerra Israel x Irã',
@@ -160,7 +145,6 @@ var MA_COURSES = [
     addedTs: 1743292800000,
     active: true
   },
-
   {
     id: 'cp',
     name: 'Copa do Mundo 2026',
@@ -180,53 +164,9 @@ var MA_COURSES = [
     addedTs: 1743350400000,
     active: true
   }
-
-  /*
-   * ──────────────────────────────────────────
-   * TEMPLATE PARA NOVO CURSO — copie e cole abaixo:
-   *
-   * ,{
-   *   id: 'xx',
-   *   name: 'Nome do Curso',
-   *   desc: 'Descrição curta e objetiva.',
-   *   file: 'nome-do-arquivo.html',
-   *   cat: 'Negócios',
-   *   modules: 0,
-   *   topics: 0,
-   *   hours: 0,
-   *   quizzes: 0,
-   *   salt: 'XX_HENRY_2026_MASTER',
-   *   ak: 'xx_auth',
-   *   storagePrefix: 'xx_',
-   *   icon: '🎓',
-   *   color: '#4b8bff',
-   *   addedTs: Date.now(),
-   *   active: true
-   * }
-   * ──────────────────────────────────────────
-   */,
-
-  {
-    id: 'ss',
-    name: 'Segurança & Sociedade 2026 — A Crise que Vai Definir as Eleições',
-    desc: 'A crise que vai definir as eleições. Violência, segurança pública e o que ninguém te conta.',
-    file: 'seguranca-sociedade-2025.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 9,
-    topics: 54,
-    hours: 8,
-    quizzes: 9,
-    salt: 'SEG_HENRY_2026_MASTER',
-    ak: 'seg_auth',
-    storagePrefix: 'seg_',
-    icon: '🎓',
-    color: '#3b82f6',
-    free: true,
-    addedTs: 1775080731517,
-    active: true
-  }
 ];
-ar MA_CATS = [
+
+var MA_CATS = [
   {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?'], isSpecial:true},
   {name:'Negócios', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:[]},
   {name:'Geopolítica', sub:'Entenda o mundo como ele realmente funciona, além das notícias', courses:[], soon:['Relações Internacionais']},
@@ -251,7 +191,7 @@ var MA_TRAILS = [
     color: 'rgba(91,127,255,.1)',
     borderColor: 'rgba(91,127,255,.4)',
     name: 'Trilha Empreendedor Digital',
-    desc: 'Do zero ao negócio digital lucrativo. Aprenda tráfego pago, negócios inteligentes e nichos lucrativos na sequência ideal para empreender online.',
+    desc: 'Do zero ao negócio digital lucrativo.',
     badge: '🚀 Empreendedor Digital',
     courseIds: ['tp', 'ni', 'nl']
   },
@@ -261,7 +201,7 @@ var MA_TRAILS = [
     color: 'rgba(34,197,94,.1)',
     borderColor: 'rgba(34,197,94,.35)',
     name: 'Trilha Estrategista Global',
-    desc: 'Entenda o mundo como ele funciona e use esse conhecimento nos seus negócios. Geopolítica + Negócios Inteligentes para uma visão estratégica completa.',
+    desc: 'Geopolítica + Negócios para uma visão estratégica completa.',
     badge: '🌍 Estrategista Global',
     courseIds: ['gp', 'ni']
   },
@@ -271,9 +211,9 @@ var MA_TRAILS = [
     color: 'rgba(59,130,246,.1)',
     borderColor: 'rgba(59,130,246,.35)',
     name: 'Trilha Cidadão Consciente',
-    desc: 'Entenda como o Brasil funciona por dentro. Política Brasileira + Geopolítica Avançada + Segurança & Sociedade para uma visão crítica e estratégica completa.',
+    desc: 'Política Brasileira + Geopolítica para uma visão crítica completa.',
     badge: '🏛️ Cidadão Consciente',
-    courseIds: ['pb', 'gp', 'ss']
+    courseIds: ['pb', 'gp']
   },
   {
     id: 'completa',
@@ -281,20 +221,18 @@ var MA_TRAILS = [
     color: 'rgba(245,158,11,.1)',
     borderColor: 'rgba(245,158,11,.35)',
     name: 'Trilha Completa Matheus Academy',
-    desc: 'O percurso definitivo. Todos os cursos principais em sequência lógica.',
+    desc: 'O percurso definitivo. Todos os cursos principais.',
     badge: '👑 Mestre Academy',
-    courseIds: ['tp', 'ni', 'gp', 'pb', 'ss', 'nl', 'mp']
+    courseIds: ['tp', 'ni', 'gp', 'pb', 'nl', 'mp']
   }
 ];
 
 function MA_getActiveCourses() {
   return MA_COURSES.filter(function(c) { return c.active !== false; });
 }
-
 function MA_getCourseById(id) {
   return MA_COURSES.find(function(c) { return c.id === id; }) || null;
 }
-
 function MA_buildCats() {
   var cats = MA_CATS.map(function(cat) {
     return { name: cat.name, sub: cat.sub, courses: [], soon: cat.soon || [], isSpecial: !!cat.isSpecial, isEbook: !!cat.isEbook };
@@ -305,7 +243,6 @@ function MA_buildCats() {
   });
   return cats.filter(function(cat) { return cat.courses.length > 0 || cat.soon.length > 0; });
 }
-
 function MA_buildTrails() {
   return MA_TRAILS.map(function(trail) {
     var resolved = [];
@@ -313,9 +250,6 @@ function MA_buildTrails() {
       var c = MA_getCourseById(cid);
       if (c && c.active !== false) resolved.push({ key: c.id, icon: c.icon, name: c.name, file: c.file });
     });
-    return {
-      id: trail.id, icon: trail.icon, color: trail.color, borderColor: trail.borderColor,
-      name: trail.name, desc: trail.desc, badge: trail.badge, courses: resolved
-    };
+    return { id: trail.id, icon: trail.icon, color: trail.color, borderColor: trail.borderColor, name: trail.name, desc: trail.desc, badge: trail.badge, courses: resolved };
   });
 }
