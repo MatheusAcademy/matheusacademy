@@ -2,45 +2,10 @@
  * ============================================================
  * MATHEUS ACADEMY — COURSES.JS
  * Fonte única de verdade de todos os cursos da plataforma.
- *
- * COMO ADICIONAR UM NOVO CURSO:
- *   1. Copie um objeto do array abaixo
- *   2. Preencha todos os campos
- *   3. Defina active: true
- *   4. Faça push no GitHub
- *   Pronto! O curso aparece automaticamente em todo o portal.
- *
- * COMO DESATIVAR UM CURSO (sem apagar):
- *   Mude active: true  →  active: false
- *
- * CAMPOS OBRIGATÓRIOS:
- *   id          → chave única curta (ex: 'tp', 'ni', 'gp')
- *   name        → nome completo exibido na plataforma
- *   desc        → descrição curta (1-2 linhas)
- *   file        → nome do arquivo HTML (ex: 'dominando-trafego-pago.html')
- *   cat         → categoria (deve bater com uma entrada em CATS abaixo)
- *   modules     → número total de módulos
- *   topics      → número total de tópicos
- *   hours       → carga horária estimada
- *   quizzes     → número de quizzes
- *   salt        → salt do SHA-256 para autenticação (definido no arquivo do curso)
- *   ak          → chave de acesso no localStorage (ex: 'tp_auth')
- *   storagePrefix → prefixo usado pelo curso para salvar progresso (ex: 'dt_')
- *   icon        → emoji representativo do curso
- *   color       → cor principal em hex (usada em gráficos e progresso)
- *   addedTs     → timestamp Unix em ms da data de lançamento
- *   active      → true = visível | false = oculto em todo o portal
- *
- * CAMPOS OPCIONAIS:
- *   free        → true = acesso gratuito sem código (padrão: false)
  * ============================================================
  */
 
 var MA_COURSES = [
-
-  /* ──────────────────────────────────────────
-     CURSOS PRINCIPAIS (requerem código de acesso)
-  ────────────────────────────────────────── */
 
   {
     id: 'tp',
@@ -175,10 +140,6 @@ var MA_COURSES = [
     active: true
   },
 
-  /* ──────────────────────────────────────────
-     NOTÍCIAS / CONTEÚDO GRATUITO
-  ────────────────────────────────────────── */
-
   {
     id: 'bm',
     name: 'Caso Banco Master',
@@ -239,27 +200,6 @@ var MA_COURSES = [
     active: true
   }
 
-
-  {
-    id: 'seg',
-    name: 'Segurança & Sociedade 2025 — A Crise que Vai Definir as Eleições',
-    desc: 'Dados verificados das principais fontes sobre a crise de segurança pública em 2025',
-    file: 'seguranca-sociedade-2025.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 9,
-    topics: 54,
-    hours: 8,
-    quizzes: 9,
-    salt: 'SEG_HENRY_2026_MASTER',
-    ak: 'seg_auth',
-    storagePrefix: 'seg_',
-    icon: '📊',
-    color: '#4a9eff',
-    free: true,
-    addedTs: 1775079085373,
-    active: true
-  },
-
   /*
    * ──────────────────────────────────────────
    * TEMPLATE PARA NOVO CURSO — copie e cole abaixo:
@@ -286,12 +226,6 @@ var MA_COURSES = [
    */
 ];
 
-/* ============================================================
-   CATEGORIAS DO PORTAL
-   Para adicionar nova categoria: copie um objeto e adicione no array.
-   O campo 'courses' é preenchido automaticamente — não edite.
-   soon[] = cursos futuros exibidos como "Em breve"
-   ============================================================ */
 var MA_CATS = [
   {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?'], isSpecial:true},
   {name:'Negócios', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:[]},
@@ -310,12 +244,6 @@ var MA_CATS = [
   {name:'📚 Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x Irã','Devocional 2026','Estamos Próximos do Fim?'], isEbook:true}
 ];
 
-/* ============================================================
-   TRILHAS DE APRENDIZADO
-   Trilhas agrupam cursos por objetivo de aprendizado.
-   Para adicionar curso em uma trilha: use o id do curso (campo id do MA_COURSES).
-   O sistema busca nome, file e icon automaticamente pelo id.
-   ============================================================ */
 var MA_TRAILS = [
   {
     id: 'empreendedor',
@@ -353,28 +281,20 @@ var MA_TRAILS = [
     color: 'rgba(245,158,11,.1)',
     borderColor: 'rgba(245,158,11,.35)',
     name: 'Trilha Completa Matheus Academy',
-    desc: 'O percurso definitivo. Todos os cursos principais em sequência lógica para quem quer dominar tráfego, negócios, geopolítica, política, persuasão, nichos e segurança pública.',
+    desc: 'O percurso definitivo. Todos os cursos principais em sequência lógica.',
     badge: '👑 Mestre Academy',
     courseIds: ['tp', 'ni', 'gp', 'pb', 'ss', 'nl', 'mp']
   }
 ];
 
-/* ============================================================
-   UTILITÁRIOS GLOBAIS
-   Funções auxiliares disponíveis para todas as páginas.
-   ============================================================ */
-
-/** Retorna apenas os cursos ativos */
 function MA_getActiveCourses() {
   return MA_COURSES.filter(function(c) { return c.active !== false; });
 }
 
-/** Busca um curso pelo id */
 function MA_getCourseById(id) {
   return MA_COURSES.find(function(c) { return c.id === id; }) || null;
 }
 
-/** Monta as categorias com os cursos ativos distribuídos */
 function MA_buildCats() {
   var cats = MA_CATS.map(function(cat) {
     return { name: cat.name, sub: cat.sub, courses: [], soon: cat.soon || [], isSpecial: !!cat.isSpecial, isEbook: !!cat.isEbook };
@@ -386,7 +306,6 @@ function MA_buildCats() {
   return cats.filter(function(cat) { return cat.courses.length > 0 || cat.soon.length > 0; });
 }
 
-/** Monta as trilhas resolvendo os cursos pelos ids */
 function MA_buildTrails() {
   return MA_TRAILS.map(function(trail) {
     var resolved = [];
