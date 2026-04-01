@@ -221,6 +221,13 @@ input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59
 <script>
 var _meta=null, _fileContent=null, _fileName=null;
 
+
+// ── HELPER UTF-8 SEGURO ──────────────────────────────────────
+// atob() nativo quebra acentos UTF-8. Esta função decodifica corretamente.
+function _b64decode(str){
+  var b=atob(str.replace(/\n/g,''));
+  try{return decodeURIComponent(escape(b));}catch(e){return b;}
+}
 // ── CONFIG ──────────────────────────────────────────────────
 window.onload=function(){
   var t=localStorage.getItem('ghToken');
@@ -362,7 +369,7 @@ async function publish(){
   var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+cpath,{headers:headers});
   if(!getRes.ok){showResult('err','❌ Não encontrei data/courses.js.');btn.disabled=false;setProgress(false);return;}
   var fd=await getRes.json();
-  var current=atob(fd.content.replace(/\n/g,''));
+  var current=_b64decode(fd.content);
   var sha=fd.sha;
 
   if(new RegExp("id:\\s*['\"]"+_meta.id+"['\"]").test(current)){
@@ -432,9 +439,8 @@ async function updateCourse(id,field,value,btnEl){
   var path='data/courses.js';
   var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:ghH()});
   var fd=await getRes.json();
-  var current=atob(fd.content.replace(/\n/g,''));
+  var current=_b64decode(fd.content);
   var sha=fd.sha;
-  // Regex robusta com limite de 800 chars entre id e o campo
   var newContent=current.replace(
     new RegExp('(id:\\s*[\'\"]+id+'[\'\"]+[\\s\\S]{0,800}?'+field+':\\s*)(true|false)'),
     '$1'+value
@@ -445,9 +451,8 @@ async function updateCourse(id,field,value,btnEl){
     body:JSON.stringify({message:'update: curso id='+id+' '+field+'='+value,content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
   });
   if(putRes.ok){
-    await _bustIndexCache(g, field==='active'?('Curso '+id+' '+(value==='false'?'ocultado':'visível')):null);
+    await _bustIndexCache(g,field==='active'?('Curso '+id+' '+(value==='false'?'ocultado':'visível')):null);
     showResult('ok','✅ Curso atualizado! Mudança imediata no portal.');
-    if(btnEl){btnEl.textContent=value==='false'?'👁️ Visível':'🙈 Ocultar';btnEl.disabled=false;}
     loadCourses();
   } else {
     var err=await putRes.json();
@@ -463,9 +468,9 @@ async function _bustIndexCache(g,motivo){
     var iRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+ipath,{headers:ghH()});
     if(!iRes.ok)return;
     var ifd=await iRes.json();
-    var ic=atob(ifd.content.replace(/\n/g,''));
+    var ic=_b64decode(ifd.content);
     var ts=Date.now();
-    var iNew=ic.replace(/courses\.js\?v=[^"\']+/g,'courses.js?v='+ts);
+    var iNew=ic.replace(/courses\.js\?v=[^"']+/g,'courses.js?v='+ts);
     if(iNew===ic)return;
     await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+ipath,{
       method:'PUT',headers:ghH(),
@@ -473,7 +478,6 @@ async function _bustIndexCache(g,motivo){
     });
   }catch(e){}
 }
-
 
 // ── EXCLUIR ──────────────────────────────────────────────────
 async function deleteCourse(id,name){
@@ -483,7 +487,7 @@ async function deleteCourse(id,name){
   var path='data/courses.js';
   var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:ghH()});
   var fd=await getRes.json();
-  var current=atob(fd.content.replace(/\n/g,''));
+  var current=_b64decode(fd.content);
   var sha=fd.sha;
   var re=new RegExp('\\s*\\{[^{}]*?id:\\s*[\'"]'+id+'[\'"][\\s\\S]*?\\}\\s*,?','');
   var newContent=current.replace(re,'');
@@ -492,7 +496,7 @@ async function deleteCourse(id,name){
     method:'PUT',headers:ghH(),
     body:JSON.stringify({message:'remove: curso "'+name+'" via admin',content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
   });
-  if(putRes.ok){showResult('ok','✅ Curso "'+escHtml(name)+'" excluído.');loadCourses();}
+  if(putRes.ok){showResult('ok','✅ Curso "'+escHtml(name)+'" excluído! Mudança imediata no portal.');_bustIndexCache(g,'excluiu: '+name);loadCourses();}
   else{var err=await putRes.json();showResult('err','❌ Erro: '+(err.message||putRes.status));}
 }
 
@@ -502,7 +506,7 @@ async function loadCourses(){
   var res=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js',{headers:ghH()});
   if(!res.ok)return;
   var fd=await res.json();
-  var content=atob(fd.content.replace(/\n/g,''));
+  var content=_b64decode(fd.content);
   var courses=[];
   content.split(/(?=\s*\{[^{}]*id:\s*['"])/).forEach(function(b){
     var idM=b.match(/id:\s*['"]([^'"]+)['"]/);
