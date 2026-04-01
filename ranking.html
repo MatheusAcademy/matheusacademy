@@ -139,6 +139,9 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 <style id="hide-floats">
 #mae-btn,#maeChatBtn,#maeChatWin,.ma-fpts,#maFpts,.points-badge,#fBadge,.f-badge{display:none!important}
 </style>
+<!-- ═══ DADOS CENTRALIZADOS — não edite cursos aqui, edite em data/courses.js ═══ -->
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
 </head>
 <body>
 
@@ -2804,12 +2807,10 @@ function _updateChatQuotaFromServer(usage){
    PLANO DE ESTUDOS
    ═══════════════════════════════════════ */
 var _spHours=0;
-var SP_COURSES=[
-  {key:'dt',name:'Tráfego Pago',modules:['Introdução ao Tráfego Pago','Facebook Ads Básico','Google Ads','Criativos de Alta Conversão','Públicos e Segmentação','Retargeting','Escala de Campanhas','Análise de Métricas','Copywriting para Anúncios','Estratégia Avançada']},
-  {key:'ni',name:'Negócios Inteligentes',modules:['Fundamentos de Negócios','Fluxo de Caixa','Precificação','Marketing Digital','Gestão de Equipes','Vendas B2B','Produto Mínimo Viável','Expansão','Gestão Financeira','Liderança']},
-  {key:'geo',name:'Geopolítica',modules:['Introdução à Geopolítica','EUA e NATO','China e Ásia','Rússia','Oriente Médio','América Latina','BRICS','Conflitos Globais','Economia Mundial','Tendências 2025-2030']},
-  {key:'nl',name:'Nichos Lucrativos',modules:['O que é um Nicho','Como Validar','Pesquisa de Mercado','Copywriting','Funil de Vendas','Tráfego Orgânico','Produtos Digitais','Autoridade','Escala','Casos de Sucesso']}
-];
+// ═══ FONTE ÚNICA: cursos vêm de data/courses.js — não edite aqui ═══
+var SP_COURSES = MA_getActiveCourses().filter(function(c){return !c.free;}).map(function(c){
+  return {key:c.id, name:c.name, modules:[c.name+' — Módulo 1',c.name+' — Módulo 2',c.name+' — Módulo 3',c.name+' — Módulo 4',c.name+' — Módulo 5',c.name+' — Módulo 6',c.name+' — Módulo 7',c.name+' — Módulo 8',c.name+' — Módulo 9',c.name+' — Módulo 10']};
+});
 var DAYS=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
 var DAY_OFF_IDX=6; // Domingo = descanso
 
@@ -3129,16 +3130,10 @@ var _SG_PAGES=[
   {ic:'🛒',t:'Loja de XP',u:'loja.html',c:'Páginas'},
   {ic:'🏅',t:'Mural de Conquistas',u:'mural.html',c:'Páginas'},
 ];
-var _SG_COURSES=[
-  {ic:'📊',t:'Dominando Tráfego Pago',u:'dominando-trafego-pago.html',c:'Cursos'},
-  {ic:'💼',t:'Negócios Inteligentes',u:'negocios-inteligentes.html',c:'Cursos'},
-  {ic:'🌍',t:'Geopolítica Avançada',u:'geopolitica-curso.html',c:'Cursos'},
-  {ic:'💡',t:'Nichos Lucrativos',u:'nichos-lucrativos.html',c:'Cursos'},
-  {ic:'🎯',t:'Mestre em Persuasão',u:'mestre-em-persuasao.html',c:'Cursos'},
-  {ic:'🏦',t:'Caso Banco Master',u:'caso-banco-master.html',c:'Cursos'},
-  {ic:'⚔️',t:'Guerra Israel x Irã',u:'guerra-israel-ira.html',c:'Cursos'},
-  {ic:'⚽',t:'Copa do Mundo 2026',u:'copa-do-mundo-2026.html',c:'Cursos'},
-];
+// ═══ FONTE ÚNICA: cursos vêm de data/courses.js — não edite aqui ═══
+var _SG_COURSES = MA_getActiveCourses().map(function(c){
+  return {ic:c.icon, t:c.name, u:c.file, c:'Cursos'};
+});
 var _sgSel=0;
 function _sgH(){try{return JSON.parse(localStorage.getItem('maSG_hist')||'[]');}catch(e){return[];}}
 function _sgAH(q){if(!q.trim())return;var h=_sgH().filter(function(x){return x!==q;});h.unshift(q);h=h.slice(0,5);localStorage.setItem('maSG_hist',JSON.stringify(h));}
