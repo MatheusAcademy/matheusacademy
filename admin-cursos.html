@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Adicionar Curso · Matheus Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c14;
+  --surface: #0d1421;
+  --card: #111827;
+  --border: #1e2d47;
+  --accent: #3b82f6;
+  --accent2: #60a5fa;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #f59e0b;
+  --text: #f0f4ff;
+  --text2: #8899bb;
+  --text3: #4a5c7a;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Sora', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(96,165,250,.06) 0%, transparent 50%);
+}
+
+/* HEADER */
+header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 32px; border-bottom: 1px solid var(--border);
+  background: rgba(8,12,20,.9); backdrop-filter: blur(12px);
+  position: sticky; top: 0; z-index: 100;
+}
+.logo-circle {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: #000; border: 2px solid #1e3a5f;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; color: var(--accent2);
+  letter-spacing: -1px;
+}
+header h1 { font-size: 15px; font-weight: 600; color: var(--text); }
+header span { font-size: 12px; color: var(--text3); margin-left: 4px; }
+.hbadge {
+  margin-left: auto; background: rgba(59,130,246,.15);
+  color: var(--accent2); border: 1px solid rgba(59,130,246,.3);
+  padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+  letter-spacing: .05em; text-transform: uppercase;
+}
+
+/* MAIN */
+main { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+.page-title {
+  margin-bottom: 32px;
+}
+.page-title h2 {
+  font-size: 26px; font-weight: 800;
+  background: linear-gradient(135deg, #f0f4ff 0%, var(--accent2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.page-title p { color: var(--text2); font-size: 14px; margin-top: 6px; }
+
+/* GITHUB CONFIG */
+.gh-config {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 24px; margin-bottom: 28px;
+}
+.gh-config-title {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 600; color: var(--text2);
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px;
+}
+.gh-config-title svg { opacity: .6; }
+.gh-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.gh-row .field { flex: 1; min-width: 200px; }
+.gh-status {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 12px; font-size: 12px;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text3); }
+.dot.green { background: var(--green); box-shadow: 0 0 8px var(--green); }
+.dot.red { background: var(--red); }
+.dot.yellow { background: var(--yellow); animation: pulse .8s infinite; }
+
+/* FORM */
+.form-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+}
+.form-section {
+  padding: 24px; border-bottom: 1px solid var(--border);
+}
+.form-section:last-child { border-bottom: none; }
+.section-label {
+  font-size: 11px; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: .1em; margin-bottom: 18px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label {
+  font-size: 11px; font-weight: 600; color: var(--text2);
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.field label .req { color: var(--accent); margin-left: 2px; }
+input, select, textarea {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px;
+  color: var(--text); font-family: var(--sans); font-size: 14px;
+  outline: none; transition: border-color .2s, box-shadow .2s;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+}
+input[type="color"] { padding: 4px 8px; height: 40px; cursor: pointer; }
+textarea { resize: vertical; min-height: 80px; }
+select option { background: #111827; }
+
+.hint { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+/* TOGGLE */
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0;
+}
+.toggle-row + .toggle-row { border-top: 1px solid var(--border); }
+.toggle-info { display: flex; flex-direction: column; gap: 2px; }
+.toggle-info span { font-size: 14px; font-weight: 500; }
+.toggle-info small { font-size: 12px; color: var(--text3); }
+.toggle {
+  position: relative; width: 44px; height: 24px; cursor: pointer;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0; background: var(--border);
+  border-radius: 12px; transition: .2s;
+}
+.toggle input:checked + .toggle-track { background: var(--accent); }
+.toggle-thumb {
+  position: absolute; top: 3px; left: 3px;
+  width: 18px; height: 18px; background: #fff; border-radius: 50%;
+  transition: .2s; pointer-events: none;
+}
+.toggle input:checked ~ .toggle-thumb { transform: translateX(20px); }
+
+/* PREVIEW */
+.preview-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px; margin-top: 20px;
+}
+.preview-box-title {
+  font-size: 11px; color: var(--text3); font-weight: 600;
+  text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px;
+}
+.preview-code {
+  font-family: var(--mono); font-size: 11.5px; color: #7dd3fc;
+  white-space: pre-wrap; word-break: break-all; line-height: 1.7;
+}
+.key { color: #f472b6; }
+.val { color: #86efac; }
+.str { color: #fde68a; }
+.num { color: #c084fc; }
+.bool-true { color: var(--green); }
+.bool-false { color: var(--red); }
+
+/* SUBMIT */
+.submit-area {
+  padding: 24px; display: flex; align-items: center; gap: 16px;
+  border-top: 1px solid var(--border); flex-wrap: wrap;
+}
+.btn-primary {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 10px; padding: 14px 28px;
+  font-family: var(--sans); font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all .2s; letter-spacing: .01em;
+}
+.btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(59,130,246,.4); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.btn-secondary {
+  background: transparent; color: var(--text2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 20px;
+  font-family: var(--sans); font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: .2s;
+}
+.btn-secondary:hover { border-color: var(--text3); color: var(--text); }
+.submit-info { font-size: 12px; color: var(--text3); }
+
+/* RESULT */
+.result-banner {
+  display: none; align-items: center; gap: 12px;
+  padding: 16px 20px; border-radius: 12px; margin-top: 24px;
+  font-size: 14px; font-weight: 500;
+}
+.result-banner.success {
+  display: flex; background: rgba(34,197,94,.1);
+  border: 1px solid rgba(34,197,94,.3); color: #86efac;
+}
+.result-banner.error {
+  display: flex; background: rgba(239,68,68,.1);
+  border: 1px solid rgba(239,68,68,.3); color: #fca5a5;
+}
+.result-banner.loading {
+  display: flex; background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.3); color: var(--accent2);
+}
+
+/* SPINNER */
+.spinner {
+  width: 18px; height: 18px; border: 2px solid transparent;
+  border-top-color: currentColor; border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+
+/* COURSES LIST */
+.courses-list { margin-top: 32px; }
+.courses-list-title {
+  font-size: 13px; font-weight: 600; color: var(--text2);
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+.course-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px;
+  transition: border-color .2s;
+}
+.course-item:hover { border-color: var(--text3); }
+.course-icon { font-size: 20px; }
+.course-info { flex: 1; }
+.course-info b { font-size: 14px; font-weight: 600; display: block; }
+.course-info small { font-size: 11px; color: var(--text3); font-family: var(--mono); }
+.course-badge {
+  padding: 3px 10px; border-radius: 20px; font-size: 10px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+}
+.badge-active { background: rgba(34,197,94,.15); color: #86efac; border: 1px solid rgba(34,197,94,.3); }
+.badge-free { background: rgba(96,165,250,.15); color: var(--accent2); border: 1px solid rgba(59,130,246,.3); }
+.badge-inactive { background: rgba(239,68,68,.1); color: #fca5a5; border: 1px solid rgba(239,68,68,.2); }
+
+@media(max-width:600px) {
+  .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+  .gh-row { flex-direction: column; }
+  header { padding: 14px 16px; }
+  main { padding: 24px 14px 60px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-circle">M</div>
+  <div>
+    <h1>Matheus Academy <span>Admin</span></h1>
+  </div>
+  <div class="hbadge">⚙ Gerenciador</div>
+</header>
+
+<main>
+  <div class="page-title">
+    <h2>Adicionar Novo Curso</h2>
+    <p>Preencha o formulário e o curso será salvo automaticamente no GitHub — sem editar código.</p>
+  </div>
+
+  <!-- GitHub Config -->
+  <div class="gh-config">
+    <div class="gh-config-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+      Configuração GitHub (salvo no navegador)
+    </div>
+    <div class="gh-row">
+      <div class="field">
+        <label>Token do GitHub <span class="req">*</span></label>
+        <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+        <span class="hint">Settings → Developer settings → Personal access tokens → Fine-grained → repo write</span>
+      </div>
+      <div class="field" style="max-width:200px">
+        <label>Usuário / Org</label>
+        <input type="text" id="ghOwner" placeholder="MatheusAcademy">
+      </div>
+      <div class="field" style="max-width:200px">
+        <label>Repositório</label>
+        <input type="text" id="ghRepo" placeholder="matheusacademy">
+      </div>
+    </div>
+    <div class="gh-status">
+      <div class="dot" id="ghDot"></div>
+      <span id="ghStatusText" style="color:var(--text3);font-size:12px">Preencha o token para conectar</span>
+      <button onclick="testGH()" style="margin-left:auto;background:transparent;border:1px solid var(--border);color:var(--text2);padding:5px 14px;border-radius:6px;font-size:12px;cursor:pointer;font-family:var(--sans)">Testar conexão</button>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card">
+
+    <!-- Identidade -->
+    <div class="form-section">
+      <div class="section-label">Identidade do Curso</div>
+      <div class="grid2" style="margin-bottom:16px">
+        <div class="field">
+          <label>ID único <span class="req">*</span></label>
+          <input type="text" id="fId" placeholder="Ex: mkt, fin, ia..." maxlength="6" oninput="updatePreview();autoFill()">
+          <span class="hint">2-6 letras minúsculas, sem espaço</span>
+        </div>
+        <div class="field">
+          <label>Ícone emoji</label>
+          <input type="text" id="fIcon" placeholder="🚀" maxlength="4" oninput="updatePreview()">
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:16px">
+        <label>Nome do curso <span class="req">*</span></label>
+        <input type="text" id="fName" placeholder="Ex: Marketing Digital — Do Zero ao Avançado" oninput="updatePreview()">
+      </div>
+      <div class="field">
+        <label>Descrição curta</label>
+        <textarea id="fDesc" placeholder="Uma linha descrevendo o curso..." rows="2" oninput="updatePreview()"></textarea>
+      </div>
+    </div>
+
+    <!-- Arquivo e Categoria -->
+    <div class="form-section">
+      <div class="section-label">Arquivo e Categoria</div>
+      <div class="grid2">
+        <div class="field">
+          <label>Arquivo HTML <span class="req">*</span></label>
+          <input type="text" id="fFile" placeholder="Ex: marketing-digital.html" oninput="updatePreview()">
+          <span class="hint">Nome exato do arquivo que você vai subir</span>
+        </div>
+        <div class="field">
+          <label>Categoria</label>
+          <select id="fCat" onchange="updatePreview()">
+            <option>NEGÓCIOS</option>
+            <option>TRÁFEGO PAGO</option>
+            <option>GEOPOLÍTICA</option>
+            <option>FINANÇAS</option>
+            <option>MARKETING</option>
+            <option>TECNOLOGIA</option>
+            <option>INTELIGÊNCIA ARTIFICIAL</option>
+            <option>MINDSET</option>
+            <option>VENDAS</option>
+            <option>COPYWRITING</option>
+            <option>PRODUTIVIDADE</option>
+            <option>POLÍTICA</option>
+            <option>NOTÍCIAS</option>
+            <option>AVANÇADO</option>
+            <option>CONCLUSÃO</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Números -->
+    <div class="form-section">
+      <div class="section-label">Estatísticas do Curso</div>
+      <div class="grid4">
+        <div class="field">
+          <label>Módulos <span class="req">*</span></label>
+          <input type="number" id="fModules" placeholder="17" min="1" oninput="updatePreview()">
+        </div>
+        <div class="field">
+          <label>Tópicos <span class="req">*</span></label>
+          <input type="number" id="fTopics" placeholder="119" min="1" oninput="updatePreview()">
+        </div>
+        <div class="field">
+          <label>Horas <span class="req">*</span></label>
+          <input type="number" id="fHours" placeholder="90" min="1" oninput="updatePreview()">
+        </div>
+        <div class="field">
+          <label>Quizzes</label>
+          <input type="number" id="fQuizzes" placeholder="17" min="0" oninput="updatePreview()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Autenticação -->
+    <div class="form-section">
+      <div class="section-label">Autenticação (gerado automaticamente)</div>
+      <div class="grid3">
+        <div class="field">
+          <label>Salt SHA-256</label>
+          <input type="text" id="fSalt" placeholder="XX_HENRY_2026_MASTER" oninput="updatePreview()">
+          <span class="hint">Auto-gerado ao digitar o ID</span>
+        </div>
+        <div class="field">
+          <label>Chave de acesso (ak)</label>
+          <input type="text" id="fAk" placeholder="xx_auth" oninput="updatePreview()">
+        </div>
+        <div class="field">
+          <label>Prefixo localStorage</label>
+          <input type="text" id="fPrefix" placeholder="xx_" oninput="updatePreview()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual -->
+    <div class="form-section">
+      <div class="section-label">Visual</div>
+      <div class="grid2">
+        <div class="field">
+          <label>Cor de destaque</label>
+          <div style="display:flex;gap:10px;align-items:center">
+            <input type="color" id="fColor" value="#3b82f6" oninput="updatePreview()" style="width:60px;flex-shrink:0">
+            <input type="text" id="fColorHex" value="#3b82f6" placeholder="#3b82f6" oninput="syncColor()" style="font-family:var(--mono)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Opções -->
+    <div class="form-section">
+      <div class="section-label">Opções</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span>Curso ativo</span>
+          <small>Aparece no portal para os alunos</small>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="fActive" checked onchange="updatePreview()">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span>Curso gratuito</span>
+          <small>Exibe badge GRÁTIS e não exige código de acesso</small>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="fFree" onchange="updatePreview()">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Preview do objeto -->
+    <div class="form-section">
+      <div class="section-label">Preview — bloco que será salvo</div>
+      <div class="preview-box">
+        <div class="preview-box-title">courses.js · novo objeto</div>
+        <div class="preview-code" id="previewCode">Preencha o formulário...</div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-area">
+      <button class="btn-primary" onclick="saveCourse()" id="btnSave">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        Salvar no GitHub
+      </button>
+      <button class="btn-secondary" onclick="resetForm()">Limpar formulário</button>
+      <span class="submit-info" id="submitInfo">O arquivo courses.js será atualizado automaticamente.</span>
+    </div>
+
+    <div class="result-banner" id="resultBanner"></div>
+  </div>
+
+  <!-- Lista de cursos atual -->
+  <div class="courses-list">
+    <div class="courses-list-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Cursos no portal
+      <span id="courseCount" style="color:var(--text3);font-weight:400"></span>
+    </div>
+    <div id="courseListEl">
+      <div style="color:var(--text3);font-size:13px;padding:12px">Conecte ao GitHub para ver os cursos...</div>
+    </div>
+  </div>
+</main>
+
+<script>
+// ── PERSISTÊNCIA ──────────────────────────────────────────
+window.onload = function() {
+  var t = localStorage.getItem('ghToken');
+  var o = localStorage.getItem('ghOwner') || 'MatheusAcademy';
+  var r = localStorage.getItem('ghRepo') || 'matheusacademy';
+  if (t) { document.getElementById('ghToken').value = t; }
+  document.getElementById('ghOwner').value = o;
+  document.getElementById('ghRepo').value = r;
+  if (t) { setTimeout(testGH, 400); }
+  updatePreview();
+};
+
+function saveGHConfig() {
+  localStorage.setItem('ghToken', document.getElementById('ghToken').value);
+  localStorage.setItem('ghOwner', document.getElementById('ghOwner').value);
+  localStorage.setItem('ghRepo', document.getElementById('ghRepo').value);
+}
+
+// ── TESTAR CONEXÃO ────────────────────────────────────────
+async function testGH() {
+  saveGHConfig();
+  var token = document.getElementById('ghToken').value.trim();
+  var owner = document.getElementById('ghOwner').value.trim();
+  var repo  = document.getElementById('ghRepo').value.trim();
+  if (!token) { setGHStatus('red', 'Token não preenchido'); return; }
+  setGHStatus('yellow', 'Conectando...');
+  try {
+    var res = await fetch('https://api.github.com/repos/' + owner + '/' + repo, {
+      headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (res.ok) {
+      setGHStatus('green', 'Conectado ✓  ' + owner + '/' + repo);
+      loadCourses();
+    } else {
+      setGHStatus('red', 'Erro: ' + res.status + ' — verifique token e permissões');
+    }
+  } catch(e) {
+    setGHStatus('red', 'Erro de rede: ' + e.message);
+  }
+}
+
+function setGHStatus(color, text) {
+  var dot = document.getElementById('ghDot');
+  dot.className = 'dot ' + color;
+  document.getElementById('ghStatusText').textContent = text;
+  document.getElementById('ghStatusText').style.color = color === 'green' ? '#86efac' : color === 'red' ? '#fca5a5' : 'var(--accent2)';
+}
+
+// ── AUTO-FILL ────────────────────────────────────────────
+function autoFill() {
+  var id = document.getElementById('fId').value.trim().toLowerCase();
+  if (!id) return;
+  var UP = id.toUpperCase();
+  document.getElementById('fSalt').value   = UP + '_HENRY_2026_MASTER';
+  document.getElementById('fAk').value     = id + '_auth';
+  document.getElementById('fPrefix').value = id + '_';
+  if (!document.getElementById('fFile').value) {
+    document.getElementById('fFile').value = id + '-curso.html';
+  }
+}
+
+function syncColor() {
+  var hex = document.getElementById('fColorHex').value;
+  if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
+    document.getElementById('fColor').value = hex;
+  }
+  updatePreview();
+}
+document.getElementById('fColor').addEventListener('input', function() {
+  document.getElementById('fColorHex').value = this.value;
+  updatePreview();
+});
+
+// ── PREVIEW ──────────────────────────────────────────────
+function updatePreview() {
+  var obj = getFormObject();
+  var lines = ['{'];
+  Object.entries(obj).forEach(function(e) {
+    var k = e[0], v = e[1];
+    var vHtml;
+    if (typeof v === 'string')  vHtml = '<span class="str">\'' + escHtml(v) + '\'</span>';
+    else if (typeof v === 'number') vHtml = '<span class="num">' + v + '</span>';
+    else if (v === true)  vHtml = '<span class="bool-true">true</span>';
+    else if (v === false) vHtml = '<span class="bool-false">false</span>';
+    else vHtml = String(v);
+    lines.push('  <span class="key">' + k + '</span>: ' + vHtml + ',');
+  });
+  lines.push('}');
+  document.getElementById('previewCode').innerHTML = lines.join('\n');
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;');
+}
+
+function getFormObject() {
+  var id = v('fId') || 'xx';
+  return {
+    id:            id,
+    name:          v('fName') || 'Nome do Curso',
+    desc:          v('fDesc') || '',
+    file:          v('fFile') || id + '.html',
+    cat:           v('fCat') || 'NEGÓCIOS',
+    modules:       n('fModules'),
+    topics:        n('fTopics'),
+    hours:         n('fHours'),
+    quizzes:       n('fQuizzes'),
+    salt:          v('fSalt') || id.toUpperCase() + '_HENRY_2026_MASTER',
+    ak:            v('fAk') || id + '_auth',
+    storagePrefix: v('fPrefix') || id + '_',
+    icon:          v('fIcon') || '📚',
+    color:         document.getElementById('fColor').value,
+    addedTs:       Date.now(),
+    active:        document.getElementById('fActive').checked,
+    free:          document.getElementById('fFree').checked
+  };
+}
+
+function v(id) { return document.getElementById(id).value.trim(); }
+function n(id) { return parseInt(document.getElementById(id).value) || 0; }
+
+// ── SALVAR NO GITHUB ─────────────────────────────────────
+async function saveCourse() {
+  var token = document.getElementById('ghToken').value.trim();
+  var owner = document.getElementById('ghOwner').value.trim();
+  var repo  = document.getElementById('ghRepo').value.trim();
+
+  if (!token) { showResult('error', '❌ Configure o token do GitHub primeiro.'); return; }
+  if (!v('fId') || !v('fName') || !n('fModules') || !n('fTopics') || !n('fHours')) {
+    showResult('error', '❌ Preencha os campos obrigatórios: ID, Nome, Módulos, Tópicos, Horas.');
+    return;
+  }
+
+  var btn = document.getElementById('btnSave');
+  btn.disabled = true;
+  showResult('loading', '<div class="spinner"></div> Salvando no GitHub...');
+
+  var path = 'data/courses.js';
+  var headers = {
+    'Authorization': 'token ' + token,
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json'
+  };
+
+  // 1. Buscar arquivo atual
+  var getRes = await fetch('https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + path, { headers });
+  if (!getRes.ok) { showResult('error', '❌ Não encontrei o arquivo data/courses.js no repositório.'); btn.disabled=false; return; }
+  var fileData = await getRes.json();
+  var currentContent = atob(fileData.content.replace(/\n/g,''));
+  var sha = fileData.sha;
+
+  // 2. Injetar novo curso
+  var newObj = getFormObject();
+  var newBlock = '\n  ' + JSON.stringify(newObj, null, 2).replace(/\n/g, '\n  ') + ',';
+
+  // Procurar o fechamento do array MA_COURSES
+  var insertAt = currentContent.lastIndexOf('];');
+  if (insertAt === -1) { showResult('error', '❌ Não encontrei o array MA_COURSES no courses.js.'); btn.disabled=false; return; }
+
+  var newContent = currentContent.slice(0, insertAt) + newBlock + '\n' + currentContent.slice(insertAt);
+
+  // 3. Commit
+  var body = JSON.stringify({
+    message: 'feat: adiciona curso "' + newObj.name + '" via admin',
+    content: btoa(unescape(encodeURIComponent(newContent))),
+    sha: sha
+  });
+
+  var putRes = await fetch('https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + path, {
+    method: 'PUT', headers, body
+  });
+
+  if (putRes.ok) {
+    showResult('success', '✅ Curso <b>"' + escHtml(newObj.name) + '"</b> adicionado com sucesso! O portal atualizará em segundos.');
+    loadCourses();
+    setTimeout(function() { if(confirm('Limpar formulário para adicionar outro curso?')) resetForm(); }, 1200);
+  } else {
+    var err = await putRes.json();
+    showResult('error', '❌ Erro ao salvar: ' + (err.message || putRes.status));
+  }
+  btn.disabled = false;
+}
+
+// ── CARREGAR CURSOS EXISTENTES ────────────────────────────
+async function loadCourses() {
+  var token = document.getElementById('ghToken').value.trim();
+  var owner = document.getElementById('ghOwner').value.trim();
+  var repo  = document.getElementById('ghRepo').value.trim();
+  if (!token) return;
+
+  var res = await fetch('https://api.github.com/repos/' + owner + '/' + repo + '/contents/data/courses.js', {
+    headers: { 'Authorization': 'token ' + token }
+  });
+  if (!res.ok) return;
+  var data = await res.json();
+  var content = atob(data.content.replace(/\n/g,''));
+
+  // Extrair cursos via regex básico
+  var matches = [];
+  var re = /\{[^{}]*id:\s*['"]([^'"]+)['"][^{}]*name:\s*['"]([^'"]+)['"][^{}]*icon:\s*['"]([^'"]*)['"]/g;
+  var m;
+  while ((m = re.exec(content)) !== null) {
+    matches.push({ id: m[1], name: m[2], icon: m[3] || '📚' });
+  }
+
+  // Extrair flags active/free
+  var allBlocks = content.split(/(?=\{[^{}]*id:\s*['"])/);
+  var courses = allBlocks.slice(1).map(function(b) {
+    var idM    = b.match(/id:\s*['"]([^'"]+)['"]/);
+    var nameM  = b.match(/name:\s*['"]([^'"]+)['"]/);
+    var iconM  = b.match(/icon:\s*['"]([^'"]*)['"]/);
+    var actM   = b.match(/active:\s*(true|false)/);
+    var freeM  = b.match(/free:\s*(true|false)/);
+    if (!idM || !nameM) return null;
+    return {
+      id: idM[1], name: nameM[1], icon: iconM ? iconM[1] : '📚',
+      active: actM ? actM[1] === 'true' : true,
+      free: freeM ? freeM[1] === 'true' : false
+    };
+  }).filter(Boolean);
+
+  document.getElementById('courseCount').textContent = '(' + courses.length + ')';
+  var el = document.getElementById('courseListEl');
+  if (!courses.length) { el.innerHTML = '<div style="color:var(--text3);font-size:13px;padding:12px">Nenhum curso encontrado.</div>'; return; }
+
+  el.innerHTML = courses.map(function(c) {
+    var badge = c.free
+      ? '<span class="course-badge badge-free">Grátis</span>'
+      : c.active
+        ? '<span class="course-badge badge-active">Ativo</span>'
+        : '<span class="course-badge badge-inactive">Inativo</span>';
+    return '<div class="course-item"><div class="course-icon">' + c.icon + '</div>'
+      + '<div class="course-info"><b>' + escHtml(c.name) + '</b>'
+      + '<small>id: ' + c.id + ' · storagePrefix: ' + c.id + '_</small></div>'
+      + badge + '</div>';
+  }).join('');
+}
+
+// ── HELPERS ──────────────────────────────────────────────
+function showResult(type, html) {
+  var el = document.getElementById('resultBanner');
+  el.className = 'result-banner ' + type;
+  el.innerHTML = html;
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function resetForm() {
+  ['fId','fName','fDesc','fFile','fSalt','fAk','fPrefix','fIcon','fModules','fTopics','fHours','fQuizzes','fColorHex'].forEach(function(id) {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('fColor').value = '#3b82f6';
+  document.getElementById('fColorHex').value = '#3b82f6';
+  document.getElementById('fActive').checked = true;
+  document.getElementById('fFree').checked = false;
+  document.getElementById('fCat').selectedIndex = 0;
+  document.getElementById('resultBanner').className = 'result-banner';
+  updatePreview();
+}
+</script>
+</body>
+</html>
