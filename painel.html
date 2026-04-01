@@ -243,6 +243,9 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 <style id="hide-floats">
 #mae-btn,#maeChatBtn,#maeChatWin,.ma-fpts,#maFpts,.points-badge,#fBadge,.f-badge{display:none!important}
 </style>
+<!-- ═══ DADOS CENTRALIZADOS — não edite cursos aqui, edite em data/courses.js ═══ -->
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
 </head>
 <body>
 
@@ -458,7 +461,10 @@ var LVLS=[{n:'Iniciante',i:'🟤',c:'lvc0',m:0,max:999},{n:'Aprendiz',i:'🔵',c
 var MISSIONS=[{id:'aula',title:'Acesse 1 curso hoje',sub:'Abra qualquer curso',pts:10,icon:'📚'},{id:'quiz',title:'Acerte 2 quizzes',sub:'Em qualquer curso',pts:15,icon:'🧠'},{id:'estudo',title:'Fique 10 min estudando',sub:'Tempo na plataforma',pts:5,icon:'⏱️'}];
 var ACH=[{id:'first',n:'Primeira Aula',i:'📖'},{id:'p100',n:'100 Pontos',i:'💯'},{id:'p500',n:'500 Pontos',i:'⭐'},{id:'p1000',n:'1.000 Pontos',i:'🌟'},{id:'p5000',n:'5.000 Pontos',i:'💎'},{id:'s3',n:'3 Dias Seguidos',i:'🔥'},{id:'s7',n:'7 Dias',i:'🏆'},{id:'q5',n:'5 Quizzes',i:'🧠'},{id:'q10',n:'10 Quizzes',i:'🎓'},{id:'w1',n:'Desafiante',i:'🎯'},{id:'box1',n:'Caixa Aberta',i:'🎁'},{id:'flash1',n:'Relâmpago',i:'⚡'}];
 var FAKE_RANK=[{name:'João Almeida',pts:8500,c:'#4b8bff'},{name:'Carlos Mendes',pts:7200,c:'#22c55e'},{name:'Ana Souza',pts:6100,c:'#a855f7'},{name:'Pedro Lima',pts:4800,c:'#f59e0b'},{name:'Fernanda Costa',pts:3200,c:'#ef4444'},{name:'Rafael Santos',pts:2100,c:'#0ea5e9'},{name:'Juliana Reis',pts:1400,c:'#e879f9'}];
-var COURSES=[{id:'tp',n:'Dominando Tráfego Pago',k:'tp_qp',t:117},{id:'ni',n:'Negócios Inteligentes',k:'ni_qp',t:197},{id:'gp',n:'Geopolítica Avançada',k:'gp_qp',t:27},{id:'nl',n:'Nichos Lucrativos',k:'nl_qp',t:97},{id:'pb',n:'Política Brasileira',k:'pb_qp',t:119},{id:'mp',n:'Mestre em Persuasão',k:'mp_qp',t:217}];
+// ═══ FONTE ÚNICA: dados vêm de data/courses.js — não edite aqui ═══
+var COURSES = MA_getActiveCourses().filter(function(c){return !c.free;}).map(function(c){
+  return {id:c.id, n:c.name, k:c.id+'_qp', t:c.quizzes||c.modules};
+});
 var FQ=[{q:'Qual rede social tem maior potencial para tráfego pago no Brasil?',opts:['Twitter','Meta Ads (Facebook/Instagram)','TikTok Ads'],a:1},{q:'O que é CPM no tráfego pago?',opts:['Custo por Mil impressões','Custo por Mensagem','Cliques Por Minuto'],a:0},{q:'Qual foi o rombo estimado do Caso Banco Master?',opts:['R$ 12 bilhões','R$ 52 bilhões','R$ 8 bilhões'],a:1},{q:'Quantas seleções na Copa 2026?',opts:['32','40','48'],a:2},{q:'O que é ROI no marketing digital?',opts:['Retorno Sobre Investimento','Ranking Orgânico','Resultado Online Imediato'],a:0}];
 
 // ═════════════════════════════════════════════
@@ -1062,13 +1068,10 @@ function renderMissions(){
 }
 
 /* ── PROGRESS ── */
-var COURSES_DEF=[
-  {key:'dt_',name:'Dominando Tráfego Pago',icon:'📊',color:'#5b7fff'},
-  {key:'ni_',name:'Negócios Inteligentes',icon:'💼',color:'#a855f7'},
-  {key:'geo_',name:'Geopolítica Avançada',icon:'🌍',color:'#22c55e'},
-  {key:'nl_',name:'Nichos Lucrativos',icon:'💡',color:'#f59e0b'},
-  {key:'pb_',name:'Política Brasileira',icon:'🏛️',color:'#3B82F6'}
-];
+// ═══ FONTE ÚNICA: dados vêm de data/courses.js — não edite aqui ═══
+var COURSES_DEF = MA_getActiveCourses().filter(function(c){return !c.free;}).map(function(c){
+  return {key:c.storagePrefix, name:c.name, icon:c.icon, color:c.color};
+});
 
 function getCourseCompletion(prefix){
   var done=0,total=0;
