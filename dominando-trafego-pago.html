@@ -1,1045 +1,1553 @@
-<!--COURSE:{"name":"Dominando Tráfego Pago","desc":"De zero a gestor de elite. Meta Ads, Google Ads, criativos, escala e muito mais. O curso mais completo do Brasil.","modules":4,"topics":16,"hours":32,"quizzes":4,"category":"Marketing Digital"}-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dominando Tráfego Pago — Matheus Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a1f'/%3E%3Ctext x='32' y='46' text-anchor='middle' fill='%234b8bff' font-family='Arial Black,Arial' font-weight='900' font-size='42'%3EM%3C/text%3E%3C/svg%3E">
+<title>Dominando o Tráfego Pago — Matheus Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f4f6fa;--bg2:#eaecf2;--bg3:#dde1ea;--card:#fff;--brd:#d0d6e0;--brd2:#bac2d0;--pri:#2563eb;--pri2:#3b82f6;--pri3:#93c5fd;--prid:rgba(37,99,235,.07);--dk:#1a1f2e;--dk2:#333b4f;--txt:#4a5468;--txt2:#7a8599;--txt3:#a0aab8;--grn:#10b981;--red:#ef4444;--warn:#f59e0b;--font:'Inter',sans-serif;--serif:'Merriweather',serif;--sh:0 1px 4px rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.04);--sh2:0 4px 20px rgba(0,0,0,.08)}
-.dark{--bg:#0d1117;--bg2:#131820;--bg3:#1a202e;--card:#161c28;--brd:#232a3a;--brd2:#2e3750;--dk:#dce2f0;--dk2:#b0b8cc;--txt:#7a88a5;--txt2:#556078;--txt3:#3a455a;--sh:0 2px 8px rgba(0,0,0,.3);--sh2:0 4px 20px rgba(0,0,0,.4)}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--txt);font-family:var(--font);line-height:1.7;transition:background .3s,color .3s}
-::selection{background:rgba(37,99,235,.15)}
-::-webkit-scrollbar{width:5px;height:4px}::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:9px}
-mark.hl{background:rgba(255,245,157,.4);color:inherit;border-radius:1px;padding:0 1px}
+/* ══════════════════════════════════
+   TOKENS
+══════════════════════════════════ */
+:root {
+  --bg:#08080f; --bg2:#0f0f1e; --bg3:#161628; --card:#111122;
+  --brd:#1e1e35; --brd2:#282844;
+  --acc:#f97316; --acc2:rgba(249,115,22,.15); --acc3:rgba(249,115,22,.07);
+  --pri:#5b7fff; --grn:#22c55e; --red:#ef4444; --orn:#f59e0b; --pur:#a855f7;
+  --txt:#e8e8f0; --txt2:#8888a8; --txt3:#44445a;
+  --font:'Outfit',sans-serif; --serif:'Playfair Display',serif;
+  --sw:260px; --th:56px; --ph:3px; --pnh:36px;
+}
+.light {
+  --bg:#f5f5fb; --bg2:#eeeff8; --bg3:#e3e4f0; --card:#fff;
+  --brd:#d0d2e8; --brd2:#b8bbd8; --txt:#1a1a2e; --txt2:#5a5c78; --txt3:#9090b0;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:99px}
 
-/* PORTAL BAR */
-.portal-bar{position:fixed;top:0;left:0;right:0;height:30px;background:rgba(5,5,10,.97);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;gap:10px;z-index:9999;border-bottom:1px solid rgba(75,139,255,.12)}
-.portal-bar a{color:#9898b0;font-size:.58rem;font-weight:600;text-decoration:none;padding:3px 7px;border-radius:5px;transition:all .2s;white-space:nowrap}
-.portal-bar a:hover{color:#4b8bff;background:rgba(75,139,255,.08)}
-.portal-bar .pb-main{color:#4b8bff;font-weight:700}
-.portal-bar .pb-plan{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff!important;font-weight:700}
-@media(max-width:480px){.portal-bar{gap:4px}.portal-bar a{font-size:.5rem;padding:2px 5px}}
+/* ══ GLOBAL PROGRESS ══ */
+#gBar{position:fixed;top:0;left:0;right:0;height:var(--ph);background:var(--brd);z-index:9999}
+#gFill{height:100%;background:linear-gradient(90deg,var(--acc),#fb923c);transition:width .6s ease;width:0%}
 
-/* HEADER */
-.hdr{position:fixed;top:30px;left:0;right:0;height:52px;background:var(--card);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 12px;z-index:300;gap:8px;transition:background .3s;box-shadow:var(--sh)}
-.hdr-logo{font-family:var(--serif);font-size:.8rem;font-weight:900;color:var(--dk);white-space:nowrap;cursor:pointer;min-width:0;overflow:hidden;text-overflow:ellipsis}
-.hdr-logo span{color:var(--pri)}
-.sbox{flex:1;max-width:320px;margin:0 auto;position:relative}
-.sbox input{width:100%;background:var(--bg);border:1.5px solid var(--brd);border-radius:8px;padding:7px 12px 7px 32px;color:var(--dk);font-family:var(--font);font-size:.76rem;outline:none;transition:all .2s}
-.sbox input:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(37,99,235,.07)}
-.sbox .sico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:.75rem}
-.hdr-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.hdr-r .hp{font-size:.6rem;color:var(--txt2);white-space:nowrap}
-.hdr-r .hp b{color:var(--pri)}
-.thm-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--brd);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--txt2);flex-shrink:0;transition:all .2s}
-.thm-btn:hover{border-color:var(--pri);color:var(--pri)}
-.gbar{position:fixed;top:82px;left:0;right:0;height:2px;background:var(--bg3);z-index:299}
-.gfill{height:100%;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .8s}
+/* ══ PORTAL NAV ══ */
+.pnav{position:fixed;top:var(--ph);left:0;right:0;height:var(--pnh);background:rgba(8,8,15,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 16px;gap:14px;z-index:9998;font-size:.69rem}
+.pnav a{color:var(--txt2);text-decoration:none;transition:.2s;white-space:nowrap}.pnav a:hover{color:var(--acc)}
+.pnav .sep{color:var(--txt3)}.pnav .sp{flex:1}
+.pnav-btn{padding:3px 10px;border-radius:6px;font-size:.64rem;font-weight:700;text-decoration:none;transition:.2s}
+.pnav-login{border:1px solid var(--brd2);color:var(--txt2)}
+.pnav-buy{background:var(--acc);color:#fff}
 
-/* LOGIN */
-.lw{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
-.lb{background:var(--card);border:1px solid var(--brd);border-radius:16px;padding:32px 28px;max-width:420px;width:100%;text-align:center;box-shadow:var(--sh2)}
-.lb .ll{font-family:var(--serif);font-size:1.3rem;font-weight:900;color:var(--dk);margin-bottom:2px}.lb .ll span{color:var(--pri)}
-.lb .ls{font-size:.72rem;color:var(--txt2);margin-bottom:22px;line-height:1.5}
-.lb input{width:100%;background:var(--bg);border:1.5px solid var(--brd);border-radius:8px;padding:10px 14px;color:var(--dk);font-family:var(--font);font-size:.83rem;outline:none;margin-bottom:8px;transition:border .2s;display:block}
-.lb input:focus{border-color:var(--pri)}
-.lb-btn{width:100%;padding:11px;border:none;border-radius:8px;font-family:var(--font);font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;background:var(--pri);color:#fff;margin-top:6px}
-.lb-btn:hover{opacity:.9;transform:translateY(-1px)}
-.lb-btn:disabled{opacity:.45;transform:none;cursor:not-allowed}
-.lb-btn.secondary{background:var(--bg);color:var(--txt);border:1.5px solid var(--brd)}
-.lb-btn.secondary:hover{border-color:var(--pri);color:var(--pri)}
-.lb-msg{font-size:.74rem;margin-top:10px;padding:9px 12px;border-radius:8px;line-height:1.5;text-align:left}
-.lb-msg.ok{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0}
-.lb-msg.er{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
-.lb-msg.in{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
-.lb-step-badge{display:inline-block;background:var(--prid);color:var(--pri);font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:14px;letter-spacing:.05em}
-.lb-free-badge{display:inline-block;background:#d1fae5;color:#065f46;font-size:.65rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-top:8px;border:1px solid #a7f3d0}
+/* ══ TOPBAR ══ */
+.topbar{position:fixed;top:calc(var(--ph) + var(--pnh));left:0;right:0;height:var(--th);background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 16px;gap:10px;z-index:9997}
+.tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.tb-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--acc),#fb923c);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:.9rem;font-weight:900;color:#fff;flex-shrink:0}
+.tb-title{font-size:.76rem;font-weight:800;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+.tb-title b{color:var(--acc)}
+.tb-hbg{display:none;width:34px;height:34px;border-radius:9px;border:1px solid var(--brd);background:var(--card);color:var(--txt2);font-size:1rem;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+@media(max-width:900px){.tb-hbg{display:flex}}
+.tb-search{flex:1;max-width:300px;position:relative}
+.tb-search input{width:100%;padding:7px 12px 7px 32px;background:var(--bg3);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:var(--font);font-size:.74rem;outline:none;transition:.2s}
+.tb-search input:focus{border-color:var(--acc)}
+.tb-si{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:.78rem;pointer-events:none}
+.tb-sp{flex:1}
+.tb-ring-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-ring{width:36px;height:36px}
+.tb-pct{font-size:.7rem;font-weight:800;color:var(--acc)}
+.tb-fc{display:flex;align-items:center;gap:3px;background:var(--bg3);border:1px solid var(--brd);border-radius:8px;padding:3px 6px;flex-shrink:0}
+.tb-fc button{background:none;border:none;color:var(--txt2);cursor:pointer;font-size:.85rem;padding:0 3px;transition:.2s;line-height:1}
+.tb-fc button:hover{color:var(--acc)}
+.tb-fc span{font-size:.6rem;color:var(--txt3);min-width:24px;text-align:center}
+.tb-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--brd);background:var(--card);color:var(--txt2);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.tb-btn:hover{border-color:var(--acc);color:var(--acc)}
+@media(max-width:900px){.tb-search{display:none}}
 
-/* PAYWALL */
-.paywall{text-align:center;padding:36px 20px;max-width:420px;margin:0 auto}
-.paywall .pw-ico{font-size:3rem;margin-bottom:12px}
-.paywall h3{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:var(--dk);margin-bottom:8px}
-.paywall p{font-size:.78rem;color:var(--txt2);line-height:1.6;margin-bottom:18px}
-.paywall .pw-buy{display:block;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;padding:14px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.85rem;margin-bottom:10px;transition:all .2s;border:none;cursor:pointer;width:100%;font-family:var(--font)}
-.paywall .pw-buy:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.35)}
-.paywall .pw-wpp{display:block;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;padding:12px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.82rem;transition:all .2s}
-.paywall .pw-wpp:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.3)}
-.paywall .pw-lock-items{text-align:left;background:var(--bg);border:1px solid var(--brd);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:.75rem;color:var(--txt2)}
-.paywall .pw-lock-items div{padding:4px 0;display:flex;align-items:center;gap:8px}
+/* ══ LAYOUT ══ */
+.layout{display:flex;padding-top:calc(var(--ph) + var(--pnh) + var(--th))}
 
-/* HOME */
-.home{margin-top:84px;padding:0 0 100px}
-.hero{text-align:center;padding:36px 16px 18px}
-.hero .ey{font-size:.55rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--pri);margin-bottom:6px}
-.hero h1{font-family:var(--serif);font-size:1.9rem;font-weight:900;color:var(--dk);margin-bottom:6px;line-height:1.25}
-.hero h1 span{color:var(--pri)}
-.hero .sub{font-size:.8rem;color:var(--txt2);max-width:420px;margin:0 auto 18px}
-.stats{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
-.stat{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:10px 14px;min-width:70px;text-align:center;box-shadow:var(--sh);transition:all .2s}
-.stat:hover{transform:translateY(-2px);box-shadow:var(--sh2);border-color:var(--pri3)}
-.stat b{font-size:1.1rem;color:var(--pri);display:block;font-weight:800}
-.stat span{font-size:.47rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+/* ══ SIDEBAR ══ */
+.sidebar{width:var(--sw);flex-shrink:0;position:fixed;top:calc(var(--ph)+var(--pnh)+var(--th));left:0;bottom:0;background:var(--bg2);border-right:1px solid var(--brd);overflow-y:auto;z-index:200;transition:transform .3s}
+.sb-head{padding:14px 14px 10px;border-bottom:1px solid var(--brd)}
+.sb-title{font-size:.78rem;font-weight:800;color:var(--txt);margin-bottom:3px}
+.sb-sub{font-size:.6rem;color:var(--txt3)}
+.sb-prog-bg{height:4px;background:var(--brd);border-radius:99px;overflow:hidden;margin-top:8px}
+.sb-prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),#fb923c);transition:width .5s;width:0%}
+.sb-prog-lbl{font-size:.54rem;color:var(--txt3);margin-top:3px;text-align:right}
+/* user pill (logado) */
+.sb-user{margin:8px 12px 0;padding:8px 10px;border-radius:9px;background:var(--acc2);border:1px solid rgba(249,115,22,.2);display:none;align-items:center;gap:7px}
+.sb-user.on{display:flex}
+.sb-udot{width:7px;height:7px;border-radius:50%;background:var(--grn);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.sb-uname{font-size:.68rem;font-weight:700;color:var(--txt);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-utier{font-size:.56rem;color:var(--txt3)}
+.sb-uout{background:none;border:none;color:var(--txt3);font-size:.65rem;cursor:pointer;transition:.2s}.sb-uout:hover{color:var(--red)}
+/* unlock button (visitante) */
+.sb-unlock{margin:10px 12px 6px;padding:9px;border-radius:10px;background:linear-gradient(135deg,var(--acc),#fb923c);border:none;color:#fff;font-size:.72rem;font-weight:800;cursor:pointer;font-family:var(--font);width:calc(100% - 24px);transition:.2s}
+.sb-unlock:hover{opacity:.88}
+/* categories & modules */
+.sb-cat{padding:12px 14px 5px;font-size:.56rem;font-weight:800;color:var(--acc);text-transform:uppercase;letter-spacing:.1em}
+.sb-mod-btn{display:flex;align-items:center;gap:9px;padding:9px 14px;width:100%;border:none;background:transparent;text-align:left;cursor:pointer;transition:.2s;font-family:var(--font)}
+.sb-mod-btn:hover{background:var(--bg3)}
+.sb-mod-btn.active{background:var(--acc2);border-left:3px solid var(--acc)}
+.sb-mnum{width:20px;height:20px;border-radius:50%;background:var(--bg3);border:1px solid var(--brd);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:800;color:var(--txt3);flex-shrink:0}
+.sb-mnum.done{background:var(--grn);border-color:var(--grn);color:#fff}
+.sb-mnum.partial{background:var(--orn);border-color:var(--orn);color:#fff}
+.sb-minfo{flex:1;min-width:0}
+.sb-mname{font-size:.7rem;font-weight:700;color:var(--txt2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-mod-btn.active .sb-mname{color:var(--txt)}
+.sb-mdots{display:flex;gap:3px;margin-top:3px}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--brd2)}
+.sb-dot.done{background:var(--grn)}
+.sb-marr{color:var(--txt3);font-size:.68rem;flex-shrink:0;transition:.3s}
+.sb-mod-btn.active .sb-marr{color:var(--acc);transform:rotate(90deg)}
+.sb-topics{display:none;flex-direction:column;gap:1px;padding:3px 14px 6px 46px}
+.sb-topics.open,.sb-mod-btn.active+.sb-topics{display:flex}
+.sb-ti{font-size:.66rem;padding:5px 7px;border-radius:6px;cursor:pointer;color:var(--txt3);display:flex;align-items:center;gap:5px;transition:.2s}
+.sb-ti:hover{background:var(--bg3);color:var(--txt2)}
+.sb-ti.done{color:var(--grn)}
+.sb-ti.free-item .sb-tidot{background:var(--grn)}
+.sb-ti.locked-item{opacity:.5;cursor:pointer}
+.sb-tidot{width:5px;height:5px;border-radius:50%;background:var(--brd2);flex-shrink:0}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:199}
+  .sb-overlay.open{display:block}
+}
 
-/* CONTINUE BANNER */
-.continue-banner{background:var(--card);border:1.5px solid var(--pri3);border-radius:10px;padding:12px 16px;margin:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:var(--sh);cursor:pointer;transition:all .25s}
-.continue-banner:hover{border-color:var(--pri);transform:translateY(-2px);box-shadow:var(--sh2)}
-.cb-icon{width:36px;height:36px;border-radius:8px;background:var(--prid);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-.cb-text{flex:1;min-width:0}
-.cb-text h4{font-size:.78rem;font-weight:700;color:var(--dk);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cb-text p{font-size:.66rem;color:var(--txt2)}
-.cb-btn{background:var(--pri);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-family:var(--font);font-size:.7rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0}
+/* ══ MAIN ══ */
+.main{flex:1;margin-left:var(--sw);min-height:100vh;padding:24px 28px 80px}
+@media(max-width:900px){.main{margin-left:0;padding:16px 14px 80px}}
 
-/* CAROUSEL */
-.cat-sec{padding:10px 0 2px}
-.cat-hd{font-size:.84rem;font-weight:700;color:var(--dk);padding:0 20px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.cat-hd em{font-size:1rem}
-.carousel-wrap{position:relative}
-.cat-row{display:flex;gap:10px;overflow-x:auto;padding:4px 20px 10px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.cat-row::-webkit-scrollbar{display:none}
-.car-btn{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;border:1px solid var(--brd);background:var(--card);box-shadow:var(--sh2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--dk);z-index:10;transition:all .2s;opacity:0}
-.carousel-wrap:hover .car-btn{opacity:1}
-.car-btn:hover{border-color:var(--pri);color:var(--pri);transform:translateY(-50%) scale(1.1)}
-.car-btn.l{left:4px}.car-btn.r{right:4px}
-@media(max-width:768px){.car-btn{opacity:1;width:26px;height:26px;font-size:.72rem}}
+/* ══ FREE PREVIEW BANNER ══ */
+.free-banner{background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(249,115,22,.03));border:1px solid rgba(249,115,22,.25);border-radius:16px;padding:18px 20px;margin-bottom:22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.fb-left{flex:1;min-width:180px}
+.fb-tag{display:inline-block;padding:3px 9px;border-radius:5px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:var(--grn);font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.fb-title{font-family:var(--serif);font-size:1rem;font-weight:900;color:var(--txt);margin-bottom:3px}
+.fb-sub{font-size:.69rem;color:var(--txt2);line-height:1.5}
+.fb-btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fb-buy{padding:9px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--acc),#fb923c);color:#fff;font-size:.74rem;font-weight:800;cursor:pointer;font-family:var(--font);transition:.2s}
+.fb-buy:hover{opacity:.9}
+.fb-code{padding:9px 14px;border-radius:10px;border:1px solid var(--brd);background:transparent;color:var(--txt2);font-size:.7rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:.2s}
+.fb-code:hover{border-color:var(--acc);color:var(--acc)}
 
-/* MODULE CARD */
-.cc{min-width:185px;max-width:185px;background:var(--card);border:1px solid var(--brd);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);scroll-snap-align:start;flex-shrink:0;position:relative;box-shadow:var(--sh)}
-.cc:hover:not(.locked){transform:scale(1.06);z-index:5;box-shadow:var(--sh2);border-color:var(--pri3)}
-.cc.done{border-color:rgba(16,185,129,.25)}
-.cc.locked{opacity:.55;cursor:not-allowed}
-.cc.locked::after{content:'🔒';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.8rem;background:rgba(0,0,0,.06)}
-.cc-top{height:92px;display:flex;align-items:center;justify-content:center;font-size:2.1rem;position:relative}
-.cc-num{position:absolute;bottom:2px;right:8px;font-size:2rem;font-weight:900;color:rgba(255,255,255,.15);line-height:1}
-.cc-fav{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.25);border:none;border-radius:50%;width:22px;height:22px;color:#fff;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:2}
-.cc-fav:hover,.cc-fav.on{background:rgba(234,179,8,.75)}
-.cc-badge{position:absolute;top:6px;left:6px;background:var(--grn);color:#fff;font-size:.5rem;font-weight:700;padding:2px 7px;border-radius:20px;z-index:2}
-.cc-body{padding:8px 10px 10px}
-.cc-body h4{font-size:.7rem;font-weight:700;color:var(--dk);line-height:1.25;margin-bottom:2px}
-.cc-body p{font-size:.57rem;color:var(--txt3);line-height:1.3}
-.cc .bar{height:2px;background:var(--bg3);margin-top:6px;border-radius:1px;overflow:hidden}
-.cc .bf{height:100%;background:var(--pri);transition:width .4s}
-.cc.done .bf{background:var(--grn)}
+/* ══ CONTINUE BANNER ══ */
+.cont-banner{background:linear-gradient(135deg,var(--acc3),rgba(249,115,22,.03));border:1px solid rgba(249,115,22,.2);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.cb-icon{font-size:1.7rem;flex-shrink:0}
+.cb-info h3{font-size:.85rem;font-weight:800;color:var(--txt);margin-bottom:2px}
+.cb-info p{font-size:.66rem;color:var(--txt2)}
+.cb-btn{margin-left:auto;padding:8px 16px;border-radius:9px;background:var(--acc);color:#fff;font-size:.72rem;font-weight:700;cursor:pointer;border:none;font-family:var(--font);white-space:nowrap;transition:.2s;flex-shrink:0}
+.cb-btn:hover{background:#ea6c00}
 
-/* MODULE VIEW */
-.mod-pg{margin-top:84px;max-width:820px;margin-left:auto;margin-right:auto;padding:18px 16px 100px}
-.bk{display:inline-flex;align-items:center;gap:4px;background:none;border:none;color:var(--txt2);font-family:var(--font);font-size:.7rem;cursor:pointer;padding:4px 0;margin-bottom:10px}
-.bk:hover{color:var(--pri)}
-.mhdr{margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--brd)}
-.mhdr .ey{font-size:.52rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pri);margin-bottom:3px}
-.mhdr h2{font-family:var(--serif);font-size:1.3rem;font-weight:900;color:var(--dk);margin-bottom:4px;line-height:1.3}
-.mhdr .d{color:var(--txt2);font-size:.77rem}
-.mnav{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
-.mnav button{background:var(--bg);border:1px solid var(--brd);border-radius:6px;padding:5px 10px;color:var(--txt2);font-family:var(--font);font-size:.65rem;font-weight:600;cursor:pointer;transition:all .2s}
-.mnav button:hover:not([disabled]){border-color:var(--pri);color:var(--pri)}
-.mnav button[disabled]{opacity:.4;cursor:not-allowed}
-.pw-bar{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:10px 14px;margin-bottom:12px;box-shadow:var(--sh)}
-.pw-bar .pt{display:flex;justify-content:space-between;margin-bottom:4px;font-size:.65rem}
-.pw-bar .pt span{color:var(--txt3)}.pw-bar .pt b{color:var(--pri)}
-.ppb{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
-.ppf{height:100%;background:var(--pri);border-radius:2px;transition:width .5s}
+/* ══ COMPLETION ══ */
+.done-banner{background:linear-gradient(135deg,rgba(34,197,94,.09),rgba(22,163,74,.05));border:1px solid rgba(34,197,94,.28);border-radius:16px;padding:22px;text-align:center;margin-bottom:22px}
+.db-icon{font-size:3rem;display:block;margin-bottom:10px}
+.db-title{font-family:var(--serif);font-size:1.2rem;font-weight:900;color:var(--grn);margin-bottom:5px}
+.db-sub{font-size:.74rem;color:var(--txt2);margin-bottom:14px}
+.db-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.db-btn{padding:9px 20px;border-radius:10px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:var(--font);border:none;transition:.2s}
+.db-pri{background:var(--acc);color:#fff}.db-pri:hover{background:#ea6c00}
+.db-sec{background:var(--bg3);color:var(--txt2);border:1px solid var(--brd)}
 
-/* TOPICS */
-.tp{background:var(--card);border:1px solid var(--brd);border-radius:8px;margin-bottom:7px;transition:all .25s;overflow:hidden;box-shadow:var(--sh)}
-.tp:hover{transform:translateX(3px);box-shadow:var(--sh2)}
-.tp.dn{border-color:rgba(16,185,129,.18)}
-.tph{display:flex;align-items:center;gap:8px;padding:11px 12px;cursor:pointer}
-.ck{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--brd);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;flex-shrink:0;color:transparent;font-size:.62rem}
-.ck:hover{border-color:var(--pri)}
-.ck.on{background:var(--grn);border-color:var(--grn);color:#fff;animation:pk .3s cubic-bezier(.175,.885,.32,1.275)}
-@keyframes pk{0%{transform:scale(.5)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
-.tn{width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:5px;background:var(--prid);font-size:.66rem;font-weight:700;color:var(--pri);flex-shrink:0}
-.ttt{flex:1;font-weight:600;font-size:.77rem;color:var(--dk);line-height:1.3}
-.tp.dn .ttt{color:var(--txt2)}
-.ta{color:var(--txt3);transition:transform .2s;font-size:.78rem;flex-shrink:0}
-.ta.o{transform:rotate(180deg);color:var(--pri)}
-.tbd{padding:8px 12px 14px 52px;display:none;color:var(--txt);line-height:1.85;font-size:.81rem}
-.tbd.o{display:block;animation:fi .2s}
-@keyframes fi{from{opacity:0}to{opacity:1}}
-.tbd strong{color:var(--pri)}.tbd p{margin-bottom:.8em}
+/* ══ MODULE CARD ══ */
+.mod-card{background:var(--card);border:1px solid var(--brd);border-radius:18px;margin-bottom:18px;overflow:hidden;transition:.2s}
+.mod-card:hover{border-color:rgba(249,115,22,.25)}
+.mod-hdr{display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;transition:.2s}
+.mod-hdr:hover{background:var(--bg3)}
+.mod-icon{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--acc),#fb923c);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.mod-icon.done{background:linear-gradient(135deg,var(--grn),#16a34a)}
+.mod-info{flex:1;min-width:0}
+.mod-title{font-family:var(--serif);font-size:.98rem;font-weight:900;color:var(--txt);margin-bottom:4px}
+.mod-meta{font-size:.63rem;color:var(--txt3);display:flex;gap:10px;flex-wrap:wrap}
+.mod-pct{font-size:.76rem;font-weight:800;color:var(--acc);flex-shrink:0}
+.mod-pct.full{color:var(--grn)}
+.mod-chev{font-size:.82rem;color:var(--txt3);transition:.3s;flex-shrink:0}
+.mod-card.open .mod-chev{transform:rotate(180deg)}
+.mod-body{display:none;border-top:1px solid var(--brd)}
+.mod-card.open .mod-body{display:block}
 
-/* FONT SIZE TOOLS */
-.tools-row{display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap}
-.fs-btn{width:28px;height:28px;border-radius:6px;border:1px solid var(--brd);background:var(--card);color:var(--txt2);font-family:var(--font);font-size:.7rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.fs-btn:hover{border-color:var(--pri);color:var(--pri)}
-.fs-lbl{font-size:.63rem;color:var(--txt3)}
+/* ══ TOPIC ITEM — OPEN ══ */
+.topic{border-bottom:1px solid rgba(255,255,255,.04)}
+.topic:last-of-type.topic-full{border-bottom:none}
+.topic-hdr{display:flex;align-items:center;gap:12px;padding:13px 20px;cursor:pointer;transition:.2s}
+.topic-hdr:hover{background:var(--bg3)}
+.t-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--brd2);display:flex;align-items:center;justify-content:center;transition:.3s;flex-shrink:0;cursor:pointer;position:relative}
+.t-check.done{background:var(--grn);border-color:var(--grn)}
+.t-check.done::after{content:'✓';color:#fff;font-size:.75rem;font-weight:900}
+.t-check.pop{animation:cpop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cpop{0%{transform:scale(1)}40%{transform:scale(1.45)}70%{transform:scale(.88)}100%{transform:scale(1)}}
+.t-name{flex:1;font-size:.82rem;font-weight:700;color:var(--txt2);transition:.2s}
+.topic-hdr:hover .t-name,.topic.open .t-name{color:var(--txt)}
+.topic.tdone .t-name{color:var(--grn)}
+.t-free-badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:5px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:var(--grn);font-size:.55rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0}
+.t-chev{font-size:.72rem;color:var(--txt3);transition:.3s;flex-shrink:0}
+.topic.open .t-chev{transform:rotate(180deg);color:var(--acc)}
+.t-body{display:none;padding:0 20px 18px 54px}
+.topic.open .t-body{display:block}
+/* topic tools */
+.t-tools{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.t-tool{display:flex;align-items:center;gap:4px;padding:5px 11px;border-radius:7px;font-size:.63rem;font-weight:700;cursor:pointer;border:1px solid var(--brd);background:transparent;color:var(--txt2);font-family:var(--font);transition:.2s}
+.t-tool:hover,.t-tool.on{border-color:var(--acc);color:var(--acc);background:var(--acc2)}
+.t-content{font-size:14px;line-height:1.8;color:var(--txt2);margin-bottom:12px;transition:font-size .2s}
+.t-content b{color:var(--txt)}
+.t-content .hl{background:rgba(249,115,22,.28);border-radius:3px;padding:0 2px}
+/* audio player */
+.audio-bar{background:var(--bg3);border:1px solid var(--brd);border-radius:9px;padding:9px 13px;display:flex;align-items:center;gap:9px;margin-top:9px;flex-wrap:wrap}
+.a-play{width:32px;height:32px;border-radius:50%;background:var(--acc);border:none;color:#fff;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s}
+.a-play:hover{background:#ea6c00}
+.a-info{flex:1;min-width:0}
+.a-title{font-size:.66rem;font-weight:700;color:var(--txt)}
+.a-st{font-size:.58rem;color:var(--txt3);margin-top:1px}
+.a-spd{display:flex;gap:3px;flex-shrink:0}
+.a-spd button{padding:3px 6px;border-radius:5px;border:1px solid var(--brd);background:transparent;color:var(--txt2);font-size:.58rem;cursor:pointer;font-family:var(--font);transition:.2s}
+.a-spd button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+/* notes */
+.notes-box{background:var(--bg2);border:1px solid var(--brd);border-radius:9px;padding:9px 11px;margin-top:10px}
+.notes-box textarea{width:100%;background:transparent;border:none;color:var(--txt);font-family:var(--font);font-size:.74rem;line-height:1.6;resize:vertical;min-height:65px;outline:none}
+.notes-save{margin-top:5px;padding:5px 13px;border-radius:7px;border:none;background:var(--acc);color:#fff;font-size:.64rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:.2s}
+.notes-save:hover{background:#ea6c00}
+/* free topic CTA */
+.free-cta-block{margin-top:16px;padding:16px;border-top:1px solid var(--brd);background:linear-gradient(135deg,rgba(249,115,22,.06),transparent);border-radius:0 0 12px 12px;text-align:center}
+.fcb-title{font-size:.82rem;font-weight:800;color:var(--txt);margin-bottom:4px}
+.fcb-sub{font-size:.7rem;color:var(--txt2);margin-bottom:12px;line-height:1.5}
+.fcb-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.fcb-main{padding:10px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--acc),#fb923c);color:#fff;font-size:.78rem;font-weight:800;cursor:pointer;font-family:var(--font);transition:.2s}
+.fcb-main:hover{opacity:.9}
+.fcb-sec{padding:10px 18px;border-radius:10px;border:1px solid var(--brd);background:transparent;color:var(--txt2);font-size:.74rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:.2s}
+.fcb-sec:hover{border-color:var(--acc);color:var(--acc)}
 
-/* NOTES */
-.notes{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:14px;margin-top:16px;box-shadow:var(--sh)}
-.notes label{font-size:.62rem;font-weight:700;color:var(--pri);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px}
-.notes textarea{display:block;width:100%;min-height:100px;background:var(--bg);border:1.5px solid var(--brd);border-radius:6px;padding:10px;font-family:var(--font);font-size:.82rem;color:var(--dk);outline:none;resize:none;overflow:hidden;transition:border .2s;line-height:1.7}
-.notes textarea:focus{border-color:var(--pri)}
-.notes .saved{font-size:.6rem;color:var(--grn);margin-top:4px;opacity:0;transition:opacity .3s}
-.notes .saved.show{opacity:1}
-.notes-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.notes-actions button{background:var(--bg);border:1px solid var(--brd);border-radius:6px;padding:5px 11px;font-family:var(--font);font-size:.66rem;font-weight:600;color:var(--txt2);cursor:pointer;transition:all .2s}
-.notes-actions button:hover{border-color:var(--pri);color:var(--pri)}
+/* ══ TOPIC ITEM — LOCKED ══ */
+.topic-locked{border-bottom:1px solid rgba(255,255,255,.04)}
+.topic-locked:last-child{border-bottom:none}
+.tl-hdr{display:flex;align-items:center;gap:12px;padding:13px 20px;cursor:pointer;transition:.2s;opacity:.75}
+.tl-hdr:hover{background:rgba(249,115,22,.04);opacity:1}
+.tl-lock{font-size:1rem;flex-shrink:0;opacity:.5}
+.tl-name{flex:1;font-size:.82rem;font-weight:700;color:var(--txt2)}
+.tl-cta{font-size:.64rem;color:var(--acc);font-weight:700;flex-shrink:0;white-space:nowrap}
+.tl-body{display:none;padding:12px 20px 16px 54px}
+.topic-locked.open .tl-body{display:block}
+.tl-teaser{background:linear-gradient(135deg,rgba(249,115,22,.06),rgba(249,115,22,.02));border:1px dashed rgba(249,115,22,.2);border-radius:10px;padding:20px 18px;text-align:center}
+.tl-t-icon{font-size:2rem;display:block;margin-bottom:8px}
+.tl-t-title{font-size:.84rem;font-weight:800;color:var(--txt2);margin-bottom:5px}
+.tl-t-sub{font-size:.7rem;color:var(--txt3);line-height:1.6;margin-bottom:14px}
+.tl-t-btn{padding:10px 26px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--acc),#fb923c);color:#fff;font-size:.78rem;font-weight:800;cursor:pointer;font-family:var(--font);transition:.2s}
+.tl-t-btn:hover{opacity:.9}
 
-/* HIGHLIGHT */
-.hl-float{position:fixed;bottom:80px;right:16px;z-index:500;width:46px;height:46px;border-radius:50%;background:var(--card);border:2px solid var(--brd);color:var(--txt2);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.1);transition:all .25s}
-.hl-float:hover{transform:scale(1.1);border-color:#eab308;color:#a16207}
-.hl-float.active{background:#fef9c3;border-color:#eab308;color:#a16207;animation:penPulse 1.5s infinite}
-@keyframes penPulse{0%,100%{box-shadow:0 0 0 4px rgba(234,179,8,.15)}50%{box-shadow:0 0 0 8px rgba(234,179,8,.08)}}
-.hl-tip{position:fixed;bottom:130px;right:8px;z-index:501;background:#fef9c3;border:1px solid #fde68a;color:#92400e;font-family:var(--font);font-size:.6rem;font-weight:600;padding:4px 9px;border-radius:5px;display:none;white-space:nowrap}
-.hl-tip.show{display:block}
-body.hl-mode{cursor:crosshair!important}body.hl-mode *{cursor:crosshair!important}
+/* ══ MODULE SUMMARY ══ */
+.mod-summary{background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:13px 15px;margin:13px 20px}
+.ms-title{font-size:.76rem;font-weight:800;color:var(--txt);margin-bottom:7px;display:flex;align-items:center;gap:5px}
+.ms-list{list-style:none}
+.ms-item{font-size:.73rem;color:var(--txt2);padding:4px 0;display:flex;align-items:flex-start;gap:6px;line-height:1.55}
+.ms-item::before{content:'▸';color:var(--acc);flex-shrink:0;margin-top:2px}
 
-/* QUIZ */
-.quiz{background:var(--card);border:2px solid var(--pri3);border-radius:10px;padding:16px;margin-top:16px;box-shadow:var(--sh)}
-.quiz h3{font-size:.86rem;font-weight:700;color:var(--dk);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+/* ══ QUIZ ══ */
+.quiz-wrap{background:linear-gradient(135deg,var(--acc3),rgba(249,115,22,.02));border:1px solid rgba(249,115,22,.2);border-radius:13px;padding:18px 20px;margin:13px 20px 20px}
+.quiz-title{font-family:var(--serif);font-size:.92rem;font-weight:900;color:var(--txt);margin-bottom:14px;display:flex;align-items:center;gap:7px}
 .qq{margin-bottom:13px}
-.qq .ql{font-size:.77rem;font-weight:600;color:var(--dk);margin-bottom:5px;line-height:1.4}
-.qq .opt{display:flex;flex-direction:column;gap:3px}
-.qq .opt label{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--brd);border-radius:6px;cursor:pointer;font-size:.74rem;color:var(--txt);transition:all .2s}
-.qq .opt label:hover{border-color:var(--pri);background:var(--prid)}
-.qq .opt label.correct{border-color:var(--grn);background:#d1fae5;color:#065f46}
-.qq .opt label.wrong{border-color:var(--red);background:#fee2e2;color:#991b1b}
-.qq .opt input{accent-color:var(--pri);flex-shrink:0}
-.qq .exp{font-size:.68rem;color:var(--txt2);margin-top:4px;font-style:italic;padding:4px 8px;background:var(--bg);border-radius:4px}
-.quiz-btn{padding:9px 20px;border:none;border-radius:6px;font-family:var(--font);font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;background:var(--pri);color:#fff}
-.quiz-btn:hover{opacity:.9}
-.quiz-btn:disabled{opacity:.4;cursor:not-allowed}
-.quiz-result{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:.8rem;font-weight:600;text-align:center}
-.quiz-result.pass{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0}
-.quiz-result.fail{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
-.quiz-unlock-badge{display:flex;align-items:center;gap:8px;background:#d1fae5;border:1px solid #a7f3d0;border-radius:8px;padding:10px 14px;margin-top:10px;font-size:.76rem;font-weight:600;color:#065f46}
+.qq-txt{font-size:.79rem;font-weight:700;color:var(--txt);margin-bottom:7px}
+.qq-opts{display:flex;flex-direction:column;gap:5px}
+.qq-opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:1px solid var(--brd);background:transparent;cursor:pointer;transition:.2s;font-family:var(--font);font-size:.74rem;color:var(--txt2);text-align:left}
+.qq-opt:hover{border-color:var(--acc);color:var(--txt)}
+.qq-opt.sel{border-color:var(--acc);background:var(--acc2);color:var(--txt)}
+.qq-opt.ok{border-color:var(--grn);background:rgba(34,197,94,.1);color:var(--grn)}
+.qq-opt.wrong{border-color:var(--red);background:rgba(239,68,68,.1);color:var(--red)}
+.qq-letter{width:20px;height:20px;border-radius:50%;background:var(--brd);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:800;flex-shrink:0}
+.quiz-submit{padding:9px 22px;border-radius:10px;border:none;background:var(--acc);color:#fff;font-size:.76rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:.2s;margin-top:7px}
+.quiz-submit:hover{background:#ea6c00}
+.quiz-submit:disabled{opacity:.45;cursor:default}
+.quiz-result{margin-top:10px;padding:10px 14px;border-radius:9px;font-size:.76rem;font-weight:700;text-align:center}
+.quiz-result.ok{background:rgba(34,197,94,.1);color:var(--grn);border:1px solid rgba(34,197,94,.22)}
+.quiz-result.bad{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.22)}
+/* quiz locked */
+.quiz-locked{background:var(--acc3);border:1px solid rgba(249,115,22,.15);border-radius:13px;padding:22px;margin:13px 20px 20px;text-align:center;cursor:pointer;transition:.2s}
+.quiz-locked:hover{background:var(--acc2)}
+.quiz-locked .ql-icon{font-size:1.8rem;display:block;margin-bottom:7px}
+.quiz-locked .ql-title{font-size:.8rem;font-weight:800;color:var(--txt2);margin-bottom:4px}
+.quiz-locked .ql-sub{font-size:.68rem;color:var(--txt3);margin-bottom:11px}
+.quiz-locked .ql-btn{padding:8px 18px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--acc),#fb923c);color:#fff;font-size:.72rem;font-weight:800;cursor:pointer;font-family:var(--font);pointer-events:none}
 
-/* CERT */
-.cert-block{background:var(--prid);border:1.5px solid var(--pri3);border-radius:12px;padding:22px;text-align:center;margin-top:20px}
-.cert-block h3{font-family:var(--serif);color:var(--pri);font-size:1.1rem;margin-bottom:6px}
-.cert-block p{color:var(--txt2);font-size:.75rem;margin-bottom:12px}
-.cert-form{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
-.cert-form input{background:var(--card);border:1.5px solid var(--brd);border-radius:6px;padding:9px 12px;color:var(--dk);font-family:var(--font);font-size:.77rem;width:180px;outline:none}
-.cert-btn{background:var(--pri);color:#fff;border:none;padding:9px 20px;border-radius:6px;font-family:var(--font);font-size:.78rem;font-weight:700;cursor:pointer}
-canvas#cc{display:none}
+/* ══ BONUS CARD ══ */
+.bonus-card{background:var(--bg2);border:1px dashed var(--brd2);border-radius:14px;padding:22px;text-align:center;margin-bottom:20px}
+.bonus-card.unlocked{border-color:rgba(249,115,22,.3);background:var(--acc3)}
+.bc-icon{font-size:2.5rem;display:block;margin-bottom:9px}
+.bc-title{font-family:var(--serif);font-size:.98rem;font-weight:900;color:var(--txt3)}
+.bonus-card.unlocked .bc-title{color:var(--acc)}
+.bc-sub{font-size:.69rem;color:var(--txt3);margin-top:5px;line-height:1.5}
+.bonus-card.unlocked .bc-sub{color:var(--txt2)}
 
-/* ACHIEVEMENT */
-.achievement{position:fixed;top:72px;left:50%;transform:translateX(-50%);background:var(--grn);color:#fff;font-family:var(--font);font-size:.78rem;font-weight:700;padding:9px 22px;border-radius:8px;z-index:9000;box-shadow:0 4px 20px rgba(16,185,129,.35);display:none;white-space:nowrap}
-.achievement.show{display:block;animation:slideDown .4s ease}
-@keyframes slideDown{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+/* ══ FLASHCARDS MODAL ══ */
+.fc-modal{display:none;position:fixed;inset:0;z-index:15000;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+.fc-modal.on{display:flex}
+.fc-box{background:var(--card);border:1px solid var(--brd2);border-radius:22px;width:100%;max-width:440px;padding:26px 22px;text-align:center}
+.fc-ttl{font-family:var(--serif);font-size:1rem;font-weight:900;color:var(--txt);margin-bottom:18px}
+.fc-wrap{perspective:800px;margin-bottom:16px;cursor:pointer}
+.fc-card{width:100%;height:155px;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:18px;font-size:.84rem;font-weight:700;backface-visibility:hidden;-webkit-backface-visibility:hidden;line-height:1.5}
+.fc-front{background:linear-gradient(135deg,var(--acc),#fb923c);color:#fff}
+.fc-back{background:var(--bg2);border:1px solid var(--brd);color:var(--txt);transform:rotateY(180deg)}
+.fc-hint{font-size:.6rem;color:var(--txt3);margin-bottom:13px}
+.fc-btns{display:flex;gap:9px;justify-content:center}
+.fc-btn{padding:8px 20px;border-radius:9px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:var(--font);border:none;transition:.2s}
+.fc-ok{background:var(--grn);color:#fff}.fc-ok:hover{background:#16a34a}
+.fc-miss{background:var(--red);color:#fff}.fc-miss:hover{background:#dc2626}
+.fc-skip{background:var(--bg3);color:var(--txt2);border:1px solid var(--brd)}
+.fc-count{font-size:.62rem;color:var(--txt3);margin-top:9px}
 
-/* CHAT BUTTON */
-.chat-btn{position:fixed;bottom:20px;right:16px;z-index:490;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-size:1.25rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(16,185,129,.4);border:none;transition:all .25s}
-.chat-btn:hover{transform:scale(1.1)}
+/* ══ SURPRISE MODAL ══ */
+.surp-modal{display:none;position:fixed;inset:0;z-index:14000;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);align-items:center;justify-content:center}
+.surp-modal.on{display:flex}
+.surp-box{background:var(--card);border:1px solid var(--acc);border-radius:22px;padding:30px 26px;text-align:center;max-width:320px;width:100%;animation:spop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes spop{from{transform:scale(.3) rotate(-10deg);opacity:0}to{transform:none;opacity:1}}
+.surp-icon{font-size:3.2rem;display:block;margin-bottom:10px;animation:sbounce 1s ease infinite}
+@keyframes sbounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.surp-title{font-family:var(--serif);font-size:1.15rem;font-weight:900;color:var(--acc);margin-bottom:5px}
+.surp-pts{font-size:2rem;font-weight:900;color:var(--grn);margin:7px 0}
+.surp-close{margin-top:13px;padding:10px 24px;border-radius:10px;border:none;background:var(--acc);color:#fff;font-size:.78rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:.2s}
 
-/* FOOTER */
-.footer{background:var(--card);border-top:1px solid var(--brd);padding:18px 20px;text-align:center;margin-top:24px}
-.footer-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-.footer-links a{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:8px;font-family:var(--font);font-size:.7rem;font-weight:600;text-decoration:none;transition:all .25s;border:1px solid var(--brd)}
-.footer-links .tg{background:#e3f2fd;color:#0088cc;border-color:#bbdefb}
-.footer-links .tg:hover{background:#bbdefb;transform:translateY(-2px)}
-.footer-brand{font-size:.62rem;color:var(--txt3)}
+/* ══ CERTIFICATE MODAL ══ */
+.cert-modal{display:none;position:fixed;inset:0;z-index:16000;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px}
+.cert-modal.on{display:flex}
+.cert-box{background:var(--card);border:1px solid var(--brd2);border-radius:22px;padding:22px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto}
+.cert-ttl{font-family:var(--serif);font-size:1rem;font-weight:900;color:var(--txt);margin-bottom:14px;text-align:center}
+#certCanvas{width:100%;border-radius:9px;margin-bottom:13px}
+.cert-btns{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.cert-dl{padding:10px 22px;border-radius:10px;border:none;background:var(--acc);color:#fff;font-size:.76rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:.2s}
+.cert-dl:hover{background:#ea6c00}
+.cert-cls{padding:10px 18px;border-radius:10px;border:1px solid var(--brd);background:transparent;color:var(--txt2);font-size:.76rem;font-weight:700;cursor:pointer;font-family:var(--font)}
 
-/* SEARCH VIEW */
-.srw{max-width:820px;margin:84px auto 0;padding:18px 16px}
-.srt{font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--dk);margin-bottom:12px}
-.sri{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:10px 14px;margin-bottom:6px;cursor:pointer;transition:all .2s;box-shadow:var(--sh)}
-.sri:hover{border-color:var(--pri3);transform:translateX(4px)}
-.srm{font-size:.5rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pri);margin-bottom:1px}
-.srtp{font-weight:600;color:var(--dk);font-size:.77rem}
+/* ══ PAYWALL MODAL ══ */
+.pw-modal{display:none;position:fixed;inset:0;z-index:20000;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px}
+.pw-modal.on{display:flex}
+.pw-box{background:var(--card);border:1px solid var(--brd2);border-radius:24px;width:100%;max-width:450px;overflow:hidden;animation:pwin .35s cubic-bezier(.34,1.2,.64,1)}
+@keyframes pwin{from{transform:scale(.88) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.pw-hero{background:linear-gradient(135deg,#f97316,#fb923c);padding:26px 22px 20px;text-align:center;position:relative}
+.pw-close{position:absolute;top:13px;right:14px;background:rgba(255,255,255,.2);border:none;color:#fff;width:27px;height:27px;border-radius:50%;font-size:.82rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
+.pw-close:hover{background:rgba(255,255,255,.35)}
+.pw-hero-icon{font-size:2.8rem;display:block;margin-bottom:9px}
+.pw-hero-title{font-family:var(--serif);font-size:1.25rem;font-weight:900;color:#fff;margin-bottom:4px}
+.pw-hero-sub{font-size:.73rem;color:rgba(255,255,255,.85);line-height:1.5}
+.pw-body{padding:20px 22px 24px}
+.pw-benefits{list-style:none;margin-bottom:16px}
+.pw-benefit{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:.76rem;color:var(--txt2);line-height:1.45}
+.pw-benefit::before{content:'✅';flex-shrink:0;margin-top:1px}
+.pw-price{background:var(--bg2);border:1px solid var(--brd);border-radius:11px;padding:13px 15px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.pw-price-lbl{font-size:.76rem;color:var(--txt2)}.pw-price-lbl strong{display:block;font-size:.65rem;color:var(--txt3);margin-top:1px}
+.pw-price-val{font-family:var(--serif);font-size:1.55rem;font-weight:900;color:var(--acc)}.pw-price-val small{font-size:.58rem;color:var(--txt3);font-family:var(--font);display:block;text-align:right}
+.pw-buy{display:block;width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--acc),#fb923c);color:#fff;font-size:.88rem;font-weight:800;cursor:pointer;font-family:var(--font);transition:.2s;text-align:center;text-decoration:none;margin-bottom:11px}
+.pw-buy:hover{opacity:.9;transform:scale(1.01)}
+.pw-div{display:flex;align-items:center;gap:9px;margin:10px 0}
+.pw-div::before,.pw-div::after{content:'';flex:1;height:1px;background:var(--brd)}
+.pw-div span{font-size:.62rem;color:var(--txt3)}
+.pw-toggle{background:none;border:none;color:var(--pri);font-size:.7rem;cursor:pointer;font-family:var(--font);display:block;width:100%;text-align:center;padding:5px;transition:.2s}
+.pw-toggle:hover{text-decoration:underline}
+.pw-code-area{display:none;margin-top:10px}
+.pw-code-area.on{display:block}
+.pw-code-input{width:100%;padding:10px 14px;background:var(--bg2);border:1.5px solid var(--brd);border-radius:9px;color:var(--txt);font-family:var(--font);font-size:.8rem;outline:none;text-align:center;letter-spacing:.12em;transition:.2s;margin-bottom:7px}
+.pw-code-input:focus{border-color:var(--acc)}
+.pw-code-btn{width:100%;padding:10px;border-radius:10px;border:1px solid var(--brd);background:var(--bg3);color:var(--txt);font-size:.78rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:.2s}
+.pw-code-btn:hover{border-color:var(--acc);color:var(--acc)}
+.pw-err{color:var(--red);font-size:.68rem;text-align:center;margin-top:5px;min-height:17px}
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  .hero h1{font-size:1.45rem}
-  .mod-pg{padding:14px 12px 100px}
-  .tbd{padding:6px 10px 12px 10px}
-  .cat-hd{padding:0 12px}
-  .cat-row{padding:4px 12px 8px}
-  .continue-banner{margin:10px 12px}
-  .mnav button{flex:1;min-width:0;font-size:.62rem;padding:7px 4px;text-align:center}
-}
-@media(max-width:480px){
-  .mhdr h2{font-size:1rem}
-  .tbd{font-size:.78rem;line-height:1.65}
-  .tph{padding:10px 10px}
-  .hdr{padding:0 8px}
-  .hdr-logo{font-size:.72rem}
-  .cc{min-width:160px;max-width:160px}
-  .cc-top{height:80px}
-  .portal-bar{height:28px}
-}
+/* ══ AI CHAT ══ */
+.ai-btn{position:fixed;bottom:84px;right:16px;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--acc),#fb923c);border:none;color:#fff;font-size:1.25rem;cursor:pointer;z-index:5000;box-shadow:0 4px 18px rgba(249,115,22,.4);transition:.3s;display:none}
+.ai-btn.on{display:flex;align-items:center;justify-content:center}
+.ai-btn:hover{transform:scale(1.1)}
+.ai-panel{position:fixed;bottom:142px;right:14px;width:305px;max-height:420px;background:var(--card);border:1px solid var(--brd2);border-radius:17px;z-index:5001;display:none;flex-direction:column;box-shadow:0 14px 44px rgba(0,0,0,.6);overflow:hidden}
+.ai-panel.on{display:flex}
+.ai-panel-hdr{padding:11px 14px;background:linear-gradient(135deg,var(--acc),#fb923c);display:flex;align-items:center;gap:7px}
+.ai-panel-hdr h3{font-size:.8rem;font-weight:800;color:#fff;flex:1}
+.ai-rem{font-size:.58rem;color:rgba(255,255,255,.72)}
+.ai-xbtn{background:none;border:none;color:#fff;font-size:.9rem;cursor:pointer}
+.ai-msgs{flex:1;overflow-y:auto;padding:11px 13px;display:flex;flex-direction:column;gap:7px;min-height:0}
+.ai-msg{padding:7px 11px;border-radius:9px;font-size:.72rem;line-height:1.55;max-width:84%}
+.ai-msg.user{background:var(--acc2);border:1px solid rgba(249,115,22,.22);align-self:flex-end;color:var(--txt)}
+.ai-msg.bot{background:var(--bg2);border:1px solid var(--brd);align-self:flex-start;color:var(--txt2)}
+.ai-msg.think{color:var(--txt3);font-style:italic}
+.ai-inp-row{display:flex;gap:7px;padding:9px 11px;border-top:1px solid var(--brd)}
+.ai-inp{flex:1;background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:7px 9px;color:var(--txt);font-family:var(--font);font-size:.72rem;outline:none;transition:.2s}
+.ai-inp:focus{border-color:var(--acc)}
+.ai-send{width:30px;height:30px;border-radius:7px;background:var(--acc);border:none;color:#fff;font-size:.8rem;cursor:pointer;flex-shrink:0;transition:.2s}
+.ai-send:hover{background:#ea6c00}
+
+/* ══ TIMER ══ */
+.timer{position:fixed;bottom:84px;left:14px;background:var(--card);border:1px solid var(--brd);border-radius:11px;padding:5px 11px;display:flex;align-items:center;gap:6px;font-size:.66rem;color:var(--txt2);z-index:4000;box-shadow:0 3px 14px rgba(0,0,0,.4)}
+.t-dot{width:6px;height:6px;border-radius:50%;background:var(--grn);flex-shrink:0;animation:pulse 2s infinite}
+.t-val{font-weight:800;color:var(--txt);font-variant-numeric:tabular-nums}
+
+/* ══ MOTIVATIONAL ══ */
+.motiv{position:fixed;bottom:150px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--acc),#fb923c);border-radius:12px;padding:11px 20px;font-size:.8rem;font-weight:800;color:#fff;z-index:12000;display:none;white-space:nowrap;box-shadow:0 7px 24px rgba(249,115,22,.4);animation:mvin .4s ease}
+@keyframes mvin{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* ══ TOASTS ══ */
+.toast-wrap{position:fixed;top:100px;right:14px;z-index:20000;display:flex;flex-direction:column;gap:7px;pointer-events:none}
+.toast{background:var(--card);border:1px solid var(--brd);border-left:3px solid var(--acc);border-radius:11px;padding:9px 15px;font-size:.76rem;display:flex;align-items:center;gap:8px;box-shadow:0 5px 22px rgba(0,0,0,.5);pointer-events:auto;transform:translateX(120%);opacity:0;transition:all .32s cubic-bezier(.2,0,.3,1);max-width:270px}
+.toast.show{transform:translateX(0);opacity:1}
+.toast.tgrn{border-left-color:var(--grn)}
+.toast.torn{border-left-color:var(--orn)}
+.toast-ico{font-size:.95rem;flex-shrink:0}
+.toast-txt{flex:1;color:var(--txt)}
+
+/* ══ LOGOUT BTN ══ */
+.logout-btn{position:fixed;bottom:9px;right:14px;background:transparent;border:none;color:var(--txt3);font-size:.58rem;cursor:pointer;font-family:var(--font);z-index:3000;padding:4px 8px;transition:.2s;display:none}
+.logout-btn.on{display:block}
+.logout-btn:hover{color:var(--red)}
+
+/* ══ FOOTER ══ */
+footer{background:var(--bg2);border-top:1px solid var(--brd);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-left:var(--sw)}
+@media(max-width:900px){footer{margin-left:0}}
+.ft-links{display:flex;gap:14px;flex-wrap:wrap}
+.ft-links a{font-size:.68rem;color:var(--txt2);text-decoration:none;transition:.2s}
+.ft-links a:hover{color:var(--acc)}
+.ft-copy{font-size:.62rem;color:var(--txt3)}
 </style>
 </head>
 <body>
-<div class="portal-bar">
-  <a href="index.html" class="pb-main">Matheus Academy</a>
-  <a href="index.html" onclick="localStorage.setItem('ma_open_modal','login');return true">Login</a>
-  <a href="index.html" onclick="localStorage.setItem('ma_open_modal','register');return true">Criar Conta</a>
-  <a href="index.html" onclick="localStorage.setItem('ma_open_modal','plans');return true" class="pb-plan">Planos</a>
-  <a href="painel.html" style="color:#5b7fff;font-weight:700;font-size:.58rem;padding:3px 7px;border-radius:5px;background:rgba(91,127,255,.12)">⭐ Painel</a>
-  <a href="indicacoes.html" style="color:#a855f7;font-weight:700;font-size:.58rem;padding:3px 7px;border-radius:5px;background:rgba(168,85,247,.1)">🔗 Indicações</a>
+
+<!-- PROGRESS BAR -->
+<div id="gBar"><div id="gFill"></div></div>
+
+<!-- PORTAL NAV -->
+<nav class="pnav">
+  <a href="index.html">🎓 Matheus Academy</a>
+  <span class="sep">·</span><a href="index.html">Início</a>
+  <span class="sep">·</span><a href="painel.html">Painel</a>
+  <div class="sp"></div>
+  <a href="index.html" class="pnav-btn pnav-login" id="pnLogin">Login</a>
+  <a href="index.html#assinaturas" class="pnav-btn pnav-buy" id="pnBuy">Assinaturas</a>
+</nav>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a class="tb-logo" href="index.html">
+    <div class="tb-icon">T</div>
+    <span class="tb-title">Dominando o <b>Tráfego Pago</b></span>
+  </a>
+  <button class="tb-hbg" onclick="toggleSidebar()">☰</button>
+  <div class="tb-search"><span class="tb-si">🔍</span><input id="searchInput" type="text" placeholder="Buscar tópico..." oninput="doSearch(this.value)"></div>
+  <div class="tb-sp"></div>
+  <!-- progress ring -->
+  <div class="tb-ring-wrap">
+    <svg class="tb-ring" viewBox="0 0 36 36">
+      <circle cx="18" cy="18" r="15" fill="none" stroke="var(--brd)" stroke-width="2.5"/>
+      <circle cx="18" cy="18" r="15" fill="none" stroke="var(--acc)" stroke-width="2.5"
+        stroke-dasharray="0 94.25" stroke-linecap="round" id="ringCirc" transform="rotate(-90 18 18)" style="transition:.6s"/>
+    </svg>
+    <span class="tb-pct" id="ringPct">0%</span>
+  </div>
+  <div class="tb-fc">
+    <button onclick="changeFz(-1)">A-</button>
+    <span id="fzLbl">14</span>
+    <button onclick="changeFz(1)">A+</button>
+  </div>
+  <button class="tb-btn" onclick="toggleTheme()">🌙</button>
+</header>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-head">
+    <div class="sb-title">Dominando o Tráfego Pago</div>
+    <div class="sb-sub" id="sbSub">3 módulos · 9 tópicos</div>
+    <div class="sb-prog-bg"><div class="sb-prog-fill" id="sbFill"></div></div>
+    <div class="sb-prog-lbl" id="sbLbl">0% concluído</div>
+  </div>
+  <!-- user pill -->
+  <div class="sb-user" id="sbUser">
+    <div class="sb-udot"></div>
+    <div><div class="sb-uname" id="sbUname">Aluno</div><div class="sb-utier" id="sbUTier">INDIVIDUAL</div></div>
+    <button class="sb-uout" onclick="doLogout()">Sair</button>
+  </div>
+  <!-- unlock btn (visitante) -->
+  <button class="sb-unlock" id="sbUnlock" onclick="openPaywall()">🔓 Desbloquear Curso Completo</button>
+
+  <div class="sb-cat">📡 Fundamentos</div>
+  <!-- Módulo 1 -->
+  <button class="sb-mod-btn active" onclick="openMod(0)" id="smb0">
+    <div class="sb-mnum" id="smn0">1</div>
+    <div class="sb-minfo"><div class="sb-mname">Fundamentos do Tráfego Pago</div>
+      <div class="sb-mdots" id="smd0"><div class="sb-dot"></div><div class="sb-dot"></div><div class="sb-dot"></div></div>
+    </div>
+    <span class="sb-marr">›</span>
+  </button>
+  <div class="sb-topics open" id="sbt0">
+    <div class="sb-ti free-item" onclick="jumpTopic(0,0)" id="sti00"><div class="sb-tidot"></div>O que é Tráfego Pago <span class="t-free-badge" style="font-size:.5rem">FREE</span></div>
+    <div class="sb-ti locked-item" onclick="jumpTopic(0,1)" id="sti01"><div class="sb-tidot"></div>🔒 Plataformas de Anúncios</div>
+    <div class="sb-ti locked-item" onclick="jumpTopic(0,2)" id="sti02"><div class="sb-tidot"></div>🔒 Métricas Essenciais</div>
+  </div>
+
+  <div class="sb-cat">🚀 Campanhas</div>
+  <!-- Módulo 2 -->
+  <button class="sb-mod-btn" onclick="openMod(1)" id="smb1">
+    <div class="sb-mnum" id="smn1">2</div>
+    <div class="sb-minfo"><div class="sb-mname">Criando Campanhas Vencedoras</div>
+      <div class="sb-mdots" id="smd1"><div class="sb-dot"></div><div class="sb-dot"></div><div class="sb-dot"></div></div>
+    </div>
+    <span class="sb-marr">›</span>
+  </button>
+  <div class="sb-topics" id="sbt1">
+    <div class="sb-ti locked-item" onclick="jumpTopic(1,0)" id="sti10"><div class="sb-tidot"></div>🔒 Estrutura de Campanha</div>
+    <div class="sb-ti locked-item" onclick="jumpTopic(1,1)" id="sti11"><div class="sb-tidot"></div>🔒 Segmentação e Público</div>
+    <div class="sb-ti locked-item" onclick="jumpTopic(1,2)" id="sti12"><div class="sb-tidot"></div>🔒 Criativos que Convertem</div>
+  </div>
+
+  <div class="sb-cat">📈 Escala</div>
+  <!-- Módulo 3 -->
+  <button class="sb-mod-btn" onclick="openMod(2)" id="smb2">
+    <div class="sb-mnum" id="smn2">3</div>
+    <div class="sb-minfo"><div class="sb-mname">Otimização e Escala</div>
+      <div class="sb-mdots" id="smd2"><div class="sb-dot"></div><div class="sb-dot"></div><div class="sb-dot"></div></div>
+    </div>
+    <span class="sb-marr">›</span>
+  </button>
+  <div class="sb-topics" id="sbt2">
+    <div class="sb-ti locked-item" onclick="jumpTopic(2,0)" id="sti20"><div class="sb-tidot"></div>🔒 Como Otimizar Campanhas</div>
+    <div class="sb-ti locked-item" onclick="jumpTopic(2,1)" id="sti21"><div class="sb-tidot"></div>🔒 Estratégias de Escala</div>
+    <div class="sb-ti locked-item" onclick="jumpTopic(2,2)" id="sti22"><div class="sb-tidot"></div>🔒 Erros Fatais a Evitar</div>
+  </div>
+</aside>
+
+<!-- ══════════════ PAYWALL MODAL ══════════════ -->
+<div class="pw-modal" id="pwModal" onclick="pwOutside(event)">
+  <div class="pw-box">
+    <div class="pw-hero">
+      <button class="pw-close" onclick="closePW()">✕</button>
+      <span class="pw-hero-icon">🚀</span>
+      <div class="pw-hero-title">Dominando o Tráfego Pago</div>
+      <p class="pw-hero-sub">Desbloqueie o curso completo e aprenda a criar campanhas que vendem de verdade</p>
+    </div>
+    <div class="pw-body">
+      <ul class="pw-benefits">
+        <li class="pw-benefit">3 módulos completos com 9 tópicos aprofundados</li>
+        <li class="pw-benefit">Quiz de fixação em cada módulo com correção automática</li>
+        <li class="pw-benefit">Flashcards de revisão para memorizar o conteúdo</li>
+        <li class="pw-benefit">Chat com IA especialista em tráfego pago</li>
+        <li class="pw-benefit">Certificado de conclusão para o LinkedIn</li>
+        <li class="pw-benefit">Acesso por 1 ano + todas as atualizações inclusas</li>
+      </ul>
+      <div class="pw-price">
+        <div class="pw-price-lbl">Acesso Individual<strong>Pagamento único</strong></div>
+        <div class="pw-price-val">R$9,99<small>por 1 ano</small></div>
+      </div>
+      <a href="index.html#assinaturas" class="pw-buy" onclick="closePW()">💳 Comprar Agora — R$9,99</a>
+      <div class="pw-div"><span>ou</span></div>
+      <button class="pw-toggle" id="pwToggle" onclick="togglePWCode()">Já tenho um código de acesso →</button>
+      <div class="pw-code-area" id="pwCodeArea">
+        <input type="text" class="pw-code-input" id="pwCodeInput" placeholder="INSIRA SEU CÓDIGO AQUI"
+          maxlength="40" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')doPWLogin()">
+        <button class="pw-code-btn" onclick="doPWLogin()">🔓 Desbloquear com Código</button>
+        <div class="pw-err" id="pwErr"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div id="app"></div>
-<div class="achievement" id="achToast"></div>
-<canvas id="cc" width="1200" height="848"></canvas>
-<button class="hl-float" id="hlBtn" title="Caneta de destaque">🖍️</button>
-<div class="hl-tip" id="hlTip">Caneta ativa — selecione o texto</div>
+<!-- ══════════════ FLASHCARDS ══════════════ -->
+<div class="fc-modal" id="fcModal">
+  <div class="fc-box">
+    <div class="fc-ttl">🃏 Flashcards de Revisão</div>
+    <div class="fc-wrap" onclick="fcFlip()">
+      <div class="fc-card" id="fcCard">
+        <div class="fc-face fc-front" id="fcFront">Carregando...</div>
+        <div class="fc-face fc-back" id="fcBack">Carregando...</div>
+      </div>
+    </div>
+    <p class="fc-hint">Clique no card para revelar a resposta</p>
+    <div class="fc-btns">
+      <button class="fc-btn fc-ok" onclick="fcAns(true)">✅ Sabia</button>
+      <button class="fc-btn fc-miss" onclick="fcAns(false)">❌ Rever</button>
+      <button class="fc-btn fc-skip" onclick="fcNext()">→ Pular</button>
+    </div>
+    <div class="fc-count" id="fcCount"></div>
+  </div>
+</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<!-- ══════════════ SURPRISE ══════════════ -->
+<div class="surp-modal" id="surpModal">
+  <div class="surp-box">
+    <span class="surp-icon">🎁</span>
+    <div class="surp-title">Você ganhou pontos bônus!</div>
+    <div class="surp-pts" id="surpPts">+25 pts</div>
+    <p style="font-size:.7rem;color:var(--txt2)">Continue assim! Você está mandando bem!</p>
+    <button class="surp-close" onclick="closeSurp()">🎉 Oba! Receber</button>
+  </div>
+</div>
+
+<!-- ══════════════ CERTIFICATE ══════════════ -->
+<div class="cert-modal" id="certModal">
+  <div class="cert-box">
+    <div class="cert-ttl">🏆 Seu Certificado</div>
+    <canvas id="certCanvas" width="800" height="560"></canvas>
+    <div class="cert-btns">
+      <button class="cert-dl" onclick="dlCert()">⬇️ Baixar</button>
+      <button class="cert-dl" onclick="shareWA()" style="background:var(--grn)">📤 WhatsApp</button>
+      <button class="cert-cls" onclick="closeCert()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MAIN APP ══════════════ -->
+<div class="layout">
+  <main class="main" id="mainContent">
+
+    <!-- FREE PREVIEW BANNER (visitantes) -->
+    <div class="free-banner" id="freeBanner">
+      <div class="fb-left">
+        <div class="fb-tag">🆓 Aula Gratuita Disponível</div>
+        <div class="fb-title">Bem-vindo ao Módulo 1 · Tópico 1</div>
+        <p class="fb-sub">Este tópico e o quiz do Módulo 1 são <strong>100% gratuitos</strong>. Leia, faça o quiz e veja se este curso é para você!</p>
+      </div>
+      <div class="fb-btns">
+        <button class="fb-buy" onclick="openPaywall()">🚀 Comprar Curso Completo</button>
+        <button class="fb-code" onclick="openPaywall(true)">Já tenho código</button>
+      </div>
+    </div>
+
+    <!-- CONTINUE BANNER (logados) -->
+    <div class="cont-banner" id="contBanner" style="display:none">
+      <div class="cb-icon">▶️</div>
+      <div class="cb-info">
+        <h3>Continuar de onde parou</h3>
+        <p id="contDesc">Retome seu progresso agora</p>
+      </div>
+      <button class="cb-btn" id="contBtn">Continuar →</button>
+    </div>
+
+    <!-- COMPLETION BANNER -->
+    <div class="done-banner" id="doneBanner" style="display:none">
+      <span class="db-icon">🎉</span>
+      <div class="db-title">Parabéns! Curso 100% Concluído!</div>
+      <p class="db-sub">Você dominou o Tráfego Pago! Está pronto para criar campanhas de alta performance.</p>
+      <div class="db-btns">
+        <button class="db-btn db-pri" onclick="openCert()">🏆 Gerar Certificado</button>
+        <button class="db-btn db-sec" onclick="openReview()">🔄 Revisão Rápida</button>
+      </div>
+    </div>
+
+    <!-- MODULES CONTAINER -->
+    <div id="modsContainer"></div>
+
+    <!-- BONUS CARD -->
+    <div class="bonus-card" id="bonusCard">
+      <span class="bc-icon" id="bonusIcon">🔒</span>
+      <div class="bc-title" id="bonusTitle">Conteúdo Bônus Bloqueado</div>
+      <p class="bc-sub" id="bonusSub">Complete 100% do curso para desbloquear: Estratégias avançadas de remarketing, automação com IA e templates de anúncios de alta conversão.</p>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <div class="ft-links">
+    <a href="index.html">🎓 Matheus Academy</a>
+    <a href="https://t.me/matheusacademy" target="_blank">📱 Telegram</a>
+    <a href="https://instagram.com/matheusacademy" target="_blank">📸 Instagram</a>
+    <a href="painel.html">⭐ Painel</a>
+  </div>
+  <span class="ft-copy">© 2026 Matheus Academy</span>
+</footer>
+
+<!-- AI CHAT -->
+<button class="ai-btn" id="aiBtn" onclick="toggleAI()">🤖</button>
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-panel-hdr">
+    <h3>🤖 IA — Tráfego Pago</h3>
+    <span class="ai-rem" id="aiRem"></span>
+    <button class="ai-xbtn" onclick="toggleAI()">✕</button>
+  </div>
+  <div class="ai-msgs" id="aiMsgs">
+    <div class="ai-msg bot">Olá! Sou a IA especialista em tráfego pago. Tire suas dúvidas sobre o conteúdo! 🚀</div>
+  </div>
+  <div class="ai-inp-row">
+    <input type="text" class="ai-inp" id="aiInp" placeholder="Sua dúvida...">
+    <button class="ai-send" onclick="sendAI()">➤</button>
+  </div>
+</div>
+
+<!-- TIMER -->
+<div class="timer" id="timer">
+  <div class="t-dot"></div>
+  <span>⏱️ <span class="t-val" id="tVal">00:00</span></span>
+</div>
+
+<!-- MOTIVATIONAL -->
+<div class="motiv" id="motiv"></div>
+
+<!-- TOASTS -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- LOGOUT -->
+<button class="logout-btn" id="logoutBtn" onclick="doLogout()">🚪 Sair</button>
 
 <script>
-// HIGHLIGHT SYSTEM
-let hlData=JSON.parse(localStorage.getItem('tp_hl')||'{}'),hlMode=false;
-document.getElementById('hlBtn').addEventListener('click',function(){
-  hlMode=!hlMode;
-  this.classList.toggle('active',hlMode);
-  document.body.classList.toggle('hl-mode',hlMode);
-  document.getElementById('hlTip').classList.toggle('show',hlMode);
-  if(!hlMode) window.getSelection().removeAllRanges();
-});
-function applyHighlight(){
-  if(!hlMode) return;
-  const sel=window.getSelection();
-  if(!sel||sel.isCollapsed||sel.toString().trim().length<2) return;
-  const range=sel.getRangeAt(0);
-  const mark=document.createElement('mark');mark.className='hl';
-  try{range.surroundContents(mark)}catch(e){return}
-  sel.removeAllRanges();
-  const container=mark.closest('.tbd');
-  if(!container) return;
-  const key=container.dataset.hlkey||'0';
-  if(!hlData[key]) hlData[key]=[];
-  hlData[key].push(mark.textContent);
-  localStorage.setItem('tp_hl',JSON.stringify(hlData));
-}
-document.addEventListener('mouseup',()=>setTimeout(applyHighlight,10));
-document.addEventListener('touchend',()=>setTimeout(applyHighlight,200));
-function restoreHL(el,key){
-  if(!hlData[key]) return;
-  hlData[key].forEach(h=>{
-    const idx=el.innerHTML.indexOf(h);
-    if(idx>-1) el.innerHTML=el.innerHTML.replace(h,'<mark class="hl">'+h+'</mark>');
-  });
-}
-function showAchievement(msg){
-  const t=document.getElementById('achToast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
-</script>
+'use strict';
+/* ══════════════════════════════════════════
+   CONSTANTS
+══════════════════════════════════════════ */
+var SALT    = 'TP_HENRY_2026_MASTER';
+var CKEY    = 'dt';
+var PFX     = 'tp_';
+var WORKER  = 'https://shiny-disk-b207ma-academy-ai.matheushenry1998.workers.dev/chat';
+var QLIMITS = {MASTER:9999,MONTHLY:15,INDIVIDUAL:5};
 
-<script type="text/babel">
-const {useState,useEffect,useRef,useMemo,useCallback}=React;
-const WORKER_URL='https://shiny-disk-b207ma-academy-ai.matheushenry1998.workers.dev';
-const CK='dt',CN='Dominando Tráfego Pago',CF='dominando-trafego-pago.html',LS='tp_';
-const SALT='TP_DT_2026_MASTER';
-const KIWIFY_URL='https://pay.kiwify.com.br/TRAFEGO_PAGO';
-const WHATSAPP='5511951006917';
+/* ══════════════════════════════════════════
+   COURSE DATA
+══════════════════════════════════════════ */
+var MODS = [
+  {
+    id:0, title:'Fundamentos do Tráfego Pago', icon:'📡', time:'~2h',
+    summary:[
+      'Tráfego pago é a compra de visibilidade em plataformas digitais para atrair visitantes qualificados rapidamente.',
+      'As principais plataformas são Google Ads, Meta Ads (Facebook/Instagram) e TikTok Ads, cada uma com características únicas.',
+      'CPC, CPM, CTR e ROAS são as métricas fundamentais para avaliar o desempenho e a lucratividade das campanhas.'
+    ],
+    topics:[
+      {
+        id:'00',
+        title:'O que é Tráfego Pago e Por que Usar',
+        free:true,
+        content:`Tráfego pago é a estratégia de investir dinheiro em plataformas de publicidade digital para atrair visitantes qualificados para um site, loja virtual ou landing page de forma rápida e mensurável.
 
-function maeCall(fn,...args){try{if(typeof window[fn]==='function') window[fn](...args);}catch(e){}}
-const lsGet=(k,def)=>{try{const v=localStorage.getItem(LS+k);return v?JSON.parse(v):def;}catch{return def;}};
-const lsSet=(k,v)=>{try{localStorage.setItem(LS+k,JSON.stringify(v));}catch{}};
+Diferente do tráfego orgânico — que leva meses para gerar resultados —, o tráfego pago permite aparecer na frente do seu público-alvo em minutos após configurar um anúncio.
 
-// ── SHA-256 CODE GENERATOR (same as nichos methodology) ──────────────────
-async function genHash(email,minuteToken){
-  const d=new TextEncoder().encode(email.toLowerCase().trim()+SALT+String(minuteToken));
-  const h=await crypto.subtle.digest('SHA-256',d);
-  return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,8).toUpperCase();
-}
+<b>Por que investir em tráfego pago?</b>
 
-// ── DATA ─────────────────────────────────────────────────────────────────
-const MODS=[
-{id:0,icon:'🎯',color:'#2563eb',grad:'linear-gradient(135deg,#2563eb,#3b82f6)',free:true,
-title:'Fundamentos do Tráfego Pago',
-desc:'Entenda o que é tráfego pago, como funciona o leilão de anúncios e as principais plataformas',
-topics:[
-{id:0,t:'O que é Tráfego Pago e por que dominar isso muda tudo',c:`<p><strong>Tráfego pago</strong> é a prática de investir dinheiro para exibir anúncios para pessoas específicas na internet. Diferente do tráfego orgânico — que você conquista com conteúdo, SEO e tempo —, o tráfego pago gera resultados imediatos e <strong>completamente escaláveis</strong>.</p><p>Pense assim: com tráfego orgânico, você publica um artigo hoje e ele pode aparecer no Google daqui a 6 meses. Com tráfego pago, você cria um anúncio agora e em minutos centenas de pessoas já podem estar vendo sua oferta.</p><p>O mercado brasileiro de tráfego pago <strong>movimenta bilhões de reais por ano</strong>, e a demanda por gestores qualificados é muito maior que a oferta. Quem sabe gerar esse tráfego tem um dos ativos mais valiosos do mercado digital.</p><p><strong>Por que dominar tráfego pago muda tudo:</strong> Gestores experientes cobram de R$2.000 a R$20.000+ por mês por cliente. Um gestor com 5 clientes fatura R$10.000 a R$100.000 mensais. Esse conhecimento também serve para alavancar o próprio negócio — seja uma loja, um serviço ou um produto digital.</p><p><strong>Ação prática:</strong> Acesse a Biblioteca de Anúncios do Meta (facebook.com/ads/library) e observe 5 anúncios de empresas do seu nicho. Note o gancho visual, o texto e para onde o anúncio leva. Esse hábito é o primeiro passo para se tornar um gestor de elite.</p>`},
-{id:1,t:'Como funciona o leilão de anúncios: o segredo por trás do CPM e CPC',c:`<p>Toda vez que uma página é carregada, um <strong>leilão instantâneo</strong> acontece em milissegundos. Plataformas como Meta e Google decidem qual anúncio exibir para aquela pessoa específica naquele momento. Entender esse leilão é o diferencial entre gestores medianos e de elite.</p><p>O leilão não é apenas sobre quem paga mais. O Meta usa uma fórmula com 3 fatores: <strong>1) Seu lance</strong>, <strong>2) Taxa de ação estimada</strong> (probabilidade de alguém converter) e <strong>3) Qualidade do anúncio</strong>. Um anúncio excelente com lance médio pode vencer um anúncio ruim com lance alto.</p><p><strong>CPM</strong> = Custo por Mil Impressões — você paga por cada 1.000 vezes que seu anúncio aparece. Ideal para brand awareness. <strong>CPC</strong> = Custo por Clique — você paga apenas quando clicam. Ideal para tráfego e conversão.</p><p>A chave para ganhar o leilão com menos dinheiro é aumentar o <strong>Quality Score</strong>. No Meta, crie anúncios que as pessoas genuinamente apreciem — com altas taxas de engajamento e baixas taxas de feedback negativo. A plataforma te recompensa com CPMs menores.</p>`},
-{id:2,t:'Meta Ads vs Google Ads vs TikTok Ads: quando usar cada plataforma',c:`<p>Escolher a plataforma errada é um dos erros mais caros que um gestor pode cometer.</p><p><strong>Meta Ads (Facebook + Instagram)</strong> — a plataforma mais completa e versátil. Ideal para: descoberta de produtos, e-commerce, geração de leads, serviços locais. Ponto forte: segmentação por comportamento e interesses. Você está interrompendo pessoas — elas não estão necessariamente procurando o que você vende.</p><p><strong>Google Ads</strong> — captura de demanda existente. Quando alguém digita "dentista em São Paulo", essa pessoa JÁ QUER comprar. Ideal para: serviços locais, e-commerce de busca ativa, B2B. Ponto forte: intenção do usuário.</p><p><strong>TikTok Ads</strong> — a plataforma mais barata com maior crescimento. Funciona como o Meta (interrupção), mas com público mais jovem (18-34 anos). O criativo é tudo — vídeos autênticos performam melhor que anúncios polidos.</p><p><strong>Regra de ouro:</strong> Comece com Meta para a maioria dos negócios. Adicione Google Search quando quiser capturar quem já procura. Teste TikTok para públicos jovens com menor custo de aquisição.</p>`},
-{id:3,t:'Métricas essenciais: CTR, CPC, CPM, CPA, ROAS e LTV',c:`<p>Um gestor que não domina métricas é como um piloto que não sabe ler os instrumentos do avião.</p><p><strong>CTR</strong> (Click-Through Rate) — % de pessoas que clicaram. Fórmula: (Cliques ÷ Impressões) × 100. CTR acima de 2% é bom para a maioria dos nichos no Meta.</p><p><strong>CPC</strong> (Custo por Clique) — quanto paga em média por clique. Varia por nicho. No Meta: R$0,30 a R$5+. CPC alto não é necessariamente ruim se a conversão compensar.</p><p><strong>CPA</strong> (Custo por Aquisição) — quanto paga por cada conversão. Se seu produto custa R$200 e seu CPA é R$30, você tem margem saudável. Se o CPA supera o valor do produto, você perde dinheiro.</p><p><strong>ROAS</strong> (Return on Ad Spend) — Receita Gerada ÷ Investimento. ROAS 3x = para cada R$1 investido, gerou R$3. A meta mínima viável varia por margem de produto.</p><p><strong>LTV</strong> (Lifetime Value) — valor total que um cliente gera ao longo de toda sua relação com a empresa. Se um cliente compra R$200 agora mas volta 5 vezes, seu LTV é R$1.000 — você pode investir muito mais para adquiri-lo.</p>`},
-],
-quiz:[
-{q:'O que é CPM?',opts:['Custo por Mil Impressões','Clique por Momento','Custo por Mensagem','Clique por Minuto'],ans:0,exp:'CPM = Cost per Mille — custo para exibir seu anúncio 1.000 vezes. "Mille" significa mil em latim.'},
-{q:'Qual plataforma captura demanda JÁ EXISTENTE (quem está procurando comprar)?',opts:['Meta Ads','TikTok Ads','Google Search Ads','Pinterest Ads'],ans:2,exp:'Google Search captura quem já digitou uma busca — essas pessoas têm alta intenção de compra imediata.'},
-{q:'Se investiu R$500 e gerou R$2.000 em vendas, qual é o ROAS?',opts:['ROAS 1x','ROAS 2x','ROAS 3x','ROAS 4x'],ans:3,exp:'ROAS = Receita ÷ Investimento = R$2.000 ÷ R$500 = 4x. Para cada R$1 investido, gerou R$4 de receita.'},
-]},
+<b>Velocidade de resultados:</b> enquanto o SEO leva 6 a 12 meses para trazer visitas consistentes, um anúncio bem configurado pode gerar vendas no mesmo dia.
 
-{id:1,icon:'📘',color:'#7c3aed',grad:'linear-gradient(135deg,#7c3aed,#a855f7)',free:false,
-title:'Meta Ads na Prática',
-desc:'Domine o Meta Ads: estrutura, pixel, públicos e campanhas de alta conversão',
-topics:[
-{id:0,t:'Estrutura do Meta Ads: campanha, conjunto de anúncios e anúncio',c:`<p>O Meta Ads tem uma estrutura hierárquica de 3 níveis. Entender essa estrutura é fundamental para criar campanhas organizadas e escaláveis.</p><p><strong>Nível 1: Campanha</strong> — Onde você define o objetivo. Os principais: Reconhecimento (brand awareness, alcance), Consideração (tráfego, engajamento, leads) e Conversão (conversões no site, vendas do catálogo). A regra de ouro: escolha o objetivo mais próximo do resultado final. Se quer vendas, use Conversão.</p><p><strong>Nível 2: Conjunto de Anúncios</strong> — Aqui você define quem, quando e quanto. Quem = segmentação (públicos, localização, idade, gênero). Quanto = orçamento diário ou total. Cada conjunto de anúncios é uma "bolha" de teste — isole variáveis para saber o que funciona.</p><p><strong>Nível 3: Anúncio</strong> — O conteúdo visual e textual que o usuário vê. Formato (imagem, vídeo, carrossel), texto principal, título e CTA. Teste múltiplos anúncios no mesmo conjunto para descobrir qual criativo performa melhor.</p><p><strong>Estrutura recomendada:</strong> 1 campanha → 2-3 conjuntos com públicos diferentes → 2-3 anúncios por conjunto. Isso permite comparar públicos e criativos simultaneamente.</p>`},
-{id:1,t:'Pixel do Meta: instalação, eventos e API de Conversões',c:`<p>O Pixel do Meta é o coração de qualquer campanha de performance. É um código JavaScript que envia dados de comportamento dos usuários de volta para o Meta. Sem o Pixel configurado corretamente, você está voando às cegas.</p><p><strong>Como instalar:</strong> No Meta Business Manager → Eventos → Pixels → Criar Pixel. Cole o código no &lt;head&gt; de todas as páginas do site. Se usar WordPress, use o plugin Meta Pixel.</p><p><strong>Eventos Padrão importantes:</strong> PageView (qualquer visita — automático), ViewContent (visitou produto), AddToCart (adicionou ao carrinho), Purchase (comprou — o mais importante!), Lead (preencheu formulário).</p><p><strong>API de Conversões (CAPI)</strong> — com as mudanças de privacidade (iOS 14+, bloqueadores), o Pixel browser perdeu precisão. A CAPI envia dados diretamente do seu servidor para o Meta — sem depender do navegador. Configure ambos (Pixel + CAPI) com deduplicação para máxima cobertura e precisão.</p>`},
-{id:2,t:'Públicos: interesses, lookalike e remarketing que convertem',c:`<p>A segmentação de público é onde a magia do Meta Ads acontece. O Meta tem dados comportamentais de bilhões de pessoas.</p><p><strong>Públicos por Interesses</strong> — Segmente com base no que as pessoas curtiram e interagiram. Dica: em vez de interesses óbvios (ex: "fitness"), teste interesses de nicho (ex: marcas concorrentes, revistas especializadas). Esses públicos tendem a ser mais qualificados e menos disputados.</p><p><strong>Públicos Semelhantes (Lookalike)</strong> — O Meta analisa seus melhores clientes e encontra pessoas similares. É o público mais poderoso. Para criar: precisa de uma "fonte" — lista de emails de clientes, pessoas que compraram via Pixel, ou pessoas que interagiram com seu perfil. Mínimo: 1.000 pessoas na fonte.</p><p><strong>Remarketing</strong> — Anuncie para quem já teve contato com sua marca: visitaram o site, assistiram vídeos, interagiram com o perfil, abandonaram o carrinho. Esse é o público mais quente com melhores taxas de conversão e menor CPA.</p>`},
-{id:3,t:'Campanhas de conversão: configuração, orçamento e otimização',c:`<p>A campanha de conversão gera vendas e leads mensuráveis. Configurá-la corretamente faz a diferença entre lucro e prejuízo.</p><p><strong>Passo a passo:</strong> 1) Crie com objetivo "Vendas" ou "Leads". 2) Nome com nomenclatura clara (ex: "DT_Conversao_Vendas_Dez2024"). 3) Ative o Orçamento da Campanha Advantage+ para o Meta distribuir automaticamente. 4) Defina pixel, evento de otimização (Purchase ou Lead), público e posicionamento. 5) Orçamento mínimo: R$50/dia para testar.</p><p><strong>Período de aprendizado:</strong> Quando cria uma campanha nova, o Meta entra em "fase de aprendizado" por 7-14 dias. NUNCA faça grandes mudanças durante esse período — reinicia o processo. Aguarde 50 conversões antes de tomar decisões.</p><p><strong>Otimização:</strong> CTR baixo (&lt;1.5%) = problema no criativo ou público. CTR alto mas conversão baixa = problema na landing page. CPA alto mas aceitável = tente aumentar o orçamento gradualmente (máximo 20-30% por vez).</p>`},
-],
-quiz:[
-{q:'Na estrutura do Meta Ads, onde você define o PÚBLICO-ALVO?',opts:['Campanha','Conjunto de Anúncios','Anúncio','Configuração do Pixel'],ans:1,exp:'O público-alvo é definido no Conjunto de Anúncios — o segundo nível da hierarquia do Meta Ads.'},
-{q:'O que é um público Lookalike?',opts:['Pessoas que compraram','Pessoas similares aos seus melhores clientes','Pessoas que curtiram a página','Pessoas que clicaram no anúncio'],ans:1,exp:'Lookalike (semelhante) = Meta encontra pessoas com perfil similar à sua base de clientes existente.'},
-{q:'Quantas conversões o Meta recomenda aguardar antes de avaliar uma campanha nova?',opts:['10 conversões','25 conversões','50 conversões','100 conversões'],ans:2,exp:'O Meta precisa de ~50 conversões para sair da fase de aprendizado e otimizar com eficiência.'},
-]},
+<b>Segmentação precisa:</b> você consegue exibir seu anúncio apenas para pessoas com idades, interesses, comportamentos e localizações específicas, sem desperdiçar verba.
 
-{id:2,icon:'🔍',color:'#059669',grad:'linear-gradient(135deg,#059669,#10b981)',free:false,
-title:'Google Ads Completo',
-desc:'Domine Search, Display, Shopping e YouTube Ads para capturar clientes em todo o funil',
-topics:[
-{id:0,t:'Google Search Ads: apareça quando o cliente já quer comprar',c:`<p><strong>Google Search Ads</strong> é o formato mais poderoso de captura de demanda. Aparece exatamente quando alguém digita uma palavra-chave relacionada ao que você oferece — falando com pessoas que JÁ QUEREM comprar.</p><p><strong>Tipos de correspondência:</strong> Broad Match (ampla) — o Google exibe para variações e termos relacionados. Maior alcance, menor controle. Phrase Match (frase) — exibido quando a busca contém a frase exata + outras palavras. Exact Match (exata) — apenas para buscas idênticas. Menor alcance, máximo controle.</p><p><strong>Palavras-chave negativas</strong> são tão importantes quanto as positivas. Se você vende tênis premium e alguém pesquisa "tênis barato", você não quer pagar por esse clique. Adicione "barato", "grátis", "tutorial" como palavras negativas para eliminar tráfego irrelevante.</p><p><strong>Estrutura recomendada:</strong> Grupos de anúncios temáticos (um por produto/serviço/intenção). Cada grupo com 10-15 palavras-chave relacionadas e 3 anúncios responsivos.</p>`},
-{id:1,t:'Google Display e YouTube Ads: alcance e remarketing visual',c:`<p><strong>Google Display Network</strong> abrange mais de 2 milhões de sites, apps e propriedades do Google. Seus anúncios aparecem como banners enquanto pessoas navegam por outros sites. Ideal para: remarketing, brand awareness em larga escala.</p><p><strong>YouTube Ads:</strong> Skippable In-Stream — podem ser pulados após 5 segundos (você paga se assistirem 30s ou clicarem). Non-Skippable — 15 segundos obrigatórios. Bumper Ads — 6 segundos não puláveis, ideais para brand awareness.</p><p><strong>Estratégia de remarketing visual:</strong> Crie uma sequência — primeiro mostre um vídeo de apresentação (15-30s), depois um vídeo de prova social (depoimentos), depois um vídeo com oferta específica. Quem assistiu tudo tem probabilidade de compra muito maior.</p>`},
-{id:2,t:'Google Shopping: o motor das vendas para e-commerce',c:`<p><strong>Google Shopping</strong> é o formato mais eficiente para e-commerce. Quando alguém pesquisa "comprar iPhone 15 128GB", os cards de produtos aparecem no topo da página — com foto, preço e nome da loja. Cliques extremamente qualificados.</p><p><strong>Feed de produtos perfeito:</strong> Título — inclua marca, modelo, cor, tamanho (ex: "Tênis Nike Air Max 270 Masculino Preto 42"). Imagens — fundo branco puro, produto centralizado, alta resolução. Preço — sempre atualizado e igual ao site. GTIN/EAN — o Google prioriza produtos com código de barras.</p><p><strong>Performance Max (PMax)</strong> é a evolução do Shopping — usa todos os canais do Google em uma campanha. Requer pelo menos 50 conversões históricas para funcionar bem. Para iniciantes, comece com Shopping Padrão.</p>`},
-{id:3,t:'Quality Score e estrutura de conta para resultados consistentes',c:`<p>O <strong>Quality Score (QS)</strong> é a nota de 1 a 10 que o Google dá para cada palavra-chave. QS alto = posições mais altas e custos menores. QS baixo = você paga mais para aparecer abaixo dos concorrentes.</p><p><strong>Os 3 componentes:</strong> 1) CTR esperado — probabilidade de clicarem no anúncio. 2) Relevância do anúncio — quão relacionado está o texto com a palavra-chave. 3) Experiência da landing page — carregamento rápido, relevância, boa experiência mobile.</p><p><strong>Extensões de anúncio</strong> são subestimadas e grátis: Sitelinks (links para páginas específicas), Callout (destaques como "Frete grátis"), Ligação (número de telefone clicável). Anúncios com extensões têm CTR 10-15% maior.</p><p><strong>Dica de ouro:</strong> Monitore o Relatório de Termos de Pesquisa semanalmente. Você verá exatamente o que as pessoas digitaram antes de clicar. Adicione termos irrelevantes como palavras negativas.</p>`},
-],
-quiz:[
-{q:'Qual correspondência de palavra-chave oferece MAIOR CONTROLE e MENOR ALCANCE?',opts:['Broad Match (Ampla)','Phrase Match (Frase)','Exact Match (Exata)','Modified Broad Match'],ans:2,exp:'Exact Match exibe seu anúncio apenas para buscas idênticas ou muito próximas — máximo controle, mínimo alcance.'},
-{q:'O que é o Quality Score do Google Ads?',opts:['Valor do lance máximo','Nota de 1-10 de relevância do anúncio','Orçamento diário','Número de cliques por dia'],ans:1,exp:'Quality Score (1-10) mede CTR esperado, relevância do anúncio e experiência da landing page.'},
-{q:'Para qual tipo de negócio o Google Shopping é mais indicado?',opts:['Advocacia','E-commerce com produtos físicos','Geração de leads B2B','Aplicativos mobile'],ans:1,exp:'Google Shopping exibe produtos com foto e preço nos resultados de busca — perfeito para e-commerce de produtos físicos.'},
-]},
+<b>Previsibilidade:</b> com os dados em mãos, é possível calcular exatamente quanto você precisa investir para gerar um determinado número de vendas.
 
-{id:3,icon:'🚀',color:'#dc2626',grad:'linear-gradient(135deg,#dc2626,#f97316)',free:false,
-title:'Escala e Otimização',
-desc:'Aprenda a escalar campanhas lucrativas, otimizar criativos e dominar testes A/B com dados reais',
-topics:[
-{id:0,t:'Como escalar campanhas sem quebrar o que está funcionando',c:`<p>Escalar uma campanha é o momento mais emocionante — e perigoso — do tráfego pago. Muitos gestores destroem campanhas lucrativas tentando escalar rápido demais.</p><p><strong>Por que a escala quebra campanhas?</strong> Quando você aumenta muito o orçamento de uma vez, o algoritmo precisa encontrar mais pessoas. Para isso, expande o público — e pode começar a exibir para pessoas menos qualificadas. Resultado: CPM aumenta, CPC sobe, conversões caem.</p><p><strong>Escala vertical (aumentar orçamento):</strong> Máximo 20-30% a cada 3-5 dias. Aguarde 48-72 horas antes de aumentar novamente. Monitore o CPM — se subir mais de 30%, pause antes de continuar.</p><p><strong>Escala horizontal (duplicar campanhas):</strong> Duplique a campanha com um público diferente (novo lookalike, nova faixa etária, nova localização). Mantém a campanha original estável enquanto testa crescimento em paralelo. É a estratégia mais segura para escala agressiva.</p>`},
-{id:1,t:'Otimização de criativos: o que testar e quando trocar',c:`<p>O criativo é responsável por <strong>70-80% dos resultados</strong> de uma campanha de tráfego pago. Você pode ter o melhor público, o melhor pixel e a melhor landing page — se o criativo não parar o scroll, não importa.</p><p><strong>Os 3 elementos críticos:</strong> 1) O gancho (primeiros 3 segundos) — deve parar o scroll com surpresa, curiosidade ou identificação imediata. 2) A proposta de valor — por que seu produto é melhor que a alternativa? 3) O CTA (Call to Action) — diga exatamente o que a pessoa deve fazer. "Compre agora", "Saiba mais", "Garanta sua vaga".</p><p><strong>Quando trocar um criativo?</strong> Sinais de esgotamento: CTR caindo consistentemente por 3+ dias; Frequência acima de 4-5; CPA subindo sem razão aparente. Quando esgota, o algoritmo está cansado — é hora de novos criativos.</p><p><strong>Ciclo de testes:</strong> Tenha sempre 3-5 criativos ativos. Os melhores gestores produzem 8-12 criativos novos por mês para manter o pipeline ativo.</p>`},
-{id:2,t:'A/B Testing: como testar variáveis e tomar decisões com dados',c:`<p>Testes A/B são a base do crescimento científico em tráfego pago. Em vez de adivinhar o que funciona, você testa variáveis específicas e toma decisões baseadas em evidências.</p><p><strong>A regra do teste único:</strong> Teste uma variável por vez. Se você muda criativo, texto E público ao mesmo tempo, não saberá o que causou a mudança. Isole cada variável para ter dados limpos e acionáveis.</p><p><strong>O que testar (em ordem de impacto):</strong> 1) Criativo visual (maior impacto). 2) Gancho/headline — primeira linha do texto ou primeiros segundos do vídeo. 3) Público-alvo — diferentes idades, interesses, lookalike de 1% vs 3%. 4) Oferta — preço, parcelamento, bônus, garantia. 5) Landing page — layout, headline, CTA.</p><p><strong>Quando encerrar um teste?</strong> Aguarde pelo menos 3-5 dias e um mínimo de 100 cliques (de preferência 300+) antes de declarar um vencedor. Decisões baseadas em 20-30 cliques são aleatórias, não científicas.</p>`},
-{id:3,t:'ROAS, ROI e como saber se sua campanha está dando lucro de verdade',c:`<p>Confundir faturamento com lucro é um dos erros mais graves em tráfego pago. Uma campanha com ROAS de 3x pode estar dando prejuízo se a margem do produto for baixa.</p><p><strong>ROAS vs ROI:</strong> ROAS considera apenas o investimento em anúncios. ROI considera TODOS os custos. ROAS 3x com produto de 40% de margem é lucrativo. ROAS 3x com produto de 20% de margem dá prejuízo.</p><p><strong>Calculando seu ROAS mínimo de breakeven:</strong> Se sua margem é 25%, você pode gastar no máximo 25% da receita em anúncios. Isso significa ROAS mínimo = 1 ÷ 0,25 = <strong>4x</strong>. Abaixo disso, os custos de anúncio superam o lucro.</p><p><strong>Dashboard financeiro semanal:</strong> Todo gestor profissional monitora: investimento total, receita gerada, CPA médio, ROAS por campanha, MER total (Receita Total ÷ Gasto Total em Marketing). Tendências são mais importantes que números isolados — uma queda consistente no ROAS ao longo de 3 semanas é um sinal de alerta muito antes de um único dia ruim.</p>`},
-],
-quiz:[
-{q:'Qual é a forma mais segura de escalar uma campanha lucrativa?',opts:['Triplicar o orçamento de uma vez','Aumentar o orçamento 20-30% a cada 3-5 dias','Criar 10 campanhas novas simultaneamente','Diminuir o público'],ans:1,exp:'Aumentos graduais (20-30%) a cada 3-5 dias permitem que o algoritmo se adapte sem perder eficiência.'},
-{q:'Quantos criativos devem estar ativos por conjunto de anúncios?',opts:['1 criativo (o melhor)','2 criativos','3-5 criativos','10+ criativos'],ans:2,exp:'3-5 criativos ativos permite ao algoritmo testar e otimizar automaticamente, mantendo frescor nas campanhas.'},
-{q:'Se sua margem de lucro é 25%, qual é o ROAS mínimo para não ter prejuízo?',opts:['ROAS 2x','ROAS 3x','ROAS 4x','ROAS 5x'],ans:2,exp:'ROAS mínimo = 1 ÷ margem = 1 ÷ 0,25 = 4x. Abaixo disso, os custos de anúncio superam o lucro do produto.'},
-]},
+<b>Escalabilidade:</b> se uma campanha está funcionando, basta aumentar o orçamento para multiplicar os resultados de forma proporcional e controlada.
+
+<b>Mensuração total:</b> ao contrário de anúncios tradicionais, cada centavo investido no digital pode ser rastreado. Você sabe exatamente quantas pessoas viram, clicaram e compraram.`,
+        fc:{q:'Qual a principal vantagem do tráfego pago sobre o orgânico?',a:'Velocidade — você pode atrair visitantes e gerar vendas no mesmo dia, enquanto o orgânico leva meses.'}
+      },
+      {
+        id:'01',
+        title:'Plataformas: Google Ads, Meta Ads e TikTok Ads',
+        free:false,
+        content:`Cada plataforma de anúncios tem suas características únicas e é mais indicada para objetivos específicos.
+
+<b>Google Ads</b> captura demanda existente. Quando alguém pesquisa "comprar tênis de corrida", você aparece exatamente neste momento de intenção de compra. É especialmente poderoso para negócios com produtos que as pessoas já buscam ativamente.
+
+<b>Meta Ads (Facebook e Instagram)</b> cria demanda. Você interrompe o scroll do usuário com um criativo envolvente. É ideal para e-commerce, lançamentos digitais e infoprodutos. A segmentação por interesses e comportamentos é extremamente precisa.
+
+<b>TikTok Ads</b> é a plataforma de maior crescimento. Com audiência predominantemente jovem e formato de vídeo curto, o custo por clique ainda é mais baixo que o Meta, criando oportunidades únicas para quem entrar agora.
+
+A escolha deve se basear em: onde está seu público, qual o formato de conteúdo que funciona para seu produto e qual o orçamento disponível.`,
+        fc:{q:'Qual plataforma é melhor para capturar demanda já existente?',a:'Google Ads, pois o usuário já está buscando ativamente pelo produto ou serviço no momento.'}
+      },
+      {
+        id:'02',
+        title:'Métricas Essenciais: CPC, CPM, CTR e ROAS',
+        free:false,
+        content:`Dominar as métricas é o que separa quem gasta dinheiro de quem investe dinheiro.
+
+<b>CPC — Custo Por Clique:</b> quanto você paga cada vez que alguém clica no anúncio. Fórmula: Valor Gasto ÷ Cliques.
+
+<b>CPM — Custo Por Mil Impressões:</b> quanto você paga para que seu anúncio seja exibido mil vezes. Usado em campanhas de awareness.
+
+<b>CTR — Taxa de Cliques:</b> percentual de pessoas que viram o anúncio e clicaram. Fórmula: (Cliques ÷ Impressões) × 100. Um CTR acima de 2% é considerado bom no Facebook.
+
+<b>ROAS — Retorno Sobre o Investimento em Anúncios:</b> a métrica mais importante para quem vende. Fórmula: Receita Gerada ÷ Valor Gasto. ROAS de 3 significa que para cada R$1 investido você gerou R$3 em vendas. A maioria dos negócios precisa de ROAS mínimo de 3 para ser sustentável.`,
+        fc:{q:'O que significa ter um ROAS de 4?',a:'Para cada R$1 investido em anúncios, o negócio gerou R$4 em receita bruta.'}
+      }
+    ],
+    quiz:[
+      {q:'Qual é a principal diferença entre tráfego pago e orgânico?',opts:['Tráfego pago é gratuito e orgânico é pago','Tráfego pago gera resultados imediatos; orgânico leva meses','Tráfego pago não é mensurável','Tráfego orgânico sempre converte mais'],correct:1},
+      {q:'Qual plataforma é mais indicada para anunciar algo que as pessoas já buscam?',opts:['TikTok Ads','Meta Ads / Instagram','Google Ads','Pinterest Ads'],correct:2},
+      {q:'Se você gastou R$500 em anúncios e gerou R$2.000 em vendas, qual é o ROAS?',opts:['2','3','4','5'],correct:2}
+    ]
+  },
+  {
+    id:1, title:'Criando Campanhas Vencedoras', icon:'🚀', time:'~2.5h',
+    summary:[
+      'Uma campanha vencedora segue a estrutura: Campanha → Conjunto de Anúncios → Anúncios.',
+      'Segmentação precisa é mais importante do que orçamento alto — anunciar para a pessoa errada é desperdício.',
+      'O criativo (imagem ou vídeo) é responsável por aproximadamente 70% do resultado de uma campanha.'
+    ],
+    topics:[
+      {id:'10',title:'Estrutura de uma Campanha do Zero',free:false,
+        content:`Antes de gastar um único centavo, você precisa entender a estrutura hierárquica dos anúncios no Meta Ads:\n\n<b>Nível 1 — Campanha:</b> onde você define o objetivo (Vendas, Leads, Tráfego ou Awareness).\n\n<b>Nível 2 — Conjunto de Anúncios:</b> define orçamento, público-alvo, posicionamentos e período. Crie múltiplos conjuntos com públicos diferentes para testar qual converte mais.\n\n<b>Nível 3 — Anúncios:</b> onde você coloca os criativos e a copy. Em cada conjunto, crie de 2 a 5 variações para o algoritmo identificar o vencedor.\n\nPara iniciantes: comece com R$10-30/dia por conjunto. Não economize no início — você precisa de dados suficientes para otimizar.`,
+        fc:{q:'Quais são os 3 níveis de estrutura de uma campanha no Meta Ads?',a:'Campanha (objetivo) → Conjunto de anúncios (público e orçamento) → Anúncios (criativos e copy).'}},
+      {id:'11',title:'Segmentação de Público e Targeting',free:false,
+        content:`A segmentação é o coração do tráfego pago. Anunciar para as pessoas erradas é o maior erro dos iniciantes.\n\n<b>Públicos por interesse e comportamento:</b> segmente por interesses, comportamentos e dados demográficos.\n\n<b>Públicos Personalizados (Custom Audiences):</b> visitantes do site, pessoas que interagiram com seu perfil, clientes existentes e abandonadores de carrinho.\n\n<b>Públicos Semelhantes (Lookalike):</b> o Meta encontra pessoas com perfil similar aos seus melhores clientes. Um Lookalike 1% dos compradores pode ser extremamente eficiente.\n\n<b>No Google Ads:</b> foque nas palavras-chave. Use correspondência exata ["comprar tênis"], de frase ["tênis de corrida barato"] e ampla moderada.`,
+        fc:{q:'O que é um público Lookalike?',a:'Um público criado pela plataforma com perfil similar aos seus melhores clientes, para encontrar novos compradores em potencial.'}},
+      {id:'12',title:'Criativos que Convertem: Imagens e Vídeos',free:false,
+        content:`O criativo é responsável por ~70% do resultado. Você tem apenas 3 segundos para capturar a atenção.\n\n<b>Tipos de criativos que funcionam:</b>\n— Prova social: depoimentos com resultados específicos\n— Problema-solução: mostre a dor e apresente a solução\n— Antes e depois: demonstre transformação visualmente\n— UGC: vídeos "caseiros" de clientes reais têm alta credibilidade\n— Tutorial rápido em 15-30 segundos\n\n<b>Copy (texto):</b> comece com headline que fala diretamente com a dor ou desejo. Use prova social, urgência ou escassez. Termine com CTA claro.\n\n<b>Sempre teste A/B:</b> nunca rode apenas um criativo. Teste pelo menos 3 variações.`,
+        fc:{q:'Por quantos segundos você tem para capturar atenção com um anúncio?',a:'Apenas 3 segundos. O elemento visual inicial precisa ser forte o suficiente para interromper o scroll.'}}
+    ],
+    quiz:[
+      {q:'Qual nível da estrutura Meta Ads define o objetivo da campanha?',opts:['Anúncio','Conjunto de anúncios','Campanha','Conta de anúncios'],correct:2},
+      {q:'O que é um público Lookalike?',opts:['Público de interesses gerais','Pessoas similares aos seus clientes','Visitantes do site','Seguidores do perfil'],correct:1},
+      {q:'Qual elemento do anúncio é responsável por ~70% do resultado?',opts:['O público-alvo','O orçamento','O criativo (imagem/vídeo)','O objetivo da campanha'],correct:2}
+    ]
+  },
+  {
+    id:2, title:'Otimização e Escala', icon:'📈', time:'~2h',
+    summary:[
+      'Otimize sempre com base em dados — aguarde ao menos 3-5 dias antes de tomar decisões.',
+      'Escala vertical (mais orçamento) e horizontal (mais públicos e criativos) são as duas formas de crescer.',
+      'Conhecer os erros mais comuns pode poupar muito dinheiro e frustração no dia a dia.'
+    ],
+    topics:[
+      {id:'20',title:'Como Analisar e Otimizar Campanhas',free:false,
+        content:`Otimização é onde você transforma dados em lucro.\n\n<b>Quando começar a otimizar?</b> Espere ao menos 3-5 dias. O algoritmo do Meta precisa de tempo para aprender. Alterar campanhas com frequência reinicia o aprendizado.\n\n<b>Métricas para analisar diariamente:</b>\n— ROAS: está acima do seu ponto de equilíbrio?\n— CTR: abaixo de 1,5%? O problema é o criativo\n— CPM alto? Saturação de público ou posicionamento errado\n— Frequência acima de 3? Hora de renovar criativos\n\n<b>Regra de ouro:</b> nunca pause anúncios vencedores. Se algo está funcionando, deixe rodar e invista mais. O erro mais comum é pausar uma campanha lucrativa por medo.`,
+        fc:{q:'Qual CTR indica que o criativo precisa ser trocado?',a:'Um CTR abaixo de 1,5% indica que o anúncio não está atraindo atenção suficiente do público.'}},
+      {id:'21',title:'Estratégias de Escala Vertical e Horizontal',free:false,
+        content:`<b>Escala Vertical:</b> aumento de orçamento na mesma campanha que já performa.\nRegra: aumente no máximo 20-30% a cada 3-4 dias para o algoritmo se adaptar sem perder performance.\n\n<b>Escala Horizontal:</b> expansão para novos públicos, criativos e plataformas:\n— Novos conjuntos com Lookalike 1%, 2%, 3%\n— Novos criativos para alcançar quem não respondeu aos anteriores\n— Expansão para Google ou TikTok se Meta está funcionando\n\n<b>Técnica do Duplicar e Escalar:</b> quando um conjunto performa bem, duplique-o sem alterar nada e aumente o orçamento no duplicado. Isso preserva a versão original.\n\n<b>Quando escalar?</b> Somente quando o ROAS estiver consistentemente acima do ponto de equilíbrio por pelo menos 5-7 dias consecutivos.`,
+        fc:{q:'Qual é o limite seguro de aumento de orçamento por vez na escala vertical?',a:'No máximo 20-30% a cada 3-4 dias para não desestabilizar o período de aprendizado do algoritmo.'}},
+      {id:'22',title:'Erros Fatais e Como Evitá-los',free:false,
+        content:`<b>1. Orçamento muito baixo:</b> com menos de R$10/dia o algoritmo não tem dados para otimizar.\n\n<b>2. Pixel não instalado:</b> sem o Pixel você não cria públicos personalizados nem otimiza para conversões.\n\n<b>3. Alterar campanhas com frequência:</b> cada mudança reinicia o aprendizado. Alterar diariamente = nunca ter dados confiáveis.\n\n<b>4. Testar apenas um criativo:</b> sem testes A/B você nunca sabe o potencial real das campanhas.\n\n<b>5. Ignorar a landing page:</b> anúncio incrível + página lenta = dinheiro no lixo. Precisa carregar em menos de 3 segundos.\n\n<b>6. Pausar no fim de semana:</b> para a maioria dos nichos, sexta a domingo é quando mais se converte.\n\n<b>7. Sem meta de ROAS:</b> sem uma meta clara você não sabe se está lucrando ou perdendo dinheiro.`,
+        fc:{q:'Por que não alterar campanhas com muita frequência?',a:'Porque cada alteração reinicia o período de aprendizado do algoritmo (3-7 dias), impedindo dados confiáveis.'}}
+    ],
+    quiz:[
+      {q:'Quanto tempo mínimo esperar antes de otimizar uma campanha recém-lançada?',opts:['Algumas horas','1 dia','3 a 5 dias','2 semanas'],correct:2},
+      {q:'Qual o limite seguro de aumento de orçamento de uma vez na escala vertical?',opts:['5%','20-30%','100%','Sem limite definido'],correct:1},
+      {q:'Qual erro faz com que o algoritmo nunca aprenda a otimizar?',opts:['Usar vídeos longos','Orçamento diário muito baixo','Testar criativos demais','Usar palavras-chave específicas'],correct:1}
+    ]
+  }
 ];
 
-// ── CERTIFICATE ────────────────────────────────────────────────────────────
-function genCert(name){
-  const cv=document.getElementById('cc'),ctx=cv.getContext('2d');
-  cv.style.display='block';
-  const g=ctx.createLinearGradient(0,0,1200,0);
-  g.addColorStop(0,'#1e3a8a');g.addColorStop(1,'#1d4ed8');
-  ctx.fillStyle=g;ctx.fillRect(0,0,1200,848);
-  ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=2;
-  ctx.strokeRect(24,24,1152,800);ctx.strokeRect(32,32,1136,784);
-  for(let i=0;i<6;i++){ctx.beginPath();ctx.arc(600,424,150+i*60,0,Math.PI*2);ctx.stroke();}
-  ctx.textAlign='center';
-  ctx.fillStyle='#fff';ctx.font='bold 22px serif';ctx.fillText('MATHEUS ACADEMY',600,90);
-  ctx.font='16px serif';ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillText('Certificado de Conclusão',600,120);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillRect(200,140,800,2);
-  ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='15px serif';ctx.fillText('Certificamos que',600,188);
-  ctx.fillStyle='#fff';ctx.font='bold 44px serif';ctx.fillText(name||'Aluno',600,248);
-  ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='15px serif';ctx.fillText('concluiu com êxito o curso',600,292);
-  ctx.fillStyle='#93c5fd';ctx.font='bold 28px serif';ctx.fillText('Dominando Tráfego Pago',600,338);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillRect(200,368,800,1);
-  ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='14px sans-serif';
-  ctx.fillText('4 módulos | 16 aulas | Aprovado em todos os quizzes',600,406);
-  ctx.fillText('Data: '+new Date().toLocaleDateString('pt-BR'),600,432);
-  const link=document.createElement('a');
-  link.download='certificado-trafego-pago.png';
-  link.href=cv.toDataURL('image/png');link.click();
-  cv.style.display='none';
-  showAchievement('🎓 Certificado gerado e baixado!');
+var MOTIVS = [
+  '🔥 Módulo concluído! Você está dominando o tráfego pago!',
+  '💪 Incrível progresso! Cada módulo te coloca à frente da concorrência!',
+  '🚀 Você está construindo habilidades que poucos têm. Continue!',
+  '🎯 Consistência é o segredo. Você está no caminho certo!',
+  '⚡ Resultados extraordinários vêm de progresso constante como o seu!'
+];
+
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+var USER    = null;   // null = visitante
+var TIER    = null;
+var FZ      = 14;
+var timerSec= 0;
+var timerTmr= null;
+var fcList  = [];
+var fcIdx   = 0;
+var fcOk    = 0;
+var fcFlipped_= false;
+var audSynth= null;
+var audUtt  = null;
+var audPlay = false;
+var audSpd  = 1.0;
+var penMode = false;
+
+/* ══════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════ */
+function gs(k,d){try{var v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch(e){return d;}}
+function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function he(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function isAuth(){return USER!==null;}
+function isFree(topicId){return topicId==='00';} // ÚNICO tópico gratuito
+
+/* ══════════════════════════════════════════
+   SHA-256
+══════════════════════════════════════════ */
+async function sha256(m){
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(m));
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
 }
 
-// ── APP ────────────────────────────────────────────────────────────────────
-function App(){
-  const [dark,setDark]=useState(()=>localStorage.getItem('tp_dark')==='1');
-  const [auth,setAuth]=useState(()=>{
-    try{
-      const d=JSON.parse(localStorage.getItem('tp_auth')||'{}');
-      const exp=3*365*24*60*60*1000;
-      if(d.email&&d.ts&&Date.now()-d.ts<exp) return d;
-    }catch{}return null;
+/* ══════════════════════════════════════════
+   XP / PORTAL INTEGRATION
+══════════════════════════════════════════ */
+function addXP(pts){
+  var xp=gs('ma_xp',0);ss('ma_xp',xp+pts);
+  var p=gs('ma_points',{total:0,history:[]});
+  p.total=(p.total||0)+pts;
+  if(!p.history)p.history=[];
+  p.history.push({type:'mod',desc:'Tráfego Pago',pts:pts,date:new Date().toLocaleDateString('pt-BR')});
+  ss('ma_points',p);
+  toast('+'+pts+' XP conquistados! 🎯','torn');
+}
+
+/* ══════════════════════════════════════════
+   LOGIN / LOGOUT
+══════════════════════════════════════════ */
+function checkSession(){
+  var sess=gs(PFX+'session',null);
+  if(!sess)return false;
+  if(Date.now()-sess.ts>90*24*3600000){localStorage.removeItem(PFX+'session');return false;}
+  TIER=sess.tier||'INDIVIDUAL';
+  var u=gs('ma_user',{});
+  USER={email:u.email||'aluno@academy.com',name:u.name||'Aluno',tier:TIER};
+  return true;
+}
+
+async function doPWLogin(){
+  var code=(document.getElementById('pwCodeInput').value||'').trim().toUpperCase();
+  var err=document.getElementById('pwErr');err.textContent='';
+  if(!code){err.textContent='Digite um código de acesso.';return;}
+  var h=await sha256(code+SALT);
+  var tier=await resolveTier(h,code);
+  if(!tier){err.textContent='Código inválido ou não reconhecido.';return;}
+  var u=gs('ma_user',{});
+  USER={email:u.email||'aluno@academy.com',name:u.name||'Aluno',tier:tier};
+  TIER=tier;
+  ss(PFX+'session',{hash:h,tier:tier,ts:Date.now()});
+  closePW();
+  bootFull();
+  toast('🎉 Curso desbloqueado! Bem-vindo!','tgrn');
+}
+
+async function resolveTier(h,code){
+  var stored=gs(PFX+'codes',{});
+  var global=gs('ma_global_codes',{});
+  var tier=null;
+  if(global[h])tier=global[h].tier;
+  if(!tier&&stored[h]&&!stored[h].expired)tier=stored[h].tier||'INDIVIDUAL';
+  if(!tier){
+    var users=gs('ma_users',{});
+    Object.keys(users).forEach(function(e){if(users[e].code&&users[e].code.toUpperCase()===code)tier=users[e].plan||'INDIVIDUAL';});
+  }
+  return tier;
+}
+
+function doLogout(){
+  if(!confirm('Deseja sair do curso?'))return;
+  USER=null;TIER=null;
+  localStorage.removeItem(PFX+'session');
+  location.reload();
+}
+
+/* ══════════════════════════════════════════
+   BOOT
+══════════════════════════════════════════ */
+function bootPreview(){
+  // Visitante: tópico 1 + quiz 1 gratuitos
+  document.getElementById('freeBanner').style.display='flex';
+  document.getElementById('sbUnlock').style.display='block';
+  document.getElementById('sbUser').classList.remove('on');
+  document.getElementById('logoutBtn').classList.remove('on');
+  document.getElementById('aiBtn').classList.remove('on');
+  startTimer();
+  renderAll();
+  updateProgress();
+  updSidebar();
+}
+
+function bootFull(){
+  // Aluno logado: acesso total
+  document.getElementById('freeBanner').style.display='none';
+  document.getElementById('sbUnlock').style.display='none';
+  document.getElementById('sbUser').classList.add('on');
+  document.getElementById('sbUname').textContent=(USER&&USER.name)||'Aluno';
+  document.getElementById('sbUTier').textContent=TIER||'INDIVIDUAL';
+  document.getElementById('logoutBtn').classList.add('on');
+  document.getElementById('aiBtn').classList.add('on');
+  document.getElementById('pnLogin').style.display='none';
+  document.getElementById('pnBuy').style.display='none';
+  // unlock sidebar
+  document.querySelectorAll('.sb-ti.locked-item').forEach(function(el){el.classList.remove('locked-item');});
+  startTimer();
+  renderAll();
+  updateProgress();
+  updSidebar();
+  showContBanner();
+  // log activity
+  var log=gs('ma_activity_log',{});var tk=new Date().toISOString().split('T')[0];log[tk]=Math.min((log[tk]||0)+1,3);ss('ma_activity_log',log);
+}
+
+/* ══════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════ */
+function renderAll(){
+  var c=document.getElementById('modsContainer');c.innerHTML='';
+  MODS.forEach(function(m){c.innerHTML+=renderMod(m);});
+}
+
+function renderMod(m){
+  var prog=getModProg(m.id);
+  var ic=prog.pct===100?'done':'';
+  var pc=prog.pct===100?'full':'';
+  var isOpen=m.id===0;
+  var html='<div class="mod-card'+(isOpen?' open':'')+'" id="mc'+m.id+'">';
+  html+='<div class="mod-hdr" onclick="toggleMod('+m.id+')">';
+  html+='<div class="mod-icon '+ic+'">'+m.icon+'</div>';
+  html+='<div class="mod-info"><div class="mod-title">'+m.title+'</div>';
+  html+='<div class="mod-meta"><span>📚 '+m.topics.length+' tópicos</span><span>⏱️ '+m.time+'</span></div></div>';
+  html+='<span class="mod-pct '+pc+'">'+prog.pct+'%</span>';
+  html+='<span class="mod-chev">▾</span></div>';
+  html+='<div class="mod-body">';
+  m.topics.forEach(function(t){html+=renderTopic(m.id,t);});
+  html+=renderSummary(m);
+  html+=renderQuiz(m);
+  html+='</div></div>';
+  return html;
+}
+
+/* ─── TOPIC — renderiza aberto (free ou authed) ou locked ─── */
+function renderTopic(mId,t){
+  var free=isFree(t.id);
+  var authed=isAuth();
+  var canRead=free||authed;
+
+  if(!canRead){
+    /* ── LOCKED VERSION ── */
+    var h='<div class="topic-locked" id="ti'+t.id+'">';
+    h+='<div class="tl-hdr" onclick="tlClick(\''+t.id+'\')">';
+    h+='<span class="tl-lock">🔒</span>';
+    h+='<span class="tl-name">'+he(t.title)+'</span>';
+    h+='<span class="tl-cta">Desbloquear →</span>';
+    h+='</div>';
+    h+='<div class="tl-body">';
+    h+='<div class="tl-teaser">';
+    h+='<span class="tl-t-icon">🔐</span>';
+    h+='<div class="tl-t-title">Conteúdo Exclusivo para Alunos</div>';
+    h+='<p class="tl-t-sub">Este tópico está disponível apenas para alunos matriculados.<br>Adquira o curso e acesse todo o conteúdo imediatamente.</p>';
+    h+='<button class="tl-t-btn" onclick="openPaywall()">🚀 Comprar o Curso — R$9,99</button>';
+    h+='</div></div></div>';
+    return h;
+  }
+
+  /* ── OPEN VERSION ── */
+  var done=gs(PFX+'topic_'+t.id,false);
+  var note=gs(PFX+'note_'+t.id,'');
+  var fzPx=gs(PFX+'fz',14);
+  var freeBadge=free?'<span class="t-free-badge">FREE</span>':'';
+  var h='<div class="topic'+(done?' tdone':'')+'" id="ti'+t.id+'">';
+  h+='<div class="topic-hdr" onclick="toggleTopic(\''+t.id+'\')">';
+  if(authed){
+    h+='<div class="t-check'+(done?' done':'')+'" id="cb'+t.id+'" onclick="event.stopPropagation();markDone(\''+mId+'\',\''+t.id+'\')"></div>';
+  } else {
+    h+='<div style="width:22px;height:22px;flex-shrink:0"></div>';
+  }
+  h+='<span class="t-name">'+he(t.title)+' '+freeBadge+'</span>';
+  h+='<span class="t-chev">▾</span></div>';
+  h+='<div class="t-body">';
+  // tools
+  h+='<div class="t-tools">';
+  h+='<button class="t-tool" onclick="startAud(\''+t.id+'\')">🎧 Ouvir</button>';
+  h+='<button class="t-tool" id="penBt'+t.id+'" onclick="togglePen(\''+t.id+'\')">🖊️ Caneta</button>';
+  h+='<div class="tb-fc" style="flex-shrink:0"><button onclick="changeTopFz(\''+t.id+'\',-1)">A-</button><span id="fzt'+t.id+'">'+fzPx+'</span><button onclick="changeTopFz(\''+t.id+'\',1)">A+</button></div>';
+  h+='</div>';
+  // content
+  h+='<div class="t-content" id="tc'+t.id+'" style="font-size:'+fzPx+'px">'+t.content.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')+'</div>';
+  // audio bar
+  h+='<div class="audio-bar" id="abar'+t.id+'" style="display:none">';
+  h+='<button class="a-play" id="apbtn'+t.id+'" onclick="toggleAud(\''+t.id+'\')">▶</button>';
+  h+='<div class="a-info"><div class="a-title">'+he(t.title)+'</div><div class="a-st" id="ast'+t.id+'">Parado</div></div>';
+  h+='<div class="a-spd">';
+  ['0.75','1','1.25','1.5'].forEach(function(s){
+    h+='<button id="spd'+t.id+'_'+s.replace('.','d')+'" onclick="setSpd(\''+t.id+'\','+s+')" class="'+(s==='1'?'on':'')+'">'+s+'x</button>';
   });
-  const [lStep,setLStep]=useState(1);
-  const [lEmail,setLEmail]=useState('');
-  const [lName,setLName]=useState('');
-  const [lCity,setLCity]=useState('');
-  const [lCode,setLCode]=useState('');
-  const [lMsg,setLMsg]=useState(null);
-  const [lLoad,setLLoad]=useState(false);
-  const [view,setView]=useState('home');
-  const [modIdx,setModIdx]=useState(0);
-  const [search,setSearch]=useState('');
-  const [done,setDone]=useState(()=>lsGet('done',{}));
-  const [notes,setNotes]=useState(()=>lsGet('notes',{}));
-  const [fav,setFav]=useState(()=>lsGet('fav',{}));
-  const [quizPassed,setQuizPassed]=useState(()=>lsGet('qp',{}));
-  const [open,setOpen]=useState({});
-  const [quizAnswers,setQuizAnswers]=useState({});
-  const [quizSubmitted,setQuizSubmitted]=useState({});
-  const [certName,setCertName]=useState('');
-  const [lastMod,setLastMod]=useState(()=>lsGet('lastMod',null));
-  const [fs,setFs]=useState(15);
-  const noteTimers=useRef({});
-
-  useEffect(()=>{
-    document.documentElement.classList.toggle('dark',dark);
-    localStorage.setItem('tp_dark',dark?'1':'0');
-  },[dark]);
-
-  // Is module accessible?
-  function isUnlocked(i){
-    if(i===0) return true; // Módulo 0 sempre livre
-    if(!auth) return false; // Módulos 1-3 requerem login
-    if(i===1) return true; // Com login, módulo 1 liberado
-    return !!quizPassed[i-1]; // Módulos 2+ requerem quiz anterior aprovado
+  h+='</div></div>';
+  // notes
+  h+='<div class="notes-box"><textarea id="nt'+t.id+'" placeholder="Suas anotações sobre este tópico...">'+he(note)+'</textarea>';
+  h+='<button class="notes-save" onclick="saveNote(\''+t.id+'\')">💾 Salvar Anotação</button></div>';
+  // free topic CTA (apenas para visitantes)
+  if(free&&!authed){
+    h+='<div class="free-cta-block">';
+    h+='<div class="fcb-title">🎉 Gostou do conteúdo gratuito?</div>';
+    h+='<p class="fcb-sub">Este foi o Tópico 1 grátis. Para continuar aprendendo com os outros 8 tópicos e receber o certificado, adquira o curso completo agora.</p>';
+    h+='<div class="fcb-btns">';
+    h+='<button class="fcb-main" onclick="openPaywall()">🚀 Quero o Curso Completo — R$9,99</button>';
+    h+='<button class="fcb-sec" onclick="openPaywall(true)">Já tenho código</button>';
+    h+='</div></div>';
   }
-
-  async function reqAccess(){
-    if(!lEmail.includes('@')||!lName.trim()||!lCity.trim()){
-      setLMsg({t:'er',m:'Preencha todos os campos (nome, email e cidade).'});return;
-    }
-    setLLoad(true);
-    const msg=encodeURIComponent('🔔 *Acesso — Dominando Tráfego Pago*\n\n👤 '+lName.trim()+'\n📧 '+lEmail.trim()+'\n📍 '+lCity.trim()+'\n📅 '+new Date().toLocaleString('pt-BR')+'\n\nOlá, realizei o pagamento. Por favor gere meu código de acesso!');
-    window.open('https://wa.me/'+WHATSAPP+'?text='+msg,'_blank');
-    setLStep(2);
-    setLMsg({t:'ok',m:'✅ Mensagem enviada! Aguarde seu código de acesso e cole abaixo.'});
-    setLLoad(false);
-  }
-
-  async function verifyCode(){
-    const code=lCode.trim().toUpperCase();
-    if(code.length<6){setLMsg({t:'er',m:'Digite o código completo.'});return;}
-    setLLoad(true);
-    const email=lEmail.trim().toLowerCase();
-    const nowToken=Math.floor(Date.now()/60000);
-    const [h1,h2]=await Promise.all([genHash(email,nowToken),genHash(email,nowToken-1)]);
-    if(code===h1||code===h2){
-      const d={email,code,name:lName.trim(),ts:Date.now()};
-      localStorage.setItem('tp_auth',JSON.stringify(d));
-      setAuth(d);setLMsg(null);
-    } else {
-      setLMsg({t:'er',m:'Código inválido ou expirado. Solicite um novo código ao administrador.'});
-    }
-    setLLoad(false);
-  }
-
-  function logout(){
-    localStorage.removeItem('tp_auth');setAuth(null);
-    setLStep(1);setLEmail('');setLCode('');setLMsg(null);
-  }
-
-  function goMod(idx){
-    if(!isUnlocked(idx)) return;
-    setModIdx(idx);setView('mod');setOpen({});
-    setQuizAnswers({});
-    const m=MODS[idx];
-    const last={modIdx:idx,title:m.title};
-    setLastMod(last);lsSet('lastMod',last);
-    maeCall('maeSetLastModule',CK,CN,idx,m.title,CF);
-    window.scrollTo(0,0);
-  }
-
-  function toggleDone(mi,ti){
-    const key=mi+'_'+ti;
-    const nd={...done,[key]:!done[key]};
-    setDone(nd);lsSet('done',nd);
-    if(!done[key]) showAchievement('✅ Tópico concluído! +10 pontos');
-  }
-
-  function toggleFav(mi,e){
-    if(e){e.stopPropagation();}
-    const nf={...fav,[mi]:!fav[mi]};
-    setFav(nf);lsSet('fav',nf);
-    maeCall('maeFavoriteToggle',CK,mi,MODS[mi].title,CF);
-    showAchievement(nf[mi]?'⭐ Favoritado!':'Removido dos favoritos');
-  }
-
-  function saveNote(mi,val){
-    const nn={...notes,[mi]:val};
-    setNotes(nn);lsSet('notes',nn);
-    clearTimeout(noteTimers.current[mi]);
-    noteTimers.current[mi]=setTimeout(()=>{
-      maeCall('maeAddNoteV3',CK,mi,MODS[mi].title,val);
-    },1500);
-  }
-
-  function submitQuiz(){
-    const q=MODS[modIdx].quiz;
-    let correct=0;
-    q.forEach((item,i)=>{if(parseInt(quizAnswers[i])===item.ans)correct++;});
-    const pass=correct>=Math.ceil(q.length*0.7);
-    const ns={...quizSubmitted,[modIdx]:{correct,total:q.length,pass}};
-    setQuizSubmitted(ns);
-    if(pass){
-      const nqp={...quizPassed,[modIdx]:true};
-      setQuizPassed(nqp);lsSet('qp',nqp);
-      showAchievement('🧠 Quiz aprovado! Próximo módulo desbloqueado!');
-    } else {
-      maeCall('maeMarkQuizFail',CK,modIdx,MODS[modIdx].title);
-    }
-  }
-
-  function retryQuiz(){
-    const ns={...quizSubmitted};delete ns[modIdx];
-    setQuizSubmitted(ns);setQuizAnswers({});
-  }
-
-  function modProg(mi){
-    const t=MODS[mi].topics.length;
-    const d=MODS[mi].topics.filter((_,ti)=>done[mi+'_'+ti]).length;
-    return {d,t,pct:Math.round(d/t*100)};
-  }
-
-  function totalPct(){
-    let total=0,d=0;
-    MODS.forEach((m,mi)=>{total+=m.topics.length;m.topics.forEach((_,ti)=>{if(done[mi+'_'+ti])d++;});});
-    return total?Math.round(d/total*100):0;
-  }
-
-  function scrollRow(id,dir){
-    const el=document.getElementById('row_'+id);
-    if(el) el.scrollBy({left:dir*210,behavior:'smooth'});
-  }
-
-  const searchRes=useMemo(()=>{
-    if(!search.trim()) return [];
-    const q=search.toLowerCase();const res=[];
-    MODS.forEach((m,mi)=>{
-      if(m.title.toLowerCase().includes(q)||m.desc.toLowerCase().includes(q))
-        res.push({type:'mod',mi,title:m.title,sub:m.desc});
-      m.topics.forEach((tp,ti)=>{
-        if(tp.t.toLowerCase().includes(q))
-          res.push({type:'topic',mi,ti,title:tp.t,sub:m.title});
-      });
-    });
-    return res;
-  },[search]);
-
-  const allCompleted=totalPct()===100&&Object.keys(quizPassed).length>=MODS.length;
-
-  // ── HEADER ─────────────────────────────────────────────────────────────
-  const Header=()=>(
-    <>
-    <div className="hdr">
-      <div className="hdr-logo" onClick={()=>{setView('home');setSearch('');}}>Tráfego <span>Pago</span></div>
-      <div className="sbox">
-        <span className="sico">🔍</span>
-        <input placeholder="Buscar módulos e tópicos..." value={search}
-          onChange={e=>{setSearch(e.target.value);setView(e.target.value?'search':'home');}}/>
-      </div>
-      <div className="hdr-r">
-        {auth&&<span className="hp"><b>{totalPct()}%</b></span>}
-        <button className="thm-btn" onClick={()=>setDark(!dark)} title="Alternar tema">{dark?'☀️':'🌙'}</button>
-      </div>
-    </div>
-    {auth&&<div className="gbar"><div className="gfill" style={{width:totalPct()+'%'}}/></div>}
-    </>
-  );
-
-  // ── LOGIN VIEW ──────────────────────────────────────────────────────────
-  if(!auth){
-    return (
-      <>
-      <Header/>
-      <div className="lw">
-        <div className="lb">
-          <div className="ll">Matheus <span>Academy</span></div>
-          <p className="ls">Dominando Tráfego Pago — Sistema de Acesso</p>
-
-          {lStep===1&&(
-            <>
-            <div className="lb-step-badge">📘 MÓDULO 1 GRÁTIS — ACESSE SEM CÓDIGO</div>
-            <button className="lb-btn" style={{marginBottom:12,background:'var(--grn)'}} onClick={()=>{
-              const guestAuth={email:'guest',name:'Visitante',ts:Date.now(),guest:true};
-              localStorage.setItem('tp_auth',JSON.stringify(guestAuth));
-              setAuth(guestAuth);
-            }}>
-              🎯 Acessar Módulo Gratuito
-            </button>
-            <div style={{textAlign:'center',color:'var(--txt3)',fontSize:'.65rem',margin:'8px 0',position:'relative'}}>
-              <span style={{background:'var(--card)',padding:'0 10px'}}>— ou compre para desbloquear tudo —</span>
-            </div>
-            <input type="text" placeholder="Seu nome completo" value={lName} onChange={e=>setLName(e.target.value)}/>
-            <input type="email" placeholder="Seu email" value={lEmail} onChange={e=>setLEmail(e.target.value)}/>
-            <input type="text" placeholder="Sua cidade" value={lCity} onChange={e=>setLCity(e.target.value)} onKeyDown={e=>e.key==='Enter'&&reqAccess()}/>
-            <button className="lb-btn" onClick={reqAccess} disabled={lLoad}>
-              {lLoad?'Aguarde...':'📲 Solicitar Código via WhatsApp'}
-            </button>
-            {lMsg&&<div className={'lb-msg '+lMsg.t}>{lMsg.m}</div>}
-            <div style={{fontSize:'.65rem',color:'var(--txt3)',marginTop:12,lineHeight:1.5}}>
-              1️⃣ Compre o curso no Kiwify → 2️⃣ Clique em "Solicitar Código" → 3️⃣ Receba seu código → 4️⃣ Cole abaixo
-            </div>
-            <a href={KIWIFY_URL} target="_blank" rel="noopener noreferrer"
-              style={{display:'block',marginTop:12,background:'linear-gradient(135deg,#059669,#10b981)',color:'#fff',padding:'11px',borderRadius:'8px',textDecoration:'none',fontWeight:700,fontSize:'.8rem',textAlign:'center'}}>
-              🛒 Comprar Curso Completo — Kiwify
-            </a>
-            </>
-          )}
-
-          {lStep===2&&(
-            <>
-            <div className="lb-step-badge">📨 STEP 2 — COLE SEU CÓDIGO</div>
-            {lMsg&&<div className={'lb-msg '+lMsg.t}>{lMsg.m}</div>}
-            <input type="text" placeholder="Cole o código aqui (ex: A1B2C3D4)" value={lCode}
-              onChange={e=>setLCode(e.target.value.toUpperCase())}
-              onKeyDown={e=>e.key==='Enter'&&verifyCode()}
-              style={{textAlign:'center',letterSpacing:4,fontSize:'1rem',fontWeight:700}}
-              maxLength={8}/>
-            <button className="lb-btn" onClick={verifyCode} disabled={lLoad}>
-              {lLoad?'Verificando...':'✅ Verificar Código'}
-            </button>
-            <button className="lb-btn secondary" style={{marginTop:8}} onClick={()=>{setLStep(1);setLMsg(null);}}>
-              ← Voltar
-            </button>
-            <div style={{fontSize:'.65rem',color:'var(--txt3)',marginTop:10}}>
-              Código inválido? Contate o administrador no WhatsApp.
-            </div>
-            </>
-          )}
-        </div>
-      </div>
-      </>
-    );
-  }
-
-  // ── SEARCH VIEW ─────────────────────────────────────────────────────────
-  if(view==='search') return (
-    <>
-    <Header/>
-    <div className="srw">
-      <div className="srt">{searchRes.length} resultado(s) para "{search}"</div>
-      {searchRes.map((r,i)=>(
-        <div key={i} className="sri" onClick={()=>{if(isUnlocked(r.mi)){goMod(r.mi);setSearch('');}}}>
-          <div className="srm">{r.type==='mod'?'MÓDULO':'TÓPICO'} · {MODS[r.mi].title}</div>
-          <div className="srtp">{!isUnlocked(r.mi)?'🔒 ':''}{r.title}</div>
-        </div>
-      ))}
-      {searchRes.length===0&&<div style={{color:'var(--txt2)',fontSize:'.8rem',padding:'20px 0'}}>Nenhum resultado encontrado.</div>}
-    </div>
-    </>
-  );
-
-  // ── MODULE VIEW ─────────────────────────────────────────────────────────
-  if(view==='mod'){
-    const m=MODS[modIdx];
-    const {d,t,pct}=modProg(modIdx);
-    const allDone=d===t;
-    const qResult=quizSubmitted[modIdx];
-    const isGuestLocked=auth.guest&&!m.free;
-
-    return (
-      <>
-      <Header/>
-      <div className="mod-pg">
-        <button className="bk" onClick={()=>setView('home')}>← Voltar</button>
-        <div className="mhdr">
-          <div className="ey">{m.icon} Módulo {modIdx+1} de {MODS.length}{m.free&&<span style={{background:'#d1fae5',color:'#065f46',fontSize:'.5rem',padding:'2px 8px',borderRadius:'20px',marginLeft:8,fontWeight:700}}>GRÁTIS</span>}</div>
-          <h2>{m.title}</h2>
-          <div className="d">{m.desc}</div>
-          <div className="mnav">
-            {MODS.map((mod,i)=>(
-              <button key={i} disabled={!isUnlocked(i)}
-                onClick={()=>isUnlocked(i)&&goMod(i)}
-                style={i===modIdx?{borderColor:'var(--pri)',color:'var(--pri)'}:{}}>
-                {mod.icon} M{i+1} {!isUnlocked(i)&&'🔒'}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {isGuestLocked?(
-          // PAYWALL para visitante free tentando acessar módulo pago
-          <div style={{background:'var(--card)',border:'1px solid var(--brd)',borderRadius:12,overflow:'hidden',boxShadow:'var(--sh2)'}}>
-            <div className="paywall">
-              <div className="pw-ico">🔒</div>
-              <h3>Conteúdo Premium</h3>
-              <p>Desbloqueie este módulo e tenha acesso ao curso completo com todos os 4 módulos, 16 aulas e certificado.</p>
-              <div className="pw-lock-items">
-                {MODS.filter(m=>!m.free).map((m,i)=>(
-                  <div key={i}><span>🔒</span><span style={{color:'var(--dk)',fontWeight:600}}>{m.title}</span></div>
-                ))}
-              </div>
-              <a href={KIWIFY_URL} target="_blank" rel="noopener noreferrer" className="pw-buy">
-                🛒 Comprar Curso Completo
-              </a>
-              <a href={'https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent('Olá! Quero comprar o curso Dominando Tráfego Pago. Data: '+new Date().toLocaleDateString('pt-BR'))}
-                target="_blank" rel="noopener noreferrer" className="pw-wpp">
-                📲 Falar com Administrador (WhatsApp)
-              </a>
-            </div>
-          </div>
-        ):(
-          <>
-          <div className="pw-bar">
-            <div className="pt"><span>Progresso do módulo</span><b>{pct}%</b></div>
-            <div className="ppb"><div className="ppf" style={{width:pct+'%'}}/></div>
-          </div>
-
-          <div className="tools-row">
-            <button className="fs-btn" onClick={()=>setFs(Math.max(12,fs-1))}>A-</button>
-            <span className="fs-lbl">{fs}px</span>
-            <button className="fs-btn" onClick={()=>setFs(Math.min(22,fs+1))}>A+</button>
-          </div>
-
-          {m.topics.map((tp,ti)=>{
-            const key=modIdx+'_'+ti;
-            const isDone=!!done[key];
-            const isOpen=!!open[ti];
-            return (
-              <div key={ti} className={'tp'+(isDone?' dn':'')}>
-                <div className="tph" onClick={()=>setOpen({...open,[ti]:!isOpen})}>
-                  <div className={'ck'+(isDone?' on':'')}
-                    onClick={e=>{e.stopPropagation();toggleDone(modIdx,ti);}}>
-                    {isDone&&'✓'}
-                  </div>
-                  <div className="tn">{ti+1}</div>
-                  <div className="ttt">{tp.t}</div>
-                  <div className={'ta'+(isOpen?' o':'')}>▼</div>
-                </div>
-                {isOpen&&(
-                  <div className="tbd o" data-hlkey={key}
-                    style={{fontSize:fs+'px'}}
-                    dangerouslySetInnerHTML={{__html:tp.c}}/>
-                )}
-              </div>
-            );
-          })}
-
-          {/* NOTES */}
-          <div className="notes">
-            <label>📓 Minhas Anotações — {m.title}</label>
-            <textarea
-              placeholder="Anote os principais aprendizados deste módulo..."
-              value={notes[modIdx]||''}
-              onChange={e=>saveNote(modIdx,e.target.value)}
-            />
-            <div className="notes-actions">
-              <button onClick={()=>{
-                const blob=new Blob([notes[modIdx]||''],{type:'text/plain'});
-                const a=document.createElement('a');
-                a.href=URL.createObjectURL(blob);
-                a.download='notas-'+m.title.replace(/ /g,'-')+'.txt';a.click();
-              }}>📥 Exportar</button>
-              <button onClick={()=>{saveNote(modIdx,'');showAchievement('Notas limpas');}}>🗑️ Limpar</button>
-              <button onClick={()=>maeCall('maeOpenCourseChat',CK,CN)}
-                style={{marginLeft:'auto',background:'#059669',color:'#fff',border:'none'}}>
-                💬 Chat IA
-              </button>
-            </div>
-          </div>
-
-          {/* QUIZ */}
-          <div className="quiz">
-            <h3>🧠 Quiz do Módulo {modIdx+1}</h3>
-            {m.quiz.map((q,qi)=>{
-              const sub=qResult;
-              return (
-                <div key={qi} className="qq">
-                  <div className="ql">{qi+1}. {q.q}</div>
-                  <div className="opt">
-                    {q.opts.map((opt,oi)=>{
-                      let cls='';
-                      if(sub){
-                        if(oi===q.ans) cls='correct';
-                        else if(parseInt(quizAnswers[qi])===oi&&oi!==q.ans) cls='wrong';
-                      }
-                      return (
-                        <label key={oi} className={cls}>
-                          <input type="radio" name={'q'+modIdx+'_'+qi} value={oi}
-                            disabled={!!sub}
-                            checked={parseInt(quizAnswers[qi])===oi}
-                            onChange={()=>!sub&&setQuizAnswers({...quizAnswers,[qi]:oi})}/>
-                          {opt}
-                        </label>
-                      );
-                    })}
-                    {sub&&<div className="exp">💡 {q.exp}</div>}
-                  </div>
-                </div>
-              );
-            })}
-
-            {!qResult?(
-              <button className="quiz-btn"
-                disabled={Object.keys(quizAnswers).length<m.quiz.length}
-                onClick={submitQuiz}>
-                {Object.keys(quizAnswers).length<m.quiz.length
-                  ?`Responda todas (${Object.keys(quizAnswers).length}/${m.quiz.length})`
-                  :'Verificar Respostas'}
-              </button>
-            ):(
-              <>
-              <div className={'quiz-result '+(qResult.pass?'pass':'fail')}>
-                {qResult.pass
-                  ?`🎉 Parabéns! ${qResult.correct}/${qResult.total} corretas! Módulo aprovado!`
-                  :`😅 ${qResult.correct}/${qResult.total} corretas. Revise o conteúdo e tente novamente!`}
-              </div>
-              {qResult.pass&&modIdx<MODS.length-1&&(
-                <div className="quiz-unlock-badge">
-                  🔓 Módulo {modIdx+2} desbloqueado! Clique em "M{modIdx+2}" acima para continuar.
-                </div>
-              )}
-              {!qResult.pass&&(
-                <button className="quiz-btn" style={{marginTop:8,background:'var(--txt2)'}} onClick={retryQuiz}>
-                  🔄 Tentar novamente
-                </button>
-              )}
-              </>
-            )}
-          </div>
-
-          {/* CERTIFICATE */}
-          {allCompleted&&(
-            <div className="cert-block">
-              <h3>🏆 Curso Completo! Parabéns!</h3>
-              <p>Você concluiu todos os módulos e passou em todos os quizzes. Gere seu certificado oficial!</p>
-              <div className="cert-form">
-                <input placeholder="Seu nome completo" value={certName} onChange={e=>setCertName(e.target.value)}/>
-                <button className="cert-btn" onClick={()=>genCert(certName)}>📜 Baixar Certificado</button>
-              </div>
-            </div>
-          )}
-
-          {/* NAV */}
-          <div style={{display:'flex',justifyContent:'space-between',marginTop:20,gap:8,flexWrap:'wrap'}}>
-            {modIdx>0&&isUnlocked(modIdx-1)&&(
-              <button className="quiz-btn" style={{background:'var(--bg)',color:'var(--txt)',border:'1px solid var(--brd)'}}
-                onClick={()=>goMod(modIdx-1)}>← Módulo Anterior</button>
-            )}
-            {modIdx<MODS.length-1&&isUnlocked(modIdx+1)&&(
-              <button className="quiz-btn" style={{marginLeft:'auto'}} onClick={()=>goMod(modIdx+1)}>
-                Próximo Módulo →
-              </button>
-            )}
-          </div>
-          </>
-        )}
-      </div>
-      {auth&&!auth.guest&&<button className="logout" onClick={logout}>Sair</button>}
-      <button className="chat-btn" title="Chat IA" onClick={()=>maeCall('maeOpenCourseChat',CK,CN)}>💬</button>
-      </>
-    );
-  }
-
-  // ── HOME VIEW ───────────────────────────────────────────────────────────
-  return (
-    <>
-    <Header/>
-    <div className="home">
-      <div className="hero">
-        <div className="ey">📡 Matheus Academy</div>
-        <h1>Dominando <span>Tráfego Pago</span></h1>
-        <p className="sub">De zero a gestor de elite. Meta Ads, Google Ads, criativos e escala. Conteúdo prático que gera resultado real.</p>
-        <div className="stats">
-          <div className="stat"><b>4</b><span>Módulos</span></div>
-          <div className="stat"><b>16</b><span>Aulas</span></div>
-          <div className="stat"><b>32h</b><span>Conteúdo</span></div>
-          <div className="stat"><b>{totalPct()}%</b><span>Progresso</span></div>
-        </div>
-      </div>
-
-      {lastMod&&isUnlocked(lastMod.modIdx)&&(
-        <div className="continue-banner" onClick={()=>goMod(lastMod.modIdx)}>
-          <div className="cb-icon">▶️</div>
-          <div className="cb-text">
-            <h4>Continuar: {lastMod.title}</h4>
-            <p>Retome de onde parou</p>
-          </div>
-          <button className="cb-btn">Continuar</button>
-        </div>
-      )}
-
-      <div className="cat-sec">
-        <div className="cat-hd"><em>📚</em> Todos os Módulos</div>
-        <div className="carousel-wrap">
-          <button className="car-btn l" onClick={()=>scrollRow(0,-1)}>‹</button>
-          <div className="cat-row" id="row_0">
-            {MODS.map((m,mi)=>{
-              const {d,t,pct}=modProg(mi);
-              const isDone=d===t&&t>0&&quizPassed[mi];
-              const locked=!isUnlocked(mi);
-              return (
-                <div key={mi} className={'cc'+(isDone?' done':'')+(locked?' locked':'')}
-                  onClick={()=>!locked&&goMod(mi)}>
-                  <div className="cc-top" style={{background:m.grad}}>
-                    <span style={{fontSize:'2.1rem'}}>{m.icon}</span>
-                    <span className="cc-num">{mi+1}</span>
-                    {m.free&&<span className="cc-badge">GRÁTIS</span>}
-                    {!locked&&<button className={'cc-fav'+(fav[mi]?' on':'')}
-                      onClick={e=>toggleFav(mi,e)}>{fav[mi]?'⭐':'☆'}</button>}
-                  </div>
-                  <div className="cc-body">
-                    <h4>{m.title}</h4>
-                    <p>{locked?'🔒 Requer compra':isDone?'✅ Concluído':`${d}/${t} aulas concluídas`}</p>
-                    <div className="bar"><div className="bf" style={{width:pct+'%'}}/></div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <button className="car-btn r" onClick={()=>scrollRow(0,1)}>›</button>
-        </div>
-      </div>
-
-      {/* Módulos favoritos */}
-      {MODS.some((_,i)=>fav[i])&&(
-        <div className="cat-sec">
-          <div className="cat-hd"><em>⭐</em> Favoritos</div>
-          <div className="carousel-wrap">
-            <button className="car-btn l" onClick={()=>scrollRow(1,-1)}>‹</button>
-            <div className="cat-row" id="row_1">
-              {MODS.filter((_,i)=>fav[i]).map((m)=>{
-                const mi=MODS.indexOf(m);
-                const {d,t,pct}=modProg(mi);
-                return (
-                  <div key={mi} className="cc" onClick={()=>goMod(mi)}>
-                    <div className="cc-top" style={{background:m.grad}}>
-                      <span style={{fontSize:'2.1rem'}}>{m.icon}</span>
-                    </div>
-                    <div className="cc-body">
-                      <h4>{m.title}</h4>
-                      <p>{d}/{t} aulas concluídas</p>
-                      <div className="bar"><div className="bf" style={{width:pct+'%'}}/></div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <button className="car-btn r" onClick={()=>scrollRow(1,1)}>›</button>
-          </div>
-        </div>
-      )}
-
-      {/* Progresso por módulo */}
-      <div style={{padding:'10px 20px 20px'}}>
-        <div style={{fontSize:'.84rem',fontWeight:700,color:'var(--dk)',marginBottom:12,display:'flex',alignItems:'center',gap:6}}>
-          <em style={{fontSize:'1rem'}}>📊</em> Progresso por Módulo
-        </div>
-        {MODS.map((m,mi)=>{
-          const {d,t,pct}=modProg(mi);
-          const locked=!isUnlocked(mi);
-          return (
-            <div key={mi} style={{background:'var(--card)',border:'1px solid var(--brd)',borderRadius:8,padding:'10px 14px',marginBottom:8,cursor:locked?'not-allowed':'pointer',opacity:locked?.5:1,boxShadow:'var(--sh)',transition:'all .2s'}}
-              onClick={()=>!locked&&goMod(mi)}>
-              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:6}}>
-                <span style={{fontSize:'.78rem',fontWeight:700,color:'var(--dk)'}}>
-                  {m.icon} M{mi+1}: {m.title}
-                </span>
-                <span style={{fontSize:'.65rem',color:'var(--txt2)'}}>
-                  {locked?'🔒':`${pct}% · ${quizPassed[mi]?'✅ Quiz aprovado':'Quiz pendente'}`}
-                </span>
-              </div>
-              <div style={{height:3,background:'var(--bg3)',borderRadius:2,overflow:'hidden'}}>
-                <div style={{height:'100%',width:pct+'%',background:quizPassed[mi]?'var(--grn)':'var(--pri)',transition:'width .5s',borderRadius:2}}/>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="footer">
-        <div className="footer-links">
-          <a href={'https://t.me/matheusacademy'} className="tg" target="_blank" rel="noopener noreferrer">
-            📱 Grupo Telegram
-          </a>
-        </div>
-        <div className="footer-brand">© 2026 Matheus Academy · Dominando Tráfego Pago</div>
-      </div>
-    </div>
-
-    {auth&&!auth.guest&&<button className="logout" onClick={logout}>Sair</button>}
-    <button className="chat-btn" title="Chat IA" onClick={()=>maeCall('maeOpenCourseChat',CK,CN)}>💬</button>
-    </>
-  );
+  h+='</div></div>';
+  return h;
 }
 
-ReactDOM.createRoot(document.getElementById('app')).render(<App/>);
+function renderSummary(m){
+  var h='<div class="mod-summary"><div class="ms-title">📌 Resumo do Módulo</div><ul class="ms-list">';
+  m.summary.forEach(function(s){h+='<li class="ms-item">'+he(s)+'</li>';});
+  return h+'</ul></div>';
+}
+
+function renderQuiz(m){
+  var authed=isAuth();
+  var freeQuiz=m.id===0; // Quiz do módulo 0 é gratuito
+  var canQuiz=freeQuiz||authed;
+
+  if(!canQuiz){
+    return '<div class="quiz-locked" onclick="openPaywall()" id="quiz'+m.id+'">'+
+      '<span class="ql-icon">🔒</span>'+
+      '<div class="ql-title">Quiz Bloqueado</div>'+
+      '<p class="ql-sub">Complete o quiz para ganhar XP e avançar no seu ranking</p>'+
+      '<button class="ql-btn">🚀 Desbloquear para fazer o quiz</button>'+
+      '</div>';
+  }
+
+  var isDone=gs(PFX+'qd_'+m.id,false);
+  var h='<div class="quiz-wrap" id="quiz'+m.id+'">';
+  h+='<div class="quiz-title">🧠 Quiz — '+m.title+(isDone?' ✅':'')+'</div>';
+  m.quiz.forEach(function(q,qi){
+    var saved=gs(PFX+'qa_'+m.id+'_'+qi,-1);
+    h+='<div class="qq" id="qq'+m.id+'_'+qi+'"><div class="qq-txt">'+(qi+1)+'. '+he(q.q)+'</div><div class="qq-opts">';
+    var lt=['A','B','C','D'];
+    q.opts.forEach(function(opt,oi){
+      var cls='qq-opt';
+      if(saved===oi)cls+=oi===q.correct?' ok':' wrong';
+      h+='<button class="'+cls+'" id="qo'+m.id+'_'+qi+'_'+oi+'" onclick="selOpt('+m.id+','+qi+','+oi+')" '+(isDone?'disabled':'')+'><span class="qq-letter">'+lt[oi]+'</span>'+he(opt)+'</button>';
+    });
+    h+='</div></div>';
+  });
+  if(!isDone)h+='<button class="quiz-submit" id="qsub'+m.id+'" onclick="submitQ('+m.id+')" disabled>Verificar Respostas</button>';
+  h+='<div id="qres'+m.id+'"></div></div>';
+  return h;
+}
+
+/* ══════════════════════════════════════════
+   TOGGLE HELPERS
+══════════════════════════════════════════ */
+function toggleMod(id){
+  var c=document.getElementById('mc'+id);if(c)c.classList.toggle('open');
+  var b=document.getElementById('smb'+id);if(b)b.classList.toggle('active');
+  var t=document.getElementById('sbt'+id);if(t)t.classList.toggle('open');
+}
+function openMod(id){
+  closeSidebar();
+  var c=document.getElementById('mc'+id);if(!c)return;
+  document.querySelectorAll('.mod-card').forEach(function(x){x.classList.remove('open');});
+  c.classList.add('open');
+  c.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.sb-mod-btn').forEach(function(x){x.classList.remove('active');});
+  var b=document.getElementById('smb'+id);if(b)b.classList.add('active');
+}
+function toggleTopic(id){var t=document.getElementById('ti'+id);if(t)t.classList.toggle('open');}
+function tlClick(id){
+  // locked topic click: toggle to show teaser OR open paywall
+  var t=document.getElementById('ti'+id);
+  if(t)t.classList.toggle('open');
+}
+function jumpTopic(mId,tIdx){
+  if(!isAuth()&&!isFree(MODS[mId].topics[tIdx].id)){closeSidebar();openPaywall();return;}
+  closeSidebar();
+  openMod(mId);
+  setTimeout(function(){
+    var id=MODS[mId].topics[tIdx].id;
+    var el=document.getElementById('ti'+id);
+    if(el){el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'start'});}
+  },350);
+}
+
+/* ══════════════════════════════════════════
+   MARK DONE
+══════════════════════════════════════════ */
+function markDone(mId,tId){
+  if(!isAuth()){openPaywall();return;}
+  var was=gs(PFX+'topic_'+tId,false);
+  var now=!was;
+  ss(PFX+'topic_'+tId,now);
+  var cb=document.getElementById('cb'+tId);
+  var ti=document.getElementById('ti'+tId);
+  if(cb){cb.classList.toggle('done',now);if(now){cb.classList.add('pop');setTimeout(function(){cb.classList.remove('pop');},420);}}
+  if(ti)ti.classList.toggle('tdone',now);
+  if(now)addXP(10);
+  updateProgress();updSidebar();
+  checkModDone(parseInt(mId));
+  ss(PFX+'last',{mId:mId,tId:tId,mTitle:MODS[mId].title});
+}
+
+function checkModDone(mId){
+  var m=MODS[mId];if(!m)return;
+  var all=m.topics.every(function(t){return gs(PFX+'topic_'+t.id,false);});
+  if(!all)return;
+  showMotiv(MOTIVS[mId%MOTIVS.length]);
+  if(Math.random()<0.3){var pts=10+Math.floor(Math.random()*41);setTimeout(function(){showSurp(pts);},1300);}
+  var n=document.getElementById('smn'+mId);if(n)n.classList.add('done');
+  checkAllDone();
+}
+
+function checkAllDone(){
+  var all=MODS.every(function(m){return m.topics.every(function(t){return gs(PFX+'topic_'+t.id,false);});});
+  if(!all)return;
+  document.getElementById('doneBanner').style.display='block';
+  document.getElementById('bonusCard').classList.add('unlocked');
+  document.getElementById('bonusIcon').textContent='🎁';
+  document.getElementById('bonusTitle').textContent='Conteúdo Bônus Desbloqueado!';
+  document.getElementById('bonusSub').textContent='Parabéns! Você desbloqueou: Estratégias avançadas de remarketing, automação com IA e templates de anúncios de alta conversão.';
+  toast('🎉 Curso 100% concluído! Certificado disponível!','tgrn');
+  addXP(100);
+  ss(PFX+'completed',true);
+  var cp=gs('ma_course_progress',{});cp['dt']=100;ss('ma_course_progress',cp);
+}
+
+/* ══════════════════════════════════════════
+   PROGRESS
+══════════════════════════════════════════ */
+function getModProg(id){
+  var m=MODS[id];if(!m)return{done:0,total:0,pct:0};
+  var d=m.topics.filter(function(t){return gs(PFX+'topic_'+t.id,false);}).length;
+  var tot=m.topics.length;
+  return{done:d,total:tot,pct:tot?Math.round(d/tot*100):0};
+}
+function getTotalProg(){
+  var d=0,tot=0;MODS.forEach(function(m){var p=getModProg(m.id);d+=p.done;tot+=p.total;});
+  return tot?Math.round(d/tot*100):0;
+}
+function updateProgress(){
+  var pct=getTotalProg();
+  document.getElementById('gFill').style.width=pct+'%';
+  document.getElementById('ringPct').textContent=pct+'%';
+  var c=document.getElementById('ringCirc');
+  if(c){var d=Math.round(pct/100*94.25);c.setAttribute('stroke-dasharray',d+' '+(94.25-d));}
+  var cp=gs('ma_course_progress',{});cp['dt']=pct;ss('ma_course_progress',cp);
+  ss(PFX+'progress',pct);
+}
+function updSidebar(){
+  var pct=getTotalProg();
+  document.getElementById('sbFill').style.width=pct+'%';
+  document.getElementById('sbLbl').textContent=pct+'% concluído';
+  MODS.forEach(function(m){
+    var dots=document.getElementById('smd'+m.id);
+    if(dots){var ds=dots.querySelectorAll('.sb-dot');m.topics.forEach(function(t,i){if(ds[i])ds[i].className='sb-dot'+(gs(PFX+'topic_'+t.id,false)?' done':'');});}
+    m.topics.forEach(function(t,i){
+      var el=document.getElementById('sti'+m.id+i);
+      if(el&&isAuth()){el.classList.remove('locked-item');el.classList.toggle('done',gs(PFX+'topic_'+t.id,false));}
+    });
+  });
+}
+
+/* ══════════════════════════════════════════
+   CONTINUE BANNER
+══════════════════════════════════════════ */
+function showContBanner(){
+  var last=gs(PFX+'last',null);if(!last)return;
+  var bn=document.getElementById('contBanner');
+  var desc=document.getElementById('contDesc');
+  var btn=document.getElementById('contBtn');
+  if(!bn)return;
+  bn.style.display='flex';
+  desc.textContent='Retomar: '+last.mTitle;
+  btn.onclick=function(){
+    openMod(parseInt(last.mId));
+    setTimeout(function(){
+      var el=document.getElementById('ti'+last.tId);
+      if(el){el.classList.add('open');el.scrollIntoView({behavior:'smooth'});}
+    },400);
+  };
+}
+
+/* ══════════════════════════════════════════
+   QUIZ
+══════════════════════════════════════════ */
+function selOpt(mId,qi,oi){
+  var done=gs(PFX+'qd_'+mId,false);if(done)return;
+  MODS[mId].quiz[qi].opts.forEach(function(o,i){var el=document.getElementById('qo'+mId+'_'+qi+'_'+i);if(el)el.classList.remove('sel');});
+  var el=document.getElementById('qo'+mId+'_'+qi+'_'+oi);if(el)el.classList.add('sel');
+  ss(PFX+'qsel_'+mId+'_'+qi,oi);
+  var all=MODS[mId].quiz.every(function(q,i){return gs(PFX+'qsel_'+mId+'_'+i,-1)>=0;});
+  var sb=document.getElementById('qsub'+mId);if(sb)sb.disabled=!all;
+}
+function submitQ(mId){
+  var m=MODS[mId];if(!m)return;
+  var ok=0;
+  m.quiz.forEach(function(q,qi){
+    var sel=gs(PFX+'qsel_'+mId+'_'+qi,-1);
+    ss(PFX+'qa_'+mId+'_'+qi,sel);
+    q.opts.forEach(function(o,oi){
+      var el=document.getElementById('qo'+mId+'_'+qi+'_'+oi);if(!el)return;
+      el.classList.remove('sel');el.disabled=true;
+      if(oi===q.correct)el.classList.add('ok');
+      else if(oi===sel&&sel!==q.correct)el.classList.add('wrong');
+    });
+    if(sel===q.correct)ok++;
+  });
+  ss(PFX+'qd_'+mId,true);
+  var pts=ok*15;addXP(pts);
+  var sb=document.getElementById('qsub'+mId);if(sb)sb.style.display='none';
+  var res=document.getElementById('qres'+mId);
+  if(res){res.className='quiz-result '+(ok===m.quiz.length?'ok':'bad');res.textContent=ok===m.quiz.length?'🎉 Perfeito! '+ok+'/'+m.quiz.length+' corretas! +'+pts+' XP':'📚 '+ok+'/'+m.quiz.length+' corretas. +'+pts+' XP. Revise os itens em vermelho.';}
+  toast('Quiz: '+ok+'/'+m.quiz.length+' ✅','tgrn');
+  setTimeout(function(){openFC(mId);},1600);
+}
+
+/* ══════════════════════════════════════════
+   FLASHCARDS
+══════════════════════════════════════════ */
+function openFC(mId){
+  fcList=MODS[mId].topics.map(function(t){return t.fc;}).filter(Boolean);
+  fcIdx=0;fcOk=0;showFC();
+  document.getElementById('fcModal').classList.add('on');
+}
+function showFC(){
+  if(fcIdx>=fcList.length){closeFC();return;}
+  var c=fcList[fcIdx];
+  document.getElementById('fcFront').textContent=c.q;
+  document.getElementById('fcBack').textContent=c.a;
+  document.getElementById('fcCount').textContent=(fcIdx+1)+' / '+fcList.length;
+  document.getElementById('fcCard').classList.remove('flipped');
+  fcFlipped_=false;
+}
+function fcFlip(){document.getElementById('fcCard').classList.toggle('flipped');fcFlipped_=!fcFlipped_;}
+function fcAns(knew){if(knew){fcOk++;addXP(5);}fcIdx++;showFC();}
+function fcNext(){fcIdx++;showFC();}
+function closeFC(){
+  document.getElementById('fcModal').classList.remove('on');
+  if(fcOk>0)toast('Flashcards: '+fcOk+' acertos! 🃏','torn');
+}
+function openReview(){
+  fcList=[];MODS.forEach(function(m){m.topics.forEach(function(t){if(t.fc)fcList.push(t.fc);});});
+  fcIdx=0;fcOk=0;showFC();document.getElementById('fcModal').classList.add('on');
+  toast('Modo revisão iniciado 🔄','torn');
+}
+
+/* ══════════════════════════════════════════
+   AUDIO
+══════════════════════════════════════════ */
+function startAud(tId){
+  stopAud();
+  var el=document.getElementById('tc'+tId);if(!el)return;
+  var txt=el.innerText||el.textContent;
+  if(!window.speechSynthesis){toast('Áudio não suportado neste navegador.','');return;}
+  document.getElementById('abar'+tId).style.display='flex';
+  audSynth=window.speechSynthesis;
+  audUtt=new SpeechSynthesisUtterance(txt);
+  audUtt.lang='pt-BR';audUtt.rate=audSpd;
+  audUtt.onstart=function(){audPlay=true;var b=document.getElementById('apbtn'+tId);if(b)b.textContent='⏸';var s=document.getElementById('ast'+tId);if(s)s.textContent='▶ Reproduzindo...';};
+  audUtt.onend=function(){audPlay=false;var b=document.getElementById('apbtn'+tId);if(b)b.textContent='▶';var s=document.getElementById('ast'+tId);if(s)s.textContent='✅ Concluído';addXP(5);toast('+5 XP por ouvir o resumo! 🎧','torn');};
+  audSynth.speak(audUtt);
+}
+function toggleAud(tId){
+  if(!audSynth)return;
+  if(audPlay){audSynth.pause();audPlay=false;var b=document.getElementById('apbtn'+tId);if(b)b.textContent='▶';}
+  else{audSynth.resume();audPlay=true;var b=document.getElementById('apbtn'+tId);if(b)b.textContent='⏸';}
+}
+function stopAud(){if(window.speechSynthesis)window.speechSynthesis.cancel();audPlay=false;}
+function setSpd(tId,spd){
+  audSpd=spd;
+  ['0.75','1','1.25','1.5'].forEach(function(s){var b=document.getElementById('spd'+tId+'_'+s.replace('.','d'));if(b)b.classList.toggle('on',parseFloat(s)===spd);});
+}
+
+/* ══════════════════════════════════════════
+   FONT SIZE
+══════════════════════════════════════════ */
+function changeFz(delta){
+  FZ=Math.min(22,Math.max(11,FZ+delta));
+  document.querySelectorAll('.t-content').forEach(function(el){el.style.fontSize=FZ+'px';});
+  document.getElementById('fzLbl').textContent=FZ;
+  ss(PFX+'fz',FZ);
+}
+function changeTopFz(tId,delta){
+  var el=document.getElementById('tc'+tId);var lb=document.getElementById('fzt'+tId);
+  if(!el)return;var cur=parseInt(el.style.fontSize)||FZ;var nw=Math.min(22,Math.max(11,cur+delta));
+  el.style.fontSize=nw+'px';if(lb)lb.textContent=nw;ss(PFX+'fz',nw);
+}
+
+/* ══════════════════════════════════════════
+   PEN / HIGHLIGHT
+══════════════════════════════════════════ */
+function togglePen(tId){
+  penMode=!penMode;
+  var btn=document.getElementById('penBt'+tId);if(btn)btn.classList.toggle('on',penMode);
+  document.body.style.cursor=penMode?'crosshair':'';
+  if(penMode)document.addEventListener('mouseup',doHL);
+  else document.removeEventListener('mouseup',doHL);
+}
+function doHL(){
+  var sel=window.getSelection();if(!sel||!sel.toString().trim())return;
+  try{var r=sel.getRangeAt(0);var sp=document.createElement('span');sp.className='hl';r.surroundContents(sp);sel.removeAllRanges();toast('Texto destacado! 🖊️','torn');}catch(e){}
+}
+
+/* ══════════════════════════════════════════
+   NOTES
+══════════════════════════════════════════ */
+function saveNote(tId){
+  var ta=document.getElementById('nt'+tId);if(!ta)return;
+  ss(PFX+'note_'+tId,ta.value);
+  var ns=gs('mae_notes_v3',[]);var ei=ns.findIndex(function(n){return n.id===tId;});
+  if(ei>=0)ns[ei]={id:tId,text:ta.value};else ns.push({id:tId,text:ta.value,course:'Tráfego Pago'});
+  ss('mae_notes_v3',ns);
+  toast('Anotação salva! ✍️','tgrn');
+}
+
+/* ══════════════════════════════════════════
+   SEARCH
+══════════════════════════════════════════ */
+function doSearch(q){
+  if(!q){renderAll();updateProgress();updSidebar();return;}
+  var ql=q.toLowerCase();
+  var c=document.getElementById('modsContainer');c.innerHTML='';
+  MODS.forEach(function(m){
+    var mt=m.topics.filter(function(t){return t.title.toLowerCase().includes(ql)||t.content.toLowerCase().includes(ql);});
+    if(mt.length||m.title.toLowerCase().includes(ql)){
+      var clone=Object.assign({},m,{topics:mt.length?mt:m.topics});
+      c.innerHTML+=renderMod(clone);
+      var mc=document.getElementById('mc'+m.id);if(mc)mc.classList.add('open');
+    }
+  });
+}
+
+/* ══════════════════════════════════════════
+   THEME
+══════════════════════════════════════════ */
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  ss(PFX+'theme',document.body.classList.contains('light')?'light':'dark');
+  document.querySelector('.tb-btn[onclick="toggleTheme()"]').textContent=document.body.classList.contains('light')?'☀️':'🌙';
+}
+
+/* ══════════════════════════════════════════
+   PAYWALL
+══════════════════════════════════════════ */
+function openPaywall(showCode){
+  document.getElementById('pwModal').classList.add('on');
+  if(showCode){togglePWCode();}
+}
+function closePW(){document.getElementById('pwModal').classList.remove('on');}
+function pwOutside(e){if(e.target===document.getElementById('pwModal'))closePW();}
+function togglePWCode(){
+  var a=document.getElementById('pwCodeArea');var t=document.getElementById('pwToggle');
+  a.classList.toggle('on');
+  t.textContent=a.classList.contains('on')?'← Voltar para comprar':'Já tenho um código de acesso →';
+}
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sbOverlay').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbOverlay').classList.remove('open');}
+
+/* ══════════════════════════════════════════
+   AI CHAT
+══════════════════════════════════════════ */
+function toggleAI(){document.getElementById('aiPanel').classList.toggle('on');updAIRem();}
+function updAIRem(){
+  var lim=QLIMITS[TIER]||5;
+  var used=gs(PFX+'aiused',{date:'',count:0});
+  var today=new Date().toLocaleDateString('pt-BR');
+  var cnt=used.date===today?used.count:0;
+  document.getElementById('aiRem').textContent=lim===9999?'Ilimitado':(lim-cnt)+' restantes hoje';
+}
+async function sendAI(){
+  var inp=document.getElementById('aiInp');var msg=(inp.value||'').trim();if(!msg)return;
+  var lim=QLIMITS[TIER]||5;
+  var used=gs(PFX+'aiused',{date:'',count:0});
+  var today=new Date().toLocaleDateString('pt-BR');
+  if(used.date!==today)used={date:today,count:0};
+  if(lim!==9999&&used.count>=lim){appendAI('Você atingiu o limite diário de perguntas. Faça upgrade para continuar! 🚀','bot');return;}
+  inp.value='';appendAI(msg,'user');appendAI('Pensando...','bot think');
+  used.count++;ss(PFX+'aiused',used);updAIRem();
+  try{
+    var r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:msg}],courseKey:CKEY,plan:TIER||'INDIVIDUAL',userEmail:(USER&&USER.email)||'anon'})});
+    var d=await r.json();
+    var msgs=document.getElementById('aiMsgs');var th=msgs.querySelector('.think');if(th)th.remove();
+    var rep=(d.content&&d.content[0])?d.content[0].text:'Não consegui processar sua pergunta.';
+    appendAI(rep,'bot');
+    if(d._ma_usage&&d._ma_usage.remaining===0)appendAI('Limite de perguntas atingido. Faça upgrade para MONTHLY ou MASTER! 🚀','bot');
+  }catch(e){var m2=document.getElementById('aiMsgs');var t2=m2.querySelector('.think');if(t2)t2.remove();appendAI('Erro de conexão. Tente novamente.','bot');}
+}
+function appendAI(txt,cls){
+  var m=document.getElementById('aiMsgs');var el=document.createElement('div');el.className='ai-msg '+cls;el.textContent=txt;m.appendChild(el);m.scrollTop=m.scrollHeight;
+}
+
+/* ══════════════════════════════════════════
+   SURPRISE
+══════════════════════════════════════════ */
+function showSurp(pts){document.getElementById('surpPts').textContent='+'+pts+' pts';document.getElementById('surpModal').classList.add('on');}
+function closeSurp(){
+  var pts=parseInt((document.getElementById('surpPts').textContent||'0').replace(/\D/g,''))||0;
+  addXP(pts);document.getElementById('surpModal').classList.remove('on');
+}
+
+/* ══════════════════════════════════════════
+   MOTIVATIONAL
+══════════════════════════════════════════ */
+function showMotiv(txt){var el=document.getElementById('motiv');el.textContent=txt;el.style.display='block';setTimeout(function(){el.style.display='none';},3500);}
+
+/* ══════════════════════════════════════════
+   CERTIFICATE
+══════════════════════════════════════════ */
+function openCert(){document.getElementById('certModal').classList.add('on');drawCert();}
+function closeCert(){document.getElementById('certModal').classList.remove('on');}
+function drawCert(){
+  var cv=document.getElementById('certCanvas');if(!cv)return;
+  var cx=cv.getContext('2d');var w=cv.width,h=cv.height;
+  cx.fillStyle='#08080f';cx.fillRect(0,0,w,h);
+  var g=cx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#f97316');g.addColorStop(1,'#fb923c');
+  cx.strokeStyle=g;cx.lineWidth=8;cx.strokeRect(16,16,w-32,h-32);
+  cx.strokeStyle='rgba(249,115,22,.3)';cx.lineWidth=1;cx.strokeRect(28,28,w-56,h-56);
+  cx.textAlign='center';
+  cx.fillStyle='#f97316';cx.font='bold 22px serif';cx.fillText('MATHEUS ACADEMY',w/2,70);
+  cx.fillStyle='rgba(249,115,22,.5)';cx.font='13px sans-serif';cx.fillText('CERTIFICADO DE CONCLUSÃO',w/2,94);
+  cx.strokeStyle='rgba(249,115,22,.35)';cx.lineWidth=1;cx.beginPath();cx.moveTo(80,110);cx.lineTo(w-80,110);cx.stroke();
+  cx.fillStyle='#8888a8';cx.font='14px sans-serif';cx.fillText('Certificamos que',w/2,148);
+  var name=(USER&&USER.name)||'Aluno';
+  cx.fillStyle='#e8e8f0';cx.font='bold 36px serif';cx.fillText(name,w/2,200);
+  cx.strokeStyle='rgba(249,115,22,.35)';cx.lineWidth=1;var nm=cx.measureText(name);cx.beginPath();cx.moveTo(w/2-nm.width/2-10,212);cx.lineTo(w/2+nm.width/2+10,212);cx.stroke();
+  cx.fillStyle='#8888a8';cx.font='14px sans-serif';cx.fillText('concluiu com êxito o curso',w/2,240);
+  cx.fillStyle='#f97316';cx.font='bold 24px serif';cx.fillText('Dominando o Tráfego Pago',w/2,276);
+  cx.fillStyle='#44445a';cx.font='13px sans-serif';cx.fillText(new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}),w/2,310);
+  cx.fillStyle='rgba(249,115,22,.6)';cx.font='12px sans-serif';cx.fillText('3 Módulos · 9 Tópicos · ~6,5 horas',w/2,334);
+  cx.strokeStyle='rgba(249,115,22,.2)';cx.lineWidth=1;cx.beginPath();cx.moveTo(80,356);cx.lineTo(w-80,356);cx.stroke();
+  cx.fillStyle='#5b7fff';cx.font='italic bold 18px serif';cx.fillText('Matheus Henry',w/2,400);
+  cx.fillStyle='#44445a';cx.font='11px sans-serif';cx.fillText('Fundador da Matheus Academy',w/2,420);
+}
+function dlCert(){var cv=document.getElementById('certCanvas');if(!cv)return;var a=document.createElement('a');a.download='certificado-trafego-pago.png';a.href=cv.toDataURL();a.click();toast('Certificado baixado! 🏆','tgrn');}
+function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent('🎉 Conclui o curso "Dominando o Tráfego Pago" na Matheus Academy! #MatheusAcademy'),'_blank');}
+
+/* ══════════════════════════════════════════
+   TIMER
+══════════════════════════════════════════ */
+function startTimer(){
+  if(timerTmr)clearInterval(timerTmr);
+  var saved=gs(PFX+'timer_today',{date:'',secs:0});
+  var today=new Date().toLocaleDateString('pt-BR');
+  timerSec=saved.date===today?saved.secs:0;
+  timerTmr=setInterval(function(){
+    timerSec++;
+    var h=Math.floor(timerSec/3600),m=Math.floor((timerSec%3600)/60),s=timerSec%60;
+    document.getElementById('tVal').textContent=(h>0?h+':':'')+(m<10&&h>0?'0':'')+m+':'+(s<10?'0':'')+s;
+    if(timerSec%60===0){
+      ss(PFX+'timer_today',{date:today,secs:timerSec});
+      ss('ma_study_today_min',(gs('ma_study_today_min',0)+1));
+      ss('ma_study_total_min',(gs('ma_study_total_min',0)+1));
+      ss('ma_study_week_min',(gs('ma_study_week_min',0)+1));
+      ss('ma_study_month_min',(gs('ma_study_month_min',0)+1));
+    }
+  },1000);
+  document.addEventListener('visibilitychange',function(){if(document.hidden)clearInterval(timerTmr);else startTimer();});
+}
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+function toast(txt,cls){
+  var w=document.getElementById('toastWrap');if(!w)return;
+  var t=document.createElement('div');t.className='toast '+(cls||'');
+  var ico=cls==='tgrn'?'✅':cls==='torn'?'🎯':'ℹ️';
+  t.innerHTML='<span class="toast-ico">'+ico+'</span><span class="toast-txt">'+txt+'</span>';
+  w.appendChild(t);requestAnimationFrame(function(){t.classList.add('show');});
+  setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove();},350);},3200);
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',function(){
+  var theme=gs(PFX+'theme','dark');
+  if(theme==='light')document.body.classList.add('light');
+  FZ=gs(PFX+'fz',14);
+
+  if(checkSession()){
+    bootFull();
+  } else {
+    bootPreview();
+  }
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      closePW();
+      document.getElementById('fcModal').classList.remove('on');
+      document.getElementById('certModal').classList.remove('on');
+      document.getElementById('aiPanel').classList.remove('on');
+    }
+  });
+  var aiIn=document.getElementById('aiInp');
+  if(aiIn)aiIn.addEventListener('keydown',function(e){if(e.key==='Enter')sendAI();});
+});
 </script>
 </body>
 </html>
