@@ -14,27 +14,43 @@ header{display:flex;align-items:center;gap:14px;padding:16px 28px;border-bottom:
 header h1{font-size:15px;font-weight:700}
 header small{color:var(--text3);font-size:12px;margin-left:4px}
 .badge{margin-left:auto;background:rgba(59,130,246,.15);color:var(--accent2);border:1px solid rgba(59,130,246,.3);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-main{max-width:800px;margin:0 auto;padding:36px 20px 80px}
+main{max-width:820px;margin:0 auto;padding:36px 20px 80px}
 .pg-title{font-size:22px;font-weight:800;margin-bottom:6px;background:linear-gradient(135deg,#f0f4ff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .pg-sub{color:var(--text2);font-size:13px;margin-bottom:28px}
+
+/* AVISO */
+.notice{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:13px 16px;margin-bottom:22px;font-size:12.5px;color:#fcd34d;line-height:1.6}
+.notice b{font-weight:700}
+.notice code{background:rgba(0,0,0,.3);padding:1px 6px;border-radius:4px;font-family:var(--mono);font-size:11px}
 
 /* TOKEN */
 .token-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:24px}
 .token-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
 .field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:170px}
 label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em}
-input,select{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;transition:.2s;width:100%}
-input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
+input,select,textarea{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;transition:.2s;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
+textarea{resize:vertical;min-height:60px;font-size:13px}
 .status{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
 .dot.green{background:var(--green);box-shadow:0 0 8px var(--green)}
 .dot.red{background:var(--red)}
 .dot.yellow{background:var(--yellow);animation:pulse .8s infinite}
 
-/* ADD CARD */
-.add-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
+/* TABS */
+.tabs{display:flex;gap:6px;margin-bottom:20px}
+.tab{padding:9px 18px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:.18s}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* FORM MANUAL */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.form-grid .full{grid-column:1/-1}
+.form-hint{font-size:10.5px;color:var(--text3);margin-top:4px}
 
 /* DROP ZONE */
+.add-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:32px}
 .dropzone{border:2px dashed var(--border);border-radius:12px;padding:36px 24px;text-align:center;cursor:pointer;transition:.2s;position:relative;margin-bottom:20px}
 .dropzone:hover,.dropzone.drag{border-color:var(--accent);background:rgba(59,130,246,.05)}
 .dropzone.done{border-color:var(--green);border-style:solid;background:rgba(34,197,94,.05)}
@@ -44,13 +60,13 @@ input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59
 .dz-sub{font-size:12px;color:var(--text2)}
 .dz-file{font-size:13px;font-weight:600;color:var(--green);margin-top:8px;font-family:var(--mono)}
 
-/* META PREVIEW */
-.meta-preview{background:var(--surface);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:14px;display:none;margin-bottom:20px}
-.meta-preview-title{font-size:11px;color:#86efac;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.meta-item{background:var(--card);border-radius:7px;padding:8px 12px}
-.meta-item .mk{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-.meta-item .mv{font-size:13px;font-weight:600;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* META PREVIEW + EDIÇÃO */
+.meta-preview{background:var(--surface);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:16px;display:none;margin-bottom:20px}
+.meta-preview-title{font-size:11px;color:#86efac;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.meta-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.meta-field{display:flex;flex-direction:column;gap:5px}
+.meta-field label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+.meta-field input,.meta-field select,.meta-field textarea{font-size:13px;padding:8px 10px}
 
 /* OPÇÕES */
 .opts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
@@ -102,8 +118,6 @@ input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59
 .bp{background:rgba(167,139,250,.1);color:#c4b5fd;border:1px solid rgba(167,139,250,.2)}
 .xbtn{background:none;border:none;color:var(--text3);cursor:pointer;padding:6px 8px;border-radius:6px;font-size:18px;transition:.2s;flex-shrink:0}
 .xbtn:hover{color:var(--text);background:var(--card)}
-
-/* ACTIONS */
 .actions-panel{display:none;border-top:1px solid var(--border);padding:12px 16px;background:rgba(0,0,0,.15)}
 .actions-panel.open{display:block}
 .act-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -121,435 +135,850 @@ input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59
 .apd:hover{background:rgba(167,139,250,.15)!important}
 .adel{border-color:rgba(239,68,68,.3)!important;color:#fca5a5!important;background:rgba(239,68,68,.08)!important}
 .adel:hover{background:rgba(239,68,68,.2)!important}
+.section-div{border-top:1px solid var(--border);margin:28px 0 24px}
 
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-@media(max-width:560px){.opts-row,.token-row{flex-direction:column;grid-template-columns:1fr}.opt-cards{flex-direction:column}.act-row{flex-direction:column;align-items:flex-start}header{padding:12px 14px}main{padding:20px 12px 60px}}
+@media(max-width:600px){.opts-row,.token-row,.form-grid,.meta-fields{grid-template-columns:1fr}.opt-cards{flex-direction:column}.act-row{flex-direction:column;align-items:flex-start}header{padding:12px 14px}main{padding:20px 12px 60px}.tabs{flex-wrap:wrap}}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">M</div>
   <div><h1>Matheus Academy <small>Admin</small></h1></div>
-  <div class="badge">⚙ Gerenciador</div>
+  <div class="badge">⚙ Gerenciador de Cursos</div>
 </header>
 <main>
   <div class="pg-title">Gerenciar Cursos</div>
-  <p class="pg-sub">Arraste o HTML do curso ou clique para selecionar — sobe no GitHub e cadastra automaticamente.</p>
+  <p class="pg-sub">Adicione, ative, oculte e exclua cursos do portal — tudo sincronizado automaticamente no GitHub.</p>
+
+  <!-- AVISO IMPORTANTE -->
+  <div class="notice">
+    <b>⚠️ Como funciona:</b> Este admin edita apenas o arquivo <code>data/courses.js</code>. O arquivo HTML do curso deve já estar subido no GitHub.
+    Ao publicar via "Upload HTML", o arquivo é subido E o curso é registrado no <code>courses.js</code>.<br>
+    Ao publicar via "Cadastro Manual", apenas registra no <code>courses.js</code> (o HTML já deve existir no repositório).<br>
+    <b>Nunca feche a janela durante uma publicação.</b>
+  </div>
 
   <!-- TOKEN -->
   <div class="token-box">
     <div class="token-row">
-      <div class="field"><label>Token GitHub</label><input type="password" id="ghToken" placeholder="ghp_..." autocomplete="off" oninput="saveConfig()"></div>
+      <div class="field"><label>Token GitHub (ghp_...)</label><input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" oninput="saveConfig()"></div>
       <div class="field" style="max-width:175px"><label>Usuário/Org</label><input type="text" id="ghOwner" placeholder="MatheusAcademy" oninput="saveConfig()"></div>
       <div class="field" style="max-width:175px"><label>Repositório</label><input type="text" id="ghRepo" placeholder="matheusacademy" oninput="saveConfig()"></div>
-      <button class="btn-sm" onclick="testGH()">Testar</button>
+      <button class="btn-sm" onclick="testGH()">Testar Conexão</button>
     </div>
-    <div class="status"><div class="dot" id="ghDot"></div><span id="ghTxt" style="color:var(--text3)">Preencha o token</span></div>
+    <div class="status"><div class="dot" id="ghDot"></div><span id="ghTxt" style="color:var(--text3)">Preencha o token para conectar</span></div>
   </div>
 
-  <!-- ADD CARD -->
-  <div class="add-card">
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('upload')">📤 Upload HTML</div>
+    <div class="tab" onclick="switchTab('manual')">✏️ Cadastro Manual</div>
+  </div>
 
-    <!-- DROP ZONE -->
-    <div class="dropzone" id="dropzone" ondragover="dzDrag(event,true)" ondragleave="dzDrag(event,false)" ondrop="dzDrop(event)">
-      <input type="file" accept=".html" onchange="fileChosen(this.files[0])">
-      <div class="dz-icon" id="dzIcon">📄</div>
-      <div class="dz-title" id="dzTitle">Arraste o arquivo HTML aqui</div>
-      <div class="dz-sub" id="dzSub">ou clique para selecionar no computador</div>
-      <div class="dz-file" id="dzFile"></div>
-    </div>
+  <!-- TAB 1: UPLOAD -->
+  <div class="tab-content active" id="tab-upload">
+    <div class="add-card">
 
-    <!-- META PREVIEW -->
-    <div class="meta-preview" id="metaPreview">
-      <div class="meta-preview-title">✅ Dados lidos automaticamente</div>
-      <div class="meta-grid" id="metaGrid"></div>
-    </div>
+      <!-- DROP ZONE -->
+      <div class="dropzone" id="dropzone" ondragover="dzDrag(event,true)" ondragleave="dzDrag(event,false)" ondrop="dzDrop(event)">
+        <input type="file" accept=".html" onchange="fileChosen(this.files[0])">
+        <div class="dz-icon" id="dzIcon">📄</div>
+        <div class="dz-title" id="dzTitle">Arraste o arquivo HTML aqui</div>
+        <div class="dz-sub" id="dzSub">ou clique para selecionar no computador</div>
+        <div class="dz-file" id="dzFile"></div>
+      </div>
 
-    <!-- OPÇÕES -->
-    <div class="opts-row" id="optsSection" style="display:none">
-      <div class="opts-group">
-        <label class="group-label">Visibilidade</label>
-        <div class="opt-cards">
-          <label class="opt-card sel" id="ov-on" onclick="selOpt('v','on')">
-            <input type="radio" name="v" value="on" checked>
-            <span class="oe">👁️</span><div class="ot">Visível</div><div class="od">Aparece no portal</div>
-          </label>
-          <label class="opt-card" id="ov-off" onclick="selOpt('v','off')">
-            <input type="radio" name="v" value="off">
-            <span class="oe">🙈</span><div class="ot">Oculto</div><div class="od">Salvo mas escondido</div>
-          </label>
+      <!-- META PREVIEW EDITÁVEL -->
+      <div class="meta-preview" id="metaPreview">
+        <div class="meta-preview-title">✅ Dados detectados — confira e edite se necessário</div>
+        <div class="meta-fields">
+          <div class="meta-field"><label>ID único (curto)</label><input type="text" id="mId" placeholder="ss"><div class="form-hint">Letras/números sem espaço. Ex: ss, tp, gp</div></div>
+          <div class="meta-field"><label>Nome do curso</label><input type="text" id="mName" placeholder="Nome Completo"></div>
+          <div class="meta-field full"><label>Descrição curta</label><textarea id="mDesc" rows="2" placeholder="Descrição curta do curso (1-2 linhas)"></textarea></div>
+          <div class="meta-field"><label>Categoria</label>
+            <select id="mCat">
+              <option>Negócios</option>
+              <option>Geopolítica</option>
+              <option>PNL</option>
+              <option>Desenvolvimento</option>
+              <option>Tecnologia</option>
+              <option>Psicologia</option>
+              <option>História</option>
+              <option>Filosofia</option>
+              <option>Inglês</option>
+              <option>Bíblia / Teologia</option>
+              <option>Biografias</option>
+              <option>Engenharia</option>
+              <option>Mecânica</option>
+              <option>📚 Ebooks</option>
+              <option>Atualize-se! Notícias Mais Relevantes da Semana</option>
+            </select>
+          </div>
+          <div class="meta-field"><label>Ícone (emoji)</label><input type="text" id="mIcon" placeholder="🎓"></div>
+          <div class="meta-field"><label>Módulos</label><input type="number" id="mModules" min="1" placeholder="9"></div>
+          <div class="meta-field"><label>Tópicos</label><input type="number" id="mTopics" min="1" placeholder="54"></div>
+          <div class="meta-field"><label>Horas</label><input type="number" id="mHours" min="1" placeholder="18"></div>
+          <div class="meta-field"><label>Quizzes</label><input type="number" id="mQuizzes" min="0" placeholder="9"></div>
+          <div class="meta-field"><label>Salt (auth)</label><input type="text" id="mSalt" placeholder="SS_HENRY_2026_MASTER"><div class="form-hint">Deve ser igual ao do arquivo HTML</div></div>
+          <div class="meta-field"><label>Cor (hex)</label><input type="text" id="mColor" placeholder="#dc2626"></div>
+          <div class="meta-field"><label>storagePrefix</label><input type="text" id="mPrefix" placeholder="ss_"><div class="form-hint">Prefixo do localStorage</div></div>
+          <div class="meta-field"><label>ak (chave auth)</label><input type="text" id="mAk" placeholder="ss_auth"></div>
         </div>
       </div>
-      <div class="opts-group">
-        <label class="group-label">Tipo de acesso</label>
-        <div class="opt-cards">
-          <label class="opt-card sel" id="oa-paid" onclick="selOpt('a','paid')">
-            <input type="radio" name="a" value="paid" checked>
-            <span class="oe">🔒</span><div class="ot">Pago</div><div class="od">Exige código Kiwify</div>
-          </label>
-          <label class="opt-card" id="oa-free" onclick="selOpt('a','free')">
-            <input type="radio" name="a" value="free">
-            <span class="oe">🎁</span><div class="ot">Gratuito</div><div class="od">Acesso livre</div>
-          </label>
+
+      <!-- OPÇÕES -->
+      <div class="opts-row" id="optsSection" style="display:none">
+        <div class="opts-group">
+          <label class="group-label">Visibilidade</label>
+          <div class="opt-cards">
+            <label class="opt-card sel" id="ov-on" onclick="selOpt('v','on')"><input type="radio" name="v" value="on" checked><span class="oe">👁️</span><div class="ot">Visível</div><div class="od">Aparece no portal</div></label>
+            <label class="opt-card" id="ov-off" onclick="selOpt('v','off')"><input type="radio" name="v" value="off"><span class="oe">🙈</span><div class="ot">Oculto</div><div class="od">Salvo mas escondido</div></label>
+          </div>
+        </div>
+        <div class="opts-group">
+          <label class="group-label">Tipo de acesso</label>
+          <div class="opt-cards">
+            <label class="opt-card sel" id="oa-paid" onclick="selOpt('a','paid')"><input type="radio" name="a" value="paid" checked><span class="oe">🔒</span><div class="ot">Pago</div><div class="od">Exige código Kiwify</div></label>
+            <label class="opt-card" id="oa-free" onclick="selOpt('a','free')"><input type="radio" name="a" value="free"><span class="oe">🎁</span><div class="ot">Gratuito</div><div class="od">Acesso livre</div></label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- PROGRESS -->
-    <div class="progress-wrap" id="progWrap">
-      <div class="progress-label"><span id="progLabel">Subindo arquivo...</span><span id="progPct">0%</span></div>
-      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
-    </div>
+      <!-- PROGRESS -->
+      <div class="progress-wrap" id="progWrap">
+        <div class="progress-label"><span id="progLabel">Subindo arquivo...</span><span id="progPct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      </div>
 
-    <!-- PUBLISH -->
-    <button class="btn-publish" id="btnPub" onclick="publish()" disabled>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
-      Publicar curso no portal
-    </button>
-    <div class="result" id="result"></div>
+      <button class="btn-publish" id="btnPub" onclick="publish()" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+        Subir HTML e publicar no portal
+      </button>
+      <div class="result" id="resultUpload"></div>
+    </div>
+  </div>
+
+  <!-- TAB 2: MANUAL -->
+  <div class="tab-content" id="tab-manual">
+    <div class="add-card">
+      <p style="font-size:13px;color:var(--text2);margin-bottom:20px">📌 Use quando o HTML já está no GitHub. Preencha os dados abaixo e clique em publicar.</p>
+      <div class="form-grid">
+        <div class="field"><label>ID único *</label><input type="text" id="mnId" placeholder="ss"><div class="form-hint">Letras/números. Ex: ss, tp, gp, nl</div></div>
+        <div class="field"><label>Nome do curso *</label><input type="text" id="mnName" placeholder="Segurança & Sociedade 2025"></div>
+        <div class="field full"><label>Descrição curta *</label><textarea id="mnDesc" rows="2" placeholder="Descrição curta do curso (1-2 linhas)"></textarea></div>
+        <div class="field"><label>Arquivo HTML *</label><input type="text" id="mnFile" placeholder="seguranca-sociedade-2025.html"><div class="form-hint">Nome exato do arquivo no GitHub</div></div>
+        <div class="field"><label>Categoria *</label>
+          <select id="mnCat">
+            <option>Negócios</option>
+            <option>Geopolítica</option>
+            <option>PNL</option>
+            <option>Desenvolvimento</option>
+            <option>Tecnologia</option>
+            <option>Psicologia</option>
+            <option>História</option>
+            <option>Filosofia</option>
+            <option>Inglês</option>
+            <option>Bíblia / Teologia</option>
+            <option>Biografias</option>
+            <option>Engenharia</option>
+            <option>Mecânica</option>
+            <option>📚 Ebooks</option>
+            <option>Atualize-se! Notícias Mais Relevantes da Semana</option>
+          </select>
+        </div>
+        <div class="field"><label>Ícone (emoji) *</label><input type="text" id="mnIcon" placeholder="🛡️"></div>
+        <div class="field"><label>Módulos</label><input type="number" id="mnModules" placeholder="9" min="1"></div>
+        <div class="field"><label>Tópicos</label><input type="number" id="mnTopics" placeholder="54" min="1"></div>
+        <div class="field"><label>Horas</label><input type="number" id="mnHours" placeholder="18" min="1"></div>
+        <div class="field"><label>Quizzes</label><input type="number" id="mnQuizzes" placeholder="9" min="0"></div>
+        <div class="field"><label>Salt (auth) *</label><input type="text" id="mnSalt" placeholder="SS_HENRY_2026_MASTER"><div class="form-hint">Mesmo salt do arquivo HTML</div></div>
+        <div class="field"><label>Cor (hex)</label><input type="text" id="mnColor" placeholder="#dc2626"></div>
+        <div class="field"><label>storagePrefix</label><input type="text" id="mnPrefix" placeholder="ss_"></div>
+        <div class="field"><label>ak (chave auth)</label><input type="text" id="mnAk" placeholder="ss_auth"></div>
+      </div>
+
+      <div class="opts-row">
+        <div class="opts-group">
+          <label class="group-label">Visibilidade</label>
+          <div class="opt-cards">
+            <label class="opt-card sel" id="mnv-on" onclick="selOpt2('v','on')"><input type="radio" name="mnv" value="on" checked><span class="oe">👁️</span><div class="ot">Visível</div><div class="od">Aparece no portal</div></label>
+            <label class="opt-card" id="mnv-off" onclick="selOpt2('v','off')"><input type="radio" name="mnv" value="off"><span class="oe">🙈</span><div class="ot">Oculto</div><div class="od">Salvo mas escondido</div></label>
+          </div>
+        </div>
+        <div class="opts-group">
+          <label class="group-label">Tipo de acesso</label>
+          <div class="opt-cards">
+            <label class="opt-card sel" id="mna-paid" onclick="selOpt2('a','paid')"><input type="radio" name="mna" value="paid" checked><span class="oe">🔒</span><div class="ot">Pago</div><div class="od">Exige código Kiwify</div></label>
+            <label class="opt-card" id="mna-free" onclick="selOpt2('a','free')"><input type="radio" name="mna" value="free"><span class="oe">🎁</span><div class="ot">Gratuito</div><div class="od">Acesso livre</div></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-wrap" id="progWrap2">
+        <div class="progress-label"><span id="progLabel2">Registrando...</span><span id="progPct2">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="progFill2"></div></div>
+      </div>
+
+      <button class="btn-publish" onclick="publishManual()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+        Registrar curso no portal (sem subir HTML)
+      </button>
+      <div class="result" id="resultManual"></div>
+    </div>
   </div>
 
   <!-- LISTA -->
+  <div class="section-div"></div>
   <div class="list-hdr">
-    <div class="list-title">Cursos no portal</div>
+    <div class="list-title">📚 Cursos no portal</div>
     <span id="cCount" style="color:var(--text3);font-size:12px"></span>
+    <button class="btn-sm" style="margin-left:auto" onclick="loadCourses()">🔄 Atualizar lista</button>
   </div>
   <div id="courseList"><div style="color:var(--text3);font-size:13px;padding:10px">Conecte ao GitHub para ver os cursos...</div></div>
 </main>
 
 <script>
-var _meta=null, _fileContent=null, _fileName=null;
+/* =====================================================
+   MATHEUS ACADEMY — ADMIN v4 (bug fixes completos)
+   ===================================================== */
+var _meta = null;
+var _fileContent = null;
+var _fileName = null;
 
-
-// ── HELPER UTF-8 SEGURO ──────────────────────────────────────
-// atob() nativo quebra acentos UTF-8. Esta função decodifica corretamente.
-function _b64decode(str){
-  var b=atob(str.replace(/\n/g,''));
-  try{return decodeURIComponent(escape(b));}catch(e){return b;}
-}
-// ── CONFIG ──────────────────────────────────────────────────
-window.onload=function(){
-  var t=localStorage.getItem('ghToken');
-  var o=localStorage.getItem('ghOwner')||'MatheusAcademy';
-  var r=localStorage.getItem('ghRepo')||'matheusacademy';
-  if(t) document.getElementById('ghToken').value=t;
-  document.getElementById('ghOwner').value=o;
-  document.getElementById('ghRepo').value=r;
-  if(t) setTimeout(testGH,300);
+// ── CONFIG ─────────────────────────────────────────────
+window.onload = function() {
+  var t = localStorage.getItem('ghToken');
+  var o = localStorage.getItem('ghOwner') || 'MatheusAcademy';
+  var r = localStorage.getItem('ghRepo') || 'matheusacademy';
+  if (t) document.getElementById('ghToken').value = t;
+  document.getElementById('ghOwner').value = o;
+  document.getElementById('ghRepo').value = r;
+  if (t) setTimeout(testGH, 300);
 };
-function saveConfig(){
-  localStorage.setItem('ghToken',document.getElementById('ghToken').value);
-  localStorage.setItem('ghOwner',document.getElementById('ghOwner').value);
-  localStorage.setItem('ghRepo',document.getElementById('ghRepo').value);
+
+function saveConfig() {
+  localStorage.setItem('ghToken', document.getElementById('ghToken').value);
+  localStorage.setItem('ghOwner', document.getElementById('ghOwner').value);
+  localStorage.setItem('ghRepo', document.getElementById('ghRepo').value);
 }
-function gh(){return{token:document.getElementById('ghToken').value.trim(),owner:document.getElementById('ghOwner').value.trim(),repo:document.getElementById('ghRepo').value.trim()};}
-function ghH(){return{'Authorization':'token '+gh().token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};}
+function gh() { return { token: document.getElementById('ghToken').value.trim(), owner: document.getElementById('ghOwner').value.trim(), repo: document.getElementById('ghRepo').value.trim() }; }
+function ghH() { return { 'Authorization': 'token ' + gh().token, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }; }
 
-// ── DROPZONE ────────────────────────────────────────────────
-function dzDrag(e,on){e.preventDefault();document.getElementById('dropzone').classList.toggle('drag',on);}
-function dzDrop(e){e.preventDefault();document.getElementById('dropzone').classList.remove('drag');var f=e.dataTransfer.files[0];if(f) fileChosen(f);}
+// ── TABS ──────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t, i) {
+    var names = ['upload', 'manual'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+  document.getElementById('tab-' + name).classList.add('active');
+}
 
-function fileChosen(f){
-  if(!f||!f.name.endsWith('.html')){alert('Selecione um arquivo .html');return;}
-  _fileName=f.name;
-  var dz=document.getElementById('dropzone');
+// ── DROPZONE ───────────────────────────────────────────
+function dzDrag(e, on) { e.preventDefault(); document.getElementById('dropzone').classList.toggle('drag', on); }
+function dzDrop(e) { e.preventDefault(); document.getElementById('dropzone').classList.remove('drag'); var f = e.dataTransfer.files[0]; if (f) fileChosen(f); }
+
+function fileChosen(f) {
+  if (!f || !f.name.endsWith('.html')) { alert('Selecione um arquivo .html'); return; }
+  _fileName = f.name;
+  var dz = document.getElementById('dropzone');
   dz.classList.add('done');
-  document.getElementById('dzIcon').textContent='✅';
-  document.getElementById('dzTitle').textContent='Arquivo selecionado!';
-  document.getElementById('dzSub').textContent='Clique em "Publicar" quando estiver pronto.';
-  document.getElementById('dzFile').textContent=f.name;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    _fileContent=e.target.result;
-    _meta=extractMeta(_fileContent,_fileName);
-    showMetaPreview();
-    document.getElementById('optsSection').style.display='grid';
-    document.getElementById('btnPub').disabled=false;
+  document.getElementById('dzIcon').textContent = '✅';
+  document.getElementById('dzTitle').textContent = 'Arquivo selecionado!';
+  document.getElementById('dzSub').textContent = 'Confira os dados abaixo e clique em Publicar.';
+  document.getElementById('dzFile').textContent = f.name;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    _fileContent = e.target.result;
+    _meta = extractMeta(_fileContent, _fileName);
+    fillMetaFields(_meta);
+    document.getElementById('metaPreview').style.display = 'block';
+    document.getElementById('optsSection').style.display = 'grid';
+    document.getElementById('btnPub').disabled = false;
   };
   reader.readAsText(f);
 }
 
-function showMetaPreview(){
-  if(!_meta) return;
-  var grid=document.getElementById('metaGrid');
-  grid.innerHTML=[['ID',_meta.id],['Nome',_meta.name],['Categoria',_meta.cat],['Módulos',_meta.modules],['Tópicos',_meta.topics],['Horas',_meta.hours+'h'],['Ícone',_meta.icon]].map(function(p){
-    return '<div class="meta-item"><div class="mk">'+p[0]+'</div><div class="mv">'+String(p[1]).substring(0,38)+'</div></div>';
-  }).join('');
-  document.getElementById('metaPreview').style.display='block';
+// ── EXTRAÇÃO DE META (robusta, múltiplos padrões) ─────
+function extractMeta(html, filename) {
+  function get(patterns, fb) {
+    for (var i = 0; i < patterns.length; i++) {
+      var m = html.match(patterns[i]);
+      if (m && m[1]) return m[1].trim();
+    }
+    return fb;
+  }
+  function getN(patterns, fb) {
+    for (var i = 0; i < patterns.length; i++) {
+      var m = html.match(patterns[i]);
+      if (m && m[1]) return parseInt(m[1]);
+    }
+    return fb;
+  }
+
+  // ID — tenta várias formas que podem existir no HTML
+  var id = get([
+    /const\s+COURSE_ID\s*=\s*['"]([^'"]+)['"]/,
+    /courseId\s*[:=]\s*['"]([^'"]+)['"]/,
+    /id:\s*['"]([a-z]{2,6})['"]/,
+    /storagePrefix\s*[:=]\s*['"]([a-z]+)_['"]/  // pega o prefixo e remove _
+  ], null);
+  if (id && id.endsWith('_')) id = id.slice(0, -1);
+  if (!id) id = filename.replace('.html', '').split('-').map(function(w) { return w[0]; }).join('').toLowerCase().substring(0, 4);
+
+  // Nome
+  var name = get([
+    /const\s+COURSE_NAME\s*=\s*['"]([^'"]+)['"]/,
+    /courseName\s*[:=]\s*['"]([^'"]+)['"]/,
+    /<title>([^<|·–\-]+)/,
+    /name:\s*['"]([^'"]{5,})['"]/
+  ], filename.replace('.html', '').replace(/-/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); }));
+  // limpar lixo do title
+  name = name.replace(/Matheus Academy/gi, '').replace(/^\s*[-–·|]\s*/, '').replace(/\s*[-–·|]\s*$/, '').trim();
+  if (!name) name = filename.replace('.html', '').replace(/-/g, ' ');
+
+  // Salt
+  var salt = get([
+    /const\s+COURSE_SALT\s*=\s*['"]([^'"]+)['"]/,
+    /SALT\s*=\s*['"]([^'"]+)['"]/,
+    /salt:\s*['"]([^'"]+)['"]/,
+    /const\s+SALT\s*=\s*['"]([^'"]+)['"]/
+  ], id.toUpperCase() + '_HENRY_2026_MASTER');
+
+  // Prefix
+  var prefix = get([
+    /const\s+PREFIX\s*=\s*['"]([^'"]+)['"]/,
+    /storagePrefix\s*[:=]\s*['"]([^'"]+)['"]/,
+    /localStorage\.setItem\(['"]([a-z]{2,6}_)/
+  ], id + '_');
+
+  // ak (chave de autenticação)
+  var ak = get([
+    /const\s+COURSE_KEY\s*=\s*['"]([^'"]+)['"]/,
+    /COURSE_KEY\s*=\s*['"]([^'"]+)['"]/,
+    /ak:\s*['"]([^'"]+)['"]/
+  ], id + '_auth');
+
+  // Contagem de tópicos
+  var totalTopics = getN([
+    /const\s+TOTAL_TOPICS\s*=\s*(\d+)/,
+    /const\s+TOTAL\s*=\s*(\d+)/,
+    /totalTopics\s*[:=]\s*(\d+)/,
+    /topics:\s*(\d+)/
+  ], 0);
+
+  // Contagem de módulos — conta objetos de módulo no array de dados
+  var modMatches = html.match(/\{id:\s*\d+\s*,/g);
+  var modules = modMatches ? modMatches.length : Math.max(1, Math.round(totalTopics / 6));
+
+  // Se ainda 0, tenta outro padrão
+  if (!totalTopics) {
+    var topicMatches = html.match(/topicId|t_id|topic_id/g);
+    totalTopics = topicMatches ? topicMatches.length : modules * 6;
+  }
+
+  var hours = Math.max(1, Math.round(totalTopics / 7));
+
+  // Categoria
+  var cat = get([
+    /cat:\s*['"]([^'"]+)['"]/,
+    /categoria:\s*['"]([^'"]+)['"]/,
+    /category:\s*['"]([^'"]+)['"]/
+  ], 'Negócios');
+
+  // Ícone
+  var icon = get([
+    /icon:\s*['"]([^'"]{1,4})['"]/,
+    /emoji:\s*['"]([^'"]{1,4})['"]/,
+    /courseIcon\s*=\s*['"]([^'"]{1,4})['"]/
+  ], '🎓');
+
+  // Cor
+  var color = get([
+    /color:\s*['"]?(#[0-9a-fA-F]{6})['"]?/,
+    /primaryColor\s*[:=]\s*['"]?(#[0-9a-fA-F]{6})['"]?/,
+    /--pri:\s*['"]?(#[0-9a-fA-F]{6})['"]?/
+  ], '#3b82f6');
+
+  // Descrição
+  var desc = get([
+    /const\s+COURSE_DESC\s*=\s*['"]([^'"]+)['"]/,
+    /courseDesc\s*[:=]\s*['"]([^'"]+)['"]/,
+    /desc:\s*['"]([^'"]{10,})['"]/
+  ], '');
+
+  return {
+    id: id,
+    name: name,
+    desc: desc,
+    file: filename,
+    cat: cat,
+    modules: modules,
+    topics: totalTopics,
+    hours: hours,
+    quizzes: modules,
+    salt: salt,
+    ak: ak,
+    storagePrefix: prefix,
+    icon: icon,
+    color: color,
+    addedTs: Date.now(),
+    active: true,
+    free: false
+  };
 }
 
-function extractMeta(html,filename){
-  function get(p,fb){var m=html.match(p);return m?m[1].trim():fb;}
-  function getN(p,fb){var m=html.match(p);return m?parseInt(m[1]):fb;}
-  var id=get(/const\s+COURSE_ID\s*=\s*['"]([^'"]+)['"]/,null);
-  var name=get(/const\s+COURSE_NAME\s*=\s*['"]([^'"]+)['"]/,null);
-  var salt=get(/const\s+COURSE_SALT\s*=\s*['"]([^'"]+)['"]/,'');
-  var prefix=get(/const\s+PREFIX\s*=\s*['"]([^'"]+)['"]/,id?id+'_':'');
-  var ak=get(/const\s+COURSE_KEY\s*=\s*['"]([^'"]+)['"]/,id?id+'_auth':'');
-  var totalTopics=getN(/const\s+TOTAL\s*=\s*(\d+)/,0);
-  var modMatches=html.match(/\{id:\d+,/g);
-  var modules=modMatches?modMatches.length:0;
-  var hours=Math.max(1,Math.round(totalTopics/7));
-  var cat=get(/cat:'([^']+)'/,get(/cat:"([^"]+)"/,'NEGÓCIOS'));
-  var icon=get(/emoji:'([^']+)'/,get(/emoji:"([^"]+)"/,'📚'));
-  var color=get(/color['":\s]+['"]?(#[0-9a-fA-F]{6})['"]?/,'#3b82f6');
-  if(!id){id=filename.replace('.html','').replace(/[^a-z0-9]/gi,'').substring(0,6).toLowerCase();}
-  if(!name){name=filename.replace('.html','').replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});}
-  return{id:id,name:name,desc:'',file:filename,cat:cat,modules:modules,topics:totalTopics,hours:hours,quizzes:modules,salt:salt||id.toUpperCase()+'_HENRY_2026_MASTER',ak:ak||id+'_auth',storagePrefix:prefix||id+'_',icon:icon,color:color,addedTs:Date.now(),active:true,free:false};
+// ── PREENCHER CAMPOS EDITÁVEIS ─────────────────────────
+function fillMetaFields(m) {
+  document.getElementById('mId').value = m.id;
+  document.getElementById('mName').value = m.name;
+  document.getElementById('mDesc').value = m.desc;
+  document.getElementById('mIcon').value = m.icon;
+  document.getElementById('mModules').value = m.modules;
+  document.getElementById('mTopics').value = m.topics;
+  document.getElementById('mHours').value = m.hours;
+  document.getElementById('mQuizzes').value = m.quizzes;
+  document.getElementById('mSalt').value = m.salt;
+  document.getElementById('mColor').value = m.color;
+  document.getElementById('mPrefix').value = m.storagePrefix;
+  document.getElementById('mAk').value = m.ak;
+  // Selecionar categoria
+  var catEl = document.getElementById('mCat');
+  for (var i = 0; i < catEl.options.length; i++) {
+    if (catEl.options[i].value === m.cat) { catEl.selectedIndex = i; break; }
+  }
 }
 
-// ── OPÇÕES ──────────────────────────────────────────────────
-function selOpt(g,v){
-  ['on','off','paid','free'].forEach(function(x){var el=document.getElementById('o'+g+'-'+x);if(el) el.classList.remove('sel');});
-  var target=document.getElementById('o'+g+'-'+v);
-  if(target) target.classList.add('sel');
-}
-function getVis(){return document.getElementById('ov-on').classList.contains('sel');}
-function getFree(){return document.getElementById('oa-free').classList.contains('sel');}
-
-// ── TESTAR ──────────────────────────────────────────────────
-async function testGH(){
-  saveConfig();var g=gh();
-  if(!g.token){setStatus('','Preencha o token');return;}
-  setStatus('yellow','Conectando...');
-  try{
-    var r=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo,{headers:ghH()});
-    if(r.ok){setStatus('green','Conectado ✓  '+g.owner+'/'+g.repo);loadCourses();}
-    else setStatus('red','Erro '+r.status+' — verifique token');
-  }catch(e){setStatus('red','Erro: '+e.message);}
-}
-function setStatus(c,t){
-  document.getElementById('ghDot').className='dot'+(c?' '+c:'');
-  var el=document.getElementById('ghTxt');
-  el.textContent=t;
-  el.style.color=c==='green'?'#86efac':c==='red'?'#fca5a5':'var(--text2)';
+function getMetaFromFields() {
+  return {
+    id: document.getElementById('mId').value.trim(),
+    name: document.getElementById('mName').value.trim(),
+    desc: document.getElementById('mDesc').value.trim(),
+    file: _fileName,
+    cat: document.getElementById('mCat').value,
+    modules: parseInt(document.getElementById('mModules').value) || 1,
+    topics: parseInt(document.getElementById('mTopics').value) || 1,
+    hours: parseInt(document.getElementById('mHours').value) || 1,
+    quizzes: parseInt(document.getElementById('mQuizzes').value) || 0,
+    salt: document.getElementById('mSalt').value.trim(),
+    ak: document.getElementById('mAk').value.trim(),
+    storagePrefix: document.getElementById('mPrefix').value.trim(),
+    icon: document.getElementById('mIcon').value.trim(),
+    color: document.getElementById('mColor').value.trim() || '#3b82f6',
+    addedTs: Date.now(),
+    active: getVis(),
+    free: getFree()
+  };
 }
 
-// ── PUBLICAR ────────────────────────────────────────────────
-async function publish(){
-  if(!_meta||!_fileContent){alert('Selecione um arquivo HTML primeiro.');return;}
-  var g=gh();
-  if(!g.token){alert('Configure o token.');return;}
+function getManualMeta() {
+  return {
+    id: document.getElementById('mnId').value.trim(),
+    name: document.getElementById('mnName').value.trim(),
+    desc: document.getElementById('mnDesc').value.trim(),
+    file: document.getElementById('mnFile').value.trim(),
+    cat: document.getElementById('mnCat').value,
+    modules: parseInt(document.getElementById('mnModules').value) || 1,
+    topics: parseInt(document.getElementById('mnTopics').value) || 1,
+    hours: parseInt(document.getElementById('mnHours').value) || 1,
+    quizzes: parseInt(document.getElementById('mnQuizzes').value) || 0,
+    salt: document.getElementById('mnSalt').value.trim(),
+    ak: document.getElementById('mnAk').value.trim(),
+    storagePrefix: document.getElementById('mnPrefix').value.trim(),
+    icon: document.getElementById('mnIcon').value.trim(),
+    color: document.getElementById('mnColor').value.trim() || '#3b82f6',
+    addedTs: Date.now(),
+    active: document.getElementById('mnv-on').classList.contains('sel'),
+    free: document.getElementById('mna-free').classList.contains('sel')
+  };
+}
 
-  _meta.active=getVis();
-  _meta.free=getFree();
-  _meta.addedTs=Date.now();
+// ── OPÇÕES ─────────────────────────────────────────────
+function selOpt(g, v) {
+  ['on', 'off', 'paid', 'free'].forEach(function(x) {
+    var el = document.getElementById('o' + g + '-' + x);
+    if (el) el.classList.remove('sel');
+  });
+  var target = document.getElementById('o' + g + '-' + v);
+  if (target) target.classList.add('sel');
+}
+function selOpt2(g, v) {
+  ['on', 'off', 'paid', 'free'].forEach(function(x) {
+    var el = document.getElementById('mn' + g + '-' + x);
+    if (el) el.classList.remove('sel');
+  });
+  var target = document.getElementById('mn' + g + '-' + v);
+  if (target) target.classList.add('sel');
+}
+function getVis() { return document.getElementById('ov-on').classList.contains('sel'); }
+function getFree() { return document.getElementById('oa-free').classList.contains('sel'); }
 
-  var btn=document.getElementById('btnPub');
-  btn.disabled=true;
-  setProgress(true,'Subindo arquivo HTML...',10);
+// ── TESTAR CONEXÃO ─────────────────────────────────────
+async function testGH() {
+  saveConfig();
+  var g = gh();
+  if (!g.token) { setStatus('', 'Preencha o token'); return; }
+  setStatus('yellow', 'Conectando...');
+  try {
+    var r = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo, { headers: ghH() });
+    if (r.ok) { setStatus('green', 'Conectado ✓  ' + g.owner + '/' + g.repo); loadCourses(); }
+    else setStatus('red', 'Erro ' + r.status + ' — verifique token e repositório');
+  } catch (e) { setStatus('red', 'Erro: ' + e.message); }
+}
+function setStatus(c, t) {
+  document.getElementById('ghDot').className = 'dot' + (c ? ' ' + c : '');
+  var el = document.getElementById('ghTxt');
+  el.textContent = t;
+  el.style.color = c === 'green' ? '#86efac' : c === 'red' ? '#fca5a5' : 'var(--text2)';
+}
 
-  var path=_fileName;
-  var headers=ghH();
+// ── CONSTRUIR BLOCO JS CORRETO (aspas simples!) ────────
+function buildCourseBlock(meta) {
+  // Constrói o objeto JavaScript com aspas simples (formato do courses.js)
+  var free = meta.free ? "\n    free: true," : '';
+  var block = "\n  {\n"
+    + "    id: '" + esc(meta.id) + "',\n"
+    + "    name: '" + esc(meta.name) + "',\n"
+    + "    desc: '" + esc(meta.desc) + "',\n"
+    + "    file: '" + esc(meta.file) + "',\n"
+    + "    cat: '" + esc(meta.cat) + "',\n"
+    + "    modules: " + (parseInt(meta.modules) || 1) + ",\n"
+    + "    topics: " + (parseInt(meta.topics) || 1) + ",\n"
+    + "    hours: " + (parseInt(meta.hours) || 1) + ",\n"
+    + "    quizzes: " + (parseInt(meta.quizzes) || 0) + ",\n"
+    + "    salt: '" + esc(meta.salt) + "',\n"
+    + "    ak: '" + esc(meta.ak) + "',\n"
+    + "    storagePrefix: '" + esc(meta.storagePrefix) + "',\n"
+    + "    icon: '" + esc(meta.icon) + "',\n"
+    + "    color: '" + esc(meta.color) + "',"
+    + free + "\n"
+    + "    addedTs: " + meta.addedTs + ",\n"
+    + "    active: " + (meta.active ? 'true' : 'false') + "\n"
+    + "  }";
+  return block;
+}
 
-  // 1. Verificar se arquivo já existe (pegar sha)
-  var checkRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:headers});
-  var existingSha=null;
-  if(checkRes.ok){var cd=await checkRes.json();existingSha=cd.sha;}
+function esc(s) {
+  // Escapa aspas simples dentro de strings JS
+  return String(s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
 
-  setProgress(true,'Subindo arquivo HTML...',35);
+// ── INSERIR NO COURSES.JS (ponto de inserção correto) ──
+function insertIntoCourses(current, block) {
+  // Encontra o final do array MA_COURSES (último '}' antes do '];')
+  // Estratégia: procura o padrão do template de comentário ou o último '}' antes de '];'
+  
+  // Tenta inserir antes do bloco de comentário do template
+  var templateComment = '  /*\n   * ──────────────────────────────────────────\n   * TEMPLATE';
+  if (current.indexOf(templateComment) !== -1) {
+    return current.replace(templateComment, block + ',\n\n' + templateComment);
+  }
+  
+  // Fallback: procura o último objeto } seguido de '];'
+  // Acha a posição do último '}' antes de '];' no array MA_COURSES
+  var arrayEnd = current.indexOf('\n];\n\n/* ====');
+  if (arrayEnd === -1) arrayEnd = current.indexOf('\n];\n\n/*');
+  if (arrayEnd === -1) arrayEnd = current.lastIndexOf('\n]');
+  
+  if (arrayEnd === -1) {
+    // Último recurso: insere antes do último ];
+    var lastBracket = current.lastIndexOf('];');
+    if (lastBracket === -1) return null;
+    return current.slice(0, lastBracket) + block + '\n\n' + current.slice(lastBracket);
+  }
+  
+  return current.slice(0, arrayEnd) + ',\n' + block + current.slice(arrayEnd);
+}
+
+// ── PUBLICAR (upload + registro) ──────────────────────
+async function publish() {
+  if (!_fileContent) { alert('Selecione um arquivo HTML primeiro.'); return; }
+  var g = gh();
+  if (!g.token) { alert('Configure e teste o token primeiro.'); return; }
+
+  var meta = getMetaFromFields();
+  if (!meta.id || !meta.name || !meta.file) { showResult('err', '❌ Preencha pelo menos ID, Nome e arquivo.', 'Upload'); return; }
+
+  var btn = document.getElementById('btnPub');
+  btn.disabled = true;
+  setProgress(true, 'Verificando arquivo...', 10, '');
+
+  var path = _fileName;
+  var headers = ghH();
+
+  // 1. Verificar se arquivo já existe
+  var checkRes = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/' + path, { headers: headers });
+  var existingSha = null;
+  if (checkRes.ok) { var cd = await checkRes.json(); existingSha = cd.sha; }
+
+  setProgress(true, 'Subindo arquivo HTML...', 35, '');
 
   // 2. Upload do HTML
-  var uploadBody={
-    message:'upload: '+_fileName+' via admin',
-    content:btoa(unescape(encodeURIComponent(_fileContent)))
-  };
-  if(existingSha) uploadBody.sha=existingSha;
+  var uploadBody = { message: 'upload: ' + path + ' via admin MA', content: btoa(unescape(encodeURIComponent(_fileContent))) };
+  if (existingSha) uploadBody.sha = existingSha;
 
-  var upRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{
-    method:'PUT',headers:headers,body:JSON.stringify(uploadBody)
+  var upRes = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/' + path, {
+    method: 'PUT', headers: headers, body: JSON.stringify(uploadBody)
   });
-  if(!upRes.ok){var e=await upRes.json();showResult('err','❌ Erro ao subir HTML: '+(e.message||upRes.status));btn.disabled=false;setProgress(false);return;}
+  if (!upRes.ok) {
+    var e = await upRes.json();
+    showResult('err', '❌ Erro ao subir HTML: ' + (e.message || upRes.status), 'Upload');
+    btn.disabled = false; setProgress(false, '', 0, ''); return;
+  }
 
-  setProgress(true,'Registrando no courses.js...',70);
+  setProgress(true, 'Registrando no courses.js...', 65, '');
 
   // 3. Atualizar courses.js
-  var cpath='data/courses.js';
-  var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+cpath,{headers:headers});
-  if(!getRes.ok){showResult('err','❌ Não encontrei data/courses.js.');btn.disabled=false;setProgress(false);return;}
-  var fd=await getRes.json();
-  var current=_b64decode(fd.content);
-  var sha=fd.sha;
+  var ok = await registerInCourses(meta, headers, g, 'resultUpload');
+  setProgress(false, '', 0, '');
+  btn.disabled = false;
+  if (ok) { resetForm(); loadCourses(); }
+}
 
-  if(new RegExp("id:\\s*['\"]"+_meta.id+"['\"]").test(current)){
-    setProgress(false);
-    showResult('err','⚠️ Já existe um curso com id "'+_meta.id+'". O HTML foi subido mas não foi adicionado ao portal. Verifique.');
-    btn.disabled=false;return;
+// ── PUBLICAR MANUAL ────────────────────────────────────
+async function publishManual() {
+  var g = gh();
+  if (!g.token) { alert('Configure e teste o token primeiro.'); return; }
+  var meta = getManualMeta();
+  if (!meta.id || !meta.name || !meta.file) { showResult('err', '❌ Preencha ID, Nome e Arquivo HTML.', 'Manual'); return; }
+
+  setProgress(true, 'Registrando no courses.js...', 30, '2');
+  var headers = ghH();
+  var ok = await registerInCourses(meta, headers, g, 'resultManual');
+  setProgress(false, '', 0, '2');
+  if (ok) loadCourses();
+}
+
+// ── REGISTRAR NO COURSES.JS (lógica central) ───────────
+async function registerInCourses(meta, headers, g, resultId) {
+  var cpath = 'data/courses.js';
+  var getRes = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/' + cpath, { headers: headers });
+  if (!getRes.ok) { showResult('err', '❌ Não encontrei data/courses.js no repositório.', resultId); return false; }
+
+  var fd = await getRes.json();
+  // Decodificar corretamente (base64 com quebras de linha)
+  var current = decodeURIComponent(escape(atob(fd.content.replace(/\n/g, ''))));
+  var sha = fd.sha;
+
+  // Verificar duplicata
+  if (new RegExp("id:\\s*['\"]" + meta.id + "['\"]").test(current)) {
+    showResult('err', '⚠️ Já existe um curso com id "' + meta.id + '". Troque o ID ou exclua o existente primeiro.', resultId);
+    return false;
   }
 
-  var block='\n  '+JSON.stringify(_meta,null,2).replace(/\n/g,'\n  ')+',';
-  var insertAt=current.lastIndexOf('];');
-  var newContent=current.slice(0,insertAt)+block+'\n'+current.slice(insertAt);
+  // Construir bloco com aspas simples (formato correto do courses.js)
+  var block = buildCourseBlock(meta);
 
-  var putRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+cpath,{
-    method:'PUT',headers:headers,
-    body:JSON.stringify({message:'feat: adiciona curso "'+_meta.name+'" via admin',content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
+  // Inserir no lugar correto
+  var newContent = insertIntoCourses(current, block);
+  if (!newContent) { showResult('err', '❌ Não consegui encontrar o ponto de inserção no courses.js.', resultId); return false; }
+
+  // Verificação básica de integridade
+  if (!newContent.includes("id: '" + meta.id + "'")) {
+    showResult('err', '❌ Falha ao inserir — o bloco não foi encontrado no conteúdo gerado.', resultId); return false;
+  }
+
+  var putRes = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/' + cpath, {
+    method: 'PUT', headers: headers,
+    body: JSON.stringify({
+      message: "feat: adiciona curso '" + meta.name + "' via admin",
+      content: btoa(unescape(encodeURIComponent(newContent))),
+      sha: sha
+    })
   });
 
-  setProgress(true,'Concluindo...',100);
-
-  if(putRes.ok){
-    setTimeout(function(){
-      setProgress(false);
-      showResult('ok','✅ Curso <b>"'+escHtml(_meta.name)+'"</b> publicado com sucesso! ('+(getVis()?'Visível':'Oculto')+' · '+(getFree()?'Gratuito':'Pago')+')');
-      resetForm();
-      loadCourses();
-    },400);
-  }else{
-    var err=await putRes.json();
-    setProgress(false);
-    showResult('err','❌ Erro ao atualizar courses.js: '+(err.message||putRes.status));
-    btn.disabled=false;
-  }
-}
-
-function setProgress(show,label,pct){
-  var wrap=document.getElementById('progWrap');
-  wrap.style.display=show?'block':'none';
-  if(show){
-    document.getElementById('progLabel').textContent=label||'';
-    document.getElementById('progPct').textContent=(pct||0)+'%';
-    document.getElementById('progFill').style.width=(pct||0)+'%';
-  }
-}
-
-function resetForm(){
-  _meta=null;_fileContent=null;_fileName=null;
-  var dz=document.getElementById('dropzone');
-  dz.classList.remove('done','drag');
-  document.getElementById('dzIcon').textContent='📄';
-  document.getElementById('dzTitle').textContent='Arraste o arquivo HTML aqui';
-  document.getElementById('dzSub').textContent='ou clique para selecionar no computador';
-  document.getElementById('dzFile').textContent='';
-  document.getElementById('metaPreview').style.display='none';
-  document.getElementById('optsSection').style.display='none';
-  document.getElementById('btnPub').disabled=true;
-  document.getElementById('ov-on').classList.add('sel');
-  document.getElementById('ov-off').classList.remove('sel');
-  document.getElementById('oa-paid').classList.add('sel');
-  document.getElementById('oa-free').classList.remove('sel');
-}
-
-// ── ATUALIZAR CURSO ──────────────────────────────────────────
-async function updateCourse(id,field,value,btnEl){
-  var g=gh();
-  if(!g.token){alert('Configure o token.');return;}
-  if(btnEl){btnEl.textContent='⏳';btnEl.disabled=true;}
-  var path='data/courses.js';
-  var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:ghH()});
-  var fd=await getRes.json();
-  var current=_b64decode(fd.content);
-  var sha=fd.sha;
-  var newContent=current.replace(
-    new RegExp('(id:\\s*[\'\"]+id+'[\'\"]+[\\s\\S]{0,800}?'+field+':\\s*)(true|false)'),
-    '$1'+value
-  );
-  if(newContent===current){showResult('err','❌ Campo não encontrado.');if(btnEl){btnEl.disabled=false;}return;}
-  var putRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{
-    method:'PUT',headers:ghH(),
-    body:JSON.stringify({message:'update: curso id='+id+' '+field+'='+value,content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
-  });
-  if(putRes.ok){
-    await _bustIndexCache(g,field==='active'?('Curso '+id+' '+(value==='false'?'ocultado':'visível')):null);
-    showResult('ok','✅ Curso atualizado! Mudança imediata no portal.');
-    loadCourses();
+  if (putRes.ok) {
+    showResult('ok', '✅ Curso <b>"' + escHtml(meta.name) + '"</b> publicado com sucesso! Aparecerá no portal em alguns instantes.', resultId);
+    return true;
   } else {
-    var err=await putRes.json();
-    showResult('err','❌ Erro: '+(err.message||putRes.status));
-    if(btnEl){btnEl.disabled=false;}
+    var err = await putRes.json();
+    showResult('err', '❌ Erro ao salvar courses.js: ' + (err.message || putRes.status), resultId);
+    return false;
   }
 }
 
-// ── CACHE-BUST DO INDEX.HTML ─────────────────────────────────
-async function _bustIndexCache(g,motivo){
-  try{
-    var ipath='index.html';
-    var iRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+ipath,{headers:ghH()});
-    if(!iRes.ok)return;
-    var ifd=await iRes.json();
-    var ic=_b64decode(ifd.content);
-    var ts=Date.now();
-    var iNew=ic.replace(/courses\.js\?v=[^"']+/g,'courses.js?v='+ts);
-    if(iNew===ic)return;
-    await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+ipath,{
-      method:'PUT',headers:ghH(),
-      body:JSON.stringify({message:'cache-bust: '+(motivo||'update')+' v='+ts,content:btoa(unescape(encodeURIComponent(iNew))),sha:ifd.sha})
+// ── PROGRESS ───────────────────────────────────────────
+function setProgress(show, label, pct, suf) {
+  suf = suf || '';
+  var wrap = document.getElementById('progWrap' + suf);
+  if (!wrap) return;
+  wrap.style.display = show ? 'block' : 'none';
+  if (show) {
+    document.getElementById('progLabel' + suf).textContent = label || '';
+    document.getElementById('progPct' + suf).textContent = (pct || 0) + '%';
+    document.getElementById('progFill' + suf).style.width = (pct || 0) + '%';
+  }
+}
+
+function resetForm() {
+  _meta = null; _fileContent = null; _fileName = null;
+  var dz = document.getElementById('dropzone');
+  dz.classList.remove('done', 'drag');
+  document.getElementById('dzIcon').textContent = '📄';
+  document.getElementById('dzTitle').textContent = 'Arraste o arquivo HTML aqui';
+  document.getElementById('dzSub').textContent = 'ou clique para selecionar no computador';
+  document.getElementById('dzFile').textContent = '';
+  document.getElementById('metaPreview').style.display = 'none';
+  document.getElementById('optsSection').style.display = 'none';
+  document.getElementById('btnPub').disabled = true;
+}
+
+// ── ATUALIZAR CAMPO (ocultar/mostrar, free/pago) ───────
+async function updateCourse(id, field, value, btnEl) {
+  var g = gh();
+  if (!g.token) { alert('Configure o token.'); return; }
+  if (btnEl) { btnEl.textContent = '⏳'; btnEl.disabled = true; }
+
+  var path = 'data/courses.js';
+  var getRes = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/' + path, { headers: ghH() });
+  var fd = await getRes.json();
+  var current = decodeURIComponent(escape(atob(fd.content.replace(/\n/g, ''))));
+  var sha = fd.sha;
+
+  // Regex mais precisa: encontra o objeto com esse id e muda o campo específico dentro dele
+  var re = new RegExp(
+    '(id:\\s*[\'"]' + id + '[\'"][\\s\\S]{0,500}?' + field + ':\\s*)(true|false)',
+    ''
+  );
+  var newContent = current.replace(re, '$1' + value);
+
+  if (newContent === current) {
+    showResult('err', '❌ Campo "' + field + '" não encontrado no curso "' + id + '".');
+    if (btnEl) { btnEl.disabled = false; btnEl.textContent = field === 'active' ? (value === 'true' ? '👁️ Visível' : '🙈 Ocultar') : (value === 'true' ? '🎁 Gratuito' : '🔒 Pago'); }
+    return;
+  }
+
+  var putRes = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/' + path, {
+    method: 'PUT', headers: ghH(),
+    body: JSON.stringify({ message: 'update: curso id=' + id + ' ' + field + '=' + value, content: btoa(unescape(encodeURIComponent(newContent))), sha: sha })
+  });
+
+  if (putRes.ok) { showResult('ok', '✅ Curso atualizado com sucesso!', 'Upload'); loadCourses(); }
+  else { var err = await putRes.json(); showResult('err', '❌ Erro: ' + (err.message || putRes.status), 'Upload'); if (btnEl) btnEl.disabled = false; }
+}
+
+// ── EXCLUIR ────────────────────────────────────────────
+async function deleteCourse(id, name) {
+  if (!confirm('⚠️ Excluir "' + name + '" do courses.js?\n\nO arquivo HTML no GitHub NÃO será deletado.')) return;
+  var g = gh();
+  showResult('load', '<div class="spin"></div> Excluindo...', 'Upload');
+
+  var path = 'data/courses.js';
+  var getRes = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/' + path, { headers: ghH() });
+  var fd = await getRes.json();
+  var current = decodeURIComponent(escape(atob(fd.content.replace(/\n/g, ''))));
+  var sha = fd.sha;
+
+  // Remove o objeto inteiro com esse id (regex mais robusta)
+  var re = new RegExp(
+    ',?\\s*\\{[^{}]*?id:\\s*[\'"]' + id + '[\'"][\\s\\S]*?\\}\\s*,?',
+    ''
+  );
+
+  var newContent = current.replace(re, function(match) {
+    // Não remove se for a última entrada sem vírgula precedente
+    return '\n  ';
+  });
+
+  // Limpeza de vírgulas duplas ou soltas
+  newContent = newContent
+    .replace(/,\s*,/g, ',')
+    .replace(/\[\s*,/g, '[')
+    .replace(/,\s*\]/g, '\n]')
+    .replace(/\n\s*\n\s*\n/g, '\n\n');
+
+  if (newContent === current) { showResult('err', '❌ Curso não encontrado.', 'Upload'); return; }
+
+  var putRes = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/' + path, {
+    method: 'PUT', headers: ghH(),
+    body: JSON.stringify({ message: 'remove: curso "' + name + '" via admin', content: btoa(unescape(encodeURIComponent(newContent))), sha: sha })
+  });
+
+  if (putRes.ok) { showResult('ok', '✅ Curso "' + escHtml(name) + '" removido do portal.', 'Upload'); loadCourses(); }
+  else { var err = await putRes.json(); showResult('err', '❌ Erro: ' + (err.message || putRes.status), 'Upload'); }
+}
+
+// ── LISTAR CURSOS ──────────────────────────────────────
+async function loadCourses() {
+  var g = gh();
+  if (!g.token) return;
+  var res = await fetch('https://api.github.com/repos/' + g.owner + '/' + g.repo + '/contents/data/courses.js', { headers: ghH() });
+  if (!res.ok) return;
+  var fd = await res.json();
+  var content = decodeURIComponent(escape(atob(fd.content.replace(/\n/g, ''))));
+
+  // Parser mais robusto usando split por blocos de objeto
+  var courses = [];
+  var blocks = content.split(/(?=\s*\{\s*\n?\s*id:)/);
+  blocks.forEach(function(b) {
+    var idM = b.match(/id:\s*['"]([^'"]+)['"]/);
+    var nameM = b.match(/name:\s*['"]([^'"]+)['"]/);
+    var iconM = b.match(/icon:\s*['"]([^'"]*)['"]/);
+    var actM = b.match(/active:\s*(true|false)/);
+    var freeM = b.match(/free:\s*(true|false)/);
+    var catM = b.match(/cat:\s*['"]([^'"]+)['"]/);
+    if (!idM || !nameM) return;
+    // Ignora blocos de comentário/template
+    if (b.indexOf('TEMPLATE') !== -1 || b.indexOf('*') === 0) return;
+    courses.push({
+      id: idM[1], name: nameM[1],
+      icon: iconM ? iconM[1] : '📚',
+      active: actM ? actM[1] === 'true' : true,
+      free: freeM ? freeM[1] === 'true' : false,
+      cat: catM ? catM[1] : '—'
     });
-  }catch(e){}
-}
-
-// ── EXCLUIR ──────────────────────────────────────────────────
-async function deleteCourse(id,name){
-  if(!confirm('⚠️ Excluir "'+name+'"?\n\nRemove do courses.js. O arquivo HTML no GitHub não é deletado.')) return;
-  var g=gh();
-  showResult('load','<div class="spin"></div> Excluindo...');
-  var path='data/courses.js';
-  var getRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{headers:ghH()});
-  var fd=await getRes.json();
-  var current=_b64decode(fd.content);
-  var sha=fd.sha;
-  var re=new RegExp('\\s*\\{[^{}]*?id:\\s*[\'"]'+id+'[\'"][\\s\\S]*?\\}\\s*,?','');
-  var newContent=current.replace(re,'');
-  if(newContent===current){showResult('err','❌ Curso não encontrado.');return;}
-  var putRes=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/'+path,{
-    method:'PUT',headers:ghH(),
-    body:JSON.stringify({message:'remove: curso "'+name+'" via admin',content:btoa(unescape(encodeURIComponent(newContent))),sha:sha})
   });
-  if(putRes.ok){showResult('ok','✅ Curso "'+escHtml(name)+'" excluído! Mudança imediata no portal.');_bustIndexCache(g,'excluiu: '+name);loadCourses();}
-  else{var err=await putRes.json();showResult('err','❌ Erro: '+(err.message||putRes.status));}
-}
 
-// ── LISTA ────────────────────────────────────────────────────
-async function loadCourses(){
-  var g=gh();if(!g.token)return;
-  var res=await fetch('https://api.github.com/repos/'+g.owner+'/'+g.repo+'/contents/data/courses.js',{headers:ghH()});
-  if(!res.ok)return;
-  var fd=await res.json();
-  var content=_b64decode(fd.content);
-  var courses=[];
-  content.split(/(?=\s*\{[^{}]*id:\s*['"])/).forEach(function(b){
-    var idM=b.match(/id:\s*['"]([^'"]+)['"]/);
-    var nameM=b.match(/name:\s*['"]([^'"]+)['"]/);
-    var iconM=b.match(/icon:\s*['"]([^'"]*)['"]/);
-    var actM=b.match(/active:\s*(true|false)/);
-    var freeM=b.match(/free:\s*(true|false)/);
-    if(!idM||!nameM)return;
-    courses.push({id:idM[1],name:nameM[1],icon:iconM?iconM[1]:'📚',active:actM?actM[1]==='true':true,free:freeM?freeM[1]==='true':false});
-  });
-  document.getElementById('cCount').textContent='('+courses.length+' cursos)';
-  var el=document.getElementById('courseList');
-  if(!courses.length){el.innerHTML='<div style="color:var(--text3);font-size:13px;padding:10px">Nenhum curso.</div>';return;}
-  el.innerHTML=courses.map(function(c){
-    var vb=c.active?'<span class="cbadge ba">Visível</span>':'<span class="cbadge bo">Oculto</span>';
-    var tb=c.free?'<span class="cbadge bf">Grátis</span>':'<span class="cbadge bp">Pago</span>';
-    var vCls=c.active?'act-btn ao':'act-btn av';
-    var vTxt=c.active?'🙈 Ocultar':'👁️ Visível';
-    var vVal=c.active?'false':'true';
-    var fCls=c.free?'act-btn apd':'act-btn afr';
-    var fTxt=c.free?'🔒 Tornar pago':'🎁 Tornar gratuito';
-    var fVal=c.free?'false':'true';
-    var cid=c.id, cname=escHtml(c.name);
+  document.getElementById('cCount').textContent = '(' + courses.length + ' cursos)';
+  var el = document.getElementById('courseList');
+  if (!courses.length) { el.innerHTML = '<div style="color:var(--text3);font-size:13px;padding:10px">Nenhum curso encontrado.</div>'; return; }
+
+  el.innerHTML = courses.map(function(c) {
+    var vb = c.active ? '<span class="cbadge ba">Visível</span>' : '<span class="cbadge bo">Oculto</span>';
+    var tb = c.free ? '<span class="cbadge bf">Grátis</span>' : '<span class="cbadge bp">Pago</span>';
+    var vCls = c.active ? 'act-btn ao' : 'act-btn av';
+    var vTxt = c.active ? '🙈 Ocultar' : '👁️ Tornar visível';
+    var vVal = c.active ? 'false' : 'true';
+    var fCls = c.free ? 'act-btn apd' : 'act-btn afr';
+    var fTxt = c.free ? '🔒 Tornar pago' : '🎁 Tornar gratuito';
+    var fVal = c.free ? 'false' : 'true';
+    var cid = c.id, cname = escHtml(c.name);
     return '<div class="course-row"><div class="course-main">'
-      +'<div class="ci">'+c.icon+'</div>'
-      +'<div class="cinfo"><b>'+cname+'</b><small>id: '+cid+'</small></div>'
-      +'<div class="cbadges">'+vb+tb+'</div>'
-      +'<button class="xbtn" onclick="togglePanel(\''+cid+'\')" title="Opções">⋯</button>'
-      +'</div>'
-      +'<div class="actions-panel" id="ap_'+cid+'">'
-      +'<div class="act-row">'
-      +'<button class="'+vCls+'" onclick="updateCourse(\''+cid+'\',\'active\',\''+vVal+'\',this)">'+vTxt+'</button>'
-      +'<div class="sep"></div>'
-      +'<button class="'+fCls+'" onclick="updateCourse(\''+cid+'\',\'free\',\''+fVal+'\',this)">'+fTxt+'</button>'
-      +'<div class="sep"></div>'
-      +'<button class="act-btn adel" onclick="deleteCourse(\''+cid+'\',\''+cname+'\')">🗑 Excluir</button>'
-      +'</div></div></div>';
+      + '<div class="ci">' + c.icon + '</div>'
+      + '<div class="cinfo"><b>' + cname + '</b><small>id: ' + cid + ' · ' + c.cat + '</small></div>'
+      + '<div class="cbadges">' + vb + tb + '</div>'
+      + '<button class="xbtn" onclick="togglePanel(\'' + cid + '\')" title="Opções">⋯</button>'
+      + '</div>'
+      + '<div class="actions-panel" id="ap_' + cid + '">'
+      + '<div class="act-row">'
+      + '<button class="' + vCls + '" onclick="updateCourse(\'' + cid + '\',\'active\',\'' + vVal + '\',this)">' + vTxt + '</button>'
+      + '<div class="sep"></div>'
+      + '<button class="' + fCls + '" onclick="updateCourse(\'' + cid + '\',\'free\',\'' + fVal + '\',this)">' + fTxt + '</button>'
+      + '<div class="sep"></div>'
+      + '<button class="act-btn" onclick="window.open(\'' + escHtml(c.id) + '.html\',\'_blank\')" style="color:var(--accent2)">🔗 Abrir curso</button>'
+      + '<div class="sep"></div>'
+      + '<button class="act-btn adel" onclick="deleteCourse(\'' + cid + '\',\'' + cname + '\')">🗑 Excluir do portal</button>'
+      + '</div></div></div>';
   }).join('');
 }
 
-function togglePanel(id){document.getElementById('ap_'+id).classList.toggle('open');}
-function showResult(t,h){var el=document.getElementById('result');el.className='result '+t;el.innerHTML=h;el.scrollIntoView({behavior:'smooth',block:'nearest'});}
-function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;');}
+function togglePanel(id) { document.getElementById('ap_' + id).classList.toggle('open'); }
+
+function showResult(t, h, suf) {
+  suf = suf || 'Upload';
+  var elId = suf === 'Manual' ? 'resultManual' : 'resultUpload';
+  var el = document.getElementById(elId);
+  if (!el) return;
+  el.className = 'result ' + t;
+  el.innerHTML = h;
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+}
 </script>
 </body>
 </html>
