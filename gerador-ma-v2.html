@@ -357,7 +357,7 @@ async function iniciar(){
     const c=document.getElementById('gs'+si); if(c){c.classList.add('active');c.querySelector('.gstep-dot').textContent='▶';}
     fill.style.width=(100/STEPS.length*(si+1))+'%';
     si++; if(si>=STEPS.length) clearInterval(iv);
-  }, Math.floor(50000/STEPS.length));
+  }, Math.floor(18000/STEPS.length));
 
   try{
     await gerarCurso(tema);
@@ -382,91 +382,80 @@ async function gerarCurso(tema){
   const nTopics = parseInt(document.getElementById('fTopics').value);
   const nQuiz   = parseInt(document.getElementById('fQuiz').value);
 
-  // Gera prefixo automático
   const words = tema.trim().split(/\s+/);
   let prefix = words.length>=2
     ? (words[0].slice(0,2)+words[1].slice(0,2)).toLowerCase()
     : tema.slice(0,4).toLowerCase();
-  prefix = prefix.replace(/[^a-z0-9]/g,'');
-
-  const prompt = `Você é especialista em criar cursos online profissionais em português do Brasil.
-
-Crie a estrutura COMPLETA de um curso sobre "${tema}" com exatamente ${nMods} módulos e ${nTopics} tópicos por módulo.
-
-Responda SOMENTE com JSON válido (sem markdown, sem comentários), neste formato:
-
-{
-  "titulo": "Título completo do curso",
-  "subtitulo": "Subtítulo impactante (ex: Do Zero ao Avançado)",
-  "emoji": "emoji mais relevante para o tema",
-  "accentHex": "#XXXXXX (cor hexadecimal temática para o curso — escolha algo que combine com o tema)",
-  "accent2Hex": "#XXXXXX (versão mais clara da cor accent)",
-  "aiPersonality": "Você é especialista em ${tema}. Responda sempre em português brasileiro, de forma clara, didática e motivadora.",
-  "coverTitle": "Título para a capa (pode ser igual ao título)",
-  "coverSubtitle": "Subtítulo da capa",
-  "modules": [
-    {
-      "id": 1,
-      "emoji": "🔰",
-      "title": "Título do módulo",
-      "cat": "CATEGORIA EM MAIÚSCULAS",
-      "desc": "Descrição breve do módulo em 1 frase",
-      "topics": ["Tópico 1","Tópico 2","Tópico 3","Tópico 4","Tópico 5","Tópico 6","Tópico 7"]
-    }
-  ],
-  "richContent": {
-    "1-0": "<h2>Título</h2><p>Conteúdo rico em HTML com pelo menos 4 parágrafos, use h2, h3, p, strong, em, ul/li. Inclua pelo menos 1 div class='hbox' e 1 div class='ebox' com seus títulos.</p>",
-    "1-1": "..."
-  },
-  "quizzes": [
-    {
-      "modId": 1,
-      "questions": [
-        {"q": "Pergunta?", "opts": ["A","B","C","D"], "c": 0}
-      ]
-    }
-  ],
-  "flashcards": [
-    {
-      "modId": 1,
-      "cards": [{"q": "Pergunta", "a": "Resposta"}]
-    }
-  ]
-}
-
-REGRAS CRÍTICAS:
-1. Todos os ${nMods} módulos devem ter exatamente ${nTopics} tópicos
-2. Gere richContent apenas para os primeiros 2 módulos (todos os tópicos), os demais usarão template padrão
-3. Quizzes: ${nQuiz} perguntas por módulo para TODOS os módulos
-4. Flashcards: 5 cards por módulo para todos os módulos
-5. O último módulo SEMPRE deve ser de Conclusão
-6. Distribua os módulos em 4-6 categorias diferentes
-7. accentHex deve ser uma cor vibrante que combine com "${tema}" (não use azul #3B82F6 — esse é o padrão)
-8. Responda APENAS o JSON, sem nada antes ou depois`;
+  prefix = prefix.replace(/[^a-z0-9]/g,'') || 'cu';
 
   const WORKER = 'https://shiny-disk-b207ma-academy-ai.matheushenry1998.workers.dev/chat';
-  const res = await fetch(WORKER,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      messages:[{role:'user',content:prompt}],
-      courseKey:'gerador',
-      plan:'master',
-      userEmail:'gerador@matheusacademy.com'
-    })
-  });
 
-  if(!res.ok) throw new Error('Erro no Worker ('+res.status+'). Verifique se o Cloudflare Worker está ativo.');
-  const data = await res.json();
-  const raw = (data.content?.map(c=>c.text||'').join('')) || (data.response) || (data.text) || '';
-
-  let parsed;
-  try{
-    const clean = raw.replace(/```json|```/g,'').trim();
-    parsed = JSON.parse(clean);
-  }catch(e){
-    throw new Error('A IA retornou formato inválido. Tente novamente.');
+  async function callWorker(prompt){
+    const r = await fetch(WORKER,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        messages:[{role:'user',content:prompt}],
+        courseKey:'geral',plan:'master',
+        userEmail:'gerador@matheusacademy.com'
+      })
+    });
+    const d = await r.json();
+    if(d.error) throw new Error(d.message||d.error);
+    const txt = d.content?.[0]?.text||'';
+    if(!txt) throw new Error('Resposta vazia. Tente novamente.');
+    return txt.replace(/```json|```/g,'').trim();
   }
+
+  // ── CHAMADA 1: Estrutura principal (título, módulos, cores) ──
+  document.getElementById('genTitle').textContent = '📋 Criando estrutura...';
+  const p1 = `Crie a estrutura de um curso sobre "${tema}" com ${nMods} módulos e ${nTopics} tópicos cada.
+Responda APENAS JSON válido:
+{"titulo":"...","subtitulo":"Do Zero ao Avançado","emoji":"🎓","accentHex":"#XXXXXX","accent2Hex":"#XXXXXX","coverTitle":"...","coverSubtitle":"...","aiPersonality":"Você é especialista em ${tema}. Responda em português brasileiro.","modules":[{"id":1,"emoji":"🔰","title":"...","cat":"CATEGORIA","desc":"...","topics":["Tópico 1","Tópico 2","Tópico 3"]}]}
+REGRAS: ${nMods} módulos, ${nTopics} tópicos cada, último módulo = Conclusão, 4-6 categorias, accentHex vibrante diferente de #3B82F6, responda SÓ o JSON.`;
+
+  const raw1 = await callWorker(p1);
+  let estrutura;
+  try{ estrutura = JSON.parse(raw1); }
+  catch(e){ throw new Error('Estrutura inválida. Tente novamente.'); }
+
+  // ── CHAMADA 2: Quizzes ──
+  document.getElementById('genTitle').textContent = '🧠 Gerando quizzes...';
+  const modTitles = (estrutura.modules||[]).map(m=>`M${m.id}:${m.title}`).join(', ');
+  const p2 = `Crie quizzes para o curso "${tema}". Módulos: ${modTitles}.
+Responda APENAS JSON:
+{"quizzes":[{"modId":1,"questions":[{"q":"Pergunta?","opts":["A","B","C","D"],"c":0}]}],"flashcards":[{"modId":1,"cards":[{"q":"Pergunta","a":"Resposta"}]}]}
+REGRAS: ${nQuiz} perguntas por módulo para TODOS os ${nMods} módulos, 3 flashcards por módulo, responda SÓ o JSON.`;
+
+  const raw2 = await callWorker(p2);
+  let quizData;
+  try{ quizData = JSON.parse(raw2); }
+  catch(e){ quizData = {quizzes:[],flashcards:[]}; }
+
+  // ── CHAMADA 3: Rich content dos 2 primeiros módulos ──
+  document.getElementById('genTitle').textContent = '📝 Gerando conteúdo...';
+  const mod1 = estrutura.modules?.[0];
+  const mod2 = estrutura.modules?.[1];
+  const p3 = `Crie conteúdo HTML rico para os primeiros tópicos do curso "${tema}".
+Para cada tópico, gere HTML com: h2, p (3+ parágrafos), h3, div class=hbox com hbox-title, div class=ebox com ebox-title.
+Responda APENAS JSON:
+{"richContent":{"1-0":"<h2>...</h2><p>...</p>...","1-1":"..."}}
+Tópicos do Módulo 1 (${mod1?.title||''}): ${(mod1?.topics||[]).map((t,i)=>`"1-${i}":"${t}"`).join(', ')}
+Tópicos do Módulo 2 (${mod2?.title||''}): ${(mod2?.topics||[]).map((t,i)=>`"2-${i}":"${t}"`).join(', ')}
+Responda SÓ o JSON.`;
+
+  const raw3 = await callWorker(p3);
+  let richData;
+  try{ richData = JSON.parse(raw3); }
+  catch(e){ richData = {richContent:{}}; }
+
+  // ── COMBINA TUDO ──
+  const parsed = {
+    ...estrutura,
+    quizzes: quizData.quizzes||[],
+    flashcards: quizData.flashcards||[],
+    richContent: richData.richContent||{}
+  };
 
   _filename = prefix+'.html';
   _code = montarHTML(parsed, prefix, nTopics, nQuiz);
