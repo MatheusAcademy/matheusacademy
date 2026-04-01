@@ -854,7 +854,7 @@ function rC() {
     h += '<div class="row-wrap">';
     h += '<button class="arr-btn ap" data-scroll="ro' + ci + '" data-dir="-1">&#8249;</button>';
     h += '<div class="row-outer" id="ro' + ci + '"><div class="row-inner" id="ri' + ci + '">';
-    cat.courses.forEach(function(c) { tM+=c.modules; tT+=c.topics; tH+=c.hours; h+=makeCard(c); });
+    cat.courses.slice().sort(function(a,b){if(a.pinned&&!b.pinned)return -1;if(!a.pinned&&b.pinned)return 1;return(b.addedTs||0)-(a.addedTs||0);}).forEach(function(c){tM+=c.modules;tT+=c.topics;tH+=c.hours;h+=makeCard(c);});
     cat.soon.forEach(function(s) {
       var lbl = cat.isSpecial?'Em Preparação':cat.isEbook?'Em Produção':'Em Breve';
       var cls = cat.isSpecial?'soon-special':cat.isEbook?'soon-ebook':'';
