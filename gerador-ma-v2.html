@@ -401,53 +401,62 @@ async function gerarCurso(tema){
       })
     });
     const d = await r.json();
-    if(d.error) throw new Error(d.message||d.error);
-    const txt = d.content?.[0]?.text||'';
-    if(!txt) throw new Error('Resposta vazia. Tente novamente.');
-    return txt.replace(/```json|```/g,'').trim();
+    if(d.error && d.error!=='limit_exceeded') throw new Error(d.message||d.error);
+    let txt = d.content?.[0]?.text||'';
+    if(!txt) throw new Error('Resposta vazia do Worker.');
+    // Limpa markdown
+    txt = txt.replace(/```json/g,'').replace(/```/g,'').trim();
+    // Garante que começa com { ou [
+    const s = txt.indexOf('{');
+    const sa = txt.indexOf('[');
+    const start = s===-1 ? sa : (sa===-1 ? s : Math.min(s,sa));
+    if(start > 0) txt = txt.slice(start);
+    // Garante que termina com } ou ]
+    const e1 = txt.lastIndexOf('}');
+    const e2 = txt.lastIndexOf(']');
+    const end = Math.max(e1,e2);
+    if(end > 0 && end < txt.length-1) txt = txt.slice(0,end+1);
+    return txt;
   }
 
   // ── CHAMADA 1: Estrutura principal (título, módulos, cores) ──
   document.getElementById('genTitle').textContent = '📋 Criando estrutura...';
-  const p1 = `Crie a estrutura de um curso sobre "${tema}" com ${nMods} módulos e ${nTopics} tópicos cada.
-Responda APENAS JSON válido:
-{"titulo":"...","subtitulo":"Do Zero ao Avançado","emoji":"🎓","accentHex":"#XXXXXX","accent2Hex":"#XXXXXX","coverTitle":"...","coverSubtitle":"...","aiPersonality":"Você é especialista em ${tema}. Responda em português brasileiro.","modules":[{"id":1,"emoji":"🔰","title":"...","cat":"CATEGORIA","desc":"...","topics":["Tópico 1","Tópico 2","Tópico 3"]}]}
-REGRAS: ${nMods} módulos, ${nTopics} tópicos cada, último módulo = Conclusão, 4-6 categorias, accentHex vibrante diferente de #3B82F6, responda SÓ o JSON.`;
+  // Prompt 1 — estrutura básica (título, cores, emoji)
+  const p1 = `Curso sobre "${tema}". Responda SOMENTE JSON:
+{"titulo":"Nome do curso","subtitulo":"Do Zero ao Avançado","emoji":"🎓","accentHex":"#E11D48","accent2Hex":"#FB7185","coverTitle":"Nome","coverSubtitle":"Subtítulo","aiPersonality":"Especialista em ${tema}. Responda em português."}
+Use emoji e cor accentHex que combine com "${tema}". Só o JSON.`;
 
   const raw1 = await callWorker(p1);
   let estrutura;
   try{ estrutura = JSON.parse(raw1); }
   catch(e){ throw new Error('Estrutura inválida. Tente novamente.'); }
 
-  // ── CHAMADA 2: Quizzes ──
-  document.getElementById('genTitle').textContent = '🧠 Gerando quizzes...';
-  const modTitles = (estrutura.modules||[]).map(m=>`M${m.id}:${m.title}`).join(', ');
-  const p2 = `Crie quizzes para o curso "${tema}". Módulos: ${modTitles}.
-Responda APENAS JSON:
-{"quizzes":[{"modId":1,"questions":[{"q":"Pergunta?","opts":["A","B","C","D"],"c":0}]}],"flashcards":[{"modId":1,"cards":[{"q":"Pergunta","a":"Resposta"}]}]}
-REGRAS: ${nQuiz} perguntas por módulo para TODOS os ${nMods} módulos, 3 flashcards por módulo, responda SÓ o JSON.`;
+  // ── CHAMADA 2: Módulos ──
+  document.getElementById('genTitle').textContent = '📚 Criando módulos...';
+  const p2 = `Curso "${tema}" com ${nMods} módulos de ${nTopics} tópicos cada. Responda SOMENTE JSON:
+{"modules":[{"id":1,"emoji":"🔰","title":"Título","cat":"CATEGORIA","desc":"Descrição","topics":["T1","T2","T3"]}]}
+REGRAS: ${nMods} módulos exatos, ${nTopics} tópicos cada, último módulo Conclusão, 4-5 categorias em MAIÚSCULAS, só JSON.`;
 
   const raw2 = await callWorker(p2);
-  let quizData;
-  try{ quizData = JSON.parse(raw2); }
-  catch(e){ quizData = {quizzes:[],flashcards:[]}; }
+  let modData;
+  try{ modData = JSON.parse(raw2); }
+  catch(e){ throw new Error('Módulos inválidos. Tente novamente.'); }
+  estrutura.modules = modData.modules || estrutura.modules || [];
 
-  // ── CHAMADA 3: Rich content dos 2 primeiros módulos ──
-  document.getElementById('genTitle').textContent = '📝 Gerando conteúdo...';
-  const mod1 = estrutura.modules?.[0];
-  const mod2 = estrutura.modules?.[1];
-  const p3 = `Crie conteúdo HTML rico para os primeiros tópicos do curso "${tema}".
-Para cada tópico, gere HTML com: h2, p (3+ parágrafos), h3, div class=hbox com hbox-title, div class=ebox com ebox-title.
-Responda APENAS JSON:
-{"richContent":{"1-0":"<h2>...</h2><p>...</p>...","1-1":"..."}}
-Tópicos do Módulo 1 (${mod1?.title||''}): ${(mod1?.topics||[]).map((t,i)=>`"1-${i}":"${t}"`).join(', ')}
-Tópicos do Módulo 2 (${mod2?.title||''}): ${(mod2?.topics||[]).map((t,i)=>`"2-${i}":"${t}"`).join(', ')}
-Responda SÓ o JSON.`;
+  // ── CHAMADA 3: Quiz (apenas primeiros 5 módulos) ──
+  document.getElementById('genTitle').textContent = '🧠 Gerando quizzes...';
+  const mods5 = estrutura.modules.slice(0,5).map(m=>m.id+':'+m.title).join(',');
+  const p3 = `Quiz para o curso "${tema}". Módulos: ${mods5}. Responda SOMENTE JSON:
+{"quizzes":[{"modId":1,"questions":[{"q":"?","opts":["A","B","C","D"],"c":0}]}],"flashcards":[{"modId":1,"cards":[{"q":"?","a":"R"}]}]}
+REGRAS: ${nQuiz} perguntas por módulo, 3 flashcards por módulo, para TODOS os módulos listados, só JSON.`;
 
   const raw3 = await callWorker(p3);
-  let richData;
-  try{ richData = JSON.parse(raw3); }
-  catch(e){ richData = {richContent:{}}; }
+  let quizData;
+  try{ quizData = JSON.parse(raw3); }
+  catch(e){ quizData = {quizzes:[],flashcards:[]}; }
+
+  // Rich content: gerado localmente para não estourar tokens
+  const richData = {richContent:{}};
 
   // ── COMBINA TUDO ──
   const parsed = {
