@@ -444,19 +444,21 @@ REGRAS CRÍTICAS:
 7. accentHex deve ser uma cor vibrante que combine com "${tema}" (não use azul #3B82F6 — esse é o padrão)
 8. Responda APENAS o JSON, sem nada antes ou depois`;
 
-  const res = await fetch('https://api.anthropic.com/v1/messages',{
+  const WORKER = 'https://shiny-disk-b207ma-academy-ai.matheushenry1998.workers.dev/chat';
+  const res = await fetch(WORKER,{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:8000,
-      messages:[{role:'user',content:prompt}]
+      messages:[{role:'user',content:prompt}],
+      courseKey:'gerador',
+      plan:'master',
+      userEmail:'gerador@matheusacademy.com'
     })
   });
 
-  if(!res.ok) throw new Error('Erro na API Anthropic ('+res.status+'). Abra este arquivo via GitHub Pages, não pelo arquivo local.');
+  if(!res.ok) throw new Error('Erro no Worker ('+res.status+'). Verifique se o Cloudflare Worker está ativo.');
   const data = await res.json();
-  const raw = data.content?.map(c=>c.text||'').join('')||'';
+  const raw = (data.content?.map(c=>c.text||'').join('')) || (data.response) || (data.text) || '';
 
   let parsed;
   try{
@@ -1300,8 +1302,8 @@ async function sendChat(){
   inp.value='';addCM(msg,'user');chatN--;lsSet('chatN',chatN);updateChatRem();
   const think=addCM('Pensando...','ai');
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:AI_PERSONALITY+' Pergunta do aluno: '+msg}]})});
+    const _W='https://shiny-disk-b207ma-academy-ai.matheushenry1998.workers.dev/chat';const res=await fetch(_W,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:[{role:'user',content:AI_PERSONALITY+' Pergunta do aluno: '+msg}],courseKey:COURSE_ID,plan:'master',userEmail:'aluno@matheusacademy.com'})});
     const d=await res.json();think.textContent=d.content?.[0]?.text||'Não consegui processar. Tente novamente.';
   }catch(e){think.textContent='Erro ao conectar com a IA.'}
 }
