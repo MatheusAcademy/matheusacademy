@@ -275,9 +275,10 @@ function MA_buildTrails() {
   return MA_TRAILS.map(function(trail) {
     var resolved = [];
     trail.courseIds.forEach(function(cid) {
-      var c = MA_getCourseById(cid);
-      if (c && c.active !== false) resolved.push({ key: c.id, icon: c.icon, name: c.name, file: c.file });
+      // Trilhas incluem TODOS os cursos (mesmo inactive) — mostram o caminho completo
+      var c = MA_COURSES.find(function(x){ return x.id === cid; });
+      if (c) resolved.push({ key: c.id, icon: c.icon, name: c.name, file: c.file });
     });
     return { id: trail.id, icon: trail.icon, color: trail.color, borderColor: trail.borderColor, name: trail.name, desc: trail.desc, badge: trail.badge, courses: resolved };
-  });
+  }).filter(function(t){ return t.courses.length > 0; });
 }
