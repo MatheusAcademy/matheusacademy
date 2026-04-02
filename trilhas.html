@@ -128,7 +128,18 @@ h1 span{color:var(--pri)}
 <script>
 // ═══ FONTE ÚNICA: trilhas e cursos vêm de data/courses.js ═══
 // Para editar trilhas ou adicionar cursos, edite APENAS data/courses.js
-var TRILHAS = MA_buildTrails();
+// Nota: MA_buildTrails inclui TODOS os cursos das trilhas (mesmo inactive)
+// porque as trilhas mostram o caminho completo independente do status
+var TRILHAS = (function(){
+  return MA_TRAILS.map(function(trail){
+    var resolved = [];
+    trail.courseIds.forEach(function(cid){
+      var c = MA_COURSES.find(function(x){ return x.id === cid; });
+      if(c) resolved.push({ key: c.id, icon: c.icon, name: c.name, file: c.file });
+    });
+    return { id: trail.id, icon: trail.icon, color: trail.color, borderColor: trail.borderColor, name: trail.name, desc: trail.desc, badge: trail.badge, courses: resolved };
+  }).filter(function(t){ return t.courses.length > 0; });
+})();
 
 function getCourseProgress(key){
   // Busca o storagePrefix correto em MA_COURSES pelo id do curso
