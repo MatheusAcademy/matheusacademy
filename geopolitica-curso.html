@@ -2319,9 +2319,9 @@ function loadTopic(mi,ti){
   if(t.quiz){qw.style.display='block';loadQuiz(t.quiz);}else qw.style.display='none';
   // Flashcards — SEMPRE ao final se existirem
   var fs=document.getElementById('fcSection');
-  if(t.cards&&t.cards.length){
+  if(t.flashcards&&t.flashcards.length){
     fs.style.display='block';
-    _fcCards=t.cards;_fcIdx=0;
+    _fcCards=t.flashcards;_fcIdx=0;
     renderCard();
   }else{
     fs.style.display='none';
@@ -2472,7 +2472,7 @@ function jumpQuiz(i){if(_qResults[i]!==null||i===_qIdx)return;_qIdx=i;renderQuiz
 function selOpt(i){if(_qAnswered)return;_qSel=i;document.querySelectorAll('.quiz-opt').forEach(function(el,idx){el.className='quiz-opt'+(idx===i?' selected':'');});}
 function submitQuiz(){
   if(_qAnswered||_qSel<0||!_qData)return;_qAnswered=true;
-  var q=_qData[_qIdx],c=q.correct;
+  var q=_qData[_qIdx],c=q.ans;
   document.querySelectorAll('.quiz-opt').forEach(function(el,i){if(i===c)el.className='quiz-opt correct';else if(i===_qSel&&i!==c)el.className='quiz-opt wrong';});
   var fb=document.getElementById('quizFb'),btn=document.getElementById('quizBtn');
   var isCorrect=_qSel===c;
@@ -2641,8 +2641,8 @@ function renderModAccordion(mi){
     var cls='moa-item'+(done?' done':'')+(isFirst?' open':'');
     // Flashcards HTML
     var fcHtml='';
-    if(t.cards&&t.cards.length){
-      var cards=t.cards.slice(0,3);
+    if(t.flashcards&&t.flashcards.length){
+      var cards=t.flashcards.slice(0,3);
       fcHtml='<div class="moa-section-sep"></div>';
       fcHtml+='<div style="font-size:.58rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">🃏 Flashcards</div>';
       fcHtml+='<div class="moa-fc-grid">';
@@ -2785,19 +2785,19 @@ function moaSubmitQuiz(mi,ti){
   s.answered=true;
   var qArr=Array.isArray(MODS[mi].topics[ti].quiz)?MODS[mi].topics[ti].quiz:[MODS[mi].topics[ti].quiz];
   var q=qArr[s.idx];
-  var correct=s.sel===q.correct;
+  var correct=s.sel===q.ans;
   s.results[s.idx]=correct?'correct':'wrong';
   // Visual
   q.opts.forEach(function(_,i){
     var el=document.getElementById('moa_qo_'+mi+'_'+ti+'_'+i);
     if(!el)return;
-    if(i===q.correct)el.className='quiz-opt correct';
+    if(i===q.ans)el.className='quiz-opt correct';
     else if(i===s.sel&&!correct)el.className='quiz-opt wrong';
   });
   var fb=document.getElementById('moa_qfb_'+mi+'_'+ti);
   var btn=document.getElementById('moa_qbtn_'+mi+'_'+ti);
   if(correct){if(fb){fb.className='quiz-feedback show ok';fb.textContent='✅ Correto!';}addPoints('Quiz correto',25);}
-  else{if(fb){fb.className='quiz-feedback show err';fb.textContent='❌ Correto: "'+q.opts[q.correct]+'"';}}
+  else{if(fb){fb.className='quiz-feedback show err';fb.textContent='❌ Correto: "'+q.opts[q.ans]+'"';}}
   // Dot
   var dot=document.getElementById('moa_qd_'+mi+'_'+ti+'_'+s.idx);
   if(dot){dot.className='moa-quiz-dot '+(correct?'correct':'wrong');}
@@ -2846,7 +2846,7 @@ function buildModuleCarousel(){
       var pct=mod.topics.length?Math.round(doneT/mod.topics.length*100):0;
       var isDone=pct===100;
       var cls='mod-card'+(isDone?' done':'')+(canAcc?'':' locked');
-      html+='<div class="'+cls+'" onclick="openModModal('+mi+')" data-mi="'+mi+'">';
+      html+='<div class="'+cls+'" onclick="'+(canAcc?'selectTopic('+mi+',0,true)':'openM(\'plans\')')+'" data-mi="'+mi+'">';
       // Capa do card
       html+='<div class="mod-card-cover">';
       html+='<div class="mod-card-cover-bg"></div>';
