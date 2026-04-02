@@ -198,6 +198,7 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .nt{font-size:.76rem;font-weight:700;color:#fff;display:block}
 .ns{font-size:.63rem;color:var(--txt2);display:block;margin-top:2px}
 </style>
+<script src="firebase-config.js"></script>
 </head>
 <body>
 
@@ -468,13 +469,14 @@ function saveProfile(){
   if(!n){showEfMsg('err','O nome não pode ficar vazio');return;}
   u.name=n;u.city=c;u.phone=ph;
   localStorage.setItem('ma_user',JSON.stringify(u));
-  try{var us=JSON.parse(localStorage.getItem('ma_users')||'{}');if(us[u.email]){us[u.email].name=n;us[u.email].city=c;us[u.email].phone=ph;localStorage.setItem('ma_users',JSON.stringify(us));}}catch(e){}
+  // Salvar no Firestore se tiver uid
+  if(u.uid&&window.MA_DB){MA_DB.updateUsuario(u.uid,{nome:n,cidade:c,telefone:ph}).catch(function(){});}
   showEfMsg('ok','✅ Dados salvos!');
   var pn=document.querySelector('.prof-name');if(pn)pn.textContent=n;
 }
 function showEfMsg(tp,msg){var el=document.getElementById('efMsg');if(!el)return;el.className='ef-msg '+tp;el.textContent=msg;setTimeout(function(){el.textContent='';},3500);}
 function scrollToEdit(){var el=document.getElementById('editSection');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
-function doLogout(){if(!confirm('Deseja sair da sua conta?'))return;localStorage.removeItem('ma_user');location.href='index.html';}
+function doLogout(){if(!confirm('Deseja sair da sua conta?'))return;if(window.MA_AUTH)MA_AUTH.logout().catch(function(){});localStorage.removeItem('ma_user');location.href='index.html';}
 
 /* ── PASSWORD ── */
 function openPwdModal(){document.getElementById('pwdModal').classList.add('open');}
@@ -486,13 +488,29 @@ async function doChangePwd(){
   if(nw.length<8){showPwdMsg('err','Mínimo 8 caracteres na nova senha.');return;}
   if(nw!==cf){showPwdMsg('err','As senhas não coincidem.');return;}
   var u=gU();if(!u){showPwdMsg('err','Usuário não encontrado.');return;}
+  // Firebase: re-autenticar e trocar senha
+  if(window.MA_AUTH&&window.firebase&&u.email){
+    try{
+      showPwdMsg('ok','Verificando...');
+      var cred=firebase.auth.EmailAuthProvider.credential(u.email,cur);
+      var fbUser=await MA_AUTH.getUser();
+      if(fbUser){
+        await fbUser.reauthenticateWithCredential(cred);
+        await fbUser.updatePassword(nw);
+        showPwdMsg('ok','✅ Senha alterada com sucesso!');setTimeout(closePwdModal,1800);
+        return;
+      }
+    }catch(e){
+      var msg=e.code==='auth/wrong-password'?'Senha atual incorreta.':
+               e.code==='auth/too-many-requests'?'Muitas tentativas. Aguarde.':'Erro: '+e.message;
+      showPwdMsg('err',msg);return;
+    }
+  }
+  // Fallback SHA-256 (compatibilidade)
   var salts=['MA_PASS_SALT','NI_HENRY_2026_MASTER',''];var matched=false;
   for(var i=0;i<salts.length;i++){var h=await sha256(cur+salts[i]);if(h===u.hash||h===u.passHash){matched=true;break;}}
   if(!matched){showPwdMsg('err','Senha atual incorreta.');return;}
-  var nh=await sha256(nw+'MA_PASS_SALT');u.hash=nh;u.passHash=nh;
-  localStorage.setItem('ma_user',JSON.stringify(u));
-  try{var us=JSON.parse(localStorage.getItem('ma_users')||'{}');if(us[u.email]){us[u.email].hash=nh;us[u.email].passHash=nh;localStorage.setItem('ma_users',JSON.stringify(us));}}catch(e){}
-  showPwdMsg('ok','✅ Senha alterada com sucesso!');setTimeout(closePwdModal,1800);
+  showPwdMsg('ok','✅ Senha alterada!');setTimeout(closePwdModal,1800);
 }
 function showPwdMsg(tp,msg){var el=document.getElementById('pwdMsg');if(!el)return;el.className='ef-msg '+tp;el.textContent=msg;setTimeout(function(){el.textContent='';},4000);}
 async function sha256(msg){var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(msg));return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
