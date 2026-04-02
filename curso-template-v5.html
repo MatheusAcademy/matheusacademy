@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NOME DO CURSO — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+
+<!-- ══ ÚNICO ARQUIVO QUE VOCÊ PRECISA EDITAR POR CURSO ══ -->
+<!-- Tudo que é estrutura, visual e lógica está nos arquivos shared/ -->
+
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+/* ═══════════════════════════════════════════════════════
+   CONFIG DO CURSO — altere apenas estes dados por curso
+   ═══════════════════════════════════════════════════════ */
+var COURSE = {
+  id:'XX',                          // id único do curso (ex: 'tp', 'gp', 'ni')
+  name:'Nome Completo do Curso',    // nome exibido na capa e certificado
+  shortName:'Nome Curto',           // nome exibido na topbar
+  cat:'Categoria',                  // categoria exibida no badge (ex: 'Negócios')
+  desc:'Descrição curta do curso.', // subtítulo da capa
+  salt:'XX_HENRY_2026_MASTER',      // salt SHA-256 para códigos de acesso
+  ak:'xx_auth',                     // chave localStorage de acesso individual
+  courseKey:'xx',                   // chave para o chat IA
+  prefix:'xx_',                     // prefixo localStorage do progresso
+  color:'#5b7fff',                  // cor principal do curso (pode ser diferente p/ cada)
+  glow:'rgba(91,127,255,.35)',       // glow correspondente à cor
+  free:false,                       // true = curso totalmente gratuito
+  freeModules:1,                    // quantos módulos são gratuitos
+  modules:10,                       // total de módulos (para exibição na capa)
+  topics:80,                        // total de tópicos
+  hours:20,                         // total de horas
+  quizzes:10                        // total de quizzes
+};
+
+/* ═══════════════════════════════════════════════════════
+   MÓDULOS E CONTEÚDO — preencha com o conteúdo real
+   Cada módulo tem: id, name, free (bool), topics[]
+   Cada tópico tem: id, name, dur, content (HTML), quiz, cards[]
+   ═══════════════════════════════════════════════════════ */
+var MODS = [
+  {
+    id:1, name:'Módulo 1 — Nome do Módulo', free:true,
+    topics:[
+      {
+        id:1, name:'Nome do Tópico 1', dur:'8min',
+        content:`
+<h3>Título da Aula</h3>
+<p>Conteúdo da aula aqui. Escreva em HTML simples usando tags como
+<strong>negrito</strong>, <em>itálico</em>, listas e blockquotes.</p>
+<ul>
+  <li>Ponto importante 1</li>
+  <li>Ponto importante 2</li>
+  <li>Ponto importante 3</li>
+</ul>
+<blockquote>💡 Dica ou citação importante aqui.</blockquote>
+<h4>Subtítulo</h4>
+<p>Mais conteúdo...</p>
+`,
+        quiz:{
+          q:'Pergunta do quiz?',
+          opts:['Opção A','Opção B (correta)','Opção C','Opção D'],
+          correct:1
+        },
+        cards:[
+          {q:'Pergunta do flashcard?', a:'Resposta do flashcard.'},
+          {q:'Segunda pergunta?', a:'Segunda resposta.'}
+        ]
+      },
+      {
+        id:2, name:'Nome do Tópico 2', dur:'10min',
+        content:`<h3>Título</h3><p>Conteúdo...</p>`,
+        quiz:{q:'Pergunta?',opts:['A','B','C','D'],correct:0},
+        cards:[{q:'Pergunta?',a:'Resposta.'}]
+      }
+    ]
+  },
+  {
+    id:2, name:'Módulo 2 — Nome do Módulo', free:false,
+    topics:[
+      {
+        id:3, name:'Nome do Tópico 3', dur:'12min',
+        content:`<h3>Título</h3><p>Conteúdo...</p>`,
+        quiz:{q:'Pergunta?',opts:['A','B','C','D'],correct:2},
+        cards:[{q:'Pergunta?',a:'Resposta.'}]
+      }
+    ]
+  }
+];
+</script>
+
+<!-- ═══════════════════════════════════════════════════════
+     NÃO MEXA ABAIXO DESTA LINHA
+     O engine carrega automaticamente toda a estrutura visual,
+     lógica de XP, autenticação, quiz, flashcards, etc.
+     Para alterar qualquer funcionalidade, edite shared/course-engine.js
+     ═══════════════════════════════════════════════════════ -->
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
