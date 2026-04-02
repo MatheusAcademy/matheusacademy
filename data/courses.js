@@ -1,273 +1,302 @@
-var MA_COURSES = [
-  {
-    id: 'tp',
-    name: 'Dominando Tráfego Pago',
-    desc: 'De zero a gestor de elite. Meta Ads, Google Ads, criativos e escala.',
-    file: 'dominando-trafego-pago.html',
-    cat: 'Negócios',
-    modules: 117,
-    topics: 819,
-    hours: 234,
-    quizzes: 117,
-    salt: 'TP_HENRY_2026_MASTER',
-    ak: 'tp_auth',
-    storagePrefix: 'dt_',
-    icon: '📊',
-    color: '#5b7fff',
-    addedTs: 1741996800000,
-    active: false
-  },
-  {
-    id: 'ni',
-    name: 'Negócios Inteligentes',
-    desc: 'Mentalidade, marketing digital, vendas, dropshipping, IA e finanças.',
-    file: 'negocios-inteligentes.html',
-    cat: 'Negócios',
-    modules: 197,
-    topics: 1379,
-    hours: 462,
-    quizzes: 197,
-    salt: 'NI_HENRY_2026_MASTER',
-    ak: 'ni_auth',
-    storagePrefix: 'ni_',
-    icon: '💼',
-    color: '#a855f7',
-    addedTs: 1742256000000,
-    active: false
-  },
-  {
-    id: 'gp',
-    name: 'Geopolítica Avançada',
-    desc: 'Entenda o mundo como ele funciona. Teoria, conflitos e economia global.',
-    file: 'geopolitica-curso.html',
-    cat: 'Geopolítica',
-    modules: 27,
-    topics: 271,
-    hours: 90,
-    quizzes: 27,
-    salt: 'GP_HENRY_2026_MASTER',
-    ak: 'gp_auth',
-    storagePrefix: 'geo_',
-    icon: '🌍',
-    color: '#22c55e',
-    addedTs: 1742688000000,
-    active: true
-  },
-  {
-    id: 'nl',
-    name: 'Nichos Lucrativos',
-    desc: 'O guia definitivo para encontrar e dominar nichos lucrativos.',
-    file: 'nichos-lucrativos.html',
-    cat: 'Negócios',
-    modules: 97,
-    topics: 679,
-    hours: 165,
-    quizzes: 97,
-    salt: 'NL_HENRY_2026_MASTER',
-    ak: 'nl_auth',
-    storagePrefix: 'nl_',
-    icon: '💡',
-    color: '#f59e0b',
-    addedTs: 1743033600000,
-    active: false
-  },
-  {
-    id: 'mp',
-    name: 'Mestre em Persuasão',
-    desc: 'Domine a arte de influenciar. Psicologia, comunicação e copywriting.',
-    file: 'mestre-em-persuasao.html',
-    cat: 'PNL',
-    modules: 217,
-    topics: 1522,
-    hours: 508,
-    quizzes: 217,
-    salt: 'MP_HENRY_2026_MASTER',
-    ak: 'mp_auth',
-    storagePrefix: 'mp_',
-    icon: '🎯',
-    color: '#ec4899',
-    addedTs: 1743206400000,
-    active: false
-  },
-  {
-    id: 'pb',
-    name: 'Política Brasileira',
-    desc: 'Do zero ao avançado. Sistema político, Constituição, eleições, poderes e cenário atual.',
-    file: 'politica-brasileira.html',
-    cat: 'Geopolítica',
-    modules: 17,
-    topics: 119,
-    hours: 42,
-    quizzes: 17,
-    salt: 'PB_HENRY_2026_MASTER',
-    ak: 'pb_auth',
-    storagePrefix: 'pb_',
-    icon: '🏛️',
-    color: '#3B82F6',
-    addedTs: 1743400000000,
-    active: false
-  },
-  {
-    id: 'bm',
-    name: 'Caso Banco Master',
-    desc: 'A maior fraude bancária do Brasil. R$52bi, CPI e delação premiada.',
-    file: 'caso-banco-master.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 7,
-    topics: 7,
-    hours: 1,
-    quizzes: 0,
-    salt: 'FREE',
-    ak: 'free',
-    storagePrefix: 'bm_',
-    icon: '🏦',
-    color: '#ef4444',
-    free: true,
-    addedTs: 1743264000000,
-    active: true
-  },
-  {
-    id: 'ii',
-    name: 'Guerra Israel x Irã',
-    desc: 'O conflito que mudou o mundo. De 2025 à escalada de 2026.',
-    file: 'guerra-israel-ira.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 7,
-    topics: 7,
-    hours: 1,
-    quizzes: 0,
-    salt: 'FREE',
-    ak: 'free',
-    storagePrefix: 'ii_',
-    icon: '⚔️',
-    color: '#f97316',
-    free: true,
-    addedTs: 1743292800000,
-    active: true
-  },
-  {
-    id: 'cp',
-    name: 'Copa do Mundo 2026',
-    desc: 'Tudo sobre o maior evento esportivo do mundo. Análise completa.',
-    file: 'copa-do-mundo-2026.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 7,
-    topics: 7,
-    hours: 1,
-    quizzes: 0,
-    salt: 'FREE',
-    ak: 'free',
-    storagePrefix: 'cp_',
-    icon: '⚽',
-    color: '#10b981',
-    free: true,
-    addedTs: 1743350400000,
-    active: true
-  },
-  {
-    id: 'seg',
-    name: 'Segurança & Sociedade 2025 — A Crise que Vai Definir as Eleições',
-    desc: 'A crise que vai definir as eleições. Violência, segurança pública e o que ninguém te conta.',
-    file: 'seguranca-sociedade-2025.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 9,
-    topics: 54,
-    hours: 8,
-    quizzes: 9,
-    salt: 'SEG_HENRY_2026_MASTER',
-    ak: 'seg_auth',
-    storagePrefix: 'seg_',
-    icon: '🎓',
-    color: '#3b82f6',
-    free: true,
-    addedTs: 1775081849020,
-    active: true
-  }
-];
-var MA_CATS = [
-  {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?'], isSpecial:true},
-  {name:'Negócios', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:[]},
-  {name:'Geopolítica', sub:'Entenda o mundo como ele realmente funciona, além das notícias', courses:[], soon:['Relações Internacionais']},
-  {name:'PNL', sub:'Domine a arte de comunicar, persuadir e influenciar pessoas', courses:[], soon:['Técnicas de Persuasão','Oratória e Comunicação Assertiva','PNL — Programação Neurolinguística']},
-  {name:'Desenvolvimento', sub:'Transforme sua mentalidade e atinja o próximo nível', courses:[], soon:['Inteligência Emocional na Prática','Produtividade e Gestão do Tempo','Liderança']},
-  {name:'Tecnologia', sub:'A tecnologia chegou para ficar — aprenda a lucrar com ela', courses:[], soon:['Inteligência Artificial na Prática','Programação para Iniciantes','Automação Digital']},
-  {name:'Psicologia', sub:'Compreenda o comportamento humano e use isso a seu favor', courses:[], soon:['Psicologia Comportamental','Neurociência e Comportamento','Psicologia das Relações']},
-  {name:'História', sub:'Quem não conhece a história está condenado a repeti-la', courses:[], soon:['História do Brasil Completa','Grandes Civilizações Antigas','História Contemporânea']},
-  {name:'Filosofia', sub:'Pense melhor, decida melhor, viva melhor', courses:[], soon:['Filosofia para a Vida Real','Grandes Filósofos da História','Ética e Pensamento Crítico']},
-  {name:'Inglês', sub:'O idioma que abre portas no mundo inteiro', courses:[], soon:['Inglês do Zero ao Fluente','Business English','Inglês para Viagens']},
-  {name:'Bíblia / Teologia', sub:'Aprofunde sua fé com estudo sério e contextualizado', courses:[], soon:['Estudo Bíblico Completo','Teologia Sistemática','Panorama do Antigo Testamento']},
-  {name:'Biografias', sub:'Aprenda com quem construiu história e mudou o mundo', courses:[], soon:['Líderes que Mudaram o Mundo','Empreendedores Visionários','Gênios da Ciência']},
-  {name:'Engenharia', sub:'Conhecimento técnico de alta precisão e aplicação real', courses:[], soon:['Instalações Hidráulicas e Gás','Fundamentos de Engenharia Civil','Projetos Estruturais']},
-  {name:'Mecânica', sub:'Do básico ao avançado em manutenção e diagnóstico automotivo', courses:[], soon:['Mecânica Básica Automotiva','Diagnóstico e Manutenção','Elétrica Automotiva']},
-  {name:'📚 Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x Irã','Devocional 2026','Estamos Próximos do Fim?'], isEbook:true}
-];
+/**
+ * ============================================================
+ * MATHEUS ACADEMY — USERSTORE.JS
+ * Wrapper centralizado para todo acesso ao localStorage.
+ *
+ * REGRA DE OURO:
+ *   Nenhuma página deve acessar localStorage diretamente.
+ *   Sempre use as funções deste módulo.
+ *
+ * COMO USAR EM QUALQUER PÁGINA:
+ *   <script src="data/courses.js"></script>
+ *   <script src="data/userStore.js"></script>
+ *   Depois: var user = MAStore.getUser();
+ *
+ * CHAVES DO LOCALSTORAGE (nunca altere):
+ *   ma_user       → dados do usuário logado (objeto)
+ *   ma_users      → banco de usuários registrados (objeto indexado por email)
+ *   ma_access     → cursos liberados e datas de expiração (objeto)
+ *   ma_points     → pontos XP: { total, history[] }
+ *   ma_sessions   → dados de sessão: streak, lastStudyDate, count
+ *   ma_missions   → missões diárias: { date, done: {} }
+ *   ma_recent     → cursos acessados recentemente (array)
+ *   mae_study_log → log diário de minutos estudados (objeto)
+ *   mae_total_mins→ total de minutos estudados (number)
+ *   mae_wk_mods   → módulos concluídos na semana (number)
+ *   mae_shop_owned→ itens da loja comprados (array)
+ *   mae_shop_stock→ estoque da loja (objeto)
+ *   mae_trail_badges → badges de trilhas conquistados (array)
+ *   indicadoPor   → código de referência de quem indicou
+ *   ma_ref_code   → código de referência do próprio usuário
+ * ============================================================
+ */
 
-var MA_TRAILS = [
-  {
-    id: 'empreendedor',
-    icon: '🚀',
-    color: 'rgba(91,127,255,.1)',
-    borderColor: 'rgba(91,127,255,.4)',
-    name: 'Trilha Empreendedor Digital',
-    desc: 'Do zero ao negócio digital lucrativo.',
-    badge: '🚀 Empreendedor Digital',
-    courseIds: ['tp', 'ni', 'nl']
-  },
-  {
-    id: 'estrategista',
-    icon: '🌍',
-    color: 'rgba(34,197,94,.1)',
-    borderColor: 'rgba(34,197,94,.35)',
-    name: 'Trilha Estrategista Global',
-    desc: 'Geopolítica + Negócios para uma visão estratégica completa.',
-    badge: '🌍 Estrategista Global',
-    courseIds: ['gp', 'ni']
-  },
-  {
-    id: 'cidadao',
-    icon: '🏛️',
-    color: 'rgba(59,130,246,.1)',
-    borderColor: 'rgba(59,130,246,.35)',
-    name: 'Trilha Cidadão Consciente',
-    desc: 'Política Brasileira + Geopolítica para uma visão crítica completa.',
-    badge: '🏛️ Cidadão Consciente',
-    courseIds: ['pb', 'gp']
-  },
-  {
-    id: 'completa',
-    icon: '👑',
-    color: 'rgba(245,158,11,.1)',
-    borderColor: 'rgba(245,158,11,.35)',
-    name: 'Trilha Completa Matheus Academy',
-    desc: 'O percurso definitivo. Todos os cursos principais.',
-    badge: '👑 Mestre Academy',
-    courseIds: ['tp', 'ni', 'gp', 'pb', 'nl', 'mp']
-  }
-];
+var MAStore = (function() {
 
-function MA_getActiveCourses() {
-  return MA_COURSES.filter(function(c) { return c.active !== false; });
-}
-function MA_getCourseById(id) {
-  return MA_COURSES.find(function(c) { return c.id === id; }) || null;
-}
-function MA_buildCats() {
-  var cats = MA_CATS.map(function(cat) {
-    return { name: cat.name, sub: cat.sub, courses: [], soon: cat.soon || [], isSpecial: !!cat.isSpecial, isEbook: !!cat.isEbook };
-  });
-  MA_getActiveCourses().forEach(function(c) {
-    var cat = cats.find(function(k) { return k.name === c.cat; });
-    if (cat) cat.courses.push(c);
-  });
-  return cats.filter(function(cat) { return cat.courses.length > 0 || cat.soon.length > 0; });
-}
-function MA_buildTrails() {
-  return MA_TRAILS.map(function(trail) {
-    var resolved = [];
-    trail.courseIds.forEach(function(cid) {
-      var c = MA_getCourseById(cid);
-      if (c && c.active !== false) resolved.push({ key: c.id, icon: c.icon, name: c.name, file: c.file });
+  /* ── Funções internas de leitura/escrita segura ── */
+  function _get(key, def) {
+    try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }
+    catch(e) { return def; }
+  }
+  function _set(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+    catch(e) { return false; }
+  }
+  function _remove(key) {
+    try { localStorage.removeItem(key); return true; }
+    catch(e) { return false; }
+  }
+
+  /* ── USUÁRIO ── */
+  function getUser()        { return _get('ma_user', null); }
+  function isLoggedIn()     { return getUser() !== null; }
+  function getUsers()       { return _get('ma_users', {}); } // legado — mantido por compatibilidade
+  function setUsers(users)  { return _set('ma_users', users); } // legado
+  function setCurrentUser(u){ return _set('ma_user', u); }
+  function logout() {
+    // Firebase logout (limpa sessão na nuvem) + cache local
+    if (window.MA_AUTH) { MA_AUTH.logout().catch(function(){}); }
+    else { _remove('ma_user'); }
+  }
+
+  /* ── ACESSO A CURSOS ── */
+  function getAccess()      { return _get('ma_access', {}); }
+  function setAccess(a)     { return _set('ma_access', a); }
+
+  /** Verifica se o usuário tem acesso a um curso pelo ak (chave de acesso) */
+  function hasCourseAccess(ak) {
+    if (!ak || ak === 'free') return true;
+    // ── Verificação Firebase (plano/cursos da nuvem via cache ma_user) ──
+    var u = getUser();
+    if (u) {
+      if (u.plano === 'master' || u.plano === 'anual' || u.plano === 'mensal') return true;
+      if (u.cursos && Array.isArray(u.cursos)) {
+        // Mapear ak → courseKey: usa course.courseKey (ex. 'gp_auth' → 'geo')
+        var course = MA_COURSES ? MA_COURSES.find(function(c){ return c.ak === ak; }) : null;
+        var courseKey = course ? (course.courseKey || course.id) : ak.replace('_auth','');
+        if (u.cursos.indexOf(courseKey) >= 0 || u.cursos.indexOf(ak) >= 0) return true;
+      }
+    }
+    // ── Fallback: sistema legado de ma_access ──
+    var ac = getAccess();
+    if (!ac.courses || !ac.courses[ak]) return false;
+    var entry = ac.courses[ak];
+    if (!entry.expiry) return true;
+    return Date.now() < entry.expiry;
+  }
+
+  /** Libera acesso a todos os cursos (MASTER) */
+  function unlockAllCourses(email, code, type, expiry) {
+    // Firebase: atualizar plano na nuvem
+    var u = getUser();
+    if (u && u.uid && window.MA_DB) {
+      MA_DB.liberarCurso(u.uid, 'all', type === 'monthly' ? 'mensal' : 'master').catch(function(){});
+      u.plano = type === 'monthly' ? 'mensal' : 'master';
+      setCurrentUser(u);
+    }
+    // Fallback legado
+    var ac = getAccess();
+    if (!ac.courses) ac.courses = {};
+    var courses = typeof MA_COURSES !== 'undefined' ? MA_COURSES : (typeof MA_getActiveCourses === 'function' ? MA_getActiveCourses() : []);
+    courses.forEach(function(c) {
+      if (c.free || c.ak === 'free') return;
+      ac.courses[c.ak] = { email: email, code: code, ts: Date.now(), name: '', type: type, expiry: expiry };
     });
-    return { id: trail.id, icon: trail.icon, color: trail.color, borderColor: trail.borderColor, name: trail.name, desc: trail.desc, badge: trail.badge, courses: resolved };
-  });
-}
+    setAccess(ac);
+  }
+
+  /** Libera acesso a um curso específico (INDIVIDUAL) */
+  function unlockCourse(ak, email, code, type, expiry) {
+    // Firebase: salvar curso liberado na nuvem
+    var u = getUser();
+    if (u && u.uid && window.MA_DB) {
+      var course = typeof MA_COURSES !== 'undefined' ? MA_COURSES.find(function(c){ return c.ak === ak; }) : null;
+      var courseKey = course ? (course.courseKey || course.id) : ak.replace('_auth','');
+      MA_DB.liberarCurso(u.uid, courseKey, 'individual').catch(function(){});
+      if (!u.cursos) u.cursos = [];
+      if (u.cursos.indexOf(courseKey) < 0) u.cursos.push(courseKey);
+      setCurrentUser(u);
+    }
+    // Fallback legado
+    var ac = getAccess();
+    if (!ac.courses) ac.courses = {};
+    ac.courses[ak] = { email: email, code: code, ts: Date.now(), name: '', type: type, expiry: expiry };
+    setAccess(ac);
+  }
+
+  /* ── PONTOS / XP ── */
+  function getPoints()      { return _get('ma_points', { total: 0, history: [] }); }
+  function setPoints(p)     { return _set('ma_points', p); }
+
+  function addPoints(source, pts) {
+    var p = getPoints();
+    p.total = (p.total || 0) + pts;
+    if (!p.history) p.history = [];
+    p.history.unshift({ source: source, pts: pts, date: new Date().toLocaleDateString('pt-BR') });
+    if (p.history.length > 200) p.history = p.history.slice(0, 200);
+    setPoints(p);
+    if (window.MA_addPoints) window.MA_addPoints(source, pts);
+    return p.total;
+  }
+
+  function getTotalPoints()  { return getPoints().total || 0; }
+
+  /* ── SESSÕES / STREAK ── */
+  function getSessions()     { return _get('ma_sessions', { streak: 0, count: 0 }); }
+  function setSessions(s)    { return _set('ma_sessions', s); }
+  function getStreak()       { return getSessions().streak || 0; }
+
+  /* ── MISSÕES DIÁRIAS ── */
+  function getMissions() {
+    var today = new Date().toLocaleDateString('pt-BR');
+    var ms = _get('ma_missions', {});
+    if (!ms.done || ms.date !== today) ms = { date: today, done: {} };
+    return ms;
+  }
+  function setMissions(ms)   { return _set('ma_missions', ms); }
+
+  function completeMission(missionKey, pointsReward) {
+    var ms = getMissions();
+    if (ms.done[missionKey]) return false;
+    ms.done[missionKey] = true;
+    setMissions(ms);
+    if (pointsReward) addPoints('Missão: ' + missionKey, pointsReward);
+    return true;
+  }
+
+  /* ── RECENTES ── */
+  function getRecent()       { return _get('ma_recent', []); }
+
+  function addRecent(courseId, courseName) {
+    var rec = getRecent();
+    rec = rec.filter(function(r) { return r.id !== courseId; });
+    rec.unshift({ id: courseId, name: courseName, ts: Date.now() });
+    if (rec.length > 10) rec = rec.slice(0, 10);
+    _set('ma_recent', rec);
+  }
+
+  /* ── PROGRESSO DE MÓDULOS ── */
+  /**
+   * Retorna progresso de um curso pelo storagePrefix.
+   * Conta chaves do tipo: {prefix}mod_xxx com valor 'done'|'true'|'1'
+   */
+  function getCourseProgress(storagePrefix) {
+    var done = 0, total = 0;
+    try {
+      for (var k in localStorage) {
+        if (k.indexOf(storagePrefix + 'mod_') === 0) {
+          total++;
+          var v = localStorage.getItem(k);
+          if (v === 'done' || v === 'true' || v === '1') done++;
+        }
+      }
+    } catch(e) {}
+    return { done: done, total: total, pct: total > 0 ? Math.round(done / total * 100) : 0 };
+  }
+
+  /** Retorna progresso de todos os cursos ativos como array */
+  function getAllProgress() {
+    return MA_getActiveCourses().map(function(c) {
+      var p = getCourseProgress(c.storagePrefix);
+      return { id: c.id, name: c.name, icon: c.icon, color: c.color, storagePrefix: c.storagePrefix, done: p.done, total: p.total, pct: p.pct };
+    });
+  }
+
+  /* ── ESTUDO (tempo) ── */
+  function getTotalMins()    { return _get('mae_total_mins', 0); }
+  function addStudyMins(m)   { _set('mae_total_mins', getTotalMins() + m); }
+
+  function getStudyLog()     { return _get('mae_study_log', {}); }
+  function addStudyLog(mins) {
+    var log = getStudyLog();
+    var today = new Date().toLocaleDateString('pt-BR');
+    log[today] = (log[today] || 0) + mins;
+    _set('mae_study_log', log);
+  }
+
+  /* ── LOJA ── */
+  function getShopOwned()    { return _get('mae_shop_owned', []); }
+  function setShopOwned(o)   { return _set('mae_shop_owned', o); }
+  function getShopStock()    { return _get('mae_shop_stock', {}); }
+  function setShopStock(s)   { return _set('mae_shop_stock', s); }
+
+  /* ── BADGES DE TRILHAS ── */
+  function getTrailBadges()  { return _get('mae_trail_badges', []); }
+  function addTrailBadge(b) {
+    var badges = getTrailBadges();
+    if (!badges.includes(b)) { badges.push(b); _set('mae_trail_badges', badges); return true; }
+    return false;
+  }
+
+  /* ── REFERÊNCIA ── */
+  function getRefCode()      { return localStorage.getItem('ma_ref_code') || null; }
+  function getIndicadoPor()  { return localStorage.getItem('indicadoPor') || null; }
+
+  /* ── RESET COMPLETO (cuidado!) ── */
+  function resetAll() {
+    // Nota: ma_user NÃO é removido aqui — gerenciado pelo Firebase via MA_AUTH.logout()
+    var keys = ['ma_access','ma_points','ma_sessions','ma_missions',
+                'ma_recent','mae_study_log','mae_total_mins','mae_wk_mods',
+                'mae_shop_owned','mae_shop_stock','mae_trail_badges'];
+    keys.forEach(function(k) { _remove(k); });
+  }
+
+  /* ── API PÚBLICA ── */
+  return {
+    // Usuário
+    getUser: getUser,
+    isLoggedIn: isLoggedIn,
+    getUsers: getUsers,
+    setUsers: setUsers,
+    setCurrentUser: setCurrentUser,
+    logout: logout,
+    // Acesso
+    getAccess: getAccess,
+    setAccess: setAccess,
+    hasCourseAccess: hasCourseAccess,
+    unlockAllCourses: unlockAllCourses,
+    unlockCourse: unlockCourse,
+    // Pontos
+    getPoints: getPoints,
+    setPoints: setPoints,
+    addPoints: addPoints,
+    getTotalPoints: getTotalPoints,
+    // Sessões
+    getSessions: getSessions,
+    setSessions: setSessions,
+    getStreak: getStreak,
+    // Missões
+    getMissions: getMissions,
+    setMissions: setMissions,
+    completeMission: completeMission,
+    // Recentes
+    getRecent: getRecent,
+    addRecent: addRecent,
+    // Progresso
+    getCourseProgress: getCourseProgress,
+    getAllProgress: getAllProgress,
+    // Estudo
+    getTotalMins: getTotalMins,
+    addStudyMins: addStudyMins,
+    getStudyLog: getStudyLog,
+    addStudyLog: addStudyLog,
+    // Loja
+    getShopOwned: getShopOwned,
+    setShopOwned: setShopOwned,
+    getShopStock: getShopStock,
+    setShopStock: setShopStock,
+    // Badges
+    getTrailBadges: getTrailBadges,
+    addTrailBadge: addTrailBadge,
+    // Referência
+    getRefCode: getRefCode,
+    getIndicadoPor: getIndicadoPor,
+    // Reset
+    resetAll: resetAll,
+    // Acesso direto (para compatibilidade com código legado)
+    _get: _get,
+    _set: _set,
+    _remove: _remove
+  };
+
+})();
