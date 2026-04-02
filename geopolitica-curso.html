@@ -228,6 +228,7 @@ body.hl-mode *{cursor:crosshair!important}
 .portal-bar a.pb-plan:hover{opacity:.9}
 @media(max-width:640px){.portal-bar{gap:6px;height:28px}.portal-bar a{font-size:.55rem;padding:3px 6px}}
 </style>
+<script src="firebase-config.js"></script>
 </head>
 <body>
 <div class="portal-bar">
@@ -851,7 +852,12 @@ function genCertificate(name) {
 
 function App(){
   // AUTH
-  const[auth,setAuth]=useState(()=>{try{const d=JSON.parse(localStorage.getItem('gp_auth')||'{}');const exp=d.expiry||3*365*24*60*60*1000;if(d.email&&d.code&&d.ts&&Date.now()-d.ts<exp)return d;return null}catch(e){return null}});
+  const[auth,setAuth]=useState(()=>{
+    // Tentar primeiro pelo Firebase (ma_user cache)
+    try{const mu=JSON.parse(localStorage.getItem('ma_user')||'{}');if(mu.uid&&mu.email){const u=JSON.parse(localStorage.getItem('ma_user'));const temAcesso=u.plano==='master'||u.plano==='anual'||u.plano==='mensal'||(u.cursos&&u.cursos.includes('geo'));if(temAcesso)return{email:mu.email,name:mu.name||mu.email,code:'firebase',ts:Date.now(),uid:mu.uid};}}catch(e){}
+    // Fallback: auth local por código
+    try{const d=JSON.parse(localStorage.getItem('gp_auth')||'{}');const exp=d.expiry||3*365*24*60*60*1000;if(d.email&&d.code&&d.ts&&Date.now()-d.ts<exp)return d;return null}catch(e){return null}
+  });
   const[lStep,setLStep]=useState(1);const[lEmail,setLEmail]=useState('');const[lName,setLName]=useState('');const[lCity,setLCity]=useState('');const[lCode,setLCode]=useState('');const[lMsg,setLMsg]=useState(null);const[lLoad,setLLoad]=useState(false);
   async function genHash(email,minuteToken){const d=new TextEncoder().encode(email.toLowerCase().trim()+'GP_HENRY_2026_MASTER'+String(minuteToken));const h=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,8).toUpperCase()}
   async function reqAccess(){
@@ -872,7 +878,7 @@ function App(){
     else{setLMsg({t:'er',m:'Código inválido ou expirado. Solicite um novo código ao administrador.'})}
     setLLoad(false);
   }
-  function logout(){localStorage.removeItem('gp_auth');setAuth(null);setLStep(1);setLEmail('');setLCode('');setLMsg(null)}
+  function logout(){if(window.MA_AUTH)MA_AUTH.logout().catch(function(){});localStorage.removeItem('gp_auth');localStorage.removeItem('ma_user');setAuth(null);setLStep(1);setLEmail('');setLCode('');setLMsg(null)}
 
   // DARK MODE
   const[dark,setDark]=useState(()=>{const s=localStorage.getItem('gp_dk');return s?s==='1':true});
