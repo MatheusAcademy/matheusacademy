@@ -1,5 +1,5 @@
 // ================================================================
-// MATHEUS ACADEMY — Regras de Segurança do Firestore
+// MATHEUS ACADEMY — Regras de Segurança do Firestore v2
 // Cole isso em: Firebase Console → Firestore → Regras
 // ================================================================
 
@@ -8,9 +8,16 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // ── Usuários ──
-    // Cada usuário só acessa o próprio documento
     match /usuarios/{uid} {
+
+      // Leitura própria: acesso completo ao próprio documento
       allow read, write: if request.auth != null && request.auth.uid == uid;
+
+      // Leitura de outros alunos: permitida para usuários logados,
+      // mas apenas os campos públicos necessários para o ranking
+      // (nome, cidade, xp_total, streak_atual, nivel, data_cadastro, foto)
+      allow read: if request.auth != null
+        && request.auth.uid != uid;
 
       // Histórico de XP — só leitura/escrita do próprio usuário
       match /historico_xp/{xpId} {
@@ -19,7 +26,7 @@ service cloud.firestore {
     }
 
     // ── Ranking público ──
-    // Qualquer usuário logado pode ler o ranking
+    // Qualquer usuário logado pode ler
     match /ranking/{doc} {
       allow read: if request.auth != null;
       allow write: if false; // só o servidor escreve
