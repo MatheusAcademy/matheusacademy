@@ -50,10 +50,14 @@ var MAStore = (function() {
   /* ── USUÁRIO ── */
   function getUser()        { return _get('ma_user', null); }
   function isLoggedIn()     { return getUser() !== null; }
-  function getUsers()       { return _get('ma_users', {}); }
-  function setUsers(users)  { return _set('ma_users', users); }
+  function getUsers()       { return _get('ma_users', {}); } // legado — mantido por compatibilidade
+  function setUsers(users)  { return _set('ma_users', users); } // legado
   function setCurrentUser(u){ return _set('ma_user', u); }
-  function logout()         { _remove('ma_user'); }
+  function logout() {
+    // Firebase logout (limpa sessão na nuvem) + cache local
+    if (window.MA_AUTH) { MA_AUTH.logout().catch(function(){}); }
+    else { _remove('ma_user'); }
+  }
 
   /* ── ACESSO A CURSOS ── */
   function getAccess()      { return _get('ma_access', {}); }
@@ -62,6 +66,18 @@ var MAStore = (function() {
   /** Verifica se o usuário tem acesso a um curso pelo ak (chave de acesso) */
   function hasCourseAccess(ak) {
     if (!ak || ak === 'free') return true;
+    // ── Verificação Firebase (plano/cursos da nuvem via cache ma_user) ──
+    var u = getUser();
+    if (u) {
+      if (u.plano === 'master' || u.plano === 'anual' || u.plano === 'mensal') return true;
+      if (u.cursos && Array.isArray(u.cursos)) {
+        // Mapear ak → courseKey: usa course.courseKey (ex. 'gp_auth' → 'geo')
+        var course = MA_COURSES ? MA_COURSES.find(function(c){ return c.ak === ak; }) : null;
+        var courseKey = course ? (course.courseKey || course.id) : ak.replace('_auth','');
+        if (u.cursos.indexOf(courseKey) >= 0 || u.cursos.indexOf(ak) >= 0) return true;
+      }
+    }
+    // ── Fallback: sistema legado de ma_access ──
     var ac = getAccess();
     if (!ac.courses || !ac.courses[ak]) return false;
     var entry = ac.courses[ak];
@@ -71,10 +87,19 @@ var MAStore = (function() {
 
   /** Libera acesso a todos os cursos (MASTER) */
   function unlockAllCourses(email, code, type, expiry) {
+    // Firebase: atualizar plano na nuvem
+    var u = getUser();
+    if (u && u.uid && window.MA_DB) {
+      MA_DB.liberarCurso(u.uid, 'all', type === 'monthly' ? 'mensal' : 'master').catch(function(){});
+      u.plano = type === 'monthly' ? 'mensal' : 'master';
+      setCurrentUser(u);
+    }
+    // Fallback legado
     var ac = getAccess();
     if (!ac.courses) ac.courses = {};
-    MA_getActiveCourses().forEach(function(c) {
-      if (c.free) return;
+    var courses = typeof MA_COURSES !== 'undefined' ? MA_COURSES : (typeof MA_getActiveCourses === 'function' ? MA_getActiveCourses() : []);
+    courses.forEach(function(c) {
+      if (c.free || c.ak === 'free') return;
       ac.courses[c.ak] = { email: email, code: code, ts: Date.now(), name: '', type: type, expiry: expiry };
     });
     setAccess(ac);
@@ -82,6 +107,17 @@ var MAStore = (function() {
 
   /** Libera acesso a um curso específico (INDIVIDUAL) */
   function unlockCourse(ak, email, code, type, expiry) {
+    // Firebase: salvar curso liberado na nuvem
+    var u = getUser();
+    if (u && u.uid && window.MA_DB) {
+      var course = typeof MA_COURSES !== 'undefined' ? MA_COURSES.find(function(c){ return c.ak === ak; }) : null;
+      var courseKey = course ? (course.courseKey || course.id) : ak.replace('_auth','');
+      MA_DB.liberarCurso(u.uid, courseKey, 'individual').catch(function(){});
+      if (!u.cursos) u.cursos = [];
+      if (u.cursos.indexOf(courseKey) < 0) u.cursos.push(courseKey);
+      setCurrentUser(u);
+    }
+    // Fallback legado
     var ac = getAccess();
     if (!ac.courses) ac.courses = {};
     ac.courses[ak] = { email: email, code: code, ts: Date.now(), name: '', type: type, expiry: expiry };
@@ -198,7 +234,8 @@ var MAStore = (function() {
 
   /* ── RESET COMPLETO (cuidado!) ── */
   function resetAll() {
-    var keys = ['ma_user','ma_access','ma_points','ma_sessions','ma_missions',
+    // Nota: ma_user NÃO é removido aqui — gerenciado pelo Firebase via MA_AUTH.logout()
+    var keys = ['ma_access','ma_points','ma_sessions','ma_missions',
                 'ma_recent','mae_study_log','mae_total_mins','mae_wk_mods',
                 'mae_shop_owned','mae_shop_stock','mae_trail_badges'];
     keys.forEach(function(k) { _remove(k); });
