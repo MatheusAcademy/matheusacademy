@@ -115,14 +115,135 @@ textarea{resize:vertical;min-height:54px}
 .ec{background:var(--card);border:1px solid var(--brd);border-radius:5px;padding:2px 7px;font-size:10px;font-family:var(--mono);color:var(--t3)}
 @keyframes sp{to{transform:rotate(360deg)}}
 @keyframes pu{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media(max-width:580px){.or,.row,.mg{grid-template-columns:1fr;flex-direction:column}.oc{flex-direction:column}.ar{flex-direction:column;align-items:flex-start}header{padding:10px 12px}main{padding:18px 10px 60px}.tabs{flex-wrap:wrap}}
+
+/* ── ALUNOS ── */
+.al-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.al-stat{background:var(--sf);border:1px solid var(--brd);border-radius:10px;padding:14px;text-align:center}
+.al-stat .val{font-size:24px;font-weight:800;font-family:var(--mono);background:linear-gradient(135deg,#f0f4ff,var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.al-stat .lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+.al-stat.g .val{background:linear-gradient(135deg,#86efac,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.al-stat.y .val{background:linear-gradient(135deg,#fde68a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.al-stat.r .val{background:linear-gradient(135deg,#fca5a5,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.al-filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.al-filters input,.al-filters select{flex:1;min-width:130px;max-width:220px;font-size:12px;padding:7px 10px}
+.al-filters .btns{white-space:nowrap}
+.al-table{width:100%;border-collapse:collapse;font-size:12px}
+.al-table th{text-align:left;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;border-bottom:1px solid var(--brd)}
+.al-table td{padding:9px 10px;border-bottom:1px solid rgba(30,45,71,.5);vertical-align:middle}
+.al-table tr:hover td{background:rgba(59,130,246,.04)}
+.al-table tr.al-exp td{background:rgba(239,68,68,.04)}
+.al-name{font-weight:700;font-size:13px}
+.al-email{font-size:10px;color:var(--t3);font-family:var(--mono)}
+.al-pill{display:inline-block;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700;text-transform:uppercase}
+.pill-at{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.25)}
+.pill-in{background:rgba(245,158,11,.1);color:#fcd34d;border:1px solid rgba(245,158,11,.2)}
+.pill-ex{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+.pill-mn{background:rgba(96,165,250,.1);color:var(--acc2);border:1px solid rgba(59,130,246,.2)}
+.pill-an{background:rgba(167,139,250,.1);color:#c4b5fd;border:1px solid rgba(167,139,250,.2)}
+.pill-3y{background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.2)}
+.xp-bar{width:60px;height:4px;background:var(--brd);border-radius:2px;display:inline-block;vertical-align:middle;margin-left:4px}
+.xp-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.al-actions{display:flex;gap:4px}
+.al-btn{padding:3px 8px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--brd);background:var(--card);color:var(--t2);font-family:var(--sans);transition:.15s;white-space:nowrap}
+.al-btn:hover{color:var(--txt);border-color:var(--t3)}
+.al-btn.wa{border-color:rgba(34,197,94,.4);color:#86efac;background:rgba(34,197,94,.07)}
+.al-btn.em{border-color:rgba(96,165,250,.4);color:var(--acc2);background:rgba(59,130,246,.07)}
+.al-btn.dl{border-color:rgba(239,68,68,.3);color:#fca5a5;background:rgba(239,68,68,.07)}
+.al-btn.xp{border-color:rgba(251,191,36,.4);color:#fbbf24;background:rgba(251,191,36,.07)}
+/* Drawer do aluno */
+.al-drawer{position:fixed;right:0;top:0;bottom:0;width:360px;background:var(--sf);border-left:1px solid var(--brd);z-index:200;overflow-y:auto;transform:translateX(100%);transition:.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.al-drawer.open{transform:none;box-shadow:-20px 0 60px rgba(0,0,0,.5)}
+.al-drawer-head{padding:16px 18px;border-bottom:1px solid var(--brd);display:flex;align-items:center;gap:10px;position:sticky;top:0;background:var(--sf);z-index:1}
+.al-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--acc),#7c3aed);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#fff;flex-shrink:0}
+.al-drawer-name{font-size:14px;font-weight:800}
+.al-drawer-email{font-size:10px;color:var(--t3);font-family:var(--mono)}
+.al-close{margin-left:auto;background:none;border:none;color:var(--t3);cursor:pointer;font-size:20px;padding:4px 8px;border-radius:6px}
+.al-close:hover{color:var(--txt);background:var(--card)}
+.al-drawer-body{padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:14px}
+.al-section{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:14px}
+.al-section-title{font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.al-kv{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(30,45,71,.5);font-size:12px}
+.al-kv:last-child{border:none}
+.al-kv .k{color:var(--t2)}
+.al-kv .v{font-weight:700;font-family:var(--mono);color:var(--txt)}
+.al-kv .v.g{color:#86efac}.al-kv .v.r{color:#fca5a5}.al-kv .v.y{color:#fcd34d}
+.al-prog-bar{height:6px;background:var(--brd);border-radius:3px;margin-top:5px;overflow:hidden}
+.al-prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.al-course-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(30,45,71,.5);font-size:12px}
+.al-course-item:last-child{border:none}
+.al-drawer-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.al-da-btn{padding:9px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid;font-family:var(--sans);text-align:center;transition:.15s}
+.al-da-btn:hover{filter:brightness(1.15)}
+.al-da-btn.wa{border-color:rgba(34,197,94,.4);color:#86efac;background:rgba(34,197,94,.08)}
+.al-da-btn.em{border-color:rgba(96,165,250,.4);color:var(--acc2);background:rgba(59,130,246,.08)}
+.al-da-btn.xp{border-color:rgba(251,191,36,.4);color:#fbbf24;background:rgba(251,191,36,.08)}
+.al-da-btn.un{border-color:rgba(167,139,250,.4);color:#c4b5fd;background:rgba(167,139,250,.08)}
+.al-da-btn.dl{border-color:rgba(239,68,68,.3);color:#fca5a5;background:rgba(239,68,68,.08)}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:199;display:none}
+.drawer-overlay.on{display:block}
+/* Add aluno form */
+.add-aluno-form{background:var(--sf);border:1px solid var(--brd);border-radius:12px;padding:18px;margin-bottom:16px;display:none;animation:fadein .2s}
+.add-aluno-form.on{display:block}
+
+/* ── MENSAGENS ── */
+.msg-type-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.msg-type-opt{border:2px solid var(--brd);border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:.15s}
+.msg-type-opt:hover{border-color:var(--t3)}
+.msg-type-opt.on{border-color:var(--acc);background:rgba(59,130,246,.07)}
+.msg-type-opt .mto-icon{font-size:28px;margin-bottom:6px}
+.msg-type-opt .mto-title{font-size:13px;font-weight:700}
+.msg-type-opt .mto-sub{font-size:10px;color:var(--t3);margin-top:2px}
+.msg-dest{margin-bottom:14px}
+.msg-dest label{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:6px}
+.msg-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.msg-chip{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--brd);background:var(--card);color:var(--t2);transition:.15s}
+.msg-chip.on{border-color:var(--acc);background:rgba(59,130,246,.1);color:var(--acc2)}
+.msg-chip:hover{border-color:var(--t3)}
+.msg-preview{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:14px;margin-bottom:14px;display:none}
+.msg-preview-title{font-size:9px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.msg-preview-content{font-size:13px;line-height:1.6;color:var(--txt);white-space:pre-wrap}
+.msg-hist{margin-top:20px}
+.msg-hist-title{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.msg-hist-item{background:var(--sf);border:1px solid var(--brd);border-radius:8px;padding:10px 12px;margin-bottom:7px;font-size:11px}
+.msg-hist-item .mhi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.msg-hist-item .mhi-type{font-weight:700;color:var(--acc2)}
+.msg-hist-item .mhi-ts{color:var(--t3);font-family:var(--mono);font-size:10px}
+.msg-hist-item .mhi-text{color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.msg-hist-item .mhi-dest{margin-top:4px;font-size:10px;color:var(--t3)}
+
+/* ── STATS ── */
+.st-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+.st-card{background:var(--sf);border:1px solid var(--brd);border-radius:12px;padding:16px}
+.st-card-title{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.st-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:11px}
+.st-bar-label{flex:0 0 80px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10px}
+.st-bar-wrap{flex:1;height:6px;background:var(--brd);border-radius:3px;overflow:hidden}
+.st-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .8s cubic-bezier(.4,0,.2,1)}
+.st-bar-val{flex:0 0 28px;text-align:right;color:var(--txt);font-weight:700;font-family:var(--mono);font-size:10px}
+.st-ranking{list-style:none}
+.st-ranking li{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(30,45,71,.5);font-size:12px}
+.st-ranking li:last-child{border:none}
+.st-rank-num{font-size:11px;font-weight:800;font-family:var(--mono);color:var(--t3);flex:0 0 20px}
+.st-rank-num.gold{color:#fbbf24}.st-rank-num.silv{color:#94a3b8}.st-rank-num.bron{color:#c97c2b}
+.st-rank-name{flex:1;font-weight:600}
+.st-rank-xp{font-family:var(--mono);font-size:11px;color:var(--acc2)}
+.st-big{font-size:32px;font-weight:800;font-family:var(--mono);background:linear-gradient(135deg,#f0f4ff,var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.st-big-lbl{font-size:10px;color:var(--t3);margin-top:4px}
+.st-duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.st-mini{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:10px;text-align:center}
+.st-mini .v{font-size:20px;font-weight:800;font-family:var(--mono);color:var(--txt)}
+.st-mini .l{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+.st-refresh{margin-left:auto;cursor:pointer;color:var(--t3);font-size:11px;border:1px solid var(--brd);background:var(--card);border-radius:6px;padding:3px 8px;font-family:var(--sans)}
+.st-refresh:hover{color:var(--txt)}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">M</div>
   <div><h1>Matheus Academy <small>Admin</small></h1></div>
-  <div class="hbadge">⚙ v7</div>
+  <div class="hbadge">⚙ v8</div>
 </header>
 <main>
   <h2>Gerenciar Cursos</h2>
@@ -147,6 +268,9 @@ textarea{resize:vertical;min-height:54px}
   <div class="tabs">
     <div class="tab on" onclick="swTab('up')">📤 Upload HTML</div>
     <div class="tab" onclick="swTab('mn')">✏️ Cadastro Manual</div>
+    <div class="tab" onclick="swTab('al')">👥 Alunos</div>
+    <div class="tab" onclick="swTab('ms')">💬 Mensagens</div>
+    <div class="tab" onclick="swTab('st')">📊 Stats</div>
   </div>
 
   <!-- TAB UPLOAD -->
@@ -292,6 +416,258 @@ textarea{resize:vertical;min-height:54px}
       </button>
       <div class="res" id="rMn"></div>
     </div>
+  </div>
+
+  <!-- TAB ALUNOS -->
+  <div class="tc" id="tc-al">
+
+    <!-- Mini-stats rápidas -->
+    <div class="al-stats">
+      <div class="al-stat g"><div class="val" id="st-ativos">—</div><div class="lbl">Ativos (7d)</div></div>
+      <div class="al-stat"><div class="val" id="st-total">—</div><div class="lbl">Total alunos</div></div>
+      <div class="al-stat y"><div class="val" id="st-inativos">—</div><div class="lbl">Inativos (7d)</div></div>
+      <div class="al-stat r"><div class="val" id="st-exp">—</div><div class="lbl">Exp. em 7 dias</div></div>
+    </div>
+
+    <!-- Formulário para adicionar aluno manualmente -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <div class="lt" style="margin:0">👤 Base de Alunos</div>
+      <button class="btns" onclick="toggleAddAluno()" style="margin-left:auto">➕ Adicionar aluno</button>
+      <button class="btns" onclick="loadAlunos()">🔄 Atualizar</button>
+    </div>
+
+    <div class="add-aluno-form" id="addAlunoForm">
+      <div style="font-size:11px;font-weight:700;color:var(--acc2);margin-bottom:12px">📝 Novo Aluno</div>
+      <div class="mg" style="margin-bottom:12px">
+        <div class="mf"><label>Nome *</label><input type="text" id="an-nome" placeholder="João Silva"></div>
+        <div class="mf"><label>Email *</label><input type="email" id="an-email" placeholder="joao@email.com"></div>
+        <div class="mf"><label>Telefone (WhatsApp)</label><input type="text" id="an-tel" placeholder="11999999999"></div>
+        <div class="mf">
+          <label>Plano</label>
+          <select id="an-plano">
+            <option value="gratuito">Gratuito</option>
+            <option value="mensal">Mensal (R$19,50)</option>
+            <option value="anual">3 Anos (R$297,55)</option>
+            <option value="individual">Individual (R$9,99)</option>
+          </select>
+        </div>
+        <div class="mf">
+          <label>Cursos com acesso</label>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px" id="an-cursos-check">
+            <label style="display:flex;align-items:center;gap:4px;font-size:11px;cursor:pointer"><input type="checkbox" value="tp"> Tráfego Pago</label>
+            <label style="display:flex;align-items:center;gap:4px;font-size:11px;cursor:pointer"><input type="checkbox" value="ni"> Negócios Int.</label>
+            <label style="display:flex;align-items:center;gap:4px;font-size:11px;cursor:pointer"><input type="checkbox" value="gp"> Geopolítica</label>
+            <label style="display:flex;align-items:center;gap:4px;font-size:11px;cursor:pointer"><input type="checkbox" value="nl"> Nichos Lucrativos</label>
+          </div>
+        </div>
+        <div class="mf"><label>Data expiração</label><input type="date" id="an-exp"></div>
+        <div class="mf"><label>Observações</label><input type="text" id="an-obs" placeholder="Ex: veio por indicação..."></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btnp" style="font-size:13px;padding:10px;flex:1" onclick="salvarAluno()">✅ Salvar aluno</button>
+        <button class="btns" onclick="toggleAddAluno()">Cancelar</button>
+      </div>
+      <div class="res" id="rAluno"></div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="al-filters">
+      <input type="text" id="al-search" placeholder="🔍 Buscar nome ou email..." oninput="filtrarAlunos()">
+      <select id="al-filter-plano" onchange="filtrarAlunos()">
+        <option value="">Todos os planos</option>
+        <option value="gratuito">Gratuito</option>
+        <option value="mensal">Mensal</option>
+        <option value="anual">3 Anos</option>
+        <option value="individual">Individual</option>
+      </select>
+      <select id="al-filter-status" onchange="filtrarAlunos()">
+        <option value="">Todos os status</option>
+        <option value="ativo">Ativos</option>
+        <option value="inativo">Inativos (7d)</option>
+        <option value="expirado">Expirados</option>
+      </select>
+      <select id="al-filter-curso" onchange="filtrarAlunos()">
+        <option value="">Todos os cursos</option>
+        <option value="tp">Tráfego Pago</option>
+        <option value="ni">Negócios Int.</option>
+        <option value="gp">Geopolítica</option>
+        <option value="nl">Nichos Lucrativos</option>
+      </select>
+      <button class="btns" onclick="exportarCSV()">⬇️ Exportar CSV</button>
+    </div>
+
+    <!-- Tabela -->
+    <div style="overflow-x:auto">
+      <table class="al-table">
+        <thead>
+          <tr>
+            <th>Aluno</th>
+            <th>Plano</th>
+            <th>Status</th>
+            <th>XP</th>
+            <th>Streak</th>
+            <th>Último acesso</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="al-tbody">
+          <tr><td colspan="7" style="color:var(--t3);padding:20px;text-align:center">Conecte ao GitHub para carregar alunos...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="color:var(--t3);font-size:10px;margin-top:8px" id="al-count"></div>
+  </div>
+
+  <!-- DRAWER ALUNO -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="al-drawer" id="alunoDrawer">
+    <div class="al-drawer-head">
+      <div class="al-avatar" id="dr-avatar">?</div>
+      <div>
+        <div class="al-drawer-name" id="dr-nome">—</div>
+        <div class="al-drawer-email" id="dr-email">—</div>
+      </div>
+      <button class="al-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <div class="al-drawer-body" id="dr-body">
+      <!-- preenchido via JS -->
+    </div>
+  </div>
+
+  <!-- TAB MENSAGENS -->
+  <div class="tc" id="tc-ms">
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">📤 Enviar Mensagem</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:18px">Envie para todos ou grupos específicos de alunos</div>
+
+      <!-- Tipo -->
+      <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Canal</div>
+      <div class="msg-type-row" style="margin-bottom:18px">
+        <div class="msg-type-opt on" id="mt-wa" onclick="selMsgType('wa')">
+          <div class="mto-icon">💬</div>
+          <div class="mto-title">WhatsApp</div>
+          <div class="mto-sub">via Evolution API</div>
+        </div>
+        <div class="msg-type-opt" id="mt-em" onclick="selMsgType('em')">
+          <div class="mto-icon">📧</div>
+          <div class="mto-title">Email</div>
+          <div class="mto-sub">via Brevo / SMTP</div>
+        </div>
+      </div>
+
+      <!-- Destinatários -->
+      <div class="msg-dest">
+        <label>Destinatários</label>
+        <div class="msg-chips">
+          <div class="msg-chip on" onclick="selDest(this,'todos')" data-dest="todos">👥 Todos</div>
+          <div class="msg-chip" onclick="selDest(this,'ativos')" data-dest="ativos">✅ Ativos (7d)</div>
+          <div class="msg-chip" onclick="selDest(this,'inativos')" data-dest="inativos">😴 Inativos (7d)</div>
+          <div class="msg-chip" onclick="selDest(this,'expirando')" data-dest="expirando">⏰ Expirando em 7d</div>
+          <div class="msg-chip" onclick="selDest(this,'tp')" data-dest="tp">📈 Tráfego Pago</div>
+          <div class="msg-chip" onclick="selDest(this,'gp')" data-dest="gp">🌍 Geopolítica</div>
+          <div class="msg-chip" onclick="selDest(this,'ni')" data-dest="ni">💼 Negócios</div>
+          <div class="msg-chip" onclick="selDest(this,'nl')" data-dest="nl">💎 Nichos</div>
+          <div class="msg-chip" onclick="selDest(this,'custom')" data-dest="custom">✏️ Email específico</div>
+        </div>
+        <div id="msg-custom-input" style="display:none">
+          <input type="text" id="msg-custom-dest" placeholder="email@exemplo.com ou 11999999999" style="font-size:12px;padding:7px 10px">
+        </div>
+      </div>
+
+      <!-- Assunto (email) -->
+      <div id="msg-subject-wrap" style="display:none;margin-bottom:12px">
+        <label style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:5px">Assunto do Email</label>
+        <input type="text" id="msg-subject" placeholder="Ex: Nova aula disponível! 🚀">
+      </div>
+
+      <!-- Mensagem -->
+      <div style="margin-bottom:12px">
+        <label style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:5px">Mensagem</label>
+        <textarea id="msg-body" rows="5" placeholder="Olá {nome}! Você pode usar {nome} para personalizar com o nome do aluno." oninput="updatePreview()" style="min-height:100px"></textarea>
+        <div style="font-size:9px;color:var(--t3);margin-top:4px">Use {nome} para inserir o nome do aluno automaticamente.</div>
+      </div>
+
+      <!-- Preview -->
+      <div class="msg-preview" id="msg-preview">
+        <div class="msg-preview-title">👁️ Pré-visualização</div>
+        <div class="msg-preview-content" id="msg-preview-content"></div>
+      </div>
+
+      <button class="btnp" onclick="enviarMensagem()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        Enviar mensagem
+      </button>
+      <div class="res" id="rMsg"></div>
+
+      <!-- Histórico -->
+      <div class="msg-hist">
+        <div class="msg-hist-title">📋 Histórico de envios</div>
+        <div id="msg-hist-list">
+          <div style="color:var(--t3);font-size:11px;padding:8px">Nenhum envio registrado ainda.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB STATS -->
+  <div class="tc" id="tc-st">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+      <div><h2 style="margin:0;font-size:16px">📊 Estatísticas da Plataforma</h2><div class="sub" style="margin:0">Dados calculados a partir da base de alunos local</div></div>
+      <button class="st-refresh" onclick="calcStats()">🔄 Recalcular</button>
+    </div>
+
+    <!-- Cards grandes -->
+    <div class="st-grid">
+      <div class="st-card">
+        <div class="st-card-title">🎓 Visão Geral</div>
+        <div class="st-duo">
+          <div class="st-mini"><div class="v" id="s-total">—</div><div class="l">Total alunos</div></div>
+          <div class="st-mini"><div class="v" id="s-ativos">—</div><div class="l">Ativos hoje</div></div>
+          <div class="st-mini"><div class="v" id="s-avgxp">—</div><div class="l">XP médio</div></div>
+          <div class="st-mini"><div class="v" id="s-avgstreak">—</div><div class="l">Streak médio</div></div>
+        </div>
+      </div>
+
+      <div class="st-card">
+        <div class="st-card-title">💰 Distribuição de Planos</div>
+        <div id="s-planos">
+          <div class="st-bar-row"><div class="st-bar-label">Gratuito</div><div class="st-bar-wrap"><div class="st-bar-fill" id="sb-gr" style="width:0%;background:var(--t3)"></div></div><div class="st-bar-val" id="sv-gr">0</div></div>
+          <div class="st-bar-row"><div class="st-bar-label">Mensal</div><div class="st-bar-wrap"><div class="st-bar-fill" id="sb-mn" style="width:0%;background:#60a5fa"></div></div><div class="st-bar-val" id="sv-mn">0</div></div>
+          <div class="st-bar-row"><div class="st-bar-label">3 Anos</div><div class="st-bar-wrap"><div class="st-bar-fill" id="sb-an" style="width:0%;background:#fbbf24"></div></div><div class="st-bar-val" id="sv-an">0</div></div>
+          <div class="st-bar-row"><div class="st-bar-label">Individual</div><div class="st-bar-wrap"><div class="st-bar-fill" id="sb-in" style="width:0%;background:#c4b5fd"></div></div><div class="st-bar-val" id="sv-in">0</div></div>
+        </div>
+      </div>
+
+      <div class="st-card">
+        <div class="st-card-title">📚 Alunos por Curso</div>
+        <div id="s-cursos-bars">
+          <div class="st-bar-row"><div class="st-bar-label">Tráfego Pago</div><div class="st-bar-wrap"><div class="st-bar-fill" id="sb-tp" style="width:0%"></div></div><div class="st-bar-val" id="sv-tp">0</div></div>
+          <div class="st-bar-row"><div class="st-bar-label">Geopolítica</div><div class="st-bar-wrap"><div class="st-bar-fill" id="sb-gp" style="width:0%;background:#22c55e"></div></div><div class="st-bar-val" id="sv-gp">0</div></div>
+          <div class="st-bar-row"><div class="st-bar-label">Negócios</div><div class="st-bar-wrap"><div class="st-bar-fill" id="sb-ni" style="width:0%;background:#f59e0b"></div></div><div class="st-bar-val" id="sv-ni">0</div></div>
+          <div class="st-bar-row"><div class="st-bar-label">Nichos Lucrativos</div><div class="st-bar-wrap"><div class="st-bar-fill" id="sb-nl" style="width:0%;background:#c4b5fd"></div></div><div class="st-bar-val" id="sv-nl">0</div></div>
+        </div>
+      </div>
+
+      <div class="st-card">
+        <div class="st-card-title">🏆 Top 5 Alunos por XP</div>
+        <ol class="st-ranking" id="s-top5">
+          <li style="color:var(--t3);font-size:11px">Carregando...</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Métricas de engajamento -->
+    <div class="st-card" style="margin-bottom:12px">
+      <div class="st-card-title">📈 Engajamento</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+        <div class="st-mini"><div class="v" id="s-taxa-ativo">—%</div><div class="l">Taxa ativa (7d)</div></div>
+        <div class="st-mini"><div class="v" id="s-maior-xp">—</div><div class="l">Maior XP</div></div>
+        <div class="st-mini"><div class="v" id="s-maior-streak">—</div><div class="l">Maior streak</div></div>
+        <div class="st-mini"><div class="v" id="s-exp7d">—</div><div class="l">Expiram em 7d</div></div>
+      </div>
+    </div>
+
+    <div style="color:var(--t3);font-size:10px;text-align:center" id="s-lastcalc">Clique em Recalcular para gerar os dados</div>
   </div>
 
   <!-- LISTA -->
@@ -751,7 +1127,496 @@ function resetForm(){
   el('dzs').textContent='ou clique para selecionar — conecte o token antes!';
   el('mp').style.display='none';el('opts').style.display='none';el('btnPub').disabled=true;
 }
-function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
+// ================================================================
+// MATHEUS ACADEMY ADMIN v8 — ALUNOS + MENSAGENS + STATS
+// ================================================================
+
+// ── STORAGE DE ALUNOS (localStorage) ──
+var MA_ALUNOS_KEY = 'ma_admin_alunos';
+var _alunosData = [];
+var _alunosFiltrados = [];
+var _alunoAtual = null;
+var _msgType = 'wa';
+var _msgDest = 'todos';
+
+function loadAlunosStorage(){
+  try{ _alunosData = JSON.parse(localStorage.getItem(MA_ALUNOS_KEY)||'[]'); }catch(e){ _alunosData=[]; }
+}
+function saveAlunosStorage(){
+  localStorage.setItem(MA_ALUNOS_KEY, JSON.stringify(_alunosData));
+}
+
+// Gera ID único
+function genId(){ return 'al_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
+
+// ── TABS atualizado (mantém original + novas) ──
+var _origSwTab = swTab;
+swTab = function(n){
+  document.querySelectorAll('.tab').forEach(function(t,i){
+    t.classList.toggle('on',['up','mn','al','ms','st'][i]===n);
+  });
+  document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('on');});
+  var tc = el('tc-'+n); if(tc) tc.classList.add('on');
+  if(n==='al') loadAlunos();
+  if(n==='st') calcStats();
+  if(n==='ms') renderMsgHist();
+};
+
+// ── ALUNOS ──
+function loadAlunos(){
+  loadAlunosStorage();
+  _alunosFiltrados = _alunosData.slice();
+  renderTabela();
+  updateAlStats();
+}
+
+function filtrarAlunos(){
+  var q = (el('al-search').value||'').toLowerCase();
+  var pl = el('al-filter-plano').value;
+  var st = el('al-filter-status').value;
+  var cu = el('al-filter-curso').value;
+  _alunosFiltrados = _alunosData.filter(function(a){
+    var nomeMail = (a.nome+' '+a.email).toLowerCase();
+    if(q && !nomeMail.includes(q)) return false;
+    if(pl && a.plano !== pl) return false;
+    if(cu && (!a.cursos || a.cursos.indexOf(cu)===-1)) return false;
+    if(st){
+      var s = statusAluno(a);
+      if(st==='ativo' && s!=='ativo') return false;
+      if(st==='inativo' && s!=='inativo') return false;
+      if(st==='expirado' && s!=='expirado') return false;
+    }
+    return true;
+  });
+  renderTabela();
+}
+
+function statusAluno(a){
+  if(a.dataExpiracao && new Date(a.dataExpiracao)<new Date()) return 'expirado';
+  if(a.ultimoAcesso){
+    var diff = (Date.now()-new Date(a.ultimoAcesso))/(1000*60*60*24);
+    if(diff<=7) return 'ativo';
+    return 'inativo';
+  }
+  return 'inativo';
+}
+
+function statusPill(s){
+  if(s==='ativo') return '<span class="al-pill pill-at">Ativo</span>';
+  if(s==='inativo') return '<span class="al-pill pill-in">Inativo</span>';
+  return '<span class="al-pill pill-ex">Expirado</span>';
+}
+
+function planoPill(p){
+  var m={'gratuito':'<span class="al-pill" style="background:rgba(100,116,139,.1);color:#94a3b8;border:1px solid rgba(100,116,139,.2)">Grátis</span>','mensal':'<span class="al-pill pill-mn">Mensal</span>','anual':'<span class="al-pill pill-3y">3 Anos</span>','individual':'<span class="al-pill pill-an">Individual</span>'};
+  return m[p]||'<span class="al-pill">'+p+'</span>';
+}
+
+function fmtData(d){
+  if(!d) return '—';
+  var dt=new Date(d); if(isNaN(dt)) return d;
+  var diff=Math.floor((Date.now()-dt)/(1000*60*60*24));
+  if(diff===0) return 'Hoje';
+  if(diff===1) return 'Ontem';
+  if(diff<7) return diff+'d atrás';
+  return dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+}
+
+function renderTabela(){
+  var tb = el('al-tbody');
+  if(!_alunosFiltrados.length){
+    tb.innerHTML='<tr><td colspan="7" style="color:var(--t3);padding:20px;text-align:center">Nenhum aluno encontrado.</td></tr>';
+    el('al-count').textContent='';
+    return;
+  }
+  var xpMax = Math.max.apply(null,_alunosFiltrados.map(function(a){return a.xp||0;}))||1;
+  tb.innerHTML = _alunosFiltrados.map(function(a){
+    var s = statusAluno(a);
+    var xpPct = Math.round((a.xp||0)/xpMax*100);
+    var trCls = s==='expirado' ? ' class="al-exp"' : '';
+    return '<tr'+trCls+'>'
+      +'<td><div class="al-name">'+escH(a.nome||'—')+'</div><div class="al-email">'+escH(a.email||'')+'</div></td>'
+      +'<td>'+planoPill(a.plano||'gratuito')+'</td>'
+      +'<td>'+statusPill(s)+'</td>'
+      +'<td><span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--acc2)">'+(a.xp||0)+'</span>'
+        +'<span class="xp-bar"><span class="xp-fill" style="width:'+xpPct+'%"></span></span></td>'
+      +'<td><span style="font-family:var(--mono);font-size:11px">'+(a.streak||0)+'🔥</span></td>'
+      +'<td style="font-size:11px;color:var(--t2)">'+fmtData(a.ultimoAcesso)+'</td>'
+      +'<td><div class="al-actions">'
+        +'<button class="al-btn" onclick="openDrawer(\''+a.id+'\')">👁</button>'
+        +(a.telefone?'<button class="al-btn wa" onclick="abrirWA(\''+escH(a.id)+'\')">💬</button>':'')
+        +'<button class="al-btn em" onclick="prepEmail(\''+escH(a.email)+'\')">📧</button>'
+        +'<button class="al-btn xp" onclick="addXP(\''+a.id+'\')">⚡</button>'
+        +'<button class="al-btn dl" onclick="delAluno(\''+a.id+'\')">🗑</button>'
+      +'</div></td>'
+    +'</tr>';
+  }).join('');
+  el('al-count').textContent = _alunosFiltrados.length+' de '+_alunosData.length+' alunos';
+}
+
+function updateAlStats(){
+  var total = _alunosData.length;
+  var now = Date.now();
+  var ativos = _alunosData.filter(function(a){ return statusAluno(a)==='ativo'; }).length;
+  var inativos = _alunosData.filter(function(a){ return statusAluno(a)==='inativo'; }).length;
+  var exp7 = _alunosData.filter(function(a){
+    if(!a.dataExpiracao) return false;
+    var d=new Date(a.dataExpiracao); var diff=(d-now)/(1000*60*60*24);
+    return diff>=0 && diff<=7;
+  }).length;
+  el('st-total').textContent=total;
+  el('st-ativos').textContent=ativos;
+  el('st-inativos').textContent=inativos;
+  el('st-exp').textContent=exp7;
+}
+
+// ── ADD ALUNO ──
+function toggleAddAluno(){
+  var f=el('addAlunoForm'); f.classList.toggle('on');
+}
+
+function salvarAluno(){
+  var nome=el('an-nome').value.trim();
+  var email=el('an-email').value.trim();
+  if(!nome||!email){showRes('rAluno','er','❌ Nome e email são obrigatórios.');return;}
+  var cursos=[];
+  el('an-cursos-check').querySelectorAll('input:checked').forEach(function(c){cursos.push(c.value);});
+  var aluno={
+    id:genId(), nome:nome, email:email,
+    telefone:el('an-tel').value.trim(),
+    plano:el('an-plano').value,
+    cursos:cursos,
+    dataExpiracao:el('an-exp').value||null,
+    obs:el('an-obs').value.trim(),
+    xp:0, streak:0, nivel:1,
+    dataCadastro:new Date().toISOString(),
+    ultimoAcesso:null
+  };
+  loadAlunosStorage();
+  _alunosData.unshift(aluno);
+  saveAlunosStorage();
+  showRes('rAluno','ok','✅ Aluno "'+escH(nome)+'" salvo com sucesso!');
+  ['an-nome','an-tel','an-email','an-obs','an-exp'].forEach(function(id){el(id).value='';});
+  el('an-cursos-check').querySelectorAll('input').forEach(function(c){c.checked=false;});
+  loadAlunos();
+}
+
+function delAluno(id){
+  if(!confirm('Remover este aluno da base?')) return;
+  loadAlunosStorage();
+  _alunosData = _alunosData.filter(function(a){return a.id!==id;});
+  saveAlunosStorage();
+  loadAlunos();
+}
+
+function addXP(id){
+  var qtd=parseInt(prompt('Quantos XP dar para este aluno?','100')||'0');
+  if(!qtd||isNaN(qtd)) return;
+  loadAlunosStorage();
+  var a=_alunosData.find(function(x){return x.id===id;});
+  if(!a) return;
+  a.xp=(a.xp||0)+qtd;
+  saveAlunosStorage();
+  loadAlunos();
+  alert('✅ +'+qtd+' XP para '+a.nome+'!');
+}
+
+// ── DRAWER ──
+function openDrawer(id){
+  loadAlunosStorage();
+  var a=_alunosData.find(function(x){return x.id===id;});
+  if(!a) return;
+  _alunoAtual=a;
+  var ini=(a.nome||'?')[0].toUpperCase();
+  el('dr-avatar').textContent=ini;
+  el('dr-nome').textContent=a.nome||'—';
+  el('dr-email').textContent=a.email||'—';
+  var s=statusAluno(a);
+  var cursosNomes={'tp':'Tráfego Pago','ni':'Negócios Inteligentes','gp':'Geopolítica Avançada','nl':'Nichos Lucrativos'};
+  var body='';
+  // Plano e status
+  body+='<div class="al-section"><div class="al-section-title">📋 Dados Gerais</div>'
+    +'<div class="al-kv"><span class="k">Status</span><span class="v '+(s==='ativo'?'g':s==='inativo'?'y':'r')+'">'+s.toUpperCase()+'</span></div>'
+    +'<div class="al-kv"><span class="k">Plano</span><span class="v">'+planoPill(a.plano||'gratuito')+'</span></div>'
+    +'<div class="al-kv"><span class="k">Expira</span><span class="v '+(a.dataExpiracao&&new Date(a.dataExpiracao)<new Date()?'r':'')+'">'+((a.dataExpiracao&&new Date(a.dataExpiracao).toLocaleDateString('pt-BR'))||'—')+'</span></div>'
+    +'<div class="al-kv"><span class="k">Cadastro</span><span class="v">'+(a.dataCadastro?new Date(a.dataCadastro).toLocaleDateString('pt-BR'):'—')+'</span></div>'
+    +'<div class="al-kv"><span class="k">Telefone</span><span class="v">'+(a.telefone||'—')+'</span></div>'
+    +(a.obs?'<div class="al-kv"><span class="k">Obs</span><span class="v" style="font-size:11px;font-family:var(--sans);text-align:right">'+escH(a.obs)+'</span></div>':'')
+  +'</div>';
+  // Gamificação
+  body+='<div class="al-section"><div class="al-section-title">🎮 Gamificação</div>'
+    +'<div class="al-kv"><span class="k">XP Total</span><span class="v" style="color:var(--acc2)">'+(a.xp||0)+'</span></div>'
+    +'<div class="al-kv"><span class="k">Nível</span><span class="v">'+(a.nivel||1)+'</span></div>'
+    +'<div class="al-kv"><span class="k">Streak</span><span class="v">'+(a.streak||0)+' 🔥</span></div>'
+    +'<div class="al-kv"><span class="k">Último acesso</span><span class="v">'+(a.ultimoAcesso?new Date(a.ultimoAcesso).toLocaleDateString('pt-BR'):'—')+'</span></div>'
+  +'</div>';
+  // Cursos
+  body+='<div class="al-section"><div class="al-section-title">📚 Cursos com Acesso</div>';
+  if(a.cursos&&a.cursos.length){
+    a.cursos.forEach(function(c){
+      var prog=a.progresso&&a.progresso[c]?a.progresso[c]:null;
+      var pct=prog?prog.percentual:0;
+      body+='<div class="al-course-item"><span>'+escH(cursosNomes[c]||c)+'</span>'
+        +'<span style="font-family:var(--mono);font-size:11px;color:var(--acc2)">'+pct+'%</span></div>';
+    });
+  } else {
+    body+='<div style="font-size:11px;color:var(--t3)">Nenhum curso com acesso.</div>';
+  }
+  body+='</div>';
+  // Ações
+  body+='<div class="al-drawer-actions">'
+    +(a.telefone?'<button class="al-da-btn wa" onclick="abrirWA(\''+a.id+'\')">💬 WhatsApp</button>':'')
+    +'<button class="al-da-btn em" onclick="prepEmail(\''+escH(a.email)+'\')">📧 Enviar Email</button>'
+    +'<button class="al-da-btn xp" onclick="addXP(\''+a.id+'\')">⚡ Dar XP</button>'
+    +'<button class="al-da-btn un" onclick="editarAluno(\''+a.id+'\')">✏️ Editar</button>'
+    +'<button class="al-da-btn dl" onclick="delAluno(\''+a.id+'\');closeDrawer()">🗑 Remover</button>'
+  +'</div>';
+  el('dr-body').innerHTML=body;
+  el('alunoDrawer').classList.add('open');
+  el('drawerOverlay').classList.add('on');
+}
+
+function closeDrawer(){
+  el('alunoDrawer').classList.remove('open');
+  el('drawerOverlay').classList.remove('on');
+}
+
+function editarAluno(id){
+  closeDrawer();
+  loadAlunosStorage();
+  var a=_alunosData.find(function(x){return x.id===id;});
+  if(!a) return;
+  var novoNome=prompt('Nome do aluno:',a.nome||'');
+  if(novoNome===null) return;
+  var novoTel=prompt('Telefone (WhatsApp, somente números):',a.telefone||'');
+  if(novoTel===null) return;
+  var novoObs=prompt('Observações:',a.obs||'');
+  a.nome=novoNome||a.nome;
+  a.telefone=novoTel;
+  a.obs=novoObs||'';
+  saveAlunosStorage();
+  loadAlunos();
+  alert('✅ Aluno atualizado!');
+}
+
+// ── WHATSAPP ──
+function abrirWA(id){
+  loadAlunosStorage();
+  var a=_alunosData.find(function(x){return x.id===id;});
+  if(!a||!a.telefone){alert('Telefone não cadastrado.');return;}
+  var msg=prompt('Mensagem para '+a.nome+' (WhatsApp):\n\nUse {nome} para o nome do aluno.','Olá {nome}! Tudo bem?');
+  if(!msg) return;
+  var txt=msg.replace(/\{nome\}/g,a.nome);
+  var tel=a.telefone.replace(/\D/g,'');
+  if(tel.length===11) tel='55'+tel;
+  var url='https://api.whatsapp.com/send?phone='+tel+'&text='+encodeURIComponent(txt);
+  window.open(url,'_blank');
+  saveMsgHist('wa',a.email,'Individual: '+a.nome,msg);
+}
+
+// ── EMAIL ──
+function prepEmail(email){
+  swTab('ms');
+  setTimeout(function(){
+    selMsgType('em');
+    selDest(document.querySelector('[data-dest="custom"]'),'custom');
+    el('msg-custom-dest').value=email;
+    el('msg-custom-input').style.display='block';
+    el('msg-body').focus();
+  },100);
+}
+
+// ── MENSAGENS ──
+function selMsgType(t){
+  _msgType=t;
+  el('mt-wa').classList.toggle('on',t==='wa');
+  el('mt-em').classList.toggle('on',t==='em');
+  el('msg-subject-wrap').style.display=t==='em'?'block':'none';
+}
+
+function selDest(el2,d){
+  document.querySelectorAll('.msg-chip').forEach(function(c){c.classList.remove('on');});
+  el2.classList.add('on');
+  _msgDest=d;
+  el('msg-custom-input').style.display=d==='custom'?'block':'none';
+}
+
+function updatePreview(){
+  var body=el('msg-body').value;
+  if(!body){el('msg-preview').style.display='none';return;}
+  el('msg-preview').style.display='block';
+  el('msg-preview-content').textContent=body.replace(/\{nome\}/g,'João (exemplo)');
+}
+
+function getDestinatarios(){
+  loadAlunosStorage();
+  if(_msgDest==='todos') return _alunosData;
+  if(_msgDest==='ativos') return _alunosData.filter(function(a){return statusAluno(a)==='ativo';});
+  if(_msgDest==='inativos') return _alunosData.filter(function(a){return statusAluno(a)==='inativo';});
+  if(_msgDest==='expirando') return _alunosData.filter(function(a){
+    if(!a.dataExpiracao) return false;
+    var diff=(new Date(a.dataExpiracao)-Date.now())/(1000*60*60*24);
+    return diff>=0&&diff<=7;
+  });
+  if(['tp','gp','ni','nl'].indexOf(_msgDest)!==-1) return _alunosData.filter(function(a){return a.cursos&&a.cursos.indexOf(_msgDest)!==-1;});
+  if(_msgDest==='custom'){
+    var v=el('msg-custom-dest').value.trim();
+    return v?[{nome:'Aluno',email:v,telefone:v}]:[];
+  }
+  return [];
+}
+
+function enviarMensagem(){
+  var body=el('msg-body').value.trim();
+  if(!body){showRes('rMsg','er','❌ Escreva a mensagem antes de enviar.');return;}
+  var dests=getDestinatarios();
+  if(!dests.length){showRes('rMsg','er','❌ Nenhum destinatário encontrado para este filtro.');return;}
+  if(_msgType==='wa'){
+    var semTel=dests.filter(function(a){return !a.telefone;});
+    var comTel=dests.filter(function(a){return !!a.telefone;});
+    if(!comTel.length){showRes('rMsg','er','❌ Nenhum aluno neste grupo tem telefone cadastrado.');return;}
+    if(!confirm('Enviar WhatsApp para '+comTel.length+' aluno(s)?'+(semTel.length?' ('+semTel.length+' sem telefone serão ignorados)':''))) return;
+    // Abre WhatsApp para o primeiro; restante via loop
+    var primeiro=comTel[0];
+    var txt=body.replace(/\{nome\}/g,primeiro.nome||'aluno');
+    var tel=(primeiro.telefone||'').replace(/\D/g,'');
+    if(tel.length===11) tel='55'+tel;
+    window.open('https://api.whatsapp.com/send?phone='+tel+'&text='+encodeURIComponent(txt),'_blank');
+    if(comTel.length>1){
+      showRes('rMsg','ok','✅ WhatsApp aberto para '+primeiro.nome+'. Para envio em massa, use o n8n com a Evolution API (instância: gasnetwork) ou repita manualmente para os demais '+( comTel.length-1)+' alunos.');
+    } else {
+      showRes('rMsg','ok','✅ WhatsApp aberto para '+primeiro.nome+'!');
+    }
+    saveMsgHist('wa',_msgDest,dests.length+' destinatário(s)',body);
+  } else {
+    if(!confirm('Enviar email para '+dests.length+' aluno(s)?')) return;
+    var subj=el('msg-subject').value.trim()||'Mensagem da Matheus Academy';
+    var links='';
+    dests.forEach(function(a){
+      var txt2=body.replace(/\{nome\}/g,a.nome||'aluno');
+      links+='<a href="mailto:'+a.email+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(txt2)+'" target="_blank" style="display:block;padding:3px 0;font-size:11px;color:var(--acc2)">📧 '+escH(a.nome||a.email)+'</a>';
+    });
+    var div=document.createElement('div');
+    div.innerHTML='<div style="font-size:11px;color:#86efac;margin-bottom:8px">✅ Links gerados para '+dests.length+' aluno(s). Clique para abrir cada email:</div>'+links;
+    el('rMsg').className='res ok';
+    el('rMsg').style.display='block';
+    el('rMsg').innerHTML='';
+    el('rMsg').appendChild(div);
+    saveMsgHist('em',_msgDest,dests.length+' destinatário(s)',body);
+  }
+  renderMsgHist();
+}
+
+function saveMsgHist(type,dest,info,body){
+  var hist=[];
+  try{hist=JSON.parse(localStorage.getItem('ma_admin_msg_hist')||'[]');}catch(e){}
+  hist.unshift({type:type,dest:dest,info:info,body:body,ts:Date.now()});
+  if(hist.length>30) hist=hist.slice(0,30);
+  localStorage.setItem('ma_admin_msg_hist',JSON.stringify(hist));
+}
+
+function renderMsgHist(){
+  var hist=[];
+  try{hist=JSON.parse(localStorage.getItem('ma_admin_msg_hist')||'[]');}catch(e){}
+  var div=el('msg-hist-list');
+  if(!hist.length){div.innerHTML='<div style="color:var(--t3);font-size:11px;padding:8px">Nenhum envio registrado ainda.</div>';return;}
+  div.innerHTML=hist.map(function(h){
+    var dt=new Date(h.ts).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+    var icon=h.type==='wa'?'💬':'📧';
+    return '<div class="msg-hist-item">'
+      +'<div class="mhi-top"><span class="mhi-type">'+icon+' '+(h.type==='wa'?'WhatsApp':'Email')+'</span><span class="mhi-ts">'+dt+'</span></div>'
+      +'<div class="mhi-text">'+escH(h.body.substring(0,80))+(h.body.length>80?'…':'')+'</div>'
+      +'<div class="mhi-dest">→ '+escH(h.info)+'</div>'
+    +'</div>';
+  }).join('');
+}
+
+// ── STATS ──
+function calcStats(){
+  loadAlunosStorage();
+  var d=_alunosData, total=d.length;
+  if(!total){
+    el('s-total').textContent='0';['s-ativos','s-avgxp','s-avgstreak','s-taxa-ativo','s-maior-xp','s-maior-streak','s-exp7d'].forEach(function(id){el(id).textContent='0';});
+    el('s-top5').innerHTML='<li style="color:var(--t3);font-size:11px">Sem dados</li>';
+    return;
+  }
+  // Básicos
+  var ativos=d.filter(function(a){return statusAluno(a)==='ativo';}).length;
+  var avgXP=Math.round(d.reduce(function(s,a){return s+(a.xp||0);},0)/total);
+  var avgStreak=Math.round(d.reduce(function(s,a){return s+(a.streak||0);},0)/total);
+  var maiorXP=Math.max.apply(null,d.map(function(a){return a.xp||0;}));
+  var maiorStreak=Math.max.apply(null,d.map(function(a){return a.streak||0;}));
+  var exp7=d.filter(function(a){
+    if(!a.dataExpiracao) return false;
+    var diff=(new Date(a.dataExpiracao)-Date.now())/(1000*60*60*24);
+    return diff>=0&&diff<=7;
+  }).length;
+  el('s-total').textContent=total;
+  el('s-ativos').textContent=ativos;
+  el('s-avgxp').textContent=avgXP;
+  el('s-avgstreak').textContent=avgStreak;
+  el('s-taxa-ativo').textContent=Math.round(ativos/total*100)+'%';
+  el('s-maior-xp').textContent=maiorXP;
+  el('s-maior-streak').textContent=maiorStreak+'🔥';
+  el('s-exp7d').textContent=exp7;
+  // Planos
+  var planos={gratuito:0,mensal:0,anual:0,individual:0};
+  d.forEach(function(a){if(planos[a.plano]!==undefined)planos[a.plano]++;});
+  var maxPl=Math.max.apply(null,Object.values(planos))||1;
+  el('sv-gr').textContent=planos.gratuito; el('sb-gr').style.width=Math.round(planos.gratuito/maxPl*100)+'%';
+  el('sv-mn').textContent=planos.mensal;   el('sb-mn').style.width=Math.round(planos.mensal/maxPl*100)+'%';
+  el('sv-an').textContent=planos.anual;    el('sb-an').style.width=Math.round(planos.anual/maxPl*100)+'%';
+  el('sv-in').textContent=planos.individual; el('sb-in').style.width=Math.round(planos.individual/maxPl*100)+'%';
+  // Cursos
+  var cursos={tp:0,gp:0,ni:0,nl:0};
+  d.forEach(function(a){if(a.cursos)a.cursos.forEach(function(c){if(cursos[c]!==undefined)cursos[c]++;});});
+  var maxCu=Math.max.apply(null,Object.values(cursos))||1;
+  ['tp','gp','ni','nl'].forEach(function(c){
+    el('sv-'+c).textContent=cursos[c];
+    el('sb-'+c).style.width=Math.round(cursos[c]/maxCu*100)+'%';
+  });
+  // Top 5
+  var sorted=d.slice().sort(function(a,b){return (b.xp||0)-(a.xp||0);}).slice(0,5);
+  var medals=['gold','silv','bron','',''];
+  var labels=['🥇','🥈','🥉','4º','5º'];
+  el('s-top5').innerHTML=sorted.map(function(a,i){
+    return '<li><span class="st-rank-num '+medals[i]+'">'+labels[i]+'</span>'
+      +'<span class="st-rank-name">'+escH(a.nome||a.email||'—')+'</span>'
+      +'<span class="st-rank-xp">'+(a.xp||0)+' XP</span></li>';
+  }).join('');
+  el('s-lastcalc').textContent='Atualizado em '+new Date().toLocaleTimeString('pt-BR');
+}
+
+// ── EXPORTAR CSV ──
+function exportarCSV(){
+  loadAlunosStorage();
+  if(!_alunosData.length){alert('Nenhum aluno para exportar.');return;}
+  var header='Nome,Email,Telefone,Plano,Status,XP,Streak,Cursos,Expira,Cadastro\n';
+  var rows=_alunosData.map(function(a){
+    var s=statusAluno(a);
+    return [
+      '"'+(a.nome||'').replace(/"/g,'""')+'"',
+      '"'+(a.email||'').replace(/"/g,'""')+'"',
+      '"'+(a.telefone||'').replace(/"/g,'""')+'"',
+      a.plano||'gratuito', s,
+      a.xp||0, a.streak||0,
+      '"'+((a.cursos||[]).join(';'))+'"',
+      a.dataExpiracao||'',
+      a.dataCadastro?new Date(a.dataCadastro).toLocaleDateString('pt-BR'):''
+    ].join(',');
+  }).join('\n');
+  var blob=new Blob(['\uFEFF'+header+rows],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url;
+  a.download='matheus_academy_alunos_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// ── INIT ──
+window.addEventListener('load',function(){
+  loadAlunosStorage();
+  renderMsgHist();
+});
 </script>
 </body>
 </html>
