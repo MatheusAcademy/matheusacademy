@@ -844,6 +844,7 @@ async function loadCoursesData(){
 
 // CONSTRUIR BLOCO JS (aspas simples, formato correto)
 function esc(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
 function buildBlock(m){
   var fr=m.free?"\n    free: true,":'';
   return "  {\n"
