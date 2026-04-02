@@ -901,9 +901,18 @@ function insertSafe(content, block){
   return null;
 }
 
-// BASE64
-function b64d(s){return decodeURIComponent(escape(atob(s.replace(/\n/g,''))));}
-function b64e(s){return btoa(unescape(encodeURIComponent(s)));}
+// BASE64 — seguro para UTF-8 (sem escape/unescape deprecated)
+function b64d(s){
+  var bin=atob(s.replace(/\n/g,''));
+  var bytes=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  return new TextDecoder('utf-8').decode(bytes);
+}
+function b64e(s){
+  var bytes=new TextEncoder().encode(s);
+  var bin=''; bytes.forEach(function(b){bin+=String.fromCharCode(b);});
+  return btoa(bin);
+}
 
 // COLETAR META DOS CAMPOS
 function getMeta(pf){
@@ -1045,7 +1054,10 @@ async function updCourse(id,field,val,btn2){
     method:'PUT',headers:gh(),
     body:JSON.stringify({message:'update: '+id+' '+field+'='+val,content:b64e(nc),sha:sha})
   });
-  if(put.ok){showRes('rUp','ok','✅ Atualizado!');loadCoursesData();loadList();}
+  if(put.ok){
+    if(btn2){btn2.disabled=false; btn2.textContent=btn2.textContent.replace('⏳','✅');}
+    showRes('rUp','ok','✅ Atualizado!');loadCoursesData();loadList();
+  }
   else{var e=await put.json();showRes('rUp','er','❌ '+(e.message||put.status));if(btn2)btn2.disabled=false;}
 }
 
@@ -1137,7 +1149,7 @@ function resetForm(){
   el('mp').style.display='none';el('opts').style.display='none';el('btnPub').disabled=true;
 }
 // ================================================================
-// MATHEUS ACADEMY ADMIN v8 — ALUNOS + MENSAGENS + STATS
+// MATHEUS ACADEMY ADMIN v9 — ALUNOS + MENSAGENS + STATS
 // ================================================================
 
 // ── STORAGE DE ALUNOS (localStorage) ──
@@ -1275,7 +1287,11 @@ function salvarAluno(){
   var nome=el('an-nome').value.trim();
   var email=el('an-email').value.trim();
   if(!nome||!email){showRes('rAluno','er','❌ Nome e email são obrigatórios.');return;}
-  var cursos=[];
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showRes('rAluno','er','❌ Email inválido.');return;}
+  loadAlunosStorage();
+  if(_alunosData.some(function(a){return a.email.toLowerCase()===email.toLowerCase();})){
+    showRes('rAluno','er','❌ Este email já está cadastrado.');return;
+  }
   el('an-cursos-check').querySelectorAll('input:checked').forEach(function(c){cursos.push(c.value);});
   var aluno={
     id:genId(), nome:nome, email:email,
