@@ -243,7 +243,7 @@ textarea{resize:vertical;min-height:54px}
 <header>
   <div class="logo">M</div>
   <div><h1>Matheus Academy <small>Admin</small></h1></div>
-  <div class="hbadge">⚙ v8</div>
+  <div class="hbadge">⚙ v9</div>
 </header>
 <main>
   <h2>Gerenciar Cursos</h2>
@@ -681,18 +681,22 @@ textarea{resize:vertical;min-height:54px}
 
 <script>
 // ================================================================
-// MATHEUS ACADEMY ADMIN v7
+// MATHEUS ACADEMY ADMIN v9
 // Lógica de inserção 100% testada — usa separador único "var MA_CATS"
+// v9: bug fix swTab (todas as 5 abas agora ativam corretamente)
 // ================================================================
 var _fc = null, _fn = null, _existIds = [], _coursesContent = '', _coursesSha = '';
 
 // CONFIG
-window.onload = function() {
+function _initApp(){
   var t=ls('ghToken'), o=ls('ghOwner')||'MatheusAcademy', r=ls('ghRepo')||'matheusacademy';
   if(t) el('ghToken').value=t;
   el('ghOwner').value=o; el('ghRepo').value=r;
+  loadAlunosStorage();
+  renderMsgHist();
   if(t) setTimeout(testGH,400);
-};
+}
+document.addEventListener('DOMContentLoaded', _initApp);
 function saveConfig(){ss('ghToken',el('ghToken').value);ss('ghOwner',el('ghOwner').value);ss('ghRepo',el('ghRepo').value);}
 function g(){return{t:el('ghToken').value.trim(),o:el('ghOwner').value.trim(),r:el('ghRepo').value.trim()};}
 function gh(){return{'Authorization':'token '+g().t,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};}
@@ -701,10 +705,14 @@ function ss(k,v){localStorage.setItem(k,v);}
 function el(id){return document.getElementById(id);}
 
 // TABS
+var _tabOrder=['up','mn','al','ms','st'];
 function swTab(n){
-  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('on',['up','mn'][i]===n);});
+  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('on',_tabOrder[i]===n);});
   document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('on');});
-  el('tc-'+n).classList.add('on');
+  var tc=el('tc-'+n); if(tc) tc.classList.add('on');
+  if(n==='al') loadAlunos();
+  if(n==='st') calcStats();
+  if(n==='ms') renderMsgHist();
 }
 
 // DROPZONE
@@ -1150,19 +1158,6 @@ function saveAlunosStorage(){
 // Gera ID único
 function genId(){ return 'al_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
 
-// ── TABS atualizado (mantém original + novas) ──
-var _origSwTab = swTab;
-swTab = function(n){
-  document.querySelectorAll('.tab').forEach(function(t,i){
-    t.classList.toggle('on',['up','mn','al','ms','st'][i]===n);
-  });
-  document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('on');});
-  var tc = el('tc-'+n); if(tc) tc.classList.add('on');
-  if(n==='al') loadAlunos();
-  if(n==='st') calcStats();
-  if(n==='ms') renderMsgHist();
-};
-
 // ── ALUNOS ──
 function loadAlunos(){
   loadAlunosStorage();
@@ -1409,7 +1404,7 @@ function abrirWA(id){
   if(!msg) return;
   var txt=msg.replace(/\{nome\}/g,a.nome);
   var tel=a.telefone.replace(/\D/g,'');
-  if(tel.length===11) tel='55'+tel;
+  if(tel.length===10||tel.length===11) tel='55'+tel;
   var url='https://api.whatsapp.com/send?phone='+tel+'&text='+encodeURIComponent(txt);
   window.open(url,'_blank');
   saveMsgHist('wa',a.email,'Individual: '+a.nome,msg);
@@ -1420,11 +1415,12 @@ function prepEmail(email){
   swTab('ms');
   setTimeout(function(){
     selMsgType('em');
-    selDest(document.querySelector('[data-dest="custom"]'),'custom');
+    var chip=document.querySelector('.msg-chip[data-dest="custom"]');
+    if(chip) selDest(chip,'custom');
     el('msg-custom-dest').value=email;
     el('msg-custom-input').style.display='block';
-    el('msg-body').focus();
-  },100);
+    var mb=el('msg-body'); if(mb) mb.focus();
+  },150);
 }
 
 // ── MENSAGENS ──
@@ -1481,7 +1477,7 @@ function enviarMensagem(){
     var primeiro=comTel[0];
     var txt=body.replace(/\{nome\}/g,primeiro.nome||'aluno');
     var tel=(primeiro.telefone||'').replace(/\D/g,'');
-    if(tel.length===11) tel='55'+tel;
+    if(tel.length===10||tel.length===11) tel='55'+tel;
     window.open('https://api.whatsapp.com/send?phone='+tel+'&text='+encodeURIComponent(txt),'_blank');
     if(comTel.length>1){
       showRes('rMsg','ok','✅ WhatsApp aberto para '+primeiro.nome+'. Para envio em massa, use o n8n com a Evolution API (instância: gasnetwork) ou repita manualmente para os demais '+( comTel.length-1)+' alunos.');
@@ -1613,11 +1609,7 @@ function exportarCSV(){
   a.click(); URL.revokeObjectURL(url);
 }
 
-// ── INIT ──
-window.addEventListener('load',function(){
-  loadAlunosStorage();
-  renderMsgHist();
-});
+// ── INIT já feito via DOMContentLoaded acima ──
 </script>
 </body>
 </html>
