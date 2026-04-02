@@ -26,6 +26,7 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .rtab.active{background:var(--card);color:var(--txt);border:1px solid var(--brd)}
 .rtab-pane{display:none}.rtab-pane.active{display:block;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
 /* ── RANK LIST ── */
 .rank-card{background:var(--card);border:1px solid var(--brd);border-radius:16px;overflow:hidden;margin-bottom:14px}
 .rank-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--brd);cursor:pointer;transition:background .15s}
@@ -238,17 +239,74 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 // ═══════════════════════════════════════════════
 // DADOS
 // ═══════════════════════════════════════════════
-var FAKE_PLAYERS = [
-  {id:'j1',name:'João Almeida',city:'São Paulo - SP',pts:8500,streak:12,phone:null,showPhone:false,date:'Jan 2026',av:'#4b8bff'},
-  {id:'j2',name:'Carlos Mendes',city:'Rio de Janeiro - RJ',pts:7200,streak:8,phone:null,showPhone:false,date:'Fev 2026',av:'#22c55e'},
-  {id:'j3',name:'Ana Souza',city:'Belo Horizonte - MG',pts:6100,streak:5,phone:'(31) 9 9999-0001',showPhone:true,date:'Jan 2026',av:'#a855f7'},
-  {id:'j4',name:'Pedro Lima',city:'Curitiba - PR',pts:4800,streak:3,phone:null,showPhone:false,date:'Mar 2026',av:'#f59e0b'},
-  {id:'j5',name:'Fernanda Costa',city:'Salvador - BA',pts:3200,streak:7,phone:'(71) 9 9999-0002',showPhone:true,date:'Fev 2026',av:'#ef4444'},
-  {id:'j6',name:'Rafael Santos',city:'Porto Alegre - RS',pts:2100,streak:2,phone:null,showPhone:false,date:'Mar 2026',av:'#0ea5e9'},
-  {id:'j7',name:'Juliana Reis',city:'Fortaleza - CE',pts:1400,streak:4,phone:null,showPhone:false,date:'Fev 2026',av:'#e879f9'},
-  {id:'j8',name:'Lucas Oliveira',city:'Brasília - DF',pts:950,streak:1,phone:'(61) 9 9999-0003',showPhone:true,date:'Mar 2026',av:'#34d399'},
-  {id:'j9',name:'Marina Ferreira',city:'Recife - PE',pts:620,streak:0,phone:null,showPhone:false,date:'Mar 2026',av:'#fb923c'},
-];
+// ═══════════════════════════════════════════════
+// RANKING REAL — dados do Firestore
+// ═══════════════════════════════════════════════
+var _rankPlayers = [];        // todos os alunos carregados do Firestore
+var _rankLoaded  = false;     // flag para não recarregar desnecessariamente
+
+// Cores de avatar por índice (consistente por nome)
+var AV_COLORS = ['#4b8bff','#22c55e','#a855f7','#f59e0b','#ef4444','#0ea5e9','#e879f9','#34d399','#fb923c','#6366f1'];
+function avColor(name){ var s=0; for(var i=0;i<name.length;i++) s+=name.charCodeAt(i); return AV_COLORS[s%AV_COLORS.length]; }
+
+// Mostrar skeleton de loading no card
+function showRankLoading(tab){
+  var el=document.getElementById('list-'+tab);
+  if(!el)return;
+  var html='';
+  for(var i=0;i<6;i++){
+    html+='<div class="rank-item" style="opacity:.5">'
+      +'<div class="r-pos" style="color:var(--txt3)">'+(i+1)+'</div>'
+      +'<div class="r-av" style="background:var(--bg3);animation:pulse 1.2s infinite"></div>'
+      +'<div class="r-info"><div class="r-name" style="background:var(--bg3);height:12px;width:120px;border-radius:4px;animation:pulse 1.2s infinite"></div>'
+      +'<div class="r-lv" style="background:var(--bg3);height:10px;width:80px;border-radius:4px;margin-top:5px;animation:pulse 1.2s infinite"></div>'
+      +'<div class="r-bar"><div class="r-bar-f" style="width:0%"></div></div></div>'
+      +'<div class="r-pts" style="background:var(--bg3);height:14px;width:50px;border-radius:4px;animation:pulse 1.2s infinite"></div>'
+      +'</div>';
+  }
+  el.innerHTML=html;
+}
+
+// Carregar ranking do Firestore (top 50 por xp_total)
+async function loadRankingFirestore(){
+  if(_rankLoaded) return _rankPlayers;
+  try {
+    await new Promise(function(res){ if(window.__maFirebaseReady){res();}else{document.addEventListener('maFirebaseReady',res,{once:true});} });
+    var db = window.maDb;
+    var snap = await db.collection('usuarios')
+      .orderBy('xp_total','desc')
+      .limit(50)
+      .get();
+    _rankPlayers = [];
+    snap.forEach(function(doc){
+      var d = doc.data();
+      if(!d.nome && !d.email) return; // pular docs vazios
+      var nome = d.nome || (d.email ? d.email.split('@')[0] : 'Aluno');
+      _rankPlayers.push({
+        id:    doc.id,
+        uid:   doc.id,
+        name:  nome,
+        city:  d.cidade || '',
+        pts:   d.xp_total || 0,
+        streak: d.streak_atual || 0,
+        date:  d.data_cadastro ? new Date(d.data_cadastro.toDate()).toLocaleDateString('pt-BR',{month:'short',year:'numeric'}) : '2026',
+        av:    avColor(nome),
+        foto:  d.foto || null,
+        // XP por período
+        xp_mes:    d.xp_mes    || Math.round((d.xp_total||0) * 0.35),
+        xp_semana: d.xp_semana || Math.round((d.xp_total||0) * 0.12),
+        xp_hoje:   d.xp_hoje   || Math.round((d.xp_total||0) * 0.02),
+      });
+    });
+    _rankLoaded = true;
+    return _rankPlayers;
+  } catch(e) {
+    console.error('[Ranking] Firestore erro:', e);
+    _rankPlayers = [];
+    _rankLoaded = true;
+    return [];
+  }
+}
 
 // ═══════════════════════════════════════════════
 // STORAGE
@@ -274,28 +332,47 @@ function getSess(){try{return JSON.parse(localStorage.getItem('ma_sessions'))||{
 var _currentTab = 'geral';
 
 function buildList(players, tab){
-  var u=gU(), myPts=gP().total, myName=u?u.name:'', myId='me';
+  var u=gU(), myPts=gP().total, myUid=u?u.uid:null;
   var list = players.slice();
-  if(u){ list.push({id:'me',name:u.name,city:u.city||'',pts:myPts,streak:getSess().streak||0,phone:u.phone||null,showPhone:false,date:u.date||'2026',av:null,isMe:true}); }
-  // Ordenar por pts
+
+  // Inserir o aluno logado se ele não estiver na lista (pts locais podem estar à frente)
+  if(u){
+    var jaEsta = list.find(function(p){ return p.uid===myUid || p.id===myUid; });
+    if(!jaEsta){
+      list.push({id:'me',uid:myUid,name:u.name,city:u.city||'',pts:myPts,streak:0,date:u.date||'2026',av:avColor(u.name||'A'),foto:u.foto||null,isMe:true});
+    } else {
+      // marcar o item já existente como "me"
+      jaEsta.isMe = true;
+      jaEsta.pts  = Math.max(jaEsta.pts, myPts); // usa o mais atualizado
+    }
+  }
+
   list.sort(function(a,b){return b.pts-a.pts;});
-  var maxPts = list[0]?list[0].pts:1;
+  var maxPts = list[0] ? list[0].pts : 1;
+  if(maxPts < 1) maxPts = 1;
+
+  if(list.length === 0){
+    return '<div style="text-align:center;padding:32px 16px;color:var(--txt2);font-size:.8rem">Nenhum aluno encontrado ainda.<br>Seja o primeiro a pontuar! 🚀</div>';
+  }
+
   var html='';
   list.forEach(function(r,i){
-    var lv=getLvObj(r.pts);
-    var posClass=i===0?'p1':i===1?'p2':i===2?'p3':'';
-    var posEmoji=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
-    var pct=Math.round(r.pts/maxPts*100);
-    var bgColor=r.av||'#5b7fff';
-    var initial=r.name.charAt(0).toUpperCase();
-    var avHtml=r.av?'<div class="r-av" style="background:'+bgColor+'">'+initial+'</div>':'<div class="r-av" style="background:linear-gradient(135deg,#2563eb,#7c3aed)">'+initial+'</div>';
-    html+='<div class="rank-item'+(r.isMe?' me':'')+'" onclick="openPfModal(\''+r.id+'\')">'
+    var lv      = getLvObj(r.pts);
+    var posClass= i===0?'p1':i===1?'p2':i===2?'p3':'';
+    var posEmoji= i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+    var pct     = Math.round(r.pts/maxPts*100);
+    var initial = (r.name||'A').charAt(0).toUpperCase();
+    var avStyle = r.foto
+      ? 'background:url('+r.foto+') center/cover no-repeat'
+      : 'background:linear-gradient(135deg,'+r.av+','+r.av+'cc)';
+    var avHtml  = '<div class="r-av" style="'+avStyle+'">'+(r.foto?'':initial)+'</div>';
+    html += '<div class="rank-item'+(r.isMe?' me':'')+'" onclick="openPfModal(\''+r.id+'\')">'
       +'<div class="r-pos '+posClass+'">'+posEmoji+'</div>'
       +avHtml
       +'<div class="r-info">'
-      +'<div class="r-name">'+r.name+(r.isMe?'<span class="r-you">VOCÊ</span>':'')+'</div>'
-      +'<div class="r-lv">'+lv.i+' '+lv.n+' · '+r.city+'</div>'
-      +'<div class="r-bar"><div class="r-bar-f" style="width:'+pct+'%"></div></div>'
+        +'<div class="r-name">'+r.name+(r.isMe?'<span class="r-you">VOCÊ</span>':'')+'</div>'
+        +'<div class="r-lv">'+lv.i+' '+lv.n+(r.city?' · '+r.city:'')+'</div>'
+        +'<div class="r-bar"><div class="r-bar-f" style="width:'+pct+'%"></div></div>'
       +'</div>'
       +'<div class="r-pts">'+r.pts.toLocaleString('pt-BR')+'</div>'
       +'</div>';
@@ -304,18 +381,26 @@ function buildList(players, tab){
 }
 
 function getTabPlayers(tab){
-  // Simular períodos diferentes (em produção viria do servidor)
-  var all = FAKE_PLAYERS.slice();
-  if(tab==='diario') return all.filter(function(_,i){return i<5;}).map(function(p,i){return Object.assign({},p,{pts:Math.max(3,Math.round(p.pts*0.01*(i+1)))});});
-  if(tab==='semanal') return all.filter(function(_,i){return i<7;}).map(function(p){return Object.assign({},p,{pts:Math.round(p.pts*0.12)});});
-  if(tab==='mensal') return all.map(function(p){return Object.assign({},p,{pts:Math.round(p.pts*0.35)});});
-  return all; // geral
+  var all = _rankPlayers.slice();
+  if(tab==='diario')  return all.map(function(p){ return Object.assign({},p,{pts: p.xp_hoje   || Math.round(p.pts*0.02)}); }).sort(function(a,b){return b.pts-a.pts;});
+  if(tab==='semanal') return all.map(function(p){ return Object.assign({},p,{pts: p.xp_semana || Math.round(p.pts*0.12)}); }).sort(function(a,b){return b.pts-a.pts;});
+  if(tab==='mensal')  return all.map(function(p){ return Object.assign({},p,{pts: p.xp_mes    || Math.round(p.pts*0.35)}); }).sort(function(a,b){return b.pts-a.pts;});
+  return all; // geral — já vem ordenado do Firestore
 }
 
-function renderRank(tab){
-  var players=getTabPlayers(tab);
-  var el=document.getElementById('list-'+tab);
-  if(el) el.innerHTML=buildList(players,tab);
+async function renderRank(tab){
+  showRankLoading(tab);
+  await loadRankingFirestore();
+
+  // Sincronizar XP do aluno logado para o Firestore (garante dados frescos)
+  var u=gU(), p=gP();
+  if(u && u.uid && window.MA_DB && p.total > 0){
+    MA_DB.updateUsuario(u.uid, {xp_total: p.total}).catch(function(){});
+  }
+
+  var players = getTabPlayers(tab);
+  var el = document.getElementById('list-'+tab);
+  if(el) el.innerHTML = buildList(players, tab);
 }
 
 function switchRank(tab){
@@ -336,35 +421,47 @@ function switchRank(tab){
 var _allPlayers=[];
 
 function openPfModal(id){
-  var u=gU(),p=gP(),sess=getSess();
+  var u=gU(), p=gP(), sess=getSess();
   var player;
-  if(id==='me'&&u){
-    player={id:'me',name:u.name,city:u.city||'',pts:p.total,streak:sess.streak||0,phone:u.phone,showPhone:true,date:u.date||'2026',isMe:true};
-  }else{
-    player=FAKE_PLAYERS.find(function(r){return r.id===id;});
+
+  if(id==='me' && u){
+    // próprio aluno — dados locais frescos
+    player={id:'me',uid:u.uid,name:u.name,city:u.city||'',pts:p.total,streak:sess.streak||0,date:u.date||'2026',isMe:true,foto:u.foto||null};
+  } else {
+    // buscar nos dados carregados do Firestore
+    player = _rankPlayers.find(function(r){ return r.id===id || r.uid===id; });
+    // pode também ser o próprio aluno identificado pelo uid
+    if(!player && u && (id===u.uid)){
+      player={id:'me',uid:u.uid,name:u.name,city:u.city||'',pts:p.total,streak:sess.streak||0,date:u.date||'2026',isMe:true,foto:u.foto||null};
+    }
   }
-  if(!player)return;
-  // Preencher modal
-  var lv=getLvObj(player.pts);
-  var initial=player.name.charAt(0).toUpperCase();
-  document.getElementById('pfAv').innerHTML=player.av?'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:'+player.av+';font-size:1.5rem;font-weight:800;color:#fff">'+initial+'</div>':initial;
-  document.getElementById('pfName').textContent=player.name+(player.isMe?' (Você)':'');
-  var lvBadge=document.getElementById('pfLvBadge');
-  lvBadge.textContent=lv.i+' '+lv.n;lvBadge.className='pf-lv-badge '+lv.c;
-  document.getElementById('pfMember').textContent='Membro desde '+player.date;
-  document.getElementById('pfPts').textContent=player.pts.toLocaleString('pt-BR');
-  document.getElementById('pfStreak').textContent=(player.streak||0)+'🔥';
-  // Posição geral
-  var allSorted=FAKE_PLAYERS.slice();if(u)allSorted.push({pts:p.total});allSorted.sort(function(a,b){return b.pts-a.pts;});
-  var pos=allSorted.findIndex(function(r){return r.pts===player.pts;})+1;
-  document.getElementById('pfPos').textContent='#'+pos;
+  if(!player) return;
+
+  var lv      = getLvObj(player.pts);
+  var initial = (player.name||'A').charAt(0).toUpperCase();
+  var avStyle = player.foto ? 'background:url('+player.foto+') center/cover no-repeat' : 'background:linear-gradient(135deg,'+avColor(player.name)+','+avColor(player.name)+'cc)';
+  document.getElementById('pfAv').innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;'+avStyle+';font-size:1.5rem;font-weight:800;color:#fff;border-radius:50%">'+(player.foto?'':initial)+'</div>';
+  document.getElementById('pfName').textContent    = player.name + (player.isMe?' (Você)':'');
+  var lvBadge = document.getElementById('pfLvBadge');
+  lvBadge.textContent = lv.i+' '+lv.n; lvBadge.className='pf-lv-badge '+lv.c;
+  document.getElementById('pfMember').textContent  = 'Membro desde '+(player.date||'2026');
+  document.getElementById('pfPts').textContent     = player.pts.toLocaleString('pt-BR');
+  document.getElementById('pfStreak').textContent  = (player.streak||0)+'🔥';
+
+  // Posição geral real
+  var allSorted = _rankPlayers.slice();
+  if(u){ var jaEsta=allSorted.find(function(r){return r.uid===u.uid;});if(!jaEsta)allSorted.push({pts:p.total}); }
+  allSorted.sort(function(a,b){return b.pts-a.pts;});
+  var pos = allSorted.findIndex(function(r){return r.pts===player.pts;})+1;
+  document.getElementById('pfPos').textContent = '#'+pos;
+
   // Info rows
   var rows='';
   rows+='<div class="pf-info-row"><span class="pf-info-icon">📍</span>'+(player.city||'Cidade não informada')+'</div>';
-  if(player.showPhone&&player.phone) rows+='<div class="pf-info-row"><span class="pf-info-icon">📱</span>'+player.phone+'</div>';
-  if(player.isMe&&player.phone) rows+='<div class="pf-info-row"><span class="pf-info-icon">📱</span>'+player.phone+' <span style="font-size:.58rem;color:var(--grn);margin-left:4px">(visível para todos)</span></div>';
-  if(!player.isMe&&(!player.showPhone||!player.phone)) rows+='<div class="pf-info-row" style="color:var(--txt3)"><span class="pf-info-icon">🔒</span>Telefone privado</div>';
-  document.getElementById('pfInfoRows').innerHTML=rows;
+  if(player.isMe){
+    rows+='<div class="pf-info-row" style="color:var(--txt3);font-size:.68rem"><span class="pf-info-icon">🔒</span>Seus dados são privados para outros alunos</div>';
+  }
+  document.getElementById('pfInfoRows').innerHTML = rows;
   document.getElementById('pfModal').classList.add('show');
 }
 
@@ -403,10 +500,12 @@ function updTopbar(){
 // ═══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',function(){
   updTopbar();
-  renderRank('geral');
-  renderRank('mensal');
-  renderRank('semanal');
-  renderRank('diario');
+  // Carregar aba ativa primeiro, as outras em background
+  renderRank('geral').then(function(){
+    renderRank('mensal');
+    renderRank('semanal');
+    renderRank('diario');
+  });
 });
 </script>
 
@@ -2223,8 +2322,7 @@ window.maeV3ExportNotes=function(){
     +'.date{font-size:11px;color:#bbb;margin-left:auto}'
     +'.content{font-size:14px;color:#444;line-height:1.6;white-space:pre-wrap}'
     +'@media print{body{padding:15px}}'
-    +'</style><script src="firebase-config.js"></script>
-</head><body>'
+    +'<\/style><\/head><body>'
     +'<div class="header"><h1>📓 Caderno de Estudos</h1>'
     +'<div class="sub">'+userName+' · Matheus Academy · '+today3()+'</div></div>';
   notes.forEach(function(n){
