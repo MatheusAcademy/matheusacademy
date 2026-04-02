@@ -248,6 +248,8 @@
 <!-- ═══ DADOS CENTRALIZADOS — não edite cursos aqui, edite em data/courses.js ═══ -->
 <script src="data/courses.js?v=CB_TS"></script>
 <script src="data/userStore.js"></script>
+<!-- ═══ FIREBASE — autenticação e banco de dados na nuvem ═══ -->
+<script src="firebase-config.js"></script>
 </head>
 <body>
 
@@ -361,6 +363,10 @@
 <div class="modal-bg" id="modal-login">
   <div class="modal"><button class="modal-close" data-close="login">&#215;</button>
     <h3>Entrar</h3><div class="msub">Acesse sua conta</div>
+    <button class="mbtn" id="googleBtn_login" onclick="doLoginGoogle('login')" style="background:#fff;color:#1f1f1f;border:1.5px solid #ddd;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px">
+      <img src="https://www.google.com/favicon.ico" style="width:16px;height:16px"> Entrar com Google
+    </button>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="flex:1;height:1px;background:var(--brd)"></div><span style="font-size:.65rem;color:var(--txt3)">ou com e-mail</span><div style="flex:1;height:1px;background:var(--brd)"></div></div>
     <label>E-mail</label><input type="email" id="loginEmail" placeholder="seu@email.com">
     <label>Senha</label><input type="password" id="loginPass" placeholder="Sua senha">
     <button class="mbtn" id="loginBtn">Entrar</button>
@@ -373,6 +379,10 @@
 <div class="modal-bg" id="modal-register">
   <div class="modal"><button class="modal-close" data-close="register">&#215;</button>
     <h3>Criar Conta</h3><div class="msub">Cadastre-se na Matheus Academy</div>
+    <button class="mbtn" id="googleBtn_register" onclick="doLoginGoogle('register')" style="background:#fff;color:#1f1f1f;border:1.5px solid #ddd;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px">
+      <img src="https://www.google.com/favicon.ico" style="width:16px;height:16px"> Cadastrar com Google
+    </button>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="flex:1;height:1px;background:var(--brd)"></div><span style="font-size:.65rem;color:var(--txt3)">ou com e-mail</span><div style="flex:1;height:1px;background:var(--brd)"></div></div>
     <label>Nome completo</label><input type="text" id="regName" placeholder="Seu nome completo">
     <label>E-mail</label><input type="email" id="regEmail" placeholder="seu@email.com">
     <label>Criar senha</label><input type="password" id="regPass" placeholder="Mínimo 6 caracteres">
@@ -387,17 +397,18 @@
 
 <div class="modal-bg" id="modal-reset">
   <div class="modal"><button class="modal-close" data-close="reset">&#215;</button>
-    <h3>Recuperar Senha</h3><div class="msub">Código via suporte WhatsApp</div>
+    <h3>Recuperar Senha</h3><div class="msub">Enviaremos um link para seu e-mail</div>
     <div id="resetStep1">
       <label>E-mail cadastrado</label><input type="email" id="resetEmail" placeholder="seu@email.com">
-      <button class="mbtn" id="sendResetBtn">Enviar Código</button>
+      <button class="mbtn" id="sendResetBtn">Enviar Link de Recuperação</button>
     </div>
     <div id="resetStep2" style="display:none">
-      <label>Código</label><input type="text" id="resetCode" placeholder="000000" maxlength="6" style="text-align:center;letter-spacing:.2em;font-size:1.2rem">
-      <label>Nova senha</label><input type="password" id="resetNewPass" placeholder="Mínimo 6 caracteres">
-      <label>Confirmar</label><input type="password" id="resetNewPass2" placeholder="Repita a senha">
-      <button class="mbtn" id="verifyResetBtn">Alterar Senha</button>
-      <a href="https://wa.me/5511951006917?text=Esqueci+minha+senha+na+Matheus+Academy" target="_blank" style="display:block;text-align:center;color:var(--pri);font-size:.72rem;margin-top:10px;font-weight:600">&#128242; Solicitar código pelo WhatsApp</a>
+      <div style="text-align:center;padding:20px 0">
+        <div style="font-size:2rem;margin-bottom:10px">📧</div>
+        <div style="font-size:.85rem;color:var(--txt);font-weight:600;margin-bottom:8px">E-mail enviado!</div>
+        <div style="font-size:.72rem;color:var(--txt2);line-height:1.6">Acesse sua caixa de entrada e clique no link de recuperação. Depois volte aqui para fazer login com sua nova senha.</div>
+      </div>
+      <button class="mbtn" id="verifyResetBtn" style="background:var(--bg3);color:var(--txt2)">Já redefiniu? Voltar ao Login</button>
     </div>
     <div id="resetMsg"></div>
     <div class="switch"><a id="backToLogin">Voltar ao login</a></div>
@@ -656,29 +667,35 @@ function ebookPrev() { _scrollSpeed = -6; } // dispara momentum para trás
 function ebookStart() { /* scroll inicia via startContinuousScroll */ }
 function ebookReset() { /* no-op */ }
 
-// ═══════════════════════════════ AUTH ═══════════════════════════════
-async function sha(s) {
-  var d = new TextEncoder().encode(s);
-  var h = await crypto.subtle.digest('SHA-256', d);
-  return Array.from(new Uint8Array(h)).map(function(b) { return b.toString(16).padStart(2,'0'); }).join('').substring(0,8).toUpperCase();
-}
+// ═══════════════════════════════ AUTH (Firebase) ═══════════════════════════════
+// gU() — retorna usuário do localStorage (cache do Firebase, atualizado no login)
 function gU() { try { return JSON.parse(localStorage.getItem('ma_user')); } catch(e) { return null; } }
-function gA() { try { return JSON.parse(localStorage.getItem('ma_access')) || {}; } catch(e) { return {}; } }
-function sA(a) { localStorage.setItem('ma_access', JSON.stringify(a)); }
+function sMsg(id, t, tp) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '<div class="msg msg-' + tp + '">' + t + '</div>';
+  setTimeout(function() { el.innerHTML = ''; }, 4000);
+}
 
+// isUn — verifica acesso ao curso via Firestore (com fallback localStorage)
 function isUn(file) {
   var c = COURSES.find(function(x) { return x.file === file; });
   if (c && c.free) return true;
-  var ac = gA(), now = Date.now();
-  if (ac.master && ac.masterTs && now - ac.masterTs < (ac.expiry || EXP_M)) return true;
-  if (ac.courses && ac.courses[file]) {
-    var cv = ac.courses[file];
-    if (typeof cv === 'object' && cv.ts && now - cv.ts < (cv.expiry || EXP_I)) return true;
-    if (typeof cv === 'string') return true;
+  var u = gU();
+  if (!u) return false;
+  // Plano anual/mensal libera tudo
+  if (u.plano === 'anual' || u.plano === 'mensal' || u.plano === 'master') return true;
+  // Verifica cursos individuais comprados
+  if (u.cursos && Array.isArray(u.cursos)) {
+    var courseKey = c ? c.courseKey : null;
+    if (courseKey && u.cursos.indexOf(courseKey) >= 0) return true;
+    // fallback: checar pelo nome do arquivo
+    if (u.cursos.indexOf(file) >= 0) return true;
   }
   return false;
 }
 
+// ── Cadastro com email/senha ──
 async function doRegister() {
   var nm = document.getElementById('regName').value.trim();
   var em = document.getElementById('regEmail').value.trim().toLowerCase();
@@ -691,80 +708,162 @@ async function doRegister() {
   if (pw !== pw2) { sMsg('regMsg','Senhas não coincidem','err'); return; }
   var btn = document.getElementById('regBtn');
   btn.disabled = true; btn.textContent = 'Cadastrando...';
-  var ph2 = await sha(pw + 'MA_PASS_SALT');
-  var us = JSON.parse(localStorage.getItem('ma_users') || '{}');
-  if (us[em]) { sMsg('regMsg','E-mail já cadastrado','err'); btn.disabled=false; btn.textContent='Criar Conta Grátis'; return; }
-  us[em] = {name:nm,email:em,passHash:ph2,phone:ph,city:ct,date:new Date().toLocaleDateString('pt-BR')};
-  localStorage.setItem('ma_users', JSON.stringify(us));
-  localStorage.setItem('ma_user', JSON.stringify(us[em]));
-  try { fetch('https://formsubmit.co/ajax/portal.matheushenry@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:'Novo Cadastro - Matheus Academy',Nome:nm,Email:em,WhatsApp:ph,Cidade:ct,Data:new Date().toLocaleString('pt-BR'),_template:'table'})}); } catch(e) {}
-  btn.disabled=false; btn.textContent='Criar Conta Grátis';
-  sMsg('regMsg','Conta criada!','ok');
-  setTimeout(function() { closeM('register'); upUI(); }, 1200);
+  try {
+    var user = await MA_AUTH.cadastrar(nm, em, pw);
+    // Salvar campos extras (phone/city) no Firestore
+    await MA_DB.updateUsuario(user.uid, { telefone: ph, cidade: ct });
+    // Sincronizar localStorage com dados do Firebase
+    var dados = await MA_DB.getUsuario(user.uid);
+    localStorage.setItem('ma_user', JSON.stringify({
+      uid: user.uid, name: nm, email: em,
+      phone: ph, city: ct,
+      plano: dados ? dados.plano : 'gratuito',
+      cursos: dados ? (dados.cursos_comprados || []) : []
+    }));
+    // Notificar por email (mantém formsubmit)
+    try { fetch('https://formsubmit.co/ajax/portal.matheushenry@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:'Novo Cadastro - Matheus Academy',Nome:nm,Email:em,WhatsApp:ph,Cidade:ct,Data:new Date().toLocaleString('pt-BR'),_template:'table'})}); } catch(e2) {}
+    btn.disabled=false; btn.textContent='Criar Conta Grátis';
+    sMsg('regMsg','Conta criada com sucesso! 🎉','ok');
+    setTimeout(function() { closeM('register'); upUI(); }, 1400);
+  } catch(e) {
+    btn.disabled=false; btn.textContent='Criar Conta Grátis';
+    var msg = e.code==='auth/email-already-in-use' ? 'E-mail já cadastrado' :
+              e.code==='auth/weak-password' ? 'Senha fraca (mín. 6 caracteres)' :
+              e.code==='auth/invalid-email' ? 'E-mail inválido' : 'Erro: ' + e.message;
+    sMsg('regMsg', msg, 'err');
+  }
 }
 
+// ── Login com email/senha ──
 async function doLogin() {
   var em = document.getElementById('loginEmail').value.trim().toLowerCase();
   var pw = document.getElementById('loginPass').value;
   if (!em || !pw) { sMsg('loginMsg','Preencha e-mail e senha','err'); return; }
-  var ph = await sha(pw + 'MA_PASS_SALT');
-  var us = JSON.parse(localStorage.getItem('ma_users') || '{}');
-  if (!us[em]) { sMsg('loginMsg','E-mail não encontrado','err'); return; }
-  if (us[em].passHash !== ph) { sMsg('loginMsg','Senha incorreta','err'); return; }
-  localStorage.setItem('ma_user', JSON.stringify(us[em]));
-  closeM('login'); upUI();
-}
-function doLogout() { localStorage.removeItem('ma_user'); location.reload(); }
-function sMsg(id, t, tp) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  el.innerHTML = '<div class="msg msg-' + tp + '">' + t + '</div>';
-  setTimeout(function() { el.innerHTML = ''; }, 4000);
+  var btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Entrando...';
+  try {
+    var user = await MA_AUTH.login(em, pw);
+    var dados = await MA_DB.getUsuario(user.uid);
+    // Sincronizar dados do Firebase no localStorage (cache local)
+    localStorage.setItem('ma_user', JSON.stringify({
+      uid: user.uid,
+      name: (dados && dados.nome) || user.displayName || em.split('@')[0],
+      email: em,
+      phone: (dados && dados.telefone) || '',
+      city: (dados && dados.cidade) || '',
+      plano: (dados && dados.plano) || 'gratuito',
+      cursos: (dados && dados.cursos_comprados) || []
+    }));
+    // Sincronizar XP e progresso do Firestore → localStorage
+    if (dados) {
+      if (dados.xp_total) {
+        var p = {total: dados.xp_total, history: []};
+        try { var ph2 = JSON.parse(localStorage.getItem('ma_points')||'{}'); p.history = ph2.history||[]; } catch(e2){}
+        localStorage.setItem('ma_points', JSON.stringify(p));
+      }
+      if (dados.streak_atual) {
+        var s = {current: dados.streak_atual, record: dados.streak_record||0};
+        localStorage.setItem('ma_streak2', JSON.stringify(s));
+      }
+    }
+    btn.disabled=false; btn.textContent='Entrar';
+    closeM('login'); upUI();
+  } catch(e) {
+    btn.disabled=false; btn.textContent='Entrar';
+    var msg = e.code==='auth/user-not-found' ? 'E-mail não encontrado' :
+              e.code==='auth/wrong-password'||e.code==='auth/invalid-credential' ? 'Senha incorreta' :
+              e.code==='auth/invalid-email' ? 'E-mail inválido' :
+              e.code==='auth/too-many-requests' ? 'Muitas tentativas. Aguarde.' : 'Erro: ' + e.message;
+    sMsg('loginMsg', msg, 'err');
+  }
 }
 
-var _rc = '', _re = '';
+// ── Login com Google (1 clique) ──
+async function doLoginGoogle(tab) {
+  tab = tab || 'login';
+  var btn = document.getElementById('googleBtn_' + tab);
+  if (btn) { btn.disabled = true; btn.textContent = 'Aguarde...'; }
+  try {
+    var user = await MA_AUTH.loginGoogle();
+    var dados = await MA_DB.getUsuario(user.uid);
+    localStorage.setItem('ma_user', JSON.stringify({
+      uid: user.uid,
+      name: (dados && dados.nome) || user.displayName || '',
+      email: user.email || '',
+      phone: (dados && dados.telefone) || '',
+      city: (dados && dados.cidade) || '',
+      foto: user.photoURL || '',
+      plano: (dados && dados.plano) || 'gratuito',
+      cursos: (dados && dados.cursos_comprados) || []
+    }));
+    if (btn) { btn.disabled=false; btn.textContent='Entrar com Google'; }
+    closeM(tab); upUI();
+  } catch(e) {
+    if (btn) { btn.disabled=false; btn.textContent='Entrar com Google'; }
+    var msg = e.code==='auth/popup-closed-by-user' ? 'Login cancelado.' : 'Erro Google: ' + e.message;
+    sMsg(tab+'Msg', msg, 'err');
+  }
+}
+
+// ── Logout ──
+function doLogout() {
+  MA_AUTH.logout().catch(function(){});
+  localStorage.removeItem('ma_user');
+  closeIdxMenu();
+  location.reload();
+}
+
+// ── Recuperar senha (via Firebase — email automático) ──
 async function sendReset() {
   var em = document.getElementById('resetEmail').value.trim().toLowerCase();
   if (!em || em.indexOf('@') < 0) { sMsg('resetMsg','E-mail inválido','err'); return; }
-  var us = JSON.parse(localStorage.getItem('ma_users') || '{}');
-  if (!us[em]) { sMsg('resetMsg','E-mail não cadastrado','err'); return; }
-  _rc = String(Math.floor(100000 + Math.random()*900000)); _re = em;
-  document.getElementById('resetStep1').style.display = 'none';
-  document.getElementById('resetStep2').style.display = 'block';
-  try { fetch('https://formsubmit.co/ajax/portal.matheushenry@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:'Reset Senha - Matheus Academy',Email:em,Codigo:_rc,Data:new Date().toLocaleString('pt-BR'),_template:'table'})}); } catch(e) {}
-  sMsg('resetMsg','Código enviado! Solicite pelo WhatsApp.','ok');
+  var btn = document.getElementById('sendResetBtn');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  try {
+    await MA_AUTH.recuperarSenha(em);
+    btn.disabled=false; btn.textContent='Enviar Código';
+    sMsg('resetMsg','✅ E-mail de recuperação enviado! Verifique sua caixa de entrada.','ok');
+    // Mostrar botão de retorno após 2s
+    setTimeout(function() {
+      document.getElementById('resetStep1').style.display = 'none';
+      document.getElementById('resetStep2').style.display = 'block';
+    }, 2000);
+  } catch(e) {
+    btn.disabled=false; btn.textContent='Enviar Código';
+    var msg = e.code==='auth/user-not-found' ? 'E-mail não cadastrado' : 'Erro: ' + e.message;
+    sMsg('resetMsg', msg, 'err');
+  }
 }
-async function verifyReset() {
-  var code = document.getElementById('resetCode').value.trim();
-  var np = document.getElementById('resetNewPass').value;
-  var np2 = document.getElementById('resetNewPass2').value;
-  if (code !== _rc) { sMsg('resetMsg','Código incorreto','err'); return; }
-  if (np.length < 6) { sMsg('resetMsg','Senha mínimo 6 caracteres','err'); return; }
-  if (np !== np2) { sMsg('resetMsg','Senhas não coincidem','err'); return; }
-  var ph = await sha(np + 'MA_PASS_SALT');
-  var us = JSON.parse(localStorage.getItem('ma_users') || '{}');
-  us[_re].passHash = ph; localStorage.setItem('ma_users', JSON.stringify(us));
-  sMsg('resetMsg','Senha alterada!','ok');
-  setTimeout(function() { closeM('reset'); openM('login'); }, 1500);
+// verifyReset — agora apenas fecha o modal (reset é feito pelo link no email)
+function verifyReset() {
+  sMsg('resetMsg','Acesse o link enviado no seu e-mail para redefinir a senha.','ok');
+  setTimeout(function() { closeM('reset'); openM('login'); }, 2000);
 }
 
+// ── Ativar código de acesso (mantém compatibilidade + salva no Firestore) ──
+async function sha(s) {
+  var d = new TextEncoder().encode(s);
+  var h = await crypto.subtle.digest('SHA-256', d);
+  return Array.from(new Uint8Array(h)).map(function(b) { return b.toString(16).padStart(2,'0'); }).join('').substring(0,8).toUpperCase();
+}
 async function activateCode() {
   var user = gU();
   if (!user) { document.getElementById('codeMsg').innerHTML = '<span class="code-err">Faça login primeiro</span>'; return; }
   var code = document.getElementById('codeInput').value.trim().toUpperCase();
   if (code.length !== 8) { document.getElementById('codeMsg').innerHTML = '<span class="code-err">Código deve ter 8 caracteres</span>'; return; }
-  var em = user.email, ac = gA();
+  var em = user.email;
   var mh = await sha(em + MASTER_SALT);
   if (code === mh) {
-    ac.master=true; ac.type='master'; ac.masterTs=Date.now(); ac.expiry=EXP_M; ac.email=em; sA(ac);
-    COURSES.forEach(function(c) { localStorage.setItem(c.ak, JSON.stringify({email:em,code:code,ts:Date.now(),name:user.name||'',type:'master',expiry:EXP_M})); });
+    // Liberar plano master no Firestore
+    if (user.uid) await MA_DB.liberarCurso(user.uid, 'all', 'master').catch(function(){});
+    var u2 = gU(); u2.plano = 'master'; localStorage.setItem('ma_user', JSON.stringify(u2));
     document.getElementById('codeMsg').innerHTML = '<span class="code-ok">✅ MASTER ativado! Todos os cursos por 3 anos!</span>';
     setTimeout(rC, 800); return;
   }
   var moh = await sha(em + MONTHLY_SALT);
   if (code === moh) {
-    ac.master=true; ac.type='monthly'; ac.masterTs=Date.now(); ac.expiry=EXP_MO; ac.email=em; sA(ac);
-    COURSES.forEach(function(c) { localStorage.setItem(c.ak, JSON.stringify({email:em,code:code,ts:Date.now(),name:user.name||'',type:'monthly',expiry:EXP_MO})); });
+    if (user.uid) await MA_DB.liberarCurso(user.uid, 'all', 'mensal').catch(function(){});
+    var u3 = gU(); u3.plano = 'mensal'; localStorage.setItem('ma_user', JSON.stringify(u3));
     document.getElementById('codeMsg').innerHTML = '<span class="code-ok">✅ Mensal ativado! 30 dias!</span>';
     setTimeout(rC, 800); return;
   }
@@ -773,9 +872,11 @@ async function activateCode() {
     var c = COURSES[i];
     var ch = await sha(em + c.salt);
     if (code === ch) {
-      if (!ac.courses) ac.courses = {};
-      ac.courses[c.file] = {code:code,ts:Date.now(),expiry:EXP_I}; ac.email=em; sA(ac);
-      localStorage.setItem(c.ak, JSON.stringify({email:em,code:code,ts:Date.now(),name:user.name||'',type:'individual',expiry:EXP_I}));
+      if (user.uid) await MA_DB.liberarCurso(user.uid, c.courseKey || c.file, 'individual').catch(function(){});
+      var u4 = gU();
+      if (!u4.cursos) u4.cursos = [];
+      if (u4.cursos.indexOf(c.courseKey||c.file) < 0) u4.cursos.push(c.courseKey||c.file);
+      localStorage.setItem('ma_user', JSON.stringify(u4));
       document.getElementById('codeMsg').innerHTML = '<span class="code-ok">✅ ' + c.name + ' desbloqueado!</span>';
       found=true; setTimeout(rC, 800); break;
     }
@@ -1076,7 +1177,7 @@ var _IDX_LVS=[{n:'Iniciante',c:'ma-lvc0',m:0,max:1000},{n:'Aprendiz',c:'ma-lvc1'
 function _idxGLv(t){for(var i=_IDX_LVS.length-1;i>=0;i--)if(t>=_IDX_LVS[i].m)return _IDX_LVS[i];return _IDX_LVS[0];}
 function toggleIdxMenu(){var d=document.getElementById('idxMenuDd'),o=document.getElementById('idxMenuOverlay');d.classList.toggle('open');o.classList.toggle('open');}
 function closeIdxMenu(){document.getElementById('idxMenuDd').classList.remove('open');document.getElementById('idxMenuOverlay').classList.remove('open');}
-function doLogout(){localStorage.removeItem('ma_user');closeIdxMenu();location.reload();}
+function doLogout(){MA_AUTH.logout().catch(function(){});localStorage.removeItem('ma_user');closeIdxMenu();location.reload();}
 function _idxCash(){try{var ctx=new(window.AudioContext||window.webkitAudioContext)();function t(f,s,d,v,tp){var o=ctx.createOscillator(),g=ctx.createGain();o.type=tp||'sine';o.frequency.value=f;g.gain.setValueAtTime(0,ctx.currentTime+s);g.gain.linearRampToValueAtTime(v,ctx.currentTime+s+.01);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+s+d);o.connect(g);g.connect(ctx.destination);o.start(ctx.currentTime+s);o.stop(ctx.currentTime+s+d);}t(1200,0,.04,.3,'square');t(880,.05,.08,.25);t(1100,.1,.1,.3);t(1320,.17,.12,.35);t(1760,.26,.18,.4);}catch(e){}}
 function _idxUpdMenu(user,p,lv){
   var uS=document.getElementById('idxMenuUserSec'),aS=document.getElementById('idxMenuAuthSec');
@@ -1314,6 +1415,39 @@ document.addEventListener('DOMContentLoaded', function() {
   upUI();
   setTimeout(addEbookTouchSwipe, 300);
   updatePointsBadge();
+
+  // ── Firebase: verificar sessão ativa ao carregar a página ──
+  document.addEventListener('maFirebaseReady', function() {
+    MA_AUTH.onAuthChange(function(firebaseUser) {
+      if (firebaseUser) {
+        // Atualizar cache local com dados frescos do Firestore
+        MA_DB.getUsuario(firebaseUser.uid).then(function(dados) {
+          if (dados) {
+            localStorage.setItem('ma_user', JSON.stringify({
+              uid: firebaseUser.uid,
+              name: dados.nome || firebaseUser.displayName || firebaseUser.email.split('@')[0],
+              email: dados.email || firebaseUser.email,
+              phone: dados.telefone || '',
+              city: dados.cidade || '',
+              foto: firebaseUser.photoURL || '',
+              plano: dados.plano || 'gratuito',
+              cursos: dados.cursos_comprados || []
+            }));
+            upUI();
+          }
+        }).catch(function(){});
+      }
+      // Se abriu login em outra aba (ma_open_modal)
+      var openMod = localStorage.getItem('ma_open_modal');
+      if (openMod) { localStorage.removeItem('ma_open_modal'); openM(openMod); }
+    });
+  });
+
+  // Fallback: processar ma_open_modal caso Firebase demore
+  setTimeout(function() {
+    var openMod = localStorage.getItem('ma_open_modal');
+    if (openMod) { localStorage.removeItem('ma_open_modal'); openM(openMod); }
+  }, 500);
 });
 </script>
 
