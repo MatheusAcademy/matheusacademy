@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Firebase Test — Matheus Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c14;--sf:#0d1421;--card:#111827;--brd:#1e2d47;--acc:#3b82f6;--acc2:#60a5fa;--grn:#22c55e;--red:#ef4444;--ylw:#f59e0b;--txt:#f0f4ff;--t2:#8899bb;--t3:#4a5c7a;--mono:'JetBrains Mono',monospace;--sans:'Sora',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);min-height:100vh;padding:28px 18px 80px;max-width:560px;margin:0 auto}
+h1{font-size:22px;font-weight:800;background:linear-gradient(135deg,#f0f4ff,var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:2px}
+.sub{color:var(--t2);font-size:12px;margin-bottom:24px}
+.box{background:var(--sf);border:1px solid var(--brd);border-radius:12px;padding:18px;margin-bottom:14px}
+.box-title{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
+/* Status */
+.st-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(30,45,71,.4);font-size:13px}
+.st-row:last-child{border:none}
+.st-icon{font-size:15px;width:22px;text-align:center;flex-shrink:0}
+.st-label{flex:1;color:var(--t2)}
+.st-val{font-size:11px;font-weight:700;font-family:var(--mono)}
+.ok{color:#86efac}.er{color:#fca5a5}.ld{color:#fcd34d}
+/* Tabs */
+.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--brd);background:var(--sf);color:var(--t2);transition:.15s}
+.tab.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.tc{display:none}.tc.on{display:block}
+/* Form */
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+label{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+input{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:9px 12px;color:var(--txt);font-family:var(--sans);font-size:13px;outline:none;transition:.2s;width:100%}
+input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(59,130,246,.13)}
+/* Buttons */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;border-radius:10px;padding:12px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;transition:.2s;margin-bottom:8px}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-blue{background:var(--acc);color:#fff}
+.btn-google{background:#fff;color:#1f1f1f;border:1px solid #ddd}
+.btn-google img{width:18px;height:18px}
+.btn-grn{background:var(--grn);color:#fff}
+.btn-red{background:var(--red);color:#fff}
+.btn-pur{background:#7c3aed;color:#fff}
+.btn-ylw{background:#d97706;color:#fff}
+/* Result */
+.res{display:none;align-items:center;gap:8px;padding:10px 14px;border-radius:8px;margin-top:8px;font-size:12px;line-height:1.5}
+.res.ok{display:flex;background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.25);color:#86efac}
+.res.er{display:flex;background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.25);color:#fca5a5}
+.res.ld{display:flex;background:rgba(59,130,246,.09);border:1px solid rgba(59,130,246,.25);color:var(--acc2)}
+.sp{width:13px;height:13px;border:2px solid transparent;border-top-color:currentColor;border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* User card */
+.ucard{background:var(--card);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:14px;margin-top:10px;display:none}
+.ucard.on{display:block}
+.ucard-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ucard-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--acc),#7c3aed);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0;overflow:hidden}
+.ucard-avatar img{width:100%;height:100%;object-fit:cover}
+.ucard-name{font-size:14px;font-weight:700}
+.ucard-email{font-size:11px;color:var(--t3);font-family:var(--mono)}
+.kv{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(30,45,71,.5);font-size:11px}
+.kv:last-child{border:none}
+.kv .k{color:var(--t2)}.kv .v{font-family:var(--mono);font-weight:700;color:var(--txt)}
+.kv .v.ok{color:#86efac}
+/* Divider */
+.divider{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--t3);font-size:11px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--brd)}
+</style>
+</head>
+<body>
+
+<h1>🔥 Firebase Test</h1>
+<p class="sub">Matheus Academy — Verificação da integração</p>
+
+<!-- STATUS -->
+<div class="box">
+  <div class="box-title">⚡ Status dos Serviços</div>
+  <div class="st-row"><div class="st-icon">📦</div><div class="st-label">Firebase SDK</div><div class="st-val ld" id="s-sdk">carregando...</div></div>
+  <div class="st-row"><div class="st-icon">🔐</div><div class="st-label">Authentication</div><div class="st-val ld" id="s-auth">aguardando...</div></div>
+  <div class="st-row"><div class="st-icon">🗄️</div><div class="st-label">Firestore</div><div class="st-val ld" id="s-db">aguardando...</div></div>
+  <div class="st-row"><div class="st-icon">👤</div><div class="st-label">Usuário logado</div><div class="st-val ld" id="s-user">verificando...</div></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab on" onclick="sw('cad')">📝 Cadastrar</div>
+  <div class="tab" onclick="sw('log')">🔑 Login</div>
+  <div class="tab" onclick="sw('db')">🗄️ Banco</div>
+</div>
+
+<!-- CADASTRO -->
+<div class="tc on" id="tc-cad">
+  <div class="box">
+    <div class="box-title">📝 Criar conta de teste</div>
+
+    <!-- Google -->
+    <button class="btn btn-google" onclick="testeGoogle('cad')">
+      <img src="https://www.google.com/favicon.ico"> Continuar com Google
+    </button>
+
+    <div class="divider">ou com email</div>
+
+    <div class="f"><label>Nome</label><input id="cad-nome" placeholder="Seu nome" value="Matheus Teste"></div>
+    <div class="f"><label>Email</label><input type="email" id="cad-email" placeholder="email@teste.com"></div>
+    <div class="f"><label>Senha (mín. 6 caracteres)</label><input type="password" id="cad-senha" placeholder="senha123" value="senha123"></div>
+    <button class="btn btn-blue" onclick="testeCadastro()">🚀 Criar conta</button>
+    <div class="res" id="r-cad"></div>
+    <div class="ucard" id="uc-cad"></div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="tc" id="tc-log">
+  <div class="box">
+    <div class="box-title">🔑 Login</div>
+
+    <!-- Google -->
+    <button class="btn btn-google" onclick="testeGoogle('log')">
+      <img src="https://www.google.com/favicon.ico"> Entrar com Google
+    </button>
+
+    <div class="divider">ou com email</div>
+
+    <div class="f"><label>Email</label><input type="email" id="log-email" placeholder="email@teste.com"></div>
+    <div class="f"><label>Senha</label><input type="password" id="log-senha" placeholder="sua senha"></div>
+    <button class="btn btn-blue" onclick="testeLogin()">🔑 Entrar</button>
+    <button class="btn btn-red" onclick="testeLogout()" id="btn-sair" style="display:none">🚪 Sair (logout)</button>
+    <div class="res" id="r-log"></div>
+    <div class="ucard" id="uc-log"></div>
+  </div>
+</div>
+
+<!-- BANCO -->
+<div class="tc" id="tc-db">
+  <div class="box">
+    <div class="box-title">🗄️ Testar Firestore</div>
+    <p style="font-size:12px;color:var(--t2);margin-bottom:14px">Faça login primeiro, depois teste as operações abaixo.</p>
+    <button class="btn btn-grn" onclick="testeRead()">📖 Ler meus dados</button>
+    <button class="btn btn-pur" onclick="testeProgresso()">📊 Salvar progresso (curso tp)</button>
+    <button class="btn btn-ylw" onclick="testeXP()">⚡ Adicionar 100 XP</button>
+    <div class="res" id="r-db"></div>
+    <div class="ucard" id="uc-db"></div>
+  </div>
+</div>
+
+<script src="firebase-config.js"></script>
+<script>
+// ── Tabs ──
+function sw(n){
+  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('on',['cad','log','db'][i]===n);});
+  document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('on');});
+  document.getElementById('tc-'+n).classList.add('on');
+}
+
+// ── Status ──
+function setSt(id,txt,cls){var e=document.getElementById(id);e.textContent=txt;e.className='st-val '+cls;}
+
+document.addEventListener('maFirebaseReady',function(){
+  setSt('s-sdk','✅ carregado','ok');
+  setSt('s-auth','✅ ativo','ok');
+  setSt('s-db','✅ ativo','ok');
+  MA_AUTH.onAuthChange(function(user){
+    if(user){
+      setSt('s-user','✅ '+( user.displayName||user.email),'ok');
+      document.getElementById('btn-sair').style.display='flex';
+    } else {
+      setSt('s-user','— não logado','ld');
+      document.getElementById('btn-sair').style.display='none';
+    }
+  });
+});
+setTimeout(function(){
+  if(!window.__maFirebaseReady){
+    ['s-sdk','s-auth','s-db','s-user'].forEach(function(id){setSt(id,'❌ falhou','er');});
+  }
+},6000);
+
+// ── Helpers ──
+function res(id,cls,html){var e=document.getElementById(id);e.className='res '+cls;e.innerHTML=html;}
+function ucard(id,user,dados){
+  var e=document.getElementById(id); e.className='ucard on';
+  var foto=user.photoURL?'<img src="'+user.photoURL+'">':( (user.displayName||'?')[0].toUpperCase());
+  e.innerHTML='<div class="ucard-head"><div class="ucard-avatar">'+foto+'</div><div><div class="ucard-name">'+(user.displayName||'Usuário')+'</div><div class="ucard-email">'+user.email+'</div></div></div>'
+    +(dados?['uid','plano','xp_total','streak_atual','cursos_comprados'].map(function(k){
+      return '<div class="kv"><span class="k">'+k+'</span><span class="v ok">'+JSON.stringify(dados[k]||0)+'</span></div>';
+    }).join(''):'');
+}
+
+// ── Google Auth ──
+async function testeGoogle(tab){
+  res('r-'+tab,'ld','<div class="sp"></div> Abrindo popup do Google...');
+  try {
+    var user = await MA_AUTH.loginGoogle();
+    res('r-'+tab,'ok','✅ '+user.displayName+' logado via Google!');
+    var dados = await MA_DB.getUsuario(user.uid);
+    ucard('uc-'+tab, user, dados);
+  } catch(e) {
+    var msg = e.code==='auth/popup-closed-by-user'?'Popup fechado antes de concluir':e.message;
+    res('r-'+tab,'er','❌ '+msg);
+  }
+}
+
+// ── Cadastro email ──
+async function testeCadastro(){
+  var nome=document.getElementById('cad-nome').value.trim();
+  var email=document.getElementById('cad-email').value.trim();
+  var senha=document.getElementById('cad-senha').value;
+  if(!nome||!email||!senha){res('r-cad','er','❌ Preencha todos os campos');return;}
+  res('r-cad','ld','<div class="sp"></div> Criando conta...');
+  try {
+    var user = await MA_AUTH.cadastrar(nome, email, senha);
+    res('r-cad','ok','✅ Conta criada! UID: '+user.uid);
+    ucard('uc-cad', user, null);
+  } catch(e) {
+    var msg=e.code==='auth/email-already-in-use'?'Email já cadastrado':
+            e.code==='auth/weak-password'?'Senha fraca (mín. 6 chars)':
+            e.code==='auth/invalid-email'?'Email inválido':e.message;
+    res('r-cad','er','❌ '+msg);
+  }
+}
+
+// ── Login email ──
+async function testeLogin(){
+  var email=document.getElementById('log-email').value.trim();
+  var senha=document.getElementById('log-senha').value;
+  if(!email||!senha){res('r-log','er','❌ Preencha email e senha');return;}
+  res('r-log','ld','<div class="sp"></div> Fazendo login...');
+  try {
+    var user = await MA_AUTH.login(email, senha);
+    res('r-log','ok','✅ Bem-vindo, '+(user.displayName||user.email)+'!');
+    var dados = await MA_DB.getUsuario(user.uid);
+    ucard('uc-log', user, dados);
+  } catch(e) {
+    var msg=e.code==='auth/user-not-found'?'Usuário não encontrado':
+            e.code==='auth/wrong-password'||e.code==='auth/invalid-credential'?'Senha incorreta':
+            e.code==='auth/invalid-email'?'Email inválido':e.message;
+    res('r-log','er','❌ '+msg);
+  }
+}
+
+// ── Logout ──
+async function testeLogout(){
+  await MA_AUTH.logout();
+  res('r-log','ok','✅ Logout realizado com sucesso!');
+  document.getElementById('uc-log').className='ucard';
+}
+
+// ── Ler dados ──
+async function testeRead(){
+  res('r-db','ld','<div class="sp"></div> Lendo Firestore...');
+  try {
+    var user = await MA_AUTH.getUser();
+    if(!user){res('r-db','er','❌ Faça login primeiro!');return;}
+    var dados = await MA_DB.getUsuario(user.uid);
+    if(dados){
+      res('r-db','ok','✅ Dados lidos com sucesso!');
+      ucard('uc-db', user, dados);
+    } else {
+      res('r-db','er','❌ Documento não encontrado');
+    }
+  } catch(e){ res('r-db','er','❌ '+e.message); }
+}
+
+// ── Salvar progresso ──
+async function testeProgresso(){
+  res('r-db','ld','<div class="sp"></div> Salvando progresso...');
+  try {
+    var user = await MA_AUTH.getUser();
+    if(!user){res('r-db','er','❌ Faça login primeiro!');return;}
+    await MA_DB.salvarProgresso(user.uid,'tp',{
+      topicos_concluidos:[1,2,3], quizzes_feitos:[1], percentual:25
+    });
+    res('r-db','ok','✅ Progresso do curso "tp" salvo no Firestore!');
+  } catch(e){ res('r-db','er','❌ '+e.message); }
+}
+
+// ── Adicionar XP ──
+async function testeXP(){
+  res('r-db','ld','<div class="sp"></div> Adicionando XP...');
+  try {
+    var user = await MA_AUTH.getUser();
+    if(!user){res('r-db','er','❌ Faça login primeiro!');return;}
+    await MA_DB.addXP(user.uid, 100, 'Teste de integração Firebase');
+    res('r-db','ok','✅ +100 XP adicionados! Confira no Firestore Console.');
+  } catch(e){ res('r-db','er','❌ '+e.message); }
+}
+</script>
+</body>
+</html>
