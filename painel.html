@@ -246,6 +246,7 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 <!-- ═══ DADOS CENTRALIZADOS — não edite cursos aqui, edite em data/courses.js ═══ -->
 <script src="data/courses.js"></script>
 <script src="data/userStore.js"></script>
+<script src="firebase-config.js"></script>
 </head>
 <body>
 
@@ -618,7 +619,7 @@ function nextFQ(ok){_fq.qi++;if(_fq.qi>=3){clearInterval(_fq.timer);var earned=a
 // ═════════════════════════════════════════════
 function toggleTbMenu(){var d=document.getElementById('tbDd'),o=document.getElementById('tbOverlay');d.classList.toggle('open');o.classList.toggle('open');}
 function closeTbMenu(){document.getElementById('tbDd').classList.remove('open');document.getElementById('tbOverlay').classList.remove('open');}
-function tbLogout(){localStorage.removeItem('ma_user');closeTbMenu();location.href='index.html';}
+function tbLogout(){if(window.MA_AUTH)MA_AUTH.logout().catch(function(){});localStorage.removeItem('ma_user');closeTbMenu();location.href='index.html';}
 function updMenu(u,p,lv){
   var uS=document.getElementById('tbUserSec'),aS=document.getElementById('tbAuthSec');if(!uS||!aS)return;
   if(u){var next=LVLS[LVLS.indexOf(lv)+1];var pct=next?Math.max(0,Math.min(100,Math.round((p.total-lv.m)/(lv.max-lv.m)*100))):100;
@@ -2420,7 +2421,8 @@ window.maeV3ExportNotes=function(){
     +'.date{font-size:11px;color:#bbb;margin-left:auto}'
     +'.content{font-size:14px;color:#444;line-height:1.6;white-space:pre-wrap}'
     +'@media print{body{padding:15px}}'
-    +'</style></head><body>'
+    +'</style><script src="firebase-config.js"></script>
+</head><body>'
     +'<div class="header"><h1>📓 Caderno de Estudos</h1>'
     +'<div class="sub">'+userName+' · Matheus Academy · '+today3()+'</div></div>';
   notes.forEach(function(n){
