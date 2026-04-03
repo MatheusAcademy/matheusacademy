@@ -3,6 +3,8 @@
  * MATHEUS ACADEMY — USERSTORE.JS
  * Wrapper centralizado para todo acesso ao localStorage.
  *
+ * VERSÃO 2.0 — Com sincronização Firestore para pontos/XP
+ *
  * REGRA DE OURO:
  *   Nenhuma página deve acessar localStorage diretamente.
  *   Sempre use as funções deste módulo.
@@ -10,6 +12,7 @@
  * COMO USAR EM QUALQUER PÁGINA:
  *   <script src="data/courses.js"></script>
  *   <script src="data/userStore.js"></script>
+ *   <script src="firebase-config.js"></script>
  *   Depois: var user = MAStore.getUser();
  *
  * CHAVES DO LOCALSTORAGE (nunca altere):
@@ -33,6 +36,11 @@
 
 var MAStore = (function() {
 
+  /* ── Flag para evitar sincronização duplicada ── */
+  var _syncInProgress = false;
+  var _lastSyncTime = 0;
+  var SYNC_COOLDOWN = 5000; // 5 segundos entre syncs
+
   /* ── Funções internas de leitura/escrita segura ── */
   function _get(key, def) {
     try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }
@@ -52,7 +60,14 @@ var MAStore = (function() {
   function isLoggedIn()     { return getUser() !== null; }
   function getUsers()       { return _get('ma_users', {}); } // legado — mantido por compatibilidade
   function setUsers(users)  { return _set('ma_users', users); } // legado
-  function setCurrentUser(u){ return _set('ma_user', u); }
+  function setCurrentUser(u){ 
+    var result = _set('ma_user', u);
+    // Ao definir usuário, sincroniza pontos do Firestore
+    if (result && u && u.uid) {
+      syncPointsFromFirestore();
+    }
+    return result;
+  }
   function logout() {
     // Firebase logout (limpa sessão na nuvem) + cache local
     if (window.MA_AUTH) { MA_AUTH.logout().catch(function(){}); }
@@ -124,22 +139,134 @@ var MAStore = (function() {
     setAccess(ac);
   }
 
-  /* ── PONTOS / XP ── */
+  /* ══════════════════════════════════════════════════════════════
+     PONTOS / XP — VERSÃO 2.0 COM SINCRONIZAÇÃO FIRESTORE
+     ══════════════════════════════════════════════════════════════ */
+  
   function getPoints()      { return _get('ma_points', { total: 0, history: [] }); }
   function setPoints(p)     { return _set('ma_points', p); }
 
-  function addPoints(source, pts) {
-    var p = getPoints();
-    p.total = (p.total || 0) + pts;
-    if (!p.history) p.history = [];
-    p.history.unshift({ source: source, pts: pts, date: new Date().toLocaleDateString('pt-BR') });
-    if (p.history.length > 200) p.history = p.history.slice(0, 200);
-    setPoints(p);
-    if (window.MA_addPoints) window.MA_addPoints(source, pts);
-    return p.total;
+  /**
+   * SINCRONIZA pontos do Firestore para o localStorage
+   * Chamado automaticamente ao fazer login ou ao carregar página
+   */
+  function syncPointsFromFirestore() {
+    var now = Date.now();
+    if (_syncInProgress || (now - _lastSyncTime) < SYNC_COOLDOWN) return Promise.resolve();
+    
+    var u = getUser();
+    if (!u || !u.uid) return Promise.resolve();
+    
+    // Verifica se Firestore está disponível
+    if (!window.firebase || !firebase.firestore) return Promise.resolve();
+    
+    _syncInProgress = true;
+    
+    return firebase.firestore().collection('users').doc(u.uid).get()
+      .then(function(doc) {
+        _syncInProgress = false;
+        _lastSyncTime = Date.now();
+        
+        if (doc.exists) {
+          var data = doc.data();
+          var firestorePoints = data.points || 0;
+          var firestoreHistory = data.pointsHistory || [];
+          
+          var localData = getPoints();
+          var localPoints = localData.total || 0;
+          
+          // Firestore é a fonte de verdade — sempre usa o valor do Firestore
+          if (firestorePoints !== localPoints) {
+            console.log('[MAStore] Sincronizando pontos: local=' + localPoints + ' → firestore=' + firestorePoints);
+            setPoints({
+              total: firestorePoints,
+              history: firestoreHistory.length > 0 ? firestoreHistory : localData.history
+            });
+            
+            // Atualiza UI se existir função global
+            if (window.updatePointsDisplay) {
+              window.updatePointsDisplay(firestorePoints);
+            }
+            // Dispara evento customizado para atualizar topbar
+            window.dispatchEvent(new CustomEvent('ma-points-synced', { detail: { points: firestorePoints } }));
+          }
+        }
+        return getPoints().total;
+      })
+      .catch(function(err) {
+        _syncInProgress = false;
+        console.warn('[MAStore] Erro ao sincronizar pontos:', err);
+        return getPoints().total;
+      });
   }
 
-  function getTotalPoints()  { return getPoints().total || 0; }
+  /**
+   * ADICIONA pontos — salva no Firestore E no localStorage
+   */
+  function addPoints(source, pts) {
+    var u = getUser();
+    var p = getPoints();
+    var newTotal = (p.total || 0) + pts;
+    
+    // Atualiza localStorage imediatamente (para UI responsiva)
+    p.total = newTotal;
+    if (!p.history) p.history = [];
+    var historyEntry = { source: source, pts: pts, date: new Date().toLocaleDateString('pt-BR') };
+    p.history.unshift(historyEntry);
+    if (p.history.length > 200) p.history = p.history.slice(0, 200);
+    setPoints(p);
+    
+    // Salva no Firestore (fonte de verdade)
+    if (u && u.uid && window.firebase && firebase.firestore) {
+      var userRef = firebase.firestore().collection('users').doc(u.uid);
+      
+      // Usa increment para operação atômica (evita race conditions)
+      userRef.update({
+        points: firebase.firestore.FieldValue.increment(pts),
+        pointsHistory: firebase.firestore.FieldValue.arrayUnion(historyEntry),
+        lastPointsUpdate: firebase.firestore.FieldValue.serverTimestamp()
+      }).catch(function(err) {
+        // Se documento não existe, cria com set
+        if (err.code === 'not-found') {
+          userRef.set({
+            points: newTotal,
+            pointsHistory: [historyEntry],
+            lastPointsUpdate: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true }).catch(function(e) {
+            console.warn('[MAStore] Erro ao criar pontos no Firestore:', e);
+          });
+        } else {
+          console.warn('[MAStore] Erro ao salvar pontos no Firestore:', err);
+        }
+      });
+    }
+    
+    // Callback legado
+    if (window.MA_addPoints) window.MA_addPoints(source, pts);
+    
+    // Dispara evento para atualizar UI
+    window.dispatchEvent(new CustomEvent('ma-points-added', { detail: { source: source, pts: pts, total: newTotal } }));
+    
+    return newTotal;
+  }
+
+  /**
+   * RETORNA total de pontos (com trigger de sync se necessário)
+   */
+  function getTotalPoints() { 
+    // Tenta sincronizar em background (não bloqueia)
+    syncPointsFromFirestore();
+    return getPoints().total || 0; 
+  }
+
+  /**
+   * FORÇA sincronização imediata do Firestore
+   * Use quando precisar garantir dados atualizados (ex: tela de ranking)
+   */
+  function forcePointsSync() {
+    _lastSyncTime = 0; // Reset cooldown
+    return syncPointsFromFirestore();
+  }
 
   /* ── SESSÕES / STREAK ── */
   function getSessions()     { return _get('ma_sessions', { streak: 0, count: 0 }); }
@@ -241,6 +368,30 @@ var MAStore = (function() {
     keys.forEach(function(k) { _remove(k); });
   }
 
+  /* ══════════════════════════════════════════════════════════════
+     INICIALIZAÇÃO AUTOMÁTICA
+     ══════════════════════════════════════════════════════════════ */
+  
+  // Sincroniza pontos automaticamente quando a página carrega
+  // (aguarda Firestore estar pronto)
+  function _initSync() {
+    if (window.firebase && firebase.firestore && isLoggedIn()) {
+      syncPointsFromFirestore();
+    }
+  }
+  
+  // Tenta sincronizar após 1 segundo (tempo para Firebase inicializar)
+  setTimeout(_initSync, 1000);
+  
+  // Também sincroniza quando Firebase Auth detectar login
+  if (window.firebase && firebase.auth) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        setTimeout(syncPointsFromFirestore, 500);
+      }
+    });
+  }
+
   /* ── API PÚBLICA ── */
   return {
     // Usuário
@@ -261,6 +412,8 @@ var MAStore = (function() {
     setPoints: setPoints,
     addPoints: addPoints,
     getTotalPoints: getTotalPoints,
+    syncPointsFromFirestore: syncPointsFromFirestore,  // NOVO
+    forcePointsSync: forcePointsSync,                  // NOVO
     // Sessões
     getSessions: getSessions,
     setSessions: setSessions,
