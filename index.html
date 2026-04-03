@@ -482,6 +482,81 @@ function geoPat(c) {
     + '</svg>';
 }
 
+/* Gera capa automática para qualquer curso — usa nome, ícone e cor do curso */
+function makeAutoCover(course, gi) {
+  var name = (course.name || '').toUpperCase();
+  var icon = course.icon || '📚';
+  // Paleta de cores baseada no índice gi
+  var PALETTES = [
+    {c1:'#4A7EFF',c2:'#00d4ff',bg:'#03030a,#0a0520'},
+    {c1:'#22c55e',c2:'#4ade80',bg:'#03030a,#051a0a'},
+    {c1:'#f59e0b',c2:'#fbbf24',bg:'#03030a,#1a0e00'},
+    {c1:'#a855f7',c2:'#ec4899',bg:'#03030a,#1a0520'},
+    {c1:'#ef4444',c2:'#f97316',bg:'#03030a,#1a0500'},
+    {c1:'#06b6d4',c2:'#0ea5e9',bg:'#03030a,#00101a'},
+    {c1:'#84cc16',c2:'#22d3ee',bg:'#03030a,#051a10'},
+    {c1:'#e879f9',c2:'#a855f7',bg:'#03030a,#1a0028'}
+  ];
+  var p = PALETTES[gi % PALETTES.length];
+  // Quebra o nome em até 2 linhas de ~18 chars
+  var words = name.split(' ');
+  var line1 = '', line2 = '';
+  var cur = '';
+  words.forEach(function(w) {
+    if ((cur + ' ' + w).trim().length <= 16) { cur = (cur + ' ' + w).trim(); }
+    else if (!line1) { line1 = cur; cur = w; }
+    else { line2 = (line2 + ' ' + w).trim(); }
+  });
+  if (!line1) { line1 = cur; } else { line2 = (cur + ' ' + line2).trim(); }
+  var y1 = line2 ? '220' : '232';
+  var fontSize1 = line1.length > 14 ? '15' : line1.length > 10 ? '18' : '20';
+  var fontSize2 = line2.length > 14 ? '14' : '16';
+
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
+    + '<defs>'
+    + '<linearGradient id="ga" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="55%" style="stop-color:' + p.bg.split(',')[1] + '"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
+    + '<linearGradient id="gb" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:' + p.c1 + ';stop-opacity:0"/><stop offset="50%" style="stop-color:' + p.c1 + ';stop-opacity:.55"/><stop offset="100%" style="stop-color:' + p.c2 + ';stop-opacity:0"/></linearGradient>'
+    + '<linearGradient id="gc" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + p.c1 + '"/><stop offset="100%" style="stop-color:' + p.c2 + '"/></linearGradient>'
+    + '<filter id="gf"><feGaussianBlur stdDeviation="7"/></filter>'
+    + '</defs>'
+    + '<rect width="300" height="400" fill="url(#ga)"/>'
+    /* grid */
+    + '<g opacity=".05" stroke="' + p.c1 + '" stroke-width=".4"><line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="100" x2="300" y2="100"/><line x1="0" y1="150" x2="300" y2="150"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="250" x2="300" y2="250"/><line x1="0" y1="300" x2="300" y2="300"/><line x1="0" y1="350" x2="300" y2="350"/><line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/></g>'
+    /* glow orb */
+    + '<circle cx="150" cy="118" r="72" fill="' + p.c1 + '" opacity=".08" filter="url(#gf)"/>'
+    + '<circle cx="150" cy="118" r="52" fill="none" stroke="' + p.c1 + '" stroke-width=".7" opacity=".22"/>'
+    + '<circle cx="150" cy="118" r="34" fill="none" stroke="' + p.c2 + '" stroke-width=".4" opacity=".18"/>'
+    /* linha scan animada */
+    + '<rect x="0" y="66" width="300" height=".8" fill="url(#gb)" opacity=".5"/>'
+    + '<rect x="0" y="170" width="300" height=".8" fill="url(#gb)" opacity=".5"/>'
+    /* ícone do curso */
+    + '<text x="150" y="134" text-anchor="middle" font-size="46">' + icon + '</text>'
+    /* divisor */
+    + '<rect x="0" y="188" width="300" height="1.5" fill="url(#gb)"/>'
+    /* nome linha 1 */
+    + '<text x="150" y="' + y1 + '" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="' + fontSize1 + '" letter-spacing="1.5">' + line1 + '</text>'
+    /* nome linha 2 */
+    + (line2 ? '<text x="150" y="242" text-anchor="middle" fill="url(#gc)" font-family="Arial,sans-serif" font-weight="900" font-size="' + fontSize2 + '" letter-spacing="1.5">' + line2 + '</text>' : '')
+    /* linha decorativa */
+    + '<rect x="60" y="256" width="180" height="1.2" fill="url(#gb)"/>'
+    /* horas / info */
+    + '<text x="150" y="282" text-anchor="middle" fill="#8888a8" font-family="Arial,sans-serif" font-size="8" letter-spacing="2.5">MATHEUS ACADEMY · 2026</text>'
+    /* botão */
+    + '<rect x="80" y="300" width="140" height="24" rx="12" fill="url(#gc)" opacity=".18"/>'
+    + '<text x="150" y="316" text-anchor="middle" fill="' + p.c2 + '" font-family="Arial,sans-serif" font-weight="700" font-size="9" letter-spacing="2">▶ ACESSAR CURSO</text>'
+    /* badge MA */
+    + '<rect x="108" y="345" width="84" height="18" rx="9" fill="none" stroke="' + p.c1 + '" stroke-width=".6" opacity=".4"/>'
+    + '<text x="150" y="357" text-anchor="middle" fill="' + p.c1 + '" font-family="Arial,sans-serif" font-size="7.5" font-weight="700" letter-spacing="2" opacity=".7">M ACADEMY</text>'
+    /* cantos */
+    + '<path d="M0,0 L16,0 L0,16 Z" fill="' + p.c1 + '" opacity=".15"/>'
+    + '<path d="M300,0 L284,0 L300,16 Z" fill="' + p.c1 + '" opacity=".15"/>'
+    + '<path d="M0,400 L16,400 L0,384 Z" fill="' + p.c2 + '" opacity=".15"/>'
+    + '<path d="M300,400 L284,400 L300,384 Z" fill="' + p.c2 + '" opacity=".15"/>'
+    + '</svg>'
+  );
+}
+
 function makeSVGCover(id) {
   var s = '';
   if (id === 'bm') {
@@ -738,23 +813,16 @@ function buildEbooks() {
 
   function cardHtml(c, gi) {
     var isFree = !!c.free;
-    var customCover = makeSVGCover(c.id);
+    var customCover = makeSVGCover(c.id) || makeAutoCover(c, gi);
     var badgeTxt = isFree ? 'GR&Aacute;TIS' : (c.hours + 'h');
     var btnCls = isFree ? 'btn-free' : 'btn-paid';
     var btnTxt = isFree ? '&#127873; Acesse Gr&aacute;tis' : 'Acessar Curso';
     var h = '<div class="ebook-card" data-file="' + c.file + '" style="--glow:' + GLOW[gi] + '">';
     h += '<div class="ebook-cover">';
     h += '<span class="p-badge ' + (isFree ? 'pfree' : 'ppaid') + '">' + badgeTxt + '</span>';
-    if (customCover) {
-      h += '<img src="' + customCover + '" alt="' + c.name + '" style="width:100%;height:100%;object-fit:cover;display:block">';
-      h += '<div class="p-img-cover"></div>';
-      h += '<div class="p-name-bar"><span>' + c.name + '</span></div>';
-    } else {
-      h += '<div class="ebook-nocover" style="background:' + GBG[gi] + '">';
-      if (logoSrc) h += '<img class="nc-logo-full" src="' + logoSrc + '" alt="MA">';
-      h += '<div class="nc-name-bar"><span class="nc-title">' + c.name + '</span></div>';
-      h += '</div>';
-    }
+    h += '<img src="' + customCover + '" alt="' + c.name + '" style="width:100%;height:100%;object-fit:cover;display:block">';
+    h += '<div class="p-img-cover"></div>';
+    h += '<div class="p-name-bar"><span>' + c.name + '</span></div>';
     h += '<div class="ebook-balloon">';
     h += '<div class="bal-name">' + c.name + '</div>';
     h += '<div class="bal-desc">' + c.desc.substring(0, 85) + '</div>';
