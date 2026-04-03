@@ -66,6 +66,60 @@
 .ebook-btn.btn-paid{background:var(--pri3);color:#fff}
 .ebook-btn.btn-paid:hover{background:var(--pri)}
 .ebook-dots{display:flex;justify-content:center;gap:6px;padding:12px 0 4px;background:var(--bg2)}.ebook-dot{width:6px;height:6px;border-radius:50%;background:var(--brd2);cursor:pointer;transition:all .3s}.ebook-dot.active{width:20px;border-radius:3px;background:var(--pri)}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MATHEUS ACADEMY FIXES v2.0 - CSS
+   FIX 1: Duplo glow | FIX 2: Carrossel | FIX 3: Favoritos | FIX 4: Logo
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── FIX 1: APENAS 1 CARD BRILHA POR VEZ ── */
+.ebook-card,.cc{transition:all .3s cubic-bezier(.4,0,.2,1)!important}
+.ebook-card:not(:hover):not(.touch-active):not(.ma-single-glow){box-shadow:none!important;border-color:var(--brd)!important}
+.ma-single-glow{border-color:var(--neon)!important;box-shadow:0 0 20px var(--neon),0 0 50px rgba(0,212,255,.5),0 12px 30px rgba(0,0,0,.5)!important;z-index:10!important;transform:scale(1.08) translateY(-4px)!important}
+
+/* ── FIX 2: CARROSSEL INFINITO MAIS RÁPIDO ── */
+@keyframes ma-carousel-flow{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ma-carousel-infinite{animation:ma-carousel-flow 18s linear infinite!important}
+.ma-carousel-infinite:hover{animation-play-state:paused!important}
+
+/* ── FIX 3: MENU DE FAVORITOS (LONG PRESS) ── */
+.ma-fav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:9998;opacity:0;visibility:hidden;transition:all .3s ease}
+.ma-fav-overlay.active{opacity:1;visibility:visible}
+.ma-fav-menu{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);background:linear-gradient(145deg,#1a1a2e,#16162a);border:1px solid rgba(91,127,255,.3);border-radius:20px;z-index:9999;opacity:0;visibility:hidden;transition:all .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 25px 50px rgba(0,0,0,.5),0 0 30px rgba(91,127,255,.2);min-width:280px;overflow:hidden}
+.ma-fav-menu.active{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.ma-fav-menu-hdr{padding:20px 24px;border-bottom:1px solid rgba(91,127,255,.15);text-align:center}
+.ma-fav-menu-hdr h3{margin:0;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1.5px}
+.ma-fav-opt{display:flex;align-items:center;gap:16px;padding:18px 24px;cursor:pointer;transition:all .2s ease;border:none;background:transparent;width:100%;text-align:left;font-family:'Outfit',sans-serif}
+.ma-fav-opt:hover{background:rgba(91,127,255,.1)}
+.ma-fav-opt:active{background:rgba(91,127,255,.2);transform:scale(.98)}
+.ma-fav-heart{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.ma-fav-opt.add .ma-fav-heart{background:linear-gradient(135deg,rgba(255,71,87,.2),rgba(255,107,129,.1));color:#ff4757}
+.ma-fav-opt.add:hover .ma-fav-heart{background:linear-gradient(135deg,rgba(255,71,87,.4),rgba(255,107,129,.3));transform:scale(1.1)}
+.ma-fav-opt.remove .ma-fav-heart{background:linear-gradient(135deg,rgba(108,117,125,.2),rgba(134,142,150,.1));color:#868e96}
+.ma-fav-opt.remove:hover .ma-fav-heart{background:linear-gradient(135deg,rgba(108,117,125,.4),rgba(134,142,150,.3));transform:scale(1.1)}
+.ma-fav-opt-txt{flex:1}
+.ma-fav-opt-txt .title{font-size:16px;font-weight:600;color:#fff;margin:0 0 4px}
+.ma-fav-opt-txt .subtitle{font-size:13px;color:rgba(255,255,255,.5);margin:0}
+.ma-fav-cancel{width:100%;padding:16px;border:none;background:rgba(255,255,255,.03);border-top:1px solid rgba(91,127,255,.1);color:rgba(255,255,255,.5);font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s ease}
+.ma-fav-cancel:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.8)}
+.ma-fav-badge{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ff4757,#ff6b81);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;z-index:10;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 15px rgba(255,71,87,.4)}
+.ma-fav-badge.active{opacity:1;transform:scale(1)}
+@keyframes ma-heart-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.ma-fav-badge.pulse{animation:ma-heart-pulse .6s cubic-bezier(.34,1.56,.64,1)}
+.ma-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(145deg,#1a1a2e,#16162a);border:1px solid rgba(91,127,255,.3);border-radius:12px;padding:14px 24px;display:flex;align-items:center;gap:12px;z-index:10000;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.ma-toast.active{opacity:1;transform:translateX(-50%) translateY(0)}
+.ma-toast-icon{font-size:20px}
+.ma-toast-text{font-family:'Outfit',sans-serif;font-size:14px;color:#fff;font-weight:500}
+
+/* ── FIX 4: LOGO INTERATIVA COM EFEITO INFLAR + SOM ── */
+.hero-logo,.ma-tb-logo img{cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1)!important;transform-origin:center center}
+.hero-logo:hover,.ma-tb-logo img:hover{transform:scale(1.05)}
+@keyframes ma-logo-inflate{0%{transform:scale(1)}30%{transform:scale(1.15)}50%{transform:scale(1.05)}70%{transform:scale(1.1)}100%{transform:scale(1)}}
+.ma-logo-inflating{animation:ma-logo-inflate .6s cubic-bezier(.34,1.56,.64,1)!important}
+@keyframes ma-logo-glow{0%,100%{filter:drop-shadow(0 0 5px rgba(91,127,255,.3))}50%{filter:drop-shadow(0 0 20px rgba(91,127,255,.6)) drop-shadow(0 0 40px rgba(91,127,255,.3))}}
+.ma-logo-glowing{animation:ma-logo-glow .8s ease-in-out!important}
+.ma-logo-ripple{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(91,127,255,.4) 0%,transparent 70%);transform:scale(0);animation:ma-ripple-fx .6s ease-out forwards;pointer-events:none}
+@keyframes ma-ripple-fx{to{transform:scale(4);opacity:0}}
 @media(max-width:767px){.ebook-card{flex:0 0 calc(50% - 8px);max-width:calc(50% - 8px)}.ebook-section{padding:16px 46px}}
 @media(max-width:480px){
   .ebook-card{flex:0 0 calc(50% - 5px);max-width:calc(50% - 5px)}
@@ -774,12 +828,12 @@ function makeSVGCover(id) {
 
 // Scroll contínuo
 var _scrollX = 0, _scrollHalf = 0, _scrollRAF = null, _scrollPaused = false;
-var _scrollSpeed = 0.4; // px por frame (~24px/s a 60fps)
+var _scrollSpeed = 1.2; // px por frame - VELOCIDADE AUMENTADA (era 0.4)
 
 function startContinuousScroll() {
   var track = document.getElementById('ebookTrack');
   if (!track) return;
-  var _baseSpeed = 0.4;
+  var _baseSpeed = 1.2; // VELOCIDADE BASE AUMENTADA (era 0.4)
   function step() {
     // Decai suavemente em direção à velocidade base (momentum)
     if (Math.abs(_scrollSpeed - _baseSpeed) > 0.02) {
@@ -4469,6 +4523,389 @@ document.addEventListener('keydown',function(e){
 </script>
 <!-- FIM MA BUSCA GLOBAL -->
 
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     MATHEUS ACADEMY FIXES v2.0
+     FIX 1: Duplo glow corrigido | FIX 2: Carrossel rápido infinito
+     FIX 3: Favoritos com long press | FIX 4: Logo interativa com som
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+'use strict';
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CONFIGURAÇÕES
+// ═══════════════════════════════════════════════════════════════════════════
+var MA_FIX_CONFIG = {
+  longPressDuration: 500,
+  vibrationDuration: 50,
+  inflateScale: 1.15
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SISTEMA DE ÁUDIO - Som da logo (igual página de cursos)
+// ═══════════════════════════════════════════════════════════════════════════
+var MA_AudioCtx = null;
+
+function maPlayLogoSound() {
+  try {
+    if (!MA_AudioCtx) MA_AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var ctx = MA_AudioCtx;
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1);
+    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.2);
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
+
+function maPlayFavAddSound() {
+  try {
+    if (!MA_AudioCtx) MA_AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var ctx = MA_AudioCtx;
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(523, ctx.currentTime);
+    osc.frequency.setValueAtTime(659, ctx.currentTime + 0.1);
+    osc.frequency.setValueAtTime(784, ctx.currentTime + 0.2);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.35);
+  } catch(e) {}
+}
+
+function maPlayFavRemoveSound() {
+  try {
+    if (!MA_AudioCtx) MA_AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var ctx = MA_AudioCtx;
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(500, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.2);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.25);
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FIX 1: APENAS 1 CARD BRILHA POR VEZ
+// ═══════════════════════════════════════════════════════════════════════════
+var _currentGlowCard = null;
+
+function maSetSingleGlow(card) {
+  if (_currentGlowCard && _currentGlowCard !== card) {
+    _currentGlowCard.classList.remove('ma-single-glow', 'touch-active');
+  }
+  card.classList.add('ma-single-glow');
+  _currentGlowCard = card;
+}
+
+function maRemoveGlow(card) {
+  card.classList.remove('ma-single-glow', 'touch-active');
+  if (_currentGlowCard === card) _currentGlowCard = null;
+}
+
+function maInitGlowFix() {
+  var cards = document.querySelectorAll('.ebook-card, .cc');
+  cards.forEach(function(card) {
+    card.addEventListener('mouseenter', function() { maSetSingleGlow(card); });
+    card.addEventListener('mouseleave', function() { maRemoveGlow(card); });
+  });
+  
+  // Touch: apenas 1 card brilha
+  document.addEventListener('touchstart', function(e) {
+    var card = e.target.closest('.ebook-card, .cc');
+    if (card) {
+      maSetSingleGlow(card);
+    }
+  }, {passive: true});
+  
+  document.addEventListener('touchend', function() {
+    setTimeout(function() {
+      if (_currentGlowCard) {
+        maRemoveGlow(_currentGlowCard);
+      }
+    }, 1200);
+  }, {passive: true});
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FIX 3: SISTEMA DE FAVORITOS COM LONG PRESS
+// ═══════════════════════════════════════════════════════════════════════════
+var _maFavOverlay = null;
+var _maFavMenu = null;
+var _maFavCurrentCard = null;
+var _maFavLongPressTimer = null;
+var _maFavorites = new Set();
+
+function maLoadFavorites() {
+  try {
+    var saved = localStorage.getItem('ma_card_favorites');
+    if (saved) _maFavorites = new Set(JSON.parse(saved));
+  } catch(e) {}
+}
+
+function maSaveFavorites() {
+  try {
+    localStorage.setItem('ma_card_favorites', JSON.stringify(Array.from(_maFavorites)));
+  } catch(e) {}
+}
+
+function maGetCardId(card) {
+  return card.getAttribute('data-file') || 
+         card.dataset.courseId || 
+         card.querySelector('h4, .bal-name')?.textContent?.trim() ||
+         Array.from(card.parentElement?.children || []).indexOf(card).toString();
+}
+
+function maCreateFavOverlay() {
+  if (_maFavOverlay) return;
+  _maFavOverlay = document.createElement('div');
+  _maFavOverlay.className = 'ma-fav-overlay';
+  _maFavOverlay.addEventListener('click', maCloseFavMenu);
+  document.body.appendChild(_maFavOverlay);
+}
+
+function maCreateFavMenu() {
+  if (_maFavMenu) return;
+  _maFavMenu = document.createElement('div');
+  _maFavMenu.className = 'ma-fav-menu';
+  _maFavMenu.innerHTML = 
+    '<div class="ma-fav-menu-hdr"><h3>Opções do Curso</h3></div>' +
+    '<button class="ma-fav-opt add" data-action="add">' +
+      '<div class="ma-fav-heart">❤️</div>' +
+      '<div class="ma-fav-opt-txt"><p class="title">Adicionar aos Favoritos</p><p class="subtitle">Salve para acessar rapidamente</p></div>' +
+    '</button>' +
+    '<button class="ma-fav-opt remove" data-action="remove" style="display:none">' +
+      '<div class="ma-fav-heart">🤍</div>' +
+      '<div class="ma-fav-opt-txt"><p class="title">Remover dos Favoritos</p><p class="subtitle">Retirar da sua lista</p></div>' +
+    '</button>' +
+    '<button class="ma-fav-cancel">Cancelar</button>';
+  
+  _maFavMenu.querySelector('[data-action="add"]').addEventListener('click', maAddToFavorites);
+  _maFavMenu.querySelector('[data-action="remove"]').addEventListener('click', maRemoveFromFavorites);
+  _maFavMenu.querySelector('.ma-fav-cancel').addEventListener('click', maCloseFavMenu);
+  document.body.appendChild(_maFavMenu);
+}
+
+function maCreateFavBadge(card) {
+  if (card.querySelector('.ma-fav-badge')) return;
+  var badge = document.createElement('div');
+  badge.className = 'ma-fav-badge';
+  badge.innerHTML = '❤️';
+  var cardId = maGetCardId(card);
+  if (_maFavorites.has(cardId)) badge.classList.add('active');
+  var cover = card.querySelector('.ebook-cover, .cc-img');
+  if (cover) {
+    if (getComputedStyle(cover).position === 'static') cover.style.position = 'relative';
+    cover.appendChild(badge);
+  }
+}
+
+function maOpenFavMenu(card) {
+  _maFavCurrentCard = card;
+  var cardId = maGetCardId(card);
+  var isFav = _maFavorites.has(cardId);
+  _maFavMenu.querySelector('[data-action="add"]').style.display = isFav ? 'none' : 'flex';
+  _maFavMenu.querySelector('[data-action="remove"]').style.display = isFav ? 'flex' : 'none';
+  _maFavOverlay.classList.add('active');
+  _maFavMenu.classList.add('active');
+}
+
+function maCloseFavMenu() {
+  _maFavOverlay.classList.remove('active');
+  _maFavMenu.classList.remove('active');
+  _maFavCurrentCard = null;
+}
+
+function maAddToFavorites() {
+  if (!_maFavCurrentCard) return;
+  var cardId = maGetCardId(_maFavCurrentCard);
+  _maFavorites.add(cardId);
+  maSaveFavorites();
+  var badge = _maFavCurrentCard.querySelector('.ma-fav-badge');
+  if (badge) {
+    badge.classList.add('active', 'pulse');
+    setTimeout(function() { badge.classList.remove('pulse'); }, 600);
+  }
+  maPlayFavAddSound();
+  maShowToast('❤️', 'Adicionado aos favoritos!');
+  maCloseFavMenu();
+}
+
+function maRemoveFromFavorites() {
+  if (!_maFavCurrentCard) return;
+  var cardId = maGetCardId(_maFavCurrentCard);
+  _maFavorites.delete(cardId);
+  maSaveFavorites();
+  var badge = _maFavCurrentCard.querySelector('.ma-fav-badge');
+  if (badge) badge.classList.remove('active');
+  maPlayFavRemoveSound();
+  maShowToast('🤍', 'Removido dos favoritos');
+  maCloseFavMenu();
+}
+
+function maShowToast(icon, msg) {
+  var existing = document.querySelector('.ma-toast');
+  if (existing) existing.remove();
+  var toast = document.createElement('div');
+  toast.className = 'ma-toast';
+  toast.innerHTML = '<span class="ma-toast-icon">' + icon + '</span><span class="ma-toast-text">' + msg + '</span>';
+  document.body.appendChild(toast);
+  requestAnimationFrame(function() { toast.classList.add('active'); });
+  setTimeout(function() {
+    toast.classList.remove('active');
+    setTimeout(function() { toast.remove(); }, 400);
+  }, 2500);
+}
+
+function maStartLongPress(card) {
+  _maFavCurrentCard = card;
+  _maFavLongPressTimer = setTimeout(function() {
+    maOpenFavMenu(card);
+    if (navigator.vibrate) navigator.vibrate(MA_FIX_CONFIG.vibrationDuration);
+  }, MA_FIX_CONFIG.longPressDuration);
+}
+
+function maCancelLongPress() {
+  if (_maFavLongPressTimer) {
+    clearTimeout(_maFavLongPressTimer);
+    _maFavLongPressTimer = null;
+  }
+}
+
+function maInitFavorites() {
+  maLoadFavorites();
+  maCreateFavOverlay();
+  maCreateFavMenu();
+  
+  var cards = document.querySelectorAll('.ebook-card, .cc');
+  cards.forEach(function(card) {
+    maCreateFavBadge(card);
+    // Touch long press
+    card.addEventListener('touchstart', function(e) { maStartLongPress(card); }, {passive: true});
+    card.addEventListener('touchend', maCancelLongPress);
+    card.addEventListener('touchmove', maCancelLongPress);
+    // Mouse long press
+    card.addEventListener('mousedown', function(e) { if (e.button === 0) maStartLongPress(card); });
+    card.addEventListener('mouseup', maCancelLongPress);
+    card.addEventListener('mouseleave', maCancelLongPress);
+  });
+  
+  // Observer para cards novos
+  var obs = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      m.addedNodes.forEach(function(node) {
+        if (node.nodeType === 1) {
+          var newCards = node.querySelectorAll ? node.querySelectorAll('.ebook-card, .cc') : [];
+          newCards.forEach(function(card) {
+            maCreateFavBadge(card);
+            card.addEventListener('touchstart', function() { maStartLongPress(card); }, {passive: true});
+            card.addEventListener('touchend', maCancelLongPress);
+            card.addEventListener('touchmove', maCancelLongPress);
+          });
+        }
+      });
+    });
+  });
+  obs.observe(document.body, {childList: true, subtree: true});
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FIX 4: LOGO INTERATIVA COM EFEITO INFLAR + SOM INFINITO
+// ═══════════════════════════════════════════════════════════════════════════
+function maAnimateLogo(logo, e) {
+  logo.classList.remove('ma-logo-inflating', 'ma-logo-glowing');
+  void logo.offsetWidth; // force reflow
+  logo.classList.add('ma-logo-inflating', 'ma-logo-glowing');
+  maPlayLogoSound();
+  
+  // Ripple effect
+  var ripple = document.createElement('div');
+  ripple.className = 'ma-logo-ripple';
+  var rect = logo.getBoundingClientRect();
+  var size = Math.max(rect.width, rect.height);
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = ((rect.width - size) / 2) + 'px';
+  ripple.style.top = ((rect.height - size) / 2) + 'px';
+  if (getComputedStyle(logo).position === 'static') logo.style.position = 'relative';
+  logo.style.overflow = 'visible';
+  logo.appendChild(ripple);
+  setTimeout(function() { ripple.remove(); }, 600);
+  
+  setTimeout(function() {
+    logo.classList.remove('ma-logo-inflating', 'ma-logo-glowing');
+  }, 800);
+}
+
+function maInitLogoInteractive() {
+  // Hero logo na página inicial
+  var heroLogo = document.querySelector('.hero-logo');
+  if (heroLogo) {
+    heroLogo.style.cursor = 'pointer';
+    heroLogo.addEventListener('click', function(e) { maAnimateLogo(heroLogo, e); });
+  }
+  
+  // Logo da topbar
+  var topbarLogo = document.querySelector('.ma-tb-logo img');
+  if (topbarLogo) {
+    topbarLogo.style.cursor = 'pointer';
+    topbarLogo.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      maAnimateLogo(topbarLogo, e);
+    });
+  }
+  
+  // Logo no header principal
+  var headerLogo = document.querySelector('#logoBtn img, .hdr-left img');
+  if (headerLogo) {
+    headerLogo.style.cursor = 'pointer';
+    headerLogo.addEventListener('click', function(e) { maAnimateLogo(headerLogo, e); });
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INICIALIZAÇÃO
+// ═══════════════════════════════════════════════════════════════════════════
+function maInitFixes() {
+  console.log('🚀 Matheus Academy Fixes v2.0 - Carregando...');
+  maInitGlowFix();
+  maInitFavorites();
+  maInitLogoInteractive();
+  console.log('✅ Fixes carregados: Glow único, Favoritos (long press), Logo interativa');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', maInitFixes);
+} else {
+  setTimeout(maInitFixes, 100);
+}
+
+// Expor funções globais
+window.MA_Fixes = {
+  playLogoSound: maPlayLogoSound,
+  showToast: maShowToast
+};
+
+})();
+</script>
+<!-- FIM MATHEUS ACADEMY FIXES v2.0 -->
+
 </body>
-</html>
 </html>
