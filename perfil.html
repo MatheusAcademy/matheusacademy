@@ -186,8 +186,8 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .nl-sub{font-size:.75rem;color:var(--txt2);line-height:1.55;margin-bottom:20px}
 .nl-btn{display:inline-block;padding:11px 28px;border-radius:12px;background:linear-gradient(135deg,#5b7fff,#a855f7);color:#fff;font-size:.8rem;font-weight:700;text-decoration:none;font-family:var(--font)}
 /* BOTTOM NAV */
-.bnav{position:fixed;bottom:0;left:0;right:0;max-width:600px;margin:0 auto;background:rgba(8,8,15,.96);backdrop-filter:blur(20px);border-top:1px solid var(--brd);display:flex;justify-content:space-around;padding:7px 0 9px;z-index:500}
-@media(min-width:601px){.bnav{left:50%;transform:translateX(-50%)}}
+
+@media(min-width:601px){}
 .bn{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.52rem;font-weight:600;color:var(--txt3);text-decoration:none;padding:4px 10px;border-radius:8px;transition:color .2s;min-width:48px}
 .bn:hover,.bn.active{color:var(--pri)}.bn-i{font-size:1.1rem}
 /* NOTIF */
@@ -197,12 +197,133 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .notif.grn{border-color:var(--grn)}.notif.acc{border-color:var(--orn)}.notif.err{border-color:var(--red)}
 .nt{font-size:.76rem;font-weight:700;color:#fff;display:block}
 .ns{font-size:.63rem;color:var(--txt2);display:block;margin-top:2px}
+
+
+/* ══ TOPBAR PADRAO MA ══ */
+.ma-topbar{position:fixed;top:0;left:0;right:0;height:54px;background:rgba(4,4,10,.99);border-bottom:1px solid rgba(91,127,255,.18);display:flex;align-items:center;padding:0 12px;gap:6px;z-index:9999;font-family:"Outfit",sans-serif}
+.ma-topbar::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#4A7EFF 30%,#00d4ff 65%,transparent);pointer-events:none}
+.ma-tb-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+.ma-tb-logo svg{display:block}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.12);flex-shrink:0;margin:0 4px}
+.ma-tb-page{font-size:.68rem;font-weight:700;color:#8888a8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.ma-tb-spacer{flex:1;min-width:0}
+.ma-tb-pts{display:flex;align-items:center;gap:5px;text-decoration:none;padding:4px 10px 4px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);flex-shrink:0;transition:.2s}
+.ma-tb-pts:hover{border-color:rgba(255,255,255,.2)}
+.ma-tb-trophy{color:#f59e0b;display:flex;align-items:center}
+.ma-tb-trophy svg{width:15px;height:15px;stroke:#f59e0b;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ma-tb-ptsn{font-size:.8rem;font-weight:900;color:#fff;min-width:24px;text-align:right;font-variant-numeric:tabular-nums}
+.ma-tb-menubtn{width:34px;height:34px;border-radius:9px;border:1px solid #1e1e35;background:#111122;color:#8888a8;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;padding:0}
+.ma-tb-menubtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;pointer-events:none}
+.ma-tb-menubtn:hover{border-color:rgba(255,255,255,.3);color:#fff}
+.ma-menu-ov{position:fixed;inset:0;z-index:10000;display:none;background:rgba(0,0,0,.4)}
+.ma-menu-ov.on{display:block}
+.ma-menu-dd{position:fixed;top:60px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:230px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-10px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd.on{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+.ma-menu-user{padding:12px 14px;border-bottom:1px solid #1e1e35}
+.ma-mu-name{font-size:.82rem;font-weight:800;color:#fff;display:block;margin-bottom:3px}
+.ma-mu-pts{font-size:.6rem;color:#8888a8}
+.ma-mu-pts b{color:#5b7fff}
+.ma-menu-sec{padding:4px 0}
+.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:.76rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:"Outfit",sans-serif;width:100%;text-align:left;transition:background .15s}
+.ma-mi:hover{background:#161628;color:#e8e8f0}
+.ma-mi-i{font-size:.95rem;width:20px;text-align:center;flex-shrink:0}
+.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
+body{padding-top:54px!important;padding-bottom:58px!important}
+@media(max-width:400px){.ma-tb-page{max-width:80px}.ma-tb-ptsn{min-width:20px;font-size:.75rem}}
+
+
+/* ══ RODAPÉ PADRAO MA ══ */
+.ma-bnav{position:fixed;bottom:0;left:0;right:0;height:58px;background:#000000;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:stretch;z-index:8000;padding-bottom:env(safe-area-inset-bottom,0px)}
+.ma-bn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;color:rgba(255,255,255,.38);font-size:.52rem;font-weight:600;font-family:"Outfit",sans-serif;letter-spacing:.05em;text-transform:uppercase;border:none;background:transparent;cursor:pointer;transition:color .18s;padding:0}
+.ma-bn:hover,.ma-bn.ativo{color:#fff}
+.ma-bn-svg{display:flex;align-items:center;justify-content:center;width:22px;height:22px}
+.ma-bn-svg svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+/* Botão logo central */
+.ma-bn-mid{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;cursor:pointer;padding-bottom:4px}
+.ma-bn-mid-wrap{width:44px;height:44px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.5);margin-top:-10px;flex-shrink:0;transition:transform .18s,box-shadow .18s}
+.ma-bn-mid:hover .ma-bn-mid-wrap{transform:scale(1.07);box-shadow:0 4px 20px rgba(255,255,255,.15)}
+.ma-bn-mid svg{display:block}
+.ma-bn-mid-lbl{font-size:.48rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;font-family:"Outfit",sans-serif;margin-top:1px}
+body{padding-bottom:58px!important}
+@media(max-width:360px){.ma-bn{font-size:.48rem}.ma-bn-svg{width:20px;height:20px}.ma-bn-svg svg{width:20px;height:20px}.ma-bn-mid-wrap{width:40px;height:40px;border-radius:10px}}
+
 </style>
 <script src="firebase-config.js"></script>
-<script>var PORTAL_PAGE={title:"👤 Meu Perfil"};</script>
-<script src="shared/portal-topbar.js"></script>
 </head>
 <body>
+
+<div class="ma-menu-ov" id="maMenuOv" onclick="maTbClose()"></div>
+<div class="ma-menu-dd" id="maMenuDd">
+  <div class="ma-menu-user" id="maMenuUser">
+    <span class="ma-mu-name">Visitante</span>
+    <div class="ma-mu-pts">Faça login para salvar seu progresso</div>
+  </div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-i">🏠</span>Início</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-i">📊</span>Meu Painel</a>
+    <a class="ma-mi" href="ranking.html"><span class="ma-mi-i">🏆</span>Ranking</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-i">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-i">🤝</span>Indicações</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-i">🗺️</span>Trilhas</a>
+    <a class="ma-mi" href="loja.html"><span class="ma-mi-i">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-i">📌</span>Mural</a>
+  </div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi gold" href="index.html" onclick="localStorage.setItem('ma_open_modal','plans');return true"><span class="ma-mi-i">💎</span>Ver Planos</a>
+  </div>
+  <div class="ma-menu-sec" id="maMenuAuth">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-i">🔑</span>Entrar / Cadastrar</a>
+  </div>
+</div>
+<nav class="ma-topbar" id="maTopbarNew">
+  <a class="ma-tb-logo" href="index.html">
+    <svg width="120" height="34" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
+      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
+      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
+      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
+      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.3)" stroke-width="1"/>
+      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
+    </svg>
+  </a>
+  <div class="ma-tb-sep"></div>
+  <span class="ma-tb-page">👤 Meu Perfil</span>
+  <div class="ma-tb-spacer"></div>
+  <a class="ma-tb-pts" id="maTbPts" href="painel.html">
+    <span class="ma-tb-trophy">
+      <svg viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg>
+    </span>
+    <span class="ma-tb-ptsn" id="maTbPtsN">0</span>
+  </a>
+  <button class="ma-tb-menubtn" onclick="maTbToggle()">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+  </button>
+</nav>
+<script>
+(function(){
+  function maTbUpdatePts(){try{var p=JSON.parse(localStorage.getItem('ma_points')||'{}');var el=document.getElementById('maTbPtsN');if(el)el.textContent=(p.total||0).toLocaleString('pt-BR');}catch(e){}}
+  function maTbUpdateUser(){
+    try{
+      var u=JSON.parse(localStorage.getItem('ma_user')||'null');
+      var sec=document.getElementById('maMenuUser'),auth=document.getElementById('maMenuAuth');
+      var pts=JSON.parse(localStorage.getItem('ma_points')||'{}');
+      if(u&&u.email){
+        if(sec)sec.innerHTML='<span class="ma-mu-name">'+(u.name||u.email)+'</span><div class="ma-mu-pts"><b>'+(pts.total||0).toLocaleString('pt-BR')+'</b> XP</div>';
+        if(auth)auth.innerHTML='<button class="ma-mi red" onclick="maTbLogout()"><span class="ma-mi-i">🚪</span>Sair da conta</button>';
+      }
+    }catch(e){}
+  }
+  window.maTbToggle=function(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOv');if(!d||!o)return;var on=d.classList.toggle('on');o.classList.toggle('on',on);if(on)maTbUpdateUser();};
+  window.maTbClose=function(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOv');if(d)d.classList.remove('on');if(o)o.classList.remove('on');};
+  window.maTbLogout=function(){maTbClose();if(window.MAStore&&MAStore.logout){MAStore.logout();return;}if(window.MA_AUTH&&MA_AUTH.logout){MA_AUTH.logout().catch(function(){});}localStorage.removeItem('ma_user');location.href='index.html';};
+  document.addEventListener('DOMContentLoaded',function(){maTbUpdatePts();});
+  setInterval(maTbUpdatePts,8000);
+})();
+</script>
+
+
+
+
 
 
 
@@ -225,12 +346,7 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 <div class="notif-stack" id="notifStack"></div>
 <div class="page" id="mainPage"></div>
 
-<nav class="bnav">
-  <a class="bn" href="index.html"><span class="bn-i">🏠</span>Início</a>
-  <a class="bn" href="painel.html"><span class="bn-i">⭐</span>Painel</a>
-  <a class="bn" href="ranking.html"><span class="bn-i">🏆</span>Ranking</a>
-  <a class="bn active" href="perfil.html"><span class="bn-i">👤</span>Perfil</a>
-</nav>
+
 
 <script>
 'use strict';
@@ -492,8 +608,8 @@ function updTopbar(){
     document.getElementById('maMenuAuth').innerHTML='<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair da conta</button>';
   }
 }
-function toggleMaMenu(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOverlay');d.classList.toggle('open');o.classList.toggle('open');}
-function closeMaMenu(){document.getElementById('maMenuDd').classList.remove('open');document.getElementById('maMenuOverlay').classList.remove('open');}
+
+
 
 /* ── NOTIF ── */
 function showNotif(txt,type){
@@ -531,5 +647,33 @@ function showNotif(txt,type){
 
 document.addEventListener('DOMContentLoaded',function(){updTopbar();renderPage();});
 </script>
+
+<nav class="ma-bnav">
+  <a class="ma-bn" href="index.html">
+    <span class="ma-bn-svg"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>
+    <span>Início</span>
+  </a>
+  <a class="ma-bn" href="painel.html">
+    <span class="ma-bn-svg"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+    <span>Painel</span>
+  </a>
+  <a class="ma-bn-mid" href="index.html">
+    <div class="ma-bn-mid-wrap"><svg width="32" height="26" viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg">
+  <text x="130" y="160" text-anchor="middle" fill="#000" font-family="Arial Black,sans-serif" font-weight="900" font-size="175" letter-spacing="-4">M</text>
+  <line x1="15" y1="178" x2="245" y2="178" stroke="#4A7EFF" stroke-width="6"/>
+  <line x1="15" y1="188" x2="245" y2="188" stroke="#4A7EFF" stroke-width="2.5" opacity=".4"/>
+</svg></div>
+    <span class="ma-bn-mid-lbl">MA</span>
+  </a>
+  <a class="ma-bn" href="ranking.html">
+    <span class="ma-bn-svg"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>
+    <span>Ranking</span>
+  </a>
+  <a class="ma-bn ativo" href="perfil.html">
+    <span class="ma-bn-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
+    <span>Perfil</span>
+  </a>
+</nav>
+
 </body>
 </html>
