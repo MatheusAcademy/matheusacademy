@@ -96,6 +96,24 @@ var MA_COURSES = [
     free: true,
     addedTs: 1743350400000,
     active: true
+  },
+  {
+    id: 'bc',
+    name: 'Bitcoin — A Moeda que Mudou a História do Mundo',
+    desc: '',
+    file: 'bitcoin-curso.html',
+    cat: 'Negócios',
+    modules: 35,
+    topics: 210,
+    hours: 30,
+    quizzes: 35,
+    salt: 'BC_HENRY_2026_MASTER',
+    ak: 'bc_auth',
+    storagePrefix: 'bc_',
+    icon: '🎓',
+    color: '#3b82f6',
+    addedTs: 1775218683742,
+    active: true
   }
 ];
 var MA_CATS = [
