@@ -116,7 +116,7 @@ var MA_COURSES = [
   },
   {
     id: 'ctep',
-    name: 'Técnicas de Persuasão —',
+    name: 'Técnicas de Persuasão',
     desc: '',
     file: 'curso-tecnicas-persuasao.html',
     cat: 'PNL',
