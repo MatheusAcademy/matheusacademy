@@ -1,320 +1,490 @@
 /**
  * ============================================================
- * MATHEUS ACADEMY — USERSTORE.JS v2.1
- * Wrapper centralizado para todo acesso ao localStorage.
+ * MATHEUS ACADEMY — USERSTORE.JS v2
+ * 100% BASEADO EM FIREBASE — SEM CONFLITOS COM LOCALSTORAGE
+ * ============================================================
+ * 
+ * MUDANÇA PRINCIPAL:
+ *   Firebase Firestore é a ÚNICA fonte de verdade para:
+ *   - Pontos/XP (xp_total)
+ *   - Progresso dos cursos (progresso.{courseKey})
+ *   - Streak e dias ativos
+ *   - Acesso a cursos (plano, cursos_comprados)
+ *   - Conquistas e badges
+ *   - Tempo de estudo
  *
- * VERSÃO 2.1 — Com sincronização Firestore para pontos/XP
- * CORRIGIDO: usa coleção 'usuarios' e campo 'xp_total'
+ * localStorage é usado APENAS como cache temporário para:
+ *   - Performance (evitar buscas repetidas no Firebase)
+ *   - Offline mode básico
+ *   - Preferências locais (tema, fonte, etc)
  *
- * REGRA DE OURO:
- *   Nenhuma página deve acessar localStorage diretamente.
- *   Sempre use as funções deste módulo.
- *
- * COMO USAR EM QUALQUER PÁGINA:
+ * COMO USAR:
+ *   <script src="firebase-config.js"></script>
  *   <script src="data/courses.js"></script>
  *   <script src="data/userStore.js"></script>
- *   <script src="firebase-config.js"></script>
- *   Depois: var user = MAStore.getUser();
+ *   
+ *   // Todos os métodos são async agora
+ *   const user = await MAStore.getUser();
+ *   const pontos = await MAStore.getTotalPoints();
+ *   await MAStore.addPoints('Aula concluída', 50);
+ *
  * ============================================================
  */
 
 var MAStore = (function() {
 
-  /* ── Flag para evitar sincronização duplicada ── */
-  var _syncInProgress = false;
-  var _lastSyncTime = 0;
-  var SYNC_COOLDOWN = 3000; // 3 segundos entre syncs
+  /* ══════════════════════════════════════════════════════════
+     CACHE LOCAL — apenas para performance, NÃO é fonte de verdade
+     ══════════════════════════════════════════════════════════ */
+  var _cache = {
+    user: null,
+    userData: null,
+    lastSync: 0
+  };
 
-  /* ── Funções internas de leitura/escrita segura ── */
+  var CACHE_TTL = 30000; // 30 segundos
+
+  /* ══════════════════════════════════════════════════════════
+     HELPERS INTERNOS
+     ══════════════════════════════════════════════════════════ */
+  
   function _get(key, def) {
     try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }
     catch(e) { return def; }
   }
+  
   function _set(key, val) {
     try { localStorage.setItem(key, JSON.stringify(val)); return true; }
     catch(e) { return false; }
   }
+  
   function _remove(key) {
     try { localStorage.removeItem(key); return true; }
     catch(e) { return false; }
   }
 
-  /* ── USUÁRIO ── */
-  function getUser()        { return _get('ma_user', null); }
-  function isLoggedIn()     { return getUser() !== null; }
-  function getUsers()       { return _get('ma_users', {}); }
-  function setUsers(users)  { return _set('ma_users', users); }
-  function setCurrentUser(u){ 
-    var result = _set('ma_user', u);
-    // Ao definir usuário, sincroniza pontos do Firestore
-    if (result && u && u.uid) {
-      syncPointsFromFirestore();
+  // Espera o Firebase estar pronto
+  function _waitFirebase() {
+    return new Promise(function(resolve) {
+      if (window.__maFirebaseReady && window.maAuth && window.maDb) {
+        resolve(true);
+        return;
+      }
+      var timeout = setTimeout(function() {
+        console.warn('[MAStore] Firebase timeout - usando fallback');
+        resolve(false);
+      }, 5000);
+      
+      document.addEventListener('maFirebaseReady', function() {
+        clearTimeout(timeout);
+        resolve(true);
+      }, { once: true });
+    });
+  }
+
+  // Verifica se o cache ainda é válido
+  function _isCacheValid() {
+    return _cache.userData && (Date.now() - _cache.lastSync) < CACHE_TTL;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     USUÁRIO — Dados do Firebase Auth + Firestore
+     ══════════════════════════════════════════════════════════ */
+
+  /**
+   * Retorna o usuário atual com dados completos do Firestore
+   * @returns {Promise<Object|null>} Dados do usuário ou null
+   */
+  async function getUser() {
+    var ready = await _waitFirebase();
+    
+    if (!ready || !window.maAuth) {
+      // Fallback: tenta do localStorage
+      return _get('ma_user', null);
     }
-    return result;
-  }
-  function logout() {
-    if (window.MA_AUTH) { MA_AUTH.logout().catch(function(){}); }
-    else { _remove('ma_user'); }
+
+    var authUser = window.maAuth.currentUser;
+    if (!authUser) {
+      _cache.user = null;
+      _cache.userData = null;
+      return null;
+    }
+
+    // Se cache válido, retorna do cache
+    if (_isCacheValid() && _cache.user && _cache.user.uid === authUser.uid) {
+      return _cache.userData;
+    }
+
+    // Busca dados frescos do Firestore
+    try {
+      var userData = await MA_DB.getUsuario(authUser.uid);
+      if (userData) {
+        _cache.user = authUser;
+        _cache.userData = userData;
+        _cache.lastSync = Date.now();
+        
+        // Atualiza localStorage como cache
+        _set('ma_user', {
+          uid: authUser.uid,
+          name: userData.nome || authUser.displayName || '',
+          email: userData.email || authUser.email || '',
+          foto: userData.foto || authUser.photoURL || '',
+          plano: userData.plano || 'gratuito',
+          cursos: userData.cursos_comprados || []
+        });
+        
+        return userData;
+      }
+    } catch(e) {
+      console.error('[MAStore] Erro ao buscar usuário:', e);
+    }
+
+    // Fallback para localStorage
+    return _get('ma_user', null);
   }
 
-  /* ── ACESSO A CURSOS ── */
-  function getAccess()      { return _get('ma_access', {}); }
-  function setAccess(a)     { return _set('ma_access', a); }
+  /**
+   * Verifica se há usuário logado
+   * @returns {Promise<boolean>}
+   */
+  async function isLoggedIn() {
+    var user = await getUser();
+    return user !== null;
+  }
 
-  function hasCourseAccess(ak) {
-    if (!ak || ak === 'free') return true;
-    var u = getUser();
-    if (u) {
-      if (u.plano === 'master' || u.plano === 'anual' || u.plano === 'mensal') return true;
-      if (u.cursos && Array.isArray(u.cursos)) {
-        var course = MA_COURSES ? MA_COURSES.find(function(c){ return c.ak === ak; }) : null;
-        var courseKey = course ? (course.courseKey || course.id) : ak.replace('_auth','');
-        if (u.cursos.indexOf(courseKey) >= 0 || u.cursos.indexOf(ak) >= 0) return true;
+  /**
+   * Atualiza dados do usuário no cache local
+   * (usado após login para sincronizar)
+   */
+  function setCurrentUser(u) {
+    _cache.userData = u;
+    _cache.lastSync = Date.now();
+    return _set('ma_user', u);
+  }
+
+  /**
+   * Logout — limpa Firebase + cache local
+   */
+  async function logout() {
+    _cache.user = null;
+    _cache.userData = null;
+    _cache.lastSync = 0;
+    
+    if (window.MA_AUTH) {
+      try {
+        await MA_AUTH.logout();
+      } catch(e) {
+        console.error('[MAStore] Erro no logout:', e);
       }
     }
-    var ac = getAccess();
-    if (!ac.courses || !ac.courses[ak]) return false;
-    var entry = ac.courses[ak];
-    if (!entry.expiry) return true;
-    return Date.now() < entry.expiry;
+    
+    // Limpa cache local
+    _remove('ma_user');
+    _remove('ma_points'); // Legado - limpar para evitar conflitos
   }
 
-  function unlockAllCourses(email, code, type, expiry) {
-    var u = getUser();
-    if (u && u.uid && window.MA_DB) {
-      MA_DB.liberarCurso(u.uid, 'all', type === 'monthly' ? 'mensal' : 'master').catch(function(){});
-      u.plano = type === 'monthly' ? 'mensal' : 'master';
-      setCurrentUser(u);
-    }
-    var ac = getAccess();
-    if (!ac.courses) ac.courses = {};
-    var courses = typeof MA_COURSES !== 'undefined' ? MA_COURSES : (typeof MA_getActiveCourses === 'function' ? MA_getActiveCourses() : []);
-    courses.forEach(function(c) {
-      if (c.free || c.ak === 'free') return;
-      ac.courses[c.ak] = { email: email, code: code, ts: Date.now(), name: '', type: type, expiry: expiry };
-    });
-    setAccess(ac);
-  }
-
-  function unlockCourse(ak, email, code, type, expiry) {
-    var u = getUser();
-    if (u && u.uid && window.MA_DB) {
-      var course = typeof MA_COURSES !== 'undefined' ? MA_COURSES.find(function(c){ return c.ak === ak; }) : null;
-      var courseKey = course ? (course.courseKey || course.id) : ak.replace('_auth','');
-      MA_DB.liberarCurso(u.uid, courseKey, 'individual').catch(function(){});
-      if (!u.cursos) u.cursos = [];
-      if (u.cursos.indexOf(courseKey) < 0) u.cursos.push(courseKey);
-      setCurrentUser(u);
-    }
-    var ac = getAccess();
-    if (!ac.courses) ac.courses = {};
-    ac.courses[ak] = { email: email, code: code, ts: Date.now(), name: '', type: type, expiry: expiry };
-    setAccess(ac);
-  }
-
-  /* ══════════════════════════════════════════════════════════════
-     PONTOS / XP — VERSÃO 2.1 COM SINCRONIZAÇÃO FIRESTORE
-     Usa coleção 'usuarios' e campo 'xp_total'
-     ══════════════════════════════════════════════════════════════ */
-  
-  function getPoints()      { return _get('ma_points', { total: 0, history: [] }); }
-  function setPoints(p)     { return _set('ma_points', p); }
+  /* ══════════════════════════════════════════════════════════
+     PONTOS / XP — 100% Firebase
+     ══════════════════════════════════════════════════════════ */
 
   /**
-   * SINCRONIZA pontos do Firestore para o localStorage
-   * Usa a coleção 'usuarios' e o campo 'xp_total'
+   * Retorna o total de pontos do usuário
+   * @returns {Promise<number>}
    */
-  function syncPointsFromFirestore() {
-    var now = Date.now();
-    if (_syncInProgress || (now - _lastSyncTime) < SYNC_COOLDOWN) {
-      return Promise.resolve(getPoints().total);
-    }
-    
-    var u = getUser();
-    if (!u || !u.uid) {
-      console.log('[MAStore] Sync ignorado: usuário não logado');
-      return Promise.resolve(getPoints().total);
-    }
-    
-    // Aguarda Firebase estar pronto
-    if (!window.maDb && !window.__maFirebaseReady) {
-      console.log('[MAStore] Aguardando Firebase...');
-      return new Promise(function(resolve) {
-        document.addEventListener('maFirebaseReady', function() {
-          syncPointsFromFirestore().then(resolve);
-        }, { once: true });
-        // Timeout de segurança
-        setTimeout(function() { resolve(getPoints().total); }, 5000);
-      });
-    }
-    
-    if (!window.maDb) {
-      console.log('[MAStore] Firestore não disponível');
-      return Promise.resolve(getPoints().total);
-    }
-    
-    _syncInProgress = true;
-    console.log('[MAStore] Sincronizando pontos do Firestore...');
-    
-    return window.maDb.collection('usuarios').doc(u.uid).get()
-      .then(function(doc) {
-        _syncInProgress = false;
-        _lastSyncTime = Date.now();
-        
-        if (doc.exists) {
-          var data = doc.data();
-          var firestoreXP = data.xp_total || 0;
-          
-          var localData = getPoints();
-          var localPoints = localData.total || 0;
-          
-          console.log('[MAStore] Firestore xp_total=' + firestoreXP + ', local=' + localPoints);
-          
-          // Firestore é a fonte de verdade
-          if (firestoreXP !== localPoints) {
-            console.log('[MAStore] ✅ Atualizando local: ' + localPoints + ' → ' + firestoreXP);
-            setPoints({
-              total: firestoreXP,
-              history: localData.history || []
-            });
-            
-            // Dispara evento para atualizar UI
-            try {
-              window.dispatchEvent(new CustomEvent('ma-points-synced', { 
-                detail: { points: firestoreXP, old: localPoints } 
-              }));
-            } catch(e) {}
-            
-            // Tenta atualizar elementos de UI diretamente
-            _updatePointsUI(firestoreXP);
-          }
-          return firestoreXP;
-        } else {
-          console.log('[MAStore] Documento do usuário não existe no Firestore');
-          return getPoints().total;
-        }
-      })
-      .catch(function(err) {
-        _syncInProgress = false;
-        console.warn('[MAStore] Erro ao sincronizar:', err.message || err);
-        return getPoints().total;
-      });
+  async function getTotalPoints() {
+    var user = await getUser();
+    if (!user) return 0;
+    return user.xp_total || 0;
   }
 
   /**
-   * Atualiza elementos de UI que mostram pontos
+   * Adiciona pontos ao usuário
+   * @param {string} source - Motivo dos pontos (ex: "Aula concluída")
+   * @param {number} pts - Quantidade de pontos
+   * @returns {Promise<number>} - Total de pontos após adição
    */
-  function _updatePointsUI(points) {
-    // Seletores comuns de elementos de pontos
-    var selectors = [
-      '#user-points', '#topbar-points', '#points-display',
-      '.user-points', '.points-display', '.xp-display',
-      '[data-points]', '.topbar-xp', '#xp-value'
-    ];
+  async function addPoints(source, pts) {
+    var ready = await _waitFirebase();
     
-    selectors.forEach(function(sel) {
-      try {
-        var els = document.querySelectorAll(sel);
-        els.forEach(function(el) {
-          var currentText = el.textContent || '';
-          // Preserva sufixo se existir (ex: "XP", "pts")
-          var suffix = currentText.replace(/[\d.,\s]+/g, '').trim();
-          var formatted = points.toLocaleString('pt-BR');
-          el.textContent = suffix ? formatted + ' ' + suffix : formatted;
-        });
-      } catch(e) {}
-    });
-  }
-
-  /**
-   * ADICIONA pontos — salva no Firestore E no localStorage
-   */
-  function addPoints(source, pts) {
-    var u = getUser();
-    var p = getPoints();
-    var newTotal = (p.total || 0) + pts;
-    
-    // Atualiza localStorage imediatamente
-    p.total = newTotal;
-    if (!p.history) p.history = [];
-    var historyEntry = { 
-      source: source, 
-      pts: pts, 
-      date: new Date().toLocaleDateString('pt-BR'),
-      ts: Date.now()
-    };
-    p.history.unshift(historyEntry);
-    if (p.history.length > 200) p.history = p.history.slice(0, 200);
-    setPoints(p);
-    
-    // Salva no Firestore usando MA_DB.addXP (já existe no firebase-config.js)
-    if (u && u.uid && window.MA_DB && typeof MA_DB.addXP === 'function') {
-      MA_DB.addXP(u.uid, pts, source).catch(function(err) {
-        console.warn('[MAStore] Erro ao salvar XP no Firestore:', err);
-      });
+    if (!ready || !window.maAuth || !window.maAuth.currentUser) {
+      console.warn('[MAStore] addPoints: usuário não autenticado');
+      return 0;
     }
-    
-    // Dispara evento
+
+    var uid = window.maAuth.currentUser.uid;
+
     try {
-      window.dispatchEvent(new CustomEvent('ma-points-added', { 
-        detail: { source: source, pts: pts, total: newTotal } 
-      }));
-    } catch(e) {}
+      // Adiciona no Firebase
+      await MA_DB.addXP(uid, pts, source);
+      
+      // Invalida cache para forçar refresh
+      _cache.lastSync = 0;
+      
+      // Busca o total atualizado
+      var userData = await MA_DB.getUsuario(uid);
+      var newTotal = userData ? userData.xp_total : 0;
+      
+      // Atualiza cache
+      if (_cache.userData) {
+        _cache.userData.xp_total = newTotal;
+      }
+      
+      // Dispara evento para atualizar UI
+      _dispatchPointsUpdate(newTotal, pts, source);
+      
+      console.log('[MAStore] +' + pts + ' XP (' + source + ') = ' + newTotal + ' total');
+      return newTotal;
+      
+    } catch(e) {
+      console.error('[MAStore] Erro ao adicionar pontos:', e);
+      return 0;
+    }
+  }
+
+  /**
+   * Retorna objeto de pontos (compatibilidade com código legado)
+   * @returns {Promise<Object>}
+   */
+  async function getPoints() {
+    var total = await getTotalPoints();
+    return { total: total, history: [] };
+  }
+
+  // Dispara evento customizado quando pontos mudam
+  function _dispatchPointsUpdate(total, added, source) {
+    var event = new CustomEvent('ma:pointsUpdate', {
+      detail: { total: total, added: added, source: source }
+    });
+    document.dispatchEvent(event);
     
-    // Atualiza UI
-    _updatePointsUI(newTotal);
+    // Também chama função global se existir (compatibilidade)
+    if (window.MA_onPointsUpdate) {
+      window.MA_onPointsUpdate(total, added, source);
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     ACESSO A CURSOS — 100% Firebase
+     ══════════════════════════════════════════════════════════ */
+
+  /**
+   * Verifica se o usuário tem acesso a um curso
+   * @param {string} ak - Access key do curso (ex: 'gp_auth', 'tp_auth')
+   * @returns {Promise<boolean>}
+   */
+  async function hasCourseAccess(ak) {
+    // Cursos gratuitos
+    if (!ak || ak === 'free') return true;
+
+    var user = await getUser();
+    if (!user) return false;
+
+    // Planos que dão acesso total
+    if (user.plano === 'master' || user.plano === 'anual' || user.plano === 'mensal') {
+      return true;
+    }
+
+    // Verifica cursos individuais comprados
+    var cursos = user.cursos_comprados || [];
     
-    // Callback legado
-    if (window.MA_addPoints && typeof window.MA_addPoints === 'function') {
-      try { window.MA_addPoints(source, pts); } catch(e) {}
+    // Mapeia ak para courseKey
+    var course = (typeof MA_COURSES !== 'undefined') 
+      ? MA_COURSES.find(function(c) { return c.ak === ak; }) 
+      : null;
+    
+    var courseKey = course ? (course.courseKey || course.id) : ak.replace('_auth', '');
+    
+    return cursos.indexOf(courseKey) >= 0 || cursos.indexOf(ak) >= 0;
+  }
+
+  /**
+   * Libera acesso a todos os cursos (plano MASTER/MENSAL)
+   */
+  async function unlockAllCourses(email, code, type, expiry) {
+    var ready = await _waitFirebase();
+    if (!ready || !window.maAuth || !window.maAuth.currentUser) return;
+
+    var uid = window.maAuth.currentUser.uid;
+    var plano = type === 'monthly' ? 'mensal' : 'master';
+
+    try {
+      await MA_DB.updateUsuario(uid, { plano: plano });
+      _cache.lastSync = 0; // Invalida cache
+      
+      // Atualiza cache local
+      var user = _get('ma_user', {});
+      user.plano = plano;
+      _set('ma_user', user);
+      
+    } catch(e) {
+      console.error('[MAStore] Erro ao liberar todos os cursos:', e);
+    }
+  }
+
+  /**
+   * Libera acesso a um curso específico (INDIVIDUAL)
+   */
+  async function unlockCourse(ak, email, code, type, expiry) {
+    var ready = await _waitFirebase();
+    if (!ready || !window.maAuth || !window.maAuth.currentUser) return;
+
+    var uid = window.maAuth.currentUser.uid;
+    
+    // Mapeia ak para courseKey
+    var course = (typeof MA_COURSES !== 'undefined')
+      ? MA_COURSES.find(function(c) { return c.ak === ak; })
+      : null;
+    var courseKey = course ? (course.courseKey || course.id) : ak.replace('_auth', '');
+
+    try {
+      await MA_DB.liberarCurso(uid, courseKey, 'individual');
+      _cache.lastSync = 0; // Invalida cache
+      
+      // Atualiza cache local
+      var user = _get('ma_user', {});
+      if (!user.cursos) user.cursos = [];
+      if (user.cursos.indexOf(courseKey) < 0) user.cursos.push(courseKey);
+      _set('ma_user', user);
+      
+    } catch(e) {
+      console.error('[MAStore] Erro ao liberar curso:', e);
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     PROGRESSO DOS CURSOS — 100% Firebase
+     ══════════════════════════════════════════════════════════ */
+
+  /**
+   * Salva progresso de um curso
+   * @param {string} courseKey - Identificador do curso
+   * @param {Object} dados - Dados do progresso
+   */
+  async function saveProgress(courseKey, dados) {
+    var ready = await _waitFirebase();
+    if (!ready || !window.maAuth || !window.maAuth.currentUser) return;
+
+    var uid = window.maAuth.currentUser.uid;
+
+    try {
+      await MA_DB.salvarProgresso(uid, courseKey, dados);
+      console.log('[MAStore] Progresso salvo:', courseKey);
+    } catch(e) {
+      console.error('[MAStore] Erro ao salvar progresso:', e);
+    }
+  }
+
+  /**
+   * Retorna progresso de um curso específico
+   * @param {string} courseKey - Identificador do curso
+   * @returns {Promise<Object>}
+   */
+  async function getProgress(courseKey) {
+    var user = await getUser();
+    if (!user || !user.progresso) return {};
+    return user.progresso[courseKey] || {};
+  }
+
+  /**
+   * Retorna progresso de todos os cursos
+   * @returns {Promise<Object>}
+   */
+  async function getAllProgress() {
+    var user = await getUser();
+    if (!user || !user.progresso) return {};
+    return user.progresso;
+  }
+
+  /**
+   * Marca um tópico como concluído
+   * @param {string} courseKey - Identificador do curso
+   * @param {number} moduleIdx - Índice do módulo
+   * @param {number} topicIdx - Índice do tópico
+   */
+  async function markTopicDone(courseKey, moduleIdx, topicIdx) {
+    var progress = await getProgress(courseKey);
+    
+    if (!progress.topicos_concluidos) {
+      progress.topicos_concluidos = [];
     }
     
-    return newTotal;
+    var topicId = moduleIdx + '_' + topicIdx;
+    if (progress.topicos_concluidos.indexOf(topicId) < 0) {
+      progress.topicos_concluidos.push(topicId);
+    }
+    
+    // Recalcula percentual
+    // (isso depende de quantos tópicos o curso tem no total)
+    
+    await saveProgress(courseKey, progress);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     STREAK E SESSÕES — 100% Firebase
+     ══════════════════════════════════════════════════════════ */
+
+  /**
+   * Retorna o streak atual do usuário
+   * @returns {Promise<number>}
+   */
+  async function getStreak() {
+    var user = await getUser();
+    if (!user) return 0;
+    return user.streak_atual || 0;
   }
 
   /**
-   * RETORNA total de pontos (com trigger de sync em background)
+   * Retorna dados de sessão/streak
+   * @returns {Promise<Object>}
    */
-  function getTotalPoints() { 
-    // Sincroniza em background (não bloqueia)
-    syncPointsFromFirestore();
-    return getPoints().total || 0; 
+  async function getSessions() {
+    var user = await getUser();
+    if (!user) return { streak: 0, count: 0 };
+    return {
+      streak: user.streak_atual || 0,
+      record: user.streak_record || 0,
+      diasAtivos: user.dias_ativos || 0
+    };
   }
 
-  /**
-   * FORÇA sincronização imediata
-   */
-  function forcePointsSync() {
-    _lastSyncTime = 0;
-    _syncInProgress = false;
-    return syncPointsFromFirestore();
-  }
+  /* ══════════════════════════════════════════════════════════
+     MISSÕES DIÁRIAS — Híbrido (localStorage + Firebase futuro)
+     ══════════════════════════════════════════════════════════ */
 
-  /* ── SESSÕES / STREAK ── */
-  function getSessions()     { return _get('ma_sessions', { streak: 0, count: 0 }); }
-  function setSessions(s)    { return _set('ma_sessions', s); }
-  function getStreak()       { return getSessions().streak || 0; }
-
-  /* ── MISSÕES DIÁRIAS ── */
   function getMissions() {
     var today = new Date().toLocaleDateString('pt-BR');
     var ms = _get('ma_missions', {});
-    if (!ms.done || ms.date !== today) ms = { date: today, done: {} };
+    if (!ms.done || ms.date !== today) {
+      ms = { date: today, done: {} };
+    }
     return ms;
   }
-  function setMissions(ms)   { return _set('ma_missions', ms); }
 
-  function completeMission(missionKey, pointsReward) {
+  function setMissions(ms) {
+    return _set('ma_missions', ms);
+  }
+
+  async function completeMission(missionKey, pointsReward) {
     var ms = getMissions();
     if (ms.done[missionKey]) return false;
+    
     ms.done[missionKey] = true;
     setMissions(ms);
-    if (pointsReward) addPoints('Missão: ' + missionKey, pointsReward);
+    
+    if (pointsReward) {
+      await addPoints('Missão: ' + missionKey, pointsReward);
+    }
+    
     return true;
   }
 
-  /* ── RECENTES ── */
-  function getRecent()       { return _get('ma_recent', []); }
+  /* ══════════════════════════════════════════════════════════
+     CURSOS RECENTES — localStorage (não crítico)
+     ══════════════════════════════════════════════════════════ */
+
+  function getRecent() {
+    return _get('ma_recent', []);
+  }
 
   function addRecent(courseId, courseName) {
     var rec = getRecent();
@@ -324,145 +494,267 @@ var MAStore = (function() {
     _set('ma_recent', rec);
   }
 
-  /* ── PROGRESSO DE MÓDULOS ── */
-  function getCourseProgress(storagePrefix) {
-    var done = 0, total = 0;
+  /* ══════════════════════════════════════════════════════════
+     TEMPO DE ESTUDO — Firebase
+     ══════════════════════════════════════════════════════════ */
+
+  /**
+   * Retorna total de minutos estudados
+   * @returns {Promise<number>}
+   */
+  async function getTotalMins() {
+    var user = await getUser();
+    if (!user) return 0;
+    return user.total_minutos_estudo || 0;
+  }
+
+  /**
+   * Adiciona minutos de estudo
+   * @param {number} mins - Minutos a adicionar
+   */
+  async function addStudyMins(mins) {
+    var ready = await _waitFirebase();
+    if (!ready || !window.maAuth || !window.maAuth.currentUser) return;
+
+    var uid = window.maAuth.currentUser.uid;
+
     try {
-      for (var k in localStorage) {
-        if (k.indexOf(storagePrefix + 'mod_') === 0) {
-          total++;
-          var v = localStorage.getItem(k);
-          if (v === 'done' || v === 'true' || v === '1') done++;
-        }
-      }
-    } catch(e) {}
-    return { done: done, total: total, pct: total > 0 ? Math.round(done / total * 100) : 0 };
+      await MA_DB.updateUsuario(uid, {
+        total_minutos_estudo: firebase.firestore.FieldValue.increment(mins)
+      });
+      _cache.lastSync = 0;
+    } catch(e) {
+      console.error('[MAStore] Erro ao adicionar minutos:', e);
+    }
   }
 
-  function getAllProgress() {
-    return MA_getActiveCourses().map(function(c) {
-      var p = getCourseProgress(c.storagePrefix);
-      return { id: c.id, name: c.name, icon: c.icon, color: c.color, storagePrefix: c.storagePrefix, done: p.done, total: p.total, pct: p.pct };
-    });
-  }
+  /* ══════════════════════════════════════════════════════════
+     LOJA / BADGES — localStorage por enquanto
+     (migrar para Firebase no futuro)
+     ══════════════════════════════════════════════════════════ */
 
-  /* ── ESTUDO (tempo) ── */
-  function getTotalMins()    { return _get('mae_total_mins', 0); }
-  function addStudyMins(m)   { _set('mae_total_mins', getTotalMins() + m); }
+  function getShopOwned() { return _get('mae_shop_owned', []); }
+  function setShopOwned(o) { return _set('mae_shop_owned', o); }
+  function getShopStock() { return _get('mae_shop_stock', {}); }
+  function setShopStock(s) { return _set('mae_shop_stock', s); }
 
-  function getStudyLog()     { return _get('mae_study_log', {}); }
-  function addStudyLog(mins) {
-    var log = getStudyLog();
-    var today = new Date().toLocaleDateString('pt-BR');
-    log[today] = (log[today] || 0) + mins;
-    _set('mae_study_log', log);
-  }
-
-  /* ── LOJA ── */
-  function getShopOwned()    { return _get('mae_shop_owned', []); }
-  function setShopOwned(o)   { return _set('mae_shop_owned', o); }
-  function getShopStock()    { return _get('mae_shop_stock', {}); }
-  function setShopStock(s)   { return _set('mae_shop_stock', s); }
-
-  /* ── BADGES DE TRILHAS ── */
-  function getTrailBadges()  { return _get('mae_trail_badges', []); }
+  function getTrailBadges() { return _get('mae_trail_badges', []); }
   function addTrailBadge(b) {
     var badges = getTrailBadges();
-    if (!badges.includes(b)) { badges.push(b); _set('mae_trail_badges', badges); return true; }
+    if (!badges.includes(b)) {
+      badges.push(b);
+      _set('mae_trail_badges', badges);
+      return true;
+    }
     return false;
   }
 
-  /* ── REFERÊNCIA ── */
-  function getRefCode()      { return localStorage.getItem('ma_ref_code') || null; }
-  function getIndicadoPor()  { return localStorage.getItem('indicadoPor') || null; }
+  /* ══════════════════════════════════════════════════════════
+     UTILITÁRIOS
+     ══════════════════════════════════════════════════════════ */
 
-  /* ── RESET COMPLETO ── */
-  function resetAll() {
-    var keys = ['ma_access','ma_points','ma_sessions','ma_missions',
-                'ma_recent','mae_study_log','mae_total_mins','mae_wk_mods',
-                'mae_shop_owned','mae_shop_stock','mae_trail_badges'];
-    keys.forEach(function(k) { _remove(k); });
+  /**
+   * Força sincronização do cache com Firebase
+   */
+  async function syncFromFirebase() {
+    _cache.lastSync = 0;
+    await getUser();
+    console.log('[MAStore] Cache sincronizado com Firebase');
   }
 
-  /* ══════════════════════════════════════════════════════════════
-     INICIALIZAÇÃO AUTOMÁTICA
-     ══════════════════════════════════════════════════════════════ */
-  
-  // Sincroniza quando Firebase estiver pronto
-  document.addEventListener('maFirebaseReady', function() {
-    console.log('[MAStore] Firebase pronto, verificando sync...');
-    if (isLoggedIn()) {
-      setTimeout(function() {
-        forcePointsSync();
-      }, 500);
-    }
-  });
+  /**
+   * Invalida o cache (força busca fresca na próxima leitura)
+   */
+  function invalidateCache() {
+    _cache.lastSync = 0;
+  }
 
-  // Também tenta sincronizar após 2 segundos (fallback)
-  setTimeout(function() {
-    if (isLoggedIn() && window.maDb) {
-      forcePointsSync();
-    }
-  }, 2000);
+  /**
+   * Reset completo (NÃO apaga dados do Firebase)
+   */
+  function resetLocalCache() {
+    var keys = [
+      'ma_missions', 'ma_recent', 'mae_shop_owned',
+      'mae_shop_stock', 'mae_trail_badges'
+    ];
+    keys.forEach(function(k) { _remove(k); });
+    _cache.user = null;
+    _cache.userData = null;
+    _cache.lastSync = 0;
+  }
 
-  /* ── API PÚBLICA ── */
+  /* ══════════════════════════════════════════════════════════
+     COMPATIBILIDADE COM CÓDIGO LEGADO
+     ══════════════════════════════════════════════════════════ */
+
+  // Funções síncronas para compatibilidade (retornam do cache)
+  function getUserSync() {
+    return _cache.userData || _get('ma_user', null);
+  }
+
+  function getTotalPointsSync() {
+    var user = _cache.userData || _get('ma_user', null);
+    if (!user) return 0;
+    return user.xp_total || 0;
+  }
+
+  // Legado - mantido para não quebrar código antigo
+  function getUsers() { return _get('ma_users', {}); }
+  function setUsers(users) { return _set('ma_users', users); }
+  function getAccess() { return _get('ma_access', {}); }
+  function setAccess(a) { return _set('ma_access', a); }
+  function setPoints(p) { /* Ignorado - Firebase é fonte de verdade */ }
+  function setSessions(s) { /* Ignorado - Firebase é fonte de verdade */ }
+
+  /* ══════════════════════════════════════════════════════════
+     API PÚBLICA
+     ══════════════════════════════════════════════════════════ */
+
   return {
-    // Usuário
+    // Usuário (async)
     getUser: getUser,
     isLoggedIn: isLoggedIn,
-    getUsers: getUsers,
-    setUsers: setUsers,
     setCurrentUser: setCurrentUser,
     logout: logout,
-    // Acesso
-    getAccess: getAccess,
-    setAccess: setAccess,
+    
+    // Usuário (sync - compatibilidade)
+    getUserSync: getUserSync,
+    
+    // Pontos/XP (async)
+    getTotalPoints: getTotalPoints,
+    addPoints: addPoints,
+    getPoints: getPoints,
+    
+    // Pontos (sync - compatibilidade)
+    getTotalPointsSync: getTotalPointsSync,
+    
+    // Acesso a cursos (async)
     hasCourseAccess: hasCourseAccess,
     unlockAllCourses: unlockAllCourses,
     unlockCourse: unlockCourse,
-    // Pontos
-    getPoints: getPoints,
-    setPoints: setPoints,
-    addPoints: addPoints,
-    getTotalPoints: getTotalPoints,
-    syncPointsFromFirestore: syncPointsFromFirestore,
-    forcePointsSync: forcePointsSync,
-    // Sessões
-    getSessions: getSessions,
-    setSessions: setSessions,
+    
+    // Progresso (async)
+    saveProgress: saveProgress,
+    getProgress: getProgress,
+    getAllProgress: getAllProgress,
+    markTopicDone: markTopicDone,
+    
+    // Streak/Sessões (async)
     getStreak: getStreak,
-    // Missões
+    getSessions: getSessions,
+    
+    // Missões (sync/async)
     getMissions: getMissions,
     setMissions: setMissions,
     completeMission: completeMission,
-    // Recentes
+    
+    // Recentes (sync)
     getRecent: getRecent,
     addRecent: addRecent,
-    // Progresso
-    getCourseProgress: getCourseProgress,
-    getAllProgress: getAllProgress,
-    // Estudo
+    
+    // Tempo de estudo (async)
     getTotalMins: getTotalMins,
     addStudyMins: addStudyMins,
-    getStudyLog: getStudyLog,
-    addStudyLog: addStudyLog,
-    // Loja
+    
+    // Loja/Badges (sync)
     getShopOwned: getShopOwned,
     setShopOwned: setShopOwned,
     getShopStock: getShopStock,
     setShopStock: setShopStock,
-    // Badges
     getTrailBadges: getTrailBadges,
     addTrailBadge: addTrailBadge,
-    // Referência
-    getRefCode: getRefCode,
-    getIndicadoPor: getIndicadoPor,
-    // Reset
-    resetAll: resetAll,
-    // Acesso direto
+    
+    // Utilitários
+    syncFromFirebase: syncFromFirebase,
+    invalidateCache: invalidateCache,
+    resetLocalCache: resetLocalCache,
+    
+    // Legado (compatibilidade)
+    getUsers: getUsers,
+    setUsers: setUsers,
+    getAccess: getAccess,
+    setAccess: setAccess,
+    setPoints: setPoints,
+    setSessions: setSessions,
+    
+    // Acesso direto ao localStorage (compatibilidade)
     _get: _get,
     _set: _set,
     _remove: _remove
   };
 
 })();
+
+/* ══════════════════════════════════════════════════════════
+   FUNÇÕES GLOBAIS — Compatibilidade com código existente
+   ══════════════════════════════════════════════════════════ */
+
+// Função global que o course-engine.js usa
+window.MA_addPoints = async function(source, pts) {
+  return await MAStore.addPoints(source, pts);
+};
+
+// Função global para obter pontos
+window.MA_getPoints = function() {
+  // Retorna sync do cache para compatibilidade
+  var total = MAStore.getTotalPointsSync();
+  return { total: total, history: [] };
+};
+
+// Atualiza UI quando pontos mudam
+document.addEventListener('ma:pointsUpdate', function(e) {
+  var detail = e.detail;
+  
+  // Atualiza todos os elementos de pontos na página
+  var ptsElements = document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .pts-display');
+  ptsElements.forEach(function(el) {
+    el.textContent = detail.total.toLocaleString('pt-BR');
+  });
+  
+  // Animação de bump
+  var ptsBlocks = document.querySelectorAll('#maPtsLive, .ma-tb-pts-block');
+  ptsBlocks.forEach(function(block) {
+    block.classList.remove('bump');
+    void block.offsetWidth;
+    block.classList.add('bump');
+    setTimeout(function() { block.classList.remove('bump'); }, 500);
+  });
+});
+
+/* ══════════════════════════════════════════════════════════
+   AUTO-SYNC — Mantém UI sincronizada
+   ══════════════════════════════════════════════════════════ */
+
+(function() {
+  // Quando Firebase estiver pronto, sincroniza
+  document.addEventListener('maFirebaseReady', async function() {
+    console.log('[MAStore v2] Firebase pronto, sincronizando...');
+    
+    // Carrega dados do usuário
+    var user = await MAStore.getUser();
+    
+    if (user) {
+      // Atualiza UI com pontos do Firebase
+      var total = user.xp_total || 0;
+      var ptsEl = document.getElementById('maPtsNum');
+      if (ptsEl) {
+        ptsEl.textContent = total.toLocaleString('pt-BR');
+      }
+      
+      console.log('[MAStore v2] Usuário:', user.nome, '| XP:', total);
+    }
+  });
+
+  // Observer para mudanças de auth
+  if (window.MA_AUTH) {
+    MA_AUTH.onAuthChange(async function(authUser) {
+      if (authUser) {
+        await MAStore.syncFromFirebase();
+      } else {
+        MAStore.invalidateCache();
+      }
+    });
+  }
+})();
+
+console.log('[MAStore v2] ✅ Carregado - Firebase como fonte única de verdade');
