@@ -1,24 +1,5 @@
 var MA_COURSES = [
   {
-    id: 'ni',
-    courseKey: 'ni',
-    name: 'Negócios Inteligentes',
-    desc: 'Mentalidade, marketing digital, vendas, dropshipping, IA e finanças.',
-    file: 'negocios-inteligentes.html',
-    cat: 'Negócios',
-    modules: 197,
-    topics: 1379,
-    hours: 462,
-    quizzes: 197,
-    salt: 'NI_HENRY_2026_MASTER',
-    ak: 'ni_auth',
-    storagePrefix: 'ni_',
-    icon: '💼',
-    color: '#a855f7',
-    addedTs: 1742256000000,
-    active: true
-  },
-  {
     id: 'gp',
     courseKey: 'geo',
     name: 'Geopolítica Avançada',
