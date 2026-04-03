@@ -1,24 +1,5 @@
 var MA_COURSES = [
   {
-    id: 'tp',
-    courseKey: 'tp',
-    name: 'Dominando Tráfego Pago',
-    desc: 'De zero a gestor de elite. Meta Ads, Google Ads, criativos e escala.',
-    file: 'dominando-trafego-pago.html',
-    cat: 'Negócios',
-    modules: 117,
-    topics: 819,
-    hours: 234,
-    quizzes: 117,
-    salt: 'TP_HENRY_2026_MASTER',
-    ak: 'tp_auth',
-    storagePrefix: 'dt_',
-    icon: '📊',
-    color: '#5b7fff',
-    addedTs: 1741996800000,
-    active: true
-  },
-  {
     id: 'ni',
     courseKey: 'ni',
     name: 'Negócios Inteligentes',
