@@ -95,25 +95,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    id: 'pb',
-    courseKey: 'pb',
-    name: 'Política Brasileira',
-    desc: 'Do zero ao avançado. Sistema político, Constituição, eleições, poderes e cenário atual.',
-    file: 'politica-brasileira.html',
-    cat: 'Geopolítica',
-    modules: 17,
-    topics: 119,
-    hours: 42,
-    quizzes: 17,
-    salt: 'PB_HENRY_2026_MASTER',
-    ak: 'pb_auth',
-    storagePrefix: 'pb_',
-    icon: '🏛️',
-    color: '#3B82F6',
-    addedTs: 1743400000000,
-    active: true
-  },
-  {
     id: 'bm',
     courseKey: 'bm',
     name: 'Caso Banco Master',
