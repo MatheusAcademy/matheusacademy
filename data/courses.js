@@ -103,7 +103,7 @@ var MA_COURSES = [
     file: 'curso-trafego-pago.html',
     cat: 'Negócios',
     modules: 217,
-    topics: 1,
+    topics: 1519,
     hours: 380,
     quizzes: 651,
     salt: 'CTP_HENRY_2026_MASTER',
