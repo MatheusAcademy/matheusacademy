@@ -150,6 +150,24 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775247280100,
     active: true
+  },
+  {
+    id: 'ie',
+    name: 'Inteligência Emocional',
+    desc: 'A formação completa em inteligência emocional — do autoconhecimento à maestria. Aprenda a dominar suas emoções, melhorar relacionamentos, liderar com impacto e viver com mais equilíbrio e propósito.',
+    file: 'curso-inteligencia-emocional.html',
+    cat: 'Desenvolvimento',
+    modules: 20,
+    topics: 140,
+    hours: 35,
+    quizzes: 141,
+    salt: 'IE_HENRY_2026_MASTER',
+    ak: 'ie_auth',
+    storagePrefix: 'ie_',
+    icon: '🚀',
+    color: '#ff6b6b',
+    addedTs: 1775250233247,
+    active: true
   }
 ];
 var MA_CATS = [
