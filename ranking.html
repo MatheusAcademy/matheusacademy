@@ -379,7 +379,21 @@ var LVS=[
 ];
 function getLvObj(t){for(var i=LVS.length-1;i>=0;i--)if(t>=LVS[i].m)return LVS[i];return LVS[0];}
 function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
-function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};}catch(e){return{total:0,history:[]};}}
+function gP(){
+  // v3 FIX: Busca XP do ma_user (sincronizado pelo Firebase) ao invés de ma_points
+  try{
+    // Prioridade 1: MAStore (Firebase)
+    if(window.MAStore && MAStore.getTotalPointsSync){
+      return {total: MAStore.getTotalPointsSync(), history:[]};
+    }
+    // Prioridade 2: ma_user.xp_total
+    var u = JSON.parse(localStorage.getItem('ma_user'));
+    if(u && typeof u.xp_total === 'number'){
+      return {total: u.xp_total, history:[]};
+    }
+    return {total:0,history:[]};
+  }catch(e){return{total:0,history:[]};}
+}
 function getSess(){try{return JSON.parse(localStorage.getItem('ma_sessions'))||{streak:0};}catch(e){return{streak:0};}}
 
 // ═══════════════════════════════════════════════
@@ -563,6 +577,16 @@ document.addEventListener('DOMContentLoaded',function(){
     renderRank('diario');
   });
 });
+
+// v3 FIX: Atualizar topbar quando Firebase sincronizar
+document.addEventListener('maFirebaseReady', async function(){
+  // Força sincronização do MAStore
+  if(window.MAStore && MAStore.syncFromFirebase){
+    await MAStore.syncFromFirebase();
+  }
+  // Atualiza a topbar com os dados corretos do Firebase
+  setTimeout(updTopbar, 100);
+});
 </script>
 
 <script>
@@ -574,7 +598,21 @@ function maLogout(){if(window.MA_AUTH)MA_AUTH.logout().catch(function(){});local
 (function(){
   var LVS=[{n:'Iniciante',c:'ma-lvc0',m:0,max:999},{n:'Aprendiz',c:'ma-lvc1',m:1000,max:2999},{n:'Profissional',c:'ma-lvc2',m:3000,max:6999},{n:'Especialista',c:'ma-lvc3',m:7000,max:14999},{n:'Elite',c:'ma-lvc4',m:15000,max:49999},{n:'Elite I',c:'ma-lvc5',m:50000,max:199999},{n:'Elite II',c:'ma-lvc6',m:200000,max:999999},{n:'Elite III',c:'ma-lvc7',m:1000000,max:9999999}];
   function gLv(t){for(var i=LVS.length-1;i>=0;i--)if(t>=LVS[i].m)return LVS[i];return LVS[0];}
-  function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};}catch(e){return{total:0,history:[]};}}
+  function gP(){
+    // v3 FIX: Busca XP do ma_user (sincronizado pelo Firebase) ao invés de ma_points
+    try{
+      // Prioridade 1: MAStore (Firebase)
+      if(window.MAStore && MAStore.getTotalPointsSync){
+        return {total: MAStore.getTotalPointsSync(), history:[]};
+      }
+      // Prioridade 2: ma_user.xp_total
+      var u = JSON.parse(localStorage.getItem('ma_user'));
+      if(u && typeof u.xp_total === 'number'){
+        return {total: u.xp_total, history:[]};
+      }
+      return {total:0,history:[]};
+    }catch(e){return{total:0,history:[]};}
+  }
   function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
   window.updTopbar=function(){
     var u=gU(),p=gP(),lv=gLv(p.total);
