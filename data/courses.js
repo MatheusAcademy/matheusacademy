@@ -111,7 +111,7 @@ var MA_COURSES = [
     icon: '🏛️',
     color: '#3B82F6',
     addedTs: 1743400000000,
-    active: false
+    active: true
   },
   {
     id: 'bm',
