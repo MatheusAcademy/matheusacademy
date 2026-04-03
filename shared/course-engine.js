@@ -24,7 +24,7 @@
     <span class="mp-icon" id="mpIcon">🎉</span>
     <h3 class="mp-title" id="mpTitle">Módulo Concluído!</h3>
     <p class="mp-sub" id="mpSub">Continue avançando!</p>
-    <div class="mp-pts">⭐ <span id="mpPts">+50 pontos</span></div>
+    <div class="mp-pts">⭐ <span id="mpPts">+100 pontos</span></div>
     <button class="mp-close" onclick="closeMotiv()">Continuar →</button>
   </div>
 </div>
@@ -1006,7 +1006,7 @@ function renderModLesson(mi){
     html+='<div class="ml-quiz-header">'
       +'<span class="ml-quiz-header-icon">🧠</span>'
       +'<span class="ml-quiz-header-title">Quiz — '+modName+'</span>'
-      +'<span class="ml-quiz-header-sub">'+allQuizzes.length+' questões · '+(allQuizzes.length*20)+' pts possíveis</span>'
+      +'<span class="ml-quiz-header-sub">'+allQuizzes.length+' questões · complete o módulo para ganhar 100 pts</span>'
       +'</div>';
     html+='<div class="ml-quiz-body"><div class="ml-quiz-inner" id="ml_quiz_inner_'+mi+'">';
 
@@ -1014,7 +1014,6 @@ function renderModLesson(mi){
       html+='<div class="mlq-item" id="mlq_'+mi+'_'+qi+'">'
         +'<div class="mlq-header-row">'
         +'<div class="mlq-num">'+(qi+1)+'. '+q.q+'</div>'
-        +'<span class="mlq-pts-badge">20 pts</span>'
         +'</div>'
         +'<div class="mlq-opts" id="mlq_opts_'+mi+'_'+qi+'">';
       q.opts.forEach(function(opt,oi){
@@ -1092,25 +1091,21 @@ function mlToggleTopic(mi,ti){
     el.classList.remove('t-open');
   });
   if(!isOpen){
+    // Calcula posição do header ANTES de expandir (posição é estável)
+    var hdr=item.querySelector('.ml-topic-hdr');
+    var target=hdr||item;
+    var topbarH=56;
+    var tabsH=48;
+    var offsetTop=target.getBoundingClientRect().top+window.scrollY-(topbarH+tabsH+12);
+    // Adiciona a classe de expansão
     item.classList.add('t-open');
     _curModIdx=mi;_curTopIdx=ti;
-    // Rola para o TOPO do cabeçalho — aguarda a animação de expansão terminar
-    setTimeout(function(){
-      var hdr=item.querySelector('.ml-topic-hdr');
-      var target=hdr||item;
-      var topbarH=56;
-      var tabsH=48;
-      var offset=target.getBoundingClientRect().top+window.scrollY-(topbarH+tabsH+8);
-      window.scrollTo({top:Math.max(0,offset),behavior:'smooth'});
-    },350);
-    // Marcar como visto
+    // Scrolla para o título (posição calculada antes da expansão)
+    window.scrollTo({top:Math.max(0,offsetTop),behavior:'smooth'});
+    // Marcar como visto — SEM pontos (pontos só de módulo concluído)
     var mod=MODS[mi],t=mod.topics[ti];
     var prog=gProg(),key=mod.id+'_'+t.id;
-    if(!prog[key]){prog[key]=true;sProg(prog);addPoints('Aula: '+t.name,10);buildSidebar();
-      var btn=document.getElementById('ml_mark_'+mi+'_'+ti);
-      if(btn){btn.classList.add('done');btn.textContent='✅ Tópico Concluído';}
-      item.classList.add('t-done');
-    }
+    if(!prog[key]){prog[key]=true;sProg(prog);buildSidebar();}
   }
 }
 
@@ -1145,7 +1140,7 @@ function mlMarkDone(mi,ti){
   var mod=MODS[mi],t=mod.topics[ti];
   var prog=gProg(),key=mod.id+'_'+t.id;
   var isNew=!prog[key];
-  if(isNew){prog[key]=true;sProg(prog);addPoints('Tópico concluído: '+t.name,20);buildSidebar();}
+  if(isNew){prog[key]=true;sProg(prog);buildSidebar();}
   var btn=document.getElementById('ml_mark_'+mi+'_'+ti);
   if(btn){
     btn.classList.add('ml-mark-done');
@@ -1158,12 +1153,13 @@ function mlMarkDone(mi,ti){
   var item=document.getElementById('ml_topic_'+mi+'_'+ti);
   if(item){
     item.classList.add('t-done');
-    // Dot mantém o número — não muda para ✓
     var badge=item.querySelector('.ml-topic-done-badge');
     if(badge)badge.style.display='inline';
   }
   renderModProgress(mi);
-  if(isNew)showToast('✅ Tópico concluído! +20 pontos','ok');
+  // Verifica se todos os tópicos do módulo foram marcados → concluir módulo (+100 pts)
+  checkModuleCompletion(mi);
+  if(isNew)showToast('✅ Tópico marcado como concluído!','ok');
 }
 
 /* Atualiza só a barra de progresso sem re-renderizar tudo */
@@ -1175,6 +1171,55 @@ function renderModProgress(mi){
   var pctEl=document.querySelector('#modLessonWrap .ml-mod-prog-pct');
   if(fill)fill.style.width=pct+'%';
   if(pctEl)pctEl.textContent=pct+'%';
+}
+
+/* ── VERIFICAR CONCLUSÃO DO MÓDULO → +100 pts ── */
+function checkModuleCompletion(mi){
+  var prog=gProg(),mod=MODS[mi],key='mod_done_'+mi;
+  var allDone=mod.topics.every(function(t){return prog[mod.id+'_'+t.id];});
+  if(allDone&&!prog[key]){
+    prog[key]=true;sProg(prog);
+    addPoints('Módulo concluído: '+mod.name,100);
+    showMotiv('🎉','Módulo Concluído!','Você completou "'+mod.name+'" com sucesso!','+100 pontos');
+    checkCourseCompletion();
+  }
+  buildSidebar();
+}
+
+/* ── VERIFICAR CONCLUSÃO DO CURSO → +1000 pts ── */
+function checkCourseCompletion(){
+  var prog=gProg(),key='course_done';
+  var allModsDone=MODS.every(function(_,mi){return prog['mod_done_'+mi];});
+  if(allModsDone&&!prog[key]){
+    prog[key]=true;
+    prog['cert_pts_granted']=true; // evita duplicação com generateCert
+    sProg(prog);
+    addPoints('Curso concluído: '+COURSE.name,1000);
+    showMotiv('🏆','Curso Concluído!','Você finalizou "'+COURSE.name+'" com sucesso! Parabéns!','+1.000 pontos');
+  }
+}
+
+/* ── STREAK 7 DIAS CONSECUTIVOS → +500 pts ── */
+function checkStreak(){
+  var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}
+  var today=new Date().toLocaleDateString('pt-BR');
+  var yest=new Date(Date.now()-86400000).toLocaleDateString('pt-BR');
+  // Se já acessou hoje, não reconta
+  if(s.lastStudyDate===today)return;
+  // Calcula streak
+  if(s.lastStudyDate===yest){s.streak=(s.streak||0)+1;}
+  else{s.streak=1;}
+  s.lastStudyDate=today;
+  localStorage.setItem('ma_sessions',JSON.stringify(s));
+  // 7 dias consecutivos → premia uma vez por ciclo
+  if(s.streak>0&&s.streak%7===0){
+    var streakKey='streak_bonus_'+Math.floor(s.streak/7);
+    if(!localStorage.getItem(streakKey)){
+      localStorage.setItem(streakKey,'1');
+      addPoints('7 dias consecutivos de acesso!',500);
+      showMotiv('🔥','Sequência de 7 Dias!','Você acessou por 7 dias seguidos! Incrível!','+500 pontos');
+    }
+  }
 }
 
 /* ── ÁUDIO ÚNICO DO MÓDULO (lê todo o conteúdo dos tópicos em sequência) ── */
@@ -1250,12 +1295,18 @@ function mlFinishQuiz(mi,corrects){
     var isCorrect=selected===correct;
     if(isCorrect){score++;totalPts+=20;}else{totalPts-=50;}
 
-    // Colorir opções
+    // Colorir opções e mostrar respostas
     var optsEl=document.getElementById('mlq_opts_'+mi+'_'+qi);
     if(optsEl)optsEl.querySelectorAll('.mlq-opt').forEach(function(o,oi){
       o.classList.remove('selected');
-      if(oi===correct){o.classList.add('correct-ans');o.querySelector('.mlq-opt-dot').textContent='✓';}
-      else if(oi===selected&&!isCorrect){o.classList.add('wrong-ans');o.querySelector('.mlq-opt-dot').textContent='✕';}
+      var letter=o.querySelector('.mlq-opt-letter');
+      if(oi===correct){
+        o.classList.add('correct-ans');
+        if(letter)letter.textContent='✓';
+      } else if(oi===selected&&!isCorrect){
+        o.classList.add('wrong-ans');
+        if(letter)letter.textContent='✕';
+      }
       o.style.pointerEvents='none';
     });
 
@@ -1263,13 +1314,13 @@ function mlFinishQuiz(mi,corrects){
     var res=document.getElementById('mlq_res_'+mi+'_'+qi);
     if(res){
       res.className='mlq-result '+(isCorrect?'correct':'wrong');
-      res.textContent=isCorrect?'✅ Correto! +20 pontos':'❌ Incorreto. −50 pontos';
+      res.textContent=isCorrect?'✅ Correto!':'❌ Incorreto — veja a resposta certa destacada em verde.';
     }
   });
 
-  // Pontos — aplica total (pode ser negativo, mas não deixa ir abaixo de 0)
-  if(totalPts>0){addPoints('Quiz do Módulo '+(mi+1),totalPts);}
-  else if(totalPts<0){
+  // Pontos — quiz correto dá 0 pontos diretos; pontos vêm de MÓDULO concluído
+  // Erros: desconto aplicado (pode ir a 0, nunca negativo)
+  if(totalPts<0){
     var p=gP();p.total=Math.max(0,p.total+totalPts);
     localStorage.setItem('ma_points',JSON.stringify(p));updateTopbar();
     showToast('📉 '+(totalPts)+' pontos pelas respostas incorretas','');
@@ -1294,10 +1345,11 @@ function mlFinishQuiz(mi,corrects){
           +'</button>';
       }
     }
+    var ptsMsgQuiz = totalPts<0 ? totalPts+' pontos (penalidade)' : (pct2===100?'Perfeito! Complete todos os tópicos para ganhar 100 pts':'Revise e refaça para melhorar seu desempenho');
     scoreEl.innerHTML='<span class="mlqs-icon">'+icon+'</span>'
       +'<div class="mlqs-title">'+score+' / '+corrects.length+' corretas</div>'
       +'<div class="mlqs-sub">'+msg+'</div>'
-      +'<span class="mlqs-pts">⭐ '+(totalPts>0?'+':'')+totalPts+' pontos</span>'
+      +'<span class="mlqs-pts">'+(totalPts<0?'📉 '+totalPts+' pts (penalidade)':'✅ '+score+'/'+corrects.length+' acertos')+'</span>'
       +nextModBtn;
   }
 
@@ -1345,11 +1397,9 @@ function mlFinishQuiz(mi,corrects){
     }
   }
 
-  // Verifica conclusão do módulo
-  var prog=gProg(),mod=MODS[mi],key='mod_done_'+mi;
-  var allDone=mod.topics.every(function(t){return prog[mod.id+'_'+t.id];});
-  if(allDone&&!prog[key]){prog[key]=true;sProg(prog);addPoints('Módulo concluído: '+mod.name,50);showMotiv('🎉','Módulo Concluído!','Você completou "'+mod.name+'" com sucesso!','+50 pontos');}
-  buildSidebar();
+  // Verifica conclusão do módulo → +100 pts via checkModuleCompletion
+  var prog=gProg(),mod=MODS[mi];
+  checkModuleCompletion(mi);
 }
 
 /* Abre o tópico para revisão (chamado pelo alerta de dificuldade) */
@@ -1390,7 +1440,7 @@ function goToNext(){
   var n=_allTopics[flat+1];if(!n.canAcc){openLockScreen();return;}
   selectTopic(n.mi,n.ti,n.canAcc);
 }
-function completeModule(mi){var prog=gProg(),mod=MODS[mi],key='mod_done_'+mi;if(!prog[key]){prog[key]=true;sProg(prog);addPoints('Módulo concluído: '+mod.name,50);showMotiv('🎉','Módulo Concluído!','Você completou "'+mod.name+'" com sucesso!','+50 pontos');}buildSidebar();}
+function completeModule(mi){checkModuleCompletion(mi);}
 
 /* ═══ TABS ═══ */
 function switchTab(tab){
@@ -1443,7 +1493,7 @@ function applyHighlight(color){
     span.className='hl-'+color;span.dataset.hlColor=color;span.dataset.hlId='hl_'+Date.now();
     _curRange.surroundContents(span);
     saveHighlight(span.dataset.hlId,color,span.textContent);
-    addPoints('Destaque no texto',3);showToast('✏️ Trecho destacado!','ok');
+    showToast('✏️ Trecho destacado!','ok');
   }catch(e){showToast('Selecione texto simples sem formatações para destacar','warn');}
   sel.removeAllRanges();hideToolbar();_curRange=null;
 }
@@ -1481,7 +1531,7 @@ function saveHlNote(){
   if(_pendingHlId){var item=data.find(d=>d.id===_pendingHlId);if(item)item.note=note;}
   else{data.unshift({id:'note_'+Date.now(),color:_activeHlColor,text:window.getSelection().toString().substring(0,200),note:note,topicKey:_curModIdx+'_'+_curTopIdx,date:new Date().toLocaleDateString('pt-BR')});}
   sHlData(data);document.getElementById('hlNoteInput').value='';
-  closeHlNote();hideToolbar();addPoints('Anotação vinculada ao texto',5);showToast('📝 Anotação salva!','ok');
+  closeHlNote();hideToolbar();showToast('📝 Anotação salva!','ok');
 }
 function closeHlNote(){document.getElementById('hlNoteInput').value='';_notePopup.classList.remove('show');_pendingHlId=null;}
 function renderHlNotes(){
@@ -1679,7 +1729,7 @@ function submitQuiz(){
   var fb=document.getElementById('quizFb'),btn=document.getElementById('quizBtn');
   var isCorrect=_qSel===c;
   _qResults[_qIdx]=isCorrect?'correct':'wrong';
-  if(isCorrect){fb.className='quiz-feedback show ok';fb.textContent='✅ Correto! Excelente!';addPoints('Quiz correto',25);btn.style.background='var(--grn)';}
+  if(isCorrect){fb.className='quiz-feedback show ok';fb.textContent='✅ Correto! Excelente!';btn.style.background='var(--grn)';}
   else{fb.className='quiz-feedback show err';fb.textContent='❌ Errado. Correto: "'+q.opts[c]+'"';btn.style.background='var(--red)';}
   // Avançar para próxima ou finalizar
   var next=_qIdx+1;
@@ -1739,7 +1789,10 @@ function openSurprise(){
 }
 
 /* ═══ MISSÕES ═══ */
-function grantMission(type){var today=new Date().toLocaleDateString('pt-BR');var ms;try{ms=JSON.parse(localStorage.getItem('ma_missions'))||{};}catch(e){ms={};}if(!ms.done||ms.date!==today)ms={date:today,done:{}};if(!ms.done[type]){ms.done[type]=true;localStorage.setItem('ma_missions',JSON.stringify(ms));var mp={aula:10,quiz:15};if(mp[type])addPoints('Missão: '+type,mp[type]);}}
+function grantMission(type){
+  // Missões removidas da pontuação — pontos só vêm de módulos/cursos/notícias/streak
+  // Mantida a função para compatibilidade de chamadas existentes
+}
 
 /* ═══ CHAT IA ═══ */
 var CHAT_URL='https://shiny-disk-b207ma-academy-ai.matheushenry1998.workers.dev/chat';
@@ -1758,7 +1811,7 @@ async function sendChat(){
     var data=await res.json();
     document.getElementById('chatTyping')&&document.getElementById('chatTyping').remove();
     var reply=data.content?.[0]?.text||data.reply||'Não consegui processar. Tente novamente.';
-    _chatHist.push({role:'assistant',content:reply});addMsg('bot',reply);addPoints('Pergunta ao Assistente IA',3);
+    _chatHist.push({role:'assistant',content:reply});addMsg('bot',reply);
   }catch(e){document.getElementById('chatTyping')&&document.getElementById('chatTyping').remove();addMsg('bot','❌ Erro de conexão.');}
   document.getElementById('chatSendBtn').disabled=false;
 }
@@ -1781,7 +1834,13 @@ function generateCert(){
   ctx.fillStyle='#5b7fff';ctx.font='bold 24px Georgia';ctx.fillText(COURSE.name,W/2,400);
   ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='13px Arial';ctx.fillText('Conclusão: '+new Date().toLocaleDateString('pt-BR'),W/2,460);
   ctx.fillStyle='rgba(255,255,255,.3)';ctx.font='11px Arial';ctx.fillText('Matheus Academy · ID: MA-'+Date.now().toString(36).toUpperCase(),W/2,520);
-  addPoints('Certificado gerado',100);showMotiv('🏆','Parabéns!','Você concluiu o curso!','+100 pontos');
+  // Pontos apenas se ainda não foram concedidos pelo checkCourseCompletion
+  var prog=gProg();
+  if(!prog['cert_pts_granted']){
+    prog['cert_pts_granted']=true;sProg(prog);
+    addPoints('Curso concluído — Certificado: '+COURSE.name,1000);
+  }
+  showMotiv('🏆','Parabéns!','Você concluiu o curso e gerou seu certificado!','+1.000 pontos');
 }
 
 /* ═══ AUTH ═══ */
@@ -1900,10 +1959,10 @@ function renderModAccordion(mi){
   var pct=mod.topics.length?Math.round(doneCount/mod.topics.length*100):0;
   document.getElementById('moaProgFill').style.width=pct+'%';
   document.getElementById('moaProgPct').textContent=pct+'%';
-  // Marcar como visto o primeiro tópico
+  // Marcar como visto o primeiro tópico — sem pontos (pontos só de módulo concluído)
   if(mod.topics.length>0){
     var t0=mod.topics[0];var prog2=gProg();var key=mod.id+'_'+t0.id;
-    if(!prog2[key]){prog2[key]=true;sProg(prog2);addPoints('Aula: '+t0.name,10);buildSidebar();}
+    if(!prog2[key]){prog2[key]=true;sProg(prog2);buildSidebar();}
   }
 }
 
@@ -1919,17 +1978,17 @@ function moaToggle(mi,ti){
   if(!isOpen){
     item.classList.add('open');
     hdr.classList.add('open');
-    // Marcar visto
+    // Marcar visto — sem pontos (pontos só de módulo concluído)
     var mod=MODS[mi],t=mod.topics[ti];
     var prog=gProg(),key=mod.id+'_'+t.id;
-    if(!prog[key]){prog[key]=true;sProg(prog);addPoints('Aula: '+t.name,10);buildSidebar();renderModAccordion(mi);}
+    if(!prog[key]){prog[key]=true;sProg(prog);buildSidebar();renderModAccordion(mi);}
   }
 }
 
 function moaMarkDone(mi,ti){
   var mod=MODS[mi],t=mod.topics[ti];
   var prog=gProg(),key=mod.id+'_'+t.id;
-  if(!prog[key]){prog[key]=true;sProg(prog);addPoints('Tópico concluído: '+t.name,20);buildSidebar();}
+  if(!prog[key]){prog[key]=true;sProg(prog);buildSidebar();}
   // Atualiza botão
   var btn=document.getElementById('moa_done_'+mi+'_'+ti);
   if(btn){btn.textContent='✅ Tópico Concluído';btn.classList.add('completed');}
@@ -1944,8 +2003,8 @@ function moaMarkDone(mi,ti){
       if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
     },350);
   }else{
-    // Último tópico — concluir módulo
-    completeModule(mi);
+    // Último tópico — verifica conclusão do módulo → +100 pts
+    checkModuleCompletion(mi);
   }
   // Atualiza progresso no header
   var doneCount=mod.topics.filter(function(t2){return !!gProg()[mod.id+'_'+t2.id];}).length;
@@ -1956,7 +2015,7 @@ function moaMarkDone(mi,ti){
 
 function moaFlipCard(mi,ti,ci){
   var fc=document.getElementById('moa_fc_'+mi+'_'+ti+'_'+ci);
-  if(fc){fc.classList.toggle('flipped');addPoints('Flashcard revisado',3);}
+  if(fc){fc.classList.toggle('flipped');}
 }
 
 // Estado do quiz por tópico
@@ -1993,7 +2052,7 @@ function moaSubmitQuiz(mi,ti){
   });
   var fb=document.getElementById('moa_qfb_'+mi+'_'+ti);
   var btn=document.getElementById('moa_qbtn_'+mi+'_'+ti);
-  if(correct){if(fb){fb.className='quiz-feedback show ok';fb.textContent='✅ Correto!';}addPoints('Quiz correto',25);}
+  if(correct){if(fb){fb.className='quiz-feedback show ok';fb.textContent='✅ Correto!';}}
   else{if(fb){fb.className='quiz-feedback show err';fb.textContent='❌ Correto: "'+q.opts[q.correct]+'"';}}
   // Dot
   var dot=document.getElementById('moa_qd_'+mi+'_'+ti+'_'+s.idx);
@@ -2476,7 +2535,7 @@ setInterval(function(){
   var m=Math.floor(e/60).toString().padStart(2,'0');
   var s=(e%60).toString().padStart(2,'0');
   var el=document.getElementById('stTime');if(el)el.textContent=m+':'+s;
-  if(e>0&&e%300===0){addPoints('Estudo (5min)',5);}
+  if(e>0&&e%300===0){/* sem pontos por tempo — pontos só de módulos/cursos/streak */}
   if(e%3===0){var p=gP();if(_lp!==null&&p.total>_lp)updateTopbar();_lp=p.total;}
   // Acumula tempo de estudo a cada 10s
   if(e>0&&e%10===0){
@@ -2727,4 +2786,6 @@ document.addEventListener('DOMContentLoaded',function(){
   function saveSession(){var dur=Math.floor((Date.now()-_ss)/60000);var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}s.count=(s.count||0)+1;s.lastDuration=dur;var today=new Date().toLocaleDateString('pt-BR'),yest=new Date(Date.now()-86400000).toLocaleDateString('pt-BR');if(s.lastStudyDate===yest)s.streak=(s.streak||0)+1;else if(s.lastStudyDate!==today)s.streak=1;s.lastStudyDate=today;localStorage.setItem('ma_sessions',JSON.stringify(s));}
   window.addEventListener('beforeunload',saveSession);window.addEventListener('pagehide',saveSession);
   grantMission('aula');
+  // Verificar streak de acesso consecutivo → +500 pts se 7 dias seguidos
+  checkStreak();
 });
