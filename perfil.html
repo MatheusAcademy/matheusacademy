@@ -249,6 +249,8 @@ body{padding-bottom:58px!important}
 @media(max-width:360px){.ma-bn{font-size:.48rem}.ma-bn-svg{width:20px;height:20px}.ma-bn-svg svg{width:20px;height:20px}.ma-bn-mid-wrap{width:40px;height:40px;border-radius:10px}}
 
 </style>
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
 <script src="firebase-config.js"></script>
 <script src="shared/time-tracker.js"></script>
 </head>
@@ -359,15 +361,25 @@ function gs(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}cat
 function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function he(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-var COURSE_DEFS=[
-  {prefix:'dt_',icon:'📊',name:'Tráfego Pago'},
-  {prefix:'ni_',icon:'💼',name:'Negócios Inteligentes'},
-  {prefix:'geo_',icon:'🌍',name:'Geopolítica Avançada'},
-  {prefix:'nl_',icon:'💡',name:'Nichos Lucrativos'},
-  {prefix:'pb_',icon:'🏛️',name:'Política Brasileira'},
-  {prefix:'mp_',icon:'🎯',name:'Mestre em Persuasão'}
-];
+/* COURSE_DEFS — gerado dinamicamente a partir de MA_COURSES (data/courses.js) */
+var COURSE_DEFS = (typeof MA_COURSES !== 'undefined')
+  ? MA_COURSES.filter(function(c){return c.active!==false;}).map(function(c){
+      return {prefix: c.storagePrefix, icon: c.icon, name: c.name, ak: c.ak, color: c.color};
+    })
+  : [
+      {prefix:'dt_', icon:'📊', name:'Tráfego Pago'},
+      {prefix:'ni_', icon:'💼', name:'Negócios Inteligentes'},
+      {prefix:'geo_',icon:'🌍', name:'Geopolítica Avançada'},
+      {prefix:'nl_', icon:'💡', name:'Nichos Lucrativos'},
+      {prefix:'pb_', icon:'🏛️', name:'Política Brasileira'},
+      {prefix:'mp_', icon:'🎯', name:'Mestre em Persuasão'},
+      {prefix:'seg_',icon:'🎓', name:'Segurança & Sociedade'},
+      {prefix:'bm_', icon:'🏦', name:'Caso Banco Master'},
+      {prefix:'ii_', icon:'⚔️', name:'Guerra Israel x Irã'},
+      {prefix:'cp_', icon:'⚽', name:'Copa do Mundo 2026'}
+    ];
 function getCProg(pfx){
+  if(typeof MAStore!=='undefined') return MAStore.getCourseProgress(pfx);
   var done=0,total=0;
   try{for(var k in localStorage){if(k.indexOf(pfx+'mod_')===0){total++;var v=localStorage.getItem(k);if(v==='done'||v==='true'||v==='1')done++;}}}catch(e){}
   return{done:done,total:total,pct:total>0?Math.min(100,Math.round(done/total*100)):0};
