@@ -667,6 +667,12 @@ textarea{resize:vertical;min-height:54px}
       </div>
     </div>
 
+    <!-- CARD TEMPO ONLINE -->
+    <div class="st-card" style="margin-bottom:12px">
+      <div class="st-card-title">🕐 Tempo Online dos Alunos <button class="st-refresh" onclick="calcTimeStats()" style="margin-left:auto">🔄</button></div>
+      <div id="time-stats-content" style="color:var(--t3);font-size:11px;padding:8px 0">Clique em 🔄 para carregar dados de tempo</div>
+    </div>
+
     <div style="color:var(--t3);font-size:10px;text-align:center" id="s-lastcalc">Clique em Recalcular para gerar os dados</div>
   </div>
 
@@ -688,15 +694,12 @@ textarea{resize:vertical;min-height:54px}
 var _fc = null, _fn = null, _existIds = [], _coursesContent = '', _coursesSha = '';
 
 // CONFIG
-function _initApp(){
+window.onload = function() {
   var t=ls('ghToken'), o=ls('ghOwner')||'MatheusAcademy', r=ls('ghRepo')||'matheusacademy';
   if(t) el('ghToken').value=t;
   el('ghOwner').value=o; el('ghRepo').value=r;
-  loadAlunosStorage();
-  renderMsgHist();
   if(t) setTimeout(testGH,400);
-}
-document.addEventListener('DOMContentLoaded', _initApp);
+};
 function saveConfig(){ss('ghToken',el('ghToken').value);ss('ghOwner',el('ghOwner').value);ss('ghRepo',el('ghRepo').value);}
 function g(){return{t:el('ghToken').value.trim(),o:el('ghOwner').value.trim(),r:el('ghRepo').value.trim()};}
 function gh(){return{'Authorization':'token '+g().t,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};}
@@ -901,18 +904,9 @@ function insertSafe(content, block){
   return null;
 }
 
-// BASE64 — seguro para UTF-8 (sem escape/unescape deprecated)
-function b64d(s){
-  var bin=atob(s.replace(/\n/g,''));
-  var bytes=new Uint8Array(bin.length);
-  for(var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-  return new TextDecoder('utf-8').decode(bytes);
-}
-function b64e(s){
-  var bytes=new TextEncoder().encode(s);
-  var bin=''; bytes.forEach(function(b){bin+=String.fromCharCode(b);});
-  return btoa(bin);
-}
+// BASE64
+function b64d(s){return decodeURIComponent(escape(atob(s.replace(/\n/g,''))));}
+function b64e(s){return btoa(unescape(encodeURIComponent(s)));}
 
 // COLETAR META DOS CAMPOS
 function getMeta(pf){
@@ -1054,10 +1048,7 @@ async function updCourse(id,field,val,btn2){
     method:'PUT',headers:gh(),
     body:JSON.stringify({message:'update: '+id+' '+field+'='+val,content:b64e(nc),sha:sha})
   });
-  if(put.ok){
-    if(btn2){btn2.disabled=false; btn2.textContent=btn2.textContent.replace('⏳','✅');}
-    showRes('rUp','ok','✅ Atualizado!');loadCoursesData();loadList();
-  }
+  if(put.ok){showRes('rUp','ok','✅ Atualizado!');loadCoursesData();loadList();}
   else{var e=await put.json();showRes('rUp','er','❌ '+(e.message||put.status));if(btn2)btn2.disabled=false;}
 }
 
@@ -1149,7 +1140,7 @@ function resetForm(){
   el('mp').style.display='none';el('opts').style.display='none';el('btnPub').disabled=true;
 }
 // ================================================================
-// MATHEUS ACADEMY ADMIN v9 — ALUNOS + MENSAGENS + STATS
+// MATHEUS ACADEMY ADMIN v8 — ALUNOS + MENSAGENS + STATS
 // ================================================================
 
 // ── STORAGE DE ALUNOS (localStorage) ──
@@ -1287,11 +1278,7 @@ function salvarAluno(){
   var nome=el('an-nome').value.trim();
   var email=el('an-email').value.trim();
   if(!nome||!email){showRes('rAluno','er','❌ Nome e email são obrigatórios.');return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showRes('rAluno','er','❌ Email inválido.');return;}
-  loadAlunosStorage();
-  if(_alunosData.some(function(a){return a.email.toLowerCase()===email.toLowerCase();})){
-    showRes('rAluno','er','❌ Este email já está cadastrado.');return;
-  }
+  var cursos=[];
   el('an-cursos-check').querySelectorAll('input:checked').forEach(function(c){cursos.push(c.value);});
   var aluno={
     id:genId(), nome:nome, email:email,
@@ -1420,7 +1407,7 @@ function abrirWA(id){
   if(!msg) return;
   var txt=msg.replace(/\{nome\}/g,a.nome);
   var tel=a.telefone.replace(/\D/g,'');
-  if(tel.length===10||tel.length===11) tel='55'+tel;
+  if(tel.length===11) tel='55'+tel;
   var url='https://api.whatsapp.com/send?phone='+tel+'&text='+encodeURIComponent(txt);
   window.open(url,'_blank');
   saveMsgHist('wa',a.email,'Individual: '+a.nome,msg);
@@ -1431,12 +1418,11 @@ function prepEmail(email){
   swTab('ms');
   setTimeout(function(){
     selMsgType('em');
-    var chip=document.querySelector('.msg-chip[data-dest="custom"]');
-    if(chip) selDest(chip,'custom');
+    selDest(document.querySelector('[data-dest="custom"]'),'custom');
     el('msg-custom-dest').value=email;
     el('msg-custom-input').style.display='block';
-    var mb=el('msg-body'); if(mb) mb.focus();
-  },150);
+    el('msg-body').focus();
+  },100);
 }
 
 // ── MENSAGENS ──
@@ -1493,7 +1479,7 @@ function enviarMensagem(){
     var primeiro=comTel[0];
     var txt=body.replace(/\{nome\}/g,primeiro.nome||'aluno');
     var tel=(primeiro.telefone||'').replace(/\D/g,'');
-    if(tel.length===10||tel.length===11) tel='55'+tel;
+    if(tel.length===11) tel='55'+tel;
     window.open('https://api.whatsapp.com/send?phone='+tel+'&text='+encodeURIComponent(txt),'_blank');
     if(comTel.length>1){
       showRes('rMsg','ok','✅ WhatsApp aberto para '+primeiro.nome+'. Para envio em massa, use o n8n com a Evolution API (instância: gasnetwork) ou repita manualmente para os demais '+( comTel.length-1)+' alunos.');
@@ -1625,7 +1611,53 @@ function exportarCSV(){
   a.click(); URL.revokeObjectURL(url);
 }
 
-// ── INIT já feito via DOMContentLoaded acima ──
+// ── INIT ──
+window.addEventListener('load',function(){
+  loadAlunosStorage();
+  renderMsgHist();
+});
+
+// ── TEMPO ONLINE DOS ALUNOS ──
+function gs2(k,def){try{var v=localStorage.getItem(k);return v!==null?JSON.parse(v):def;}catch(e){return def;}}
+function calcTimeStats(){
+  var div=el('time-stats-content');
+  if(!div)return;
+  var today=gs2('ma_time_today',{});
+  var history=gs2('ma_time_history',[]);
+  var totalSec=gs2('ma_time_total',0);
+  var online=gs2('ma_online_status',{});
+  function fmtSec(s){var h=Math.floor(s/3600),m=Math.floor((s%3600)/60);if(h>0)return h+'h '+m+'m';if(m>0)return m+'m';return (s||0)+'s';}
+  function timeSince(ts){if(!ts)return '—';var d=Math.floor((Date.now()-ts)/60000);if(d<1)return 'Agora';if(d<60)return d+'min atrás';return Math.floor(d/60)+'h atrás';}
+  var pageNames={index:'Início',painel:'Painel',ranking:'Ranking',perfil:'Perfil',indicacoes:'Indicações',trilhas:'Trilhas',loja:'Loja',mural:'Mural'};
+  var isOnline=online.online&&online.lastSeen&&(Date.now()-online.lastSeen)<120000;
+  var html='';
+  html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:10px;background:var(--card);border-radius:8px;border:1px solid var(--brd)">';
+  html+='<span style="font-size:1.2rem">'+(isOnline?'🟢':'🔴')+'</span>';
+  html+='<div><div style="font-size:12px;font-weight:700;color:var(--txt)">'+(isOnline?'Aluno ONLINE agora':'Último acesso registrado')+'</div>';
+  html+='<div style="font-size:10px;color:var(--t2)">'+(online.userName||online.user||'—')+' · '+(online.page?pageNames[online.page]||online.page:'—')+' · '+timeSince(online.lastSeen)+'</div></div></div>';
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">';
+  html+='<div class="st-mini"><div class="v" style="font-size:18px">'+fmtSec(today.totalSec||0)+'</div><div class="l">Hoje ('+( today.date||'—')+')</div></div>';
+  html+='<div class="st-mini"><div class="v" style="font-size:18px">'+fmtSec(totalSec)+'</div><div class="l">Total geral</div></div></div>';
+  var byPage=today.byPage||{};
+  var pageKeys=Object.keys(byPage).sort(function(a,b){return byPage[b]-byPage[a];});
+  if(pageKeys.length){
+    html+='<div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Páginas hoje</div>';
+    pageKeys.forEach(function(pg){
+      var pct=today.totalSec>0?Math.round(byPage[pg]/today.totalSec*100):0;
+      html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:11px"><span style="color:var(--t2);flex:0 0 80px">'+(pageNames[pg]||pg)+'</span><div style="flex:1;height:5px;background:var(--brd);border-radius:3px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:3px"></div></div><span style="color:var(--txt);font-weight:700;flex:0 0 40px;text-align:right">'+fmtSec(byPage[pg])+'</span></div>';
+    });
+  }
+  if(history.length){
+    html+='<div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin:10px 0 6px">Histórico (últimos 7 dias)</div>';
+    var maxSec=Math.max.apply(null,history.slice(0,7).map(function(d){return d.totalSec||0;}));
+    history.slice(0,7).forEach(function(day){
+      var pct=maxSec>0?Math.round((day.totalSec||0)/maxSec*100):0;
+      html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:10px"><span style="color:var(--t2);flex:0 0 90px">'+day.date+'</span><div style="flex:1;height:5px;background:var(--brd);border-radius:3px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:linear-gradient(90deg,#22c55e,#4ade80);border-radius:3px"></div></div><span style="color:var(--txt);font-weight:700;flex:0 0 50px;text-align:right">'+fmtSec(day.totalSec||0)+'</span></div>';
+    });
+  }
+  if(!today.totalSec&&!totalSec)html='<div style="color:var(--t3);font-size:11px;padding:8px">Nenhum dado ainda. O aluno precisa acessar o portal com o <b>time-tracker.js</b> instalado.</div>';
+  div.innerHTML=html;
+}
 </script>
 </body>
 </html>
