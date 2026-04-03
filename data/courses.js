@@ -95,6 +95,24 @@ var MA_COURSES = [
     color: '#3b82f6',
     addedTs: 1775218683742,
     active: true
+  },
+  {
+    id: 'ctp',
+    name: 'Dominando o Tráfego Pago —',
+    desc: '',
+    file: 'curso-trafego-pago.html',
+    cat: 'Negócios',
+    modules: 1,
+    topics: 6,
+    hours: 1,
+    quizzes: 1,
+    salt: 'CTP_HENRY_2026_MASTER',
+    ak: 'ctp_auth',
+    storagePrefix: 'ctp_',
+    icon: '🎓',
+    color: '#3b82f6',
+    addedTs: 1775241650620,
+    active: true
   }
 ];
 var MA_CATS = [
