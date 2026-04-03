@@ -668,8 +668,8 @@ function applySelectedHighlight(){
     return;
   }
   var range = sel.getRangeAt(0);
-  var content = document.getElementById('lessonContent');
-  if(!content.contains(range.commonAncestorContainer)){
+  var content = document.getElementById('modLessonWrap');
+  if(!content||!content.contains(range.commonAncestorContainer)){
     showToast('Selecione texto dentro da aula!', 'warn');
     return;
   }
@@ -899,19 +899,28 @@ function selectTopic(mi,ti,canAcc){
   if(_isMobile())closeSidebarMobile();
   grantMission('aula');
   renderModLesson(mi);
-  // Expandir o tópico correto após render
+  // Após render, expande o tópico correto e scrolla para o título
+  // Usa setTimeout para aguardar o DOM ser inserido pelo renderModLesson
   setTimeout(function(){
     var item=document.getElementById('ml_topic_'+mi+'_'+ti);
-    if(item&&!item.classList.contains('t-open')){
-      mlToggleTopic(mi,ti);
-    } else if(item){
-      var hdr=item.querySelector('.ml-topic-hdr')||item;
-      var offset=hdr.getBoundingClientRect().top+window.scrollY-112;
-      window.scrollTo({top:Math.max(0,offset),behavior:'smooth'});
-    } else {
-      window.scrollTo({top:0,behavior:'instant'});
-    }
-  },400);
+    if(!item){window.scrollTo({top:0,behavior:'instant'});return;}
+    // Fecha todos os tópicos do módulo
+    document.querySelectorAll('[id^="ml_topic_'+mi+'_"]').forEach(function(el){
+      el.classList.remove('t-open');
+    });
+    // Calcula posição ANTES de expandir
+    var hdr=item.querySelector('.ml-topic-hdr')||item;
+    var topbarH=56,tabsH=48;
+    var offsetTop=hdr.getBoundingClientRect().top+window.scrollY-(topbarH+tabsH+12);
+    // Expande
+    item.classList.add('t-open');
+    // Scrolla para o título
+    window.scrollTo({top:Math.max(0,offsetTop),behavior:'smooth'});
+    // Marca como visto sem pontos
+    var mod=MODS[mi],t=mod.topics[ti];
+    var prog=gProg(),key=mod.id+'_'+t.id;
+    if(!prog[key]){prog[key]=true;sProg(prog);buildSidebar();}
+  },80);
 }
 
 /* ═══ RENDERIZAR MÓDULO COMPLETO — acordeão de tópicos + quiz + flashcards ═══ */
@@ -998,7 +1007,6 @@ function renderModLesson(mi){
   allQuizzes=allQuizzes.slice(0,3);
 
   if(allQuizzes.length>0){
-    var qzDone=!!localStorage.getItem(COURSE.prefix+'qzdone_'+mi);
     var modName=mod.name.replace(/Módulo\s*\d+\s*[—\-–]\s*/i,'').trim();
     var letters=['A','B','C','D','E'];
 
@@ -1075,10 +1083,48 @@ function renderModLesson(mi){
   setTimeout(applyFontSize,30);
 
   /* Restaurar quiz respondido */
+  var qzDoneRestored=!!localStorage.getItem(COURSE.prefix+'qzdone_'+mi);
   allQuizzes.forEach(function(_,qi){
     var saved=localStorage.getItem(COURSE.prefix+'qzsel_'+mi+'_'+qi);
     if(saved!==null) mlSelOpt(mi,qi,parseInt(saved),true);
   });
+  // Se o quiz já foi finalizado, restaurar o estado visual completo
+  if(qzDoneRestored&&allQuizzes.length>0){
+    var corrects=allQuizzes.map(function(q){return q.correct;});
+    var score=0;
+    corrects.forEach(function(correct,qi){
+      var saved=localStorage.getItem(COURSE.prefix+'qzsel_'+mi+'_'+qi);
+      var selected=saved!==null?parseInt(saved):-1;
+      var isCorrect=selected===correct;
+      if(isCorrect)score++;
+      var optsEl=document.getElementById('mlq_opts_'+mi+'_'+qi);
+      if(optsEl)optsEl.querySelectorAll('.mlq-opt').forEach(function(o,oi){
+        o.classList.remove('selected');
+        var letter=o.querySelector('.mlq-opt-letter');
+        if(oi===correct){o.classList.add('correct-ans');if(letter)letter.textContent='✓';}
+        else if(oi===selected&&!isCorrect){o.classList.add('wrong-ans');if(letter)letter.textContent='✕';}
+        o.style.pointerEvents='none';
+      });
+      var res=document.getElementById('mlq_res_'+mi+'_'+qi);
+      if(res){
+        res.className='mlq-result '+(isCorrect?'correct':'wrong');
+        res.textContent=isCorrect?'✅ Correto!':'❌ Incorreto — veja a resposta certa destacada em verde.';
+      }
+    });
+    var fbtn=document.getElementById('ml_qfbtn_'+mi);
+    if(fbtn){fbtn.disabled=true;fbtn.textContent='✅ Quiz Finalizado';}
+    var scoreEl=document.getElementById('ml_qscore_'+mi);
+    if(scoreEl){
+      var pct2=Math.round(score/corrects.length*100);
+      var icon=pct2===100?'🏆':pct2>=60?'🎯':'📚';
+      var msg=pct2===100?'Perfeito! Acertou tudo!':pct2>=60?'Bom resultado! Continue assim.':'Revise o conteúdo e tente novamente.';
+      scoreEl.classList.add('show');
+      scoreEl.innerHTML='<span class="mlqs-icon">'+icon+'</span>'
+        +'<div class="mlqs-title">'+score+' / '+corrects.length+' corretas</div>'
+        +'<div class="mlqs-sub">'+msg+'</div>'
+        +'<span class="mlqs-pts">✅ '+score+'/'+corrects.length+' acertos</span>';
+    }
+  }
 }
 
 /* ── TOGGLE DO TÓPICO ── */
@@ -1345,7 +1391,6 @@ function mlFinishQuiz(mi,corrects){
           +'</button>';
       }
     }
-    var ptsMsgQuiz = totalPts<0 ? totalPts+' pontos (penalidade)' : (pct2===100?'Perfeito! Complete todos os tópicos para ganhar 100 pts':'Revise e refaça para melhorar seu desempenho');
     scoreEl.innerHTML='<span class="mlqs-icon">'+icon+'</span>'
       +'<div class="mlqs-title">'+score+' / '+corrects.length+' corretas</div>'
       +'<div class="mlqs-sub">'+msg+'</div>'
@@ -1398,21 +1443,13 @@ function mlFinishQuiz(mi,corrects){
   }
 
   // Verifica conclusão do módulo → +100 pts via checkModuleCompletion
-  var prog=gProg(),mod=MODS[mi];
   checkModuleCompletion(mi);
 }
 
 /* Abre o tópico para revisão (chamado pelo alerta de dificuldade) */
 function mlReviewTopic(mi,ti){
+  // mlToggleTopic já cuida do scroll para o título
   mlToggleTopic(mi,ti);
-  setTimeout(function(){
-    var item=document.getElementById('ml_topic_'+mi+'_'+ti);
-    if(item){
-      var hdr=item.querySelector('.ml-topic-hdr')||item;
-      var offset=hdr.getBoundingClientRect().top+window.scrollY-112;
-      window.scrollTo({top:offset,behavior:'smooth'});
-    }
-  },80);
 }
 
 /* ── TOGGLE FLASHCARDS ── */
@@ -1472,7 +1509,7 @@ function onTextSelect(){
   var sel=window.getSelection();
   if(!sel||sel.rangeCount===0||sel.toString().trim().length<2){hideToolbar();return;}
   var range=sel.getRangeAt(0);
-  var content=document.getElementById('lessonContent');
+  var content=document.getElementById('modLessonWrap');
   if(!content||!content.contains(range.commonAncestorContainer)){hideToolbar();return;}
   _curRange=range.cloneRange();
   var rect=range.getBoundingClientRect();
@@ -1501,7 +1538,7 @@ function removeHighlight(){
   var sel=window.getSelection();if(!sel||sel.rangeCount===0){showToast('Clique sobre o texto destacado e selecione-o','warn');return;}
   var node=sel.getRangeAt(0).commonAncestorContainer;
   var mark=node.nodeType===3?node.parentElement:node;
-  while(mark&&mark.tagName!=='MARK'&&mark.id!=='lessonContent')mark=mark.parentElement;
+  while(mark&&mark.tagName!=='MARK'&&mark.id!=='modLessonWrap')mark=mark.parentElement;
   if(mark&&mark.tagName==='MARK'){var hlId=mark.dataset.hlId;var parent=mark.parentNode;while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);parent.removeChild(mark);if(hlId)deleteHighlight(hlId);showToast('Destaque removido','ok');}
   else showToast('Selecione o texto destacado para remover','warn');
   sel.removeAllRanges();hideToolbar();
@@ -1661,32 +1698,39 @@ function downloadNotesPDF(){
   showToast('📥 Abrindo para impressão/PDF...','ok');
 }
 
-/* ═══ ÁUDIO ═══ */
+/* ═══ ÁUDIO (legado — compatibilidade) ═══ */
 var _synth=window.speechSynthesis,_utt=null,_speaking=false,_paused=false;
+function _getLessonText(){
+  // Pega texto do tópico aberto no acordeão
+  var openTopic=document.querySelector('.ml-topic-item.t-open .ml-topic-content');
+  if(openTopic)return openTopic.innerText||'';
+  // Fallback: todo o conteúdo visível do módulo
+  var wrap=document.getElementById('modLessonWrap');
+  return wrap?wrap.innerText||'':'';
+}
 function toggleAudio(){
   if(!_synth)return;
   if(_speaking&&!_paused){_synth.pause();_paused=true;_speaking=false;document.getElementById('audioBtn').textContent='▶️';document.getElementById('audioStatus').textContent='Pausado';}
   else if(_paused){_synth.resume();_paused=false;_speaking=true;document.getElementById('audioBtn').textContent='⏸️';document.getElementById('audioStatus').textContent='Reproduzindo...';}
   else{
-    var txt=document.getElementById('lessonContent').innerText;if(!txt)return;
+    var txt=_getLessonText();if(!txt)return;
     _synth.cancel();
-    var rate=parseFloat(document.getElementById('audioSpeed').value)||1;
+    var rate=parseFloat(document.getElementById('audioSpeed')&&document.getElementById('audioSpeed').value||1);
     _utt=new SpeechSynthesisUtterance(txt);_utt.lang='pt-BR';_utt.rate=rate;
-    _utt.onstart=()=>{_speaking=true;_paused=false;document.getElementById('audioBtn').textContent='⏸️';document.getElementById('audioStatus').textContent='Reproduzindo... ('+rate+'×)';};
-    _utt.onend=_utt.onerror=()=>{_speaking=false;_paused=false;document.getElementById('audioBtn').textContent='▶️';document.getElementById('audioStatus').textContent='Concluído';};
+    _utt.onstart=function(){_speaking=true;_paused=false;var ab=document.getElementById('audioBtn');var as_=document.getElementById('audioStatus');if(ab)ab.textContent='⏸️';if(as_)as_.textContent='Reproduzindo... ('+rate+'×)';};
+    _utt.onend=_utt.onerror=function(){_speaking=false;_paused=false;var ab=document.getElementById('audioBtn');var as_=document.getElementById('audioStatus');if(ab)ab.textContent='▶️';if(as_)as_.textContent='Concluído';};
     _synth.speak(_utt);
   }
 }
-/* Altera velocidade em tempo real — reinicia a fala com nova taxa */
+/* Altera velocidade em tempo real */
 function changeAudioSpeed(val){
   var rate=parseFloat(val)||1;
   if(_speaking||_paused){
-    /* Guarda posição aproximada não é possível via API — reinicia do começo com nova velocidade */
-    var txt=document.getElementById('lessonContent').innerText;if(!txt)return;
+    var txt=_getLessonText();if(!txt)return;
     _synth.cancel();_speaking=false;_paused=false;
     _utt=new SpeechSynthesisUtterance(txt);_utt.lang='pt-BR';_utt.rate=rate;
-    _utt.onstart=()=>{_speaking=true;_paused=false;document.getElementById('audioBtn').textContent='⏸️';document.getElementById('audioStatus').textContent='Reproduzindo... ('+rate+'×)';};
-    _utt.onend=_utt.onerror=()=>{_speaking=false;_paused=false;document.getElementById('audioBtn').textContent='▶️';document.getElementById('audioStatus').textContent='Concluído';};
+    _utt.onstart=function(){_speaking=true;_paused=false;var ab=document.getElementById('audioBtn');var as_=document.getElementById('audioStatus');if(ab)ab.textContent='⏸️';if(as_)as_.textContent='Reproduzindo... ('+rate+'×)';};
+    _utt.onend=_utt.onerror=function(){_speaking=false;_paused=false;var ab=document.getElementById('audioBtn');var as_=document.getElementById('audioStatus');if(ab)ab.textContent='▶️';if(as_)as_.textContent='Concluído';};
     _synth.speak(_utt);
     showToast('🔊 Velocidade: '+rate+'×','ok');
   }
@@ -2345,7 +2389,7 @@ function _setupPenClickHighlight(){
 
   function _inContent(el){
     return !!(el && el.closest && el.closest(
-      '.ml-topic-content,.moa-topic-content,#lessonContent'
+      '.ml-topic-content,.moa-topic-content,#modLessonWrap'
     ));
   }
 
@@ -2781,10 +2825,18 @@ document.addEventListener('DOMContentLoaded',function(){
   initSidebar();setupEvents();updateTopbar();buildSidebar();initHighlight();setBottomNavActive();updateLessonCoverMini();initFloatingPen();buildModuleCarousel();
   // Polling de pontos
   // Polling de pontos — unificado no timer principal acima
-  // Sessão
+  // Sessão — salva duração e contagem, sem mexer no streak (gerenciado por checkStreak)
   var _ss=Date.now();
-  function saveSession(){var dur=Math.floor((Date.now()-_ss)/60000);var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}s.count=(s.count||0)+1;s.lastDuration=dur;var today=new Date().toLocaleDateString('pt-BR'),yest=new Date(Date.now()-86400000).toLocaleDateString('pt-BR');if(s.lastStudyDate===yest)s.streak=(s.streak||0)+1;else if(s.lastStudyDate!==today)s.streak=1;s.lastStudyDate=today;localStorage.setItem('ma_sessions',JSON.stringify(s));}
-  window.addEventListener('beforeunload',saveSession);window.addEventListener('pagehide',saveSession);
+  function saveSession(){
+    var dur=Math.floor((Date.now()-_ss)/60000);
+    var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}
+    s.count=(s.count||0)+1;
+    s.lastDuration=dur;
+    // NÃO sobrescreve lastStudyDate nem streak — isso é responsabilidade do checkStreak()
+    localStorage.setItem('ma_sessions',JSON.stringify(s));
+  }
+  window.addEventListener('beforeunload',saveSession);
+  window.addEventListener('pagehide',saveSession);
   grantMission('aula');
   // Verificar streak de acesso consecutivo → +500 pts se 7 dias seguidos
   checkStreak();
