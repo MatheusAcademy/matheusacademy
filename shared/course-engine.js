@@ -215,27 +215,25 @@
           </div>
         </div>
 
-        <!-- TÍTULO DO CURSO -->
-        <div class="cover-modules-title" id="coverModulesTitle">
-          <div class="cmt-line"></div>
-          <span id="coverModulesTitleText">Conteúdo do Curso</span>
-          <div class="cmt-line"></div>
-        </div>
-
-        <!-- CARROSSEL DE MÓDULOS — fileiras de até 4, scroll horizontal -->
-        <div class="cover-modules-section" id="coverModulesSection">
-          <!-- preenchido por JS -->
-        </div>
-
-        <!-- PROGRESSO -->
-        <div class="cover-progress" id="coverProgressWrap" style="display:none">
+        <!-- PROGRESSO — sempre visível logo abaixo dos stats -->
+        <div class="cover-progress" id="coverProgressWrap">
           <div class="cover-prog-row">
-            <span class="cover-prog-label">Seu progresso</span>
+            <span class="cover-prog-label">Seu Progresso</span>
             <span class="cover-prog-val" id="coverProgVal">0%</span>
           </div>
           <div class="cover-prog-bar">
             <div class="cover-prog-fill" id="coverProgFill" style="width:0%"></div>
           </div>
+        </div>
+
+        <!-- TÍTULO E MÓDULOS -->
+        <div class="cover-modules-title" id="coverModulesTitle">
+          <div class="cmt-line"></div>
+          <span id="coverModulesTitleText">Conteúdo do Curso</span>
+          <div class="cmt-line"></div>
+        </div>
+        <div class="cover-modules-section" id="coverModulesSection">
+          <!-- preenchido por JS -->
         </div>
       </div>
     </div>
@@ -254,10 +252,10 @@
       </button>
     </div>
 
-    <!-- ABA: AULA -->
+    <!-- ABA: AULA — NOVO LAYOUT ACORDEÃO POR MÓDULO -->
     <div class="tab-pane active" id="pane-conteudo" style="display:none">
 
-      <!-- MINI-CAPA IDÊNTICA À CAPA PRINCIPAL -->
+      <!-- MINI-CAPA -->
       <div class="lesson-cover-mini" id="lessonCoverMini">
         <div class="lcm-bg"></div>
         <div class="lcm-grid"></div>
@@ -281,117 +279,58 @@
         </div>
       </div>
 
-      <div class="lesson-area">
-        <div class="lesson-header">
-          <span class="lesson-mod-tag" id="lessonModTag">Selecione um tópico →</span>
-          <h2 class="lesson-title" id="lessonTitle">Bem-vindo ao curso!</h2>
-          <div class="lesson-meta-row">
-            <span class="lm-chip" id="lessonDur">⏱️ —</span>
-            <span class="lm-chip" id="lessonNum">Tópico —</span>
-          </div>
+      <!-- BARRA DE FONTE — acima do acordeão -->
+      <div class="reading-toolbar" style="margin:0;border-radius:0;border-left:none;border-right:none;">
+        <div class="rt-section">
+          <span class="rt-label">Aa Fonte</span>
         </div>
-
-        <!-- ÁUDIO -->
-        <div class="audio-ctrl">
-          <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">▶️</button>
-          <div class="audio-info">
-            <span class="audio-label">Narração por IA</span>
-            <span class="audio-status" id="audioStatus">Clique para ouvir a aula</span>
-          </div>
-          <select class="audio-speed" id="audioSpeed" onchange="changeAudioSpeed(this.value)">
-            <option value="0.5">0.5×</option>
-            <option value="0.75">0.75×</option>
-            <option value="1" selected>1×</option>
-            <option value="1.25">1.25×</option>
-            <option value="1.5">1.5×</option>
-            <option value="1.75">1.75×</option>
-            <option value="2">2×</option>
-            <option value="2.5">2.5×</option>
-            <option value="3">3×</option>
-          </select>
-        </div>
-
-        <!-- ══════════════════════════════════════════════
-             BARRA DE FERRAMENTAS DE LEITURA — SEMPRE VISÍVEL
-             Canetinha + Tamanho de fonte
-             ══════════════════════════════════════════════ -->
-        <div class="reading-toolbar">
-          <!-- Canetinha -->
-          <div class="rt-section">
-            <span class="rt-label">✏️ Canetinha</span>
-          </div>
-          <div class="rt-section" style="gap:5px">
-            <div class="hl-btn" data-color="amarelo" title="Amarelo" onclick="setActiveColor('amarelo')"></div>
-            <div class="hl-btn" data-color="verde" title="Verde" onclick="setActiveColor('verde')"></div>
-            <div class="hl-btn" data-color="azul" title="Azul" onclick="setActiveColor('azul')"></div>
-            <div class="hl-btn" data-color="rosa" title="Rosa" onclick="setActiveColor('rosa')"></div>
-            <div class="hl-btn" data-color="laranja" title="Laranja" onclick="setActiveColor('laranja')"></div>
-          </div>
-          <button class="rt-note-btn" onclick="applySelectedHighlight()">🖌️ Aplicar</button>
-          <button class="hl-remove-btn" onclick="removeHighlight()">✕ Remover</button>
-          <div class="rt-sep"></div>
-          <!-- Tamanho de fonte -->
-          <div class="rt-section">
-            <span class="rt-label">Aa Fonte</span>
-          </div>
-          <div class="rt-section">
-            <button class="font-size-btn" onclick="changeFontSize(-1)" title="Diminuir fonte">−</button>
-            <span class="font-size-display" id="fontSizeDisplay">14px</span>
-            <button class="font-size-btn" onclick="changeFontSize(1)" title="Aumentar fonte">+</button>
-          </div>
-        </div>
-
-        <!-- CONTEÚDO DA AULA -->
-        <div class="lesson-content" id="lessonContent">
-          <p>Selecione um módulo e tópico na barra lateral para começar a estudar.</p>
-          <p>Use a <strong>barra de ferramentas acima</strong> para destacar trechos com cores e ajustar o tamanho da fonte do texto. Selecione o texto e clique em 🖌️ Aplicar para colorir!</p>
-        </div>
-
-        <!-- QUIZ — 5 perguntas por tópico -->
-        <div class="quiz-wrap" id="quizWrap" style="display:none">
-          <span class="quiz-label">🧠 Quiz do Tópico</span>
-          <div class="quiz-nav-row">
-            <div class="quiz-progress-dots" id="quizProgDots"></div>
-            <span class="quiz-step-label" id="quizStepLabel">1 / 5</span>
-          </div>
-          <div class="quiz-card">
-            <div class="quiz-q" id="quizQ"></div>
-            <div class="quiz-opts" id="quizOpts"></div>
-            <div class="quiz-feedback" id="quizFb"></div>
-            <button class="quiz-confirm" id="quizBtn" onclick="submitQuiz()">Confirmar</button>
-          </div>
-        </div>
-
-        <!-- FLASHCARDS — 3 lado a lado -->
-        <div class="fc-section" id="fcSection" style="display:none">
-          <div class="fc-section-header">
-            <span class="fc-label">🃏 Flashcards — Clique para virar</span>
-            <span class="fc-counter-badge" id="fcCounterBadge">3 cards</span>
-          </div>
-          <div class="fc-grid" id="fcGrid">
-            <!-- renderizado por JS -->
-          </div>
-          <div class="fc-dots-row" id="fcDotsRow"></div>
-        </div>
-
-        <!-- NAVEGAÇÃO -->
-        <div class="topic-nav">
-          <button class="tnav-btn" id="prevBtn" onclick="goToPrev()">← Anterior</button>
-          <button class="tnav-btn primary" id="nextBtn" onclick="goToNext()">Próximo →</button>
+        <div class="rt-section">
+          <button class="font-size-btn" onclick="changeFontSize(-1)" title="Diminuir fonte">−</button>
+          <span class="font-size-display" id="fontSizeDisplay">14px</span>
+          <button class="font-size-btn" onclick="changeFontSize(1)" title="Aumentar fonte">+</button>
         </div>
       </div>
+
+      <!-- ACORDEÃO DE TÓPICOS + QUIZ + FLASHCARDS DO MÓDULO -->
+      <div class="mod-lesson-wrap" id="modLessonWrap">
+        <!-- preenchido por renderModLesson() -->
+      </div>
+
     </div>
 
-    <!-- ABA: ANOTAÇÕES -->
+    <!-- ABA: ANOTAÇÕES — caderno único do curso -->
     <div class="tab-pane" id="pane-anotacoes" style="display:none">
       <div class="notes-area">
-        <div class="notes-tab-header">
-          <div class="notes-tab-title">✏️ Minhas Anotações & Destaques</div>
-          <div class="notes-tab-sub">Trechos destacados com a canetinha aparecem aqui</div>
+        <div class="nb-header">
+          <div class="nb-title-row">
+            <span class="nb-icon">📓</span>
+            <div>
+              <div class="nb-title">Caderno de Anotações</div>
+              <div class="nb-sub">Suas notas e destaques de todo o curso</div>
+            </div>
+            <button class="nb-pdf-btn" onclick="downloadNotesPDF()" title="Baixar PDF">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar PDF
+            </button>
+          </div>
         </div>
-        <div class="hl-notes-list" id="hlNotesList">
-          <div style="text-align:center;color:var(--txt3);font-size:.75rem;padding:40px 0">
-            Nenhum destaque ainda.<br>Use a barra de ferramentas da aula para destacar textos!
+
+        <!-- Textarea livre — persiste no localStorage -->
+        <div class="nb-free-section">
+          <div class="nb-section-label">✏️ Suas anotações livres</div>
+          <textarea
+            class="nb-textarea"
+            id="nbFreeText"
+            placeholder="Escreva suas observações, resumos, ideias... Tudo é salvo automaticamente."
+            oninput="saveNbText()"
+          ></textarea>
+        </div>
+
+        <!-- Destaques e grifos da canetinha -->
+        <div class="nb-hl-section">
+          <div class="nb-section-label">🖊️ Trechos grifados</div>
+          <div class="hl-notes-list" id="hlNotesList">
+            <div class="nb-empty">Nenhum trecho grifado ainda.<br>Ative a canetinha e toque no texto da aula!</div>
           </div>
         </div>
       </div>
@@ -469,7 +408,7 @@
     <span class="bn-label">Início</span>
   </a>
   <!-- CURSOS -->
-  <a class="bn-item" id="bn-cursos" href="#" onclick="showCoverIfNeeded();return false">
+  <a class="bn-item" id="bn-cursos" href="cursos.html">
     <span class="bn-icon">
       <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
     </span>
@@ -510,9 +449,13 @@
     <div class="fp-color" data-color="rosa" onclick="fpSelectColor('rosa')"></div>
     <div class="fp-color" data-color="laranja" onclick="fpSelectColor('laranja')"></div>
     <div class="fp-sep"></div>
-    <div class="fp-erase" onclick="removeHighlight()" title="Remover destaque">✕</div>
+    <div class="fp-erase" onclick="fpEraseMode()" title="Remover destaque">✕</div>
   </div>
   <div class="fp-btn" id="fpBtn">
+    <!-- Indicador de cor ativa no canto do botão -->
+    <div class="fp-color-dot" id="fpColorDot"></div>
+    <!-- Badge ON/OFF -->
+    <span class="fp-status-badge" id="fpStatusBadge">OFF</span>
     <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
   </div>
 </div>
@@ -664,7 +607,7 @@ function setActiveColor(color){
   document.querySelectorAll('.hl-btn').forEach(b => b.classList.remove('active'));
   var btn = document.querySelector('.hl-btn[data-color="'+color+'"]');
   if(btn) btn.classList.add('active');
-  showToast('Cor selecionada: '+color, 'ok');
+  // sem toast — silencioso
 }
 function applySelectedHighlight(){
   var sel = window.getSelection();
@@ -740,46 +683,57 @@ function toggleMaMenu(){var d=document.getElementById('maMenuDd'),o=document.get
 function closeMaMenu(){document.getElementById('maMenuDd').classList.remove('open');document.getElementById('maMenuOverlay').classList.remove('open');}
 function maLogout(){localStorage.removeItem('ma_user');closeMaMenu();location.reload();}
 
-/* ═══ SIDEBAR ═══ */
-var _sidebarOpen=true;
+/* ═══ SIDEBAR — OVERLAY UNIVERSAL ═══ */
+var _sidebarOpen=false;
 var _isMobile=()=>window.innerWidth<=768;
-function toggleSidebar(){
-  _sidebarOpen=!_sidebarOpen;
+var _isTablet=()=>window.innerWidth>768&&window.innerWidth<=1024;
+
+function openSidebar(){
+  _sidebarOpen=true;
   var sb=document.getElementById('courseSidebar');
-  var main=document.getElementById('courseMain');
   var ov=document.getElementById('sidebarOverlay');
   var puller=document.getElementById('sbPuller');
-  if(_isMobile()){
-    sb.classList.toggle('mobile-open',_sidebarOpen);
-    ov.classList.toggle('show',_sidebarOpen);
-  }else{
-    sb.classList.toggle('hidden',!_sidebarOpen);
-    main.classList.toggle('sidebar-hidden',!_sidebarOpen);
-    if(puller){
-      puller.classList.toggle('sb-closed',!_sidebarOpen);
-    }
-  }
-  localStorage.setItem('ma_sidebar',_sidebarOpen?'1':'0');
+  if(sb)sb.classList.add('sb-open');
+  if(ov)ov.classList.add('show');
+  if(puller)puller.classList.add('sb-open');
+  localStorage.setItem('ma_sidebar','1');
 }
-function closeSidebarMobile(){
+
+function closeSidebar(){
   _sidebarOpen=false;
-  document.getElementById('courseSidebar').classList.remove('mobile-open');
-  document.getElementById('sidebarOverlay').classList.remove('show');
-}
-function initSidebar(){
+  var sb=document.getElementById('courseSidebar');
+  var ov=document.getElementById('sidebarOverlay');
   var puller=document.getElementById('sbPuller');
-  if(_isMobile()){
-    _sidebarOpen=false;
-    document.getElementById('courseSidebar').classList.remove('mobile-open');
-  }else{
-    var saved=localStorage.getItem('ma_sidebar');
-    _sidebarOpen=saved!=='0';
-    if(!_sidebarOpen){
-      document.getElementById('courseSidebar').classList.add('hidden');
-      document.getElementById('courseMain').classList.add('sidebar-hidden');
-      if(puller)puller.classList.add('sb-closed');
+  if(sb)sb.classList.remove('sb-open');
+  if(ov)ov.classList.remove('show');
+  if(puller)puller.classList.remove('sb-open');
+  localStorage.setItem('ma_sidebar','0');
+}
+
+function toggleSidebar(){
+  if(_sidebarOpen)closeSidebar();else openSidebar();
+}
+
+/* Compat: usado pelo overlay onclick e mobile */
+function closeSidebarMobile(){closeSidebar();}
+
+function initSidebar(){
+  // Sidebar sempre fechada ao iniciar
+  closeSidebar();
+  // Overlay fecha ao clicar
+  var ov=document.getElementById('sidebarOverlay');
+  if(ov)ov.addEventListener('click',closeSidebar);
+  // Fechar ao clicar no conteúdo principal (desktop/tablet)
+  var main=document.getElementById('courseMain');
+  if(main)main.addEventListener('click',function(e){
+    if(_sidebarOpen&&!e.target.closest('.course-sidebar')&&!e.target.closest('.sb-puller')&&!e.target.closest('.sidebar-toggle-btn')){
+      closeSidebar();
     }
-  }
+  });
+  // Resize — reajusta
+  window.addEventListener('resize',function(){
+    if(_sidebarOpen)closeSidebar();
+  });
 }
 
 /* ═══ ACESSO ═══ */
@@ -823,7 +777,7 @@ function buildSidebar(){
       var vis2=!_filterStr||topic.name.toLowerCase().includes(_filterStr);
       if(!vis2)return;
       html+='<div class="sb-topic-item'+(isActive?' active':'')+(topDone?' done':'')+'" onclick="selectTopic('+mi+','+ti+','+canAcc+')" id="sbTopic'+mi+'_'+ti+'">';
-      html+='<div class="sb-topic-dot"></div><span class="sb-topic-name">'+topic.name+'</span><span class="sb-topic-dur">'+topic.dur+'</span>';
+      html+='<div class="sb-topic-dot">'+(topDone?'✓':(ti+1))+'</div><span class="sb-topic-name">'+topic.name+'</span><span class="sb-topic-dur">'+topic.dur+'</span>';
       if(!canAcc)html+='<span class="sb-topic-lock">🔒</span>';
       html+='</div>';
     });
@@ -836,13 +790,29 @@ function buildSidebar(){
   document.getElementById('sbProgPct').textContent=pct+'%';
   updateCertPct(pct);
   // Atualizar capa
+  // Atualizar progresso na capa — sempre visível
   var cpw=document.getElementById('coverProgressWrap');
-  if(cpw&&done>0){cpw.style.display='block';document.getElementById('coverProgVal').textContent=pct+'%';document.getElementById('coverProgFill').style.width=pct+'%';}
+  if(cpw){
+    cpw.style.display='block';
+    document.getElementById('coverProgVal').textContent=pct+'%';
+    document.getElementById('coverProgFill').style.width=pct+'%';
+  }
   // Atualizar carrossel de módulos
   buildModuleCarousel();
 }
 function toggleSbMod(mi,canAcc){if(!canAcc){openLockScreen();return;}var hdr=document.getElementById('sbModHdr'+mi),tops=document.getElementById('sbTopics'+mi);if(hdr)hdr.classList.toggle('open');if(tops)tops.classList.toggle('open');}
 function filterModules(val){_filterStr=val.trim().toLowerCase();buildSidebar();if(_filterStr){document.querySelectorAll('.sb-topics').forEach(el=>el.classList.add('open'));document.querySelectorAll('.sb-mod-hdr').forEach(el=>el.classList.add('open'));}}
+
+/* Controle do puller — só aparece em aula (não na capa) */
+function _showPuller(){
+  var p=document.getElementById('sbPuller');
+  // No mobile não mostra puxador (usa o botão ☰ da topbar)
+  if(p&&window.innerWidth>=769)p.style.display='flex';
+}
+function _hidePuller(){
+  var p=document.getElementById('sbPuller');
+  if(p)p.style.display='none';
+}
 
 /* ═══ MOSTRAR ABAS / CAPA ═══ */
 function showCoverIfNeeded(){
@@ -850,6 +820,7 @@ function showCoverIfNeeded(){
   document.getElementById('courseTabs').style.display='none';
   document.querySelectorAll('.tab-pane').forEach(function(p){p.style.display='none';});
   hideFloatingPen();
+  _hidePuller();
 }
 function showTabs(){
   document.getElementById('courseCoverSection').style.display='none';
@@ -858,60 +829,476 @@ function showTabs(){
   document.getElementById('pane-conteudo').style.display='block';
   document.getElementById('pane-conteudo').classList.add('active');
   showFloatingPen();
+  _showPuller();
 }
 function startCourse(){
-  if(MODS.length>0&&MODS[0].topics.length>0){selectTopic(0,0,true);}
+  if(MODS.length>0)selectTopic(0,0,true);
 }
 
-/* ═══ SELECIONAR TÓPICO ═══ */
+/* ═══ SELECIONAR TÓPICO — abre módulo e expande o tópico ═══ */
 function selectTopic(mi,ti,canAcc){
   if(!canAcc){openLockScreen();return;}
   _curModIdx=mi;_curTopIdx=ti;
-  buildSidebar();loadTopic(mi,ti);
+  buildSidebar();
   showTabs();switchTab('conteudo');
   if(_isMobile())closeSidebarMobile();
   grantMission('aula');
-  // Scroll imediato ao topo do conteúdo
+  renderModLesson(mi);
+  // Expandir o tópico correto após render
   setTimeout(function(){
-    window.scrollTo({top:0,behavior:'instant'});
-    var main=document.getElementById('courseMain');
-    if(main)main.scrollTo({top:0,behavior:'instant'});
-  },0);
+    var item=document.getElementById('ml_topic_'+mi+'_'+ti);
+    if(item&&!item.classList.contains('t-open')){
+      mlToggleTopic(mi,ti);
+    }
+    // Scroll suave até o tópico
+    if(item){item.scrollIntoView({behavior:'smooth',block:'start'});}
+    else{window.scrollTo({top:0,behavior:'instant'});}
+  },80);
 }
 
-/* ═══ CARREGAR TÓPICO ═══ */
-function loadTopic(mi,ti){
-  var mod=MODS[mi],t=mod.topics[ti];if(!t)return;
-  document.getElementById('lessonModTag').textContent='Módulo '+(mi+1)+' — '+mod.name;
-  document.getElementById('lessonTitle').textContent=t.name;
-  document.getElementById('lessonDur').textContent='⏱️ '+t.dur;
-  document.getElementById('lessonNum').textContent='Tópico '+(ti+1)+'/'+mod.topics.length;
-  document.getElementById('lessonContent').innerHTML=t.content||'<p>Conteúdo em preparação.</p>';
-  stopAudio();
-  // Quiz
-  var qw=document.getElementById('quizWrap');
-  if(t.quiz){qw.style.display='block';loadQuiz(t.quiz);}else qw.style.display='none';
-  // Flashcards — SEMPRE ao final se existirem
-  var fs=document.getElementById('fcSection');
-  if(t.cards&&t.cards.length){
-    fs.style.display='block';
-    _fcCards=t.cards;_fcIdx=0;
-    renderCard();
-  }else{
-    fs.style.display='none';
+/* ═══ RENDERIZAR MÓDULO COMPLETO — acordeão de tópicos + quiz + flashcards ═══ */
+var _mlAudio={}; // estado de áudio por tópico {mi_ti: {synth, playing}}
+
+function renderModLesson(mi){
+  var mod=MODS[mi];
+  if(!mod)return;
+  var wrap=document.getElementById('modLessonWrap');
+  var prog=gProg();
+  var unlocked=isUnlocked();
+  var doneCount=mod.topics.filter(function(t){return prog[mod.id+'_'+t.id];}).length;
+  var pct=mod.topics.length?Math.round(doneCount/mod.topics.length*100):0;
+
+  var html='';
+
+  /* Cabeçalho do módulo + player de áudio único acima */
+  html+='<div class="ml-audio-ctrl" id="ml_audio_'+mi+'">'
+    +'<button class="ml-audio-btn" id="ml_abtn_'+mi+'" onclick="mlToggleModAudio('+mi+')" title="Ouvir narração do módulo">▶️</button>'
+    +'<div class="ml-audio-info">'
+    +'<span class="ml-audio-label">🎙️ Narração por IA</span>'
+    +'<span class="ml-audio-status" id="ml_ast_'+mi+'">Clique ▶️ para ouvir</span>'
+    +'</div>'
+    +'<select class="ml-audio-speed" id="ml_aspd_'+mi+'" onchange="mlChangeModSpeed('+mi+',this.value)">'
+    +'<option value="0.5">0.5×</option>'
+    +'<option value="0.75">0.75×</option>'
+    +'<option value="1" selected>1×</option>'
+    +'<option value="1.25">1.25×</option>'
+    +'<option value="1.5">1.5×</option>'
+    +'<option value="1.75">1.75×</option>'
+    +'<option value="2">2×</option>'
+    +'<option value="2.5">2.5×</option>'
+    +'<option value="3">3×</option>'
+    +'</select>'
+    +'</div>';
+
+  html+='<div class="ml-mod-header">'
+    +'<span class="ml-mod-label">Módulo '+(mi+1)+'</span>'
+    +'<div class="ml-mod-name">'+mod.name+'</div>'
+    +'<div class="ml-mod-meta">'+mod.topics.length+' aulas · '+doneCount+' concluídas</div>'
+    +'</div>';
+
+  /* Barra de progresso */
+  html+='<div class="ml-mod-prog-row">'
+    +'<div class="ml-mod-prog-bar"><div class="ml-mod-prog-fill" style="width:'+pct+'%"></div></div>'
+    +'<span class="ml-mod-prog-pct">'+pct+'%</span>'
+    +'</div>';
+
+  /* Lista de tópicos */
+  html+='<div class="ml-topics-list" id="ml_topics_list_'+mi+'">';
+  mod.topics.forEach(function(t,ti){
+    var done=!!prog[mod.id+'_'+t.id];
+    var isOpen=mi===_curModIdx&&ti===_curTopIdx;
+    var cls='ml-topic-item'+(done?' t-done':'')+(isOpen?' t-open':'');
+    html+='<div class="'+cls+'" id="ml_topic_'+mi+'_'+ti+'">';
+
+    /* Header do tópico */
+    html+='<div class="ml-topic-hdr" onclick="mlToggleTopic('+mi+','+ti+')">'
+      +'<div class="ml-topic-dot">'+(ti+1)+'</div>'
+      +'<div class="ml-topic-info">'
+      +'<span class="ml-topic-name">'+t.name+'</span>'
+      +'<div class="ml-topic-meta"><span class="ml-topic-dur">'+t.dur+'</span></div>'
+      +'</div>'
+      +'<div class="ml-topic-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>'
+      +'</div>';
+
+    /* Corpo do tópico */
+    html+='<div class="ml-topic-body" id="ml_tbody_'+mi+'_'+ti+'">'
+      +'<div class="ml-topic-inner">'
+      /* Conteúdo direto, sem áudio por tópico */
+      +'<div class="ml-topic-content lesson-content" id="ml_content_'+mi+'_'+ti+'">'+(t.content||'<p>Conteúdo em preparação.</p>')+'</div>'
+      /* Botão marcar como concluído — preto antes, verde ao clicar */
+      +'<button class="ml-mark-btn'+(done?' ml-mark-done':'')+'" id="ml_mark_'+mi+'_'+ti+'" onclick="mlMarkDone('+mi+','+ti+')">'
+      +'<div class="ml-mark-checkbox">'
+      +(done?'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>':'')
+      +'</div>'
+      +'<span class="ml-mark-label">'+(done?'Concluído':'Marcar como concluído')+'</span>'
+      +'</button>'
+      +'</div>'
+      +'</div>';
+
+    html+='</div>'; // ml-topic-item
+  });
+  html+='</div>'; // ml-topics-list
+
+  /* ── QUIZ FINAL DO MÓDULO — máximo 3 questões ── */
+  var allQuizzes=[];
+  mod.topics.forEach(function(t){
+    if(t.quiz){
+      var arr=Array.isArray(t.quiz)?t.quiz:[t.quiz];
+      arr.forEach(function(q){allQuizzes.push(q);});
+    }
+  });
+  // Limita sempre a 3 questões por módulo
+  allQuizzes=allQuizzes.slice(0,3);
+
+  if(allQuizzes.length>0){
+    var qzDoneKey=COURSE.prefix+'qzdone_'+mi;
+    var qzDone=!!localStorage.getItem(qzDoneKey);
+    var modName=mod.name.replace(/Módulo\s*\d+\s*[—\-–]\s*/i,'').trim();
+    html+='<div class="ml-quiz-section'+(qzDone?' qz-open':'')+'" id="ml_quiz_sec_'+mi+'">';
+    html+='<div class="ml-quiz-header" onclick="mlToggleQuiz('+mi+')">'
+      +'<div class="ml-quiz-toggle-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>'
+      +'<span class="ml-quiz-header-icon">🧠</span>'
+      +'<span class="ml-quiz-header-title">Quiz — '+modName+'</span>'
+      +'<span class="ml-quiz-header-sub">Teste o que você aprendeu — '+allQuizzes.length+' questões — máximo de '+(allQuizzes.length*20)+' pontos</span>'
+      +'</div>';
+    html+='<div class="ml-quiz-body"><div class="ml-quiz-inner" id="ml_quiz_inner_'+mi+'">';
+    var letters=['A','B','C','D','E'];
+    allQuizzes.forEach(function(q,qi){
+      html+='<div class="mlq-item" id="mlq_'+mi+'_'+qi+'">'
+        +'<div class="mlq-header-row">'
+        +'<div class="mlq-num">'+(qi+1)+'. '+q.q+'</div>'
+        +'<span class="mlq-pts-badge">'+20+' pts</span>'
+        +'</div>'
+        +'<div class="mlq-opts" id="mlq_opts_'+mi+'_'+qi+'">';
+      q.opts.forEach(function(opt,oi){
+        html+='<div class="mlq-opt" id="mlq_opt_'+mi+'_'+qi+'_'+oi+'" onclick="mlSelOpt('+mi+','+qi+','+oi+')">'
+          +'<div class="mlq-opt-letter">'+(letters[oi]||oi)+'</div>'
+          +opt+'</div>';
+      });
+      html+='</div>'
+        +'<div class="mlq-result" id="mlq_res_'+mi+'_'+qi+'"></div>'
+        +'</div>';
+    });
+
+    html+='<button class="ml-quiz-finish-btn" id="ml_qfbtn_'+mi+'" onclick="mlFinishQuiz('+mi+','+JSON.stringify(allQuizzes.map(function(q){return q.correct;}))+')">🎯 Finalizar Questões</button>';
+    html+='<div class="ml-quiz-score" id="ml_qscore_'+mi+'"></div>';
+    html+='</div></div>'; // inner, body
+    html+='</div>'; // quiz section
   }
-  // Marcar como visto
-  var prog=gProg(),key=mod.id+'_'+t.id;
-  if(!prog[key]){prog[key]=true;sProg(prog);addPoints('Aula: '+t.name,10);buildSidebar();}
-  // Prev/Next
-  var flat=_allTopics.findIndex(x=>x.mi===mi&&x.ti===ti);
-  var prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn');
-  if(prevBtn)prevBtn.disabled=flat<=0;
-  if(nextBtn){if(flat>=_allTopics.length-1)nextBtn.textContent='✅ Concluir Módulo';else nextBtn.textContent='Próximo →';}
+
+  /* ── FLASHCARDS OPCIONAIS ── */
+  var allCards=[];
+  mod.topics.forEach(function(t){
+    if(t.cards&&t.cards.length)t.cards.forEach(function(c){allCards.push(c);});
+  });
+
+  if(allCards.length>0){
+    html+='<div class="ml-fc-section" id="ml_fc_sec_'+mi+'">';
+    html+='<button class="ml-fc-toggle-btn" onclick="mlToggleFC('+mi+')">'
+      +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>'
+      +'<span class="ml-fc-toggle-label">🃏 Flashcards do Módulo</span>'
+      +'<span class="ml-fc-toggle-count">'+allCards.length+' cards</span>'
+      +'<div class="ml-fc-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>'
+      +'</button>';
+    html+='<div class="ml-fc-body"><div class="ml-fc-grid" id="ml_fc_grid_'+mi+'">';
+    allCards.forEach(function(c,ci){
+      html+='<div class="ml-flashcard" id="ml_fc_'+mi+'_'+ci+'" onclick="mlFlipCard('+mi+','+ci+')">'
+        +'<div class="ml-fc-inner">'
+        +'<div class="ml-fc-face ml-fc-front">'
+        +'<span class="ml-fc-suit">✦</span>'
+        +'<span class="ml-fc-suit-br">✦</span>'
+        +'<div class="ml-fc-qmark">?</div>'
+        +'<div class="ml-fc-front-hint">Toque para revelar</div>'
+        +'</div>'
+        +'<div class="ml-fc-face ml-fc-back">'
+        +'<div class="ml-fc-back-glow"></div>'
+        +'<div class="ml-fc-back-tag">✅ Resposta</div>'
+        +'<div class="ml-fc-back-q">'+c.q+'</div>'
+        +'<div class="ml-fc-answer">'+c.a+'</div>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+    });
+    html+='</div></div>';
+    html+='</div>'; // fc-section
+  }
+
+  /* ── RODAPÉ SOCIAL ── */
+  html+='<div class="ml-social-footer">'
+    +'<span class="ml-social-label">Siga e entre na comunidade</span>'
+    +'<div class="ml-social-links">'
+    +'<a class="ml-social-btn ml-ig" href="https://instagram.com/matheusacademy" target="_blank" rel="noopener">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>'
+    +'Instagram'
+    +'</a>'
+    +'<a class="ml-social-btn ml-tg" href="https://t.me/matheusacademy" target="_blank" rel="noopener">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5L2.5 9.5l6 2.5 2.5 7 3-4 5 4 2.5-16.5z"/><line x1="8.5" y1="12" x2="14.5" y2="9"/></svg>'
+    +'Grupo VIP Telegram'
+    +'</a>'
+    +'</div>'
+    +'</div>';
+
+  wrap.innerHTML=html;
+
+  /* Restaurar estado de quiz se já foi respondido */
+  allQuizzes.forEach(function(_,qi){
+    var saved=localStorage.getItem(COURSE.prefix+'qzsel_'+mi+'_'+qi);
+    if(saved!==null){mlSelOpt(mi,qi,parseInt(saved),true);}
+  });
 }
-function _scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});var main=document.getElementById('courseMain');if(main)main.scrollTo({top:0,behavior:'smooth'});}
-function goToPrev(){var flat=_allTopics.findIndex(x=>x.mi===_curModIdx&&x.ti===_curTopIdx);if(flat<=0)return;var p=_allTopics[flat-1];selectTopic(p.mi,p.ti,p.canAcc);_scrollToTop();}
-function goToNext(){var flat=_allTopics.findIndex(x=>x.mi===_curModIdx&&x.ti===_curTopIdx);if(flat>=_allTopics.length-1){completeModule(_curModIdx);return;}var n=_allTopics[flat+1];if(!n.canAcc){openLockScreen();return;}selectTopic(n.mi,n.ti,n.canAcc);_scrollToTop();}
+
+/* ── TOGGLE DO TÓPICO ── */
+function mlToggleTopic(mi,ti){
+  var item=document.getElementById('ml_topic_'+mi+'_'+ti);
+  if(!item)return;
+  var isOpen=item.classList.contains('t-open');
+  // Fecha todos do mesmo módulo
+  document.querySelectorAll('[id^="ml_topic_'+mi+'_"]').forEach(function(el){
+    el.classList.remove('t-open');
+  });
+  if(!isOpen){
+    item.classList.add('t-open');
+    _curModIdx=mi;_curTopIdx=ti;
+    // Marcar como visto
+    var mod=MODS[mi],t=mod.topics[ti];
+    var prog=gProg(),key=mod.id+'_'+t.id;
+    if(!prog[key]){prog[key]=true;sProg(prog);addPoints('Aula: '+t.name,10);buildSidebar();
+      // Atualiza badge do botão marcar
+      var btn=document.getElementById('ml_mark_'+mi+'_'+ti);
+      if(btn){btn.classList.add('done');btn.textContent='✅ Tópico Concluído';}
+      // Dot mantém o número — não muda para ✓
+      item.classList.add('t-done');
+    }
+  }
+}
+
+/* Som de check — lápis riscando papel */
+function playCheckSound(){
+  try{
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    // Ruído branco filtrado — simula lápis no papel
+    var buf=ctx.createBuffer(1,ctx.sampleRate*0.18,ctx.sampleRate);
+    var data=buf.getChannelData(0);
+    for(var i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*(1-i/data.length);
+    var src=ctx.createBufferSource();src.buffer=buf;
+    var hp=ctx.createBiquadFilter();hp.type='highpass';hp.frequency.value=2200;
+    var lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=7000;
+    var gain=ctx.createGain();gain.gain.setValueAtTime(0.18,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.18);
+    src.connect(hp);hp.connect(lp);lp.connect(gain);gain.connect(ctx.destination);
+    src.start();src.stop(ctx.currentTime+0.18);
+    // Click seco no final
+    var osc=ctx.createOscillator();var g2=ctx.createGain();
+    osc.connect(g2);g2.connect(ctx.destination);
+    osc.type='sine';osc.frequency.setValueAtTime(900,ctx.currentTime+0.12);
+    osc.frequency.exponentialRampToValueAtTime(400,ctx.currentTime+0.18);
+    g2.gain.setValueAtTime(0.12,ctx.currentTime+0.12);
+    g2.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);
+    osc.start(ctx.currentTime+0.12);osc.stop(ctx.currentTime+0.22);
+  }catch(e){}
+}
+
+/* ── MARCAR TÓPICO COMO CONCLUÍDO (botão manual) ── */
+function mlMarkDone(mi,ti){
+  var mod=MODS[mi],t=mod.topics[ti];
+  var prog=gProg(),key=mod.id+'_'+t.id;
+  var isNew=!prog[key];
+  if(isNew){prog[key]=true;sProg(prog);addPoints('Tópico concluído: '+t.name,20);buildSidebar();}
+  var btn=document.getElementById('ml_mark_'+mi+'_'+ti);
+  if(btn){
+    btn.classList.add('ml-mark-done');
+    var cb=btn.querySelector('.ml-mark-checkbox');
+    if(cb)cb.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    var lbl=btn.querySelector('.ml-mark-label');
+    if(lbl)lbl.textContent='Concluído';
+    playCheckSound();
+  }
+  var item=document.getElementById('ml_topic_'+mi+'_'+ti);
+  if(item){
+    item.classList.add('t-done');
+    // Dot mantém o número — não muda para ✓
+    var badge=item.querySelector('.ml-topic-done-badge');
+    if(badge)badge.style.display='inline';
+  }
+  renderModProgress(mi);
+  if(isNew)showToast('✅ Tópico concluído! +20 pontos','ok');
+}
+
+/* Atualiza só a barra de progresso sem re-renderizar tudo */
+function renderModProgress(mi){
+  var mod=MODS[mi];var prog=gProg();
+  var done=mod.topics.filter(function(t){return prog[mod.id+'_'+t.id];}).length;
+  var pct=mod.topics.length?Math.round(done/mod.topics.length*100):0;
+  var fill=document.querySelector('#modLessonWrap .ml-mod-prog-fill');
+  var pctEl=document.querySelector('#modLessonWrap .ml-mod-prog-pct');
+  if(fill)fill.style.width=pct+'%';
+  if(pctEl)pctEl.textContent=pct+'%';
+}
+
+/* ── ÁUDIO ÚNICO DO MÓDULO (lê todo o conteúdo dos tópicos em sequência) ── */
+var _mlModSynth=null,_mlModMi=-1;
+function mlToggleModAudio(mi){
+  var btn=document.getElementById('ml_abtn_'+mi);
+  var st=document.getElementById('ml_ast_'+mi);
+  // Para áudio de outro módulo
+  if(_mlModSynth&&_mlModMi!==mi){
+    _mlModSynth.cancel();_mlModSynth=null;
+    var ob=document.getElementById('ml_abtn_'+_mlModMi);
+    var os=document.getElementById('ml_ast_'+_mlModMi);
+    if(ob)ob.textContent='▶️';if(os)os.textContent='Clique ▶️ para ouvir';
+  }
+  // Pausa se já tocando este módulo
+  if(_mlModSynth&&_mlModMi===mi){
+    _mlModSynth.cancel();_mlModSynth=null;
+    if(btn)btn.textContent='▶️';if(st)st.textContent='Clique ▶️ para ouvir';return;
+  }
+  // Monta texto de todos os tópicos do módulo
+  var mod=MODS[mi];
+  var txt='';
+  mod.topics.forEach(function(t){
+    var tmp=document.createElement('div');tmp.innerHTML=t.content||'';
+    var t2=tmp.textContent||'';
+    if(t2.trim())txt+=t.name+'. '+t2+' ';
+  });
+  if(!txt.trim()){showToast('Sem conteúdo para narrar','warn');return;}
+  var spd=parseFloat(document.getElementById('ml_aspd_'+mi)&&document.getElementById('ml_aspd_'+mi).value||1);
+  var utt=new SpeechSynthesisUtterance(txt);
+  utt.lang='pt-BR';utt.rate=spd;
+  utt.onstart=function(){if(btn)btn.textContent='⏸️';if(st)st.textContent='Narrando módulo...';};
+  utt.onend=utt.onerror=function(){if(btn)btn.textContent='▶️';if(st)st.textContent='Concluído';_mlModSynth=null;};
+  window.speechSynthesis.speak(utt);
+  _mlModSynth=window.speechSynthesis;_mlModMi=mi;
+}
+function mlChangeModSpeed(mi,val){
+  if(_mlModSynth&&_mlModMi===mi){mlToggleModAudio(mi);setTimeout(function(){mlToggleModAudio(mi);},100);}
+}
+
+/* ── TOGGLE QUIZ ── */
+function mlToggleQuiz(mi){
+  var sec=document.getElementById('ml_quiz_sec_'+mi);
+  if(sec)sec.classList.toggle('qz-open');
+}
+
+/* ── SELEÇÃO DE OPÇÃO DO QUIZ ── */
+var _mlQzSel={}; // {mi_qi: oi}
+function mlSelOpt(mi,qi,oi,silent){
+  var key=mi+'_'+qi;
+  _mlQzSel[key]=oi;
+  if(!silent)localStorage.setItem(COURSE.prefix+'qzsel_'+mi+'_'+qi,oi);
+  // Atualiza visual
+  var optsEl=document.getElementById('mlq_opts_'+mi+'_'+qi);
+  if(!optsEl)return;
+  optsEl.querySelectorAll('.mlq-opt').forEach(function(o,idx){
+    o.classList.toggle('selected',idx===oi);
+  });
+}
+
+/* ── FINALIZAR QUIZ DO MÓDULO ── */
+function mlFinishQuiz(mi,corrects){
+  // Verifica se todas as questões foram respondidas
+  var allAnswered=true;
+  for(var qi=0;qi<corrects.length;qi++){
+    if(_mlQzSel[mi+'_'+qi]===undefined){allAnswered=false;break;}
+  }
+  if(!allAnswered){showToast('⚠️ Responda todas as questões antes de finalizar!','warn');return;}
+
+  var score=0,totalPts=0;
+  corrects.forEach(function(correct,qi){
+    var selected=_mlQzSel[mi+'_'+qi];
+    var isCorrect=selected===correct;
+    if(isCorrect){score++;totalPts+=20;}else{totalPts-=50;}
+
+    // Colorir opções
+    var optsEl=document.getElementById('mlq_opts_'+mi+'_'+qi);
+    if(optsEl)optsEl.querySelectorAll('.mlq-opt').forEach(function(o,oi){
+      o.classList.remove('selected');
+      if(oi===correct){o.classList.add('correct-ans');o.querySelector('.mlq-opt-dot').textContent='✓';}
+      else if(oi===selected&&!isCorrect){o.classList.add('wrong-ans');o.querySelector('.mlq-opt-dot').textContent='✕';}
+      o.style.pointerEvents='none';
+    });
+
+    // Feedback por questão
+    var res=document.getElementById('mlq_res_'+mi+'_'+qi);
+    if(res){
+      res.className='mlq-result '+(isCorrect?'correct':'wrong');
+      res.textContent=isCorrect?'✅ Correto! +20 pontos':'❌ Incorreto. −50 pontos';
+    }
+  });
+
+  // Pontos — aplica total (pode ser negativo, mas não deixa ir abaixo de 0)
+  if(totalPts>0){addPoints('Quiz do Módulo '+(mi+1),totalPts);}
+  else if(totalPts<0){
+    var p=gP();p.total=Math.max(0,p.total+totalPts);
+    localStorage.setItem('ma_points',JSON.stringify(p));updateTopbar();
+    showToast('📉 '+(totalPts)+' pontos pelas respostas incorretas','');
+  }
+
+  // Score final
+  var scoreEl=document.getElementById('ml_qscore_'+mi);
+  if(scoreEl){
+    scoreEl.classList.add('show');
+    var pct2=Math.round(score/corrects.length*100);
+    var icon=pct2===100?'🏆':pct2>=60?'🎯':'📚';
+    var msg=pct2===100?'Perfeito! Acertou tudo!':pct2>=60?'Bom resultado! Continue assim.':'Revise o conteúdo e tente novamente.';
+    var nextModBtn='';
+    // Botão próximo módulo só aparece se acertou 100% E existe próximo módulo
+    if(pct2===100&&mi+1<MODS.length){
+      var nextMod=MODS[mi+1];
+      var canNext=isUnlocked()||mi+1<COURSE.freeModules;
+      if(canNext){
+        nextModBtn='<button class="ml-next-mod-btn" onclick="selectTopic('+(mi+1)+',0,true);window.scrollTo({top:0,behavior:\'smooth\'})">'
+          +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><polyline points="9 18 15 12 9 6"/></svg>'
+          +'Ir para o Módulo '+(mi+2)+': '+nextMod.name
+          +'</button>';
+      }
+    }
+    scoreEl.innerHTML='<span class="mlqs-icon">'+icon+'</span>'
+      +'<div class="mlqs-title">'+score+' / '+corrects.length+' corretas</div>'
+      +'<div class="mlqs-sub">'+msg+'</div>'
+      +'<span class="mlqs-pts">⭐ '+(totalPts>0?'+':'')+totalPts+' pontos</span>'
+      +nextModBtn;
+  }
+
+  // Desabilita botão finalizar
+  var fbtn=document.getElementById('ml_qfbtn_'+mi);
+  if(fbtn){fbtn.disabled=true;fbtn.textContent='✅ Quiz Finalizado';}
+
+  // Salva como feito
+  localStorage.setItem(COURSE.prefix+'qzdone_'+mi,'1');
+  grantMission('quiz');
+
+  // Verifica conclusão do módulo
+  var prog=gProg(),mod=MODS[mi],key='mod_done_'+mi;
+  var allDone=mod.topics.every(function(t){return prog[mod.id+'_'+t.id];});
+  if(allDone&&!prog[key]){prog[key]=true;sProg(prog);addPoints('Módulo concluído: '+mod.name,50);showMotiv('🎉','Módulo Concluído!','Você completou "'+mod.name+'" com sucesso!','+50 pontos');}
+  buildSidebar();
+}
+
+/* ── TOGGLE FLASHCARDS ── */
+function mlToggleFC(mi){
+  var sec=document.getElementById('ml_fc_sec_'+mi);
+  if(sec)sec.classList.toggle('fc-open');
+}
+
+/* ── VIRAR FLASHCARD ── */
+function mlFlipCard(mi,ci){
+  var card=document.getElementById('ml_fc_'+mi+'_'+ci);
+  if(card)card.classList.toggle('flipped');
+}
+
+/* Legado — mantido para compatibilidade com sidebar */
+function loadTopic(mi,ti){selectTopic(mi,ti,true);}
+function goToPrev(){
+  var flat=_allTopics.findIndex(function(x){return x.mi===_curModIdx&&x.ti===_curTopIdx;});
+  if(flat<=0)return;
+  var p=_allTopics[flat-1];selectTopic(p.mi,p.ti,p.canAcc);
+}
+function goToNext(){
+  var flat=_allTopics.findIndex(function(x){return x.mi===_curModIdx&&x.ti===_curTopIdx;});
+  if(flat>=_allTopics.length-1){completeModule(_curModIdx);return;}
+  var n=_allTopics[flat+1];if(!n.canAcc){openLockScreen();return;}
+  selectTopic(n.mi,n.ti,n.canAcc);
+}
 function completeModule(mi){var prog=gProg(),mod=MODS[mi],key='mod_done_'+mi;if(!prog[key]){prog[key]=true;sProg(prog);addPoints('Módulo concluído: '+mod.name,50);showMotiv('🎉','Módulo Concluído!','Você completou "'+mod.name+'" com sucesso!','+50 pontos');}buildSidebar();}
 
 /* ═══ TABS ═══ */
@@ -920,7 +1307,13 @@ function switchTab(tab){
   document.querySelectorAll('.tab-pane').forEach(p=>{p.classList.remove('active');p.style.display='none';});
   document.getElementById('tab-'+tab).classList.add('active');
   var pane=document.getElementById('pane-'+tab);pane.style.display='block';pane.classList.add('active');
-  if(tab==='anotacoes')renderHlNotes();
+  if(tab==='anotacoes'){
+    // Carrega texto livre salvo
+    var saved=localStorage.getItem(COURSE.prefix+'nb_free')||'';
+    var ta=document.getElementById('nbFreeText');
+    if(ta)ta.value=saved;
+    renderHlNotes();
+  }
 }
 
 /* ═══ CANETINHA FLUTUANTE ═══ */
@@ -933,6 +1326,8 @@ function initHighlight(){
   document.addEventListener('mousedown',function(e){if(!_toolbar.contains(e.target)&&!_notePopup.contains(e.target)){hideToolbar();closeHlNote();}});
 }
 function onTextSelect(){
+  // Quando caneta está no modo ON, não mostra toolbar — o clique já aplica direto
+  if(_penActive){hideToolbar();return;}
   var sel=window.getSelection();
   if(!sel||sel.rangeCount===0||sel.toString().trim().length<2){hideToolbar();return;}
   var range=sel.getRangeAt(0);
@@ -992,13 +1387,103 @@ function saveHlNote(){
 }
 function closeHlNote(){document.getElementById('hlNoteInput').value='';_notePopup.classList.remove('show');_pendingHlId=null;}
 function renderHlNotes(){
-  var data=gHlData();var el=document.getElementById('hlNotesList');
-  if(!data.length){el.innerHTML='<div style="text-align:center;color:var(--txt3);font-size:.75rem;padding:40px 0">Nenhum destaque ainda.<br>Use a canetinha na aula!</div>';return;}
-  var colorLabels={amarelo:'#fbbb24',verde:'#22c55e',azul:'#5b7fff',rosa:'#ec4899',laranja:'#f59e0b'};
-  el.innerHTML=data.map(d=>'<div class="hl-note-item">'+(d.text?'<div class="hl-ni-quote" style="border-left-color:'+(colorLabels[d.color]||'#5b7fff')+'">'+escHtml(d.text.substring(0,120))+(d.text.length>120?'…':'')+'</div>':'')+(d.note?'<div class="hl-ni-note">'+escHtml(d.note)+'</div>':'')+'<div class="hl-ni-meta"><div class="hl-ni-color" style="background:'+(colorLabels[d.color]||'#5b7fff')+'"></div><span>'+d.date+'</span></div><button class="hl-note-del" onclick="deleteHlItem(\''+d.id+'\')">✕</button></div>').join('');
+  var data=gHlData();
+  var el=document.getElementById('hlNotesList');
+  if(!el)return;
+  if(!data.length){
+    el.innerHTML='<div class="nb-empty">Nenhum trecho grifado ainda.<br>Ative a canetinha e toque no texto da aula!</div>';
+    return;
+  }
+  var colorMap={amarelo:'#fbbb24',verde:'#22c55e',azul:'#5b7fff',rosa:'#ec4899',laranja:'#f59e0b'};
+  el.innerHTML=data.map(function(d){
+    // Descobrir nome do tópico a partir de topicKey "mi_ti"
+    var topicLabel='';
+    if(d.topicKey){
+      var parts=d.topicKey.split('_');
+      var tmi=parseInt(parts[0]),tti=parseInt(parts[1]);
+      if(!isNaN(tmi)&&MODS[tmi]&&MODS[tmi].topics[tti])
+        topicLabel=MODS[tmi].name+' › '+MODS[tmi].topics[tti].name;
+    }
+    return '<div class="hl-note-item">'
+      +(topicLabel?'<div style="font-size:.46rem;color:var(--txt3);margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:.08em">📍 '+escHtml(topicLabel)+'</div>':'')
+      +(d.text?'<div class="hl-ni-quote" style="border-left-color:'+(colorMap[d.color]||'#5b7fff')+'">'+escHtml(d.text.substring(0,300))+(d.text.length>300?'…':'')+'</div>':'')
+      +(d.note?'<div class="hl-ni-note">📝 '+escHtml(d.note)+'</div>':'')
+      +'<div class="hl-ni-meta"><div class="hl-ni-color" style="background:'+(colorMap[d.color]||'#5b7fff')+'"></div><span>'+d.date+'</span></div>'
+      +'<button class="hl-note-del" onclick="deleteHlItem(\''+d.id+'\')" title="Remover">✕</button>'
+      +'</div>';
+  }).join('');
 }
-function deleteHlItem(id){var data=gHlData().filter(d=>d.id!==id);sHlData(data);renderHlNotes();}
+function deleteHlItem(id){var data=gHlData().filter(function(d){return d.id!==id;});sHlData(data);renderHlNotes();}
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* Salvar texto livre do caderno */
+function saveNbText(){
+  var ta=document.getElementById('nbFreeText');
+  if(ta)localStorage.setItem(COURSE.prefix+'nb_free',ta.value);
+}
+
+/* Download PDF das anotações */
+function downloadNotesPDF(){
+  var freeText=localStorage.getItem(COURSE.prefix+'nb_free')||'';
+  var hlData=gHlData();
+  var colorMap={amarelo:'#fbbb24',verde:'#22c55e',azul:'#5b7fff',rosa:'#ec4899',laranja:'#f59e0b'};
+
+  // Monta HTML para o PDF via janela de impressão
+  var lines=[];
+  lines.push('<!DOCTYPE html><html><head><meta charset="UTF-8">');
+  lines.push('<style>');
+  lines.push('body{font-family:Arial,sans-serif;max-width:800px;margin:40px auto;color:#1a1a2e;font-size:14px;line-height:1.7;}');
+  lines.push('h1{font-size:22px;color:#1a1a2e;border-bottom:3px solid #4A7EFF;padding-bottom:8px;}');
+  lines.push('h2{font-size:15px;color:#4A7EFF;margin-top:28px;margin-bottom:8px;}');
+  lines.push('.free{background:#f5f6fc;border-radius:8px;padding:16px;white-space:pre-wrap;font-size:13px;line-height:1.8;}');
+  lines.push('.hl-item{border-left:4px solid #4A7EFF;padding:10px 14px;margin-bottom:12px;background:#f9f9ff;border-radius:0 8px 8px 0;}');
+  lines.push('.hl-topic{font-size:10px;color:#888;font-weight:bold;text-transform:uppercase;margin-bottom:4px;}');
+  lines.push('.hl-text{font-style:italic;color:#2a2a4a;margin-bottom:4px;}');
+  lines.push('.hl-note{font-size:12px;color:#555;background:#fff;padding:6px 10px;border-radius:6px;margin-top:6px;}');
+  lines.push('.hl-date{font-size:10px;color:#aaa;margin-top:4px;}');
+  lines.push('@media print{body{margin:20px;}}');
+  lines.push('</style></head><body>');
+  lines.push('<h1>📓 Caderno de Anotações — '+escHtml(COURSE.name)+'</h1>');
+  lines.push('<p style="color:#888;font-size:12px">Exportado em '+new Date().toLocaleDateString('pt-BR')+' às '+new Date().toLocaleTimeString('pt-BR')+'</p>');
+
+  if(freeText.trim()){
+    lines.push('<h2>✏️ Anotações Livres</h2>');
+    lines.push('<div class="free">'+escHtml(freeText)+'</div>');
+  }
+
+  if(hlData.length){
+    lines.push('<h2>🖊️ Trechos Grifados ('+hlData.length+')</h2>');
+    hlData.forEach(function(d){
+      var topicLabel='';
+      if(d.topicKey){
+        var parts=d.topicKey.split('_');
+        var tmi=parseInt(parts[0]),tti=parseInt(parts[1]);
+        if(!isNaN(tmi)&&MODS[tmi]&&MODS[tmi].topics[tti])
+          topicLabel=MODS[tmi].name+' › '+MODS[tmi].topics[tti].name;
+      }
+      var color=colorMap[d.color]||'#4A7EFF';
+      lines.push('<div class="hl-item" style="border-left-color:'+color+'">');
+      if(topicLabel)lines.push('<div class="hl-topic">📍 '+escHtml(topicLabel)+'</div>');
+      if(d.text)lines.push('<div class="hl-text">"'+escHtml(d.text)+'"</div>');
+      if(d.note)lines.push('<div class="hl-note">📝 '+escHtml(d.note)+'</div>');
+      lines.push('<div class="hl-date">'+d.date+'</div>');
+      lines.push('</div>');
+    });
+  }
+
+  if(!freeText.trim()&&!hlData.length){
+    lines.push('<p style="color:#888;text-align:center;padding:40px 0">Nenhuma anotação encontrada.</p>');
+  }
+
+  lines.push('</body></html>');
+
+  var win=window.open('','_blank','width=900,height=700');
+  if(!win){showToast('Permita pop-ups para baixar o PDF','warn');return;}
+  win.document.write(lines.join(''));
+  win.document.close();
+  setTimeout(function(){win.print();},400);
+  showToast('📥 Abrindo para impressão/PDF...','ok');
+}
 
 /* ═══ ÁUDIO ═══ */
 var _synth=window.speechSynthesis,_utt=null,_speaking=false,_paused=false;
@@ -1538,13 +2023,129 @@ function updateLessonCoverMini(){
   if(d)d.textContent=COURSE.desc||'';
 }
 
-/* ═══ CANETINHA FLUTUANTE ═══ */
+/* ═══ CANETINHA FLUTUANTE — ON/OFF + AUTO-HIGHLIGHT ═══ */
+var _penActive = false; // estado: ligada ou desligada
+
+/* Cores CSS de cada nome */
+var _colorMap = {
+  amarelo:'rgba(251,191,36,.9)',
+  verde:'rgba(34,197,94,.85)',
+  azul:'rgba(91,127,255,.9)',
+  rosa:'rgba(236,72,153,.85)',
+  laranja:'rgba(245,158,11,.9)'
+};
+
+/* Atualiza visual do botão (badge + bolinha de cor) */
+function _updatePenUI(){
+  var pen=document.getElementById('floatingPen');
+  var badge=document.getElementById('fpStatusBadge');
+  var dot=document.getElementById('fpColorDot');
+  if(!pen)return;
+  if(_penActive){
+    pen.classList.add('pen-on');
+    if(badge){badge.textContent='ON';}
+    if(dot){dot.style.background=_colorMap[_activeHlColor]||_colorMap.amarelo;}
+    document.body.classList.add('pen-mode-active');
+    document.body.className=document.body.className.replace(/\bpen-\w+\b/g,'').trim();
+    document.body.classList.add('pen-mode-active','pen-'+_activeHlColor);
+  }else{
+    pen.classList.remove('pen-on');
+    if(badge){badge.textContent='OFF';}
+    document.body.classList.remove('pen-mode-active');
+    document.body.className=document.body.className.replace(/\bpen-\w+\b/g,'').trim();
+  }
+}
+
+/* Toggle ON/OFF da canetinha (chamado ao clicar no botão sem arrastar) */
+function fpToggleMode(){
+  _penActive=!_penActive;
+  _updatePenUI();
+  showToast(_penActive?'✏️ Canetinha ATIVADA — toque no texto para marcar':'✏️ Canetinha desativada',_penActive?'ok':'');
+}
+
+/* Selecionar cor pelo balão (sem fechar o modo, só troca a cor) */
+function fpSelectColor(c){
+  _activeHlColor=c;
+  document.querySelectorAll('.fp-color').forEach(function(b){b.classList.toggle('fp-active',b.dataset.color===c);});
+  document.querySelectorAll('.hl-btn').forEach(function(b){b.classList.toggle('active',b.dataset.color===c);});
+  document.getElementById('fpPalette').classList.remove('open');
+  // Atualiza a bolinha de cor no botão
+  var dot=document.getElementById('fpColorDot');
+  if(dot)dot.style.background=_colorMap[c]||_colorMap.amarelo;
+  // Atualiza classe do body para cursor
+  document.body.className=document.body.className.replace(/\bpen-\w+\b/g,'').trim();
+  if(_penActive)document.body.classList.add('pen-mode-active','pen-'+c);
+  // sem toast — silencioso
+}
+
+/* Modo borracha pelo balão */
+function fpEraseMode(){
+  document.getElementById('fpPalette').classList.remove('open');
+  removeHighlight();
+}
+
+/* Auto-highlight por clique/toque no texto da aula quando caneta ON */
+function _setupPenClickHighlight(){
+  // Delegação de evento — funciona para conteúdo dinâmico (tópicos renderizados depois)
+  var main=document.getElementById('courseMain')||document.body;
+
+  function isInContent(node){
+    var el=node.nodeType===3?node.parentElement:node;
+    return !!(el&&(el.closest('.ml-topic-content')||el.closest('#lessonContent')));
+  }
+
+  function highlightAtPoint(x,y){
+    if(!_penActive)return;
+    var range;
+    if(document.caretRangeFromPoint){range=document.caretRangeFromPoint(x,y);}
+    else if(document.caretPositionFromPoint){var pos=document.caretPositionFromPoint(x,y);if(!pos)return;range=document.createRange();range.setStart(pos.offsetNode,pos.offset);range.setEnd(pos.offsetNode,pos.offset);}
+    else return;
+    if(!range)return;
+    var node=range.startContainer;
+    if(node.nodeType!==3)return;
+    if(!isInContent(node))return;
+    var txt=node.textContent;
+    var off=range.startOffset;
+    var start=off;while(start>0&&!/\s/.test(txt[start-1]))start--;
+    var end=off;while(end<txt.length&&!/\s/.test(txt[end]))end++;
+    if(start===end)return;
+    var wordRange=document.createRange();
+    wordRange.setStart(node,start);wordRange.setEnd(node,end);
+    _curRange=wordRange;
+    applyHighlight(_activeHlColor);
+  }
+
+  main.addEventListener('click',function(e){
+    if(!_penActive)return;
+    if(!isInContent(e.target))return;
+    e.preventDefault();e.stopPropagation();
+    highlightAtPoint(e.clientX,e.clientY);
+  });
+  main.addEventListener('touchend',function(e){
+    if(!_penActive)return;
+    var t2=e.changedTouches[0];
+    var el=document.elementFromPoint(t2.clientX,t2.clientY);
+    if(!el||!isInContent(el))return;
+    highlightAtPoint(t2.clientX,t2.clientY);
+  });
+}
+
 function initFloatingPen(){
   var pen=document.getElementById('floatingPen');
   var btn=document.getElementById('fpBtn');
   var palette=document.getElementById('fpPalette');
   if(!pen||!btn)return;
-  var _dragging=false,_startX,_startY,_origX,_origY;
+
+  /* Inicializa visual */
+  _updatePenUI();
+  // Bolinha de cor inicial
+  var dot=document.getElementById('fpColorDot');
+  if(dot)dot.style.background=_colorMap[_activeHlColor]||_colorMap.amarelo;
+
+  var _dragging=false,_startX,_startY,_origX,_origY,_longPressTimer=null;
+
+  /* Mouse — drag ou click simples (toggle) ou click-direito (paleta) */
+  btn.addEventListener('contextmenu',function(e){e.preventDefault();palette.classList.toggle('open');});
   btn.addEventListener('mousedown',function(e){
     _dragging=false;_startX=e.clientX;_startY=e.clientY;
     var r=pen.getBoundingClientRect();_origX=r.left;_origY=r.top;
@@ -1552,26 +2153,32 @@ function initFloatingPen(){
       if(Math.abs(dx)>4||Math.abs(dy)>4){_dragging=true;}
       if(_dragging){pen.style.left=Math.max(0,_origX+dx)+'px';pen.style.top=Math.max(0,_origY+dy)+'px';pen.style.right='auto';pen.style.bottom='auto';}}
     function onUp(){document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);
-      if(!_dragging){palette.classList.toggle('open');}}
+      if(!_dragging){
+        if(palette.classList.contains('open')){palette.classList.remove('open');}
+        else{fpToggleMode();}
+      }}
     document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);e.preventDefault();
   });
+
+  /* Touch — drag, tap (toggle) ou toque longo (paleta) */
   btn.addEventListener('touchstart',function(e){
     _dragging=false;var tc=e.touches[0];_startX=tc.clientX;_startY=tc.clientY;
     var r=pen.getBoundingClientRect();_origX=r.left;_origY=r.top;
+    // Toque longo (500ms) → abre paleta de cores
+    _longPressTimer=setTimeout(function(){
+      if(!_dragging){palette.classList.toggle('open');}
+    },500);
     function onMove(e){var tc=e.touches[0];var dx=tc.clientX-_startX,dy=tc.clientY-_startY;
-      if(Math.abs(dx)>4||Math.abs(dy)>4)_dragging=true;
+      if(Math.abs(dx)>4||Math.abs(dy)>4){_dragging=true;clearTimeout(_longPressTimer);}
       if(_dragging){pen.style.left=Math.max(0,_origX+dx)+'px';pen.style.top=Math.max(0,_origY+dy)+'px';pen.style.right='auto';pen.style.bottom='auto';}}
-    function onEnd(){document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onEnd);
-      if(!_dragging){palette.classList.toggle('open');}}
+    function onEnd(){clearTimeout(_longPressTimer);document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onEnd);
+      if(!_dragging&&!palette.classList.contains('open')){fpToggleMode();}
+      else if(!_dragging&&palette.classList.contains('open')){/* já abriu no longpress, não fecha */}}
     document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('touchend',onEnd);e.preventDefault();
   },{passive:false});
-}
-function fpSelectColor(c){
-  _activeHlColor=c;
-  document.querySelectorAll('.fp-color').forEach(function(b){b.classList.toggle('fp-active',b.dataset.color===c);});
-  document.querySelectorAll('.hl-btn').forEach(function(b){b.classList.toggle('active',b.dataset.color===c);});
-  document.getElementById('fpPalette').classList.remove('open');
-  showToast('✏️ Cor: '+c,'ok');
+
+  /* Setup do auto-highlight por clique/toque */
+  _setupPenClickHighlight();
 }
 function showFloatingPen(){var p=document.getElementById('floatingPen');if(p)p.style.display='block';}
 function hideFloatingPen(){var p=document.getElementById('floatingPen');if(p)p.style.display='none';}
