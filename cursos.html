@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cursos — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08080f;--bg2:#0d0d1a;--bg3:#111122;--card:#0f0f1e;
+  --brd:rgba(255,255,255,.07);--brd2:rgba(255,255,255,.12);
+  --pri:#4A7EFF;--neon:#00d4ff;
+  --txt:#e8e8ef;--txt2:rgba(255,255,255,.55);--txt3:rgba(255,255,255,.28);
+  --grn:#22c55e;--orn:#f59e0b;--red:#ef4444;
+  --font:'Outfit',sans-serif;--serif:'Playfair Display',serif;
+  --topbar:56px;--bottombar:72px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--font);overflow-x:hidden;}
+::selection{background:var(--pri);color:#fff;}
+
+/* ══ TOPBAR ══ */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:var(--topbar);
+  background:rgba(4,4,10,.97);
+  border-bottom:1px solid var(--brd);
+  display:flex;align-items:center;padding:0 20px;gap:10px;
+  z-index:999;
+}
+.topbar::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,transparent,#4A7EFF 30%,#00d4ff 65%,transparent);
+  opacity:.7;
+}
+.tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;}
+.tb-title{font-size:.65rem;font-weight:700;color:var(--txt2);letter-spacing:.06em;text-transform:uppercase;}
+.tb-spacer{flex:1;}
+.tb-pts{
+  display:flex;align-items:center;gap:7px;
+  padding:5px 12px 5px 10px;border-radius:22px;
+  border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+  text-decoration:none;cursor:pointer;transition:all .2s;
+}
+.tb-pts:hover{border-color:rgba(255,255,255,.22);}
+.tb-pts-icon{color:var(--orn);display:flex;align-items:center;}
+.tb-pts-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.tb-pts-num{font-size:.72rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;}
+.tb-back{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:8px;
+  border:1px solid var(--brd);background:transparent;
+  color:var(--txt3);font-family:var(--font);font-size:.62rem;font-weight:600;
+  cursor:pointer;transition:all .2s;text-decoration:none;letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.tb-back:hover{border-color:var(--brd2);color:var(--txt);}
+.tb-back svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+/* ══ HERO HEADER ══ */
+.page-hero{
+  padding:calc(var(--topbar) + 48px) 24px 40px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.page-hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%,rgba(74,126,255,.12) 0%,transparent 60%),
+    var(--bg);
+  pointer-events:none;
+}
+.hero-label{
+  display:inline-block;
+  font-size:.5rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--pri);margin-bottom:14px;
+  position:relative;
+}
+.hero-label::before,.hero-label::after{
+  content:'';display:inline-block;
+  width:20px;height:1px;background:var(--pri);
+  vertical-align:middle;opacity:.5;
+}
+.hero-label::before{margin-right:10px;}
+.hero-label::after{margin-left:10px;}
+.hero-title{
+  font-family:var(--serif);
+  font-size:clamp(1.8rem,5vw,2.6rem);
+  font-weight:900;color:#fff;
+  line-height:1.1;letter-spacing:-.02em;
+  margin-bottom:12px;position:relative;
+}
+.hero-sub{
+  font-size:.82rem;color:var(--txt2);
+  max-width:420px;margin:0 auto;line-height:1.7;
+  position:relative;
+}
+
+/* ══ FILTRO / PROGRESSO GERAL ══ */
+.summary-bar{
+  max-width:680px;margin:32px auto 0;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.summary-stat{text-align:center;}
+.summary-val{font-size:1.4rem;font-weight:900;color:#fff;display:block;line-height:1;}
+.summary-lbl{font-size:.46rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.14em;margin-top:4px;display:block;}
+.summary-div{width:1px;height:32px;background:var(--brd);}
+.summary-prog{flex:1;max-width:180px;}
+.summary-prog-label{font-size:.46rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.12em;display:block;margin-bottom:6px;}
+.summary-prog-bar{height:3px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
+.summary-prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--pri),var(--neon));transition:width 1s ease;}
+
+/* ══ GRID DE CURSOS ══ */
+.courses-grid{
+  max-width:680px;margin:0 auto;
+  padding:32px 24px calc(var(--bottombar) + 32px);
+  display:flex;flex-direction:column;gap:1px;
+}
+.section-divider{
+  display:flex;align-items:center;gap:14px;
+  padding:28px 0 16px;
+}
+.section-divider span{
+  font-size:.46rem;font-weight:700;color:var(--txt3);
+  text-transform:uppercase;letter-spacing:.18em;white-space:nowrap;
+}
+.section-divider::before,.section-divider::after{
+  content:'';flex:1;height:1px;background:var(--brd);
+}
+
+/* Card de curso */
+.course-card{
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:12px;
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+  text-decoration:none;
+  display:block;
+  position:relative;
+  cursor:pointer;
+}
+.course-card:hover{
+  border-color:rgba(74,126,255,.35);
+  transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(0,0,0,.4),0 0 0 1px rgba(74,126,255,.1);
+}
+.course-card.locked{
+  opacity:.75;
+}
+.course-card.locked:hover{
+  border-color:rgba(255,255,255,.15);
+  transform:none;
+  box-shadow:none;
+}
+
+/* Linha de acento no topo do card */
+.card-accent{
+  height:2px;
+  background:linear-gradient(90deg,var(--card-color,#4A7EFF),transparent 70%);
+}
+
+/* Corpo do card */
+.card-body{
+  padding:20px 20px 16px;
+  display:flex;align-items:flex-start;gap:16px;
+}
+
+/* Ícone/avatar do curso */
+.card-icon{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  background:rgba(74,126,255,.1);
+  border:1px solid rgba(74,126,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;
+  position:relative;overflow:hidden;
+}
+.card-icon::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.1),transparent 60%);
+}
+
+/* Info do curso */
+.card-info{flex:1;min-width:0;}
+.card-cat{
+  font-size:.46rem;font-weight:700;
+  color:var(--card-color,#4A7EFF);
+  text-transform:uppercase;letter-spacing:.16em;
+  display:block;margin-bottom:5px;
+}
+.card-name{
+  font-family:var(--serif);
+  font-size:1.05rem;font-weight:900;color:#fff;
+  line-height:1.2;margin-bottom:6px;
+  display:block;
+}
+.card-desc{
+  font-size:.68rem;color:var(--txt2);
+  line-height:1.55;display:block;
+}
+
+/* Badge de status */
+.card-badge{
+  flex-shrink:0;padding:4px 10px;border-radius:6px;
+  font-size:.48rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;margin-top:2px;
+  align-self:flex-start;
+}
+.badge-free{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25);}
+.badge-locked{background:rgba(255,255,255,.05);color:rgba(255,255,255,.3);border:1px solid var(--brd);}
+.badge-owned{background:rgba(74,126,255,.1);color:var(--pri);border:1px solid rgba(74,126,255,.25);}
+
+/* Footer do card — stats + progresso */
+.card-footer{
+  padding:12px 20px 16px;
+  border-top:1px solid var(--brd);
+}
+.card-stats{
+  display:flex;gap:16px;margin-bottom:10px;
+}
+.card-stat{
+  display:flex;align-items:center;gap:5px;
+  font-size:.52rem;color:var(--txt3);
+}
+.card-stat svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+
+/* Barra de progresso do card */
+.card-prog-row{display:flex;align-items:center;gap:10px;}
+.card-prog-bar{flex:1;height:2px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.card-prog-fill{height:100%;border-radius:2px;transition:width 1s ease;}
+.card-prog-val{font-size:.5rem;font-weight:700;white-space:nowrap;}
+
+/* Seta do card */
+.card-arrow{
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:8px;
+  border:1px solid var(--brd);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--txt3);transition:all .2s;
+}
+.card-arrow svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.course-card:hover .card-arrow{border-color:rgba(74,126,255,.4);color:var(--pri);}
+
+/* Estado locked — cadeado overlay */
+.card-lock-overlay{
+  position:absolute;inset:0;
+  background:rgba(8,8,15,.4);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .2s;
+  border-radius:16px;
+}
+.course-card.locked:hover .card-lock-overlay{opacity:1;}
+.lock-msg{
+  background:rgba(8,8,15,.9);border:1px solid var(--brd2);
+  padding:10px 20px;border-radius:10px;
+  font-size:.7rem;color:rgba(255,255,255,.7);font-weight:600;
+  display:flex;align-items:center;gap:8px;
+}
+
+/* ══ BANNER CTA ══ */
+.cta-banner{
+  max-width:680px;margin:0 auto 24px;padding:0 24px;
+}
+.cta-inner{
+  background:linear-gradient(135deg,rgba(74,126,255,.12),rgba(0,212,255,.06));
+  border:1px solid rgba(74,126,255,.2);
+  border-radius:16px;padding:24px 24px;
+  display:flex;align-items:center;gap:18px;
+  position:relative;overflow:hidden;
+}
+.cta-inner::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(74,126,255,.5),transparent);
+}
+.cta-text{flex:1;min-width:0;}
+.cta-title{font-family:var(--serif);font-size:1rem;font-weight:900;color:#fff;margin-bottom:4px;}
+.cta-sub{font-size:.65rem;color:var(--txt2);line-height:1.5;}
+.cta-btn{
+  flex-shrink:0;
+  padding:10px 20px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--pri),#2563eb);
+  color:#fff;font-family:var(--font);font-size:.72rem;font-weight:700;
+  cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;
+  display:flex;align-items:center;
+}
+.cta-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+
+/* ══ BOTTOM NAV ══ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  height:var(--bottombar);
+  background:rgba(4,4,10,.98);
+  border-top:1px solid var(--brd);
+  display:flex;align-items:center;justify-content:space-around;
+  z-index:999;padding:0 8px;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.bottom-nav::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);
+}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;flex:1;height:100%;
+  cursor:pointer;border:none;background:transparent;
+  color:rgba(255,255,255,.28);font-family:var(--font);
+  text-decoration:none;position:relative;
+  transition:color .2s;-webkit-tap-highlight-color:transparent;
+}
+.bn-item.active,.bn-item:hover{color:#fff;}
+.bn-item.active::after{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:20px;height:2px;border-radius:0 0 2px 2px;background:#fff;
+}
+.bn-item.bn-center{flex:1.4;position:relative;top:-10px;}
+.bn-center-logo{
+  width:50px;height:50px;border-radius:14px;background:#000;
+  border:1.5px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.6);
+  transition:all .25s;
+}
+.bn-item.bn-center:hover .bn-center-logo{transform:scale(1.1);border-color:rgba(255,255,255,.4);}
+.bn-icon{display:flex;align-items:center;justify-content:center;}
+.bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1;}
+@media(min-width:769px){.bottom-nav{display:none;}}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-8px);
+  background:#0f0f1e;border:1px solid var(--brd2);color:var(--txt);
+  padding:10px 20px;border-radius:10px;font-size:.76rem;font-weight:600;
+  z-index:9999;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;
+  box-shadow:0 8px 32px rgba(0,0,0,.6);font-family:var(--font);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ══ ANIMAÇÕES ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.course-card{animation:fadeUp .4s ease both;}
+.course-card:nth-child(1){animation-delay:.05s;}
+.course-card:nth-child(2){animation-delay:.1s;}
+.course-card:nth-child(3){animation-delay:.15s;}
+.course-card:nth-child(4){animation-delay:.2s;}
+.course-card:nth-child(5){animation-delay:.25s;}
+.course-card:nth-child(6){animation-delay:.3s;}
+
+@media(max-width:768px){
+  .summary-bar{flex-wrap:wrap;gap:16px;}
+  .summary-div{display:none;}
+  .summary-prog{max-width:100%;width:100%;}
+  .card-arrow{display:none;}
+  .card-body{padding-right:16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a class="tb-logo" href="index.html">
+    <svg width="110" height="34" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
+      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
+      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
+      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
+      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
+      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
+    </svg>
+  </a>
+  <div class="tb-sep"></div>
+  <span class="tb-title">Meus Cursos</span>
+  <div class="tb-spacer"></div>
+  <a class="tb-pts" href="painel.html">
+    <span class="tb-pts-icon">
+      <svg viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg>
+    </span>
+    <span class="tb-pts-num" id="tbPts">000</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-label">Matheus Academy</div>
+  <h1 class="hero-title">Seus Cursos</h1>
+  <p class="hero-sub">Tudo em um só lugar. Aprenda no seu ritmo, acompanhe seu progresso e avance de forma consistente.</p>
+</div>
+
+<!-- SUMMARY BAR -->
+<div class="summary-bar" id="summaryBar">
+  <div class="summary-stat">
+    <span class="summary-val" id="sumCursos">—</span>
+    <span class="summary-lbl">Cursos</span>
+  </div>
+  <div class="summary-div"></div>
+  <div class="summary-stat">
+    <span class="summary-val" id="sumConcluidos">—</span>
+    <span class="summary-lbl">Concluídos</span>
+  </div>
+  <div class="summary-div"></div>
+  <div class="summary-prog">
+    <span class="summary-prog-label">Progresso geral</span>
+    <div class="summary-prog-bar"><div class="summary-prog-fill" id="sumProgFill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- GRID DE CURSOS -->
+<div class="courses-grid" id="coursesGrid">
+  <!-- preenchido por JS -->
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner" id="ctaBanner" style="display:none">
+  <div class="cta-inner">
+    <div class="cta-text">
+      <div class="cta-title">Desbloqueie todos os cursos</div>
+      <div class="cta-sub">Acesso completo por 3 anos. Todos os lançamentos incluídos.</div>
+    </div>
+    <a class="cta-btn" href="https://pay.kiwify.com.br/uzERliL" target="_blank">Ver Planos</a>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a class="bn-item" href="index.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 13 15 13 15 21"/></svg></span>
+    <span class="bn-label">Início</span>
+  </a>
+  <a class="bn-item active" href="cursos.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+    <span class="bn-label">Cursos</span>
+  </a>
+  <a class="bn-item bn-center" href="index.html">
+    <div class="bn-center-logo">
+      <svg width="36" height="36" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+        <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="48">M</text>
+        <line x1="10" y1="58" x2="62" y2="58" stroke="#4A7EFF" stroke-width="3"/>
+        <line x1="10" y1="63" x2="62" y2="63" stroke="#4A7EFF" stroke-width="1.4" opacity=".4"/>
+      </svg>
+    </div>
+  </a>
+  <a class="bn-item" href="ranking.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><polyline points="18 20 18 10"/><polyline points="12 20 12 4"/><polyline points="6 20 6 14"/></svg></span>
+    <span class="bn-label">Ranking</span>
+  </a>
+  <a class="bn-item" href="perfil.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+    <span class="bn-label">Perfil</span>
+  </a>
+</nav>
+
+<script>
+/* ═══ CONFIGURAÇÃO DOS CURSOS ═══
+   Edite aqui para adicionar, remover ou ajustar os cursos exibidos.
+   Cada curso tem: id, name, desc, cat, icon (emoji), color (hex), file, ak (chave localStorage), prefix (progresso)
+*/
+var CURSOS = [
+  {
+    id:'tp',
+    name:'Dominando Tráfego Pago',
+    desc:'Meta Ads, Google Ads e TikTok para escalar qualquer negócio digital.',
+    cat:'Marketing Digital',
+    icon:'🎯',
+    color:'#4A7EFF',
+    file:'dominando-trafego-pago.html',
+    ak:'tp_auth',
+    prefix:'tp_',
+    modules:10, topics:80, hours:20,
+    free:false
+  },
+  {
+    id:'ni',
+    name:'Negócios Inteligentes',
+    desc:'Estruture, escale e automatize negócios lucrativos do zero.',
+    cat:'Empreendedorismo',
+    icon:'💼',
+    color:'#f59e0b',
+    file:'negocios-inteligentes.html',
+    ak:'ni_auth',
+    prefix:'ni_',
+    modules:8, topics:64, hours:18,
+    free:false
+  },
+  {
+    id:'gp',
+    name:'Geopolítica Avançada',
+    desc:'Entenda o mundo, conflitos e tendências globais com profundidade.',
+    cat:'Geopolítica',
+    icon:'🌍',
+    color:'#00d4ff',
+    file:'geopolitica-curso.html',
+    ak:'gp_auth',
+    prefix:'gp_',
+    modules:12, topics:96, hours:24,
+    free:false
+  },
+  {
+    id:'nl',
+    name:'Nichos Lucrativos',
+    desc:'Descubra e monetize nichos de mercado com alta demanda.',
+    cat:'Negócios',
+    icon:'💡',
+    color:'#22c55e',
+    file:'nichos-lucrativos.html',
+    ak:'nl_auth',
+    prefix:'nl_',
+    modules:6, topics:48, hours:12,
+    free:false
+  }
+];
+
+/* ═══ HELPERS ═══ */
+var EXP_M=3*365*24*3600e3, EXP_I=365*24*3600e3;
+function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
+function gA(){try{return JSON.parse(localStorage.getItem('ma_access'))||{};}catch(e){return{};}}
+function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0};}catch(e){return{total:0};}}
+
+function isCourseUnlocked(c){
+  var ac=gA(),now=Date.now();
+  if(ac.master&&ac.masterTs&&now-ac.masterTs<(ac.expiry||EXP_M))return true;
+  var raw=localStorage.getItem(c.ak);
+  if(raw){try{var d=JSON.parse(raw);if(d.ts&&now-d.ts<(d.expiry||EXP_I))return true;}catch(e){}}
+  if(c.free)return true;
+  return false;
+}
+
+function getCourseProgress(c){
+  try{
+    var prog=JSON.parse(localStorage.getItem(c.prefix+'prog'))||{};
+    var keys=Object.keys(prog).filter(k=>!k.startsWith('mod_done_')&&!k.startsWith('qz'));
+    var done=keys.filter(k=>prog[k]).length;
+    var total=c.topics||1;
+    return{done:done,total:total,pct:Math.min(100,Math.round(done/total*100))};
+  }catch(e){return{done:0,total:c.topics||1,pct:0};}
+}
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ═══ RENDER CURSOS ═══ */
+function renderCursos(){
+  var grid=document.getElementById('coursesGrid');
+  var u=gU();
+  var p=gP();
+  var pts=p.total;
+  var str=pts<1000?String(pts).padStart(3,'0'):pts.toLocaleString('pt-BR');
+  var ptEl=document.getElementById('tbPts');
+  if(ptEl)ptEl.textContent=str;
+
+  var totalPct=0, concluidos=0;
+  var html='';
+  var temBloqueado=false;
+
+  CURSOS.forEach(function(c,i){
+    var unlocked=isCourseUnlocked(c);
+    var prog=getCourseProgress(c);
+    totalPct+=prog.pct;
+    if(prog.pct===100)concluidos++;
+    if(!unlocked)temBloqueado=true;
+
+    var statusBadge='';
+    if(c.free){
+      statusBadge='<span class="card-badge badge-free">Gratuito</span>';
+    }else if(unlocked){
+      statusBadge='<span class="card-badge badge-owned">Com Acesso</span>';
+    }else{
+      statusBadge='<span class="card-badge badge-locked">🔒 Bloqueado</span>';
+    }
+
+    var progColor=prog.pct===100?'#22c55e':c.color;
+    var progLabel=prog.pct===0?'Não iniciado':prog.pct===100?'Concluído':prog.pct+'% concluído';
+    var progValColor=prog.pct===100?'#22c55e':prog.pct>0?c.color:'rgba(255,255,255,.25)';
+
+    var onclick=unlocked
+      ?'onclick="window.location.href=\''+c.file+'\'"'
+      :'onclick="showToast(\'🔒 Acesse os planos para desbloquear este curso\')"';
+
+    html+='<div class="course-card'+(unlocked?'':' locked')+'" '+onclick+' style="--card-color:'+c.color+';">';
+    html+='<div class="card-accent"></div>';
+    html+='<div class="card-body">';
+    html+='<div class="card-icon" style="background:'+c.color+'18;border-color:'+c.color+'30;">'+c.icon+'</div>';
+    html+='<div class="card-info">';
+    html+='<span class="card-cat">'+c.cat+'</span>';
+    html+='<span class="card-name">'+c.name+'</span>';
+    html+='<span class="card-desc">'+c.desc+'</span>';
+    html+='</div>';
+    html+=statusBadge;
+    html+='</div>';
+
+    html+='<div class="card-footer">';
+    html+='<div class="card-stats">';
+    html+='<span class="card-stat"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'+c.modules+' módulos</span>';
+    html+='<span class="card-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 15.5"/></svg>'+c.hours+'h</span>';
+    html+='<span class="card-stat"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'+c.topics+' aulas</span>';
+    html+='</div>';
+    html+='<div class="card-prog-row">';
+    html+='<div class="card-prog-bar"><div class="card-prog-fill" style="width:'+prog.pct+'%;background:'+progColor+';"></div></div>';
+    html+='<span class="card-prog-val" style="color:'+progValColor+'">'+progLabel+'</span>';
+    html+='</div>';
+    html+='</div>';
+
+    if(unlocked){
+      html+='<div class="card-arrow"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div>';
+    }
+
+    html+='</div>'; // course-card
+  });
+
+  grid.innerHTML=html;
+
+  // Summary
+  var avgPct=CURSOS.length?Math.round(totalPct/CURSOS.length):0;
+  document.getElementById('sumCursos').textContent=CURSOS.length;
+  document.getElementById('sumConcluidos').textContent=concluidos;
+  document.getElementById('sumProgFill').style.width=avgPct+'%';
+
+  // CTA banner
+  if(temBloqueado&&!u){
+    document.getElementById('ctaBanner').style.display='block';
+  }
+}
+
+document.addEventListener('DOMContentLoaded',renderCursos);
+</script>
+</body>
+</html>
