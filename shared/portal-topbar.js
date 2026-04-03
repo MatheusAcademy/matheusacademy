@@ -1,16 +1,18 @@
 /* ══════════════════════════════════════════════════════════════
-   MATHEUS ACADEMY — PORTAL TOPBAR v2
-   Injeta o cabeçalho superior PADRÃO em todas as páginas do
-   portal: index, painel, ranking, perfil, indicacoes, trilhas,
-   loja, mural — E também nas páginas de notícias.
-
+   MATHEUS ACADEMY — PORTAL TOPBAR v3 (Firebase Edition)
+   ══════════════════════════════════════════════════════════════
+   
+   MUDANÇAS NA v3:
+   - Busca pontos do Firebase (via MAStore) ao invés do localStorage
+   - Escuta evento 'ma:pointsUpdate' para atualizar em tempo real
+   - Mantém compatibilidade com código existente
+   
    COMO USAR:
-     No <head> de cada página do portal, APÓS os outros scripts:
+     No <head> de cada página do portal:
+     <script src="firebase-config.js"></script>
+     <script src="data/courses.js"></script>
+     <script src="data/userStore.js"></script>
      <script src="shared/portal-topbar.js"></script>
-
-   O nome da página é detectado automaticamente pelo URL,
-   mas pode ser sobrescrito definindo ANTES deste script:
-     <script>var PORTAL_PAGE = { title: '📊 Meu Painel' };</script>
    ══════════════════════════════════════════════════════════════ */
 
 (function injectPortalTopbar() {
@@ -260,9 +262,10 @@
    ══════════════════════════════════════════════════════════════ */
 
 function ptInitTopbar() {
+  // Atualiza pontos imediatamente com dados do cache
   ptUpdatePts();
 
-  /* Tema salvo */
+  // Tema salvo
   var saved = localStorage.getItem('ma_theme');
   if (saved === 'light') {
     document.body.classList.add('light');
@@ -274,45 +277,133 @@ function ptInitTopbar() {
 
   ptUpdateMenuUser();
 
-  /* Atualiza XP a cada 10s (reflete ganhos em outras abas) */
-  setInterval(ptUpdatePts, 10000);
+  // Atualiza XP a cada 30s (backup para manter sincronizado)
+  setInterval(ptUpdatePts, 30000);
+  
+  // Escuta evento de atualização de pontos
+  document.addEventListener('ma:pointsUpdate', function(e) {
+    ptUpdatePtsFromEvent(e.detail);
+  });
+  
+  // Quando Firebase estiver pronto, sincroniza
+  document.addEventListener('maFirebaseReady', function() {
+    ptSyncFromFirebase();
+  });
 }
 
+/**
+ * Atualiza pontos na topbar - VERSÃO FIREBASE
+ */
 function ptUpdatePts() {
   var el = document.getElementById('maPtsNum');
   if (!el) return;
-  try {
-    var pts = JSON.parse(localStorage.getItem('ma_points') || '{}');
-    var total = pts.total || 0;
-    el.textContent = total.toLocaleString('pt-BR');
-    var prev = el._prev;
-    if (prev !== undefined && prev !== total) {
-      var block = document.getElementById('maPtsLive');
-      if (block) { block.classList.remove('bump'); void block.offsetWidth; block.classList.add('bump'); }
+  
+  var total = 0;
+  
+  // Prioridade 1: MAStore (Firebase)
+  if (window.MAStore && window.MAStore.getTotalPointsSync) {
+    total = MAStore.getTotalPointsSync();
+  } 
+  // Fallback: localStorage
+  else {
+    try {
+      var pts = JSON.parse(localStorage.getItem('ma_points') || '{}');
+      total = pts.total || 0;
+    } catch(e) {}
+  }
+  
+  var prev = el._prev;
+  el.textContent = total.toLocaleString('pt-BR');
+  
+  // Animação de bump se mudou
+  if (prev !== undefined && prev !== total) {
+    var block = document.getElementById('maPtsLive');
+    if (block) {
+      block.classList.remove('bump');
+      void block.offsetWidth;
+      block.classList.add('bump');
     }
-    el._prev = total;
-  } catch(e) {}
+  }
+  
+  el._prev = total;
+}
+
+/**
+ * Atualiza pontos quando recebe evento
+ */
+function ptUpdatePtsFromEvent(detail) {
+  var el = document.getElementById('maPtsNum');
+  if (!el) return;
+  
+  el.textContent = detail.total.toLocaleString('pt-BR');
+  
+  // Animação de bump
+  var block = document.getElementById('maPtsLive');
+  if (block) {
+    block.classList.remove('bump');
+    void block.offsetWidth;
+    block.classList.add('bump');
+  }
+  
+  el._prev = detail.total;
+  
+  // Atualiza menu também se estiver aberto
+  ptUpdateMenuUser();
+}
+
+/**
+ * Sincroniza pontos do Firebase
+ */
+async function ptSyncFromFirebase() {
+  if (!window.MAStore) return;
+  
+  try {
+    var user = await MAStore.getUser();
+    if (user) {
+      var total = user.xp_total || 0;
+      var el = document.getElementById('maPtsNum');
+      if (el) {
+        el.textContent = total.toLocaleString('pt-BR');
+        el._prev = total;
+      }
+      console.log('[Portal Topbar] Pontos sincronizados:', total);
+    }
+  } catch(e) {
+    console.error('[Portal Topbar] Erro na sincronização:', e);
+  }
 }
 
 function ptUpdateMenuUser() {
   var sec  = document.getElementById('ptMenuUser');
   var auth = document.getElementById('ptMenuAuth');
   if (!sec || !auth) return;
-  try {
-    var u = JSON.parse(localStorage.getItem('ma_user') || 'null');
-    if (u && u.email) {
+  
+  // Prioridade: MAStore
+  var u = null;
+  var total = 0;
+  
+  if (window.MAStore && window.MAStore.getUserSync) {
+    u = MAStore.getUserSync();
+    total = u ? (u.xp_total || 0) : 0;
+  } else {
+    try {
+      u = JSON.parse(localStorage.getItem('ma_user') || 'null');
       var pts = JSON.parse(localStorage.getItem('ma_points') || '{}');
-      sec.innerHTML  = '<span class="ma-mu-name">' + (u.name || u.email) + '</span>'
-                     + '<div class="ma-mu-pts"><b>' + (pts.total || 0).toLocaleString('pt-BR') + '</b> XP</div>';
-      auth.innerHTML = '<button class="ma-mi red" onclick="ptLogout()">'
-                     + '<span class="ma-mi-icon">🚪</span>Sair da conta</button>';
-    } else {
-      sec.innerHTML  = '<span class="ma-mu-name" style="color:#8888a8">Visitante</span>'
-                     + '<div class="ma-mu-pts">Faça login para salvar seu progresso</div>';
-      auth.innerHTML = '<a class="ma-mi" href="index.html">'
-                     + '<span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a>';
-    }
-  } catch(e) {}
+      total = pts.total || 0;
+    } catch(e) {}
+  }
+  
+  if (u && (u.email || u.nome)) {
+    sec.innerHTML  = '<span class="ma-mu-name">' + (u.nome || u.name || u.email) + '</span>'
+                   + '<div class="ma-mu-pts"><b>' + total.toLocaleString('pt-BR') + '</b> XP</div>';
+    auth.innerHTML = '<button class="ma-mi red" onclick="ptLogout()">'
+                   + '<span class="ma-mi-icon">🚪</span>Sair da conta</button>';
+  } else {
+    sec.innerHTML  = '<span class="ma-mu-name" style="color:#8888a8">Visitante</span>'
+                   + '<div class="ma-mu-pts">Faça login para salvar seu progresso</div>';
+    auth.innerHTML = '<a class="ma-mi" href="index.html">'
+                   + '<span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a>';
+  }
 }
 
 function ptToggleMenu() {
@@ -341,10 +432,17 @@ function ptToggleTheme() {
   if (sun)  sun.style.display  = isLight ? 'block' : 'none';
 }
 
-function ptLogout() {
+async function ptLogout() {
   ptCloseMenu();
-  if (window.MAStore && MAStore.logout) { MAStore.logout(); return; }
-  if (window.MA_AUTH && MA_AUTH.logout) { MA_AUTH.logout().catch(function(){}); }
+  
+  if (window.MAStore && MAStore.logout) {
+    await MAStore.logout();
+  } else if (window.MA_AUTH && MA_AUTH.logout) {
+    await MA_AUTH.logout().catch(function(){});
+  }
+  
   localStorage.removeItem('ma_user');
   location.href = 'index.html';
 }
+
+console.log('[Portal Topbar v3] ✅ Carregado - Firebase Edition');
