@@ -1,18 +1,38 @@
 /* ══════════════════════════════════════════════════════════════
-   MATHEUS ACADEMY — PORTAL TOPBAR v1
-   Injeta o cabeçalho padrão (igual ao course-engine) em todas
-   as páginas do portal: index, painel, ranking, perfil,
-   indicacoes, trilhas, loja, mural
-   ══════════════════════════════════════════════════════════════
-   USO: coloque <script src="shared/portal-topbar.js"></script>
-   no <head> de cada página do portal, APÓS os outros scripts.
-   Defina a variável global antes de incluir este arquivo:
-     var PORTAL_PAGE = { title: '📊 Meu Painel' };
+   MATHEUS ACADEMY — PORTAL TOPBAR v2
+   Injeta o cabeçalho superior PADRÃO em todas as páginas do
+   portal: index, painel, ranking, perfil, indicacoes, trilhas,
+   loja, mural — E também nas páginas de notícias.
+
+   COMO USAR:
+     No <head> de cada página do portal, APÓS os outros scripts:
+     <script src="shared/portal-topbar.js"></script>
+
+   O nome da página é detectado automaticamente pelo URL,
+   mas pode ser sobrescrito definindo ANTES deste script:
+     <script>var PORTAL_PAGE = { title: '📊 Meu Painel' };</script>
    ══════════════════════════════════════════════════════════════ */
 
 (function injectPortalTopbar() {
 
-  /* ── CSS da topbar (idêntico ao course.css) ── */
+  /* ── Mapa automático de páginas ── */
+  var PAGE_NAMES = {
+    'index.html'       : '🏠 Início',
+    'painel.html'      : '📊 Meu Painel',
+    'ranking.html'     : '🏆 Ranking',
+    'perfil.html'      : '👤 Meu Perfil',
+    'indicacoes.html'  : '🤝 Indicações',
+    'trilhas.html'     : '🗺️ Trilhas',
+    'loja.html'        : '🛒 Loja de XP',
+    'mural.html'       : '📌 Mural',
+    'admin-codigos.html': '🔑 Admin'
+  };
+
+  var currentFile = window.location.pathname.split('/').pop() || 'index.html';
+  var autoName = PAGE_NAMES[currentFile] || '';
+  var pageName = (window.PORTAL_PAGE && window.PORTAL_PAGE.title) || autoName;
+
+  /* ── CSS da topbar ── */
   var style = document.createElement('style');
   style.textContent = `
     :root {
@@ -25,9 +45,11 @@
       --txt2:  #8888a8;
       --font:  'Outfit', sans-serif;
     }
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap');
+
     body { padding-top: var(--topbar-h); }
 
-    /* ── TOPBAR ── */
+    /* ══ TOPBAR ══ */
     .ma-topbar {
       position: fixed; top: 0; left: 0; right: 0;
       height: var(--topbar-h);
@@ -38,13 +60,13 @@
     }
     .ma-topbar::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1.5px;
-      background: linear-gradient(90deg,transparent 0%,#4A7EFF 30%,#00d4ff 65%,transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, #4A7EFF 30%, #00d4ff 65%, transparent 100%);
       opacity: .75;
     }
     .ma-tb-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
     .ma-tb-logo svg { display: block; flex-shrink: 0; }
     .ma-tb-sep { width: 1px; height: 20px; background: rgba(255,255,255,.1); flex-shrink: 0; }
-    .ma-tb-page-name { font-size: .66rem; font-weight: 700; color: var(--txt2); white-space: nowrap; flex-shrink: 0; }
+    .ma-tb-page-name { font-size: .66rem; font-weight: 700; color: var(--txt2); white-space: nowrap; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
     .ma-tb-spacer { flex: 1; min-width: 0; }
 
     /* Bloco troféu + pontos */
@@ -76,7 +98,6 @@
     }
     .ma-tb-theme-btn svg { width: 16px; height: 16px; stroke: currentColor; pointer-events: none; }
     .ma-tb-theme-btn:hover { border-color: rgba(245,158,11,.5); background: rgba(245,158,11,.08); }
-    body.light .ma-tb-theme-btn { color: #5b7fff; }
 
     /* Botão menu 3 pontos */
     .ma-tb-menu-btn {
@@ -117,31 +138,38 @@
     .ma-mi.gold { color: #f59e0b; }
     .ma-mi.red  { color: #ef4444; }
 
-    /* Tema claro */
+    /* ══ TEMA CLARO ══ */
     body.light .ma-topbar { background: rgba(240,242,248,.98); border-bottom-color: rgba(91,127,255,.2); }
+    body.light .ma-topbar::before { opacity: .5; }
+    body.light .ma-tb-page-name { color: #5a5a7a; }
+    body.light .ma-tb-pts-block { border-color: rgba(0,0,0,.15); background: rgba(0,0,0,.04); }
+    body.light .ma-tb-pts-num { color: #1a1a2e; }
+    body.light .ma-tb-theme-btn { color: #5b7fff; }
+    body.light .ma-tb-theme-btn:hover { border-color: rgba(91,127,255,.4); background: rgba(91,127,255,.08); }
+    body.light .ma-tb-menu-btn { background: #f0f2f8; border-color: #d0d4e8; color: #5a5a7a; }
     body.light .ma-menu-dd { background: #ffffff; border-color: #d0d4e8; box-shadow: 0 16px 56px rgba(0,0,0,.15); }
     body.light .ma-menu-user { border-bottom-color: #e8eaf2; }
+    body.light .ma-mu-name { color: #1a1a2e; }
     body.light .ma-mi { color: #5a5a7a; }
     body.light .ma-mi:hover { background: #f0f2f8; color: #1a1a2e; }
     body.light .ma-menu-sec + .ma-menu-sec { border-top-color: #e8eaf2; }
-    body.light .ma-tb-pts-block { border-color: rgba(0,0,0,.15); background: rgba(0,0,0,.04); }
-    body.light .ma-tb-pts-num { color: #1a1a2e; }
   `;
   document.head.appendChild(style);
 
   /* ── HTML da topbar ── */
-  var pageName = (window.PORTAL_PAGE && window.PORTAL_PAGE.title) || '';
   var html = `
 <nav class="ma-topbar">
 
   <!-- LOGO SVG horizontal — M branco + linha dupla azul + ACADEMY -->
   <a class="ma-tb-logo" href="index.html">
     <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
-      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
+      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF"
+            font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
       <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
       <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
       <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
-      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
+      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF"
+            font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
     </svg>
   </a>
 
@@ -153,7 +181,8 @@
   <a class="ma-tb-pts-block" id="maPtsLive" href="painel.html">
     <span class="ma-tb-trophy">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/>
+        <path d="M6 9H4a2 2 0 0 1-2-2V5h4"/>
+        <path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/>
         <path d="M8 21h8"/><path d="M12 17v4"/>
         <path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/>
       </svg>
@@ -163,8 +192,18 @@
 
   <!-- BOTÃO TEMA -->
   <button class="ma-tb-theme-btn" id="ptThemeBtn" onclick="ptToggleTheme()" title="Alternar tema">
-    <svg id="ptIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg id="ptIconSun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <svg id="ptIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round" style="display:block">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+    <svg id="ptIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round" style="display:none">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
   </button>
 
   <!-- MENU 3 PONTOS -->
@@ -178,20 +217,21 @@
 </nav>
 
 <div class="ma-menu-overlay" id="ptMenuOverlay" onclick="ptCloseMenu()"></div>
-<div class="ma-menu-dd"      id="ptMenuDd">
+<div class="ma-menu-dd" id="ptMenuDd">
   <div id="ptMenuUser" class="ma-menu-user"></div>
   <div class="ma-menu-sec">
-    <a class="ma-mi" href="index.html">      <span class="ma-mi-icon">🏠</span>Início</a>
-    <a class="ma-mi" href="painel.html">     <span class="ma-mi-icon">📊</span>Meu Painel</a>
-    <a class="ma-mi" href="ranking.html">    <span class="ma-mi-icon">🏆</span>Ranking</a>
-    <a class="ma-mi" href="perfil.html">     <span class="ma-mi-icon">👤</span>Meu Perfil</a>
-    <a class="ma-mi" href="indicacoes.html"> <span class="ma-mi-icon">🤝</span>Indicações</a>
-    <a class="ma-mi" href="trilhas.html">    <span class="ma-mi-icon">🗺️</span>Trilhas</a>
-    <a class="ma-mi" href="loja.html">       <span class="ma-mi-icon">🛒</span>Loja de XP</a>
-    <a class="ma-mi" href="mural.html">      <span class="ma-mi-icon">📌</span>Mural</a>
+    <a class="ma-mi" href="index.html">       <span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="painel.html">      <span class="ma-mi-icon">📊</span>Meu Painel</a>
+    <a class="ma-mi" href="ranking.html">     <span class="ma-mi-icon">🏆</span>Ranking</a>
+    <a class="ma-mi" href="perfil.html">      <span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="indicacoes.html">  <span class="ma-mi-icon">🤝</span>Indicações</a>
+    <a class="ma-mi" href="trilhas.html">     <span class="ma-mi-icon">🗺️</span>Trilhas</a>
+    <a class="ma-mi" href="loja.html">        <span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html">       <span class="ma-mi-icon">📌</span>Mural</a>
   </div>
   <div class="ma-menu-sec">
-    <a class="ma-mi gold" href="index.html" onclick="localStorage.setItem('ma_open_modal','plans');return true">
+    <a class="ma-mi gold" href="index.html"
+       onclick="localStorage.setItem('ma_open_modal','plans');return true">
       <span class="ma-mi-icon">💎</span>Ver Planos
     </a>
   </div>
@@ -199,7 +239,7 @@
 </div>
 `;
 
-  /* Injeta no body assim que o DOM estiver pronto */
+  /* ── Injeta no body assim que o DOM estiver pronto ── */
   function inject() {
     var wrapper = document.createElement('div');
     wrapper.innerHTML = html;
@@ -216,11 +256,10 @@
 })();
 
 /* ══════════════════════════════════════════════════════════════
-   FUNÇÕES DA TOPBAR DO PORTAL
+   FUNÇÕES GLOBAIS DA TOPBAR DO PORTAL
    ══════════════════════════════════════════════════════════════ */
 
 function ptInitTopbar() {
-  /* Pontos XP */
   ptUpdatePts();
 
   /* Tema salvo */
@@ -233,10 +272,9 @@ function ptInitTopbar() {
     if (sun)  sun.style.display  = 'block';
   }
 
-  /* Usuário no menu */
   ptUpdateMenuUser();
 
-  /* Atualiza pontos a cada 10s (para refletir XP ganho em outras abas) */
+  /* Atualiza XP a cada 10s (reflete ganhos em outras abas) */
   setInterval(ptUpdatePts, 10000);
 }
 
@@ -247,7 +285,6 @@ function ptUpdatePts() {
     var pts = JSON.parse(localStorage.getItem('ma_points') || '{}');
     var total = pts.total || 0;
     el.textContent = total.toLocaleString('pt-BR');
-    /* Anima quando muda */
     var prev = el._prev;
     if (prev !== undefined && prev !== total) {
       var block = document.getElementById('maPtsLive');
@@ -258,20 +295,22 @@ function ptUpdatePts() {
 }
 
 function ptUpdateMenuUser() {
-  var sec = document.getElementById('ptMenuUser');
+  var sec  = document.getElementById('ptMenuUser');
   var auth = document.getElementById('ptMenuAuth');
   if (!sec || !auth) return;
   try {
     var u = JSON.parse(localStorage.getItem('ma_user') || 'null');
     if (u && u.email) {
       var pts = JSON.parse(localStorage.getItem('ma_points') || '{}');
-      sec.innerHTML = '<span class="ma-mu-name">' + (u.name || u.email) + '</span>'
-        + '<div class="ma-mu-pts"><b>' + (pts.total || 0).toLocaleString('pt-BR') + '</b> XP</div>';
-      auth.innerHTML = '<button class="ma-mi red" onclick="ptLogout()"><span class="ma-mi-icon">🚪</span>Sair da conta</button>';
+      sec.innerHTML  = '<span class="ma-mu-name">' + (u.name || u.email) + '</span>'
+                     + '<div class="ma-mu-pts"><b>' + (pts.total || 0).toLocaleString('pt-BR') + '</b> XP</div>';
+      auth.innerHTML = '<button class="ma-mi red" onclick="ptLogout()">'
+                     + '<span class="ma-mi-icon">🚪</span>Sair da conta</button>';
     } else {
-      sec.innerHTML = '<span class="ma-mu-name" style="color:#8888a8">Visitante</span>'
-        + '<div class="ma-mu-pts">Faça login para salvar seu progresso</div>';
-      auth.innerHTML = '<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a>';
+      sec.innerHTML  = '<span class="ma-mu-name" style="color:#8888a8">Visitante</span>'
+                     + '<div class="ma-mu-pts">Faça login para salvar seu progresso</div>';
+      auth.innerHTML = '<a class="ma-mi" href="index.html">'
+                     + '<span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a>';
     }
   } catch(e) {}
 }
