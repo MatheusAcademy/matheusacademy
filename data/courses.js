@@ -134,7 +134,7 @@ var MA_COURSES = [
   },
   {
     id: 'nlf',
-    name: 'Lei FELCA e o Modelo Chinês de Censura no Brasil —',
+    name: 'Lei FELCA e o Modelo Chinês de Censura no Brasil',
     desc: '',
     file: 'noticia-lei-felca.html',
     cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
