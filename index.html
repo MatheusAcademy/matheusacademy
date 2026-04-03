@@ -26,12 +26,39 @@
 .ebook-overflow{overflow:hidden}
 .ebook-track{display:flex;gap:16px;padding:4px 2px;will-change:transform;align-items:flex-start}
 .ebook-page{display:contents}
-/* Card: tamanho FIXO igual para todos — 3:4 retrato */
-.ebook-card{flex:0 0 calc(25% - 12px);max-width:calc(25% - 12px);cursor:pointer;transition:transform .3s,box-shadow .3s}
-.ebook-card:hover{transform:translateY(-8px) scale(1.03);z-index:5}
-.ebook-card.touch-active{transform:translateY(-8px) scale(1.04);z-index:5;transition:transform .18s}
-.ebook-cover{border-radius:10px;aspect-ratio:3/4;position:relative;overflow:visible;box-shadow:0 6px 24px rgba(0,0,0,.7)}.ebook-cover>img,.ebook-cover>.ebook-nocover,.ebook-cover>.p-img-cover,.ebook-cover>.p-name-bar,.ebook-cover>.p-badge{border-radius:10px;overflow:hidden}.ebook-cover>img{border-radius:10px}
-.ebook-card:hover .ebook-cover{box-shadow:0 10px 36px rgba(0,0,0,.8),0 0 26px var(--glow,rgba(75,139,255,.5))}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   EBOOK CARD - SEM EFEITO ELÉTRICO, SÓ BALÃO INFLANDO
+   ══════════════════════════════════════════════════════════════════════════════ */
+.ebook-card{
+  flex:0 0 calc(25% - 12px);
+  max-width:calc(25% - 12px);
+  cursor:pointer;
+  transition:transform .25s ease-out;
+}
+/* Hover/Touch: apenas elevação sutil - SEM brilho elétrico */
+.ebook-card:hover{
+  transform:translateY(-6px) scale(1.02);
+  z-index:5;
+}
+.ebook-card.touch-active{
+  transform:translateY(-6px) scale(1.02);
+  z-index:5;
+}
+.ebook-cover{
+  border-radius:10px;
+  aspect-ratio:3/4;
+  position:relative;
+  overflow:visible;
+  box-shadow:0 6px 24px rgba(0,0,0,.7);
+  transition:box-shadow .25s ease-out;
+}
+.ebook-cover>img,.ebook-cover>.ebook-nocover,.ebook-cover>.p-img-cover,.ebook-cover>.p-name-bar,.ebook-cover>.p-badge{border-radius:10px;overflow:hidden}
+.ebook-cover>img{border-radius:10px}
+/* Hover na capa: sombra mais forte - SEM glow elétrico */
+.ebook-card:hover .ebook-cover{
+  box-shadow:0 12px 40px rgba(0,0,0,.85);
+}
 /* Imagem de capa */
 .ebook-cover img{width:100%;height:100%;object-fit:cover;display:block}
 /* Overlay de nome — DENTRO da capa, na base */
@@ -50,15 +77,48 @@
 /* Overlay escuro na base para o nome ficar legível */
 .nc-name-bar{padding:24px 10px 10px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.6) 55%,transparent 100%);position:absolute;bottom:0;left:0;right:0}
 .nc-title{font-size:.95rem;font-weight:900;color:#fff;line-height:1.3;text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 20px rgba(75,139,255,.3);font-family:var(--serif);word-break:break-word;display:block;letter-spacing:.01em}
-/* Balão de hover */
-.ebook-balloon{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) scale(.88);background:var(--card);border:1.5px solid var(--neon);border-radius:14px;padding:15px 17px;width:192px;opacity:0;pointer-events:none;transition:all .28s cubic-bezier(.2,0,.3,1);z-index:200;box-shadow:0 10px 40px rgba(0,0,0,.8),0 0 28px rgba(0,212,255,.25)}
-.ebook-balloon::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border:8px solid transparent;border-bottom:none;border-top-color:var(--neon)}
+/* Balão de hover - EFEITO INFLAR SUAVE */
+.ebook-balloon{
+  position:absolute;
+  bottom:calc(100% + 12px);
+  left:50%;
+  transform:translateX(-50%) scale(.7);
+  background:var(--card);
+  border:1.5px solid var(--pri);
+  border-radius:14px;
+  padding:15px 17px;
+  width:200px;
+  opacity:0;
+  pointer-events:none;
+  transition:all .35s cubic-bezier(.34,1.56,.64,1);
+  z-index:200;
+  box-shadow:0 10px 40px rgba(0,0,0,.8);
+}
+.ebook-balloon::after{
+  content:'';
+  position:absolute;
+  bottom:-8px;
+  left:50%;
+  transform:translateX(-50%);
+  border:8px solid transparent;
+  border-bottom:none;
+  border-top-color:var(--pri);
+}
 .ebook-balloon .bal-name{font-size:.86rem;font-weight:900;color:#fff;font-family:var(--serif);line-height:1.3;margin-bottom:7px}
 .ebook-balloon .bal-desc{font-size:.65rem;color:var(--txt2);line-height:1.45;margin-bottom:8px}
 .ebook-balloon .bal-meta{display:flex;gap:12px;font-size:.6rem;color:var(--txt3)}
 .ebook-balloon .bal-meta b{color:var(--pri);font-weight:800}
-.ebook-card:hover .ebook-balloon{opacity:1;transform:translateX(-50%) scale(1.2);pointer-events:none}
-.ebook-card.touch-active .ebook-balloon{opacity:1;transform:translateX(-50%) scale(1.15);pointer-events:none}
+/* Balão INFLA suavemente no hover */
+.ebook-card:hover .ebook-balloon{
+  opacity:1;
+  transform:translateX(-50%) scale(1.1);
+  pointer-events:none;
+}
+.ebook-card.touch-active .ebook-balloon{
+  opacity:1;
+  transform:translateX(-50%) scale(1.08);
+  pointer-events:none;
+}
 /* Botão abaixo da capa — mesmo padding para todos */
 .ebook-btn{display:block;margin-top:8px;padding:8px;border-radius:8px;text-align:center;font-size:.68rem;font-weight:700;border:none;cursor:pointer;font-family:var(--font);transition:background .2s;width:100%}
 .ebook-btn.btn-free{background:var(--grn);color:#fff}
@@ -68,31 +128,27 @@
 .ebook-dots{display:flex;justify-content:center;gap:6px;padding:12px 0 4px;background:var(--bg2)}.ebook-dot{width:6px;height:6px;border-radius:50%;background:var(--brd2);cursor:pointer;transition:all .3s}.ebook-dot.active{width:20px;border-radius:3px;background:var(--pri)}
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   MATHEUS ACADEMY FIXES v3.0 - CSS
-   FIX 1: GLOW ÚNICO ABSOLUTO | FIX 2: SCROLL ULTRA-RESPONSIVO
+   MATHEUS ACADEMY FIXES v3.1 - CSS
+   SEM EFEITO ELÉTRICO - Apenas balão inflando suavemente
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/* ── FIX 1: DESABILITAR TODO HOVER/TOUCH NATIVO - CONTROLE 100% VIA JS ── */
+/* ── REMOVER TODOS OS EFEITOS DE GLOW/ELÉTRICO ── */
 .ebook-card,.cc{
-  transition:none!important;
+  transition:transform .25s ease-out!important;
   box-shadow:none!important;
   border-color:var(--brd)!important;
-  transform:none!important;
 }
 .ebook-card:hover,.cc:hover,
 .ebook-card.touch-active,.cc.touch-active,
-.ebook-card:focus,.cc:focus{
+.ebook-card:focus,.cc:focus,
+.ma-glow-active{
   box-shadow:none!important;
   border-color:var(--brd)!important;
-  transform:none!important;
 }
-/* ÚNICA classe que ativa o brilho - controlada 100% por JS */
+/* Efeito sutil de elevação apenas - SEM brilho elétrico */
 .ma-glow-active{
-  border-color:var(--neon)!important;
-  box-shadow:0 0 20px var(--neon),0 0 50px rgba(0,212,255,.5),0 12px 30px rgba(0,0,0,.5)!important;
-  transform:scale(1.06) translateY(-3px)!important;
-  z-index:100!important;
-  transition:transform .15s ease-out,box-shadow .15s ease-out,border-color .15s ease-out!important;
+  transform:scale(1.04) translateY(-2px)!important;
+  z-index:50!important;
 }
 
 /* ── FIX 3: MENU DE FAVORITOS (LONG PRESS) ── */
@@ -153,17 +209,66 @@
 .row-wrap{position:relative;padding:0 50px}
 .row-outer{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:smooth;user-select:none}.row-outer::-webkit-scrollbar{display:none}
 .row-inner{display:flex;gap:14px;padding:16px 4px 20px;width:max-content}
-.cc{min-width:calc((100vw - 100px)/3.3);max-width:calc((100vw - 100px)/3.3);background:var(--card);border:1.5px solid var(--brd);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .3s cubic-bezier(.2,0,.3,1),border-color .3s,box-shadow .3s;flex-shrink:0}
-.cc:hover{transform:scale(1.13) translateY(-4px);border-color:var(--neon);box-shadow:0 0 16px var(--neon),0 0 40px rgba(0,212,255,.4),0 12px 30px rgba(0,0,0,.5);z-index:10;position:relative}
-/* Estado touch-active (celular): mesmo efeito elétrico do hover desktop */
-.cc.touch-active{transform:scale(1.08) translateY(-4px);border-color:var(--neon);box-shadow:0 0 20px var(--neon),0 0 50px rgba(0,212,255,.5),0 12px 30px rgba(0,0,0,.5);z-index:10;position:relative;transition:transform .18s,border-color .18s,box-shadow .18s}
-.cc.soon{cursor:default;opacity:.55}.cc.soon:hover{transform:none!important;box-shadow:none!important;border-color:var(--brd)!important}
-.cc-img{height:145px;background:#000;position:relative;overflow:hidden}.cc-img img{width:100%;height:100%;object-fit:cover;opacity:.88;transition:all .3s}.cc:hover .cc-img img{opacity:1;transform:scale(1.05)}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   CARDS DE CURSO - TAMANHOS PROPORCIONAIS E UNIFORMES
+   ══════════════════════════════════════════════════════════════════════════════ */
+.cc{
+  min-width:calc((100vw - 100px)/3.3);
+  max-width:calc((100vw - 100px)/3.3);
+  background:var(--card);
+  border:1.5px solid var(--brd);
+  border-radius:14px;
+  overflow:hidden;
+  cursor:pointer;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  /* SEM efeitos de transição elétricos */
+  transition:transform .2s ease-out;
+}
+/* REMOVER efeito elétrico do hover - apenas elevação sutil */
+.cc:hover{
+  transform:scale(1.02) translateY(-2px);
+  z-index:10;
+  position:relative;
+}
+/* Estado touch-active - SEM efeito elétrico */
+.cc.touch-active{
+  transform:scale(1.02) translateY(-2px);
+  z-index:10;
+  position:relative;
+}
+.cc.soon{cursor:default;opacity:.55}.cc.soon:hover{transform:none!important}
+.cc-img{height:140px;background:#000;position:relative;overflow:hidden;flex-shrink:0}.cc-img img{width:100%;height:100%;object-fit:cover;opacity:.92;transition:opacity .2s}.cc:hover .cc-img img{opacity:1}
 .cc-badge{position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:6px;font-size:.5rem;font-weight:700;text-transform:uppercase}.cc-badge.live{background:var(--grn);color:#fff}.cc-badge.free{background:var(--orn);color:#fff}
 .soon-img{background:var(--bg3);display:flex;align-items:center;justify-content:center}.soon-special{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(245,158,11,.1))}.soon-special .soon-label{color:#ef4444;font-weight:800}.soon-ebook{background:linear-gradient(135deg,rgba(75,139,255,.1),rgba(168,85,247,.1))}.soon-ebook .soon-label{color:#a855f7}.soon-label{font-size:.8rem;font-weight:700;color:var(--orn)}
-.cc-body{padding:14px}.cc-body h4{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.35}.cc-body p{font-size:.7rem;color:var(--txt2);line-height:1.45}
-.cc-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}.ccs{text-align:center;padding:8px 2px;border-right:1px solid var(--brd)}.ccs:last-child{border-right:none}.ccs b{display:block;font-size:.95rem;font-weight:800;color:var(--pri)}.ccs span{font-size:.42rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
-.cc-btn{display:block;margin:10px 12px 12px;padding:8px;border-radius:8px;text-align:center;font-size:.7rem;font-weight:700;background:var(--pri3);color:#fff}
+/* Body do card - altura FIXA para alinhamento */
+.cc-body{
+  padding:12px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-height:80px;
+}
+.cc-body h4{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.3}
+.cc-body p{font-size:.68rem;color:var(--txt2);line-height:1.4;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+/* Stats grid - altura fixa */
+.cc-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);flex-shrink:0}
+.ccs{text-align:center;padding:6px 2px;border-right:1px solid var(--brd)}.ccs:last-child{border-right:none}.ccs b{display:block;font-size:.85rem;font-weight:800;color:var(--pri)}.ccs span{font-size:.4rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+/* Botão UNIFORME - sempre alinhado na base */
+.cc-btn{
+  display:block;
+  margin:auto 10px 10px;
+  padding:10px;
+  border-radius:8px;
+  text-align:center;
+  font-size:.72rem;
+  font-weight:700;
+  background:var(--pri3);
+  color:#fff;
+  flex-shrink:0;
+}
 .sec{padding:20px 24px 10px;text-align:center}.sec h3{font-family:var(--serif);font-size:1.3rem;font-weight:900;color:#fff}.sec p{font-size:.78rem;color:var(--txt2)}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}.modal-bg.show{display:flex}
 .modal{background:var(--card);border:1px solid var(--brd);border-radius:16px;max-width:440px;width:100%;max-height:92vh;overflow-y:auto;padding:28px;position:relative}.modal-close{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--txt3);font-size:1.3rem;cursor:pointer;padding:4px}
@@ -199,7 +304,24 @@
   .hdr-pts{padding:4px 8px!important;}
   .hdr-pts-num{font-size:.78rem!important;}
 }
-@media(max-width:480px){.cc{min-width:calc((100vw - 48px)/2);max-width:calc((100vw - 48px)/2)}.cc-img{height:100px}.cc-body{padding:8px 9px}.cc-body h4{font-size:.72rem;font-weight:700;line-height:1.3}.cc-body p{font-size:.6rem;color:var(--txt2)}.cc-stats{display:grid}.ccs b{font-size:.72rem}.ccs span{font-size:.38rem}.cc-btn{padding:6px 4px;font-size:.6rem;margin:4px 8px 8px;border-radius:8px}.hero h2{font-size:1.2rem}.hero .sub{font-size:.74rem}.hdr-left h1{font-size:.72rem}.ebook-section{padding:14px 40px}.ebook-card{flex:0 0 calc(50% - 8px)}.arr-btn{width:32px;height:32px;font-size:1rem}}
+/* ── Mobile 480px: Cards proporcionais ── */
+@media(max-width:480px){
+  .cc{min-width:calc((100vw - 40px)/2);max-width:calc((100vw - 40px)/2)}
+  .cc-img{height:110px}
+  .cc-body{padding:10px;min-height:70px}
+  .cc-body h4{font-size:.72rem;line-height:1.25}
+  .cc-body p{font-size:.58rem;-webkit-line-clamp:2}
+  .cc-stats .ccs{padding:5px 2px}
+  .ccs b{font-size:.7rem}
+  .ccs span{font-size:.36rem}
+  .cc-btn{padding:8px;font-size:.62rem;margin:auto 8px 8px}
+  .hero h2{font-size:1.2rem}
+  .hero .sub{font-size:.74rem}
+  .hdr-left h1{font-size:.72rem}
+  .ebook-section{padding:14px 40px}
+  .ebook-card{flex:0 0 calc(50% - 8px)}
+  .arr-btn{width:32px;height:32px;font-size:1rem}
+}
 @media(min-width:481px) and (max-width:767px){.ebook-card{flex:0 0 calc(50% - 8px)}.ebook-section{padding:16px 48px}}
 
 /* ══ MA TOPBAR GLOBAL ══ */
@@ -839,12 +961,12 @@ function makeSVGCover(id) {
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
 }
 
-// Scroll contínuo - VERSÃO ULTRA-RESPONSIVA v3.0
+// Scroll contínuo - VERSÃO v3.1 - VELOCIDADE REDUZIDA
 var _scrollX = 0, _scrollHalf = 0, _scrollRAF = null;
-var _scrollSpeed = 1.5; // velocidade base automática
+var _scrollSpeed = 0.3; // velocidade base - BEM LENTA
 var _scrollUserSpeed = 0; // velocidade do usuário (touch/mouse)
 var _scrollIsDragging = false;
-var _scrollBaseSpeed = 1.5; // velocidade quando não está arrastando
+var _scrollBaseSpeed = 0.3; // velocidade quando não está arrastando - BEM LENTA
 
 function startContinuousScroll() {
   var track = document.getElementById('ebookTrack');
@@ -858,9 +980,9 @@ function startContinuousScroll() {
       _scrollX += _scrollUserSpeed;
       _scrollUserSpeed = 0; // consumir velocidade instantaneamente
     } else {
-      // Não arrastando: decaimento ultra-rápido para velocidade base
-      if (Math.abs(_scrollSpeed - _scrollBaseSpeed) > 0.1) {
-        _scrollSpeed = _scrollSpeed * 0.85 + _scrollBaseSpeed * 0.15; // decaimento mais rápido
+      // Não arrastando: decaimento suave para velocidade base
+      if (Math.abs(_scrollSpeed - _scrollBaseSpeed) > 0.05) {
+        _scrollSpeed = _scrollSpeed * 0.92 + _scrollBaseSpeed * 0.08;
       } else {
         _scrollSpeed = _scrollBaseSpeed;
       }
