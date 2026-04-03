@@ -95,6 +95,24 @@ var MA_COURSES = [
     color: '#3b82f6',
     addedTs: 1775218683742,
     active: true
+  },
+  {
+    id: 'ctp',
+    name: 'Dominando o Tráfego Pago - Completo',
+    desc: 'O Dominando o Tráfego Pago é a especialização mais completa do mercado brasileiro',
+    file: 'curso-trafego-pago.html',
+    cat: 'Negócios',
+    modules: 217,
+    topics: 1,
+    hours: 380,
+    quizzes: 651,
+    salt: 'CTP_HENRY_2026_MASTER',
+    ak: 'ctp_auth',
+    storagePrefix: 'ctp_',
+    icon: '🎓',
+    color: '#3b82f6',
+    addedTs: 1775242461154,
+    active: true
   }
 ];
 var MA_CATS = [
