@@ -68,19 +68,32 @@
 .ebook-dots{display:flex;justify-content:center;gap:6px;padding:12px 0 4px;background:var(--bg2)}.ebook-dot{width:6px;height:6px;border-radius:50%;background:var(--brd2);cursor:pointer;transition:all .3s}.ebook-dot.active{width:20px;border-radius:3px;background:var(--pri)}
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   MATHEUS ACADEMY FIXES v2.0 - CSS
-   FIX 1: Duplo glow | FIX 2: Carrossel | FIX 3: Favoritos | FIX 4: Logo
+   MATHEUS ACADEMY FIXES v3.0 - CSS
+   FIX 1: GLOW ÚNICO ABSOLUTO | FIX 2: SCROLL ULTRA-RESPONSIVO
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/* ── FIX 1: APENAS 1 CARD BRILHA POR VEZ ── */
-.ebook-card,.cc{transition:all .3s cubic-bezier(.4,0,.2,1)!important}
-.ebook-card:not(:hover):not(.touch-active):not(.ma-single-glow){box-shadow:none!important;border-color:var(--brd)!important}
-.ma-single-glow{border-color:var(--neon)!important;box-shadow:0 0 20px var(--neon),0 0 50px rgba(0,212,255,.5),0 12px 30px rgba(0,0,0,.5)!important;z-index:10!important;transform:scale(1.08) translateY(-4px)!important}
-
-/* ── FIX 2: CARROSSEL INFINITO MAIS RÁPIDO ── */
-@keyframes ma-carousel-flow{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.ma-carousel-infinite{animation:ma-carousel-flow 18s linear infinite!important}
-.ma-carousel-infinite:hover{animation-play-state:paused!important}
+/* ── FIX 1: DESABILITAR TODO HOVER/TOUCH NATIVO - CONTROLE 100% VIA JS ── */
+.ebook-card,.cc{
+  transition:none!important;
+  box-shadow:none!important;
+  border-color:var(--brd)!important;
+  transform:none!important;
+}
+.ebook-card:hover,.cc:hover,
+.ebook-card.touch-active,.cc.touch-active,
+.ebook-card:focus,.cc:focus{
+  box-shadow:none!important;
+  border-color:var(--brd)!important;
+  transform:none!important;
+}
+/* ÚNICA classe que ativa o brilho - controlada 100% por JS */
+.ma-glow-active{
+  border-color:var(--neon)!important;
+  box-shadow:0 0 20px var(--neon),0 0 50px rgba(0,212,255,.5),0 12px 30px rgba(0,0,0,.5)!important;
+  transform:scale(1.06) translateY(-3px)!important;
+  z-index:100!important;
+  transition:transform .15s ease-out,box-shadow .15s ease-out,border-color .15s ease-out!important;
+}
 
 /* ── FIX 3: MENU DE FAVORITOS (LONG PRESS) ── */
 .ma-fav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:9998;opacity:0;visibility:hidden;transition:all .3s ease}
@@ -826,27 +839,44 @@ function makeSVGCover(id) {
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
 }
 
-// Scroll contínuo
-var _scrollX = 0, _scrollHalf = 0, _scrollRAF = null, _scrollPaused = false;
-var _scrollSpeed = 1.2; // px por frame - VELOCIDADE AUMENTADA (era 0.4)
+// Scroll contínuo - VERSÃO ULTRA-RESPONSIVA v3.0
+var _scrollX = 0, _scrollHalf = 0, _scrollRAF = null;
+var _scrollSpeed = 1.5; // velocidade base automática
+var _scrollUserSpeed = 0; // velocidade do usuário (touch/mouse)
+var _scrollIsDragging = false;
+var _scrollBaseSpeed = 1.5; // velocidade quando não está arrastando
 
 function startContinuousScroll() {
   var track = document.getElementById('ebookTrack');
   if (!track) return;
-  var _baseSpeed = 1.2; // VELOCIDADE BASE AUMENTADA (era 0.4)
+  
   function step() {
-    // Decai suavemente em direção à velocidade base (momentum)
-    if (Math.abs(_scrollSpeed - _baseSpeed) > 0.02) {
-      _scrollSpeed = _scrollSpeed * 0.94 + _baseSpeed * 0.06;
+    // Se usuário está arrastando, usar velocidade do usuário
+    // Senão, usar velocidade base com decaimento suave do momentum
+    if (_scrollIsDragging) {
+      // Durante arrasto: movimento direto, sem delay
+      _scrollX += _scrollUserSpeed;
+      _scrollUserSpeed = 0; // consumir velocidade instantaneamente
     } else {
-      _scrollSpeed = _baseSpeed;
+      // Não arrastando: decaimento ultra-rápido para velocidade base
+      if (Math.abs(_scrollSpeed - _scrollBaseSpeed) > 0.1) {
+        _scrollSpeed = _scrollSpeed * 0.85 + _scrollBaseSpeed * 0.15; // decaimento mais rápido
+      } else {
+        _scrollSpeed = _scrollBaseSpeed;
+      }
+      _scrollX += _scrollSpeed;
     }
-    _scrollX += _scrollSpeed;
-    if (_scrollHalf > 0 && _scrollX >= _scrollHalf) _scrollX -= _scrollHalf;
-    if (_scrollX < 0) _scrollX += (_scrollHalf > 0 ? _scrollHalf : 1000);
-    track.style.transform = 'translateX(-' + _scrollX + 'px)';
+    
+    // Loop infinito
+    if (_scrollHalf > 0) {
+      while (_scrollX >= _scrollHalf) _scrollX -= _scrollHalf;
+      while (_scrollX < 0) _scrollX += _scrollHalf;
+    }
+    
+    track.style.transform = 'translateX(' + (-_scrollX) + 'px)';
     _scrollRAF = requestAnimationFrame(step);
   }
+  
   if (_scrollRAF) cancelAnimationFrame(_scrollRAF);
   _scrollRAF = requestAnimationFrame(step);
 }
@@ -1516,79 +1546,99 @@ function addEbookTouchSwipe() {
   var track = document.getElementById('ebookTrack');
   if (!track) return;
 
-  // ── TOUCH com momentum real ──
-  var tStartX = 0, tStartY = 0, tStartScroll = 0;
-  var tLastX = 0, tLastTime = 0, tVelocity = 0;
-  var tDir = null;
-
+  // ══════════════════════════════════════════════════════════════════
+  // TOUCH ULTRA-RESPONSIVO v3.0 - Sem delay, aceleração contínua
+  // ══════════════════════════════════════════════════════════════════
+  var tLastX = 0, tLastY = 0, tDir = null;
+  var tVelocityHistory = []; // histórico para calcular velocidade média
+  
   track.addEventListener('touchstart', function(e) {
-    // Frear momentum atual — congelar a roleta no ponto atual
-    _scrollSpeed = 0;
-    tStartX = e.touches[0].clientX;
-    tStartY = e.touches[0].clientY;
-    tStartScroll = _scrollX;
-    tLastX = tStartX; tLastTime = Date.now();
-    tVelocity = 0; tDir = null;
+    _scrollIsDragging = true;
+    tLastX = e.touches[0].clientX;
+    tLastY = e.touches[0].clientY;
+    tDir = null;
+    tVelocityHistory = [];
+    _scrollSpeed = 0; // parar scroll automático imediatamente
   }, {passive: true});
 
   track.addEventListener('touchmove', function(e) {
+    if (!_scrollIsDragging) return;
     var cx = e.touches[0].clientX;
     var cy = e.touches[0].clientY;
-    var dx = tStartX - cx;
-    var dy = tStartY - cy;
-    if (!tDir) tDir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
-    if (tDir === 'h') {
-      // Calcular velocidade instantânea (px/frame a 60fps)
-      var now = Date.now();
-      var dt = Math.max(1, now - tLastTime);
-      tVelocity = (tLastX - cx) / dt * 16; // normalizado para 16ms/frame
-      tLastX = cx; tLastTime = now;
-      // Mover carousel diretamente
-      _scrollX = tStartScroll + dx;
-      if (_scrollHalf > 0) {
-        while (_scrollX < 0) _scrollX += _scrollHalf;
-        while (_scrollX >= _scrollHalf) _scrollX -= _scrollHalf;
+    var dx = tLastX - cx;
+    var dy = tLastY - cy;
+    
+    // Detectar direção apenas uma vez
+    if (!tDir) {
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        tDir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
       }
     }
+    
+    if (tDir === 'h') {
+      // MOVIMENTO DIRETO E INSTANTÂNEO - multiplicador 2.5x para sensibilidade
+      _scrollUserSpeed = dx * 2.5;
+      
+      // Guardar histórico de velocidade para momentum
+      tVelocityHistory.push(dx);
+      if (tVelocityHistory.length > 5) tVelocityHistory.shift();
+    }
+    
+    tLastX = cx;
+    tLastY = cy;
   }, {passive: true});
 
   track.addEventListener('touchend', function() {
-    if (tDir === 'h') {
-      // Lançar com velocidade do swipe — decaimento cuida do resto
-      _scrollSpeed = tVelocity;
+    _scrollIsDragging = false;
+    
+    if (tDir === 'h' && tVelocityHistory.length > 0) {
+      // Calcular velocidade média do swipe
+      var avgVel = tVelocityHistory.reduce(function(a,b){return a+b;}, 0) / tVelocityHistory.length;
+      // Lançar com momentum - multiplicador para mais força
+      _scrollSpeed = avgVel * 3;
       // Limitar velocidade máxima
-      if (_scrollSpeed > 30) _scrollSpeed = 30;
-      if (_scrollSpeed < -30) _scrollSpeed = -30;
+      if (_scrollSpeed > 40) _scrollSpeed = 40;
+      if (_scrollSpeed < -40) _scrollSpeed = -40;
     }
+    
     tDir = null;
+    tVelocityHistory = [];
   }, {passive: true});
 
-  // ── MOUSE drag (desktop) ──
-  var mStartX = 0, mStartScroll = 0, mLastX = 0, mLastTime = 0, mVel = 0;
+  // ══════════════════════════════════════════════════════════════════
+  // MOUSE DRAG ULTRA-RESPONSIVO
+  // ══════════════════════════════════════════════════════════════════
+  var mLastX = 0, mVelHistory = [];
+  
   track.addEventListener('mousedown', function(e) {
     if (e.button !== 0) return;
+    _scrollIsDragging = true;
+    mLastX = e.clientX;
+    mVelHistory = [];
     _scrollSpeed = 0;
-    mStartX = e.clientX; mStartScroll = _scrollX;
-    mLastX = mStartX; mLastTime = Date.now(); mVel = 0;
+    
     var onMove = function(ev) {
-      var now = Date.now();
-      var dt = Math.max(1, now - mLastTime);
-      mVel = (mLastX - ev.clientX) / dt * 16;
-      mLastX = ev.clientX; mLastTime = now;
-      _scrollX = mStartScroll + (mStartX - ev.clientX);
-      if (_scrollHalf > 0) {
-        while (_scrollX < 0) _scrollX += _scrollHalf;
-        while (_scrollX >= _scrollHalf) _scrollX -= _scrollHalf;
-      }
+      if (!_scrollIsDragging) return;
+      var dx = mLastX - ev.clientX;
+      _scrollUserSpeed = dx * 2;
+      mVelHistory.push(dx);
+      if (mVelHistory.length > 5) mVelHistory.shift();
+      mLastX = ev.clientX;
     };
+    
     var onUp = function() {
-      // Lançar momentum ao soltar o mouse
-      _scrollSpeed = mVel;
-      if (_scrollSpeed > 20) _scrollSpeed = 20;
-      if (_scrollSpeed < -20) _scrollSpeed = -20;
+      _scrollIsDragging = false;
+      if (mVelHistory.length > 0) {
+        var avgVel = mVelHistory.reduce(function(a,b){return a+b;}, 0) / mVelHistory.length;
+        _scrollSpeed = avgVel * 2.5;
+        if (_scrollSpeed > 30) _scrollSpeed = 30;
+        if (_scrollSpeed < -30) _scrollSpeed = -30;
+      }
+      mVelHistory = [];
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onUp);
     };
+    
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onUp);
   });
@@ -4603,44 +4653,80 @@ function maPlayFavRemoveSound() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// FIX 1: APENAS 1 CARD BRILHA POR VEZ
+// FIX 1: GLOW ÚNICO ABSOLUTO v3.0 - Detecta card sob o dedo em tempo real
 // ═══════════════════════════════════════════════════════════════════════════
 var _currentGlowCard = null;
 
-function maSetSingleGlow(card) {
-  if (_currentGlowCard && _currentGlowCard !== card) {
-    _currentGlowCard.classList.remove('ma-single-glow', 'touch-active');
-  }
-  card.classList.add('ma-single-glow');
+function maRemoveAllGlow() {
+  // Remove glow de TODOS os cards
+  document.querySelectorAll('.ma-glow-active').forEach(function(c) {
+    c.classList.remove('ma-glow-active');
+  });
+  _currentGlowCard = null;
+}
+
+function maSetGlow(card) {
+  if (!card) return;
+  if (_currentGlowCard === card) return; // já está ativo
+  maRemoveAllGlow(); // remove de todos primeiro
+  card.classList.add('ma-glow-active');
   _currentGlowCard = card;
 }
 
-function maRemoveGlow(card) {
-  card.classList.remove('ma-single-glow', 'touch-active');
-  if (_currentGlowCard === card) _currentGlowCard = null;
+function maGetCardUnderPoint(x, y) {
+  // Encontra o card que está sob o ponto (x, y)
+  var el = document.elementFromPoint(x, y);
+  if (!el) return null;
+  return el.closest('.ebook-card, .cc');
 }
 
 function maInitGlowFix() {
-  var cards = document.querySelectorAll('.ebook-card, .cc');
-  cards.forEach(function(card) {
-    card.addEventListener('mouseenter', function() { maSetSingleGlow(card); });
-    card.addEventListener('mouseleave', function() { maRemoveGlow(card); });
+  // ══════════════════════════════════════════════════════════════════
+  // MOUSE - Desktop
+  // ══════════════════════════════════════════════════════════════════
+  document.addEventListener('mousemove', function(e) {
+    var card = maGetCardUnderPoint(e.clientX, e.clientY);
+    if (card) {
+      maSetGlow(card);
+    } else if (_currentGlowCard) {
+      maRemoveAllGlow();
+    }
   });
   
-  // Touch: apenas 1 card brilha
+  document.addEventListener('mouseleave', function() {
+    maRemoveAllGlow();
+  });
+  
+  // ══════════════════════════════════════════════════════════════════
+  // TOUCH - Mobile - Detecta card sob o dedo em TEMPO REAL
+  // ══════════════════════════════════════════════════════════════════
   document.addEventListener('touchstart', function(e) {
-    var card = e.target.closest('.ebook-card, .cc');
+    if (!e.touches.length) return;
+    var touch = e.touches[0];
+    var card = maGetCardUnderPoint(touch.clientX, touch.clientY);
     if (card) {
-      maSetSingleGlow(card);
+      maSetGlow(card);
+    }
+  }, {passive: true});
+  
+  document.addEventListener('touchmove', function(e) {
+    if (!e.touches.length) return;
+    var touch = e.touches[0];
+    var card = maGetCardUnderPoint(touch.clientX, touch.clientY);
+    if (card) {
+      maSetGlow(card); // Muda para o card sob o dedo INSTANTANEAMENTE
+    } else {
+      maRemoveAllGlow(); // Se não está sobre nenhum card, remove glow
     }
   }, {passive: true});
   
   document.addEventListener('touchend', function() {
-    setTimeout(function() {
-      if (_currentGlowCard) {
-        maRemoveGlow(_currentGlowCard);
-      }
-    }, 1200);
+    // Delay curto para o usuário ver o último card destacado
+    setTimeout(maRemoveAllGlow, 800);
+  }, {passive: true});
+  
+  document.addEventListener('touchcancel', function() {
+    maRemoveAllGlow();
   }, {passive: true});
 }
 
