@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin · Matheus Academy</title>
+<script src="firebase-config.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#080c14;--sf:#0d1421;--card:#111827;--brd:#1e2d47;--acc:#3b82f6;--acc2:#60a5fa;--grn:#22c55e;--red:#ef4444;--ylw:#f59e0b;--txt:#f0f4ff;--t2:#8899bb;--t3:#4a5c7a;--mono:'JetBrains Mono',monospace;--sans:'Sora',sans-serif}
@@ -213,6 +214,51 @@ textarea{resize:vertical;min-height:54px}
 .msg-hist-item .mhi-text{color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .msg-hist-item .mhi-dest{margin-top:4px;font-size:10px;color:var(--t3)}
 
+/* ── EDITOR DE CURSOS ── */
+.ed-curso-item{background:var(--card);border:1px solid var(--brd);border-radius:10px;margin-bottom:8px;display:flex;align-items:center;gap:10px;padding:12px 14px;transition:.15s;cursor:pointer}
+.ed-curso-item:hover{border-color:var(--acc);background:rgba(59,130,246,.04)}
+.ed-curso-item.selecionado{border-color:var(--acc);background:rgba(59,130,246,.06)}
+.ed-icon{font-size:22px;flex-shrink:0}
+.ed-info{flex:1;min-width:0}
+.ed-info b{font-size:13px;font-weight:700;display:block}
+.ed-info small{font-size:10px;color:var(--t3);font-family:var(--mono)}
+.ed-badges{display:flex;gap:4px;flex-shrink:0}
+.ed-edit-btn{background:rgba(59,130,246,.12);color:var(--acc2);border:1px solid rgba(59,130,246,.25);padding:5px 11px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:.15s;flex-shrink:0}
+.ed-edit-btn:hover{background:rgba(59,130,246,.22)}
+/* ── AUDIT ── */
+.audit-item{padding:8px 10px;border-bottom:1px solid rgba(30,45,71,.5);font-size:11px;display:flex;align-items:flex-start;gap:8px}
+.audit-item:last-child{border:none}
+.audit-ts{color:var(--t3);font-family:var(--mono);font-size:10px;flex-shrink:0;padding-top:1px}
+.audit-msg{flex:1;color:var(--txt)}
+.audit-empty{color:var(--t3);font-size:11px;padding:8px;text-align:center}
+/* ── LOTE ── */
+.lote-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(30,45,71,.4);font-size:11px}
+.lote-row:last-child{border:none}
+.lote-email{color:var(--t2);font-family:var(--mono);font-size:10px}
+.lote-code{color:#86efac;font-family:var(--mono);font-size:10px;cursor:pointer}
+/* ── ORDEM ── */
+.ordem-item{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:10px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:grab;user-select:none;transition:.15s}
+.ordem-item.dragging{opacity:.4;border-color:var(--acc)}
+.ordem-item:hover{border-color:var(--t3)}
+.ordem-handle{color:var(--t3);font-size:16px;cursor:grab}
+.ordem-num{font-size:11px;font-weight:700;font-family:var(--mono);color:var(--t3);flex:0 0 22px}
+/* ── RECEITA ── */
+.receita-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.receita-card{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:12px;text-align:center}
+.receita-card .rv{font-size:20px;font-weight:800;font-family:var(--mono);color:#86efac}
+.receita-card .rl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+/* ── BUSCA RÁPIDA ── */
+.busca-card-result{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:14px}
+.bkv{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(30,45,71,.4);font-size:12px}
+.bkv:last-child{border:none}
+.bkv .k{color:var(--t2)}
+.bkv .v{font-weight:700;color:var(--txt);font-family:var(--mono)}
+/* ── EXP RELATÓRIO ── */
+.exp-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(30,45,71,.4);font-size:12px}
+.exp-item:last-child{border:none}
+.exp-item .ei-nome{flex:1;font-weight:700}
+.exp-item .ei-data{font-family:var(--mono);font-size:10px;color:#fcd34d}
+.exp-item .ei-dias{font-size:10px;color:#fca5a5;font-weight:700}
 /* ── STATS ── */
 .st-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
 .st-card{background:var(--sf);border:1px solid var(--brd);border-radius:12px;padding:16px}
@@ -240,10 +286,70 @@ textarea{resize:vertical;min-height:54px}
 </style>
 </head>
 <body>
+
+<!-- ══════════════════════════════════════════════
+     TELA DE LOGIN DO ADMIN
+══════════════════════════════════════════════ -->
+<div id="admin-lock" style="position:fixed;inset:0;background:#080c14;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:0">
+
+  <!-- Logo / Branding -->
+  <div style="text-align:center;margin-bottom:32px">
+    <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1e3a5f,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;margin:0 auto 14px;border:2px solid rgba(59,130,246,.3)">M</div>
+    <div style="font-size:20px;font-weight:800;background:linear-gradient(135deg,#f0f4ff,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Matheus Academy</div>
+    <div style="font-size:11px;color:#4a5c7a;margin-top:3px;font-family:'JetBrains Mono',monospace">Painel Administrativo</div>
+  </div>
+
+  <!-- Card de login -->
+  <div style="background:#0d1421;border:1px solid #1e2d47;border-radius:16px;padding:32px 28px;width:100%;max-width:360px;margin:0 18px">
+    <div style="font-size:13px;font-weight:700;color:#f0f4ff;margin-bottom:4px">🔐 Acesso Restrito</div>
+    <div style="font-size:11px;color:#4a5c7a;margin-bottom:24px">Digite a senha de administrador para continuar</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
+      <label style="font-size:10px;font-weight:700;color:#8899bb;text-transform:uppercase;letter-spacing:.06em">Senha</label>
+      <input type="password" id="lock-senha" placeholder="••••••••••••"
+        style="background:#111827;border:1px solid #1e2d47;border-radius:8px;padding:11px 14px;color:#f0f4ff;font-family:'Sora',sans-serif;font-size:14px;outline:none;transition:.2s;width:100%"
+        onkeydown="if(event.key==='Enter')tentarLogin()"
+        oninput="el('lock-erro').style.display='none'"
+        onfocus="this.style.borderColor='#3b82f6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,.13)'"
+        onblur="this.style.borderColor='#1e2d47';this.style.boxShadow='none'">
+    </div>
+
+    <div id="lock-erro" style="display:none;background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.25);color:#fca5a5;border-radius:8px;padding:9px 12px;font-size:12px;margin-bottom:14px">
+      ❌ Senha incorreta. Tente novamente.
+    </div>
+    <div id="lock-tentativas" style="display:none;background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.25);color:#fcd34d;border-radius:8px;padding:9px 12px;font-size:11px;margin-bottom:14px"></div>
+
+    <button onclick="tentarLogin()" id="lock-btn"
+      style="width:100%;background:#3b82f6;color:#fff;border:none;border-radius:10px;padding:13px;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Entrar no Admin
+    </button>
+
+    <div style="text-align:center;margin-top:16px;font-size:10px;color:#2a3a52">
+      Matheus Academy · Admin v10 · Acesso monitorado
+    </div>
+  </div>
+
+  <!-- Bloqueio temporário -->
+  <div id="lock-bloqueado" style="display:none;position:fixed;inset:0;background:#080c14;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;z-index:10000">
+    <div style="font-size:48px">🔒</div>
+    <div style="font-size:16px;font-weight:700;color:#fca5a5">Acesso bloqueado temporariamente</div>
+    <div style="font-size:12px;color:#4a5c7a">Aguarde <span id="lock-timer" style="color:#fcd34d;font-weight:700">60s</span> para tentar novamente</div>
+  </div>
+</div>
+
+<!-- Conteúdo real do admin (oculto até login) -->
+<div id="admin-content" style="display:none">
 <header>
   <div class="logo">M</div>
   <div><h1>Matheus Academy <small>Admin</small></h1></div>
-  <div class="hbadge">⚙ v9</div>
+  <div class="hbadge">⚙ v10</div>
+  <div class="hbadge" id="fb-badge" style="background:rgba(239,68,68,.15);color:#fca5a5;border-color:rgba(239,68,68,.3)">🔴 Firebase</div>
+  <button class="btns" onclick="abrirBackup()" style="margin-left:8px;font-size:10px">💾 Backup</button>
+  <button class="btns" onclick="abrirAudit()" style="margin-left:4px;font-size:10px">📋 Audit Log</button>
+  <button class="btns" onclick="logoutAdmin()" style="margin-left:4px;font-size:10px;border-color:rgba(239,68,68,.3);color:#fca5a5">🚪 Sair</button>
+</header>
+<div id="fb-status" style="display:none;align-items:center;gap:8px;padding:8px 24px;background:rgba(59,130,246,.08);border-bottom:1px solid rgba(59,130,246,.15);font-size:11px;color:var(--acc2)"></div>
 </header>
 <main>
   <h2>Gerenciar Cursos</h2>
@@ -268,9 +374,11 @@ textarea{resize:vertical;min-height:54px}
   <div class="tabs">
     <div class="tab on" onclick="swTab('up')">📤 Upload HTML</div>
     <div class="tab" onclick="swTab('mn')">✏️ Cadastro Manual</div>
+    <div class="tab" onclick="swTab('ed')">🔧 Editar Cursos</div>
     <div class="tab" onclick="swTab('al')">👥 Alunos</div>
     <div class="tab" onclick="swTab('ms')">💬 Mensagens</div>
     <div class="tab" onclick="swTab('st')">📊 Stats</div>
+    <div class="tab" onclick="swTab('fe')">⚙️ Ferramentas</div>
   </div>
 
   <!-- TAB UPLOAD -->
@@ -415,6 +523,282 @@ textarea{resize:vertical;min-height:54px}
         Registrar no portal (sem subir HTML)
       </button>
       <div class="res" id="rMn"></div>
+    </div>
+  </div>
+
+  <!-- TAB EDITAR CURSOS -->
+  <div class="tc" id="tc-ed">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">🔧 Editor de Cursos</div>
+          <div style="font-size:11px;color:var(--t2);margin-top:2px">Edite qualquer campo de cursos já publicados</div>
+        </div>
+        <button class="btns" onclick="carregarCursosEditor()">🔄 Carregar cursos</button>
+      </div>
+      <div id="ed-list" style="color:var(--t3);font-size:12px;padding:8px">Clique em "Carregar cursos" para ver os cursos disponíveis.</div>
+    </div>
+
+    <!-- Formulário de edição (oculto até selecionar um curso) -->
+    <div class="card" id="ed-form" style="display:none">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+        <span id="ed-form-icon" style="font-size:28px">📚</span>
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--txt)" id="ed-form-title">Editando curso</div>
+          <div style="font-size:10px;color:var(--t3);font-family:var(--mono)" id="ed-form-id">id: —</div>
+        </div>
+        <button class="btns" onclick="fecharEditor()" style="margin-left:auto">✕ Fechar</button>
+      </div>
+
+      <div class="mg">
+        <div class="mf"><label>Nome *</label><input type="text" id="ed-name"></div>
+        <div class="mf"><label>Ícone</label><input type="text" id="ed-icon" placeholder="🎓" style="max-width:80px"></div>
+        <div class="mf" style="grid-column:1/-1"><label>Descrição</label><textarea id="ed-desc" rows="2"></textarea></div>
+        <div class="mf"><label>Categoria</label>
+          <select id="ed-cat">
+            <option value="Negócios">Negócios</option>
+            <option value="Geopolítica">Geopolítica</option>
+            <option value="PNL">PNL</option>
+            <option value="Desenvolvimento">Desenvolvimento</option>
+            <option value="Tecnologia">Tecnologia</option>
+            <option value="Psicologia">Psicologia</option>
+            <option value="História">História</option>
+            <option value="Filosofia">Filosofia</option>
+            <option value="Inglês">Inglês</option>
+            <option value="Bíblia / Teologia">Bíblia / Teologia</option>
+            <option value="Biografias">Biografias</option>
+            <option value="Engenharia">Engenharia</option>
+            <option value="Mecânica">Mecânica</option>
+            <option value="📚 Ebooks">📚 Ebooks</option>
+            <option value="Atualize-se! Notícias Mais Relevantes da Semana">🔴 Notícias (Atualize-se!)</option>
+          </select>
+        </div>
+        <div class="mf"><label>Módulos</label><input type="number" id="ed-modules" min="1" placeholder="9"></div>
+        <div class="mf"><label>Tópicos</label><input type="number" id="ed-topics" min="1" placeholder="54"></div>
+        <div class="mf"><label>Horas</label><input type="number" id="ed-hours" min="1" placeholder="18"></div>
+        <div class="mf"><label>Quizzes</label><input type="number" id="ed-quizzes" min="0" placeholder="9"></div>
+        <div class="mf"><label>Arquivo HTML</label><input type="text" id="ed-file" placeholder="curso.html"></div>
+        <div class="mf"><label>Salt (⚠️ cuidado)</label>
+          <input type="text" id="ed-salt">
+          <div style="font-size:9px;color:#fcd34d;margin-top:3px">⚠️ Alterar o salt invalida os acessos existentes</div>
+        </div>
+        <div class="mf"><label>Auth Key (ak)</label><input type="text" id="ed-ak"></div>
+        <div class="mf"><label>Storage Prefix</label><input type="text" id="ed-prefix"></div>
+        <div class="mf"><label>Cor hex</label><input type="text" id="ed-color" placeholder="#3b82f6"></div>
+        <div class="mf" style="grid-column:1/-1"><label>Descrição Longa / Ementa</label><textarea id="ed-longdesc" rows="3" placeholder="O que o aluno vai aprender..."></textarea></div>
+        <div class="mf"><label>Nível</label>
+          <select id="ed-nivel">
+            <option value="">Não definido</option>
+            <option value="iniciante">Iniciante</option>
+            <option value="intermediario">Intermediário</option>
+            <option value="avancado">Avançado</option>
+          </select>
+        </div>
+        <div class="mf"><label>Instrutor</label><input type="text" id="ed-instrutor" placeholder="Matheus Henry"></div>
+        <div class="mf"><label>Tag de destaque</label><input type="text" id="ed-badge" placeholder="Ex: Novo, Em Alta, Exclusivo"></div>
+        <div class="mf"><label>Preço (exibição)</label><input type="text" id="ed-preco" placeholder="Ex: R$9,99"></div>
+        <div class="mf"><label>Link Kiwify</label><input type="text" id="ed-kiwify" placeholder="pay.kiwify.com.br/XXXXX"></div>
+        <div class="mf"><label>Idioma</label>
+          <select id="ed-idioma">
+            <option value="pt-BR">Português (BR)</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:18px">
+        <button class="btnp" style="font-size:13px;padding:11px;flex:1" onclick="salvarEdicaoCurso()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+          Salvar alterações no GitHub
+        </button>
+        <button class="btns" onclick="fecharEditor()">Cancelar</button>
+      </div>
+      <div class="res" id="rEd"></div>
+    </div>
+  </div>
+
+  <!-- TAB FERRAMENTAS -->
+  <div class="tc" id="tc-fe">
+    <!-- 1. Gerador de Código de Acesso -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">🔑 Gerador de Código de Acesso</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Gera o hash SHA-256 de acesso para qualquer aluno</div>
+      <div class="mg" style="margin-bottom:12px">
+        <div class="mf"><label>Email do aluno</label><input type="email" id="gc-email" placeholder="aluno@email.com"></div>
+        <div class="mf"><label>Salt do curso</label><input type="text" id="gc-salt" placeholder="TP_HENRY_2026_MASTER"></div>
+        <div class="mf"><label>Prefixo</label><input type="text" id="gc-prefix" placeholder="tp_"></div>
+      </div>
+      <button class="btns" onclick="gerarCodigo()">🔑 Gerar código</button>
+      <div id="gc-result" style="display:none;margin-top:12px;padding:12px;background:var(--card);border:1px solid rgba(34,197,94,.3);border-radius:8px">
+        <div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Código gerado:</div>
+        <div id="gc-code" style="font-family:var(--mono);font-size:11px;color:#86efac;word-break:break-all;cursor:pointer" onclick="copiarTexto(this.textContent,'gc-copy-msg')"></div>
+        <div style="font-size:9px;color:var(--t3);margin-top:4px">🖱️ Clique no código para copiar</div>
+        <div id="gc-copy-msg" style="font-size:10px;color:#86efac;margin-top:4px;display:none">✅ Copiado!</div>
+      </div>
+    </div>
+
+    <!-- 2. Verificador de Código -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">🔍 Verificador de Código</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Confira se um código de acesso é válido para determinado aluno</div>
+      <div class="mg" style="margin-bottom:12px">
+        <div class="mf"><label>Email</label><input type="email" id="vc-email" placeholder="aluno@email.com"></div>
+        <div class="mf"><label>Código informado</label><input type="text" id="vc-code" placeholder="Cole o código aqui..."></div>
+        <div class="mf"><label>Salt</label><input type="text" id="vc-salt" placeholder="TP_HENRY_2026_MASTER"></div>
+        <div class="mf"><label>Prefixo</label><input type="text" id="vc-prefix" placeholder="tp_"></div>
+      </div>
+      <button class="btns" onclick="verificarCodigo()">🔍 Verificar</button>
+      <div id="vc-result" style="margin-top:10px;display:none;padding:10px;border-radius:8px;font-size:12px;font-weight:700"></div>
+    </div>
+
+    <!-- 3. Envio em Lote de Códigos -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">📨 Gerador em Lote</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Gera código de acesso para múltiplos alunos de uma vez</div>
+      <div class="mg" style="margin-bottom:12px">
+        <div class="mf" style="grid-column:1/-1"><label>Emails (um por linha)</label><textarea id="lote-emails" rows="4" placeholder="joao@email.com&#10;maria@email.com&#10;pedro@email.com"></textarea></div>
+        <div class="mf"><label>Salt do curso</label><input type="text" id="lote-salt" placeholder="TP_HENRY_2026_MASTER"></div>
+        <div class="mf"><label>Prefixo</label><input type="text" id="lote-prefix" placeholder="tp_"></div>
+      </div>
+      <button class="btns" onclick="gerarLote()">📨 Gerar todos</button>
+      <div id="lote-result" style="display:none;margin-top:12px"></div>
+    </div>
+
+    <!-- 4. Analisador de courses.js -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">🛠️ Analisador de courses.js</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Faz diagnóstico e detecta problemas no arquivo de cursos</div>
+      <button class="btns" onclick="analisarCourses()">🔬 Analisar agora</button>
+      <div id="analise-result" style="margin-top:12px;display:none"></div>
+    </div>
+
+    <!-- 5. Reordenar Cursos -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">🔢 Reordenar Cursos no Portal</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Arraste para definir a ordem de exibição dos cursos</div>
+      <button class="btns" onclick="carregarOrdem()">📋 Carregar ordem atual</button>
+      <div id="ordem-list" style="margin-top:12px"></div>
+      <div id="ordem-save" style="display:none;margin-top:12px">
+        <button class="btnp" style="font-size:13px;padding:10px" onclick="salvarOrdem()">💾 Salvar nova ordem</button>
+        <div class="res" id="rOrdem"></div>
+      </div>
+    </div>
+
+    <!-- 6. Importar/Exportar Alunos JSON -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">📦 Importar / Exportar Alunos (JSON)</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Backup completo da base de alunos em JSON</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btns" onclick="exportarJSON()">⬇️ Exportar JSON</button>
+        <button class="btns" onclick="el('importJson').click()">⬆️ Importar JSON</button>
+        <input type="file" id="importJson" accept=".json" style="display:none" onchange="importarJSON(this)">
+      </div>
+      <div id="import-result" style="margin-top:10px;display:none;font-size:11px;padding:8px;border-radius:7px"></div>
+    </div>
+
+    <!-- 7. Calculadora de Receita -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">💰 Calculadora de Receita Estimada</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Estime a receita com base nos alunos cadastrados</div>
+      <button class="btns" onclick="calcReceita()">💰 Calcular</button>
+      <div id="receita-result" style="margin-top:12px;display:none"></div>
+    </div>
+
+    <!-- 8. Limpar dados expirados -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">🧹 Limpar Alunos Expirados</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Remove automaticamente alunos com acesso vencido da base local</div>
+      <button class="btns" onclick="limparExpirados()">🧹 Limpar expirados</button>
+      <div id="limpar-result" style="margin-top:10px;display:none;font-size:11px;padding:8px;border-radius:7px"></div>
+    </div>
+
+    <!-- 9. Audit Log -->
+    <div class="card" id="audit-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--txt)">📋 Audit Log de Ações</div>
+        <button class="btns" onclick="limparAudit()">🗑 Limpar log</button>
+      </div>
+      <div id="audit-list" style="max-height:300px;overflow-y:auto"></div>
+    </div>
+
+    <!-- 10. Backup local do courses.js -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">💾 Backup do courses.js</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Faz download do courses.js atual do GitHub para backup local</div>
+      <button class="btns" onclick="baixarCoursesJs()">⬇️ Baixar courses.js</button>
+      <div id="backup-result" style="margin-top:10px;display:none;font-size:11px;padding:8px;border-radius:7px"></div>
+    </div>
+
+    <!-- 11. Busca rápida de aluno -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">🔎 Busca Rápida de Aluno</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Encontre qualquer aluno por email e veja todos os dados</div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="busca-rapida" placeholder="Email ou nome do aluno..." style="flex:1;font-size:12px">
+        <button class="btns" onclick="buscaRapida()">🔎</button>
+      </div>
+      <div id="busca-result" style="margin-top:12px;display:none"></div>
+    </div>
+
+    <!-- 12. Renovador de acesso em massa -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">⏰ Renovar Acesso em Massa</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Renova a data de expiração de todos os alunos de um plano</div>
+      <div class="mg" style="margin-bottom:12px">
+        <div class="mf"><label>Plano</label>
+          <select id="ren-plano">
+            <option value="mensal">Mensal</option>
+            <option value="anual">3 Anos</option>
+            <option value="individual">Individual</option>
+            <option value="gratuito">Gratuito</option>
+          </select>
+        </div>
+        <div class="mf"><label>Nova data de expiração</label><input type="date" id="ren-data"></div>
+      </div>
+      <button class="btns" onclick="renovarMassa()">⏰ Renovar acesso</button>
+      <div id="ren-result" style="margin-top:10px;display:none;font-size:11px;padding:8px;border-radius:7px"></div>
+    </div>
+
+    <!-- 13. Notificação de Expiração Próxima -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">⚡ Relatório de Expiração Próxima</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Lista todos os alunos que expiram nos próximos N dias</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+        <label style="font-size:11px;color:var(--t2)">Prazo (dias):</label>
+        <input type="number" id="exp-dias" value="7" min="1" max="90" style="width:70px;font-size:12px">
+        <button class="btns" onclick="relatorioExpiracao()">📋 Gerar relatório</button>
+      </div>
+      <div id="exp-result" style="display:none"></div>
+    </div>
+
+    <!-- 14. Clone / Duplicar Curso -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">📋 Clonar Metadados de Curso</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Copia todos os campos de um curso existente para criar um novo rapidamente</div>
+      <div class="mg" style="margin-bottom:12px">
+        <div class="mf"><label>ID do curso a clonar</label><input type="text" id="clone-id" placeholder="tp"></div>
+        <div class="mf"><label>Novo ID</label><input type="text" id="clone-novo-id" placeholder="tp2"></div>
+      </div>
+      <button class="btns" onclick="clonarCurso()">📋 Clonar</button>
+      <div id="clone-result" style="margin-top:10px;display:none;font-size:11px;padding:8px;border-radius:7px"></div>
+    </div>
+
+    <!-- 15. Configurações do Admin -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">⚙️ Configurações do Admin</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Personalize e configure o painel</div>
+      <div class="mg" style="margin-bottom:12px">
+        <div class="mf"><label>Nome do Admin</label><input type="text" id="cfg-nome" placeholder="Matheus Henry" oninput="ss('adminNome',this.value)"></div>
+        <div class="mf"><label>WhatsApp padrão</label><input type="text" id="cfg-wa" placeholder="5511951006917" oninput="ss('adminWa',this.value)"></div>
+        <div class="mf"><label>Email padrão</label><input type="email" id="cfg-email" placeholder="portal.matheushenry@gmail.com" oninput="ss('adminEmail',this.value)"></div>
+        <div class="mf"><label>Plataforma Kiwify padrão</label><input type="text" id="cfg-kiwify" placeholder="pay.kiwify.com.br/" oninput="ss('adminKiwify',this.value)"></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btns" onclick="salvarConfigs()">💾 Salvar configs</button>
+        <button class="btns" onclick="resetarAdmin()" style="border-color:rgba(239,68,68,.3);color:#fca5a5">🗑 Resetar tudo</button>
+      </div>
+      <div id="cfg-result" style="margin-top:10px;display:none;font-size:11px;padding:8px;border-radius:7px"></div>
     </div>
   </div>
 
@@ -684,6 +1068,166 @@ textarea{resize:vertical;min-height:54px}
   </div>
   <div id="list"><div style="color:var(--t3);font-size:12px;padding:8px">Conecte ao GitHub para ver os cursos...</div></div>
 </main>
+</div><!-- /admin-content -->
+
+<script>
+// ================================================================
+// MATHEUS ACADEMY ADMIN — SISTEMA DE LOGIN v10
+// Senha configurável abaixo. Hash SHA-256 para segurança.
+// ================================================================
+
+// ── CONFIGURAÇÃO DA SENHA ──
+// Para trocar a senha: gere o hash SHA-256 da nova senha em:
+// https://emn178.github.io/online-tools/sha256.html
+// e substitua o valor abaixo.
+
+// Senha padrão: matheus2026admin
+var ADMIN_HASH = 'd5a8a6feebd3d5c7e64d21ceb4bc6b1852ccb043176fb8b9a6f3c7c02d217039';
+
+// Sessão dura 8 horas (em ms)
+var SESSION_DURATION = 8 * 60 * 60 * 1000;
+
+// Máximo de tentativas antes de bloquear
+var MAX_TENTATIVAS = 5;
+
+// Tempo de bloqueio após exceder tentativas (60 segundos)
+var BLOCK_TIME = 60 * 1000;
+
+// ── CHAVES DE STORAGE ──
+var KEY_SESSION = 'ma_admin_session';
+var KEY_TENTATIVAS = 'ma_admin_tentativas';
+var KEY_BLOQUEIO = 'ma_admin_bloqueio';
+
+// ── SHA-256 via Web Crypto ──
+async function sha256Hex(msg) {
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+}
+
+// ── VERIFICAR SESSÃO ATIVA ──
+function verificarSessao() {
+  try {
+    var s = JSON.parse(localStorage.getItem(KEY_SESSION)||'{}');
+    if (s.ts && (Date.now() - s.ts) < SESSION_DURATION) {
+      liberar();
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+// ── LIBERAR ADMIN ──
+function liberar() {
+  el('admin-lock').style.display = 'none';
+  el('admin-content').style.display = 'block';
+  // Registra sessão
+  localStorage.setItem(KEY_SESSION, JSON.stringify({ ts: Date.now() }));
+  // Reseta tentativas
+  localStorage.removeItem(KEY_TENTATIVAS);
+  localStorage.removeItem(KEY_BLOQUEIO);
+}
+
+// ── TENTAR LOGIN ──
+async function tentarLogin() {
+  // Verificar bloqueio
+  var bloqueioTs = parseInt(localStorage.getItem(KEY_BLOQUEIO)||'0');
+  if (bloqueioTs && (Date.now() - bloqueioTs) < BLOCK_TIME) {
+    mostrarBloqueio(bloqueioTs);
+    return;
+  }
+
+  var btn = el('lock-btn');
+  var senhaInput = el('lock-senha');
+  var senha = senhaInput.value;
+
+  if (!senha) {
+    senhaInput.style.borderColor = '#ef4444';
+    senhaInput.focus();
+    return;
+  }
+
+  // Loading
+  btn.disabled = true;
+  btn.innerHTML = '<div class="sp" style="border-top-color:#fff;width:16px;height:16px;border-width:2px"></div> Verificando...';
+
+  var hash = await sha256Hex(senha);
+
+  if (hash === ADMIN_HASH) {
+    // ✅ Senha correta
+    btn.innerHTML = '✅ Acesso liberado!';
+    btn.style.background = '#22c55e';
+    setTimeout(liberar, 600);
+  } else {
+    // ❌ Senha errada
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Entrar no Admin';
+
+    senhaInput.value = '';
+    senhaInput.style.borderColor = '#ef4444';
+    senhaInput.style.boxShadow = '0 0 0 3px rgba(239,68,68,.13)';
+    el('lock-erro').style.display = 'block';
+    senhaInput.focus();
+
+    // Contabilizar tentativas
+    var tent = parseInt(localStorage.getItem(KEY_TENTATIVAS)||'0') + 1;
+    localStorage.setItem(KEY_TENTATIVAS, tent);
+
+    var restantes = MAX_TENTATIVAS - tent;
+    if (restantes <= 0) {
+      // Bloquear
+      localStorage.setItem(KEY_BLOQUEIO, Date.now());
+      localStorage.removeItem(KEY_TENTATIVAS);
+      mostrarBloqueio(Date.now());
+    } else if (restantes <= 2) {
+      var av = el('lock-tentativas');
+      av.style.display = 'block';
+      av.textContent = '⚠️ Atenção: ' + restantes + ' tentativa(s) restante(s) antes do bloqueio.';
+    }
+
+    // Pequena animação de shake
+    var card = el('lock-senha').parentElement.parentElement;
+    card.style.transform = 'translateX(-6px)';
+    setTimeout(function(){ card.style.transform = 'translateX(6px)'; }, 80);
+    setTimeout(function(){ card.style.transform = 'translateX(-4px)'; }, 160);
+    setTimeout(function(){ card.style.transform = 'translateX(0)'; }, 240);
+  }
+}
+
+// ── MOSTRAR TELA DE BLOQUEIO ──
+function mostrarBloqueio(bloqueioTs) {
+  var bloq = el('lock-bloqueado');
+  bloq.style.display = 'flex';
+
+  var interval = setInterval(function() {
+    var restante = Math.ceil((BLOCK_TIME - (Date.now() - bloqueioTs)) / 1000);
+    if (restante <= 0) {
+      clearInterval(interval);
+      bloq.style.display = 'none';
+      localStorage.removeItem(KEY_BLOQUEIO);
+      el('lock-senha').focus();
+    } else {
+      el('lock-timer').textContent = restante + 's';
+    }
+  }, 1000);
+}
+
+// ── LOGOUT DO ADMIN ──
+function logoutAdmin() {
+  localStorage.removeItem(KEY_SESSION);
+  location.reload();
+}
+
+// ── INICIAR ──
+window.addEventListener('load', function() {
+  // Verifica se já tem sessão ativa
+  if (!verificarSessao()) {
+    // Mostra tela de login
+    el('admin-lock').style.display = 'flex';
+    el('admin-content').style.display = 'none';
+    setTimeout(function(){ el('lock-senha').focus(); }, 200);
+  }
+});
+</script>
 
 <script>
 // ================================================================
@@ -707,16 +1251,7 @@ function ls(k){return localStorage.getItem(k)||'';}
 function ss(k,v){localStorage.setItem(k,v);}
 function el(id){return document.getElementById(id);}
 
-// TABS
-var _tabOrder=['up','mn','al','ms','st'];
-function swTab(n){
-  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('on',_tabOrder[i]===n);});
-  document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('on');});
-  var tc=el('tc-'+n); if(tc) tc.classList.add('on');
-  if(n==='al') loadAlunos();
-  if(n==='st') calcStats();
-  if(n==='ms') renderMsgHist();
-}
+// TABS — substituído pela versão v10 abaixo
 
 // DROPZONE
 function dzDrag(e,on){e.preventDefault();el('dz').classList.toggle('drag',on);}
@@ -1140,30 +1675,113 @@ function resetForm(){
   el('mp').style.display='none';el('opts').style.display='none';el('btnPub').disabled=true;
 }
 // ================================================================
-// MATHEUS ACADEMY ADMIN v8 — ALUNOS + MENSAGENS + STATS
+// MATHEUS ACADEMY ADMIN v10 — ALUNOS + MENSAGENS + STATS (FIREBASE)
 // ================================================================
 
-// ── STORAGE DE ALUNOS (localStorage) ──
-var MA_ALUNOS_KEY = 'ma_admin_alunos';
+// ── FIREBASE STATE ──
 var _alunosData = [];
 var _alunosFiltrados = [];
 var _alunoAtual = null;
 var _msgType = 'wa';
 var _msgDest = 'todos';
+var _fbReady = false;
 
-function loadAlunosStorage(){
-  try{ _alunosData = JSON.parse(localStorage.getItem(MA_ALUNOS_KEY)||'[]'); }catch(e){ _alunosData=[]; }
-}
-function saveAlunosStorage(){
-  localStorage.setItem(MA_ALUNOS_KEY, JSON.stringify(_alunosData));
+// Aguarda Firebase estar pronto
+function _waitFb(){
+  return new Promise(function(resolve){
+    if(window.__maFirebaseReady && window.maDb){ resolve(); return; }
+    document.addEventListener('maFirebaseReady', function(){ resolve(); }, {once:true});
+    setTimeout(resolve, 8000); // fallback timeout
+  });
 }
 
-// Gera ID único
+// ── CARREGAR ALUNOS DO FIRESTORE ──
+async function loadAlunosStorage(){
+  await _waitFb();
+  if(!window.maDb){ _alunosData=[]; return; }
+  try{
+    showFbStatus('Carregando alunos do Firebase...');
+    var snap = await maDb.collection('usuarios').orderBy('data_cadastro','desc').limit(500).get();
+    _alunosData = snap.docs.map(function(doc){
+      var d = doc.data();
+      return {
+        id: doc.id,
+        uid: doc.id,
+        nome: d.nome||d.displayName||'',
+        email: d.email||'',
+        telefone: d.telefone||d.whatsapp||'',
+        plano: d.plano||'gratuito',
+        cursos: d.cursos_comprados||[],
+        xp: d.xp_total||0,
+        streak: d.streak_atual||0,
+        streakRecord: d.streak_record||0,
+        nivel: d.nivel||1,
+        diasAtivos: d.dias_ativos||0,
+        dataExpiracao: d.data_expiracao||d.dataExpiracao||'',
+        dataCadastro: d.data_cadastro ? d.data_cadastro.toDate().toISOString() : '',
+        ultimoAcesso: d.ultimo_acesso ? d.ultimo_acesso.toDate().toISOString() : '',
+        foto: d.foto||'',
+        ativo: d.ativo!==false,
+        progresso: d.progresso||{},
+        total_minutos: d.total_minutos_estudo||0,
+        obs: d.obs||''
+      };
+    });
+    _alunosFiltrados = _alunosData.slice();
+    hideFbStatus();
+  } catch(e){
+    console.error('[Admin Firebase] Erro ao carregar alunos:', e);
+    _alunosData=[];
+    showFbStatus('❌ Erro ao carregar: '+e.message, true);
+  }
+}
+
+// ── SALVAR ALUNO NO FIRESTORE ──
+async function saveAlunoFirebase(uid, dados){
+  await _waitFb();
+  if(!window.maDb) throw new Error('Firebase não disponível');
+  await maDb.collection('usuarios').doc(uid).set(dados, {merge:true});
+}
+
+// Status overlay
+function showFbStatus(msg, err){
+  var el2=el('fb-status');
+  if(!el2) return;
+  el2.style.display='flex';
+  el2.innerHTML='<div class="sp" style="'+(err?'border-top-color:#fca5a5':'')+'"></div> '+msg;
+  if(err) el2.style.color='#fca5a5';
+  else el2.style.color='var(--acc2)';
+}
+function hideFbStatus(){ var e=el('fb-status'); if(e) e.style.display='none'; }
+
+// ── GERA ID ──
 function genId(){ return 'al_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
 
+// ── INIT FIREBASE ──
+document.addEventListener('maFirebaseReady', function(){
+  var badge = el('fb-badge');
+  if(badge){
+    badge.textContent = '🟢 Firebase';
+    badge.style.background = 'rgba(34,197,94,.15)';
+    badge.style.color = '#86efac';
+    badge.style.borderColor = 'rgba(34,197,94,.3)';
+  }
+  _fbReady = true;
+  console.log('[Admin v10] Firebase conectado ao projeto: matheus-academy');
+});
+setTimeout(function(){
+  if(!window.__maFirebaseReady){
+    var badge=el('fb-badge');
+    if(badge){ badge.textContent='❌ Firebase ERRO'; }
+    console.error('[Admin] Firebase não carregou em 8s — verifique firebase-config.js');
+  }
+},8000);
+
 // ── ALUNOS ──
-function loadAlunos(){
-  loadAlunosStorage();
+async function loadAlunos(){
+  var tbody=el('al-tbody');
+  if(tbody) tbody.innerHTML='<tr><td colspan="7" style="color:var(--t3);padding:20px;text-align:center"><span class="sp" style="display:inline-block;margin-right:6px"></span>Carregando do Firebase...</td></tr>';
+  await loadAlunosStorage();
   _alunosFiltrados = _alunosData.slice();
   renderTabela();
   updateAlStats();
@@ -1175,7 +1793,7 @@ function filtrarAlunos(){
   var st = el('al-filter-status').value;
   var cu = el('al-filter-curso').value;
   _alunosFiltrados = _alunosData.filter(function(a){
-    var nomeMail = (a.nome+' '+a.email).toLowerCase();
+    var nomeMail = ((a.nome||'')+' '+(a.email||'')).toLowerCase();
     if(q && !nomeMail.includes(q)) return false;
     if(pl && a.plano !== pl) return false;
     if(cu && (!a.cursos || a.cursos.indexOf(cu)===-1)) return false;
@@ -1242,15 +1860,15 @@ function renderTabela(){
       +'<td><span style="font-family:var(--mono);font-size:11px">'+(a.streak||0)+'🔥</span></td>'
       +'<td style="font-size:11px;color:var(--t2)">'+fmtData(a.ultimoAcesso)+'</td>'
       +'<td><div class="al-actions">'
-        +'<button class="al-btn" onclick="openDrawer(\''+a.id+'\')">👁</button>'
-        +(a.telefone?'<button class="al-btn wa" onclick="abrirWA(\''+escH(a.id)+'\')">💬</button>':'')
+        +'<button class="al-btn" onclick="openDrawer(\''+a.uid+'\')">👁</button>'
+        +(a.telefone?'<button class="al-btn wa" onclick="abrirWA(\''+a.uid+'\')">💬</button>':'')
         +'<button class="al-btn em" onclick="prepEmail(\''+escH(a.email)+'\')">📧</button>'
-        +'<button class="al-btn xp" onclick="addXP(\''+a.id+'\')">⚡</button>'
-        +'<button class="al-btn dl" onclick="delAluno(\''+a.id+'\')">🗑</button>'
+        +'<button class="al-btn xp" onclick="addXP(\''+a.uid+'\')">⚡</button>'
+        +'<button class="al-btn dl" onclick="delAluno(\''+a.uid+'\')">🗑</button>'
       +'</div></td>'
     +'</tr>';
   }).join('');
-  el('al-count').textContent = _alunosFiltrados.length+' de '+_alunosData.length+' alunos';
+  el('al-count').textContent = _alunosFiltrados.length+' de '+_alunosData.length+' alunos (Firebase)';
 }
 
 function updateAlStats(){
@@ -1274,56 +1892,71 @@ function toggleAddAluno(){
   var f=el('addAlunoForm'); f.classList.toggle('on');
 }
 
-function salvarAluno(){
+async function salvarAluno(){
   var nome=el('an-nome').value.trim();
   var email=el('an-email').value.trim();
   if(!nome||!email){showRes('rAluno','er','❌ Nome e email são obrigatórios.');return;}
+  await _waitFb();
+  if(!window.maDb){showRes('rAluno','er','❌ Firebase não conectado.');return;}
+  showRes('rAluno','ld','<div class="sp"></div> Salvando no Firebase...');
   var cursos=[];
   el('an-cursos-check').querySelectorAll('input:checked').forEach(function(c){cursos.push(c.value);});
-  var aluno={
-    id:genId(), nome:nome, email:email,
-    telefone:el('an-tel').value.trim(),
-    plano:el('an-plano').value,
-    cursos:cursos,
-    dataExpiracao:el('an-exp').value||null,
-    obs:el('an-obs').value.trim(),
-    xp:0, streak:0, nivel:1,
-    dataCadastro:new Date().toISOString(),
-    ultimoAcesso:null
+  var uid = 'admin_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+  var dados = {
+    uid: uid, nome: nome, email: email,
+    telefone: el('an-tel').value.trim(),
+    plano: el('an-plano').value,
+    cursos_comprados: cursos,
+    data_expiracao: el('an-exp').value||null,
+    obs: el('an-obs').value.trim(),
+    xp_total: 0, streak_atual: 0, nivel: 1,
+    data_cadastro: firebase.firestore.FieldValue.serverTimestamp(),
+    ultimo_acesso: null, ativo: true,
+    origem: 'admin_manual'
   };
-  loadAlunosStorage();
-  _alunosData.unshift(aluno);
-  saveAlunosStorage();
-  showRes('rAluno','ok','✅ Aluno "'+escH(nome)+'" salvo com sucesso!');
-  ['an-nome','an-tel','an-email','an-obs','an-exp'].forEach(function(id){el(id).value='';});
-  el('an-cursos-check').querySelectorAll('input').forEach(function(c){c.checked=false;});
-  loadAlunos();
+  try{
+    await maDb.collection('usuarios').doc(uid).set(dados);
+    showRes('rAluno','ok','✅ Aluno "'+escH(nome)+'" criado no Firebase!');
+    addAudit('Criou aluno: '+nome+' ('+email+')');
+    ['an-nome','an-tel','an-email','an-obs','an-exp'].forEach(function(id){el(id).value='';});
+    el('an-cursos-check').querySelectorAll('input').forEach(function(c){c.checked=false;});
+    loadAlunos();
+  } catch(err){
+    showRes('rAluno','er','❌ Erro Firebase: '+err.message);
+  }
 }
 
-function delAluno(id){
-  if(!confirm('Remover este aluno da base?')) return;
-  loadAlunosStorage();
-  _alunosData = _alunosData.filter(function(a){return a.id!==id;});
-  saveAlunosStorage();
-  loadAlunos();
+async function delAluno(uid){
+  if(!confirm('Remover este aluno permanentemente do Firebase?\n\nEsta ação não pode ser desfeita.')) return;
+  await _waitFb();
+  try{
+    await maDb.collection('usuarios').doc(uid).delete();
+    addAudit('Excluiu aluno uid: '+uid);
+    loadAlunos();
+  } catch(e){ alert('❌ Erro: '+e.message); }
 }
 
-function addXP(id){
+async function addXP(uid){
   var qtd=parseInt(prompt('Quantos XP dar para este aluno?','100')||'0');
   if(!qtd||isNaN(qtd)) return;
-  loadAlunosStorage();
-  var a=_alunosData.find(function(x){return x.id===id;});
-  if(!a) return;
-  a.xp=(a.xp||0)+qtd;
-  saveAlunosStorage();
-  loadAlunos();
-  alert('✅ +'+qtd+' XP para '+a.nome+'!');
+  await _waitFb();
+  try{
+    await maDb.collection('usuarios').doc(uid).update({
+      xp_total: firebase.firestore.FieldValue.increment(qtd)
+    });
+    await maDb.collection('usuarios').doc(uid).collection('historico_xp').add({
+      xp: qtd, motivo: 'Admin manual', ts: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    addAudit('Deu '+qtd+' XP para uid: '+uid);
+    var a=_alunosData.find(function(x){return x.uid===uid;});
+    alert('✅ +'+qtd+' XP para '+(a?a.nome:uid)+'!');
+    loadAlunos();
+  } catch(e){ alert('❌ Erro: '+e.message); }
 }
 
 // ── DRAWER ──
-function openDrawer(id){
-  loadAlunosStorage();
-  var a=_alunosData.find(function(x){return x.id===id;});
+function openDrawer(uid){
+  var a=_alunosData.find(function(x){return x.uid===uid;});
   if(!a) return;
   _alunoAtual=a;
   var ini=(a.nome||'?')[0].toUpperCase();
@@ -1333,23 +1966,24 @@ function openDrawer(id){
   var s=statusAluno(a);
   var cursosNomes={'tp':'Tráfego Pago','ni':'Negócios Inteligentes','gp':'Geopolítica Avançada','nl':'Nichos Lucrativos'};
   var body='';
-  // Plano e status
-  body+='<div class="al-section"><div class="al-section-title">📋 Dados Gerais</div>'
+  body+='<div class="al-section"><div class="al-section-title">📋 Dados Gerais (Firebase)</div>'
     +'<div class="al-kv"><span class="k">Status</span><span class="v '+(s==='ativo'?'g':s==='inativo'?'y':'r')+'">'+s.toUpperCase()+'</span></div>'
     +'<div class="al-kv"><span class="k">Plano</span><span class="v">'+planoPill(a.plano||'gratuito')+'</span></div>'
     +'<div class="al-kv"><span class="k">Expira</span><span class="v '+(a.dataExpiracao&&new Date(a.dataExpiracao)<new Date()?'r':'')+'">'+((a.dataExpiracao&&new Date(a.dataExpiracao).toLocaleDateString('pt-BR'))||'—')+'</span></div>'
     +'<div class="al-kv"><span class="k">Cadastro</span><span class="v">'+(a.dataCadastro?new Date(a.dataCadastro).toLocaleDateString('pt-BR'):'—')+'</span></div>'
     +'<div class="al-kv"><span class="k">Telefone</span><span class="v">'+(a.telefone||'—')+'</span></div>'
+    +'<div class="al-kv"><span class="k">UID</span><span class="v" style="font-size:9px">'+a.uid+'</span></div>'
     +(a.obs?'<div class="al-kv"><span class="k">Obs</span><span class="v" style="font-size:11px;font-family:var(--sans);text-align:right">'+escH(a.obs)+'</span></div>':'')
   +'</div>';
-  // Gamificação
-  body+='<div class="al-section"><div class="al-section-title">🎮 Gamificação</div>'
+  body+='<div class="al-section"><div class="al-section-title">🎮 Gamificação (Firebase)</div>'
     +'<div class="al-kv"><span class="k">XP Total</span><span class="v" style="color:var(--acc2)">'+(a.xp||0)+'</span></div>'
     +'<div class="al-kv"><span class="k">Nível</span><span class="v">'+(a.nivel||1)+'</span></div>'
-    +'<div class="al-kv"><span class="k">Streak</span><span class="v">'+(a.streak||0)+' 🔥</span></div>'
+    +'<div class="al-kv"><span class="k">Streak atual</span><span class="v">'+(a.streak||0)+' 🔥</span></div>'
+    +'<div class="al-kv"><span class="k">Streak record</span><span class="v">'+(a.streakRecord||0)+' 🔥</span></div>'
+    +'<div class="al-kv"><span class="k">Dias ativos</span><span class="v">'+(a.diasAtivos||0)+'</span></div>'
+    +'<div class="al-kv"><span class="k">Minutos estudo</span><span class="v">'+(a.total_minutos||0)+'</span></div>'
     +'<div class="al-kv"><span class="k">Último acesso</span><span class="v">'+(a.ultimoAcesso?new Date(a.ultimoAcesso).toLocaleDateString('pt-BR'):'—')+'</span></div>'
   +'</div>';
-  // Cursos
   body+='<div class="al-section"><div class="al-section-title">📚 Cursos com Acesso</div>';
   if(a.cursos&&a.cursos.length){
     a.cursos.forEach(function(c){
@@ -1362,13 +1996,28 @@ function openDrawer(id){
     body+='<div style="font-size:11px;color:var(--t3)">Nenhum curso com acesso.</div>';
   }
   body+='</div>';
-  // Ações
+  // Liberação rápida de curso
+  body+='<div class="al-section"><div class="al-section-title">🔑 Liberar Acesso Rápido</div>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">'
+    +['tp','ni','gp','nl'].map(function(c){
+      var tem=a.cursos&&a.cursos.indexOf(c)!==-1;
+      return '<button class="al-btn '+(tem?'dl':'wa')+'" onclick="toggleCursoAluno(\''+uid+'\',\''+c+'\')">'+(tem?'❌ ':'')+escH(cursosNomes[c]||c)+'</button>';
+    }).join('')
+    +'</div>'
+    +'<div style="font-size:9px;color:var(--t3)">Clique para dar/remover acesso ao curso</div></div>';
+  // Mudar plano
+  body+='<div class="al-section"><div class="al-section-title">💳 Alterar Plano</div>'
+    +'<div style="display:flex;gap:6px;flex-wrap:wrap">'
+    +['gratuito','mensal','anual','individual'].map(function(p){
+      return '<button class="al-btn '+(a.plano===p?'wa':'')+'" onclick="alterarPlano(\''+uid+'\',\''+p+'\')">'+p+'</button>';
+    }).join('')
+    +'</div></div>';
   body+='<div class="al-drawer-actions">'
-    +(a.telefone?'<button class="al-da-btn wa" onclick="abrirWA(\''+a.id+'\')">💬 WhatsApp</button>':'')
-    +'<button class="al-da-btn em" onclick="prepEmail(\''+escH(a.email)+'\')">📧 Enviar Email</button>'
-    +'<button class="al-da-btn xp" onclick="addXP(\''+a.id+'\')">⚡ Dar XP</button>'
-    +'<button class="al-da-btn un" onclick="editarAluno(\''+a.id+'\')">✏️ Editar</button>'
-    +'<button class="al-da-btn dl" onclick="delAluno(\''+a.id+'\');closeDrawer()">🗑 Remover</button>'
+    +(a.telefone?'<button class="al-da-btn wa" onclick="abrirWA(\''+uid+'\')">💬 WhatsApp</button>':'')
+    +'<button class="al-da-btn em" onclick="prepEmail(\''+escH(a.email)+'\')">📧 Email</button>'
+    +'<button class="al-da-btn xp" onclick="addXP(\''+uid+'\')">⚡ Dar XP</button>'
+    +'<button class="al-da-btn un" onclick="editarAluno(\''+uid+'\')">✏️ Editar</button>'
+    +'<button class="al-da-btn dl" onclick="delAluno(\''+uid+'\');closeDrawer()">🗑 Excluir</button>'
   +'</div>';
   el('dr-body').innerHTML=body;
   el('alunoDrawer').classList.add('open');
@@ -1380,28 +2029,68 @@ function closeDrawer(){
   el('drawerOverlay').classList.remove('on');
 }
 
-function editarAluno(id){
+async function toggleCursoAluno(uid, courseKey){
+  await _waitFb();
+  var a=_alunosData.find(function(x){return x.uid===uid;});
+  if(!a) return;
+  var tem=a.cursos&&a.cursos.indexOf(courseKey)!==-1;
+  try{
+    if(tem){
+      await maDb.collection('usuarios').doc(uid).update({
+        cursos_comprados: firebase.firestore.FieldValue.arrayRemove(courseKey)
+      });
+      addAudit('Removeu acesso ao curso "'+courseKey+'" do aluno: '+a.nome);
+    } else {
+      await maDb.collection('usuarios').doc(uid).update({
+        cursos_comprados: firebase.firestore.FieldValue.arrayUnion(courseKey)
+      });
+      addAudit('Liberou acesso ao curso "'+courseKey+'" para: '+a.nome);
+    }
+    await loadAlunos();
+    openDrawer(uid);
+  } catch(e){ alert('❌ '+e.message); }
+}
+
+async function alterarPlano(uid, plano){
+  if(!confirm('Alterar plano deste aluno para "'+plano+'"?')) return;
+  await _waitFb();
+  var a=_alunosData.find(function(x){return x.uid===uid;});
+  try{
+    await maDb.collection('usuarios').doc(uid).update({ plano: plano });
+    addAudit('Alterou plano de '+(a?a.nome:uid)+' para: '+plano);
+    await loadAlunos();
+    openDrawer(uid);
+  } catch(e){ alert('❌ '+e.message); }
+}
+
+async function editarAluno(uid){
   closeDrawer();
-  loadAlunosStorage();
-  var a=_alunosData.find(function(x){return x.id===id;});
+  var a=_alunosData.find(function(x){return x.uid===uid;});
   if(!a) return;
   var novoNome=prompt('Nome do aluno:',a.nome||'');
   if(novoNome===null) return;
   var novoTel=prompt('Telefone (WhatsApp, somente números):',a.telefone||'');
   if(novoTel===null) return;
   var novoObs=prompt('Observações:',a.obs||'');
-  a.nome=novoNome||a.nome;
-  a.telefone=novoTel;
-  a.obs=novoObs||'';
-  saveAlunosStorage();
-  loadAlunos();
-  alert('✅ Aluno atualizado!');
+  if(novoObs===null) return;
+  var novaExp=prompt('Data expiração (AAAA-MM-DD, deixe em branco para sem expiração):',a.dataExpiracao||'');
+  await _waitFb();
+  try{
+    await maDb.collection('usuarios').doc(uid).update({
+      nome: novoNome||a.nome,
+      telefone: novoTel,
+      obs: novoObs||'',
+      data_expiracao: novaExp||null
+    });
+    addAudit('Editou aluno: '+(novoNome||a.nome));
+    loadAlunos();
+    alert('✅ Aluno atualizado no Firebase!');
+  } catch(e){ alert('❌ '+e.message); }
 }
 
 // ── WHATSAPP ──
-function abrirWA(id){
-  loadAlunosStorage();
-  var a=_alunosData.find(function(x){return x.id===id;});
+function abrirWA(uid){
+  var a=_alunosData.find(function(x){return x.uid===uid;});
   if(!a||!a.telefone){alert('Telefone não cadastrado.');return;}
   var msg=prompt('Mensagem para '+a.nome+' (WhatsApp):\n\nUse {nome} para o nome do aluno.','Olá {nome}! Tudo bem?');
   if(!msg) return;
@@ -1448,7 +2137,6 @@ function updatePreview(){
 }
 
 function getDestinatarios(){
-  loadAlunosStorage();
   if(_msgDest==='todos') return _alunosData;
   if(_msgDest==='ativos') return _alunosData.filter(function(a){return statusAluno(a)==='ativo';});
   if(_msgDest==='inativos') return _alunosData.filter(function(a){return statusAluno(a)==='inativo';});
@@ -1475,14 +2163,13 @@ function enviarMensagem(){
     var comTel=dests.filter(function(a){return !!a.telefone;});
     if(!comTel.length){showRes('rMsg','er','❌ Nenhum aluno neste grupo tem telefone cadastrado.');return;}
     if(!confirm('Enviar WhatsApp para '+comTel.length+' aluno(s)?'+(semTel.length?' ('+semTel.length+' sem telefone serão ignorados)':''))) return;
-    // Abre WhatsApp para o primeiro; restante via loop
     var primeiro=comTel[0];
     var txt=body.replace(/\{nome\}/g,primeiro.nome||'aluno');
     var tel=(primeiro.telefone||'').replace(/\D/g,'');
     if(tel.length===11) tel='55'+tel;
     window.open('https://api.whatsapp.com/send?phone='+tel+'&text='+encodeURIComponent(txt),'_blank');
     if(comTel.length>1){
-      showRes('rMsg','ok','✅ WhatsApp aberto para '+primeiro.nome+'. Para envio em massa, use o n8n com a Evolution API (instância: gasnetwork) ou repita manualmente para os demais '+( comTel.length-1)+' alunos.');
+      showRes('rMsg','ok','✅ WhatsApp aberto para '+primeiro.nome+'. Para envio em massa, use o n8n + Evolution API (instância: gasnetwork).');
     } else {
       showRes('rMsg','ok','✅ WhatsApp aberto para '+primeiro.nome+'!');
     }
@@ -1530,16 +2217,14 @@ function renderMsgHist(){
   }).join('');
 }
 
-// ── STATS ──
+// ── STATS (Firebase) ──
 function calcStats(){
-  loadAlunosStorage();
   var d=_alunosData, total=d.length;
   if(!total){
     el('s-total').textContent='0';['s-ativos','s-avgxp','s-avgstreak','s-taxa-ativo','s-maior-xp','s-maior-streak','s-exp7d'].forEach(function(id){el(id).textContent='0';});
-    el('s-top5').innerHTML='<li style="color:var(--t3);font-size:11px">Sem dados</li>';
+    el('s-top5').innerHTML='<li style="color:var(--t3);font-size:11px">Sem dados — carregue os alunos primeiro</li>';
     return;
   }
-  // Básicos
   var ativos=d.filter(function(a){return statusAluno(a)==='ativo';}).length;
   var avgXP=Math.round(d.reduce(function(s,a){return s+(a.xp||0);},0)/total);
   var avgStreak=Math.round(d.reduce(function(s,a){return s+(a.streak||0);},0)/total);
@@ -1558,7 +2243,6 @@ function calcStats(){
   el('s-maior-xp').textContent=maiorXP;
   el('s-maior-streak').textContent=maiorStreak+'🔥';
   el('s-exp7d').textContent=exp7;
-  // Planos
   var planos={gratuito:0,mensal:0,anual:0,individual:0};
   d.forEach(function(a){if(planos[a.plano]!==undefined)planos[a.plano]++;});
   var maxPl=Math.max.apply(null,Object.values(planos))||1;
@@ -1566,7 +2250,6 @@ function calcStats(){
   el('sv-mn').textContent=planos.mensal;   el('sb-mn').style.width=Math.round(planos.mensal/maxPl*100)+'%';
   el('sv-an').textContent=planos.anual;    el('sb-an').style.width=Math.round(planos.anual/maxPl*100)+'%';
   el('sv-in').textContent=planos.individual; el('sb-in').style.width=Math.round(planos.individual/maxPl*100)+'%';
-  // Cursos
   var cursos={tp:0,gp:0,ni:0,nl:0};
   d.forEach(function(a){if(a.cursos)a.cursos.forEach(function(c){if(cursos[c]!==undefined)cursos[c]++;});});
   var maxCu=Math.max.apply(null,Object.values(cursos))||1;
@@ -1574,7 +2257,6 @@ function calcStats(){
     el('sv-'+c).textContent=cursos[c];
     el('sb-'+c).style.width=Math.round(cursos[c]/maxCu*100)+'%';
   });
-  // Top 5
   var sorted=d.slice().sort(function(a,b){return (b.xp||0)-(a.xp||0);}).slice(0,5);
   var medals=['gold','silv','bron','',''];
   var labels=['🥇','🥈','🥉','4º','5º'];
@@ -1583,14 +2265,13 @@ function calcStats(){
       +'<span class="st-rank-name">'+escH(a.nome||a.email||'—')+'</span>'
       +'<span class="st-rank-xp">'+(a.xp||0)+' XP</span></li>';
   }).join('');
-  el('s-lastcalc').textContent='Atualizado em '+new Date().toLocaleTimeString('pt-BR');
+  el('s-lastcalc').textContent='Firebase · Atualizado em '+new Date().toLocaleTimeString('pt-BR')+' · '+total+' alunos';
 }
 
-// ── EXPORTAR CSV ──
+// ── EXPORTAR CSV (Firebase) ──
 function exportarCSV(){
-  loadAlunosStorage();
-  if(!_alunosData.length){alert('Nenhum aluno para exportar.');return;}
-  var header='Nome,Email,Telefone,Plano,Status,XP,Streak,Cursos,Expira,Cadastro\n';
+  if(!_alunosData.length){alert('Carregue os alunos primeiro (aba Alunos).');return;}
+  var header='Nome,Email,Telefone,Plano,Status,XP,Streak,Dias Ativos,Cursos,Expira,Cadastro,UID\n';
   var rows=_alunosData.map(function(a){
     var s=statusAluno(a);
     return [
@@ -1598,20 +2279,644 @@ function exportarCSV(){
       '"'+(a.email||'').replace(/"/g,'""')+'"',
       '"'+(a.telefone||'').replace(/"/g,'""')+'"',
       a.plano||'gratuito', s,
-      a.xp||0, a.streak||0,
+      a.xp||0, a.streak||0, a.diasAtivos||0,
       '"'+((a.cursos||[]).join(';'))+'"',
       a.dataExpiracao||'',
-      a.dataCadastro?new Date(a.dataCadastro).toLocaleDateString('pt-BR'):''
+      a.dataCadastro?new Date(a.dataCadastro).toLocaleDateString('pt-BR'):'',
+      a.uid||''
     ].join(',');
   }).join('\n');
   var blob=new Blob(['\uFEFF'+header+rows],{type:'text/csv;charset=utf-8;'});
   var url=URL.createObjectURL(blob);
   var a=document.createElement('a'); a.href=url;
-  a.download='matheus_academy_alunos_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.download='matheus_academy_firebase_'+new Date().toISOString().slice(0,10)+'.csv';
   a.click(); URL.revokeObjectURL(url);
+  addAudit('Exportou CSV de '+_alunosData.length+' alunos do Firebase');
 }
 
-// ── INIT ──
+
+
+// ================================================================
+// MATHEUS ACADEMY ADMIN v10 — EDITOR + 15 FUNCIONALIDADES
+// ================================================================
+
+// ── AUDIT LOG ──
+var AUDIT_KEY = 'ma_admin_audit';
+function addAudit(msg){
+  var log = [];
+  try{ log = JSON.parse(localStorage.getItem(AUDIT_KEY)||'[]'); }catch(e){}
+  log.unshift({ts: new Date().toISOString(), msg: msg});
+  if(log.length > 200) log = log.slice(0,200);
+  localStorage.setItem(AUDIT_KEY, JSON.stringify(log));
+}
+function renderAudit(){
+  var log = [];
+  try{ log = JSON.parse(localStorage.getItem(AUDIT_KEY)||'[]'); }catch(e){}
+  var div = el('audit-list');
+  if(!div) return;
+  if(!log.length){ div.innerHTML = '<div class="audit-empty">Nenhuma ação registrada ainda.</div>'; return; }
+  div.innerHTML = log.map(function(e){
+    var d = new Date(e.ts);
+    var ts = d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR');
+    return '<div class="audit-item"><div class="audit-ts">'+ts+'</div><div class="audit-msg">'+escH(e.msg)+'</div></div>';
+  }).join('');
+}
+function limparAudit(){
+  if(!confirm('Limpar todo o log de auditoria?')) return;
+  localStorage.removeItem(AUDIT_KEY);
+  renderAudit();
+}
+function abrirAudit(){ swTab('fe'); setTimeout(function(){ var c=el('audit-card'); if(c) c.scrollIntoView({behavior:'smooth'}); }, 100); renderAudit(); }
+function abrirBackup(){ swTab('fe'); setTimeout(function(){ baixarCoursesJs(); },200); }
+
+// ── ATUALIZAR TABORDER ──
+var _tabOrder=['up','mn','ed','al','ms','st','fe'];
+function swTab(n){
+  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('on',_tabOrder[i]===n);});
+  document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('on');});
+  var tc=el('tc-'+n); if(tc) tc.classList.add('on');
+  if(n==='al') loadAlunos();
+  if(n==='st') calcStats();
+  if(n==='ms') renderMsgHist();
+  if(n==='ed') carregarCursosEditor();
+  if(n==='fe'){ renderAudit(); carregarConfigs(); }
+}
+
+// ── EDITOR DE CURSOS ──
+var _cursoEditando = null;
+var _cursosCarregados = [];
+
+async function carregarCursosEditor(){
+  var c=g(); if(!c.t){ el('ed-list').innerHTML='<div style="color:var(--t3);font-size:12px;padding:8px">⚠️ Configure o token GitHub primeiro.</div>'; return; }
+  el('ed-list').innerHTML='<div style="color:var(--t3);font-size:12px;padding:8px"><span class="sp" style="display:inline-block;margin-right:6px"></span>Carregando cursos...</div>';
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
+  if(!res.ok){ el('ed-list').innerHTML='<div style="color:#fca5a5;font-size:12px;padding:8px">❌ Não foi possível carregar o courses.js.</div>'; return; }
+  var fd=await res.json();
+  var content=b64d(fd.content);
+  _coursesContent=content; _coursesSha=fd.sha;
+  _cursosCarregados = parseCursosCompleto(content);
+  renderEdList();
+}
+
+function parseCursosCompleto(content){
+  var cursos = [];
+  var blocos = content.split(/(?=\n  \{\n\s+id:)/);
+  blocos.forEach(function(b){
+    function gStr(keys){ for(var i=0;i<keys.length;i++){ var m=b.match(new RegExp(keys[i]+":\\s*['\"]([^'\"]*)['\"]")); if(m) return m[1]; } return ''; }
+    function gNum(k,def){ var m=b.match(new RegExp(k+":\\s*(\\d+)")); return m?parseInt(m[1]):def; }
+    function gBool(k,def){ var m=b.match(new RegExp(k+":\\s*(true|false)")); return m?(m[1]==='true'):def; }
+    var id=gStr(['id']);
+    if(!id||b.indexOf('TEMPLATE')!==-1) return;
+    cursos.push({
+      id:id, name:gStr(['name']), desc:gStr(['desc']), file:gStr(['file']), cat:gStr(['cat']),
+      modules:gNum('modules',1), topics:gNum('topics',1), hours:gNum('hours',1), quizzes:gNum('quizzes',0),
+      salt:gStr(['salt']), ak:gStr(['ak']), storagePrefix:gStr(['storagePrefix']),
+      icon:gStr(['icon']), color:gStr(['color']),
+      active:gBool('active',true), free:gBool('free',false),
+      addedTs:gNum('addedTs',0),
+      longdesc:gStr(['longdesc','longDesc']), nivel:gStr(['nivel']), instrutor:gStr(['instrutor']),
+      badge:gStr(['badge']), preco:gStr(['preco','price']), kiwify:gStr(['kiwify']), idioma:gStr(['idioma'])
+    });
+  });
+  return cursos;
+}
+
+function renderEdList(){
+  if(!_cursosCarregados.length){ el('ed-list').innerHTML='<div style="color:var(--t3);font-size:12px;padding:8px">Nenhum curso encontrado.</div>'; return; }
+  el('ed-list').innerHTML = _cursosCarregados.map(function(c2){
+    var vb = c2.active?'<span class="cb ba">Visível</span>':'<span class="cb bo">Oculto</span>';
+    var tb = c2.free?'<span class="cb bf">Grátis</span>':'<span class="cb bp">Pago</span>';
+    return '<div class="ed-curso-item" id="editem_'+c2.id+'">'
+      +'<div class="ed-icon">'+(c2.icon||'📚')+'</div>'
+      +'<div class="ed-info"><b>'+escH(c2.name)+'</b><small>id: '+c2.id+' · '+c2.cat+'</small></div>'
+      +'<div class="ed-badges">'+vb+tb+'</div>'
+      +'<button class="ed-edit-btn" onclick="abrirEditor(\''+c2.id+'\')">✏️ Editar</button>'
+      +'</div>';
+  }).join('');
+}
+
+function abrirEditor(id){
+  var c2 = _cursosCarregados.find(function(x){ return x.id===id; });
+  if(!c2) return;
+  _cursoEditando = c2;
+  // Preencher formulário
+  el('ed-form-icon').textContent = c2.icon||'📚';
+  el('ed-form-title').textContent = 'Editando: '+c2.name;
+  el('ed-form-id').textContent = 'id: '+c2.id;
+  el('ed-name').value = c2.name||'';
+  el('ed-icon').value = c2.icon||'';
+  el('ed-desc').value = c2.desc||'';
+  var cat=el('ed-cat'); for(var i=0;i<cat.options.length;i++){ if(cat.options[i].value===c2.cat){ cat.selectedIndex=i; break; } }
+  el('ed-modules').value = c2.modules||1;
+  el('ed-topics').value = c2.topics||1;
+  el('ed-hours').value = c2.hours||1;
+  el('ed-quizzes').value = c2.quizzes||0;
+  el('ed-file').value = c2.file||'';
+  el('ed-salt').value = c2.salt||'';
+  el('ed-ak').value = c2.ak||'';
+  el('ed-prefix').value = c2.storagePrefix||'';
+  el('ed-color').value = c2.color||'#3b82f6';
+  el('ed-longdesc').value = c2.longdesc||'';
+  var nv=el('ed-nivel'); for(var j=0;j<nv.options.length;j++){ if(nv.options[j].value===c2.nivel){ nv.selectedIndex=j; break; } }
+  el('ed-instrutor').value = c2.instrutor||'';
+  el('ed-badge').value = c2.badge||'';
+  el('ed-preco').value = c2.preco||'';
+  el('ed-kiwify').value = c2.kiwify||'';
+  var idm=el('ed-idioma'); for(var k=0;k<idm.options.length;k++){ if(idm.options[k].value===c2.idioma){ idm.selectedIndex=k; break; } }
+  // Highlight item
+  document.querySelectorAll('.ed-curso-item').forEach(function(x){ x.classList.remove('selecionado'); });
+  var it=el('editem_'+id); if(it){ it.classList.add('selecionado'); }
+  el('ed-form').style.display='block';
+  el('ed-form').scrollIntoView({behavior:'smooth',block:'start'});
+  el('rEd').className='res';
+}
+
+function fecharEditor(){ el('ed-form').style.display='none'; _cursoEditando=null; document.querySelectorAll('.ed-curso-item').forEach(function(x){ x.classList.remove('selecionado'); }); }
+
+async function salvarEdicaoCurso(){
+  if(!_cursoEditando){ alert('Nenhum curso selecionado.'); return; }
+  var id = _cursoEditando.id;
+  var c=g(); if(!c.t){ showRes('rEd','er','❌ Configure o token GitHub.'); return; }
+  showRes('rEd','ld','<div class="sp"></div> Salvando alterações...');
+  // Recarregar courses.js
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
+  if(!res.ok){ showRes('rEd','er','❌ Erro ao carregar courses.js'); return; }
+  var fd=await res.json();
+  var content=b64d(fd.content), sha=fd.sha;
+  // Encontrar o bloco do curso
+  var pat="id: '"+id+"'"; var alt='id: "'+id+'"';
+  var pos=content.indexOf(pat); if(pos===-1) pos=content.indexOf(alt);
+  if(pos===-1){ showRes('rEd','er','❌ Curso não encontrado no arquivo.'); return; }
+  var open=content.lastIndexOf('  {',pos);
+  var close=content.indexOf('\n  }',pos)+4;
+  if(open===-1||close<=4){ showRes('rEd','er','❌ Estrutura do bloco não reconhecida.'); return; }
+  var m2 = {
+    id: id,
+    name: el('ed-name').value.trim(),
+    desc: el('ed-desc').value.trim(),
+    file: el('ed-file').value.trim(),
+    cat: el('ed-cat').value,
+    modules: parseInt(el('ed-modules').value)||1,
+    topics: parseInt(el('ed-topics').value)||1,
+    hours: parseInt(el('ed-hours').value)||1,
+    quizzes: parseInt(el('ed-quizzes').value)||0,
+    salt: el('ed-salt').value.trim(),
+    ak: el('ed-ak').value.trim(),
+    storagePrefix: el('ed-prefix').value.trim(),
+    icon: el('ed-icon').value.trim()||_cursoEditando.icon||'🎓',
+    color: el('ed-color').value.trim()||'#3b82f6',
+    addedTs: _cursoEditando.addedTs||Date.now(),
+    active: _cursoEditando.active,
+    free: _cursoEditando.free
+  };
+  // Campos extras (só adiciona se preenchido)
+  var extras = '';
+  var longd=el('ed-longdesc').value.trim(); if(longd) extras+="    longdesc: '"+esc(longd)+"',\n";
+  var nivel=el('ed-nivel').value; if(nivel) extras+="    nivel: '"+esc(nivel)+"',\n";
+  var inst=el('ed-instrutor').value.trim(); if(inst) extras+="    instrutor: '"+esc(inst)+"',\n";
+  var badge=el('ed-badge').value.trim(); if(badge) extras+="    badge: '"+esc(badge)+"',\n";
+  var preco=el('ed-preco').value.trim(); if(preco) extras+="    preco: '"+esc(preco)+"',\n";
+  var kiw=el('ed-kiwify').value.trim(); if(kiw) extras+="    kiwify: '"+esc(kiw)+"',\n";
+  var idioma=el('ed-idioma').value; if(idioma&&idioma!=='pt-BR') extras+="    idioma: '"+esc(idioma)+"',\n";
+  var fr=m2.free?"\n    free: true,":'';
+  var newBlock="  {\n"
+    +"    id: '"+esc(m2.id)+"',\n"
+    +"    name: '"+esc(m2.name)+"',\n"
+    +"    desc: '"+esc(m2.desc)+"',\n"
+    +"    file: '"+esc(m2.file)+"',\n"
+    +"    cat: '"+esc(m2.cat)+"',\n"
+    +"    modules: "+m2.modules+",\n"
+    +"    topics: "+m2.topics+",\n"
+    +"    hours: "+m2.hours+",\n"
+    +"    quizzes: "+m2.quizzes+",\n"
+    +"    salt: '"+esc(m2.salt)+"',\n"
+    +"    ak: '"+esc(m2.ak)+"',\n"
+    +"    storagePrefix: '"+esc(m2.storagePrefix)+"',\n"
+    +"    icon: '"+esc(m2.icon)+"',\n"
+    +"    color: '"+esc(m2.color)+"',"+fr+"\n"
+    +extras
+    +"    addedTs: "+m2.addedTs+",\n"
+    +"    active: "+(m2.active?'true':'false')+"\n"
+    +"  }";
+  var newContent = content.slice(0,open)+newBlock+content.slice(close);
+  var put=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{
+    method:'PUT', headers:gh(),
+    body:JSON.stringify({message:"edit: atualiza curso '"+m2.name+"' via admin v10", content:b64e(newContent), sha:sha})
+  });
+  if(put.ok){
+    showRes('rEd','ok','✅ Curso "'+escH(m2.name)+'" atualizado com sucesso!');
+    addAudit('Editou curso: '+m2.name+' (id:'+id+')');
+    _coursesContent=newContent;
+    await carregarCursosEditor();
+    loadList();
+  } else {
+    var er=await put.json();
+    showRes('rEd','er','❌ Erro GitHub: '+(er.message||put.status));
+  }
+}
+
+// ── SHA-256 ──
+async function sha256(msg){
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+
+// ── 1. GERADOR DE CÓDIGO ──
+async function gerarCodigo(){
+  var email=el('gc-email').value.trim(), salt=el('gc-salt').value.trim(), prefix=el('gc-prefix').value.trim();
+  if(!email||!salt){ alert('Preencha email e salt.'); return; }
+  var hash=await sha256(email+salt);
+  var code=(prefix||'')+hash;
+  el('gc-code').textContent=code;
+  el('gc-result').style.display='block';
+  el('gc-copy-msg').style.display='none';
+  addAudit('Gerou código para: '+email);
+}
+
+function copiarTexto(txt,msgId){
+  navigator.clipboard.writeText(txt).then(function(){
+    var m=el(msgId); if(m){ m.style.display='block'; setTimeout(function(){ m.style.display='none'; },2000); }
+  });
+}
+
+// ── 2. VERIFICADOR ──
+async function verificarCodigo(){
+  var email=el('vc-email').value.trim(), code=el('vc-code').value.trim();
+  var salt=el('vc-salt').value.trim(), prefix=el('vc-prefix').value.trim();
+  if(!email||!code||!salt){ alert('Preencha todos os campos.'); return; }
+  var hash=await sha256(email+salt);
+  var esperado=(prefix||'')+hash;
+  var ok=(code.trim()===esperado.trim());
+  var div=el('vc-result');
+  div.style.display='block';
+  if(ok){
+    div.style.background='rgba(34,197,94,.1)'; div.style.border='1px solid rgba(34,197,94,.3)'; div.style.color='#86efac';
+    div.innerHTML='✅ Código VÁLIDO para este aluno!';
+  } else {
+    div.style.background='rgba(239,68,68,.1)'; div.style.border='1px solid rgba(239,68,68,.3)'; div.style.color='#fca5a5';
+    div.innerHTML='❌ Código INVÁLIDO. Esperado: <span style="font-family:var(--mono);font-size:10px;word-break:break-all">'+esperado+'</span>';
+  }
+}
+
+// ── 3. GERADOR EM LOTE ──
+async function gerarLote(){
+  var emails=el('lote-emails').value.trim().split('\n').map(function(e){ return e.trim(); }).filter(Boolean);
+  var salt=el('lote-salt').value.trim(), prefix=el('lote-prefix').value.trim();
+  if(!emails.length||!salt){ alert('Preencha os emails e o salt.'); return; }
+  var rows='';
+  for(var i=0;i<emails.length;i++){
+    var hash=await sha256(emails[i]+salt);
+    var code=(prefix||'')+hash;
+    rows+='<div class="lote-row"><div class="lote-email">'+escH(emails[i])+'</div><div class="lote-code" onclick="navigator.clipboard.writeText(\''+code+'\')" title="Clique para copiar">'+code.slice(0,30)+'...</div></div>';
+  }
+  var div=el('lote-result');
+  div.style.display='block';
+  div.innerHTML='<div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">'+emails.length+' código(s) gerado(s) — clique para copiar</div>'+rows;
+  addAudit('Gerou '+emails.length+' códigos em lote');
+  // Exportar CSV
+  var csv='Email,Codigo\n'+emails.map(function(e){ var h=e; return e+','+(prefix||'')+h; }).join('\n');
+  var csvFull='';
+  // Botão de download
+  div.innerHTML += '<button class="btns" style="margin-top:10px" onclick="downloadLoteCSV()">⬇️ Baixar como CSV</button>';
+  window._loteEmails=emails; window._loteSalt=salt; window._lotePrefix=prefix;
+}
+
+async function downloadLoteCSV(){
+  var emails=window._loteEmails||[], salt=window._loteSalt||'', prefix=window._lotePrefix||'';
+  var rows=[['Email','Codigo']];
+  for(var i=0;i<emails.length;i++){
+    var hash=await sha256(emails[i]+salt);
+    rows.push([emails[i],(prefix)+hash]);
+  }
+  var csv=rows.map(function(r){ return r.join(','); }).join('\n');
+  var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url; a.download='codigos_acesso.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── 4. ANALISADOR ──
+async function analisarCourses(){
+  var c=g(); if(!c.t){ alert('Configure o token.'); return; }
+  el('analise-result').style.display='block'; el('analise-result').innerHTML='<div style="color:var(--t2);font-size:11px">⏳ Analisando...</div>';
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
+  if(!res.ok){ el('analise-result').innerHTML='<div style="color:#fca5a5;font-size:11px">❌ Erro ao carregar courses.js</div>'; return; }
+  var fd=await res.json();
+  var content=b64d(fd.content);
+  var cursos=parseCursosCompleto(content);
+  var problemas=[];
+  var ids={};
+  cursos.forEach(function(c2){
+    if(ids[c2.id]) problemas.push('🔴 ID duplicado: "'+c2.id+'"');
+    ids[c2.id]=true;
+    if(!c2.salt) problemas.push('🟡 Curso "'+c2.name+'" sem salt');
+    if(!c2.file) problemas.push('🟡 Curso "'+c2.name+'" sem arquivo HTML');
+    if(!c2.modules||c2.modules<1) problemas.push('🟡 Curso "'+c2.name+'" com módulos = 0');
+  });
+  var html='<div style="background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:12px">';
+  html+='<div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;margin-bottom:10px">Resultado da Análise</div>';
+  html+='<div style="font-size:12px;margin-bottom:6px">📚 Total de cursos: <b style="color:var(--acc2)">'+cursos.length+'</b></div>';
+  html+='<div style="font-size:12px;margin-bottom:6px">✅ Ativos: <b style="color:#86efac">'+cursos.filter(function(x){return x.active;}).length+'</b></div>';
+  html+='<div style="font-size:12px;margin-bottom:10px">🆓 Gratuitos: <b style="color:#fcd34d">'+cursos.filter(function(x){return x.free;}).length+'</b></div>';
+  if(problemas.length){
+    html+='<div style="font-size:10px;font-weight:700;color:#fca5a5;text-transform:uppercase;margin-bottom:6px">⚠️ Problemas encontrados ('+problemas.length+')</div>';
+    html+=problemas.map(function(p){ return '<div style="font-size:11px;padding:3px 0;border-bottom:1px solid rgba(30,45,71,.4)">'+escH(p)+'</div>'; }).join('');
+  } else {
+    html+='<div style="font-size:12px;color:#86efac;font-weight:700">✅ Nenhum problema encontrado!</div>';
+  }
+  html+='</div>';
+  el('analise-result').innerHTML=html;
+}
+
+// ── 5. REORDENAR ──
+var _ordemDragSrc = null;
+async function carregarOrdem(){
+  var c=g(); if(!c.t){ alert('Configure o token.'); return; }
+  if(!_cursosCarregados.length){ await carregarCursosEditor(); }
+  if(!_cursosCarregados.length){ el('ordem-list').innerHTML='<div style="color:var(--t3);font-size:12px">Nenhum curso carregado.</div>'; return; }
+  renderOrdemList(_cursosCarregados);
+  el('ordem-save').style.display='block';
+}
+
+function renderOrdemList(cursos){
+  el('ordem-list').innerHTML=cursos.map(function(c2,i){
+    return '<div class="ordem-item" draggable="true" data-id="'+c2.id+'" ondragstart="ordemDragStart(event,\''+c2.id+'\')" ondragover="ordemDragOver(event)" ondrop="ordemDrop(event,\''+c2.id+'\')"><div class="ordem-handle">⠿</div><div class="ordem-num">'+(i+1)+'</div><div style="font-size:16px">'+c2.icon+'</div><div style="font-size:13px;font-weight:700;flex:1">'+escH(c2.name)+'</div></div>';
+  }).join('');
+}
+
+function ordemDragStart(e,id){ _ordemDragSrc=id; e.currentTarget.style.opacity='.4'; }
+function ordemDragOver(e){ e.preventDefault(); }
+function ordemDrop(e,targetId){
+  e.preventDefault();
+  if(!_ordemDragSrc||_ordemDragSrc===targetId) return;
+  var srcIdx=_cursosCarregados.findIndex(function(x){ return x.id===_ordemDragSrc; });
+  var tgtIdx=_cursosCarregados.findIndex(function(x){ return x.id===targetId; });
+  var spliced=_cursosCarregados.splice(srcIdx,1)[0];
+  _cursosCarregados.splice(tgtIdx,0,spliced);
+  renderOrdemList(_cursosCarregados);
+  document.querySelectorAll('.ordem-item').forEach(function(x){ x.style.opacity='1'; });
+  _ordemDragSrc=null;
+}
+
+async function salvarOrdem(){
+  var c=g(); if(!c.t){ alert('Configure o token.'); return; }
+  showRes('rOrdem','ld','<div class="sp"></div> Reordenando...');
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
+  if(!res.ok){ showRes('rOrdem','er','❌ Erro ao carregar'); return; }
+  var fd=await res.json();
+  var content=b64d(fd.content), sha=fd.sha;
+  // Reconstruir array na nova ordem
+  var oldCursos=parseCursosCompleto(content);
+  var idOrder=_cursosCarregados.map(function(x){ return x.id; });
+  var reordered=idOrder.map(function(id){ return oldCursos.find(function(x){ return x.id===id; }); }).filter(Boolean);
+  // Extrair o restante do arquivo (MA_CATS etc)
+  var markerPos=content.indexOf('\nvar MA_CATS');
+  if(markerPos===-1){ showRes('rOrdem','er','❌ Marcador var MA_CATS não encontrado'); return; }
+  var after=content.slice(markerPos);
+  var header=content.slice(0,content.indexOf('\n  {\n'));
+  var newCursosBlock=reordered.map(function(c2,i){
+    var fr=c2.free?"\n    free: true,":'';
+    return "  {\n"
+      +"    id: '"+esc(c2.id)+"',\n"
+      +"    name: '"+esc(c2.name)+"',\n"
+      +"    desc: '"+esc(c2.desc)+"',\n"
+      +"    file: '"+esc(c2.file)+"',\n"
+      +"    cat: '"+esc(c2.cat)+"',\n"
+      +"    modules: "+c2.modules+",\n"
+      +"    topics: "+c2.topics+",\n"
+      +"    hours: "+c2.hours+",\n"
+      +"    quizzes: "+c2.quizzes+",\n"
+      +"    salt: '"+esc(c2.salt)+"',\n"
+      +"    ak: '"+esc(c2.ak)+"',\n"
+      +"    storagePrefix: '"+esc(c2.storagePrefix)+"',\n"
+      +"    icon: '"+esc(c2.icon)+"',\n"
+      +"    color: '"+esc(c2.color)+"',"+fr+"\n"
+      +"    addedTs: "+c2.addedTs+",\n"
+      +"    active: "+(c2.active?'true':'false')+"\n"
+      +"  }";
+  }).join(',\n');
+  var newContent=header+'\n'+newCursosBlock+'\n];\n'+after.slice(1);
+  var put=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{
+    method:'PUT', headers:gh(),
+    body:JSON.stringify({message:"sort: reordena cursos via admin v10", content:b64e(newContent), sha:sha})
+  });
+  if(put.ok){ showRes('rOrdem','ok','✅ Ordem salva com sucesso!'); addAudit('Reordenou os cursos no portal'); }
+  else { var er=await put.json(); showRes('rOrdem','er','❌ '+(er.message||put.status)); }
+}
+
+// ── 6. IMPORTAR/EXPORTAR JSON ──
+function exportarJSON(){
+  loadAlunosStorage();
+  if(!_alunosData.length){ alert('Nenhum aluno para exportar.'); return; }
+  var blob=new Blob([JSON.stringify(_alunosData,null,2)],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url;
+  a.download='alunos_backup_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click(); URL.revokeObjectURL(url);
+  addAudit('Exportou '+_alunosData.length+' alunos em JSON');
+}
+
+function importarJSON(input){
+  var f=input.files[0]; if(!f) return;
+  var rd=new FileReader();
+  rd.onload=function(e){
+    try{
+      var data=JSON.parse(e.target.result);
+      if(!Array.isArray(data)){ throw new Error('Formato inválido'); }
+      if(!confirm('Importar '+data.length+' aluno(s)?\n\nATENÇÃO: Isso vai MESCLAR com os alunos existentes (não substitui).')){ return; }
+      loadAlunosStorage();
+      var novos=0;
+      data.forEach(function(a){
+        if(!a.id){ a.id=genId(); }
+        var existe=_alunosData.find(function(x){ return x.email===a.email; });
+        if(!existe){ _alunosData.push(a); novos++; }
+      });
+      saveAlunosStorage();
+      var div=el('import-result');
+      div.style.display='block'; div.style.background='rgba(34,197,94,.1)'; div.style.border='1px solid rgba(34,197,94,.3)'; div.style.color='#86efac';
+      div.textContent='✅ '+novos+' aluno(s) importado(s) com sucesso!';
+      addAudit('Importou '+novos+' alunos via JSON');
+    } catch(err){
+      var div=el('import-result');
+      div.style.display='block'; div.style.background='rgba(239,68,68,.1)'; div.style.border='1px solid rgba(239,68,68,.3)'; div.style.color='#fca5a5';
+      div.textContent='❌ Erro: '+err.message;
+    }
+  };
+  rd.readAsText(f,'UTF-8');
+  input.value='';
+}
+
+// ── 7. CALCULADORA DE RECEITA ──
+function calcReceita(){
+  loadAlunosStorage();
+  var precos={mensal:19.50, anual:297.55, individual:9.99, gratuito:0};
+  var contagem={mensal:0, anual:0, individual:0, gratuito:0};
+  _alunosData.forEach(function(a){ var p=a.plano||'gratuito'; if(contagem[p]!==undefined) contagem[p]++; });
+  var totalMensal=contagem.mensal*19.50 + contagem.anual*(297.55/36) + contagem.individual*0;
+  var totalRecebido=contagem.mensal*19.50 + contagem.anual*297.55 + contagem.individual*9.99;
+  var div=el('receita-result');
+  div.style.display='block';
+  div.innerHTML='<div class="receita-grid">'
+    +'<div class="receita-card"><div class="rv">R$'+totalMensal.toFixed(2).replace('.',',')+'</div><div class="rl">Receita mensal recorrente (MRR)</div></div>'
+    +'<div class="receita-card"><div class="rv">R$'+totalRecebido.toFixed(2).replace('.',',')+'</div><div class="rl">Total recebido (histórico)</div></div>'
+    +'<div class="receita-card"><div class="rv">'+contagem.mensal+'</div><div class="rl">Assinantes mensais (R$19,50)</div></div>'
+    +'<div class="receita-card"><div class="rv">'+contagem.anual+'</div><div class="rl">Plano 3 anos (R$297,55)</div></div>'
+    +'<div class="receita-card"><div class="rv">'+contagem.individual+'</div><div class="rl">Cursos avulsos (R$9,99)</div></div>'
+    +'<div class="receita-card"><div class="rv">'+contagem.gratuito+'</div><div class="rl">Alunos gratuitos</div></div>'
+    +'</div>';
+}
+
+// ── 8. LIMPAR EXPIRADOS ──
+function limparExpirados(){
+  loadAlunosStorage();
+  var antes=_alunosData.length;
+  _alunosData=_alunosData.filter(function(a){ if(!a.dataExpiracao) return true; return new Date(a.dataExpiracao)>=new Date(); });
+  var removidos=antes-_alunosData.length;
+  if(!removidos){ var d=el('limpar-result'); d.style.display='block'; d.style.background='rgba(59,130,246,.1)'; d.style.border='1px solid rgba(59,130,246,.25)'; d.style.color=var_acc2(); d.textContent='ℹ️ Nenhum aluno expirado encontrado.'; return; }
+  if(!confirm('Remover '+removidos+' aluno(s) expirado(s)?')) return;
+  saveAlunosStorage();
+  var d=el('limpar-result'); d.style.display='block'; d.style.background='rgba(34,197,94,.1)'; d.style.border='1px solid rgba(34,197,94,.3)'; d.style.color='#86efac';
+  d.textContent='✅ '+removidos+' aluno(s) expirado(s) removido(s)!';
+  addAudit('Removeu '+removidos+' alunos expirados');
+}
+function var_acc2(){ return '#60a5fa'; }
+
+// ── 10. BACKUP COURSES.JS ──
+async function baixarCoursesJs(){
+  var c=g(); if(!c.t){ alert('Configure o token.'); return; }
+  var div=el('backup-result'); if(div){ div.style.display='block'; div.style.background='rgba(59,130,246,.1)'; div.style.border='1px solid rgba(59,130,246,.25)'; div.style.color='#60a5fa'; div.textContent='⏳ Baixando...'; }
+  var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
+  if(!res.ok){ if(div){ div.style.background='rgba(239,68,68,.1)'; div.style.border='1px solid rgba(239,68,68,.25)'; div.style.color='#fca5a5'; div.textContent='❌ Erro ao carregar'; } return; }
+  var fd=await res.json();
+  var content=b64d(fd.content);
+  var blob=new Blob([content],{type:'text/javascript'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url;
+  a.download='courses_backup_'+new Date().toISOString().slice(0,10)+'.js';
+  a.click(); URL.revokeObjectURL(url);
+  if(div){ div.style.background='rgba(34,197,94,.1)'; div.style.border='1px solid rgba(34,197,94,.25)'; div.style.color='#86efac'; div.textContent='✅ courses.js baixado com sucesso!'; }
+  addAudit('Fez backup do courses.js');
+}
+
+// ── 11. BUSCA RÁPIDA ──
+function buscaRapida(){
+  loadAlunosStorage();
+  var q=(el('busca-rapida').value||'').toLowerCase().trim();
+  var div=el('busca-result'); div.style.display='block';
+  if(!q){ div.innerHTML='<div style="color:var(--t3);font-size:11px">Digite um nome ou email para buscar.</div>'; return; }
+  var found=_alunosData.filter(function(a){ return (a.nome+' '+a.email).toLowerCase().includes(q); });
+  if(!found.length){ div.innerHTML='<div style="color:#fca5a5;font-size:11px">❌ Nenhum aluno encontrado para "'+escH(q)+'".</div>'; return; }
+  div.innerHTML=found.map(function(a){
+    var s=statusAluno(a);
+    var sp=s==='ativo'?'#86efac':s==='expirado'?'#fca5a5':'#fcd34d';
+    return '<div class="busca-card-result" style="margin-bottom:8px">'
+      +'<div style="font-size:14px;font-weight:800;color:var(--txt);margin-bottom:8px">'+escH(a.nome||'—')+'</div>'
+      +'<div class="bkv"><div class="k">Email</div><div class="v">'+escH(a.email||'—')+'</div></div>'
+      +'<div class="bkv"><div class="k">Plano</div><div class="v">'+escH(a.plano||'gratuito')+'</div></div>'
+      +'<div class="bkv"><div class="k">Status</div><div class="v" style="color:'+sp+'">'+s+'</div></div>'
+      +'<div class="bkv"><div class="k">XP</div><div class="v">'+(a.xp||0)+'</div></div>'
+      +'<div class="bkv"><div class="k">Streak</div><div class="v">'+(a.streak||0)+'🔥</div></div>'
+      +'<div class="bkv"><div class="k">Expira</div><div class="v">'+(a.dataExpiracao||'—')+'</div></div>'
+      +'<div class="bkv"><div class="k">Cursos</div><div class="v">'+((a.cursos||[]).join(', ')||'—')+'</div></div>'
+      +'</div>';
+  }).join('');
+}
+
+// ── 12. RENOVAR ACESSO EM MASSA ──
+function renovarMassa(){
+  var plano=el('ren-plano').value, data=el('ren-data').value;
+  if(!data){ alert('Selecione uma data de expiração.'); return; }
+  loadAlunosStorage();
+  var count=0;
+  _alunosData.forEach(function(a){ if(a.plano===plano){ a.dataExpiracao=data; count++; } });
+  if(!count){ var d=el('ren-result'); d.style.display='block'; d.style.background='rgba(59,130,246,.1)'; d.style.border='1px solid rgba(59,130,246,.25)'; d.style.color='#60a5fa'; d.textContent='ℹ️ Nenhum aluno com plano "'+plano+'" encontrado.'; return; }
+  if(!confirm('Renovar acesso de '+count+' aluno(s) do plano "'+plano+'" até '+data+'?')) return;
+  saveAlunosStorage();
+  var d=el('ren-result'); d.style.display='block'; d.style.background='rgba(34,197,94,.1)'; d.style.border='1px solid rgba(34,197,94,.3)'; d.style.color='#86efac';
+  d.textContent='✅ '+count+' aluno(s) renovado(s) até '+data+'!';
+  addAudit('Renovou acesso de '+count+' alunos (plano: '+plano+', exp: '+data+')');
+}
+
+// ── 13. RELATÓRIO EXPIRAÇÃO ──
+function relatorioExpiracao(){
+  var dias=parseInt(el('exp-dias').value)||7;
+  loadAlunosStorage();
+  var agora=new Date(), limite=new Date(agora.getTime()+dias*24*60*60*1000);
+  var lista=_alunosData.filter(function(a){
+    if(!a.dataExpiracao) return false;
+    var exp=new Date(a.dataExpiracao);
+    return exp>=agora && exp<=limite;
+  }).sort(function(a,b){ return new Date(a.dataExpiracao)-new Date(b.dataExpiracao); });
+  var div=el('exp-result'); div.style.display='block';
+  if(!lista.length){ div.innerHTML='<div style="color:#86efac;font-size:11px;padding:8px;background:rgba(34,197,94,.07);border-radius:7px;border:1px solid rgba(34,197,94,.2)">✅ Nenhum aluno expirando nos próximos '+dias+' dias.</div>'; return; }
+  div.innerHTML='<div style="background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:12px">'
+    +'<div style="font-size:10px;font-weight:700;color:#fca5a5;text-transform:uppercase;margin-bottom:10px">⚠️ '+lista.length+' aluno(s) expirando em até '+dias+' dias</div>'
+    +lista.map(function(a){
+      var exp=new Date(a.dataExpiracao);
+      var diffDias=Math.ceil((exp-agora)/(1000*60*60*24));
+      return '<div class="exp-item"><div class="ei-nome">'+escH(a.nome||a.email||'—')+'</div><div class="ei-data">'+a.dataExpiracao+'</div><div class="ei-dias">'+diffDias+'d</div></div>';
+    }).join('')
+    +'</div>';
+}
+
+// ── 14. CLONAR CURSO ──
+async function clonarCurso(){
+  var srcId=el('clone-id').value.trim(), novoId=el('clone-novo-id').value.trim();
+  if(!srcId||!novoId){ alert('Preencha os IDs.'); return; }
+  if(!/^[a-z0-9]{1,8}$/.test(novoId)){ alert('Novo ID deve ter apenas letras minúsculas e números (máx 8).'); return; }
+  var c=g(); if(!c.t){ alert('Configure o token.'); return; }
+  if(!_cursosCarregados.length) await carregarCursosEditor();
+  var src=_cursosCarregados.find(function(x){ return x.id===srcId; });
+  if(!src){ var d=el('clone-result'); d.style.display='block'; d.style.background='rgba(239,68,68,.1)'; d.style.border='1px solid rgba(239,68,68,.3)'; d.style.color='#fca5a5'; d.textContent='❌ Curso origem "'+srcId+'" não encontrado.'; return; }
+  // Preencher tab Manual com os dados
+  swTab('mn');
+  el('nId').value=novoId; el('nName').value=src.name+' (Cópia)';
+  el('nDesc').value=src.desc||''; el('nFile').value=''; el('nIcon').value=src.icon||'🎓';
+  el('nModules').value=src.modules; el('nTopics').value=src.topics; el('nHours').value=src.hours;
+  el('nQuizzes').value=src.quizzes; el('nSalt').value=novoId.toUpperCase()+'_HENRY_2026_MASTER';
+  el('nColor').value=src.color||'#3b82f6'; el('nPrefix').value=novoId+'_'; el('nAk').value=novoId+'_auth';
+  var cat=el('nCat'); for(var i=0;i<cat.options.length;i++){ if(cat.options[i].value===src.cat){ cat.selectedIndex=i; break; } }
+  chkId(novoId,'fb2','nId');
+  addAudit('Clonou metadados de "'+src.name+'" para novo ID: '+novoId);
+}
+
+// ── 15. CONFIGURAÇÕES ──
+function carregarConfigs(){
+  var nome=ls('adminNome'), wa=ls('adminWa'), email=ls('adminEmail'), kiw=ls('adminKiwify');
+  if(el('cfg-nome')&&nome) el('cfg-nome').value=nome;
+  if(el('cfg-wa')&&wa) el('cfg-wa').value=wa;
+  if(el('cfg-email')&&email) el('cfg-email').value=email;
+  if(el('cfg-kiwify')&&kiw) el('cfg-kiwify').value=kiw;
+}
+function salvarConfigs(){
+  ss('adminNome',el('cfg-nome').value||'');
+  ss('adminWa',el('cfg-wa').value||'');
+  ss('adminEmail',el('cfg-email').value||'');
+  ss('adminKiwify',el('cfg-kiwify').value||'');
+  var d=el('cfg-result'); d.style.display='block'; d.style.background='rgba(34,197,94,.1)'; d.style.border='1px solid rgba(34,197,94,.3)'; d.style.color='#86efac';
+  d.textContent='✅ Configurações salvas!';
+  addAudit('Salvou configurações do admin');
+  setTimeout(function(){ d.style.display='none'; },2500);
+}
+function resetarAdmin(){
+  if(!confirm('ATENÇÃO: Isso vai apagar TODOS os dados locais (alunos, configurações, token).\n\nTem certeza absoluta?')) return;
+  localStorage.clear();
+  alert('Todos os dados locais foram apagados. A página será recarregada.');
+  location.reload();
+}
+
+// Sobrescrever a função updCourse original para logar
+var _updCourseOrig=window.updCourse;
+window.updCourse=async function(id,field,val,btn2){
+  await _updCourseOrig(id,field,val,btn2);
+  addAudit('Alterou campo "'+field+'" do curso "'+id+'" para: '+val);
+};
+var _delCourseOrig=window.delCourse;
+window.delCourse=async function(id,name){
+  await _delCourseOrig(id,name);
+  addAudit('Excluiu curso: '+name+' (id:'+id+')');
+};
+
 window.addEventListener('load',function(){
   loadAlunosStorage();
   renderMsgHist();
