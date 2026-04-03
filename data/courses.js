@@ -113,6 +113,24 @@ var MA_COURSES = [
     color: '#3b82f6',
     addedTs: 1775242461154,
     active: true
+  },
+  {
+    id: 'ctep',
+    name: 'Técnicas de Persuasão —',
+    desc: '',
+    file: 'curso-tecnicas-persuasao.html',
+    cat: 'PNL',
+    modules: 27,
+    topics: 189,
+    hours: 48,
+    quizzes: 81,
+    salt: 'CTP_HENRY_2026_MASTER',
+    ak: 'ctp_auth',
+    storagePrefix: 'ctp_',
+    icon: '🎓',
+    color: '#3b82f6',
+    addedTs: 1775247136694,
+    active: true
   }
 ];
 var MA_CATS = [
