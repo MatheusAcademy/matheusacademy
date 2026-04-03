@@ -368,9 +368,24 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);overflow-x:hi
 .sb-topic-item.active{background:rgba(91,127,255,.12);border-left:2px solid var(--pri)}
 .sb-topic-item.active .sb-topic-name{color:#fff;font-weight:700}
 .sb-topic-item.done{opacity:.65}
-.sb-topic-dot{width:8px;height:8px;border-radius:50%;background:var(--brd2);border:1.5px solid var(--brd2);flex-shrink:0;transition:all .2s}
-.sb-topic-item.active .sb-topic-dot{background:var(--pri);border-color:var(--pri);box-shadow:0 0 6px rgba(91,127,255,.5)}
-.sb-topic-item.done .sb-topic-dot{background:var(--grn);border-color:var(--grn)}
+.sb-topic-dot{
+  width:22px;height:22px;border-radius:6px;
+  background:transparent;
+  border:1.5px solid rgba(255,255,255,.12);
+  flex-shrink:0;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.52rem;font-weight:700;color:rgba(255,255,255,.3);
+  font-family:var(--font);
+}
+.sb-topic-item.active .sb-topic-dot{
+  background:rgba(74,126,255,.18);
+  border-color:var(--pri);color:var(--pri);
+}
+.sb-topic-item.done .sb-topic-dot{
+  background:rgba(34,197,94,.15);
+  border-color:rgba(34,197,94,.5);
+  color:#22c55e;
+}
 .sb-topic-name{font-size:.7rem;color:var(--txt2);line-height:1.35;flex:1;min-width:0}
 .sb-topic-dur{font-size:.52rem;color:var(--txt3);flex-shrink:0}
 .sb-topic-lock{font-size:.62rem;color:var(--txt3);flex-shrink:0}
@@ -767,12 +782,11 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);overflow-x:hi
   background:rgba(74,126,255,.08);
   box-shadow:0 0 0 3px rgba(74,126,255,.08);
 }
-/* Concluído MANUALMENTE — check verde preenchido */
+/* Concluído MANUALMENTE — número permanece, sem verde */
 .ml-topic-item.t-done .ml-topic-dot{
-  background:#22c55e;
-  border-color:#22c55e;
-  color:#fff;
-  font-size:.55rem;
+  background:transparent;
+  border-color:rgba(255,255,255,.15);
+  color:rgba(255,255,255,.3);
 }
 
 /* Info do tópico */
@@ -883,55 +897,57 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);overflow-x:hi
   letter-spacing:.02em;
 }
 
-/* ── Botão marcar concluído — minimalista ── */
+/* ── Botão marcar concluído — só o checkbox, sem texto ── */
 .ml-mark-btn{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:9px 18px;border-radius:8px;
-  border:1px solid rgba(74,126,255,.25);
-  background:transparent;
-  color:rgba(74,126,255,.6);
-  font-family:var(--font);font-size:.72rem;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:10px 20px;border-radius:8px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.03);
+  color:rgba(255,255,255,.35);
+  font-family:var(--font);font-size:.72rem;font-weight:500;
   cursor:pointer;transition:all .22s;
-  margin-top:20px;
+  margin-top:24px;
   letter-spacing:.04em;
   user-select:none;-webkit-tap-highlight-color:transparent;
-  width:auto; /* não ocupa 100% — mais elegante */
+  width:auto;
 }
 .ml-mark-btn:hover{
-  border-color:rgba(74,126,255,.5);
-  color:var(--course-color);
-  background:rgba(74,126,255,.05);
+  border-color:rgba(74,126,255,.3);
+  color:rgba(74,126,255,.7);
+  background:rgba(74,126,255,.04);
 }
+/* Checkbox — quadrado simples, preto vazado */
 .ml-mark-checkbox{
-  width:16px;height:16px;border-radius:4px;flex-shrink:0;
-  border:1.5px solid rgba(74,126,255,.4);
+  width:18px;height:18px;border-radius:5px;flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,.2);
   background:transparent;
   display:flex;align-items:center;justify-content:center;
-  transition:all .25s cubic-bezier(.2,0,.3,1);
+  transition:all .3s cubic-bezier(.2,0,.3,1);
 }
 .ml-mark-checkbox svg{
   opacity:0;transition:opacity .15s;
-  width:10px;height:10px;
-  stroke:#fff;fill:none;stroke-width:2.5;
+  width:11px;height:11px;
+  stroke:#fff;fill:none;stroke-width:2.8;
   stroke-linecap:round;stroke-linejoin:round;
 }
-/* Estado concluído manualmente — verde */
+/* ── Estado concluído — VERDE, checkbox preenchido, texto some ── */
 .ml-mark-btn.ml-mark-done{
-  border-color:rgba(34,197,94,.35);
-  color:rgba(34,197,94,.7);
+  border-color:rgba(34,197,94,.25);
+  color:rgba(34,197,94,.6);
   background:transparent;
   cursor:default;
-}
-.ml-mark-btn.ml-mark-done:hover{
-  background:transparent;
-  border-color:rgba(34,197,94,.35);
+  pointer-events:none;
 }
 .ml-mark-btn.ml-mark-done .ml-mark-checkbox{
   background:#22c55e;border-color:#22c55e;
-  animation:checkPop .3s cubic-bezier(.2,0,.3,1);
+  animation:checkPop .32s cubic-bezier(.2,0,.3,1);
 }
 .ml-mark-btn.ml-mark-done .ml-mark-checkbox svg{opacity:1;}
-@keyframes checkPop{0%{transform:scale(0);}65%{transform:scale(1.25);}100%{transform:scale(1);}}
+.ml-mark-btn.ml-mark-done .ml-mark-label{
+  /* texto "Tópico Concluído" some — só o checkbox importa */
+  opacity:.55;font-size:.66rem;
+}
+@keyframes checkPop{0%{transform:scale(0);}65%{transform:scale(1.3);}100%{transform:scale(1);}}
 
 /* ══ SEÇÃO QUIZ FINAL DO MÓDULO ══ */
 .ml-quiz-section{
@@ -2583,7 +2599,7 @@ var MODS = [
     <span class="bn-label">Início</span>
   </a>
   <!-- CURSOS -->
-  <a class="bn-item" id="bn-cursos" href="#" onclick="showCoverIfNeeded();return false">
+  <a class="bn-item" id="bn-cursos" href="cursos.html">
     <span class="bn-icon">
       <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
     </span>
@@ -2782,7 +2798,7 @@ function setActiveColor(color){
   document.querySelectorAll('.hl-btn').forEach(b => b.classList.remove('active'));
   var btn = document.querySelector('.hl-btn[data-color="'+color+'"]');
   if(btn) btn.classList.add('active');
-  showToast('Cor selecionada: '+color, 'ok');
+  // sem toast — silencioso
 }
 function applySelectedHighlight(){
   var sel = window.getSelection();
@@ -2952,7 +2968,7 @@ function buildSidebar(){
       var vis2=!_filterStr||topic.name.toLowerCase().includes(_filterStr);
       if(!vis2)return;
       html+='<div class="sb-topic-item'+(isActive?' active':'')+(topDone?' done':'')+'" onclick="selectTopic('+mi+','+ti+','+canAcc+')" id="sbTopic'+mi+'_'+ti+'">';
-      html+='<div class="sb-topic-dot"></div><span class="sb-topic-name">'+topic.name+'</span><span class="sb-topic-dur">'+topic.dur+'</span>';
+      html+='<div class="sb-topic-dot">'+(topDone?'✓':(ti+1))+'</div><span class="sb-topic-name">'+topic.name+'</span><span class="sb-topic-dur">'+topic.dur+'</span>';
       if(!canAcc)html+='<span class="sb-topic-lock">🔒</span>';
       html+='</div>';
     });
@@ -3087,7 +3103,7 @@ function renderModLesson(mi){
 
     /* Header do tópico */
     html+='<div class="ml-topic-hdr" onclick="mlToggleTopic('+mi+','+ti+')">'
-      +'<div class="ml-topic-dot">'+(done?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':(ti+1))+'</div>'
+      +'<div class="ml-topic-dot">'+(ti+1)+'</div>'
       +'<div class="ml-topic-info">'
       +'<span class="ml-topic-name">'+t.name+'</span>'
       +'<div class="ml-topic-meta"><span class="ml-topic-dur">'+t.dur+'</span></div>'
@@ -3103,9 +3119,9 @@ function renderModLesson(mi){
       /* Botão marcar como concluído — preto antes, verde ao clicar */
       +'<button class="ml-mark-btn'+(done?' ml-mark-done':'')+'" id="ml_mark_'+mi+'_'+ti+'" onclick="mlMarkDone('+mi+','+ti+')">'
       +'<div class="ml-mark-checkbox">'
-      +(done?'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>':'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>')
+      +(done?'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>':'')
       +'</div>'
-      +(done?'Tópico Concluído':'Marcar como Concluído')
+      +'<span class="ml-mark-label">'+(done?'Concluído':'Marcar como concluído')+'</span>'
       +'</button>'
       +'</div>'
       +'</div>';
@@ -3241,9 +3257,7 @@ function mlToggleTopic(mi,ti){
       // Atualiza badge do botão marcar
       var btn=document.getElementById('ml_mark_'+mi+'_'+ti);
       if(btn){btn.classList.add('done');btn.textContent='✅ Tópico Concluído';}
-      // Atualiza dot
-      var dot=item.querySelector('.ml-topic-dot');
-      if(dot)dot.textContent='✓';
+      // Dot mantém o número — não muda para ✓
       item.classList.add('t-done');
     }
   }
@@ -3285,16 +3299,15 @@ function mlMarkDone(mi,ti){
   if(btn){
     btn.classList.add('ml-mark-done');
     var cb=btn.querySelector('.ml-mark-checkbox');
-    if(cb)cb.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-    btn.childNodes[btn.childNodes.length-1].textContent='Tópico Concluído';
-    // Som de check
+    if(cb)cb.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    var lbl=btn.querySelector('.ml-mark-label');
+    if(lbl)lbl.textContent='Concluído';
     playCheckSound();
   }
   var item=document.getElementById('ml_topic_'+mi+'_'+ti);
   if(item){
     item.classList.add('t-done');
-    var dot=item.querySelector('.ml-topic-dot');
-    if(dot)dot.textContent='✓';
+    // Dot mantém o número — não muda para ✓
     var badge=item.querySelector('.ml-topic-done-badge');
     if(badge)badge.style.display='inline';
   }
@@ -4253,7 +4266,7 @@ function fpSelectColor(c){
   // Atualiza classe do body para cursor
   document.body.className=document.body.className.replace(/\bpen-\w+\b/g,'').trim();
   if(_penActive)document.body.classList.add('pen-mode-active','pen-'+c);
-  showToast('✏️ Cor: '+c,'ok');
+  // sem toast — silencioso
 }
 
 /* Modo borracha pelo balão */
