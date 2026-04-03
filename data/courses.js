@@ -131,6 +131,25 @@ var MA_COURSES = [
     color: '#3b82f6',
     addedTs: 1775247136694,
     active: true
+  },
+  {
+    id: 'nlf',
+    name: 'Lei FELCA e o Modelo Chinês de Censura no Brasil —',
+    desc: '',
+    file: 'noticia-lei-felca.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 5,
+    hours: 4,
+    quizzes: 15,
+    salt: 'NLF_HENRY_2026_MASTER',
+    ak: 'nlf_auth',
+    storagePrefix: 'nlf_',
+    icon: '🎓',
+    color: '#3b82f6',
+    free: true,
+    addedTs: 1775247280100,
+    active: true
   }
 ];
 var MA_CATS = [
