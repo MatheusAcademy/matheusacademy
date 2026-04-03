@@ -522,78 +522,44 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 </nav>
 
 <script>
-/* ═══ CONFIGURAÇÃO DOS CURSOS ═══
-   Edite aqui para adicionar, remover ou ajustar os cursos exibidos.
-   Cada curso tem: id, name, desc, cat, icon (emoji), color (hex), file, ak (chave localStorage), prefix (progresso)
-*/
-var CURSOS = [
-  {
-    id:'tp',
-    name:'Dominando Tráfego Pago',
-    desc:'Meta Ads, Google Ads e TikTok para escalar qualquer negócio digital.',
-    cat:'Marketing Digital',
-    icon:'🎯',
-    color:'#4A7EFF',
-    file:'dominando-trafego-pago.html',
-    ak:'tp_auth',
-    prefix:'tp_',
-    modules:10, topics:80, hours:20,
-    free:false
-  },
-  {
-    id:'ni',
-    name:'Negócios Inteligentes',
-    desc:'Estruture, escale e automatize negócios lucrativos do zero.',
-    cat:'Empreendedorismo',
-    icon:'💼',
-    color:'#f59e0b',
-    file:'negocios-inteligentes.html',
-    ak:'ni_auth',
-    prefix:'ni_',
-    modules:8, topics:64, hours:18,
-    free:false
-  },
-  {
-    id:'gp',
-    name:'Geopolítica Avançada',
-    desc:'Entenda o mundo, conflitos e tendências globais com profundidade.',
-    cat:'Geopolítica',
-    icon:'🌍',
-    color:'#00d4ff',
-    file:'geopolitica-curso.html',
-    ak:'gp_auth',
-    prefix:'gp_',
-    modules:12, topics:96, hours:24,
-    free:false
-  },
-  {
-    id:'nl',
-    name:'Nichos Lucrativos',
-    desc:'Descubra e monetize nichos de mercado com alta demanda.',
-    cat:'Negócios',
-    icon:'💡',
-    color:'#22c55e',
-    file:'nichos-lucrativos.html',
-    ak:'nl_auth',
-    prefix:'nl_',
-    modules:6, topics:48, hours:12,
-    free:false
-  }
-];
+/* ═══ CONFIGURAÇÃO ═══ */
+var GH_OWNER = 'MatheusAcademy';
+var GH_REPO  = 'matheusacademy';
+/* Arquivos a IGNORAR — nunca aparecem como curso */
+var IGNORAR  = ['index.html','cursos.html','painel.html','ranking.html',
+                'perfil.html','indicacoes.html','trilhas.html','loja.html',
+                'mural.html','admin-codigos.html'];
 
 /* ═══ HELPERS ═══ */
 var EXP_M=3*365*24*3600e3, EXP_I=365*24*3600e3;
 function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
 function gA(){try{return JSON.parse(localStorage.getItem('ma_access'))||{};}catch(e){return{};}}
 function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0};}catch(e){return{total:0};}}
-function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2800);}
+
+function isCourseUnlocked(c){
+  if(c.free)return true;
+  var ac=gA(),now=Date.now();
+  if(ac.master&&ac.masterTs&&now-ac.masterTs<(ac.expiry||EXP_M))return true;
+  var raw=localStorage.getItem(c.ak);
+  if(raw){try{var d=JSON.parse(raw);if(d.ts&&now-d.ts<(d.expiry||EXP_I))return true;}catch(e){}}
+  return false;
+}
+
+function getCourseProgress(c){
+  try{
+    var prog=JSON.parse(localStorage.getItem(c.prefix+'prog'))||{};
+    var keys=Object.keys(prog).filter(function(k){return !k.startsWith('mod_done_')&&!k.startsWith('qz');});
+    var done=keys.filter(function(k){return prog[k];}).length;
+    var total=c.topics||1;
+    return{done:done,total:total,pct:Math.min(100,Math.round(done/total*100))};
+  }catch(e){return{done:0,total:c.topics||1,pct:0};}
+}
 
 /* ═══ MENU 3 PONTINHOS ═══ */
 function toggleMenu(){
-  var dd=document.getElementById('menuDd');
-  var ov=document.getElementById('menuOverlay');
-  dd.classList.toggle('open');
-  ov.classList.toggle('open');
+  document.getElementById('menuDd').classList.toggle('open');
+  document.getElementById('menuOverlay').classList.toggle('open');
 }
 function closeMenu(){
   document.getElementById('menuDd').classList.remove('open');
@@ -622,111 +588,188 @@ function applyTheme(){
 }
 function toggleTheme(){_light=!_light;localStorage.setItem('ma_theme',_light?'light':'dark');applyTheme();}
 
-/* ═══ PONTOS NA TOPBAR ═══ */
 function updatePts(){
   var p=gP();var total=p.total;
   var str=total<1000?String(total).padStart(3,'0'):total.toLocaleString('pt-BR');
   var el=document.getElementById('maPtsNum');
   if(el)el.textContent=str;
 }
-  var ac=gA(),now=Date.now();
-  if(ac.master&&ac.masterTs&&now-ac.masterTs<(ac.expiry||EXP_M))return true;
-  var raw=localStorage.getItem(c.ak);
-  if(raw){try{var d=JSON.parse(raw);if(d.ts&&now-d.ts<(d.expiry||EXP_I))return true;}catch(e){}}
-  if(c.free)return true;
-  return false;
+
+/* ═══ EXTRAI CONFIG DO COURSE DE UM HTML BRUTO ═══ */
+function extractCourse(html, filename){
+  // Busca var COURSE = { ... };
+  var m = html.match(/var\s+COURSE\s*=\s*\{([\s\S]*?)\};/);
+  if(!m) return null;
+  var block = m[1];
+  function getVal(key){
+    // Tenta string com aspas simples ou duplas
+    var r = new RegExp(key+"\\s*:\\s*['\"]([^'\"]+)['\"]");
+    var found = block.match(r);
+    if(found) return found[1];
+    // Tenta número ou boolean
+    var r2 = new RegExp(key+"\\s*:\\s*([\\w.#]+)");
+    var found2 = block.match(r2);
+    return found2 ? found2[1] : null;
+  }
+  var id      = getVal('id');
+  var name    = getVal('name');
+  var cat     = getVal('cat');
+  var desc    = getVal('desc');
+  var color   = getVal('color') || '#5b7fff';
+  var ak      = getVal('ak')    || id+'_auth';
+  var prefix  = getVal('prefix')|| id+'_';
+  var free    = getVal('free')  === 'true';
+  var modules = parseInt(getVal('modules'))||1;
+  var topics  = parseInt(getVal('topics'))||7;
+  var hours   = parseInt(getVal('hours'))||2;
+
+  if(!id || !name) return null;
+
+  // Ícone por categoria (heurística)
+  var icons = {
+    'Marketing':'🎯','Negócios':'💼','Empreend':'💡','Geopolít':'🌍',
+    'Política':'🏛️','Seguran':'🔴','Esporte':'⚽','PNL':'🧠',
+    'Persuas':'🧠','Comuni':'💬','Finan':'💰','Saúde':'❤️',
+    'Tecnol':'💻','Vendas':'📈','Lideran':'👑'
+  };
+  var icon = '📚';
+  for(var k in icons){if(cat&&cat.indexOf(k)>-1){icon=icons[k];break;}}
+  if(name.toLowerCase().indexOf('copa')>-1||name.toLowerCase().indexOf('futebol')>-1) icon='⚽';
+  if(name.toLowerCase().indexOf('guerra')>-1||name.toLowerCase().indexOf('israel')>-1) icon='🌍';
+  if(name.toLowerCase().indexOf('persuad')>-1||name.toLowerCase().indexOf('persuasão')>-1) icon='🧠';
+
+  return {id:id,name:name,cat:cat||'Curso',desc:desc||'',
+          color:color,icon:icon,file:filename,ak:ak,prefix:prefix,
+          free:free,modules:modules,topics:topics,hours:hours};
 }
 
-function getCourseProgress(c){
+/* ═══ RENDER DE UM CURSO ═══ */
+function renderCard(c){
+  var unlocked = isCourseUnlocked(c);
+  var prog = getCourseProgress(c);
+  var statusBadge = c.free
+    ? '<span class="card-badge badge-free">Gratuito</span>'
+    : unlocked
+      ? '<span class="card-badge badge-owned">Com Acesso</span>'
+      : '<span class="card-badge badge-locked">🔒 Bloqueado</span>';
+  var progColor   = prog.pct===100?'#22c55e':c.color;
+  var progLabel   = prog.pct===0?'Não iniciado':prog.pct===100?'Concluído':prog.pct+'% concluído';
+  var progValColor= prog.pct===100?'#22c55e':prog.pct>0?c.color:'rgba(255,255,255,.25)';
+  var onclick = unlocked
+    ? 'onclick="window.location.href=\''+c.file+'\'"'
+    : 'onclick="showToast(\'🔒 Acesse os planos para desbloquear\')"';
+
+  return '<div class="course-card'+(unlocked?'':' locked')+'" '+onclick
+    +' style="--card-color:'+c.color+';">'
+    +'<div class="card-accent"></div>'
+    +'<div class="card-body">'
+    +'<div class="card-icon" style="background:'+c.color+'18;border-color:'+c.color+'30;">'+c.icon+'</div>'
+    +'<div class="card-info">'
+    +'<span class="card-cat">'+c.cat+'</span>'
+    +'<span class="card-name">'+c.name+'</span>'
+    +'<span class="card-desc">'+c.desc+'</span>'
+    +'</div>'+statusBadge+'</div>'
+    +'<div class="card-footer">'
+    +'<div class="card-stats">'
+    +'<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'+c.modules+' módulos</span>'
+    +'<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 15.5"/></svg>'+c.hours+'h</span>'
+    +'<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'+c.topics+' aulas</span>'
+    +'</div>'
+    +'<div class="card-prog-row">'
+    +'<div class="card-prog-bar"><div class="card-prog-fill" style="width:'+prog.pct+'%;background:'+progColor+';"></div></div>'
+    +'<span class="card-prog-val" style="color:'+progValColor+'">'+progLabel+'</span>'
+    +'</div></div>'
+    +(unlocked?'<div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></div>':'')
+    +'</div>';
+}
+
+/* ═══ BUSCA DINÂMICA VIA API GITHUB ═══ */
+async function loadCursosGitHub(){
+  var grid = document.getElementById('coursesGrid');
+  grid.innerHTML = '<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Carregando cursos...</div>';
+
   try{
-    var prog=JSON.parse(localStorage.getItem(c.prefix+'prog'))||{};
-    var keys=Object.keys(prog).filter(k=>!k.startsWith('mod_done_')&&!k.startsWith('qz'));
-    var done=keys.filter(k=>prog[k]).length;
-    var total=c.topics||1;
-    return{done:done,total:total,pct:Math.min(100,Math.round(done/total*100))};
-  }catch(e){return{done:0,total:c.topics||1,pct:0};}
-}
+    // 1. Busca lista de arquivos na raiz do repo
+    var apiUrl = 'https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/';
+    var res = await fetch(apiUrl, {headers:{'Accept':'application/vnd.github.v3+json'}});
+    if(!res.ok) throw new Error('GitHub API: '+res.status);
+    var files = await res.json();
 
-function showToast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
-}
+    // 2. Filtra só .html da raiz, excluindo os ignorados
+    var htmlFiles = files.filter(function(f){
+      return f.type==='file'
+        && f.name.endsWith('.html')
+        && IGNORAR.indexOf(f.name)===-1;
+    });
 
-/* ═══ RENDER CURSOS ═══ */
-function renderCursos(){
-  var grid=document.getElementById('coursesGrid');
-  var u=gU();
-
-  var totalPct=0, concluidos=0;
-  var html='';
-  var temBloqueado=false;
-
-  CURSOS.forEach(function(c,i){
-    var unlocked=isCourseUnlocked(c);
-    var prog=getCourseProgress(c);
-    totalPct+=prog.pct;
-    if(prog.pct===100)concluidos++;
-    if(!unlocked)temBloqueado=true;
-
-    var statusBadge='';
-    if(c.free){
-      statusBadge='<span class="card-badge badge-free">Gratuito</span>';
-    }else if(unlocked){
-      statusBadge='<span class="card-badge badge-owned">Com Acesso</span>';
-    }else{
-      statusBadge='<span class="card-badge badge-locked">🔒 Bloqueado</span>';
+    if(!htmlFiles.length){
+      grid.innerHTML='<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Nenhum curso encontrado.</div>';
+      return;
     }
 
-    var progColor=prog.pct===100?'#22c55e':c.color;
-    var progLabel=prog.pct===0?'Não iniciado':prog.pct===100?'Concluído':prog.pct+'% concluído';
-    var progValColor=prog.pct===100?'#22c55e':prog.pct>0?c.color:'rgba(255,255,255,.25)';
+    // 3. Baixa cada HTML e tenta extrair o COURSE — em paralelo
+    var results = await Promise.allSettled(
+      htmlFiles.map(async function(f){
+        // Usa raw.githubusercontent para pegar o conteúdo bruto — mais rápido
+        var rawUrl = 'https://raw.githubusercontent.com/'+GH_OWNER+'/'+GH_REPO+'/main/'+f.name;
+        var r = await fetch(rawUrl);
+        if(!r.ok) return null;
+        // Lê só os primeiros 8KB — o COURSE sempre está no início
+        var reader = r.body.getReader();
+        var chunks = [];
+        var total = 0;
+        while(total < 8000){
+          var chunk = await reader.read();
+          if(chunk.done) break;
+          chunks.push(chunk.value);
+          total += chunk.value.length;
+        }
+        reader.cancel();
+        var text = new TextDecoder().decode(
+          chunks.reduce(function(a,b){var c=new Uint8Array(a.length+b.length);c.set(a);c.set(b,a.length);return c;}, new Uint8Array(0))
+        );
+        return extractCourse(text, f.name);
+      })
+    );
 
-    var onclick=unlocked
-      ?'onclick="window.location.href=\''+c.file+'\'"'
-      :'onclick="showToast(\'🔒 Acesse os planos para desbloquear\')"';
+    // 4. Filtra os que têm COURSE válido
+    var cursos = results
+      .filter(function(r){return r.status==='fulfilled' && r.value;})
+      .map(function(r){return r.value;});
 
-    html+='<div class="course-card'+(unlocked?'':' locked')+'" '+onclick+' style="--card-color:'+c.color+';">';
-    html+='<div class="card-accent"></div>';
-    html+='<div class="card-body">';
-    html+='<div class="card-icon" style="background:'+c.color+'18;border-color:'+c.color+'30;">'+c.icon+'</div>';
-    html+='<div class="card-info">';
-    html+='<span class="card-cat">'+c.cat+'</span>';
-    html+='<span class="card-name">'+c.name+'</span>';
-    html+='<span class="card-desc">'+c.desc+'</span>';
-    html+='</div>';
-    html+=statusBadge;
-    html+='</div>';
-
-    html+='<div class="card-footer">';
-    html+='<div class="card-stats">';
-    html+='<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'+c.modules+' módulos</span>';
-    html+='<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 15.5"/></svg>'+c.hours+'h</span>';
-    html+='<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'+c.topics+' aulas</span>';
-    html+='</div>';
-    html+='<div class="card-prog-row">';
-    html+='<div class="card-prog-bar"><div class="card-prog-fill" style="width:'+prog.pct+'%;background:'+progColor+';"></div></div>';
-    html+='<span class="card-prog-val" style="color:'+progValColor+'">'+progLabel+'</span>';
-    html+='</div>';
-    html+='</div>';
-
-    if(unlocked){
-      html+='<div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></div>';
+    if(!cursos.length){
+      grid.innerHTML='<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Nenhum curso com configuração encontrado.</div>';
+      return;
     }
-    html+='</div>'; // course-card
-  });
 
-  grid.innerHTML=html;
+    // 5. Ordena: gratuitos primeiro, depois por nome
+    cursos.sort(function(a,b){
+      if(a.free && !b.free) return -1;
+      if(!a.free && b.free) return 1;
+      return a.name.localeCompare(b.name,'pt-BR');
+    });
 
-  // Summary
-  var avgPct=CURSOS.length?Math.round(totalPct/CURSOS.length):0;
-  document.getElementById('sumCursos').textContent=CURSOS.length;
-  document.getElementById('sumConcluidos').textContent=concluidos;
-  document.getElementById('sumProgFill').style.width=avgPct+'%';
+    // 6. Renderiza
+    var html = cursos.map(renderCard).join('');
+    grid.innerHTML = html;
 
-  // CTA banner
-  if(temBloqueado){
-    document.getElementById('ctaBanner').style.display='block';
+    // 7. Atualiza summary
+    var totalPct=0, concluidos=0, temBloqueado=false;
+    cursos.forEach(function(c){
+      var prog=getCourseProgress(c);
+      totalPct+=prog.pct;
+      if(prog.pct===100)concluidos++;
+      if(!isCourseUnlocked(c))temBloqueado=true;
+    });
+    var avgPct=cursos.length?Math.round(totalPct/cursos.length):0;
+    document.getElementById('sumCursos').textContent=cursos.length;
+    document.getElementById('sumConcluidos').textContent=concluidos;
+    document.getElementById('sumProgFill').style.width=avgPct+'%';
+    if(temBloqueado) document.getElementById('ctaBanner').style.display='block';
+
+  }catch(err){
+    console.error('Erro ao carregar cursos:', err);
+    grid.innerHTML='<div style="text-align:center;padding:60px 0;color:rgba(239,68,68,.5);font-size:.78rem;">⚠️ Não foi possível carregar os cursos. Verifique sua conexão.</div>';
   }
 }
 
@@ -734,7 +777,7 @@ document.addEventListener('DOMContentLoaded',function(){
   applyTheme();
   updatePts();
   updateMenuUser();
-  renderCursos();
+  loadCursosGitHub();
 });
 </script>
 </body>
