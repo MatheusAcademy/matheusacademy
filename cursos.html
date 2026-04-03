@@ -7,6 +7,13 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+<!-- ═══ DADOS CENTRALIZADOS ═══ -->
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
+<script src="firebase-config.js"></script>
+<script src="shared/time-tracker.js"></script>
+
 <style>
 :root{
   --bg:#08080f;--bg2:#0d0d1a;--bg3:#111122;--card:#0f0f1e;
@@ -21,7 +28,7 @@
 html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--font);overflow-x:hidden;}
 ::selection{background:var(--pri);color:#fff;}
 
-/* ══ TOPBAR PADRÃO ══ */
+/* ══ TOPBAR ══ */
 .ma-topbar{
   position:fixed;top:0;left:0;right:0;height:var(--topbar);
   background:rgba(4,4,10,.99);
@@ -39,7 +46,6 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 .ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;}
 .ma-tb-page-name{font-size:.64rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;}
 .ma-tb-spacer{flex:1;min-width:0;}
-/* Troféu + pontos */
 .ma-tb-pts-block{
   display:flex;align-items:center;gap:7px;
   text-decoration:none;flex-shrink:0;
@@ -51,7 +57,6 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 .ma-tb-trophy{color:#f59e0b;display:flex;align-items:center;}
 .ma-tb-trophy svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .ma-tb-pts-num{font-size:.78rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;}
-/* Botão tema */
 .ma-tb-theme-btn{
   width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);
   background:rgba(255,255,255,.04);color:#f59e0b;cursor:pointer;
@@ -59,7 +64,6 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 }
 .ma-tb-theme-btn svg{width:15px;height:15px;stroke:currentColor;}
 .ma-tb-theme-btn:hover{border-color:rgba(245,158,11,.4);}
-/* Botão 3 pontinhos */
 .ma-tb-menu-btn{
   width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);
   background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;
@@ -67,7 +71,6 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 }
 .ma-tb-menu-btn svg{width:16px;height:16px;stroke:currentColor;pointer-events:none;}
 .ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;}
-/* Dropdown menu */
 .ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none;}
 .ma-menu-overlay.open{display:block;}
 .ma-menu-dd{
@@ -89,52 +92,52 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 .ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0;}
 .ma-mi.gold{color:#f59e0b;}.ma-mi.red{color:#ef4444;}
 
-/* ══ HERO HEADER ══ */
+/* Tema claro */
+body.light{--bg:#f5f5fb;--bg2:#eeeef8;--bg3:#e3e4f0;--card:#fff;--brd:rgba(0,0,0,.07);--brd2:rgba(0,0,0,.12);--txt:#1a1a2e;--txt2:rgba(0,0,0,.55);--txt3:rgba(0,0,0,.28);}
+body.light .ma-topbar{background:rgba(240,242,248,.99);}
+body.light .ma-menu-dd{background:#fff;border-color:#d0d4e8;}
+body.light .ma-menu-user{border-color:#e8eaf2;}
+body.light .ma-mi{color:#5a5a7a;}
+body.light .ma-mi:hover{background:#f0f2f8;color:#1a1a2e;}
+body.light .ma-menu-sec+.ma-menu-sec{border-color:#e8eaf2;}
+
+/* ══ HERO ══ */
 .page-hero{
   padding:calc(var(--topbar) + 48px) 24px 40px;
-  text-align:center;
-  position:relative;overflow:hidden;
+  text-align:center;position:relative;overflow:hidden;
 }
 .page-hero::before{
   content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 0%,rgba(74,126,255,.12) 0%,transparent 60%),
-    var(--bg);
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(74,126,255,.12) 0%,transparent 60%),var(--bg);
   pointer-events:none;
 }
 .hero-label{
   display:inline-block;
   font-size:.5rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--pri);margin-bottom:14px;
-  position:relative;
+  color:var(--pri);margin-bottom:14px;position:relative;
 }
 .hero-label::before,.hero-label::after{
-  content:'';display:inline-block;
-  width:20px;height:1px;background:var(--pri);
+  content:'';display:inline-block;width:20px;height:1px;background:var(--pri);
   vertical-align:middle;opacity:.5;
 }
 .hero-label::before{margin-right:10px;}
 .hero-label::after{margin-left:10px;}
 .hero-title{
-  font-family:var(--serif);
-  font-size:clamp(1.8rem,5vw,2.6rem);
-  font-weight:900;color:#fff;
-  line-height:1.1;letter-spacing:-.02em;
+  font-family:var(--serif);font-size:clamp(1.8rem,5vw,2.6rem);
+  font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.02em;
   margin-bottom:12px;position:relative;
 }
-.hero-sub{
-  font-size:.82rem;color:var(--txt2);
-  max-width:420px;margin:0 auto;line-height:1.7;
-  position:relative;
-}
+body.light .hero-title{color:#0a0a1e;}
+.hero-sub{font-size:.82rem;color:var(--txt2);max-width:420px;margin:0 auto;line-height:1.7;position:relative;}
 
-/* ══ FILTRO / PROGRESSO GERAL ══ */
+/* ══ SUMMARY ══ */
 .summary-bar{
   max-width:680px;margin:32px auto 0;padding:0 24px;
   display:flex;align-items:center;justify-content:space-between;gap:20px;
 }
 .summary-stat{text-align:center;}
 .summary-val{font-size:1.4rem;font-weight:900;color:#fff;display:block;line-height:1;}
+body.light .summary-val{color:#0a0a1e;}
 .summary-lbl{font-size:.46rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.14em;margin-top:4px;display:block;}
 .summary-div{width:1px;height:32px;background:var(--brd);}
 .summary-prog{flex:1;max-width:180px;}
@@ -142,145 +145,77 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 .summary-prog-bar{height:3px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
 .summary-prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--pri),var(--neon));transition:width 1s ease;}
 
-/* ══ GRID DE CURSOS ══ */
+/* ══ GRID ══ */
 .courses-grid{
   max-width:680px;margin:0 auto;
   padding:32px 24px calc(var(--bottombar) + 32px);
   display:flex;flex-direction:column;gap:1px;
 }
+
+/* Separador de categoria */
 .section-divider{
-  display:flex;align-items:center;gap:14px;
-  padding:28px 0 16px;
+  display:flex;align-items:center;gap:14px;padding:28px 0 16px;
 }
 .section-divider span{
   font-size:.46rem;font-weight:700;color:var(--txt3);
   text-transform:uppercase;letter-spacing:.18em;white-space:nowrap;
 }
-.section-divider::before,.section-divider::after{
-  content:'';flex:1;height:1px;background:var(--brd);
-}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--brd);}
 
-/* Card de curso */
+/* Card */
 .course-card{
-  background:var(--card);
-  border:1px solid var(--brd);
-  border-radius:16px;
-  overflow:hidden;
-  margin-bottom:12px;
+  background:var(--card);border:1px solid var(--brd);border-radius:16px;
+  overflow:hidden;margin-bottom:12px;
   transition:border-color .25s,transform .25s,box-shadow .25s;
-  text-decoration:none;
-  display:block;
-  position:relative;
-  cursor:pointer;
+  text-decoration:none;display:block;position:relative;cursor:pointer;
 }
 .course-card:hover{
-  border-color:rgba(74,126,255,.35);
-  transform:translateY(-2px);
+  border-color:rgba(74,126,255,.35);transform:translateY(-2px);
   box-shadow:0 12px 40px rgba(0,0,0,.4),0 0 0 1px rgba(74,126,255,.1);
 }
-.course-card.locked{
-  opacity:.75;
-}
-.course-card.locked:hover{
-  border-color:rgba(255,255,255,.15);
-  transform:none;
-  box-shadow:none;
-}
-
-/* Linha de acento no topo do card */
-.card-accent{
-  height:2px;
-  background:linear-gradient(90deg,var(--card-color,#4A7EFF),transparent 70%);
-}
-
-/* Corpo do card */
-.card-body{
-  padding:20px 20px 16px;
-  display:flex;align-items:flex-start;gap:16px;
-}
-
-/* Ícone/avatar do curso */
+.course-card.locked{opacity:.75;}
+.course-card.locked:hover{border-color:rgba(255,255,255,.15);transform:none;box-shadow:none;}
+.card-accent{height:2px;background:linear-gradient(90deg,var(--card-color,#4A7EFF),transparent 70%);}
+.card-body{padding:20px 20px 16px;display:flex;align-items:flex-start;gap:16px;}
 .card-icon{
   width:44px;height:44px;border-radius:12px;flex-shrink:0;
-  background:rgba(74,126,255,.1);
-  border:1px solid rgba(74,126,255,.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;
+  background:rgba(74,126,255,.1);border:1px solid rgba(74,126,255,.2);
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
   position:relative;overflow:hidden;
 }
-.card-icon::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.1),transparent 60%);
-}
-
-/* Info do curso */
+.card-icon::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.1),transparent 60%);}
 .card-info{flex:1;min-width:0;}
-.card-cat{
-  font-size:.46rem;font-weight:700;
-  color:var(--card-color,#4A7EFF);
-  text-transform:uppercase;letter-spacing:.16em;
-  display:block;margin-bottom:5px;
-}
-.card-name{
-  font-family:var(--serif);
-  font-size:1.05rem;font-weight:900;color:#fff;
-  line-height:1.2;margin-bottom:6px;
-  display:block;
-}
-.card-desc{
-  font-size:.68rem;color:var(--txt2);
-  line-height:1.55;display:block;
-}
-
-/* Badge de status */
+.card-cat{font-size:.46rem;font-weight:700;color:var(--card-color,#4A7EFF);text-transform:uppercase;letter-spacing:.16em;display:block;margin-bottom:5px;}
+.card-name{font-family:var(--serif);font-size:1.05rem;font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px;display:block;}
+body.light .card-name{color:#0a0a1e;}
+.card-desc{font-size:.68rem;color:var(--txt2);line-height:1.55;display:block;}
 .card-badge{
   flex-shrink:0;padding:4px 10px;border-radius:6px;
-  font-size:.48rem;font-weight:700;letter-spacing:.06em;
-  text-transform:uppercase;margin-top:2px;
-  align-self:flex-start;
+  font-size:.48rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  margin-top:2px;align-self:flex-start;
 }
 .badge-free{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25);}
 .badge-locked{background:rgba(255,255,255,.05);color:rgba(255,255,255,.3);border:1px solid var(--brd);}
 .badge-owned{background:rgba(74,126,255,.1);color:var(--pri);border:1px solid rgba(74,126,255,.25);}
-
-/* Footer do card — stats + progresso */
-.card-footer{
-  padding:12px 20px 16px;
-  border-top:1px solid var(--brd);
-}
-.card-stats{
-  display:flex;gap:16px;margin-bottom:10px;
-}
-.card-stat{
-  display:flex;align-items:center;gap:5px;
-  font-size:.52rem;color:var(--txt3);
-}
+.card-footer{padding:12px 20px 16px;border-top:1px solid var(--brd);}
+.card-stats{display:flex;gap:16px;margin-bottom:10px;}
+.card-stat{display:flex;align-items:center;gap:5px;font-size:.52rem;color:var(--txt3);}
 .card-stat svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
-
-/* Barra de progresso do card */
 .card-prog-row{display:flex;align-items:center;gap:10px;}
 .card-prog-bar{flex:1;height:2px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
 .card-prog-fill{height:100%;border-radius:2px;transition:width 1s ease;}
 .card-prog-val{font-size:.5rem;font-weight:700;white-space:nowrap;}
-
-/* Seta do card */
 .card-arrow{
   position:absolute;right:20px;top:50%;transform:translateY(-50%);
-  width:28px;height:28px;border-radius:8px;
-  border:1px solid var(--brd);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--txt3);transition:all .2s;
+  width:28px;height:28px;border-radius:8px;border:1px solid var(--brd);
+  display:flex;align-items:center;justify-content:center;color:var(--txt3);transition:all .2s;
 }
 .card-arrow svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .course-card:hover .card-arrow{border-color:rgba(74,126,255,.4);color:var(--pri);}
-
-/* Estado locked — cadeado overlay */
 .card-lock-overlay{
-  position:absolute;inset:0;
-  background:rgba(8,8,15,.4);
+  position:absolute;inset:0;background:rgba(8,8,15,.4);
   display:flex;align-items:center;justify-content:center;
-  opacity:0;transition:opacity .2s;
-  border-radius:16px;
+  opacity:0;transition:opacity .2s;border-radius:16px;
 }
 .course-card.locked:hover .card-lock-overlay{opacity:1;}
 .lock-msg{
@@ -290,84 +225,68 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
   display:flex;align-items:center;gap:8px;
 }
 
-/* ══ BANNER CTA ══ */
-.cta-banner{
-  max-width:680px;margin:0 auto 24px;padding:0 24px;
-}
+/* ══ CTA BANNER ══ */
+.cta-banner{max-width:680px;margin:0 auto 24px;padding:0 24px;}
 .cta-inner{
   background:linear-gradient(135deg,rgba(74,126,255,.12),rgba(0,212,255,.06));
-  border:1px solid rgba(74,126,255,.2);
-  border-radius:16px;padding:24px 24px;
-  display:flex;align-items:center;gap:18px;
-  position:relative;overflow:hidden;
+  border:1px solid rgba(74,126,255,.2);border-radius:16px;padding:24px;
+  display:flex;align-items:center;gap:18px;position:relative;overflow:hidden;
 }
-.cta-inner::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(74,126,255,.5),transparent);
-}
+.cta-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(74,126,255,.5),transparent);}
 .cta-text{flex:1;min-width:0;}
 .cta-title{font-family:var(--serif);font-size:1rem;font-weight:900;color:#fff;margin-bottom:4px;}
+body.light .cta-title{color:#0a0a1e;}
 .cta-sub{font-size:.65rem;color:var(--txt2);line-height:1.5;}
 .cta-btn{
-  flex-shrink:0;
-  padding:10px 20px;border-radius:10px;border:none;
+  flex-shrink:0;padding:10px 20px;border-radius:10px;border:none;
   background:linear-gradient(135deg,var(--pri),#2563eb);
   color:#fff;font-family:var(--font);font-size:.72rem;font-weight:700;
-  cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;
-  display:flex;align-items:center;
+  cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;display:flex;align-items:center;
 }
 .cta-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
 
 /* ══ BOTTOM NAV ══ */
 .bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;
-  height:var(--bottombar);
-  background:rgba(4,4,10,.98);
-  border-top:1px solid var(--brd);
+  position:fixed;bottom:0;left:0;right:0;height:var(--bottombar);
+  background:rgba(4,4,10,.98);border-top:1px solid var(--brd);
   display:flex;align-items:center;justify-content:space-around;
-  z-index:999;padding:0 8px;
-  padding-bottom:env(safe-area-inset-bottom);
+  z-index:999;padding:0 8px;padding-bottom:env(safe-area-inset-bottom);
 }
-.bottom-nav::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);
-}
+.bottom-nav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);}
 .bn-item{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:5px;flex:1;height:100%;
-  cursor:pointer;border:none;background:transparent;
-  color:rgba(255,255,255,.28);font-family:var(--font);
-  text-decoration:none;position:relative;
-  transition:color .2s;-webkit-tap-highlight-color:transparent;
+  gap:5px;flex:1;height:100%;cursor:pointer;border:none;background:transparent;
+  color:rgba(255,255,255,.28);font-family:var(--font);text-decoration:none;
+  position:relative;transition:color .2s;-webkit-tap-highlight-color:transparent;
 }
 .bn-item.active,.bn-item:hover{color:#fff;}
-.bn-item.active::after{
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:20px;height:2px;border-radius:0 0 2px 2px;background:#fff;
-}
+.bn-item.active::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:2px;border-radius:0 0 2px 2px;background:#fff;}
 .bn-item.bn-center{flex:1.4;position:relative;top:-10px;}
 .bn-center-logo{
   width:50px;height:50px;border-radius:14px;background:#000;
   border:1.5px solid rgba(255,255,255,.2);
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(0,0,0,.6);
-  transition:all .25s;
+  box-shadow:0 4px 20px rgba(0,0,0,.6);transition:all .25s;
 }
 .bn-item.bn-center:hover .bn-center-logo{transform:scale(1.1);border-color:rgba(255,255,255,.4);}
 .bn-icon{display:flex;align-items:center;justify-content:center;}
 .bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1;}
+body.light .bottom-nav{background:rgba(240,242,248,.98);border-top-color:#d0d4e8;}
+body.light .bn-item{color:rgba(0,0,0,.28);}
+body.light .bn-item.active,body.light .bn-item:hover{color:#0a0a1e;}
 @media(min-width:769px){.bottom-nav{display:none;}}
 
 /* ══ TOAST ══ */
-.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-8px);
+.toast{
+  position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-8px);
   background:#0f0f1e;border:1px solid var(--brd2);color:var(--txt);
   padding:10px 20px;border-radius:10px;font-size:.76rem;font-weight:600;
   z-index:9999;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;
-  box-shadow:0 8px 32px rgba(0,0,0,.6);font-family:var(--font);}
+  box-shadow:0 8px 32px rgba(0,0,0,.6);font-family:var(--font);
+}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-/* ══ ANIMAÇÕES ══ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .course-card{animation:fadeUp .4s ease both;}
 .course-card:nth-child(1){animation-delay:.05s;}
@@ -390,9 +309,8 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 
 <div class="toast" id="toast"></div>
 
-<!-- TOPBAR PADRÃO -->
+<!-- ══ TOPBAR ══ -->
 <nav class="ma-topbar">
-  <!-- LOGO HORIZONTAL — M branco + linha dupla azul + ACADEMY -->
   <a class="ma-tb-logo" href="index.html">
     <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
       <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
@@ -405,22 +323,16 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
   <div class="ma-tb-sep"></div>
   <span class="ma-tb-page-name">Cursos</span>
   <div class="ma-tb-spacer"></div>
-
-  <!-- TROFÉU + PONTOS -->
   <a class="ma-tb-pts-block" href="painel.html">
     <span class="ma-tb-trophy">
       <svg viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg>
     </span>
     <span class="ma-tb-pts-num" id="maPtsNum">000</span>
   </a>
-
-  <!-- TEMA -->
   <button class="ma-tb-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema">
     <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </button>
-
-  <!-- 3 PONTINHOS -->
   <button class="ma-tb-menu-btn" onclick="toggleMenu()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
       <circle cx="12" cy="5" r="1" fill="currentColor"/>
@@ -478,7 +390,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 
 <!-- GRID DE CURSOS -->
 <div class="courses-grid" id="coursesGrid">
-  <!-- preenchido por JS -->
+  <div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Carregando cursos...</div>
 </div>
 
 <!-- CTA BANNER -->
@@ -504,15 +416,13 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
   </a>
   <a class="bn-item bn-center" href="index.html">
     <div class="bn-center-logo">
-      <svg width="36" height="36" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
-        <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="48">M</text>
-        <line x1="10" y1="58" x2="62" y2="58" stroke="#4A7EFF" stroke-width="3"/>
-        <line x1="10" y1="63" x2="62" y2="63" stroke="#4A7EFF" stroke-width="1.4" opacity=".4"/>
+      <svg width="28" height="28" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <text x="28" y="40" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="38" letter-spacing="-1">M</text>
       </svg>
     </div>
   </a>
   <a class="bn-item" href="ranking.html">
-    <span class="bn-icon"><svg viewBox="0 0 24 24"><polyline points="18 20 18 10"/><polyline points="12 20 12 4"/><polyline points="6 20 6 14"/></svg></span>
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
     <span class="bn-label">Ranking</span>
   </a>
   <a class="bn-item" href="perfil.html">
@@ -522,262 +432,205 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 </nav>
 
 <script>
-/* ═══ CONFIGURAÇÃO ═══ */
-var GH_OWNER = 'MatheusAcademy';
-var GH_REPO  = 'matheusacademy';
-/* Arquivos a IGNORAR — nunca aparecem como curso */
-var IGNORAR  = ['index.html','cursos.html','painel.html','ranking.html',
-                'perfil.html','indicacoes.html','trilhas.html','loja.html',
-                'mural.html','admin-codigos.html'];
+/* ════════════════════════════════════════════════
+   CURSOS.HTML — usa MA_COURSES de data/courses.js
+   ════════════════════════════════════════════════ */
 
-/* ═══ HELPERS ═══ */
-var EXP_M=3*365*24*3600e3, EXP_I=365*24*3600e3;
-function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
-function gA(){try{return JSON.parse(localStorage.getItem('ma_access'))||{};}catch(e){return{};}}
-function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0};}catch(e){return{total:0};}}
-function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2800);}
+var EXP_M = 3*365*24*3600e3;
+var EXP_I = 365*24*3600e3;
 
-function isCourseUnlocked(c){
-  if(c.free)return true;
-  var ac=gA(),now=Date.now();
-  if(ac.master&&ac.masterTs&&now-ac.masterTs<(ac.expiry||EXP_M))return true;
-  var raw=localStorage.getItem(c.ak);
-  if(raw){try{var d=JSON.parse(raw);if(d.ts&&now-d.ts<(d.expiry||EXP_I))return true;}catch(e){}}
+function gU()  { try { return JSON.parse(localStorage.getItem('ma_user')||'null'); } catch(e) { return null; } }
+function gA()  { try { return JSON.parse(localStorage.getItem('ma_access')||'{}'); } catch(e) { return {}; } }
+function gP()  { try { return JSON.parse(localStorage.getItem('ma_points')||'{}'); } catch(e) { return {total:0}; } }
+function showToast(msg) { var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2800); }
+
+/* ── Verifica acesso ao curso ── */
+function isCourseUnlocked(c) {
+  if (c.free || c.ak === 'free') return true;
+  /* Firebase — via ma_user cacheado */
+  if (typeof MAStore !== 'undefined') return MAStore.hasCourseAccess(c.ak);
+  /* Fallback legado */
+  var u = gU();
+  if (u) {
+    if (u.plano === 'master' || u.plano === 'anual' || u.plano === 'mensal') return true;
+    if (u.cursos && (u.cursos.indexOf(c.courseKey) >= 0 || u.cursos.indexOf(c.ak) >= 0)) return true;
+  }
+  var ac = gA(), now = Date.now();
+  if (ac.master && ac.masterTs && now - ac.masterTs < (ac.expiry || EXP_M)) return true;
+  var raw = localStorage.getItem(c.ak);
+  if (raw) { try { var d=JSON.parse(raw); if (d.ts && now-d.ts < (d.expiry||EXP_I)) return true; } catch(e){} }
   return false;
 }
 
-function getCourseProgress(c){
-  try{
-    var prog=JSON.parse(localStorage.getItem(c.prefix+'prog'))||{};
-    var keys=Object.keys(prog).filter(function(k){return !k.startsWith('mod_done_')&&!k.startsWith('qz');});
-    var done=keys.filter(function(k){return prog[k];}).length;
-    var total=c.topics||1;
-    return{done:done,total:total,pct:Math.min(100,Math.round(done/total*100))};
-  }catch(e){return{done:0,total:c.topics||1,pct:0};}
+/* ── Progresso do curso ── */
+function getCourseProgress(c) {
+  if (typeof MAStore !== 'undefined') return MAStore.getCourseProgress(c.storagePrefix);
+  /* Fallback */
+  var done=0, total=0;
+  try {
+    for (var k in localStorage) {
+      if (k.indexOf(c.storagePrefix+'mod_') === 0) {
+        total++;
+        var v = localStorage.getItem(k);
+        if (v === 'done' || v === 'true' || v === '1') done++;
+      }
+    }
+  } catch(e) {}
+  return { done: done, total: total, pct: total > 0 ? Math.round(done/total*100) : 0 };
 }
 
-/* ═══ MENU 3 PONTINHOS ═══ */
-function toggleMenu(){
-  document.getElementById('menuDd').classList.toggle('open');
-  document.getElementById('menuOverlay').classList.toggle('open');
-}
-function closeMenu(){
-  document.getElementById('menuDd').classList.remove('open');
-  document.getElementById('menuOverlay').classList.remove('open');
-}
-function updateMenuUser(){
-  var u=gU(),p=gP();
-  var us=document.getElementById('menuUserSec');
-  var as=document.getElementById('menuAuthSec');
-  if(u){
-    if(us)us.innerHTML='<div style="padding:0"><span class="ma-mu-name">'+u.name.split(' ')[0]+'</span><div class="ma-mu-pts">'+p.total.toLocaleString('pt-BR')+' pontos</div></div>';
-    if(as)as.innerHTML='<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
-  }else{
-    if(us)us.innerHTML='<div><span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span></div>';
-    if(as)as.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
-  }
-}
-function doLogout(){localStorage.removeItem('ma_user');closeMenu();location.reload();}
-
-/* ═══ TEMA ═══ */
-var _light=localStorage.getItem('ma_theme')==='light';
-function applyTheme(){
-  document.body.classList.toggle('light',_light);
-  document.getElementById('iconSun').style.display=_light?'block':'none';
-  document.getElementById('iconMoon').style.display=_light?'none':'block';
-}
-function toggleTheme(){_light=!_light;localStorage.setItem('ma_theme',_light?'light':'dark');applyTheme();}
-
-function updatePts(){
-  var p=gP();var total=p.total;
-  var str=total<1000?String(total).padStart(3,'0'):total.toLocaleString('pt-BR');
-  var el=document.getElementById('maPtsNum');
-  if(el)el.textContent=str;
-}
-
-/* ═══ EXTRAI CONFIG DO COURSE DE UM HTML BRUTO ═══ */
-function extractCourse(html, filename){
-  // Busca var COURSE = { ... };
-  var m = html.match(/var\s+COURSE\s*=\s*\{([\s\S]*?)\};/);
-  if(!m) return null;
-  var block = m[1];
-  function getVal(key){
-    // Tenta string com aspas simples ou duplas
-    var r = new RegExp(key+"\\s*:\\s*['\"]([^'\"]+)['\"]");
-    var found = block.match(r);
-    if(found) return found[1];
-    // Tenta número ou boolean
-    var r2 = new RegExp(key+"\\s*:\\s*([\\w.#]+)");
-    var found2 = block.match(r2);
-    return found2 ? found2[1] : null;
-  }
-  var id      = getVal('id');
-  var name    = getVal('name');
-  var cat     = getVal('cat');
-  var desc    = getVal('desc');
-  var color   = getVal('color') || '#5b7fff';
-  var ak      = getVal('ak')    || id+'_auth';
-  var prefix  = getVal('prefix')|| id+'_';
-  var free    = getVal('free')  === 'true';
-  var modules = parseInt(getVal('modules'))||1;
-  var topics  = parseInt(getVal('topics'))||7;
-  var hours   = parseInt(getVal('hours'))||2;
-
-  if(!id || !name) return null;
-
-  // Ícone por categoria (heurística)
-  var icons = {
-    'Marketing':'🎯','Negócios':'💼','Empreend':'💡','Geopolít':'🌍',
-    'Política':'🏛️','Seguran':'🔴','Esporte':'⚽','PNL':'🧠',
-    'Persuas':'🧠','Comuni':'💬','Finan':'💰','Saúde':'❤️',
-    'Tecnol':'💻','Vendas':'📈','Lideran':'👑'
-  };
-  var icon = '📚';
-  for(var k in icons){if(cat&&cat.indexOf(k)>-1){icon=icons[k];break;}}
-  if(name.toLowerCase().indexOf('copa')>-1||name.toLowerCase().indexOf('futebol')>-1) icon='⚽';
-  if(name.toLowerCase().indexOf('guerra')>-1||name.toLowerCase().indexOf('israel')>-1) icon='🌍';
-  if(name.toLowerCase().indexOf('persuad')>-1||name.toLowerCase().indexOf('persuasão')>-1) icon='🧠';
-
-  return {id:id,name:name,cat:cat||'Curso',desc:desc||'',
-          color:color,icon:icon,file:filename,ak:ak,prefix:prefix,
-          free:free,modules:modules,topics:topics,hours:hours};
-}
-
-/* ═══ RENDER DE UM CURSO ═══ */
-function renderCard(c){
+/* ── Renderiza um card de curso ── */
+function renderCard(c) {
   var unlocked = isCourseUnlocked(c);
   var prog = getCourseProgress(c);
-  var statusBadge = c.free
+  var statusBadge = c.free || c.ak === 'free'
     ? '<span class="card-badge badge-free">Gratuito</span>'
     : unlocked
       ? '<span class="card-badge badge-owned">Com Acesso</span>'
       : '<span class="card-badge badge-locked">🔒 Bloqueado</span>';
-  var progColor   = prog.pct===100?'#22c55e':c.color;
-  var progLabel   = prog.pct===0?'Não iniciado':prog.pct===100?'Concluído':prog.pct+'% concluído';
-  var progValColor= prog.pct===100?'#22c55e':prog.pct>0?c.color:'rgba(255,255,255,.25)';
+  var progColor   = prog.pct === 100 ? '#22c55e' : (c.color || '#4A7EFF');
+  var progLabel   = prog.pct === 0 ? 'Não iniciado' : prog.pct === 100 ? 'Concluído' : prog.pct + '% concluído';
+  var progValColor= prog.pct === 100 ? '#22c55e' : prog.pct > 0 ? (c.color||'#4A7EFF') : 'rgba(255,255,255,.25)';
   var onclick = unlocked
-    ? 'onclick="window.location.href=\''+c.file+'\'"'
+    ? 'onclick="window.location.href=\'' + c.file + '\'"'
     : 'onclick="showToast(\'🔒 Acesse os planos para desbloquear\')"';
-
-  return '<div class="course-card'+(unlocked?'':' locked')+'" '+onclick
-    +' style="--card-color:'+c.color+';">'
-    +'<div class="card-accent"></div>'
-    +'<div class="card-body">'
-    +'<div class="card-icon" style="background:'+c.color+'18;border-color:'+c.color+'30;">'+c.icon+'</div>'
-    +'<div class="card-info">'
-    +'<span class="card-cat">'+c.cat+'</span>'
-    +'<span class="card-name">'+c.name+'</span>'
-    +'<span class="card-desc">'+c.desc+'</span>'
-    +'</div>'+statusBadge+'</div>'
-    +'<div class="card-footer">'
-    +'<div class="card-stats">'
-    +'<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'+c.modules+' módulos</span>'
-    +'<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 15.5"/></svg>'+c.hours+'h</span>'
-    +'<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'+c.topics+' aulas</span>'
-    +'</div>'
-    +'<div class="card-prog-row">'
-    +'<div class="card-prog-bar"><div class="card-prog-fill" style="width:'+prog.pct+'%;background:'+progColor+';"></div></div>'
-    +'<span class="card-prog-val" style="color:'+progValColor+'">'+progLabel+'</span>'
-    +'</div></div>'
-    +(unlocked?'<div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></div>':'')
-    +'</div>';
+  return '<div class="course-card' + (unlocked?'':' locked') + '" style="--card-color:' + (c.color||'#4A7EFF') + '" ' + onclick + '>'
+    + '<div class="card-accent"></div>'
+    + '<div class="card-body">'
+    + '<div class="card-icon">' + (c.icon||'📚') + '</div>'
+    + '<div class="card-info">'
+    + '<span class="card-cat">' + (c.cat||'Curso') + '</span>'
+    + '<span class="card-name">' + he(c.name) + '</span>'
+    + '<span class="card-desc">' + he(c.desc||'') + '</span>'
+    + '</div>'
+    + statusBadge
+    + '</div>'
+    + '<div class="card-footer">'
+    + '<div class="card-stats">'
+    + '<span class="card-stat"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>' + (c.modules||1) + ' módulos</span>'
+    + '<span class="card-stat"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>' + (c.topics||0) + ' tópicos</span>'
+    + '<span class="card-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + (c.hours||1) + 'h</span>'
+    + (c.quizzes ? '<span class="card-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + c.quizzes + ' quizzes</span>' : '')
+    + '</div>'
+    + '<div class="card-prog-row">'
+    + '<div class="card-prog-bar"><div class="card-prog-fill" style="width:' + prog.pct + '%;background:' + progColor + '"></div></div>'
+    + '<span class="card-prog-val" style="color:' + progValColor + '">' + progLabel + '</span>'
+    + '</div></div>'
+    + (unlocked ? '<div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></div>' : '')
+    + (unlocked ? '' : '<div class="card-lock-overlay"><div class="lock-msg">🔒 Clique para ver planos</div></div>')
+    + '</div>';
 }
 
-/* ═══ BUSCA DINÂMICA VIA API GITHUB ═══ */
-async function loadCursosGitHub(){
+/* ── Escapa HTML ── */
+function he(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ── Renderiza todos os cursos de MA_COURSES ── */
+function renderCursos() {
   var grid = document.getElementById('coursesGrid');
-  grid.innerHTML = '<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Carregando cursos...</div>';
 
-  try{
-    // 1. Busca lista de arquivos na raiz do repo
-    var apiUrl = 'https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/';
-    var res = await fetch(apiUrl, {headers:{'Accept':'application/vnd.github.v3+json'}});
-    if(!res.ok) throw new Error('GitHub API: '+res.status);
-    var files = await res.json();
+  /* Garante que MA_COURSES está disponível */
+  if (typeof MA_COURSES === 'undefined' || !MA_COURSES.length) {
+    grid.innerHTML = '<div style="text-align:center;padding:60px 0;color:rgba(239,68,68,.5);font-size:.78rem;">⚠️ Lista de cursos não encontrada. Verifique se data/courses.js está carregado.</div>';
+    return;
+  }
 
-    // 2. Filtra só .html da raiz, excluindo os ignorados
-    var htmlFiles = files.filter(function(f){
-      return f.type==='file'
-        && f.name.endsWith('.html')
-        && IGNORAR.indexOf(f.name)===-1;
+  var cursos = MA_COURSES.filter(function(c) { return c.active !== false; });
+
+  /* Agrupa por categoria na ordem definida em MA_CATS */
+  var catOrder = [];
+  if (typeof MA_CATS !== 'undefined') {
+    MA_CATS.forEach(function(cat) { if (catOrder.indexOf(cat.name) === -1) catOrder.push(cat.name); });
+  }
+  /* Categorias dos cursos que não estão em MA_CATS */
+  cursos.forEach(function(c) { if (catOrder.indexOf(c.cat||'Outros') === -1) catOrder.push(c.cat||'Outros'); });
+
+  var grouped = {};
+  cursos.forEach(function(c) {
+    var cat = c.cat || 'Outros';
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(c);
+  });
+
+  var html = '';
+  var totalPct = 0, concluidos = 0, temBloqueado = false;
+
+  catOrder.forEach(function(catName) {
+    var lista = grouped[catName];
+    if (!lista || !lista.length) return;
+    /* Separador de categoria */
+    html += '<div class="section-divider"><span>' + he(catName) + '</span></div>';
+    lista.forEach(function(c) {
+      var prog = getCourseProgress(c);
+      totalPct += prog.pct;
+      if (prog.pct === 100) concluidos++;
+      if (!isCourseUnlocked(c)) temBloqueado = true;
+      html += renderCard(c);
     });
+  });
 
-    if(!htmlFiles.length){
-      grid.innerHTML='<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Nenhum curso encontrado.</div>';
-      return;
-    }
+  grid.innerHTML = html || '<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Nenhum curso disponível no momento.</div>';
 
-    // 3. Baixa cada HTML e tenta extrair o COURSE — em paralelo
-    var results = await Promise.allSettled(
-      htmlFiles.map(async function(f){
-        // Usa raw.githubusercontent para pegar o conteúdo bruto — mais rápido
-        var rawUrl = 'https://raw.githubusercontent.com/'+GH_OWNER+'/'+GH_REPO+'/main/'+f.name;
-        var r = await fetch(rawUrl);
-        if(!r.ok) return null;
-        // Lê só os primeiros 8KB — o COURSE sempre está no início
-        var reader = r.body.getReader();
-        var chunks = [];
-        var total = 0;
-        while(total < 8000){
-          var chunk = await reader.read();
-          if(chunk.done) break;
-          chunks.push(chunk.value);
-          total += chunk.value.length;
-        }
-        reader.cancel();
-        var text = new TextDecoder().decode(
-          chunks.reduce(function(a,b){var c=new Uint8Array(a.length+b.length);c.set(a);c.set(b,a.length);return c;}, new Uint8Array(0))
-        );
-        return extractCourse(text, f.name);
-      })
-    );
+  /* Atualiza summary */
+  var avgPct = cursos.length ? Math.round(totalPct / cursos.length) : 0;
+  document.getElementById('sumCursos').textContent = cursos.length;
+  document.getElementById('sumConcluidos').textContent = concluidos;
+  document.getElementById('sumProgFill').style.width = avgPct + '%';
+  if (temBloqueado) document.getElementById('ctaBanner').style.display = 'block';
+}
 
-    // 4. Filtra os que têm COURSE válido
-    var cursos = results
-      .filter(function(r){return r.status==='fulfilled' && r.value;})
-      .map(function(r){return r.value;});
-
-    if(!cursos.length){
-      grid.innerHTML='<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Nenhum curso com configuração encontrado.</div>';
-      return;
-    }
-
-    // 5. Ordena: gratuitos primeiro, depois por nome
-    cursos.sort(function(a,b){
-      if(a.free && !b.free) return -1;
-      if(!a.free && b.free) return 1;
-      return a.name.localeCompare(b.name,'pt-BR');
-    });
-
-    // 6. Renderiza
-    var html = cursos.map(renderCard).join('');
-    grid.innerHTML = html;
-
-    // 7. Atualiza summary
-    var totalPct=0, concluidos=0, temBloqueado=false;
-    cursos.forEach(function(c){
-      var prog=getCourseProgress(c);
-      totalPct+=prog.pct;
-      if(prog.pct===100)concluidos++;
-      if(!isCourseUnlocked(c))temBloqueado=true;
-    });
-    var avgPct=cursos.length?Math.round(totalPct/cursos.length):0;
-    document.getElementById('sumCursos').textContent=cursos.length;
-    document.getElementById('sumConcluidos').textContent=concluidos;
-    document.getElementById('sumProgFill').style.width=avgPct+'%';
-    if(temBloqueado) document.getElementById('ctaBanner').style.display='block';
-
-  }catch(err){
-    console.error('Erro ao carregar cursos:', err);
-    grid.innerHTML='<div style="text-align:center;padding:60px 0;color:rgba(239,68,68,.5);font-size:.78rem;">⚠️ Não foi possível carregar os cursos. Verifique sua conexão.</div>';
+/* ══ MENU ══ */
+function toggleMenu() {
+  document.getElementById('menuDd').classList.toggle('open');
+  document.getElementById('menuOverlay').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('menuDd').classList.remove('open');
+  document.getElementById('menuOverlay').classList.remove('open');
+}
+function updateMenuUser() {
+  var u = gU(), p = gP();
+  var us = document.getElementById('menuUserSec');
+  var as = document.getElementById('menuAuthSec');
+  if (u) {
+    if (us) us.innerHTML = '<div style="padding:0"><span class="ma-mu-name">' + he((u.name||u.email||'').split(' ')[0]) + '</span><div class="ma-mu-pts">' + (p.total||0).toLocaleString('pt-BR') + ' pontos</div></div>';
+    if (as) as.innerHTML = '<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
+  } else {
+    if (us) us.innerHTML = '<div><span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span></div>';
+    if (as) as.innerHTML = '<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
   }
 }
+function doLogout() {
+  if (typeof MAStore !== 'undefined') { MAStore.logout(); return; }
+  if (window.MA_AUTH) { MA_AUTH.logout().catch(function(){}); }
+  localStorage.removeItem('ma_user');
+  closeMenu();
+  location.href = 'index.html';
+}
 
-document.addEventListener('DOMContentLoaded',function(){
+/* ══ TEMA ══ */
+var _light = localStorage.getItem('ma_theme') === 'light';
+function applyTheme() {
+  document.body.classList.toggle('light', _light);
+  document.getElementById('iconSun').style.display = _light ? 'block' : 'none';
+  document.getElementById('iconMoon').style.display = _light ? 'none' : 'block';
+}
+function toggleTheme() { _light = !_light; localStorage.setItem('ma_theme', _light?'light':'dark'); applyTheme(); }
+
+/* ══ PONTOS ══ */
+function updatePts() {
+  var el = document.getElementById('maPtsNum');
+  if (!el) return;
+  var p = gP();
+  var total = p.total || 0;
+  el.textContent = total < 1000 ? String(total).padStart(3,'0') : total.toLocaleString('pt-BR');
+}
+
+/* ══ INIT ══ */
+document.addEventListener('DOMContentLoaded', function() {
   applyTheme();
   updatePts();
   updateMenuUser();
-  loadCursosGitHub();
+  renderCursos();
 });
 </script>
 </body>
