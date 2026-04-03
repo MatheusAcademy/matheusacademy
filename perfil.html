@@ -250,6 +250,7 @@ body{padding-bottom:58px!important}
 
 </style>
 <script src="firebase-config.js"></script>
+<script src="shared/time-tracker.js"></script>
 </head>
 <body>
 
@@ -427,18 +428,53 @@ function buildCalendar(){
 }
 
 /* ── STUDY TIME ── */
+function fmtSec(sec){var h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;if(h>0)return h+'h '+m+'m';if(m>0)return m+'m '+s+'s';return s+'s';}
+function fmtMin(min){var h=Math.floor(min/60),m=min%60;if(h>0)return h+'h '+m+'m';return m+'min';}
 function buildStudyTime(){
-  var tm=gs('ma_study_total_min',0),td=gs('ma_study_today_min',0),tw=gs('ma_study_week_min',0),tmn=gs('ma_study_month_min',0);
-  var se=gs('ma_sessions',{count:1});var avg=se.count>0?Math.round(tm/se.count):0;
-  var h=Math.floor(tm/60),m=tm%60;
-  return '<div class="time-big-wrap"><div class="time-big">'+h+'h '+m+'m</div><div class="time-big-lbl">tempo total estudado</div></div>'
+  /* Dados do time-tracker (segundos) */
+  var tt=window.MA_TimeTracker;
+  var todaySec=(tt?tt.getToday().totalSec:0);
+  var totalSec=(tt?tt.getTotal():0);
+  var hist=(tt?tt.getHistory():[]);
+  /* Fallback para dados antigos em minutos */
+  var tmMin=gs('ma_study_total_min',0);
+  var tdMin=gs('ma_study_today_min',0);
+  var twMin=gs('ma_study_week_min',0);
+  var tmnMin=gs('ma_study_month_min',0);
+  /* Usar o maior valor entre os dois sistemas */
+  var todayDisp=Math.max(todaySec,tdMin*60);
+  var totalDisp=Math.max(totalSec,tmMin*60);
+  /* Status online em tempo real */
+  var sessNow=tt?tt.getStatus().sessionSec:0;
+  var onlineDot=document.hidden?'🔴':'🟢';
+  var onlineLbl=document.hidden?'Offline':'Online agora ('+fmtSec(sessNow)+' nesta sessão)';
+  /* Páginas visitadas hoje */
+  var byPage=(tt&&tt.getToday().byPage)||{};
+  var pagesHtml='';
+  var pageNames={index:'Início',painel:'Painel',ranking:'Ranking',perfil:'Perfil',indicacoes:'Indicações',trilhas:'Trilhas',loja:'Loja',mural:'Mural'};
+  Object.keys(byPage).sort(function(a,b){return byPage[b]-byPage[a];}).forEach(function(pg){
+    if(byPage[pg]>5) pagesHtml+='<div class="time-row"><span class="lbl">📄 '+( pageNames[pg]||pg)+'</span><span class="val">'+fmtSec(byPage[pg])+'</span></div>';
+  });
+  var se=gs('ma_sessions',{count:1});var avg=se.count>0?Math.round(tmMin/se.count):0;
+  return '<div class="time-big-wrap"><div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px"><span style="font-size:.75rem">'+onlineDot+'</span><span style="font-size:.62rem;color:var(--txt2)" id="onlineLbl">'+onlineLbl+'</span></div>'
+    +'<div class="time-big">'+fmtSec(totalDisp)+'</div><div class="time-big-lbl">tempo total na plataforma</div></div>'
     +'<div class="time-rows">'
-    +'<div class="time-row"><span class="lbl">📱 Hoje</span><span class="val">'+td+' min</span></div>'
-    +'<div class="time-row"><span class="lbl">📅 Esta semana</span><span class="val">'+tw+' min</span></div>'
-    +'<div class="time-row"><span class="lbl">🗓️ Este mês</span><span class="val">'+Math.floor(tmn/60)+'h '+tmn%60+'m</span></div>'
-    +'<div class="time-row"><span class="lbl">📊 Média por sessão</span><span class="val">'+avg+' min</span></div>'
+    +'<div class="time-row"><span class="lbl">📱 Hoje</span><span class="val" id="todayTimeVal">'+fmtSec(todayDisp)+'</span></div>'
+    +'<div class="time-row"><span class="lbl">📅 Esta semana</span><span class="val">'+fmtMin(twMin)+'</span></div>'
+    +'<div class="time-row"><span class="lbl">🗓️ Este mês</span><span class="val">'+fmtMin(tmnMin)+'</span></div>'
+    +'<div class="time-row"><span class="lbl">📊 Sessões</span><span class="val">'+se.count+' (média '+avg+' min)</span></div>'
+    +(pagesHtml?'<div style="font-size:.6rem;color:var(--txt3);padding:6px 0 2px;text-transform:uppercase;letter-spacing:.08em">Páginas visitadas hoje</div>'+pagesHtml:'')
     +'</div>';
 }
+/* Atualizar tempo online em tempo real */
+setInterval(function(){
+  var tt=window.MA_TimeTracker;if(!tt)return;
+  var st=tt.getStatus();
+  var lbl=document.getElementById('onlineLbl');
+  var tv=document.getElementById('todayTimeVal');
+  if(lbl){var online=!document.hidden;lbl.textContent=(online?'🟢 Online agora ('+fmtSec(st.sessionSec)+' nesta sessão)':'🔴 Offline');}
+  if(tv){var td=tt.getToday();var min=gs('ma_study_today_min',0);tv.textContent=fmtSec(Math.max(td.totalSec,min*60));}
+},5000);
 
 /* ── COMMUNITY ── */
 function buildCommunity(pts){
