@@ -57,25 +57,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    id: 'nl',
-    courseKey: 'nl',
-    name: 'Nichos Lucrativos',
-    desc: 'O guia definitivo para encontrar e dominar nichos lucrativos.',
-    file: 'nichos-lucrativos.html',
-    cat: 'Negócios',
-    modules: 97,
-    topics: 679,
-    hours: 165,
-    quizzes: 97,
-    salt: 'NL_HENRY_2026_MASTER',
-    ak: 'nl_auth',
-    storagePrefix: 'nl_',
-    icon: '💡',
-    color: '#f59e0b',
-    addedTs: 1743033600000,
-    active: true
-  },
-  {
     id: 'mp',
     courseKey: 'mp',
     name: 'Mestre em Persuasão',
