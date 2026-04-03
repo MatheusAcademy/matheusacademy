@@ -394,6 +394,7 @@ textarea{resize:vertical;min-height:54px}
 
       <div class="mp" id="mp">
         <div class="mpt">✅ Dados detectados — confira e edite se necessário</div>
+        <div id="parse-summary" style="display:none;margin-bottom:12px;padding:10px 12px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:8px;font-size:11px;line-height:1.7"></div>
         <div class="mg">
           <div class="mf">
             <label>ID único *</label>
@@ -1277,29 +1278,121 @@ function fileChosen(f){
   rd.readAsText(f,'UTF-8');
 }
 
-// EXTRAÇÃO DE META
+// EXTRAÇÃO DE META — v11
+// Lê o objeto "var COURSE = {...}" e conta MODS dinamicamente
 function extractMeta(html,fn){
+
+  // ── Tenta extrair o objeto COURSE via eval seguro ──
+  var courseData = null;
+  var courseMatch = html.match(/var\s+COURSE\s*=\s*(\{[\s\S]*?\});/);
+  if(courseMatch){
+    try{ courseData = (new Function('return '+courseMatch[1]))(); }catch(e){ courseData=null; }
+  }
+
+  // ── Tenta contar módulos e tópicos do array MODS ──
+  var totalMods = 0, totalTopics = 0, totalQuizzes = 0;
+  var modsMatch = html.match(/var\s+MODS\s*=\s*(\[[\s\S]*?\]);/);
+  if(modsMatch){
+    try{
+      var mods = (new Function('return '+modsMatch[1]))();
+      totalMods   = mods.length;
+      totalTopics = mods.reduce(function(a,m){ return a+(m.topics?m.topics.length:0); },0);
+      totalQuizzes= mods.reduce(function(a,m){
+        return a+(m.topics?m.topics.filter(function(t){return !!t.quiz;}).length:0);
+      },0);
+      // Adiciona quizFinal como +1 se existir no último módulo
+      var last = mods[mods.length-1];
+      if(last && last.quizFinal && last.quizFinal.length) totalQuizzes++;
+    }catch(e){ totalMods=0; totalTopics=0; totalQuizzes=0; }
+  }
+
+  // ── Funções auxiliares de fallback (para HTMLs antigos sem COURSE) ──
   function g2(ps,fb){for(var i=0;i<ps.length;i++){var m=html.match(ps[i]);if(m&&m[1])return m[1].trim();}return fb;}
   function gn(ps,fb){for(var i=0;i<ps.length;i++){var m=html.match(ps[i]);if(m&&m[1])return parseInt(m[1]);}return fb;}
 
-  var id=g2([/const\s+COURSE_ID\s*=\s*['"]([^'"]+)['"]/,/courseId\s*[:=]\s*['"]([^'"]+)['"]/],null);
-  if(!id){id=fn.replace('.html','').split('-').map(function(w){return w[0]||'';}).join('').toLowerCase().substring(0,4);}
+  // ── Resolve cada campo: prioriza COURSE, depois fallback regex ──
+  var id = (courseData && (courseData.courseKey||courseData.id))
+    || g2([/const\s+COURSE_ID\s*=\s*['"]([^'"]+)['"]/,/courseId\s*[:=]\s*['"]([^'"]+)['"]/],null);
+  if(!id){ id = fn.replace('.html','').split('-').map(function(w){return w[0]||'';}).join('').toLowerCase().substring(0,4); }
+  // Garante que o ID respeita o limite de 8 chars e só minúsculas/números
+  id = (id||'').toLowerCase().replace(/[^a-z0-9]/g,'').substring(0,8);
 
-  var name=g2([/const\s+COURSE_NAME\s*=\s*['"]([^'"]+)['"]/,/courseName\s*[:=]\s*['"]([^'"]+)['"]/,/<title>([^<]+)/],fn.replace('.html','').replace(/-/g,' '));
-  name=name.replace(/Matheus\s*Academy/gi,'').replace(/^\s*[-–·|:]\s*/,'').replace(/\s*[-–·|:]\s*$/,'').trim()||fn.replace('.html','').replace(/-/g,' ');
+  var name = (courseData && courseData.name)
+    || g2([/const\s+COURSE_NAME\s*=\s*['"]([^'"]+)['"]/,/courseName\s*[:=]\s*['"]([^'"]+)['"]/,/<title>([^<]+)/],fn.replace('.html','').replace(/-/g,' '));
+  name = name.replace(/Matheus\s*Academy/gi,'').replace(/^\s*[-–·|:]\s*/,'').replace(/\s*[-–·|:]\s*$/,'').trim()
+         || fn.replace('.html','').replace(/-/g,' ');
 
-  var salt=g2([/const\s+COURSE_SALT\s*=\s*['"]([^'"]+)['"]/,/[^a-z]SALT\s*=\s*['"]([A-Z0-9_]{6,})['"]/],id.toUpperCase()+'_HENRY_2026_MASTER');
-  var pfx=g2([/const\s+PREFIX\s*=\s*['"]([^'"]+)['"]/,/storagePrefix\s*[:=]\s*['"]([^'"]+)['"]/],id+'_');
-  var ak=g2([/const\s+COURSE_KEY\s*=\s*['"]([^'"]+)['"]/,/COURSE_KEY\s*=\s*['"]([^'"]+)['"]/],id+'_auth');
-  var topics=gn([/const\s+TOTAL_TOPICS\s*=\s*(\d+)/,/const\s+TOTAL\s*=\s*(\d+)/],0);
-  var mods=(html.match(/\{id:\s*\d+\s*,/g)||[]).length||Math.max(1,Math.round(topics/6));
-  if(!topics) topics=mods*6;
-  var hours=Math.max(1,Math.round(topics/7));
-  var cat=g2([/const\s+COURSE_CAT\s*=\s*['"]([^'"]+)['"]/],'Negócios');
-  var icon=g2([/const\s+COURSE_ICON\s*=\s*['"]([^'"]{1,4})['"]/],'🎓');
-  var color=g2([/const\s+COURSE_COLOR\s*=\s*['"]?(#[0-9a-fA-F]{6})['"]?/,/--pri[^:]*:\s*['"]?(#[0-9a-fA-F]{6})['"]?/],'#3b82f6');
-  var desc=g2([/const\s+COURSE_DESC\s*=\s*['"]([^'"]{5,})['"]/],'');
-  return{id:id,name:name,desc:desc,file:fn,cat:cat,modules:mods,topics:topics,hours:hours,quizzes:mods,salt:salt,ak:ak,storagePrefix:pfx,icon:icon,color:color};
+  var desc = (courseData && courseData.desc)
+    || g2([/const\s+COURSE_DESC\s*=\s*['"]([^'"]{5,})['"]/],'');
+
+  var salt = (courseData && courseData.salt)
+    || g2([/const\s+COURSE_SALT\s*=\s*['"]([^'"]+)['"]/,/[^a-z]SALT\s*=\s*['"]([A-Z0-9_]{6,})['"]/],id.toUpperCase()+'_HENRY_2026_MASTER');
+
+  var pfx = (courseData && courseData.prefix)
+    || g2([/const\s+PREFIX\s*=\s*['"]([^'"]+)['"]/,/storagePrefix\s*[:=]\s*['"]([^'"]+)['"]/],id+'_');
+
+  var ak = (courseData && courseData.ak)
+    || g2([/const\s+COURSE_KEY\s*=\s*['"]([^'"]+)['"]/,/ak\s*[:=]\s*['"]([^'"]+)['"]/],id+'_auth');
+
+  // Módulos/Tópicos/Horas/Quizzes — prioriza contagem real do MODS
+  var mods = totalMods || (courseData && courseData.modules)
+    || gn([/const\s+TOTAL_MODS\s*=\s*(\d+)/],0)
+    || Math.max(1, Math.round((totalTopics||6)/6));
+
+  var topics = totalTopics || (courseData && courseData.topics)
+    || gn([/const\s+TOTAL_TOPICS\s*=\s*(\d+)/,/const\s+TOTAL\s*=\s*(\d+)/],0)
+    || mods*6;
+
+  var hours = (courseData && courseData.hours)
+    || gn([/hours\s*:\s*(\d+)/], Math.max(1,Math.round(topics/7)));
+
+  var quizzes = totalQuizzes || (courseData && courseData.quizzes)
+    || gn([/quizzes\s*:\s*(\d+)/], mods);
+
+  // ── Categoria: mapeia cat do COURSE para as opções do select ──
+  var rawCat = (courseData && courseData.cat) || g2([/const\s+COURSE_CAT\s*=\s*['"]([^'"]+)['"]/],'');
+  var cat = 'Negócios'; // default
+  if(rawCat){
+    var catLC = rawCat.toLowerCase();
+    if(catLC.indexOf('notícia')!==-1||catLC.indexOf('noticia')!==-1||catLC.indexOf('política')!==-1||catLC.indexOf('politica')!==-1||catLC.indexOf('atualize')!==-1)
+      cat = 'Atualize-se! Notícias Mais Relevantes da Semana';
+    else if(catLC.indexOf('negócio')!==-1||catLC.indexOf('negocio')!==-1) cat = 'Negócios';
+    else if(catLC.indexOf('geopolít')!==-1||catLC.indexOf('geopolit')!==-1) cat = 'Geopolítica';
+    else if(catLC.indexOf('pnl')!==-1) cat = 'PNL';
+    else if(catLC.indexOf('tecnolog')!==-1) cat = 'Tecnologia';
+    else if(catLC.indexOf('desenvolvim')!==-1) cat = 'Desenvolvimento';
+    else if(catLC.indexOf('psicolog')!==-1) cat = 'Psicologia';
+    else if(catLC.indexOf('histór')!==-1||catLC.indexOf('histor')!==-1) cat = 'História';
+    else if(catLC.indexOf('filosof')!==-1) cat = 'Filosofia';
+    else if(catLC.indexOf('inglês')!==-1||catLC.indexOf('ingles')!==-1) cat = 'Inglês';
+    else if(catLC.indexOf('bíblia')!==-1||catLC.indexOf('biblia')!==-1||catLC.indexOf('teolog')!==-1) cat = 'Bíblia / Teologia';
+    else if(catLC.indexOf('biografia')!==-1) cat = 'Biografias';
+    else if(catLC.indexOf('engenhar')!==-1) cat = 'Engenharia';
+    else if(catLC.indexOf('mecânic')!==-1||catLC.indexOf('mecanic')!==-1) cat = 'Mecânica';
+    else if(catLC.indexOf('ebook')!==-1) cat = '📚 Ebooks';
+    else if(catLC.indexOf('tráfego')!==-1||catLC.indexOf('trafego')!==-1||catLC.indexOf('marketing')!==-1) cat = 'Negócios';
+    else cat = rawCat; // passa direto se não reconhecer
+  }
+
+  // ── Ícone: baseado na categoria ──
+  var iconMap = {
+    'Atualize-se! Notícias Mais Relevantes da Semana':'📰',
+    'Negócios':'🏛️','Geopolítica':'🌍','PNL':'🧠','Tecnologia':'💻',
+    'Desenvolvimento':'🚀','Psicologia':'🧩','História':'📜','Filosofia':'🦉',
+    'Inglês':'🇺🇸','Bíblia / Teologia':'✝️','Biografias':'👤',
+    'Engenharia':'⚙️','Mecânica':'🔧','📚 Ebooks':'📚'
+  };
+  var icon = iconMap[cat] || g2([/const\s+COURSE_ICON\s*=\s*['"]([^'"]{1,4})['"]/],'🎓');
+
+  // ── Cor ──
+  var color = (courseData && courseData.color)
+    || g2([/const\s+COURSE_COLOR\s*=\s*['"]?(#[0-9a-fA-F]{6})['"]?/,/--pri[^:]*:\s*['"]?(#[0-9a-fA-F]{6})['"]?/],'#3b82f6');
+
+  // ── Acesso livre? ──
+  var isFree = !!(courseData && courseData.free);
+
+  return{id:id,name:name,desc:desc,file:fn,cat:cat,modules:mods,topics:topics,hours:hours,
+         quizzes:quizzes,salt:salt,ak:ak,storagePrefix:pfx,icon:icon,color:color,free:isFree};
 }
 
 function fillUp(m){
@@ -1307,7 +1400,22 @@ function fillUp(m){
   el('mIcon').value=m.icon; el('mModules').value=m.modules; el('mTopics').value=m.topics;
   el('mHours').value=m.hours; el('mQuizzes').value=m.quizzes; el('mSalt').value=m.salt;
   el('mColor').value=m.color; el('mPrefix').value=m.storagePrefix; el('mAk').value=m.ak;
+  // Categoria
   var s=el('mCat'); for(var i=0;i<s.options.length;i++){if(s.options[i].value===m.cat){s.selectedIndex=i;break;}}
+  // Acesso: se free=true no COURSE, marca Gratuito automaticamente
+  if(m.free){ so('a','fr'); } else { so('a','pd'); }
+  // Feedback visual com resumo do que foi detectado
+  var fb = el('parse-summary');
+  if(fb){
+    fb.style.display='block';
+    fb.innerHTML='<span style="color:#86efac;font-weight:700">✅ Dados detectados do objeto COURSE:</span><br>'
+      +'<span style="color:var(--t2)">ID:</span> <b>'+m.id+'</b> &nbsp;·&nbsp; '
+      +'<span style="color:var(--t2)">Módulos:</span> <b>'+m.modules+'</b> &nbsp;·&nbsp; '
+      +'<span style="color:var(--t2)">Tópicos:</span> <b>'+m.topics+'</b> &nbsp;·&nbsp; '
+      +'<span style="color:var(--t2)">Quizzes:</span> <b>'+m.quizzes+'</b><br>'
+      +'<span style="color:var(--t2)">Cor:</span> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+m.color+';vertical-align:middle;margin:0 3px"></span><b>'+m.color+'</b> &nbsp;·&nbsp; '
+      +'<span style="color:var(--t2)">Acesso:</span> <b>'+(m.free?'🎁 Gratuito':'🔒 Pago')+'</b>';
+  }
 }
 
 // VERIFICAÇÃO DE ID EM TEMPO REAL
