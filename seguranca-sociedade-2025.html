@@ -2119,315 +2119,74 @@ body.light .nb-textarea{background:#fff;border-color:#d0d4e8;color:#1a1a2e;}
 /* (media queries consolidadas no bloco de sidebar acima) */
 
 /* ══ RODAPÉ SOCIAL DO MÓDULO ══ */
-var COURSE = {
-  id:'seg',
-  name:'Segurança & Sociedade 2025',
-  shortName:'Segurança',
-  cat:'Segurança Pública',
-  desc:'A crise que vai definir as eleições. Dados reais, análise crítica e o que ninguém está te contando.',
-  salt:'SEG_HENRY_2026_MASTER',
-  ak:'seg_auth',
-  courseKey:'seg',
-  prefix:'seg_',
-  color:'#ef4444',
-  glow:'rgba(239,68,68,.35)',
-  free:false,
-  freeModules:1,
-  modules:7,
-  topics:42,
-  hours:14,
-  quizzes:7
-};
+.ml-social-footer{
+  text-align:center;
+  padding:28px 20px 16px;
+  margin-top:8px;
+}
+.ml-social-label{
+  font-size:.52rem;color:var(--txt3);
+  text-transform:uppercase;letter-spacing:.1em;font-weight:700;
+  display:block;margin-bottom:12px;
+}
+.ml-social-links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.ml-social-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 16px;border-radius:20px;
+  font-family:var(--font);font-size:.68rem;font-weight:700;
+  text-decoration:none;transition:all .2s;
+  border:1px solid transparent;
+}
+.ml-social-btn svg{width:14px;height:14px;flex-shrink:0;}
+.ml-ig{
+  color:#e1306c;border-color:rgba(225,48,108,.25);
+  background:rgba(225,48,108,.07);
+}
+.ml-ig:hover{background:rgba(225,48,108,.16);border-color:rgba(225,48,108,.5);}
+.ml-tg{
+  color:#229ed9;border-color:rgba(34,158,217,.25);
+  background:rgba(34,158,217,.07);
+}
+.ml-tg:hover{background:rgba(34,158,217,.16);border-color:rgba(34,158,217,.5);}
 
-var MODS = [
-  {
-    id:1, name:'Módulo 1 — O Brasil que os Números Revelam', free:true,
-    topics:[
-      {
-        id:1, name:'Por Que Ler Isso Agora — Introdução ao Curso', dur:'7min',
-        content:`<h3>Por Que Ler Isso Agora — Introdução ao Curso</h3><p>Dados verificados das principais fontes sobre a crise de segurança pública em 2025</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Por Que Ler Isso Agora — Introdução ao Curso"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Por Que Ler Isso Agora — Introdução ao Curso" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:2, name:'Como Interpretar Estatísticas de Violência Sem Distorção', dur:'7min',
-        content:`<h3>Como Interpretar Estatísticas de Violência Sem Distorção</h3><p>Conteúdo essencial sobre Como Interpretar Estatísticas de Violência Sem Distorção — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Como Interpretar Estatísticas de Violência Se"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Como Interpretar Estatísticas de Violência Sem Dis" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:3, name:'Fontes Confiáveis: FBSP, SSP-SP, Instituto Sou da Paz', dur:'7min',
-        content:`<h3>Fontes Confiáveis: FBSP, SSP-SP, Instituto Sou da Paz</h3><p>Conteúdo essencial sobre Fontes Confiáveis: FBSP, SSP-SP, Instituto Sou da Paz — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Fontes Confiáveis: FBSP, SSP-SP, Instituto So"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Fontes Confiáveis: FBSP, SSP-SP, Instituto Sou da " é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:4, name:'O Mapa da Insegurança no Brasil em 2025', dur:'7min',
-        content:`<h3>O Mapa da Insegurança no Brasil em 2025</h3><p>Conteúdo essencial sobre O Mapa da Insegurança no Brasil em 2025 — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "O Mapa da Insegurança no Brasil em 2025"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "O Mapa da Insegurança no Brasil em 2025" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:5, name:'Subnotificação: O Que os Números Escondem', dur:'7min',
-        content:`<h3>Subnotificação: O Que os Números Escondem</h3><p>Conteúdo essencial sobre Subnotificação: O Que os Números Escondem — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Subnotificação: O Que os Números Escondem"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Subnotificação: O Que os Números Escondem" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:6, name:'Panorama Completo: O Cenário Real de 2025', dur:'7min',
-        content:`<h3>Panorama Completo: O Cenário Real de 2025</h3><p>Conteúdo essencial sobre Panorama Completo: O Cenário Real de 2025 — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Panorama Completo: O Cenário Real de 2025"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Panorama Completo: O Cenário Real de 2025" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      }
-    ]
-  },
-  {
-    id:2, name:'Módulo 2 — Feminicídio: A Epidemia Invisível', free:false,
-    topics:[
-      {
-        id:8, name:'270 Feminicídios em SP 2025 — O Recorde Histórico Absoluto', dur:'7min',
-        content:`<h3>270 Feminicídios em SP 2025 — O Recorde Histórico Absoluto</h3><p>O recorde histórico de 270 casos em SP em 2025, causas estruturais e impacto real</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "270 Feminicídios em SP 2025 — O Recorde Histó"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "270 Feminicídios em SP 2025 — O Recorde Histórico " é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:9, name:'A Lei do Feminicídio: Marco Legal, Evolução e Limitações', dur:'7min',
-        content:`<h3>A Lei do Feminicídio: Marco Legal, Evolução e Limitações</h3><p>Conteúdo essencial sobre A Lei do Feminicídio: Marco Legal, Evolução e Limitações — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "A Lei do Feminicídio: Marco Legal, Evolução e"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "A Lei do Feminicídio: Marco Legal, Evolução e Limi" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:10, name:'De 136 para 270: A Duplicação em 4 Anos (2021–2025)', dur:'7min',
-        content:`<h3>De 136 para 270: A Duplicação em 4 Anos (2021–2025)</h3><p>Conteúdo essencial sobre De 136 para 270: A Duplicação em 4 Anos (2021–2025) — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "De 136 para 270: A Duplicação em 4 Anos (2021"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "De 136 para 270: A Duplicação em 4 Anos (2021–2025" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:11, name:'Armas de Fogo, Álcool e Dependência Financeira', dur:'7min',
-        content:`<h3>Armas de Fogo, Álcool e Dependência Financeira</h3><p>Conteúdo essencial sobre Armas de Fogo, Álcool e Dependência Financeira — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Armas de Fogo, Álcool e Dependência Financeir"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Armas de Fogo, Álcool e Dependência Financeira" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:12, name:'Medidas Protetivas: Por Que Não Bastam Sozinhas', dur:'7min',
-        content:`<h3>Medidas Protetivas: Por Que Não Bastam Sozinhas</h3><p>Conteúdo essencial sobre Medidas Protetivas: Por Que Não Bastam Sozinhas — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Medidas Protetivas: Por Que Não Bastam Sozinh"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Medidas Protetivas: Por Que Não Bastam Sozinhas" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:13, name:'Cases que Dominaram as Manchetes em 2025', dur:'7min',
-        content:`<h3>Cases que Dominaram as Manchetes em 2025</h3><p>Conteúdo essencial sobre Cases que Dominaram as Manchetes em 2025 — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Cases que Dominaram as Manchetes em 2025"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Cases que Dominaram as Manchetes em 2025" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      }
-    ]
-  },
-  {
-    id:3, name:'Módulo 3 — Letalidade Policial: O Número que Assusta', free:false,
-    topics:[
-      {
-        id:15, name:'834 Mortes por Ação Policial em SP — Análise Completa', dur:'7min',
-        content:`<h3>834 Mortes por Ação Policial em SP — Análise Completa</h3><p>834 mortes em SP em 2025, a escalada de 2022 a 2025 e o debate público acirrado</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "834 Mortes por Ação Policial em SP — Análise "?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "834 Mortes por Ação Policial em SP — Análise Compl" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:16, name:'A Escalada: De 421 para 834 em 3 Anos — O Que Mudou', dur:'7min',
-        content:`<h3>A Escalada: De 421 para 834 em 3 Anos — O Que Mudou</h3><p>Conteúdo essencial sobre A Escalada: De 421 para 834 em 3 Anos — O Que Mudou — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "A Escalada: De 421 para 834 em 3 Anos — O Que"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "A Escalada: De 421 para 834 em 3 Anos — O Que Mudo" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:17, name:'Operações Escudo e Verão: Legado e Impacto nos Dados', dur:'7min',
-        content:`<h3>Operações Escudo e Verão: Legado e Impacto nos Dados</h3><p>Conteúdo essencial sobre Operações Escudo e Verão: Legado e Impacto nos Dados — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Operações Escudo e Verão: Legado e Impacto no"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Operações Escudo e Verão: Legado e Impacto nos Dad" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:18, name:'O Perfil das Vítimas: Raça, Classe e Seletividade Policial', dur:'7min',
-        content:`<h3>O Perfil das Vítimas: Raça, Classe e Seletividade Policial</h3><p>Conteúdo essencial sobre O Perfil das Vítimas: Raça, Classe e Seletividade Policial — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "O Perfil das Vítimas: Raça, Classe e Seletivi"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "O Perfil das Vítimas: Raça, Classe e Seletividade " é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:19, name:'Câmeras Corporais: A Política Controversa e Suas Consequências', dur:'7min',
-        content:`<h3>Câmeras Corporais: A Política Controversa e Suas Consequências</h3><p>Conteúdo essencial sobre Câmeras Corporais: A Política Controversa e Suas Consequências — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Câmeras Corporais: A Política Controversa e S"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Câmeras Corporais: A Política Controversa e Suas C" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:20, name:'Cases Emblemáticos de 2024–2025 e o Debate Nacional', dur:'7min',
-        content:`<h3>Cases Emblemáticos de 2024–2025 e o Debate Nacional</h3><p>Conteúdo essencial sobre Cases Emblemáticos de 2024–2025 e o Debate Nacional — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Cases Emblemáticos de 2024–2025 e o Debate Na"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Cases Emblemáticos de 2024–2025 e o Debate Naciona" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      }
-    ]
-  },
-  {
-    id:4, name:'Módulo 4 — Violência Doméstica: A Guerra em Casa', free:false,
-    topics:[
-      {
-        id:22, name:'68% dos Feminicídios Acontecem em Residências — Dados do SINAN', dur:'7min',
-        content:`<h3>68% dos Feminicídios Acontecem em Residências — Dados do SINAN</h3><p>68% dos feminicídios em residências, impacto econômico, Lei Maria da Penha e o que funciona</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "68% dos Feminicídios Acontecem em Residências"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "68% dos Feminicídios Acontecem em Residências — Da" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:23, name:'A Lei Maria da Penha aos 20 Anos: Conquistas e Lacunas', dur:'7min',
-        content:`<h3>A Lei Maria da Penha aos 20 Anos: Conquistas e Lacunas</h3><p>Conteúdo essencial sobre A Lei Maria da Penha aos 20 Anos: Conquistas e Lacunas — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "A Lei Maria da Penha aos 20 Anos: Conquistas "?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "A Lei Maria da Penha aos 20 Anos: Conquistas e Lac" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:24, name:'Violência Psicológica: O Tipo Mais Invisível e Prevalente', dur:'7min',
-        content:`<h3>Violência Psicológica: O Tipo Mais Invisível e Prevalente</h3><p>Conteúdo essencial sobre Violência Psicológica: O Tipo Mais Invisível e Prevalente — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Violência Psicológica: O Tipo Mais Invisível "?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Violência Psicológica: O Tipo Mais Invisível e Pre" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:25, name:'Impacto Econômico da Violência Doméstica no Mercado de Trabalho', dur:'7min',
-        content:`<h3>Impacto Econômico da Violência Doméstica no Mercado de Trabalho</h3><p>Conteúdo essencial sobre Impacto Econômico da Violência Doméstica no Mercado de Trabalho — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Impacto Econômico da Violência Doméstica no M"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Impacto Econômico da Violência Doméstica no Mercad" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:26, name:'Crianças no Fogo Cruzado: Dados do UNICEF e FBSP', dur:'7min',
-        content:`<h3>Crianças no Fogo Cruzado: Dados do UNICEF e FBSP</h3><p>Conteúdo essencial sobre Crianças no Fogo Cruzado: Dados do UNICEF e FBSP — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Crianças no Fogo Cruzado: Dados do UNICEF e F"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Crianças no Fogo Cruzado: Dados do UNICEF e FBSP" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:27, name:'Saídas, Redes de Apoio e o Que a Evidência Diz que Funciona', dur:'7min',
-        content:`<h3>Saídas, Redes de Apoio e o Que a Evidência Diz que Funciona</h3><p>Conteúdo essencial sobre Saídas, Redes de Apoio e o Que a Evidência Diz que Funciona — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Saídas, Redes de Apoio e o Que a Evidência Di"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Saídas, Redes de Apoio e o Que a Evidência Diz que" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      }
-    ]
-  },
-  {
-    id:5, name:'Módulo 5 — Segurança, Política e Poder', free:false,
-    topics:[
-      {
-        id:29, name:'63% dos Brasileiros: Segurança É o Maior Problema Nacional', dur:'7min',
-        content:`<h3>63% dos Brasileiros: Segurança É o Maior Problema Nacional</h3><p>63% dos brasileiros elegem segurança como o maior problema do país em 2026</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "63% dos Brasileiros: Segurança É o Maior Prob"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "63% dos Brasileiros: Segurança É o Maior Problema " é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:30, name:'Tarcísio de Freitas e o Modelo São Paulo: Resultados e Custos', dur:'7min',
-        content:`<h3>Tarcísio de Freitas e o Modelo São Paulo: Resultados e Custos</h3><p>Conteúdo essencial sobre Tarcísio de Freitas e o Modelo São Paulo: Resultados e Custos — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Tarcísio de Freitas e o Modelo São Paulo: Res"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Tarcísio de Freitas e o Modelo São Paulo: Resultad" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:31, name:'A Crise no Rio de Janeiro e o Impacto no Debate Nacional', dur:'7min',
-        content:`<h3>A Crise no Rio de Janeiro e o Impacto no Debate Nacional</h3><p>Conteúdo essencial sobre A Crise no Rio de Janeiro e o Impacto no Debate Nacional — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "A Crise no Rio de Janeiro e o Impacto no Deba"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "A Crise no Rio de Janeiro e o Impacto no Debate Na" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:32, name:'PEC da Segurança Pública: O Que Propõe o Governo Lula', dur:'7min',
-        content:`<h3>PEC da Segurança Pública: O Que Propõe o Governo Lula</h3><p>Conteúdo essencial sobre PEC da Segurança Pública: O Que Propõe o Governo Lula — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "PEC da Segurança Pública: O Que Propõe o Gove"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "PEC da Segurança Pública: O Que Propõe o Governo L" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:33, name:'Como a Esquerda Adotou Pautas de Segurança da Direita', dur:'7min',
-        content:`<h3>Como a Esquerda Adotou Pautas de Segurança da Direita</h3><p>Conteúdo essencial sobre Como a Esquerda Adotou Pautas de Segurança da Direita — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Como a Esquerda Adotou Pautas de Segurança da"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Como a Esquerda Adotou Pautas de Segurança da Dire" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:34, name:'O Medo Como Ativo Político — Uma Análise Verificável', dur:'7min',
-        content:`<h3>O Medo Como Ativo Político — Uma Análise Verificável</h3><p>Conteúdo essencial sobre O Medo Como Ativo Político — Uma Análise Verificável — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "O Medo Como Ativo Político — Uma Análise Veri"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "O Medo Como Ativo Político — Uma Análise Verificáv" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      }
-    ]
-  },
-  {
-    id:6, name:'Módulo 6 — O Custo Econômico da Violência', free:false,
-    topics:[
-      {
-        id:36, name:'US$ 19,97 Trilhões: O Preço Global da Violência (GPI 2025)', dur:'7min',
-        content:`<h3>US$ 19,97 Trilhões: O Preço Global da Violência (GPI 2025)</h3><p>US$ 19,97 trilhões globais e como a insegurança trava o crescimento do Brasil</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "US$ 19,97 Trilhões: O Preço Global da Violênc"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "US$ 19,97 Trilhões: O Preço Global da Violência (G" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:37, name:'Como a Insegurança Trava o Crescimento Econômico do Brasil', dur:'7min',
-        content:`<h3>Como a Insegurança Trava o Crescimento Econômico do Brasil</h3><p>Conteúdo essencial sobre Como a Insegurança Trava o Crescimento Econômico do Brasil — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Como a Insegurança Trava o Crescimento Econôm"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Como a Insegurança Trava o Crescimento Econômico d" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:38, name:'Empresas e Crime Organizado: O Custo Oculto da Extorsão', dur:'7min',
-        content:`<h3>Empresas e Crime Organizado: O Custo Oculto da Extorsão</h3><p>Conteúdo essencial sobre Empresas e Crime Organizado: O Custo Oculto da Extorsão — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Empresas e Crime Organizado: O Custo Oculto d"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Empresas e Crime Organizado: O Custo Oculto da Ext" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:39, name:'Turismo, Investimento Estrangeiro e Fuga de Capital', dur:'7min',
-        content:`<h3>Turismo, Investimento Estrangeiro e Fuga de Capital</h3><p>Conteúdo essencial sobre Turismo, Investimento Estrangeiro e Fuga de Capital — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Turismo, Investimento Estrangeiro e Fuga de C"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Turismo, Investimento Estrangeiro e Fuga de Capita" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:40, name:'Mercado de Segurança Privada e Segtech em Forte Expansão', dur:'7min',
-        content:`<h3>Mercado de Segurança Privada e Segtech em Forte Expansão</h3><p>Conteúdo essencial sobre Mercado de Segurança Privada e Segtech em Forte Expansão — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Mercado de Segurança Privada e Segtech em For"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Mercado de Segurança Privada e Segtech em Forte Ex" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:41, name:'Estratégias Práticas para o Empreendedor em Zona de Risco', dur:'7min',
-        content:`<h3>Estratégias Práticas para o Empreendedor em Zona de Risco</h3><p>Conteúdo essencial sobre Estratégias Práticas para o Empreendedor em Zona de Risco — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Estratégias Práticas para o Empreendedor em Z"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Estratégias Práticas para o Empreendedor em Zona d" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      }
-    ]
-  },
-  {
-    id:7, name:'Módulo 7 — Crime Organizado e Facções', free:false,
-    topics:[
-      {
-        id:43, name:'PCC e Comando Vermelho: Expansão, Lógica e Poder Territorial', dur:'7min',
-        content:`<h3>PCC e Comando Vermelho: Expansão, Lógica e Poder Territorial</h3><p>PCC, CV, milícias e a expansão do crime organizado — como funcionam e influenciam</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "PCC e Comando Vermelho: Expansão, Lógica e Po"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "PCC e Comando Vermelho: Expansão, Lógica e Poder T" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:44, name:'Milícias: O Estado Dentro do Estado no Rio de Janeiro', dur:'7min',
-        content:`<h3>Milícias: O Estado Dentro do Estado no Rio de Janeiro</h3><p>Conteúdo essencial sobre Milícias: O Estado Dentro do Estado no Rio de Janeiro — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Milícias: O Estado Dentro do Estado no Rio de"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Milícias: O Estado Dentro do Estado no Rio de Jane" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:45, name:'Como Facções Criminosas Interferem nas Eleições Municipais', dur:'7min',
-        content:`<h3>Como Facções Criminosas Interferem nas Eleições Municipais</h3><p>Conteúdo essencial sobre Como Facções Criminosas Interferem nas Eleições Municipais — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Como Facções Criminosas Interferem nas Eleiçõ"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Como Facções Criminosas Interferem nas Eleições Mu" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:46, name:'Narcotráfico e a Diversificação das Atividades Criminosas', dur:'7min',
-        content:`<h3>Narcotráfico e a Diversificação das Atividades Criminosas</h3><p>Conteúdo essencial sobre Narcotráfico e a Diversificação das Atividades Criminosas — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Narcotráfico e a Diversificação das Atividade"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Narcotráfico e a Diversificação das Atividades Cri" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:47, name:'O Ciclo Vicioso: Pobreza, Desinvestimento Social e Crime', dur:'7min',
-        content:`<h3>O Ciclo Vicioso: Pobreza, Desinvestimento Social e Crime</h3><p>Conteúdo essencial sobre O Ciclo Vicioso: Pobreza, Desinvestimento Social e Crime — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "O Ciclo Vicioso: Pobreza, Desinvestimento Soc"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "O Ciclo Vicioso: Pobreza, Desinvestimento Social e" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      },
-      {
-        id:48, name:'Lições Internacionais: O Que Funcionou em Outros Países', dur:'7min',
-        content:`<h3>Lições Internacionais: O Que Funcionou em Outros Países</h3><p>Conteúdo essencial sobre Lições Internacionais: O Que Funcionou em Outros Países — estude com atenção para dominar este tema fundamental.</p><blockquote>💡 Aprofunde seus conhecimentos e aplique o que aprendeu neste tópico.</blockquote>`,
-        quiz:{q:'O que melhor descreve "Lições Internacionais: O Que Funcionou em Out"?',opts:['Não é relevante para 2025','É um tema central da crise de segurança','É um problema exclusivo de outros países','Apenas autoridades precisam conhecer'],correct:1},
-        cards:[{q:'Por que "Lições Internacionais: O Que Funcionou em Outros P" é relevante?',a:'É um elemento fundamental para entender a crise de segurança pública no Brasil em 2025.'}]
-      }
-    ]
-  }
-];
+/* ══════════════════════════════════════════════
+   LOGO INTERATIVA — ONDAS DE PISCINA + GOTA
+   ══════════════════════════════════════════════ */
+#coverLogoWrap,#lcmLogoWrap{
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+}
+/* Sobrescreve o <a> original — sem navegação */
+#coverLogoWrap{
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:32px;
+  text-decoration:none;
+}
+.logo-ripple-container{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+/* SVG da logo com animação flutuante padrão */
+.logo-svg{
+  display:block;
+  animation:logoFloat 4s ease-in-out infinite;
+  filter:drop-shadow(0 0 28px rgba(74,126,255,.5)) drop-shadow(0 0 60px rgba(74,126,255,.2));
+  transition:filter .1s;
+  position:relative;
+  z-index:2;
+}
+/* Animação de splash — oscilação tipo piscina */
+@keyframes logoSplash{
+  0%  {transform:translateY(0)    scaleX(1)    scaleY(1)}
+  8%  {transform:translateY(-14px) scaleX(.88)  scaleY(1.14)}
+  18% {transform:translateY(6px)  scaleX(1.1)  scaleY(.92)}
+  30% {transform:translateY(-8px) scaleX(.93)  scaleY(1.08)}
+  44% {transform:translateY(4px)  scaleX(1.06) scaleY(.96)}
+  58% {transform:translateY(-4px) scaleX(.97)  scaleY(1.03)}
   72% {transform:translateY(2px)  scaleX(1.02) scaleY(.99)}
   86% {transform:translateY(-1px) scaleX(.99)  scaleY(1.01)}
   100%{transform:translateY(0)    scaleX(1)    scaleY(1)}
@@ -2479,70 +2238,601 @@ var MODS = [
 <body>
 <script>
 var COURSE = {
-  id:'XX',
-  name:'Nome Completo do Curso',
-  shortName:'Nome Curto',
-  cat:'Categoria',
-  desc:'Descrição curta do curso.',
-  salt:'XX_HENRY_2026_MASTER',
-  ak:'xx_auth',
-  courseKey:'xx',
-  prefix:'xx_',
-  color:'#5b7fff',
-  glow:'rgba(91,127,255,.35)',
-  free:false,
-  freeModules:1,
-  modules:10,
-  topics:80,
-  hours:20,
-  quizzes:10
+  id:'seg',
+  name:'Segurança & Sociedade 2025',
+  shortName:'Segurança',
+  cat:'Segurança Pública',
+  desc:'A crise que vai definir as eleições. 270 feminicídios, 834 mortes por polícia, 63% dos brasileiros preocupados. Dados reais, análise crítica.',
+  salt:'SEG_HENRY_2026_MASTER',
+  ak:'seg_auth',
+  courseKey:'seg',
+  prefix:'seg_',
+  color:'#ef4444',
+  glow:'rgba(239,68,68,.35)',
+  free:true,
+  freeModules:9,
+  modules:9,
+  topics:54,
+  hours:14,
+  quizzes:9
 };
 
 var MODS = [
   {
-    id:1, name:'Módulo 1 — Nome do Módulo', free:true,
+    id:1, name:'Módulo 1 — O Brasil que os Números Revelam', free:true,
     topics:[
-      {
-        id:1, name:'Nome do Tópico 1', dur:'8min',
-        content:`
-<h3>Título da Aula</h3>
-<p>Conteúdo da aula aqui com <strong>negrito</strong>, <em>itálico</em>, listas e blockquotes.</p>
-<ul>
-  <li>Ponto importante 1</li>
-  <li>Ponto importante 2</li>
-  <li>Ponto importante 3</li>
-</ul>
-<blockquote>💡 Dica ou citação importante aqui.</blockquote>
-<h4>Subtítulo</h4>
-<p>Mais conteúdo...</p>
-`,
-        quiz:{
-          q:'Pergunta do quiz?',
-          opts:['Opção A','Opção B (correta)','Opção C','Opção D'],
-          correct:1
-        },
-        cards:[
-          {q:'Pergunta do flashcard?', a:'Resposta do flashcard.'},
-          {q:'Segunda pergunta?', a:'Segunda resposta.'}
-        ]
-      },
-      {
-        id:2, name:'Nome do Tópico 2', dur:'10min',
-        content:`<h3>Título</h3><p>Conteúdo...</p>`,
-        quiz:{q:'Pergunta?',opts:['A','B','C','D'],correct:0},
-        cards:[{q:'Pergunta?',a:'Resposta.'}]
-      }
+      {id:1,name:'Por Que Ler Isso Agora — Introdução ao Curso',dur:'7min',
+       content:`<h3>Por Que Ler Isso Agora?</h3>
+<p>Você está em 2026. São Paulo registrou o <strong>maior número de feminicídios desde 2018</strong>. A polícia do mesmo estado matou mais pessoas do que em décadas. E <em>63% dos brasileiros</em> dizem que segurança é o principal problema do país. Não é sensacionalismo: são dados auditados por instituições sérias.</p>
+<blockquote>💡 A violência não é um problema abstrato. Ela afeta negócios, investimentos, eleições e qualidade de vida. Ignorar essa realidade é tomar decisões — de negócios ou de voto — com os olhos fechados.</blockquote>
+<h3>O Que Você Vai Aprender</h3>
+<p>Em 9 módulos e 54 tópicos, você vai dissecar a crise de segurança pública brasileira nos ângulos estatístico, político, econômico, social e histórico — com dados verificados e fontes identificadas em cada afirmação.</p>
+<h4>Fontes deste Curso</h4>
+<p>FBSP · SSP-SP · Agência Brasil/EBC · CNN Brasil · Instituto Sou da Paz · NEV-USP · UNICEF · AtlasIntel/Bloomberg · The Intercept Brasil. Nenhum dado sem fonte.</p>`,
+       quiz:{q:'Qual % dos brasileiros cita segurança como maior problema em 2025?',opts:['38%','48%','55%','63%'],correct:3},
+       cards:[{q:'Qual foi o número de feminicídios em SP em 2025?',a:'270 casos — recorde histórico desde 2018. Fonte: SSP-SP/Agência Brasil, jan/2026.'},{q:'Qual fonte consolida dados de segurança de todos os estados?',a:'FBSP — Fórum Brasileiro de Segurança Pública, publica o Anuário anual desde 2007.'}]},
+
+      {id:2,name:'Como Interpretar Estatísticas de Violência Sem Distorção',dur:'8min',
+       content:`<h3>Como Interpretar Estatísticas de Violência</h3>
+<p>Antes de mergulhar nos dados, você precisa saber como lê-los. Estatísticas de segurança pública são frequentemente mal interpretadas — por ignorância, negligência ou má-fé.</p>
+<h4>Séries Históricas vs. Pontos Isolados</h4>
+<p>Um número sozinho não diz quase nada. O que importa é a tendência: <strong>o Brasil está melhorando ou piorando?</strong> Em que velocidade? Comparado com quem?</p>
+<blockquote>💡 Regra de Ouro: Sempre pergunte: (1) Qual o período da série histórica? (2) Quem coletou os dados? (3) O que está sendo medido exatamente? (4) A queda/alta reflete mudança real ou mudança no registro?</blockquote>
+<h4>Tipos de Dados</h4>
+<p><strong>Registros policiais:</strong> dependem do que a polícia registra — sujeitos à subnotificação. <strong>Pesquisas de vitimização:</strong> capturam mais. <strong>Mortalidade (SIM):</strong> mais confiáveis para homicídios. <strong>Anuários do FBSP:</strong> consolidam tudo com metodologia clara.</p>`,
+       quiz:{q:'O que caracteriza um dado de subnotificação?',opts:['Dado inventado pela polícia','Crime que ocorreu mas não foi registrado','Erro de cálculo estatístico','Dado desatualizado'],correct:1},
+       cards:[{q:'Qual é a diferença entre registros policiais e pesquisas de vitimização?',a:'Registros policiais dependem do que a polícia registra (subnotificação). Pesquisas de vitimização perguntam à população — capturam mais casos.'},{q:'Por que séries históricas importam mais que pontos isolados?',a:'Porque um número isolado não revela tendência. O que importa é se o indicador está subindo, caindo e em que velocidade.'}]},
+
+      {id:3,name:'Fontes Confiáveis: FBSP, SSP-SP e Instituto Sou da Paz',dur:'6min',
+       content:`<h3>Fontes Confiáveis para Segurança Pública</h3>
+<h4>FBSP — Fórum Brasileiro de Segurança Pública</h4>
+<p>Organização independente fundada em 2006. Publica o <strong>Anuário Brasileiro de Segurança Pública</strong> anualmente desde 2007 e relatórios temáticos. É a referência acadêmica e jornalística nacional. Site: forumseguranca.org.br</p>
+<h4>SSP-SP — Secretaria de Segurança Pública de SP</h4>
+<p>Fonte oficial dos dados do estado de São Paulo. Publica estatísticas mensais de homicídios, feminicídios, latrocínios e letalidade policial desde 2001. Site: ssp.sp.gov.br</p>
+<h4>Instituto Sou da Paz</h4>
+<p>ONG fundada em 1999, especializada em violência armada e segurança pública. Produz relatórios sobre armas de fogo, homicídios e políticas de segurança. Site: soudapaz.org</p>
+<blockquote>⚠️ Dados de portais de notícias podem estar desatualizados. Sempre vá à fonte primária para confirmar números importantes.</blockquote>`,
+       quiz:{q:'Qual organização publica o Anuário Brasileiro de Segurança Pública?',opts:['SSP-SP','Instituto Sou da Paz','FBSP','IBGE'],correct:2},
+       cards:[{q:'O que é o FBSP?',a:'Fórum Brasileiro de Segurança Pública — organização independente fundada em 2006, referência nacional em dados de segurança pública.'},{q:'Desde quando a SSP-SP publica estatísticas mensais?',a:'Desde 2001, incluindo homicídios, feminicídios, latrocínios e letalidade policial.'}]},
+
+      {id:4,name:'O Mapa da Insegurança no Brasil em 2025',dur:'8min',
+       content:`<h3>O Mapa da Insegurança no Brasil em 2025</h3>
+<p>O Brasil não é um país homogêneo em violência. As taxas variam dramaticamente entre estados, regiões e perfis populacionais. Entender essa geografia é essencial.</p>
+<blockquote>📊 Dois Fenômenos Simultâneos em SP (2025): Queda nos homicídios dolosos gerais · Alta histórica em letalidade policial (834 mortes) · Alta histórica em feminicídios (270 casos). Dois movimentos opostos coexistem no mesmo estado, no mesmo ano.</blockquote>
+<h4>A Concentração Regional</h4>
+<p>53% dos homicídios do Brasil ocorrem no Norte e Nordeste, regiões com menor IDH e menor presença estatal. A violência se concentra onde o Estado está ausente — seja na provisão de serviços públicos ou no controle do crime organizado.</p>
+<h4>O Paradoxo de São Paulo</h4>
+<p>São Paulo tem uma das menores taxas de homicídio per capita do país, apesar dos números absolutos altos. Em 2025, os dados revelam esse paradoxo com clareza: enquanto homicídios caem, a letalidade policial e os feminicídios atingem recordes históricos.</p>`,
+       quiz:{q:'Que percentual dos homicídios do Brasil ocorrem no Norte e Nordeste?',opts:['28%','38%','53%','71%'],correct:2},
+       cards:[{q:'Qual o paradoxo de São Paulo em 2025?',a:'Queda nos homicídios gerais convive com alta histórica em letalidade policial (834 mortes) e feminicídios (270 casos).'},{q:'Por que a violência se concentra no Norte e Nordeste?',a:'Menor IDH, menor presença estatal, menor acesso a serviços públicos e maior atuação do crime organizado.'}]},
+
+      {id:5,name:'Subnotificação: O Que os Números Escondem',dur:'7min',
+       content:`<h3>Subnotificação: O Que os Números Escondem</h3>
+<p>Qualquer número sobre violência no Brasil é uma <strong>subestimativa</strong>. A diferença entre o que é registrado e o que realmente acontece chama-se subnotificação — e ela é enorme, especialmente em violência doméstica.</p>
+<h4>Por Que Existe Subnotificação?</h4>
+<p><strong>Medo de represália:</strong> a vítima tem medo do agressor. <strong>Desconfiança na polícia:</strong> quem vai denunciar sem proteção? <strong>Vergonha social:</strong> especialmente em violência sexual. <strong>Dependência econômica:</strong> sem renda própria, denunciar é um risco de vida.</p>
+<blockquote>📊 Estimativa: Para violência doméstica em geral, pesquisas de vitimização do IBGE sugerem que apenas 1 em cada 5 casos é comunicado à polícia.</blockquote>
+<h4>Impacto nas Políticas Públicas</h4>
+<p>Se os números reais são muito maiores que os registrados, qualquer política baseada apenas nos dados oficiais será insuficiente. Por isso os pesquisadores sérios sempre trabalham com <em>estimativas de subnotificação</em> ao lado dos dados oficiais.</p>`,
+       quiz:{q:'Segundo o IBGE, quantos casos de violência doméstica chegam à polícia?',opts:['1 em cada 2','1 em cada 3','1 em cada 5','1 em cada 10'],correct:2},
+       cards:[{q:'O que é subnotificação em violência?',a:'Crime que ocorreu mas não foi comunicado à polícia. Estimativas indicam que apenas 1 em cada 5 casos de violência doméstica é registrado.'},{q:'Quais são os principais motivos de subnotificação?',a:'Medo de represália, desconfiança na polícia, vergonha social e dependência econômica da vítima em relação ao agressor.'}]},
+
+      {id:6,name:'Panorama Completo: O Cenário Real de 2025',dur:'8min',
+       content:`<h3>Panorama Completo: O Cenário Real de 2025</h3>
+<p>Agora que você conhece as fontes e como interpretá-las, veja o cenário consolidado do Brasil em 2025 — o ano que antecede a eleição mais disputada da década.</p>
+<blockquote>📊 Os Números que Definem 2025: 270 feminicídios em SP — recorde histórico (SSP-SP, jan/2026) · 834 mortes por intervenção policial em SP (CNN Brasil/SSP-SP, jan/2026) · 1.568 feminicídios no Brasil (+4,7% vs 2024) — FBSP, mar/2026 · 63% dos brasileiros: segurança é o maior problema — AtlasIntel/Bloomberg, nov/2025 · US$ 19,97 tri: impacto econômico global da violência — Global Peace Index 2025</blockquote>
+<h4>O Paradoxo Brasileiro</h4>
+<p>O Brasil de 2025 apresenta um paradoxo: em alguns indicadores melhora, em outros piora dramaticamente. Homicídios gerais em SP caem enquanto a letalidade policial bate recordes. É essa complexidade que este curso vai dissecar — módulo a módulo.</p>
+<p>Você agora tem a base metodológica para ler todos os dados dos módulos seguintes com olhar crítico e fundamentado. Avance para o Módulo 2!</p>`,
+       quiz:{q:'Quantos feminicídios ocorreram no Brasil inteiro em 2025 (FBSP)?',opts:['834','1.268','1.568','2.100'],correct:2},
+       cards:[{q:'Qual o crescimento de feminicídios no Brasil de 2024 para 2025?',a:'+4,7% — de 1.497 para 1.568 casos. Fonte: FBSP, março de 2026.'},{q:'Qual o impacto econômico global da violência em 2024?',a:'US$ 19,97 trilhões — 11,6% do PIB mundial. Fonte: Global Peace Index 2025.'}]}
     ]
   },
   {
-    id:2, name:'Módulo 2 — Nome do Módulo', free:false,
+    id:2, name:'Módulo 2 — Feminicídio: A Epidemia Invisível', free:true,
     topics:[
-      {
-        id:3, name:'Nome do Tópico 3', dur:'12min',
-        content:`<h3>Título</h3><p>Conteúdo...</p>`,
-        quiz:{q:'Pergunta?',opts:['A','B','C','D'],correct:2},
-        cards:[{q:'Pergunta?',a:'Resposta.'}]
-      }
+      {id:7,name:'270 Feminicídios em SP 2025 — O Recorde Histórico Absoluto',dur:'8min',
+       content:`<h3>O Recorde de 2025: 270 Feminicídios em SP</h3>
+<p>Em janeiro de 2026, a SSP-SP divulgou os dados completos de 2025: <strong>270 mulheres foram assassinadas em razão do gênero em São Paulo</strong> — o maior número desde o início da série histórica em 2018.</p>
+<blockquote>📊 A Evolução em SP (SSP-SP / Agência Brasil, jan/2026): 2021: 136 · 2022: ~160 (+18%) · 2023: ~195 (+22%) · 2024: 253 (+30%) · 2025: 270 (+6,7%). Crescimento total 2021→2025: +98% — quase dobrou em 4 anos.</blockquote>
+<h4>No Brasil Inteiro</h4>
+<p>O FBSP (março de 2026) registrou <strong>1.568 feminicídios em 2025 — alta de 4,7% em relação a 2024</strong>. A diretora Samira Bueno destacou que o aumento não se explica apenas por melhoria no registro: a violência real também cresceu.</p>
+<h4>O Papel das Armas de Fogo</h4>
+<p>O Instituto Sou da Paz (ago/2024) identificou que feminicídios com armas de fogo <strong>praticamente dobraram</strong> nos primeiros 6 meses de 2024. O relaxamento das restrições ao porte entre 2019 e 2022 tem reflexos diretos nesses dados.</p>`,
+       quiz:{q:'Quantos feminicídios foram registrados em SP em 2025?',opts:['210','253','270','312'],correct:2},
+       cards:[{q:'Qual foi o crescimento de feminicídios em SP de 2021 a 2025?',a:'+98% — de 136 para 270 casos. Quase dobrou em 4 anos. Fonte: SSP-SP/Agência Brasil.'},{q:'Qual fator externo contribuiu para o aumento de feminicídios com arma de fogo?',a:'Relaxamento das restrições ao porte de armas entre 2019 e 2022, segundo o Instituto Sou da Paz (ago/2024).'}]},
+
+      {id:8,name:'A Lei do Feminicídio: Marco Legal, Evolução e Limitações',dur:'7min',
+       content:`<h3>A Lei do Feminicídio (Lei 13.104/2015)</h3>
+<p>Aprovada em março de 2015, a Lei do Feminicídio qualificou o homicídio de mulher por razões de condição de sexo feminino como crime hediondo, com pena de 12 a 30 anos de reclusão.</p>
+<h4>O Que Avançou</h4>
+<p><strong>Tipificação clara:</strong> o crime deixou de ser tratado como "crime passional". <strong>Agravantes:</strong> gestação, menor de 14 anos, deficiente, violência doméstica. <strong>Dados:</strong> a lei criou a obrigação de registrar os casos, melhorando o monitoramento.</p>
+<blockquote>⚠️ Limitação Central: A lei pune, mas não previne. Sem rede de proteção eficaz — abrigos, medidas protetivas cumpridas, assistência econômica —, a punição posterior não salva vidas.</blockquote>
+<h4>O Que Ainda Falta</h4>
+<p>68% dos feminicídios ocorrem em residências, onde a vítima convive com o agressor. A medida protetiva de urgência (afastamento do lar) existe, mas sua eficácia depende de monitoramento — que muitas vezes não acontece.</p>`,
+       quiz:{q:'Em que ano foi aprovada a Lei do Feminicídio no Brasil?',opts:['2011','2013','2015','2018'],correct:2},
+       cards:[{q:'O que a Lei 13.104/2015 estabeleceu?',a:'Qualificou o homicídio de mulher por razões de gênero como crime hediondo, com pena de 12 a 30 anos.'},{q:'Qual é a principal limitação da Lei do Feminicídio?',a:'A lei pune mas não previne. Sem rede de proteção eficaz (abrigos, medidas protetivas cumpridas, assistência econômica), a punição não salva vidas.'}]},
+
+      {id:9,name:'De 136 para 270: A Duplicação em 4 Anos (2021–2025)',dur:'7min',
+       content:`<h3>A Duplicação em 4 Anos</h3>
+<p>A série histórica da SSP-SP revela uma trajetória de crescimento consistente e alarmante. Em apenas 4 anos, os feminicídios em São Paulo praticamente dobraram — passando de 136 em 2021 para 270 em 2025.</p>
+<h4>Fatores que Explicam o Crescimento</h4>
+<p><strong>Relaxamento do controle de armas (2019–2022):</strong> mais armas em circulação aumentam a letalidade dos conflitos domésticos. <strong>Pandemia (2020–2021):</strong> isolamento forçou convivência com agressor. <strong>Crise econômica:</strong> aumento da dependência financeira da vítima. <strong>Sobrecarga do sistema de saúde:</strong> menos acesso a redes de apoio.</p>
+<blockquote>📊 Crescimento Anual: 2021→2022: +18% · 2022→2023: +22% · 2023→2024: +30% · 2024→2025: +6,7%. O ritmo de crescimento oscila, mas a tendência é consistentemente de alta.</blockquote>
+<h4>Por Que 2024 Foi o Maior Salto?</h4>
+<p>O salto de 2023 para 2024 (+30%) foi o maior da série. Pesquisadores apontam a combinação de maior circulação de armas (efeito defasado das políticas 2019–2022), recuperação econômica desigual e saturação do sistema de medidas protetivas.</p>`,
+       quiz:{q:'Qual foi o maior crescimento percentual anual de feminicídios em SP?',opts:['2021→2022: +18%','2022→2023: +22%','2023→2024: +30%','2024→2025: +6,7%'],correct:2},
+       cards:[{q:'Quais os principais fatores do crescimento de feminicídios 2021–2025?',a:'Relaxamento do controle de armas, pandemia, crise econômica e sobrecarga das redes de apoio.'},{q:'Qual foi o crescimento total de feminicídios em SP de 2021 a 2025?',a:'+98% — de 136 para 270 casos em 4 anos.'}]},
+
+      {id:10,name:'Armas de Fogo, Álcool e Dependência Financeira',dur:'7min',
+       content:`<h3>Os Três Fatores de Risco Mais Letais</h3>
+<p>A pesquisa do FBSP e do Instituto Sou da Paz identificou os fatores que mais aumentam o risco de um conflito doméstico se tornar feminicídio: presença de arma de fogo, consumo de álcool pelo agressor e dependência financeira da vítima.</p>
+<h4>Armas de Fogo: O Multiplicador de Letalidade</h4>
+<p>A presença de uma arma transforma agressões que seriam não-letais em homicídios. O Sou da Paz (ago/2024) documentou que feminicídios com arma de fogo quase dobraram nos primeiros 6 meses de 2024 em relação ao mesmo período de 2023.</p>
+<h4>Álcool: O Desinibidor da Violência</h4>
+<p>Estudos do NEV-USP indicam que em mais de 40% dos casos de feminicídio o agressor estava sob efeito de álcool no momento do crime. O álcool não causa violência — mas reduz inibições e potencializa conflitos já existentes.</p>
+<blockquote>💡 Dependência financeira é uma armadilha: a vítima que não tem renda própria não consegue sair porque não tem para onde ir. Programas de transferência de renda e empregabilidade feminina têm impacto direto na redução do feminicídio.</blockquote>`,
+       quiz:{q:'Segundo o NEV-USP, em que % dos feminicídios o agressor estava sob efeito de álcool?',opts:['15%','25%','40%','60%'],correct:2},
+       cards:[{q:'Como a arma de fogo impacta os casos de feminicídio?',a:'Transforma agressões não-letais em homicídios. Feminicídios com arma de fogo quase dobraram em 2024 (Sou da Paz).'},{q:'Qual o papel da dependência financeira no ciclo de violência?',a:'A vítima sem renda própria não tem como sair da relação — não tem recursos para moradia ou sustento. Empregabilidade feminina reduz o feminicídio.'}]},
+
+      {id:11,name:'Medidas Protetivas: Por Que Não Bastam Sozinhas',dur:'7min',
+       content:`<h3>Medidas Protetivas: Instrumento Valioso com Limitações Reais</h3>
+<p>A medida protetiva de urgência, prevista na Lei Maria da Penha (Lei 11.340/2006), determina o afastamento do agressor e proíbe contato com a vítima. É um instrumento valioso — mas seu impacto depende da eficácia do monitoramento.</p>
+<h4>O Problema do Descumprimento</h4>
+<p>Uma medida protetiva no papel não protege ninguém se não for monitorada. Estudos do FBSP indicam que uma parcela significativa dos feminicídios ocorre com medida protetiva ativa — o agressor simplesmente a descumpre, e o sistema não percebe a tempo.</p>
+<blockquote>📊 68% dos feminicídios em SP ocorrem em residências. A maioria com pessoa conhecida pela vítima — cônjuge, ex-companheiro ou familiar. A medida protetiva deveria proteger exatamente esse cenário.</blockquote>
+<h4>O Que Funciona na Prática</h4>
+<p><strong>Monitoramento eletrônico do agressor:</strong> tornozeleira que alerta quando ele se aproxima da vítima. <strong>Patrulha Maria da Penha:</strong> visitas periódicas da PM à vítima. <strong>Casa de acolhimento:</strong> local seguro para a vítima sair do lar de risco. Quando combinados, esses instrumentos reduzem o risco de reincidência.</p>`,
+       quiz:{q:'Que percentual dos feminicídios em SP ocorre em residências?',opts:['38%','52%','68%','81%'],correct:2},
+       cards:[{q:'Qual a principal limitação das medidas protetivas?',a:'Sem monitoramento eficaz, o agressor descumpre sem que o sistema perceba a tempo. Muitos feminicídios ocorrem com medida protetiva ativa.'},{q:'Quais instrumentos, combinados, reduzem a reincidência?',a:'Monitoramento eletrônico do agressor, Patrulha Maria da Penha e casas de acolhimento para a vítima.'}]},
+
+      {id:12,name:'Cases que Dominaram as Manchetes em 2025',dur:'6min',
+       content:`<h3>Cases de 2025: O Que as Manchetes Revelam</h3>
+<p>Além dos dados agregados, os casos individuais que dominaram as manchetes em 2025 revelam padrões importantes sobre como o feminicídio acontece no Brasil contemporâneo.</p>
+<h4>Padrões Recorrentes nos Cases de 2025</h4>
+<p><strong>Separação como gatilho:</strong> a maioria dos casos ocorre quando a vítima decide terminar o relacionamento. O período de maior risco é imediatamente após a separação. <strong>Escalada prévia:</strong> raramente o feminicídio é o primeiro ato de violência — quase sempre há histórico de agressões. <strong>Falha no sistema:</strong> muitos casos têm boletins de ocorrência anteriores ignorados.</p>
+<blockquote>⚠️ O Ciclo: O feminicídio não acontece do nada. Ele é o ápice de um ciclo de violência que começa com controle, passa por agressões psicológicas, físicas e culmina no assassinato. Interromper o ciclo cedo salva vidas.</blockquote>
+<h4>O Papel da Mídia</h4>
+<p>A cobertura jornalística dos casos influencia tanto a percepção pública quanto as políticas de segurança. Quando a mídia trata o feminicídio como "crime passional" ou "tragédia familiar", normaliza a violência. A cobertura com perspectiva de gênero educa e pressiona por políticas.</p>`,
+       quiz:{q:'Qual é o período de maior risco para uma vítima de violência doméstica?',opts:['Durante a pandemia','Quando registra o boletim de ocorrência','Imediatamente após a separação','Durante crises econômicas'],correct:2},
+       cards:[{q:'O feminicídio geralmente acontece de forma isolada?',a:'Não. Quase sempre há histórico de agressões prévias — é o ápice de um ciclo que começa com controle e violência psicológica.'},{q:'Como a cobertura midiática impacta o feminicídio?',a:'Cobertura que usa termos como "crime passional" normaliza a violência. Perspectiva de gênero educa e pressiona por políticas públicas eficazes.'}]}
+    ]
+  },
+  {
+    id:3, name:'Módulo 3 — Letalidade Policial: O Número que Assusta', free:true,
+    topics:[
+      {id:13,name:'834 Mortes por Ação Policial em SP — Análise Completa',dur:'8min',
+       content:`<h3>834 Mortes por Ação Policial em SP em 2025</h3>
+<p>Enquanto os homicídios gerais recuavam em São Paulo, outro indicador disparava: <strong>834 pessoas foram mortas por policiais em 2025</strong> — sendo 808 pela Polícia Militar — segundo dados da SSP-SP analisados pela CNN Brasil (jan/2026).</p>
+<blockquote>📊 A Escalada Histórica (SSP-SP/CNN Brasil/FBSP): 2022: 421 · 2023: 504 (+19,7%) · 2024: 813 (+61,3%) — maior salto em uma década · 2025: 834 — novo patamar. Em 2024: mortes por polícia = 22% de todas as mortes violentas em SP.</blockquote>
+<h4>SP Lidera o País</h4>
+<p>O 19.º Anuário do FBSP (2025) aponta SP com <strong>+60,9% de crescimento em MDIP de 2023 para 2024</strong> — o maior crescimento percentual do país, enquanto o Rio de Janeiro registrou queda de 19% no mesmo período.</p>
+<h4>O Perfil das Vítimas</h4>
+<p>Segundo o FBSP, o risco de uma pessoa negra ser morta pelas forças de segurança é <strong>3,5 vezes maior</strong> do que o de uma pessoa branca. Em SP, 66% das vítimas letais da polícia em 2024 eram negras — grupo que representa 34,6% da população estadual.</p>`,
+       quiz:{q:'Quantas pessoas foram mortas por ação policial em SP em 2025?',opts:['421','504','813','834'],correct:3},
+       cards:[{q:'Qual foi o crescimento de mortes por polícia em SP de 2022 a 2025?',a:'+98% — de 421 para 834. O maior salto isolado foi de 2023 para 2024: +61,3%.'},{q:'Qual a proporção de vítimas negras nas mortes por polícia em SP?',a:'66% das vítimas são negras, grupo que representa 34,6% da população estadual — risco 3,5x maior que brancos.'}]},
+
+      {id:14,name:'A Escalada: De 421 para 834 em 3 Anos — O Que Mudou',dur:'7min',
+       content:`<h3>O Que Explica a Escalada?</h3>
+<p>Três anos, dois recordes históricos. O que mudou em São Paulo para que as mortes por intervenção policial passassem de 421 (2022) para 834 (2025)?</p>
+<h4>Fatores Estruturais</h4>
+<p><strong>Política de segurança do governo Tarcísio:</strong> expansão das operações policiais em áreas de alta criminalidade, com discurso explícito de tolerância zero. <strong>Pressão sobre indicadores:</strong> o número de "resistências seguidas de morte" como proxy de eficiência policial. <strong>Câmeras corporais desativadas:</strong> relatórios indicam que muitas câmeras são desligadas antes de operações.</p>
+<blockquote>⚠️ O Paradoxo: SP tem queda nos homicídios gerais E alta na letalidade policial. Parte da queda nos homicídios pode ser resultado de mais mortes classificadas como "intervenção policial" — que não entram no cômputo de homicídios dolosos.</blockquote>
+<h4>O Debate Público</h4>
+<p>A Anistia Internacional e o FBSP criticam a tendência. O governo do estado defende que as mortes são resultado de confrontos legítimos com criminosos. O Ministério Público de SP abriu investigações sobre a conformidade das operações com protocolos legais.</p>`,
+       quiz:{q:'Qual foi o crescimento de mortes por polícia em SP de 2023 para 2024?',opts:['+19,7%','+40%','+61,3%','+98%'],correct:2},
+       cards:[{q:'Qual o paradoxo entre homicídios e letalidade policial em SP?',a:'Homicídios gerais caem enquanto mortes por polícia aumentam. Parte da queda pode ser reclassificação de mortes como "intervenção policial".'},{q:'Quais instituições criticam o aumento da letalidade policial em SP?',a:'Anistia Internacional, FBSP e o Ministério Público de SP, que abriu investigações sobre conformidade das operações.'}]},
+
+      {id:15,name:'Operações Escudo e Verão: Legado e Impacto nos Dados',dur:'7min',
+       content:`<h3>Operações Policiais de Grande Escala em SP</h3>
+<p>As operações de grande escala da Polícia Militar de São Paulo — como as denominadas Escudo e Verão — concentraram mortes em curtos períodos e geraram debate intenso sobre proporcionalidade e legalidade.</p>
+<h4>Características das Operações</h4>
+<p>Mobilização massiva de efetivo em regiões específicas (Baixada Santista, Grande SP), operações noturnas, supressão de câmeras corporais em alguns registros. O objetivo declarado: desarticular o crime organizado.</p>
+<blockquote>📊 Impacto Imediato: Em um único mês de operação intensa, o número de mortes por intervenção policial pode saltar 300–400% em relação à média mensal anterior.</blockquote>
+<h4>O Que Dizem os Dados Pós-Operação</h4>
+<p>Pesquisadores do NEV-USP analisaram operações anteriores e identificaram que o efeito sobre o crime organizado é geralmente temporário — com retomada da atividade criminosa em 3–6 meses. O custo em vidas, porém, é permanente.</p>`,
+       quiz:{q:'Qual o efeito de longo prazo de operações policiais massivas sobre o crime organizado?',opts:['Eliminação definitiva','Redução permanente de 50%','Temporário — retomada em 3-6 meses','Aumento do crime nas regiões vizinhas'],correct:2},
+       cards:[{q:'Qual o efeito imediato de operações policiais de grande escala?',a:'Salto de 300–400% nas mortes por intervenção policial em relação à média mensal anterior.'},{q:'O que o NEV-USP identificou sobre o efeito das operações no crime organizado?',a:'Efeito temporário — o crime organizado retoma atividade em 3–6 meses. O custo em vidas, porém, é permanente.'}]},
+
+      {id:16,name:'O Perfil das Vítimas: Raça, Classe e Seletividade Policial',dur:'8min',
+       content:`<h3>Seletividade Policial: Quem Morre?</h3>
+<p>Os dados são consistentes ao longo dos anos: as vítimas letais da polícia no Brasil não são distribuídas aleatoriamente pela população. Há um padrão claro de seletividade por raça, classe e localização geográfica.</p>
+<h4>O Dado que Define</h4>
+<p>Risco 3,5x maior para pessoas negras (FBSP). Em SP, 66% das vítimas letais da polícia em 2024 eram negras — num estado onde negros representam 34,6% da população. No Rio de Janeiro, o padrão é ainda mais agudo.</p>
+<blockquote>📊 Seletividade por Classe e Localização: Mortes por polícia se concentram em periferias. Jovens de 15 a 29 anos representam a maioria das vítimas. A combinação jovem-negro-periférico multiplica o risco de forma exponencial.</blockquote>
+<h4>Debate Conceitual</h4>
+<p>O governo de SP argumenta que a concentração de mortes em grupos específicos reflete onde o crime é mais intenso — não discriminação intencional. Pesquisadores como o FBSP e a Anistia Internacional contestam: mesmo controlando para criminalidade da área, o viés racial persiste.</p>`,
+       quiz:{q:'Qual o risco relativo de uma pessoa negra ser morta pela polícia em relação a uma pessoa branca?',opts:['1,5x maior','2x maior','3,5x maior','5x maior'],correct:2},
+       cards:[{q:'Qual a composição racial das vítimas letais da polícia em SP em 2024?',a:'66% negras — grupo que representa 34,6% da população estadual. Risco 3,5x maior que brancos (FBSP).'},{q:'Quais variáveis combinadas multiplicam o risco de morte por policia?',a:'Jovem (15–29 anos) + negro + morador de periferia — combinação que gera risco exponencialmente maior.'}]},
+
+      {id:17,name:'Câmeras Corporais: A Política Controversa e Suas Consequências',dur:'6min',
+       content:`<h3>Câmeras Corporais: Transparência ou Controvérsia?</h3>
+<p>São Paulo foi pioneiro na implementação de câmeras corporais para policiais militares. A política foi anunciada como resposta à escalada de mortes — mas sua implementação gerou novos debates.</p>
+<h4>O Que os Dados Mostram</h4>
+<p>Estudos preliminares mostraram que batalhões com câmeras ativas tiveram redução nas mortes em confronto. O problema: relatórios indicam que algumas câmeras foram desligadas antes de operações que resultaram em mortes.</p>
+<blockquote>⚠️ A Controvérsia: O governo de SP emitiu decreto tornando obrigatório o uso das câmeras. Mas a fiscalização do cumprimento é feita pela própria corporação — o que cria conflito de interesse evidente.</blockquote>
+<h4>Modelos que Funcionam</h4>
+<p>Estudos internacionais (EUA, Reino Unido) mostram que câmeras corporais reduzem mortes em confronto quando: (1) o desligamento é automaticamente registrado e investigado; (2) a revisão é feita por órgão externo à polícia; (3) há consequências reais para descumprimento.</p>`,
+       quiz:{q:'Qual condição é essencial para que câmeras corporais reduzam mortes?',opts:['Câmeras de alta resolução','Revisão por órgão externo à polícia','Câmeras apenas em operações noturnas','Transmissão ao vivo para a mídia'],correct:1},
+       cards:[{q:'Qual o problema identificado no uso de câmeras corporais em SP?',a:'Relatórios indicam que câmeras foram desligadas antes de operações que resultaram em mortes. Fiscalização feita pela própria corporação.'},{q:'O que estudos internacionais mostram sobre câmeras corporais?',a:'Reduzem mortes quando o desligamento é automaticamente investigado, a revisão é externa e há consequências reais para descumprimento.'}]},
+
+      {id:18,name:'Cases Emblemáticos de 2024–2025 e o Debate Nacional',dur:'7min',
+       content:`<h3>Cases que Definiram o Debate</h3>
+<p>Além dos números agregados, casos individuais de 2024–2025 colocaram a letalidade policial em SP no centro do debate nacional e internacional.</p>
+<h4>O Padrão Recorrente</h4>
+<p>Os cases emblemáticos revelam padrões: operações em área residencial, ausência de câmeras ativas, versões conflitantes entre a corporação e testemunhas, e demora nas investigações do Ministério Público.</p>
+<blockquote>📊 Contexto Internacional: O Brasil tem uma das polícias mais letais do mundo em números absolutos. O FBSP coloca o país consistentemente entre os que mais matam per capita em intervenções policiais, ao lado de El Salvador e Honduras.</blockquote>
+<h4>O Impacto no Debate Político</h4>
+<p>A operação no Complexo do Alemão (RJ), em novembro de 2024, que resultou em mais de 100 mortes em um único dia, gerou crise política nacional. O presidente Lula declarou que "bandido bom é bandido preso" — frase que gerou controvérsia e alimentou o debate sobre o modelo de segurança para 2026.</p>`,
+       quiz:{q:'Com qual grupo de países o Brasil se compara em letalidade policial per capita?',opts:['França e Alemanha','EUA e Canadá','El Salvador e Honduras','China e Rússia'],correct:2},
+       cards:[{q:'Quais padrões recorrentes aparecem nos cases de letalidade policial?',a:'Operações em área residencial, câmeras inativas, versões conflitantes entre PM e testemunhas, demora nas investigações do MP.'},{q:'O que a operação no Complexo do Alemão (nov/2024) gerou politicamente?',a:'Crise política nacional. Declaração polêmica do presidente Lula e acirramento do debate sobre o modelo de segurança para 2026.'}]}
+    ]
+  },
+  {
+    id:4, name:'Módulo 4 — Violência Doméstica: A Guerra em Casa', free:true,
+    topics:[
+      {id:19,name:'68% dos Feminicídios Acontecem em Residências — Dados do SINAN',dur:'7min',
+       content:`<h3>68% dos Feminicídios: O Lar como Local de Crime</h3>
+<p>Dados do SINAN (Sistema de Informação de Agravos de Notificação) e do FBSP convergem: <strong>68% dos feminicídios em SP ocorrem em residências</strong>, a maioria praticada por cônjuges ou ex-companheiros.</p>
+<blockquote>📊 O Cenário: 68% em residências · Agressor é cônjuge ou ex em ~75% dos casos · 40%+ com álcool envolvido · Medida protetiva ativa em parte significativa dos casos.</blockquote>
+<h4>Por Que a Casa é o Local Mais Perigoso</h4>
+<p>Convivência forçada com o agressor. Isolamento social da vítima. Dependência financeira. Normalização da violência ao longo do tempo. Dificuldade de acionar socorro sem alertar o agressor. Todos esses fatores convertem o ambiente doméstico no mais letal para mulheres.</p>`,
+       quiz:{q:'Qual % dos feminicídios em SP ocorre em residências?',opts:['38%','52%','68%','82%'],correct:2},
+       cards:[{q:'Por que a residência é o local mais perigoso para mulheres em risco?',a:'Convivência forçada com o agressor, isolamento social, dependência financeira e dificuldade de acionar socorro sem alertar o agressor.'},{q:'Qual a relação mais comum entre vítima e agressor nos feminicídios?',a:'Cônjuge ou ex-companheiro — presente em cerca de 75% dos casos.'}]},
+
+      {id:20,name:'A Lei Maria da Penha aos 20 Anos: Conquistas e Lacunas',dur:'8min',
+       content:`<h3>Lei Maria da Penha (Lei 11.340/2006): 20 Anos de Impacto</h3>
+<p>Aprovada em agosto de 2006, a Lei Maria da Penha é considerada uma das legislações mais avançadas do mundo em proteção à mulher vítima de violência doméstica. Mas dois décadas depois, sua implementação ainda é desigual.</p>
+<h4>O Que Avançou em 20 Anos</h4>
+<p><strong>Juizados especializados:</strong> criação de varas específicas para violência doméstica. <strong>Medidas protetivas:</strong> afastamento do agressor e proibição de contato. <strong>Capacitação policial:</strong> treinamento específico para atendimento de vítimas. <strong>Dados:</strong> sistema SINAN de notificação.</p>
+<blockquote>⚠️ O Que Ainda Falta: 2/3 dos municípios brasileiros não têm delegacia especializada da mulher. 90% não têm casa de acolhimento. A lei existe, mas a estrutura para implementá-la, não.</blockquote>`,
+       quiz:{q:'Em que ano foi aprovada a Lei Maria da Penha?',opts:['2001','2004','2006','2010'],correct:2},
+       cards:[{q:'Qual a maior lacuna de implementação da Lei Maria da Penha?',a:'2/3 dos municípios sem delegacia especializada, 90% sem casa de acolhimento. A lei existe, mas falta estrutura.'},{q:'O que são as medidas protetivas de urgência?',a:'Determinação judicial de afastamento do agressor do lar e proibição de contato com a vítima, prevista na Lei Maria da Penha.'}]},
+
+      {id:21,name:'Violência Psicológica: O Tipo Mais Invisível e Prevalente',dur:'7min',
+       content:`<h3>Violência Psicológica: A Mais Comum, a Mais Ignorada</h3>
+<p>A violência psicológica — humilhações, ameaças, controle, isolamento — é a forma mais prevalente de violência doméstica e a mais difícil de provar juridicamente. Ela prepara o terreno para as formas mais graves.</p>
+<h4>O Que Caracteriza</h4>
+<p>Controle sobre saídas, amizades e finanças. Humilhações públicas e privadas. Ameaças veladas. Gaslighting (fazer a vítima duvidar da própria percepção). Monitoramento constante via celular. Isolamento de família e amigos.</p>
+<blockquote>💡 Ciclo da Violência: A violência psicológica precede e prepara a física. O "ciclo de Walker" mostra: tensão acumulada → explosão (agressão) → lua de mel (arrependimento) → retorno à tensão. Romper o ciclo é mais fácil nas fases iniciais.</blockquote>
+<h4>O Desafio Jurídico</h4>
+<p>A Lei Maria da Penha tipifica a violência psicológica como crime desde 2006. Em 2021, foi aprovada lei que a tornou crime autônomo, com pena de 6 meses a 2 anos. Mas a prova é difícil: requer registros, testemunhos e avaliação psicológica.</p>`,
+       quiz:{q:'Em que ano a violência psicológica tornou-se crime autônomo no Brasil?',opts:['2006','2012','2018','2021'],correct:3},
+       cards:[{q:'O que caracteriza violência psicológica?',a:'Controle, humilhações, ameaças, isolamento social e gaslighting. É a forma mais prevalente e que precede a violência física.'},{q:'O que é o ciclo de Walker?',a:'Tensão acumulada → explosão (agressão) → lua de mel (arrependimento) → retorno à tensão. Romper é mais fácil nas fases iniciais.'}]},
+
+      {id:22,name:'Impacto Econômico da Violência Doméstica no Mercado de Trabalho',dur:'6min',
+       content:`<h3>Violência Doméstica e Mercado de Trabalho</h3>
+<p>A violência doméstica não é apenas uma tragédia humana — é um problema econômico de grande escala. Vítimas perdem produtividade, faltam ao trabalho, são demitidas ou abandonam o emprego por medo do agressor.</p>
+<h4>Os Dados Econômicos</h4>
+<p>Estudos do Banco Mundial e do IPEA estimam que a violência doméstica custa ao Brasil entre 2% e 4% do PIB anualmente, considerando custos de saúde, segurança, judiciário e perda de produtividade.</p>
+<blockquote>📊 Para o Empreendedor: Violência doméstica reduz presenteísmo e aumenta rotatividade. Programas corporativos de proteção à mulher — licença para vítimas, parceria com delegacias, suporte psicológico — têm ROI mensurável em retenção e produtividade.</blockquote>`,
+       quiz:{q:'Quanto a violência doméstica custa ao Brasil anualmente (IPEA/Banco Mundial)?',opts:['0,5% do PIB','1% do PIB','2–4% do PIB','6% do PIB'],correct:2},
+       cards:[{q:'Como a violência doméstica impacta o mercado de trabalho?',a:'Vítimas perdem produtividade, faltam ao trabalho, são demitidas ou abandonam o emprego por medo. Custo estimado: 2–4% do PIB (IPEA/Banco Mundial).'},{q:'Qual o ROI de programas corporativos de proteção à mulher?',a:'Redução de rotatividade, aumento de produtividade e retenção de talentos — benefícios mensuráveis para a empresa.'}]},
+
+      {id:23,name:'Crianças no Fogo Cruzado: Dados do UNICEF e FBSP',dur:'7min',
+       content:`<h3>Crianças e Violência Doméstica</h3>
+<p>Crianças que testemunham ou vivenciam violência doméstica sofrem impactos profundos em seu desenvolvimento — e têm maior probabilidade de reproduzir ou sofrer violência na vida adulta.</p>
+<blockquote>📊 O UNICEF e o FBSP documentam que crianças expostas à violência doméstica têm: 3x mais risco de desenvolver transtornos de saúde mental · 2x mais risco de evasão escolar · Maior probabilidade de envolvimento com violência na adolescência.</blockquote>
+<h4>O Círculo que Precisa Ser Rompido</h4>
+<p>A violência doméstica é transmitida intergeracionalmente. Crianças que crescem em lares violentos têm mais chance de se tornarem vítimas ou agressores. Programas que protegem mães protegem também as crianças — e quebram o ciclo.</p>`,
+       quiz:{q:'Qual o risco aumentado de transtornos mentais em crianças expostas à violência doméstica?',opts:['1,5x','2x','3x','5x'],correct:2},
+       cards:[{q:'Como a violência doméstica impacta crianças a longo prazo?',a:'3x mais risco de transtornos mentais, 2x mais evasão escolar, maior probabilidade de violência na adolescência (UNICEF/FBSP).'},{q:'Por que proteger a mãe também protege as crianças?',a:'A violência doméstica é intergeracional. Quebrar o ciclo na geração atual reduz probabilidade de violência na geração seguinte.'}]},
+
+      {id:24,name:'Saídas, Redes de Apoio e o Que a Evidência Diz que Funciona',dur:'7min',
+       content:`<h3>O Que Realmente Funciona Para Proteger Mulheres</h3>
+<p>Com dados de décadas de pesquisa em diversos países, a ciência já identifica com clareza o que reduz o feminicídio e a violência doméstica — e o que não funciona.</p>
+<h4>O Que Funciona (com evidências)</h4>
+<p><strong>Empregabilidade feminina:</strong> renda própria reduz dependência e aumenta capacidade de sair. <strong>Monitoramento do agressor:</strong> tornozeleira com alerta de proximidade. <strong>Casa de acolhimento:</strong> local seguro para a saída. <strong>Capacitação policial:</strong> atendimento qualificado aumenta registro e proteção. <strong>Programas de reabilitação do agressor:</strong> reduzem reincidência em 30–40%.</p>
+<blockquote>💡 O Que Não Funciona Sozinho: Campanhas de conscientização, endurecimento de penas sem infraestrutura de aplicação, e medidas protetivas sem monitoramento eficaz.</blockquote>
+<h4>O Papel do Setor Privado</h4>
+<p>Empresas que implementam programas de proteção à funcionária vítima de violência — licença remunerada, suporte jurídico, parceria com delegacias — contribuem para reduzir o impacto e têm retorno em retenção e imagem.</p>`,
+       quiz:{q:'Qual medida reduz reincidência de agressores em 30–40%?',opts:['Prisão longa','Campanhas de conscientização','Programas de reabilitação do agressor','Endurecimento de penas'],correct:2},
+       cards:[{q:'Quais são as medidas com maior evidência de eficácia na redução do feminicídio?',a:'Empregabilidade feminina, monitoramento eletrônico do agressor, casas de acolhimento e capacitação policial.'},{q:'O que programas de reabilitação de agressores alcançam?',a:'Redução de reincidência em 30–40% — evidência de múltiplos países. Funcionam melhor quando combinados com monitoramento.'}]}
+    ]
+  },
+  {
+    id:5, name:'Módulo 5 — Segurança, Política e Poder', free:true,
+    topics:[
+      {id:25,name:'63% dos Brasileiros: Segurança É o Maior Problema Nacional',dur:'7min',
+       content:`<h3>63% dos Brasileiros: Segurança Acima de Tudo</h3>
+<p>A pesquisa Latam Pulse da AtlasIntel em parceria com a Bloomberg (novembro de 2025) estabeleceu o cenário eleitoral de 2026: <strong>63% dos brasileiros apontam criminalidade e tráfico de drogas como os principais problemas do país</strong> — acima de inflação, saúde e educação.</p>
+<blockquote>📊 O Cenário Político-Eleitoral: 63% citam segurança como maior problema (AtlasIntel/Bloomberg, nov/2025) · 53% aprovam a política de Tarcísio (jan/2025) · 38% avaliam negativamente o governo federal em segurança · Lula perdeu pontos após declaração sobre traficantes.</blockquote>
+<h4>Por Que Segurança Mobiliza o Voto</h4>
+<p>Diferentemente de saúde e educação, ações repressivas de segurança pública produzem efeitos visíveis no curto prazo — operações, prisões, apreensões —, gerando percepção de resultado. Isso explica por que governantes de todos os espectros buscam esse capital político.</p>`,
+       quiz:{q:'Qual % dos brasileiros cita segurança como maior problema (AtlasIntel/Bloomberg, nov/2025)?',opts:['38%','48%','55%','63%'],correct:3},
+       cards:[{q:'Por que segurança mobiliza mais o voto do que saúde ou educação?',a:'Ações repressivas produzem efeitos visíveis no curto prazo (operações, prisões). Saúde e educação têm resultados de longo prazo, menos perceptíveis.'},{q:'Como o presidente Lula foi impactado pelo tema da segurança em 2025?',a:'Perdeu pontos nas pesquisas após declaração sobre traficantes e pela percepção de resposta federal lenta às crises de segurança.'}]},
+
+      {id:26,name:'Tarcísio de Freitas e o Modelo São Paulo: Resultados e Custos',dur:'8min',
+       content:`<h3>O Modelo Tarcísio: Linha Dura com Resultados e Custos</h3>
+<p>O governador de São Paulo, Tarcísio de Freitas, adotou uma política de segurança de linha dura com resultados duais: queda nos homicídios gerais e alta histórica na letalidade policial.</p>
+<h4>O Que Apresenta como Resultado</h4>
+<p>Queda nos homicídios dolosos gerais de SP. Operações de grande escala que resultaram em apreensões expressivas de armas e drogas. Aprovação de 53% segundo pesquisas de janeiro de 2025.</p>
+<blockquote>⚠️ O Custo: 834 mortes por intervenção policial em 2025. Denúncias de violações de direitos em operações. Investigações do MP. Questionamentos sobre a proporcionalidade das operações e sobre o destino das câmeras corporais.</blockquote>
+<h4>O Debate sobre o Modelo</h4>
+<p>Defensores: a queda nos homicídios gerais mostra eficácia. Críticos: a queda nos homicídios pode ser parcialmente explicada pela reclassificação de mortes como "intervenção policial", que não entra no cômputo de homicídios dolosos.</p>`,
+       quiz:{q:'Qual a aprovação de Tarcísio de Freitas em segurança pública (jan/2025)?',opts:['28%','38%','53%','67%'],correct:2},
+       cards:[{q:'Qual o principal trade-off do modelo de segurança de Tarcísio?',a:'Queda nos homicídios gerais (resultado positivo) combinada com alta histórica na letalidade policial — 834 mortes por polícia em 2025.'},{q:'Qual a crítica metodológica ao modelo de SP?',a:'A queda nos homicídios pode ser parcialmente resultado da reclassificação de mortes como intervenção policial, que não computa como homicídio doloso.'}]},
+
+      {id:27,name:'A Crise no Rio de Janeiro e o Impacto no Debate Nacional',dur:'7min',
+       content:`<h3>Rio de Janeiro: A Crise que Definiu o Debate Nacional</h3>
+<p>A operação no Complexo do Alemão (novembro de 2024) — com mais de 100 mortes em um único dia — e as crises subsequentes tornaram o Rio de Janeiro o epicentro do debate sobre segurança pública no Brasil pré-2026.</p>
+<h4>O Contraste com SP</h4>
+<p>Enquanto SP adotou linha dura com resultado ambíguo, o Rio oscilou entre diferentes estratégias sem conseguir reduzir consistentemente a violência. O FBSP apontou que o Rio registrou queda de 19% em MDIP de 2023 para 2024 — mas as operações no Complexo do Alemão reverteram a narrativa.</p>
+<blockquote>⚠️ O Impacto Político: A operação no Alemão gerou crise para o governo Lula, que foi pressionado a se posicionar. A declaração presidencial sobre traficantes alimentou o debate eleitoral e beneficiou candidatos de linha dura.</blockquote>`,
+       quiz:{q:'Qual operação no RJ gerou crise política nacional em 2024?',opts:['Operação Escudo','Complexo do Alemão','Maré','Jacarezinho'],correct:1},
+       cards:[{q:'O que a operação no Complexo do Alemão (nov/2024) revelou politicamente?',a:'Vulnerabilidade do governo Lula no tema da segurança. Beneficiou candidatos de linha dura e alimentou o debate eleitoral de 2026.'},{q:'Qual a diferença de resultado entre SP e RJ em letalidade policial de 2023 para 2024?',a:'SP: +60,9% (maior crescimento do país). RJ: −19% (queda). Trajetórias opostas no mesmo período.'}]},
+
+      {id:28,name:'PEC da Segurança Pública: O Que Propõe o Governo Lula',dur:'7min',
+       content:`<h3>A PEC da Segurança Pública</h3>
+<p>Em resposta à pressão do tema, o governo Lula apresentou a Proposta de Emenda Constitucional sobre segurança pública — que reorganiza atribuições entre federação e estados e propõe ampliação de recursos.</p>
+<h4>O Que Propõe</h4>
+<p>Criação de sistema nacional integrado de segurança pública. Ampliação do papel federal em regiões de crise. Investimento em tecnologia e inteligência. Programa nacional de prevenção à violência, com foco em jovens vulneráveis.</p>
+<blockquote>⚠️ A Recepção: Governadores de direita, especialmente Tarcísio, criticaram a proposta como "federalização da segurança" e interferência na autonomia estadual. O debate sobre centralização vs. descentralização domina o campo político.</blockquote>`,
+       quiz:{q:'Qual a principal crítica de governadores de direita à PEC da Segurança?',opts:['Falta de recursos','Federalização e interferência na autonomia estadual','Foco excessivo em tecnologia','Ausência de metas mensuráveis'],correct:1},
+       cards:[{q:'O que a PEC da Segurança Pública propõe?',a:'Sistema nacional integrado de segurança, ampliação do papel federal em crises, tecnologia e inteligência, e programa de prevenção à violência.'},{q:'Qual o debate central em torno da PEC?',a:'Centralização federal versus autonomia estadual na segurança pública — divisão que reflete o campo político pré-2026.'}]},
+
+      {id:29,name:'Como a Esquerda Adotou Pautas de Segurança da Direita',dur:'7min',
+       content:`<h3>A Convergência nas Pautas de Segurança</h3>
+<p>Um dos fenômenos mais significativos do ciclo político 2023–2025 foi a adoção, pela esquerda e pelo centro-esquerda, de linguagem e propostas antes exclusivas da direita em segurança pública.</p>
+<h4>A Mudança de Discurso</h4>
+<p>O governo Lula, sob pressão das pesquisas, passou a enfatizar resultados em segurança, apoiar operações policiais e usar linguagem mais dura sobre crime organizado. A declaração "bandido bom é bandido preso" — associada à direita — passou a aparecer em discursos de aliados do PT.</p>
+<blockquote>💡 Por Que Isso Acontece: Com 63% dos brasileiros priorizando segurança, qualquer candidato que ignore o tema perde votos. O eleitorado punição o que percebe como omissão — independente do espectro ideológico.</blockquote>`,
+       quiz:{q:'Por que partidos de esquerda adotaram pautas de segurança da direita?',opts:['Por convicção ideológica','Por pressão dos militares','Porque 63% dos eleitores priorizam segurança','Por acordo parlamentar com a direita'],correct:2},
+       cards:[{q:'Qual fenômeno político ocorreu no Brasil de 2023–2025 em segurança pública?',a:'Esquerda e centro-esquerda adotaram linguagem e propostas antes exclusivas da direita, pressionados pelas pesquisas.'},{q:'O que explica a convergência entre esquerda e direita no tema da segurança?',a:'Com 63% dos eleitores priorizando segurança, ignorar o tema equivale a perder votos — independente do espectro ideológico.'}]},
+
+      {id:30,name:'O Medo Como Ativo Político — Uma Análise Verificável',dur:'7min',
+       content:`<h3>O Medo Como Capital Político</h3>
+<p>A análise do The Intercept Brasil (jan/2026) sintetiza: "A segurança deixou de ser uma política pública entre outras para se tornar uma linguagem de poder, uma estratégia eleitoral e, cada vez mais, um modelo de governo."</p>
+<h4>Como o Medo é Fabricado e Amplificado</h4>
+<p>Mídia que cobre crimes violentos de forma desproporcional. Políticos que usam estatísticas seletivamente. Redes sociais que amplificam casos individuais. Todos esses mecanismos inflam a percepção de insegurança acima da realidade — mesmo quando os indicadores melhoram.</p>
+<blockquote>⚠️ Para o Empreendedor: Em ano eleitoral, mapeie como cada candidato impacta seu setor. Mais ou menos policiamento, centralização ou descentralização, endurecimento penal ou prevenção social têm efeitos diretos e diferentes nos negócios. Use este curso como filtro das promessas eleitorais.</blockquote>`,
+       quiz:{q:'Segundo The Intercept Brasil (jan/2026), o que a segurança se tornou politicamente?',opts:['Um problema técnico','Uma linguagem de poder e estratégia eleitoral','Uma questão irrelevante eleitoralmente','Um consenso entre partidos'],correct:1},
+       cards:[{q:'Como o medo é amplificado politicamente?',a:'Cobertura midiática desproporcional, estatísticas seletivas por políticos e redes sociais que ampliam casos individuais — inflam percepção acima da realidade.'},{q:'Qual a orientação prática para o empreendedor em ano eleitoral?',a:'Mapear como cada candidato impacta especificamente seu setor — policiamento, centralização, modelo penal — e usar análise crítica das promessas.'}]}
+    ]
+  },
+  {
+    id:6, name:'Módulo 6 — O Custo Econômico da Violência', free:true,
+    topics:[
+      {id:31,name:'US$ 19,97 Trilhões: O Preço Global da Violência (GPI 2025)',dur:'7min',
+       content:`<h3>O Preço da Violência: US$ 19,97 Trilhões</h3>
+<p>O Global Peace Index 2025 (Institute for Economics and Peace) estimou que em 2024 o impacto econômico da violência atingiu <strong>US$ 19,97 trilhões — 11,6% do PIB mundial</strong>, equivalente a US$ 2.455 por pessoa no planeta.</p>
+<blockquote>📊 Impacto Econômico (GPI 2025/FMI/OCDE): US$ 19,97 tri global · +30% nos homicídios = −0,14 p.p. no crescimento (FMI) · +0,5% de PIB se Brasil reduzisse homicídios à média global · Brasil cresceu 2,1% em 2025 vs média mundial de 3,1%.</blockquote>
+<h4>O Ciclo Vicioso</h4>
+<p>Rodrigo Valdes, diretor do FMI para o Hemisfério Ocidental (fev/2025): "Há um ciclo vicioso entre crime e baixo crescimento." A violência deprime o investimento, que reduz o crescimento, que piora as condições sociais, que alimenta a violência.</p>`,
+       quiz:{q:'Qual o impacto econômico global da violência em 2024 (GPI 2025)?',opts:['US$ 8,3 tri','US$ 12,1 tri','US$ 15,5 tri','US$ 19,97 tri'],correct:3},
+       cards:[{q:'O que o Global Peace Index 2025 estimou sobre o custo da violência?',a:'US$ 19,97 trilhões em 2024 — 11,6% do PIB mundial, ou US$ 2.455 por pessoa no planeta.'},{q:'O que o FMI identificou sobre o impacto da violência no crescimento econômico?',a:'Aumento de 30% nos homicídios reduz o crescimento em 0,14 p.p. Ciclo vicioso: crime deprime investimento → crescimento cai → condições sociais pioram → crime aumenta.'}]},
+
+      {id:32,name:'Como a Insegurança Trava o Crescimento Econômico do Brasil',dur:'7min',
+       content:`<h3>Insegurança e Crescimento: O Impacto Brasileiro</h3>
+<p>O Brasil cresceu 2,1% em 2025 — abaixo da média mundial de 3,1% (OCDE). Pesquisadores do FMI estimam que se o Brasil reduzisse sua taxa de homicídios à média global, o crescimento poderia ser até 0,5 ponto percentual maior anualmente.</p>
+<h4>Os Canais de Transmissão</h4>
+<p><strong>Investimento:</strong> empresas internacionais e nacionais evitam ou demandam prêmio de risco para instalar operações em regiões violentas. <strong>Produtividade:</strong> trabalhadores em áreas violentas têm maior absenteísmo e menor saúde mental. <strong>Capital humano:</strong> violência reduz frequência escolar e aumenta evasão.</p>
+<blockquote>💡 Para o Empreendedor: Custo de segurança privada, rotatividade de funcionários por medo, perdas por roubos e extorsões — todos esses custos ocultos da violência devem entrar no modelo financeiro de qualquer negócio em região de alto risco.</blockquote>`,
+       quiz:{q:'Quanto o Brasil poderia crescer a mais se reduzisse homicídios à média global (FMI)?',opts:['0,1 p.p.','0,3 p.p.','0,5 p.p.','1,2 p.p.'],correct:2},
+       cards:[{q:'Quais são os principais canais pelo qual a insegurança trava o crescimento?',a:'Desincentivo ao investimento, redução de produtividade por absenteísmo e saúde mental, e queda no capital humano por evasão escolar.'},{q:'Qual a diferença de crescimento do Brasil vs. média mundial em 2025?',a:'Brasil: 2,1% vs. média mundial: 3,1% (OCDE). Parte do gap é explicada pelo custo da violência.'}]},
+
+      {id:33,name:'Empresas e Crime Organizado: O Custo Oculto da Extorsão',dur:'7min',
+       content:`<h3>Extorsão e Crime Organizado: O Custo Empresarial Invisível</h3>
+<p>Em regiões dominadas por facções, empresas pagam "pedágio" para funcionar. Esse custo raramente aparece nos balanços — é classificado como "despesa operacional" ou simplesmente absorvido.</p>
+<h4>Estimativas do Impacto</h4>
+<p>Pesquisas da FGV e do FBSP estimam que a extorsão pelo crime organizado impacta entre 15% e 30% dos pequenos negócios em regiões de alto risco no Brasil. O valor médio pago mensalmente varia de R$ 200 a R$ 2.000 dependendo da região e do tipo de negócio.</p>
+<blockquote>⚠️ O Dilema: Denunciar coloca o negócio e a família em risco. Não denunciar alimenta o financiamento do crime. Muitos empresários de periferias ficam presos nessa armadilha sem saída institucional.</blockquote>`,
+       quiz:{q:'Qual % dos pequenos negócios em regiões de alto risco é impactado por extorsão (FGV/FBSP)?',opts:['5–10%','15–30%','40–50%','60–70%'],correct:1},
+       cards:[{q:'Como a extorsão pelo crime organizado aparece nos balanços das empresas?',a:'Raramente aparece explicitamente — é classificada como "despesa operacional" ou simplesmente absorvida para evitar denúncias que coloquem a família em risco.'},{q:'Qual o dilema enfrentado pelo empresário que sofre extorsão?',a:'Denunciar = risco para o negócio e a família. Não denunciar = alimenta o financiamento do crime. Ausência de saída institucional segura.'}]},
+
+      {id:34,name:'Turismo, Investimento Estrangeiro e Fuga de Capital',dur:'6min',
+       content:`<h3>Violência e Competitividade Internacional</h3>
+<p>A percepção internacional de insegurança no Brasil tem impacto direto no turismo, no investimento estrangeiro direto (IED) e na atratividade para eventos globais.</p>
+<h4>Turismo</h4>
+<p>O Brasil recebe proporcionalmente menos turistas internacionais do que países com PIB similar. Pesquisas da EMBRATUR identificam que a percepção de insegurança é o principal fator de inibição para visitantes de EUA, Europa e Ásia.</p>
+<h4>Investimento Estrangeiro</h4>
+<p>Relatórios do Banco Mundial e da OCDE consistentemente apontam a insegurança jurídica e física como fatores que elevam o custo de capital no Brasil — o chamado "risco Brasil" tem componente de segurança pública além do componente macroeconômico.</p>
+<blockquote>💡 Oportunidade: Regiões que conseguem reduzir violência atraem mais investimento. Empresários locais que apoiam iniciativas de segurança comunitária podem se beneficiar indiretamente do aumento de atividade econômica.</blockquote>`,
+       quiz:{q:'Qual o principal fator que inibe turistas internacionais no Brasil (EMBRATUR)?',opts:['Custo de voos','Barreira do idioma','Percepção de insegurança','Falta de atrações culturais'],correct:2},
+       cards:[{q:'Como a insegurança impacta o investimento estrangeiro no Brasil?',a:'Eleva o custo de capital e o "risco Brasil". Relatórios do Banco Mundial e OCDE identificam segurança como fator de inibição do IED.'},{q:'Qual a oportunidade identificada para empreendedores locais?',a:'Regiões que reduzem violência atraem mais investimento. Apoiar iniciativas de segurança comunitária gera benefícios econômicos indiretos.'}]},
+
+      {id:35,name:'Mercado de Segurança Privada e Segtech em Forte Expansão',dur:'7min',
+       content:`<h3>O Mercado de Segurança: Uma Oportunidade Real</h3>
+<p>Enquanto a insegurança cria problemas, ela também cria um mercado em forte expansão. O setor de segurança privada e a segtech (tecnologia de segurança) são dois dos mais dinâmicos da economia brasileira.</p>
+<h4>Segurança Privada</h4>
+<p>O Brasil tem mais de 500.000 vigilantes privados — número que supera a Polícia Militar. O setor faturou R$ 50 bilhões em 2024 e cresce a 8–12% ao ano. Empresas que prestam serviços de vigilância, escolta e monitoramento residencial estão entre as mais rentáveis do país.</p>
+<blockquote>📊 Segtech em Alta: Monitoramento remoto, biometria, análise preditiva de risco, câmeras com inteligência artificial. O mercado de segtech cresceu 35% em 2024 no Brasil — muito acima da média do setor de TI.</blockquote>`,
+       quiz:{q:'Qual a taxa de crescimento anual do setor de segurança privada no Brasil?',opts:['2–4%','8–12%','18–22%','30%+'],correct:1},
+       cards:[{q:'Qual o tamanho do mercado de segurança privada no Brasil?',a:'500.000+ vigilantes, R$ 50 bilhões de faturamento em 2024, crescimento de 8–12% ao ano.'},{q:'Quanto cresceu a segtech no Brasil em 2024?',a:'+35% — muito acima da média do setor de TI. Monitoramento remoto, biometria e análise preditiva lideram o crescimento.'}]},
+
+      {id:36,name:'Estratégias Práticas para o Empreendedor em Zona de Risco',dur:'7min',
+       content:`<h3>Estratégias Práticas: Negócios em Ambiente de Alto Risco</h3>
+<p>Para o empreendedor que opera em regiões de alto risco, a questão não é ignorar a violência — é incorporá-la ao modelo de negócio de forma inteligente.</p>
+<h4>Os 5 Movimentos Essenciais</h4>
+<p><strong>1. PRECIFIQUE O RISCO:</strong> inclua custo de segurança privada, seguros e possíveis perdas no modelo financeiro. <strong>2. MAPEIE O TERRITÓRIO:</strong> entenda as dinâmicas locais — quem controla o quê e como isso afeta operação e logística. <strong>3. PROTEJA SEUS FUNCIONÁRIOS:</strong> políticas de segurança no trajeto, horários e comunicação de emergência. <strong>4. DIVERSIFIQUE GEOGRAFICAMENTE:</strong> não concentre toda a operação em área de alto risco. <strong>5. ATIVE REDES LOCAIS:</strong> associações empresariais e câmaras de comércio têm informação e influência sobre segurança local.</p>
+<blockquote>💡 ESG com Dados: Programas de proteção à mulher funcionária, parcerias com delegacias e apoio a iniciativas de prevenção têm ROI mensurável — tanto em produtividade quanto em imagem e acesso a capital ESG.</blockquote>`,
+       quiz:{q:'Qual o primeiro movimento recomendado para empreendedores em zonas de risco?',opts:['Contratar segurança armada','Precificar o risco no modelo financeiro','Mudar o negócio de região','Fechar às 18h'],correct:1},
+       cards:[{q:'Quais são os 5 movimentos essenciais para negócios em zonas de risco?',a:'Precificar o risco, mapear o território, proteger funcionários, diversificar geograficamente e ativar redes locais.'},{q:'Qual o impacto de programas de proteção à mulher funcionária?',a:'ROI mensurável em produtividade, retenção de talentos e imagem — além de acesso a capital ESG de investidores com critérios socioambientais.'}]}
+    ]
+  },
+  {
+    id:7, name:'Módulo 7 — Crime Organizado e Facções', free:true,
+    topics:[
+      {id:37,name:'PCC e Comando Vermelho: Expansão, Lógica e Poder Territorial',dur:'8min',
+       content:`<h3>PCC e CV: As Duas Maiores Organizações Criminosas do Brasil</h3>
+<p>O Primeiro Comando da Capital (PCC) e o Comando Vermelho (CV) são as duas principais organizações criminosas brasileiras, com atuação que vai muito além do tráfico de drogas.</p>
+<h4>PCC: A Expansão Nacional e Internacional</h4>
+<p>Fundado em 1993 em prisões de SP, o PCC se expandiu para todos os estados brasileiros e para países vizinhos. Controla boa parte do tráfico de crack e cocaína e investe em atividades "limpas" para lavagem de dinheiro.</p>
+<blockquote>💡 A Lógica do PCC: Mais do que uma gangue, o PCC funciona como um Estado paralelo em muitas periferias — oferece "proteção", resolve conflitos internos e até fornece assistência social em troca de lealdade e silêncio.</blockquote>`,
+       quiz:{q:'Em que ano e onde foi fundado o PCC?',opts:['1985, RJ','1993, SP','1997, RS','2001, BA'],correct:1},
+       cards:[{q:'O que diferencia o PCC de uma gangue comum?',a:'Funciona como Estado paralelo: oferece proteção, resolve conflitos e fornece assistência social em troca de lealdade e silêncio.'},{q:'Qual a abrangência atual do PCC?',a:'Todos os estados brasileiros e países vizinhos. Controla tráfico de crack e cocaína e investe em atividades lícitas para lavagem de dinheiro.'}]},
+
+      {id:38,name:'Milícias: O Estado Dentro do Estado no Rio de Janeiro',dur:'7min',
+       content:`<h3>Milícias: O Crime Organizado com Rosto Institucional</h3>
+<p>As milícias são grupos paramilitares formados por policiais e ex-policiais que controlam territórios no Rio de Janeiro por meio de extorsão — cobrando por serviços como gás, internet clandestina e segurança.</p>
+<h4>A Diferença em Relação ao Tráfico</h4>
+<p>Enquanto o tráfico é ilegal e opera à margem, as milícias se confundem com o Estado — seus membros frequentemente têm vínculos com a polícia, a política e o sistema judiciário. Isso as torna mais difíceis de combater.</p>
+<blockquote>📊 Expansão: Segundo o FBSP (2025), as milícias controlam mais territórios no RJ do que o tráfico. Além do Rio, avançam para cidades do interior fluminense, Baixada e até outros estados.</blockquote>`,
+       quiz:{q:'O que distingue as milícias do tráfico de drogas?',opts:['Milícias são mais violentas','Milícias têm vínculos com o Estado e polícia','Milícias atuam apenas nas favelas','Milícias não cobram extorsão'],correct:1},
+       cards:[{q:'Como as milícias se sustentam economicamente?',a:'Cobram extorsão por serviços como gás, internet clandestina, transporte e segurança. Controlam o mercado imobiliário em áreas dominadas.'},{q:'Por que as milícias são mais difíceis de combater que o tráfico?',a:'Têm vínculos com a polícia, a política e o judiciário — confundem-se com o Estado, o que dificulta investigação e punição.'}]},
+
+      {id:39,name:'Como Facções Criminosas Interferem nas Eleições Municipais',dur:'7min',
+       content:`<h3>Crime Organizado e Eleições: A Interferência Documentada</h3>
+<p>Pesquisas do TSE, do FBSP e de universidades documentam que facções criminosas interferem nas eleições municipais em territórios que controlam — por meio de coação de eleitores, financiamento de candidatos e proibição de campanha adversária.</p>
+<h4>Os Mecanismos de Interferência</h4>
+<p><strong>Coação de eleitores:</strong> indicação de candidato a votar sob ameaça implícita ou explícita. <strong>Financiamento informal:</strong> apoio logístico a candidatos favoráveis. <strong>Veto territorial:</strong> candidatos adversários impedidos de fazer campanha em áreas dominadas. <strong>Controle de urnas:</strong> em casos extremos, pressão para que urnas registrem votos específicos.</p>
+<blockquote>⚠️ O Impacto: Vereadores e até prefeitos eleitos com apoio de facções atuam para proteger os interesses criminosos — bloqueando políticas de segurança e nomeando aliados em cargos estratégicos.</blockquote>`,
+       quiz:{q:'Qual mecanismo é mais comum na interferência do crime organizado em eleições?',opts:['Hacking de sistemas eleitorais','Coação de eleitores e veto territorial','Compra direta de votos em espécie','Falsificação de documentos'],correct:1},
+       cards:[{q:'Como facções criminosas interferem nas eleições municipais?',a:'Coação de eleitores, financiamento informal de candidatos favoráveis, veto territorial a candidatos adversários.'},{q:'Qual o impacto político de vereadores eleitos com apoio de facções?',a:'Atuam para proteger interesses criminosos — bloqueiam políticas de segurança e nomeiam aliados em cargos estratégicos.'}]},
+
+      {id:40,name:'Narcotráfico e a Diversificação das Atividades Criminosas',dur:'7min',
+       content:`<h3>Além do Tráfico: A Diversificação Criminosa</h3>
+<p>O crime organizado brasileiro diversificou massivamente suas atividades. Além do narcotráfico, as organizações controlam mercados de armas, extorsão, tráfico de pessoas, contrabando, pirâmides financeiras e até mercados regulados.</p>
+<h4>As Novas Frentes</h4>
+<p><strong>Criptomoedas:</strong> lavagem de dinheiro e ransomware. <strong>Agronegócio:</strong> grilagem de terra e exportação ilegal de commodities. <strong>Setor público:</strong> desvio em licitações e contratos. <strong>Mercado financeiro:</strong> esquemas de pirâmide voltados para populações vulneráveis.</p>
+<blockquote>⚠️ O Crime como Empresa: As maiores organizações criminosas brasileiras têm faturamento estimado em bilhões de reais, estrutura hierárquica, divisão de funções e até "responsabilidade social" nos territórios que controlam.</blockquote>`,
+       quiz:{q:'Qual nova frente de atuação o crime organizado brasileiro expandiu nas últimas décadas?',opts:['Apenas narcotráfico','Lavagem via criptomoedas e grilagem no agronegócio','Apenas extorsão de pequenos negócios','Apenas tráfico de pessoas'],correct:1},
+       cards:[{q:'Quais são as novas frentes de atuação do crime organizado brasileiro?',a:'Criptomoedas, agronegócio (grilagem), setor público (licitações), mercado financeiro (pirâmides) — além do narcotráfico tradicional.'},{q:'Como o crime organizado se assemelha a uma empresa?',a:'Faturamento de bilhões, hierarquia, divisão de funções e até "responsabilidade social" nos territórios — com estrutura empresarial sofisticada.'}]},
+
+      {id:41,name:'O Ciclo Vicioso: Pobreza, Desinvestimento Social e Crime',dur:'7min',
+       content:`<h3>Por Que o Crime Persiste: O Ciclo Estrutural</h3>
+<p>O crime organizado não surge do nada — ele preenche um vácuo deixado pela ausência do Estado. Compreender o ciclo estrutural é essencial para entender por que soluções exclusivamente repressivas têm efeito limitado.</p>
+<h4>O Ciclo</h4>
+<p><strong>Pobreza e desigualdade</strong> → ausência de oportunidades legítimas → <strong>entrada no crime</strong> → repressão policial → <strong>encarceramento</strong> → estigmatização → menos oportunidades → mais crime. Em cada etapa, o Estado intervém de forma insuficiente ou contraproducente.</p>
+<blockquote>💡 O Que Quebra o Ciclo: Educação de qualidade, emprego formal acessível, programas de saúde mental, cultura e esporte para jovens — todos esses fatores reduzem a entrada no crime de forma mais eficaz e duradoura que a repressão isolada.</blockquote>`,
+       quiz:{q:'O que o crime organizado preenche nos territórios onde atua?',opts:['Um vácuo deixado pela ausência do Estado','Um desejo natural da população por ordem','Uma demanda por serviços ilegais pré-existente','Uma necessidade de proteção contra outros crimes'],correct:0},
+       cards:[{q:'Qual é o ciclo estrutural que alimenta o crime organizado?',a:'Pobreza → falta de oportunidades → entrada no crime → repressão → encarceramento → estigmatização → menos oportunidades → mais crime.'},{q:'O que quebra o ciclo de forma mais eficaz que a repressão?',a:'Educação de qualidade, emprego formal, saúde mental, cultura e esporte para jovens — fatores que reduzem a atratividade do crime.'}]},
+
+      {id:42,name:'Lições Internacionais: O Que Funcionou em Outros Países',dur:'7min',
+       content:`<h3>Lições Internacionais em Segurança Pública</h3>
+<p>Outros países enfrentaram crises similares de crime organizado e violência. Seus resultados — positivos e negativos — oferecem lições valiosas para o Brasil de 2026.</p>
+<h4>Colômbia: Medellín como Caso de Sucesso</h4>
+<p>Medellín foi a cidade mais violenta do mundo nos anos 1990. Hoje é referência em urbanismo social. A combinação de presença estatal integral (não apenas policiamento), mobilidade urbana em áreas periféricas, educação e oportunidades econômicas reduziu homicídios em 95% em 20 anos.</p>
+<blockquote>📊 El Salvador: O Contra-Exemplo: A política de encarceramento massivo de Bukele reduziu homicídios rapidamente — mas gerou preocupações severas de direitos humanos e suspeitas de acordo com gangues. O resultado de longo prazo ainda é incerto.</blockquote>
+<h4>A Lição Central</h4>
+<p>Não há bala de prata. Os países que reduziram violência de forma sustentável combinaram policiamento inteligente com presença estatal ampla — saúde, educação, infraestrutura e oportunidades econômicas.</p>`,
+       quiz:{q:'O que a experiência de Medellín comprova sobre redução de violência?',opts:['Encarceramento massivo é suficiente','Policiamento inteligente + presença estatal ampla reduzem violência sustentavelmente','Apenas fatores econômicos importam','A violência é inevitável em cidades grandes'],correct:1},
+       cards:[{q:'Quanto Medellín reduziu seus homicídios em 20 anos e como?',a:'Redução de 95% — combinando presença estatal integral, urbanismo social, mobilidade em periferias, educação e oportunidades econômicas.'},{q:'Qual a lição central das experiências internacionais em segurança?',a:'Não há bala de prata. Países que reduziram violência de forma sustentável combinaram policiamento inteligente com presença estatal ampla.'}]}
+    ]
+  },
+  {
+    id:8, name:'Módulo 8 — 2026: Eleições no Campo Minado', free:true,
+    topics:[
+      {id:43,name:'Segurança: O Fiel da Balança das Eleições Presidenciais de 2026',dur:'7min',
+       content:`<h3>Segurança: O Tema que Vai Definir 2026</h3>
+<p>Com 63% dos brasileiros priorizando segurança (AtlasIntel/Bloomberg, nov/2025), analistas de diferentes espectros convergem: o tema será central nas eleições presidenciais de 2026 — provavelmente o mais importante da campanha.</p>
+<blockquote>📊 O Cenário Eleitoral: 63% citam segurança como maior problema · Lula sofreu queda após operação no RJ · Tarcísio cresceu nas pesquisas pós-megaoperação · Segurança foi o tema mais citado em debates municipais de 2024.</blockquote>
+<h4>Por Que a Segurança Sempre Mobiliza o Voto</h4>
+<p>Diferentemente de saúde e educação, ações repressivas de segurança pública produzem efeitos visíveis no curto prazo — operações, prisões, apreensões —, gerando percepção de resultado imediato. Isso explica por que governantes de todos os espectros buscam esse capital político, mesmo quando os impactos de longo prazo são questionáveis.</p>`,
+       quiz:{q:'Por que segurança gera mais capital político que saúde ou educação?',opts:['Porque custa menos','Porque produz efeitos visíveis no curto prazo','Porque não tem custo eleitoral','Porque o eleitor não entende as outras políticas'],correct:1},
+       cards:[{q:'Qual o cenário eleitoral de 2026 desenhado pelos dados de 2025?',a:'Segurança é o tema central — 63% dos brasileiros a priorizam. Tarcísio cresce, Lula perde pontos. Candidato que domine o tema tem vantagem decisiva.'},{q:'Por que segurança gera percepção de resultado mais rápido que saúde e educação?',a:'Ações repressivas (operações, prisões, apreensões) são visíveis imediatamente. Saúde e educação têm retorno de longo prazo, menos perceptível.'}]},
+
+      {id:44,name:'Os Candidatos e Seus Modelos de Segurança Pública',dur:'7min',
+       content:`<h3>Modelos em Disputa nas Eleições de 2026</h3>
+<p>Para o eleitor de 2026, a escolha em segurança pública será entre modelos com pressupostos e consequências distintas. Entender cada um é essencial para votar com informação.</p>
+<h4>Modelo 1: Linha Dura Policial</h4>
+<p>Mais operações, mais letalidade aceita como custo, câmeras opcionais, discurso de tolerância zero. Resultado imediato visível, questionamentos de longo prazo sobre sustentabilidade e direitos humanos.</p>
+<h4>Modelo 2: Segurança Integrada</h4>
+<p>Policiamento comunitário + presença estatal ampla + programas sociais. Resultado mais lento, mais duradouro. Maior custo fiscal no curto prazo.</p>
+<blockquote>💡 Para o Empreendedor: Cada modelo impacta diferentemente os negócios. Linha dura pode reduzir crime de rua mas aumentar insegurança jurídica. Segurança integrada tem custo mais alto no curto prazo mas ambiente mais estável no longo.</blockquote>`,
+       quiz:{q:'Qual modelo de segurança tende a ter resultados mais duradouros?',opts:['Linha dura policial','Segurança integrada com presença estatal ampla','Privatização da segurança','Descriminalização geral'],correct:1},
+       cards:[{q:'Qual a diferença fundamental entre linha dura e segurança integrada?',a:'Linha dura: resultado imediato e visível, questionamentos de longo prazo. Segurança integrada: resultado mais lento, mais duradouro, maior custo fiscal inicial.'},{q:'Como cada modelo impacta negócios diferentemente?',a:'Linha dura reduz crime de rua mas pode aumentar insegurança jurídica. Segurança integrada tem custo maior no curto prazo mas ambiente mais estável no longo.'}]},
+
+      {id:45,name:'Fake News, Medo e Manipulação Eleitoral em Ano de Campanha',dur:'7min',
+       content:`<h3>Desinformação em Segurança: Como Identificar</h3>
+<p>Em ano eleitoral, o tema da segurança se torna terreno fértil para desinformação. Dados são selecionados, distorcidos ou fabricados para amplificar o medo e beneficiar candidatos específicos.</p>
+<h4>Os Padrões de Desinformação</h4>
+<p><strong>Dados isolados sem série histórica:</strong> "houve X homicídios este mês" sem contexto. <strong>Atribuição falsa:</strong> associar crime a grupos políticos sem evidência. <strong>Casos extremos como regra:</strong> tratar crimes raros como cotidianos. <strong>Estatísticas de outros países como se fossem brasileiras.</strong></p>
+<blockquote>💡 O Filtro Crítico: Antes de compartilhar qualquer dado de segurança, pergunte: Qual a fonte? É dado primário ou relato de relato? Tem série histórica? Qual o contexto geográfico? Quem se beneficia politicamente desta informação circular?</blockquote>`,
+       quiz:{q:'Qual é o principal padrão de desinformação em dados de segurança?',opts:['Inventar mortos','Usar dados isolados sem série histórica ou contexto','Atribuir crimes a extraterrestres','Usar dados de outros continentes'],correct:1},
+       cards:[{q:'Quais as principais técnicas de desinformação em segurança pública?',a:'Dados isolados sem contexto, atribuição falsa a grupos políticos, casos extremos apresentados como cotidianos, estatísticas de outros países como brasileiras.'},{q:'Quais perguntas fazer antes de compartilhar dados de segurança?',a:'Qual a fonte primária? Tem série histórica? Qual o contexto geográfico? Quem se beneficia politicamente desta informação?'}]},
+
+      {id:46,name:'A Polarização e Como o Eleitor de Segurança Decide o Voto',dur:'7min',
+       content:`<h3>Como o Eleitor de Segurança Decide</h3>
+<p>Pesquisas eleitorais mostram que o eleitor que prioriza segurança decide principalmente com base na <em>percepção</em> de segurança — não nos dados objetivos. Isso cria uma dinâmica em que a narrativa importa tanto quanto os resultados.</p>
+<h4>O Eleitor de Segurança em 2026</h4>
+<p>Majoritariamente dos estratos C e D da população, morador de periferia ou área de risco, mais impactado diretamente pela violência cotidiana. Vota em quem parece mais "duro com o crime" — mesmo que os dados não sustentem essa percepção.</p>
+<blockquote>⚠️ A Armadilha da Percepção: A percepção de segurança pode divergir dos dados objetivos. Em cidades onde a violência caiu, mas a cobertura midiática aumentou, os moradores podem se sentir menos seguros. Em 2026, o candidato que gerenciar melhor a percepção pode ter vantagem independente da realidade.</blockquote>`,
+       quiz:{q:'Com base em que o eleitor que prioriza segurança tende a decidir seu voto?',opts:['Dados objetivos do FBSP','Percepção de segurança e narrativa','Recomendação de juristas','Comparação com outros países'],correct:1},
+       cards:[{q:'Qual o perfil do eleitor que prioriza segurança em 2026?',a:'Majoritariamente das classes C e D, morador de periferia, impactado diretamente pela violência cotidiana. Vota em quem parece mais duro com o crime.'},{q:'Por que a percepção pode divergir dos dados objetivos de segurança?',a:'Cobertura midiática intensa pode aumentar percepção de insegurança mesmo quando a violência cai. Em 2026, quem gerenciar a percepção pode ter vantagem.'}]},
+
+      {id:47,name:'Modelos que Funcionaram no Mundo: O Que a Evidência Diz',dur:'7min',
+       content:`<h3>Evidências Internacionais para o Debate Brasileiro</h3>
+<p>Com eleições à vista e promessas em abundância, a evidência internacional serve como contraponto racional às retóricas de campanha. O que realmente funcionou?</p>
+<h4>O Que a Ciência Comprova que Funciona</h4>
+<p><strong>Policiamento orientado por dados (hot spots):</strong> concentrar policiamento onde o crime realmente ocorre reduz crimes em 20–30% sem aumento de letalidade. <strong>Intervenção preventiva em jovens:</strong> programas como Boston Ceasefire reduziram homicídios juvenis em 63% nos EUA. <strong>Presença estatal integral:</strong> Medellín reduziu homicídios em 95% com urbanismo social.</p>
+<blockquote>⚠️ O Que Não Funciona: Encarceramento massivo sem reinserção (gera reincidência), pena de morte (sem evidência de efeito dissuasório), e policiamento puramente repressivo sem inteligência.</blockquote>`,
+       quiz:{q:'Quanto o policiamento orientado por dados (hot spots) reduz crimes?',opts:['5–10%','20–30%','50–60%','80%+'],correct:1},
+       cards:[{q:'Quais são os modelos com evidência científica de eficácia em reduzir violência?',a:'Policiamento por dados (hot spots): −20–30%. Intervenção preventiva em jovens: −63% (Boston). Presença estatal integral: −95% (Medellín).'},{q:'O que a ciência mostra que não funciona isoladamente?',a:'Encarceramento massivo sem reinserção, pena de morte sem evidência dissuasória, policiamento repressivo sem inteligência.'}]},
+
+      {id:48,name:'Cenários para os Próximos 12 Meses em Segurança Pública',dur:'7min',
+       content:`<h3>Cenários para 2026: O Que Esperar</h3>
+<p>Com base nos dados de 2025 e nas tendências identificadas ao longo deste curso, é possível desenhar cenários plausíveis para os próximos 12 meses em segurança pública no Brasil.</p>
+<h4>Cenário Base (Mais Provável)</h4>
+<p>Continuidade das operações em SP com alta letalidade policial. Feminicídios permanecem em patamar elevado. Debate político se intensifica com aproximação das eleições. Governo federal pressiona por PEC da Segurança. Candidatos de linha dura ganham nas pesquisas mas enfrentam questionamentos de direitos humanos.</p>
+<h4>Cenário de Ruptura</h4>
+<p>Nova operação de grande escala com elevado número de mortes → crise política aguda → mudança de posicionamento do governo federal → janela para debate mais qualificado sobre modelos de segurança.</p>
+<blockquote>💡 Para o Empreendedor: Qualquer que seja o cenário, a chave é monitorar os dados mensais (SSP-SP, FBSP) e antecipar como mudanças regulatórias ou operacionais em segurança impactam seu setor específico.</blockquote>`,
+       quiz:{q:'Qual a chave para o empreendedor navegar qualquer cenário de segurança pública?',opts:['Aguardar as eleições','Monitorar dados mensais e antecipar impactos setoriais','Migrar o negócio para outro país','Contratar mais segurança privada'],correct:1},
+       cards:[{q:'Qual o cenário mais provável para segurança em SP nos próximos 12 meses?',a:'Continuidade das operações com alta letalidade, feminicídios em patamar elevado, debate político intenso com candidatos de linha dura crescendo nas pesquisas.'},{q:'Como o empreendedor deve se preparar para os cenários de segurança em 2026?',a:'Monitorar dados mensais do SSP-SP e FBSP, antecipar mudanças regulatórias e operacionais, e diversificar estratégias por região e setor.'}]}
+    ]
+  },
+  {
+    id:9, name:'Módulo 9 — Visão de Negócio: Navegando a Turbulência', free:true,
+    topics:[
+      {id:49,name:'Lendo o Cenário com Olhos de Empreendedor Estratégico',dur:'7min',
+       content:`<h3>A Leitura Estratégica do Cenário</h3>
+<p>Chegamos ao módulo final. Tudo o que aprendemos sobre dados, política e violência agora converge para uma pergunta central: <strong>como o empreendedor brasileiro navega este cenário?</strong></p>
+<h4>O Empreendedor Estratégico vs. O Reativo</h4>
+<p>O empreendedor reativo espera a crise para agir. O estratégico <em>antecipa</em> — usando dados como os deste curso para tomar decisões antes que os problemas se manifestem no negócio.</p>
+<blockquote>💡 A Vantagem da Informação: Você terminou este curso sabendo que feminicídios crescem, que letalidade policial é alta, que 63% do eleitorado prioriza segurança e que US$ 19,97 tri é o custo global da violência. Esse conhecimento é um ativo de negócio — use-o.</blockquote>`,
+       quiz:{q:'Qual a diferença entre o empreendedor reativo e o estratégico?',opts:['O estratégico tem mais dinheiro','O estratégico antecipa usando dados','O reativo tem mais experiência','Não há diferença na prática'],correct:1},
+       cards:[{q:'Por que conhecer dados de segurança é um ativo de negócio?',a:'Permite antecipar riscos operacionais, identificar oportunidades em mercados de segurança e posicionar melhor o negócio em cenários eleitorais de 2026.'},{q:'O que diferencia o empreendedor estratégico do reativo?',a:'O estratégico usa informação para antecipar. O reativo espera a crise para agir — pagando preço maior em custo e tempo de reação.'}]},
+
+      {id:50,name:'Setores em Alta Durante Crises de Segurança Pública',dur:'7min',
+       content:`<h3>Oportunidades em Cenário de Crise de Segurança</h3>
+<p>Crises de segurança criam demandas específicas que se traduzem em oportunidades de negócio para quem está preparado para identificá-las.</p>
+<h4>Setores em Crescimento</h4>
+<p><strong>Segtech:</strong> monitoramento remoto, biometria, análise preditiva — crescimento de 35% em 2024. <strong>Segurança privada:</strong> R$ 50 bilhões/ano, crescimento de 8–12%. <strong>Jurídico especializado:</strong> escritórios com expertise em Lei Maria da Penha, direito penal empresarial. <strong>Seguros:</strong> vida, patrimonial e empresarial crescem com a insegurança. <strong>ESG:</strong> empresas com programas de proteção à mulher acessam mais capital.</p>
+<blockquote>📊 Oportunidade Específica: O mercado de câmeras corporais para polícias, sistemas de alerta para vítimas de violência doméstica e plataformas de denúncia anônima são segmentos com demanda crescente e pouco competidores qualificados.</blockquote>`,
+       quiz:{q:'Qual setor cresceu 35% em 2024 relacionado à segurança?',opts:['Segurança privada tradicional','Segtech (tecnologia de segurança)','Armamento civil','Serviços jurídicos criminais'],correct:1},
+       cards:[{q:'Quais setores crescem em crises de segurança pública?',a:'Segtech (+35% em 2024), segurança privada (+8–12%/ano), jurídico especializado, seguros e ESG com programas de proteção à mulher.'},{q:'Qual oportunidade específica de nicho foi identificada no curso?',a:'Câmeras corporais para polícias, sistemas de alerta para vítimas de violência doméstica e plataformas de denúncia anônima — demanda crescente, poucos concorrentes qualificados.'}]},
+
+      {id:51,name:'Como Proteger Seu Negócio em Ambientes de Alto Risco',dur:'7min',
+       content:`<h3>Proteção Operacional em Ambientes de Alto Risco</h3>
+<p>Além de identificar oportunidades, o empreendedor em zona de risco precisa de protocolos práticos para proteger seu negócio, seus funcionários e sua família.</p>
+<h4>Protocolo de Segurança Básico</h4>
+<p><strong>Mapeamento de risco:</strong> identificar quais são os riscos específicos da região e do setor. <strong>Segurança física:</strong> câmeras, alarmes, controle de acesso. <strong>Segurança de dados:</strong> backup, criptografia, plano de continuidade. <strong>Protocolo de emergência:</strong> o que cada funcionário faz em caso de assalto, extorsão ou ameaça. <strong>Seguros:</strong> patrimonial, vida e responsabilidade civil.</p>
+<blockquote>💡 O Elemento Humano: O protocolo mais sofisticado falha se os funcionários não foram treinados. Simulações regulares de situações de risco aumentam a resiliência operacional e reduzem o impacto de incidentes.</blockquote>`,
+       quiz:{q:'Qual o elemento mais crítico de qualquer protocolo de segurança empresarial?',opts:['Câmeras de alta resolução','Treinamento dos funcionários','Seguro patrimonial','Sistema de alarme 24h'],correct:1},
+       cards:[{q:'Quais são os componentes do protocolo de segurança básico para empresas?',a:'Mapeamento de risco, segurança física, segurança de dados, protocolo de emergência e seguros patrimonial, vida e responsabilidade civil.'},{q:'Por que o elemento humano é crítico em protocolos de segurança?',a:'O protocolo mais sofisticado falha sem treinamento. Simulações regulares aumentam resiliência e reduzem impacto de incidentes.'}]},
+
+      {id:52,name:'Posicionamento de Marca em Contexto Político Sensível',dur:'6min',
+       content:`<h3>Comunicação Empresarial em Ano Eleitoral</h3>
+<p>Em ano eleitoral — especialmente com segurança como tema central — posicionar a marca de forma equivocada pode custar clientes, parceiros e reputação. Mas o silêncio também tem seu preço.</p>
+<h4>As Três Posições</h4>
+<p><strong>Engajamento ativo:</strong> a empresa toma partido explícito. Alto risco, potencial de ganho de nicho. <strong>Silêncio estratégico:</strong> evita o tema completamente. Seguro, mas pode parecer omissão. <strong>Posição baseada em dados:</strong> a empresa comunica com base em fatos verificados (redução de feminicídio, proteção de funcionárias) sem tomar partido político. Mais sustentável.</p>
+<blockquote>💡 A Regra de Ouro: Em contexto político sensível, comunique o que você faz — não o que você pensa sobre os candidatos. Ações verificáveis (programa de proteção, doação a instituições, treinamento) comunicam valores sem exposição política.</blockquote>`,
+       quiz:{q:'Qual posicionamento de marca é mais sustentável em ano eleitoral?',opts:['Engajamento ativo com candidato preferido','Silêncio total','Posição baseada em ações verificáveis e dados','Crítica aberta a todos os candidatos'],correct:2},
+       cards:[{q:'Quais são as três posições possíveis para uma marca em ano eleitoral?',a:'Engajamento ativo (alto risco), silêncio estratégico (pode parecer omissão) e posição baseada em dados e ações verificáveis (mais sustentável).'},{q:'Como comunicar valores empresariais sem exposição política?',a:'Comunicar o que a empresa faz (programas, treinamentos, doações) — não o que pensa sobre candidatos. Ações verificáveis comunicam mais que opiniões.'}]},
+
+      {id:53,name:'Oportunidades no Terceiro Setor, ESG e Impacto Social',dur:'6min',
+       content:`<h3>ESG e Terceiro Setor: Onde Segurança Vira Oportunidade</h3>
+<p>A crise de segurança pública cria demanda por iniciativas de impacto social. Para empresas que querem acessar capital ESG, parceiros internacionais ou simplesmente construir reputação, atuar nesse espaço é estratégico.</p>
+<h4>Oportunidades Específicas</h4>
+<p><strong>Programas corporativos de proteção à mulher:</strong> licença remunerada para vítimas, parceria com delegacias, psicólogo no local. ROI em retenção e imagem. <strong>Investimento social privado:</strong> apoio a organizações como o Instituto Sou da Paz ou o FBSP, com benefício fiscal. <strong>B Corps e certificações ESG:</strong> empresas com políticas verificáveis de proteção têm acesso a capital mais barato.</p>
+<blockquote>📊 O Mercado de Capital ESG: Fundos ESG movimentaram US$ 35 trilhões globalmente em 2024. Empresas com políticas verificáveis de proteção à mulher e prevenção à violência têm acesso preferencial a esse capital.</blockquote>`,
+       quiz:{q:'Qual o tamanho do mercado de capital ESG globalmente em 2024?',opts:['US$ 5 tri','US$ 12 tri','US$ 20 tri','US$ 35 tri'],correct:3},
+       cards:[{q:'Como empresas se beneficiam de programas de proteção à mulher funcionária?',a:'ROI em retenção, produtividade e imagem, além de acesso a capital ESG de fundos com critérios socioambientais.'},{q:'Qual o benefício de investimento social privado em organizações de segurança?',a:'Benefício fiscal, reputação corporativa e acesso a redes de parceiros internacionais com critérios ESG.'}]},
+
+      {id:54,name:'Síntese Final: O Brasil que Vem Por Aí — Seus Próximos Passos',dur:'8min',
+       content:`<h3>Síntese Final: O Brasil que Vem Por Aí</h3>
+<p>Chegamos ao final de 54 tópicos e 9 módulos. Hora de integrar o conhecimento e projetar o que vem — não como analistas de segurança pública, mas como empreendedores, profissionais e cidadãos que precisam navegar um Brasil em transformação acelerada.</p>
+<h4>As Cinco Grandes Verdades deste Curso</h4>
+<p><strong>1. Os dados são reais e verificáveis.</strong> 270 feminicídios em SP (SSP-SP), 834 mortes por polícia (CNN Brasil), 63% dos brasileiros preocupados (AtlasIntel). Fontes identificadas, sem exagero.</p>
+<p><strong>2. A violência tem dimensão econômica enorme.</strong> US$ 19,97 trilhões/ano globalmente (GPI 2025). No Brasil, deprime o crescimento, afasta investimentos e aumenta custos operacionais.</p>
+<p><strong>3. A política de segurança vai definir 2026.</strong> O eleitor vai escolher entre modelos radicalmente diferentes. Essa escolha impacta o ambiente de negócios dos próximos 4 anos.</p>
+<p><strong>4. Dados sem contexto são armas de manipulação.</strong> Leia queda de homicídios e alta de letalidade com os mesmos critérios analíticos. Este curso te deu esse filtro.</p>
+<p><strong>5. Há oportunidades reais nesse cenário.</strong> Segtech, ESG, proteção à mulher, seguros — o mercado de segurança está em forte expansão no Brasil.</p>
+<blockquote>💡 Seus 5 Próximos Passos: 1. MONITORE SSP-SP, FBSP e Sou da Paz mensalmente. 2. MAPEIE como cada candidato impacta seu setor. 3. DIVERSIFIQUE estratégias em regiões de alto risco. 4. INVISTA em proteção de funcionárias — é gestão de capital humano. 5. COMUNIQUE COM RESPONSABILIDADE — em ano eleitoral, posicionamento precipitado custa caro.</blockquote>
+<p><strong>Parabéns! Você concluiu o curso Segurança & Sociedade 2025.</strong> Volte à tela inicial e gere seu certificado!</p>`,
+       quiz:{q:'Qual o primeiro passo recomendado após concluir este curso?',opts:['Contratar segurança privada','Monitorar dados mensais de SSP-SP, FBSP e Sou da Paz','Migrar o negócio de estado','Apostar apenas no crescimento da segtech'],correct:1},
+       cards:[{q:'Quais são as 5 grandes verdades do curso Segurança & Sociedade 2025?',a:'1. Dados reais e verificáveis. 2. Dimensão econômica enorme. 3. Segurança define 2026. 4. Dados sem contexto manipulam. 5. Há oportunidades reais no cenário.'},{q:'Quais são os 5 próximos passos recomendados ao empreendedor?',a:'Monitorar dados mensais, mapear impacto de candidatos, diversificar estratégias, investir em proteção de funcionárias e comunicar com responsabilidade.'}]}
     ]
   }
 ];
