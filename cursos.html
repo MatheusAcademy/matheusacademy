@@ -21,43 +21,73 @@
 html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--font);overflow-x:hidden;}
 ::selection{background:var(--pri);color:#fff;}
 
-/* ══ TOPBAR ══ */
-.topbar{
+/* ══ TOPBAR PADRÃO ══ */
+.ma-topbar{
   position:fixed;top:0;left:0;right:0;height:var(--topbar);
-  background:rgba(4,4,10,.97);
-  border-bottom:1px solid var(--brd);
-  display:flex;align-items:center;padding:0 20px;gap:10px;
-  z-index:999;
+  background:rgba(4,4,10,.99);
+  border-bottom:1px solid rgba(91,127,255,.15);
+  display:flex;align-items:center;padding:0 14px;gap:6px;
+  z-index:9999;font-family:var(--font);
 }
-.topbar::before{
+.ma-topbar::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1.5px;
-  background:linear-gradient(90deg,transparent,#4A7EFF 30%,#00d4ff 65%,transparent);
-  opacity:.7;
+  background:linear-gradient(90deg,transparent 0%,#4A7EFF 30%,#00d4ff 65%,transparent 100%);
+  opacity:.75;
 }
-.tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
-.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;}
-.tb-title{font-size:.65rem;font-weight:700;color:var(--txt2);letter-spacing:.06em;text-transform:uppercase;}
-.tb-spacer{flex:1;}
-.tb-pts{
+.ma-tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.ma-tb-logo svg{display:block;flex-shrink:0;}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;}
+.ma-tb-page-name{font-size:.64rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;}
+.ma-tb-spacer{flex:1;min-width:0;}
+/* Troféu + pontos */
+.ma-tb-pts-block{
   display:flex;align-items:center;gap:7px;
+  text-decoration:none;flex-shrink:0;
   padding:5px 12px 5px 10px;border-radius:22px;
   border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
-  text-decoration:none;cursor:pointer;transition:all .2s;
+  transition:all .2s;cursor:pointer;
 }
-.tb-pts:hover{border-color:rgba(255,255,255,.22);}
-.tb-pts-icon{color:var(--orn);display:flex;align-items:center;}
-.tb-pts-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.tb-pts-num{font-size:.72rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;}
-.tb-back{
-  display:flex;align-items:center;gap:6px;
-  padding:6px 12px;border-radius:8px;
-  border:1px solid var(--brd);background:transparent;
-  color:var(--txt3);font-family:var(--font);font-size:.62rem;font-weight:600;
-  cursor:pointer;transition:all .2s;text-decoration:none;letter-spacing:.04em;
-  text-transform:uppercase;
+.ma-tb-pts-block:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08);}
+.ma-tb-trophy{color:#f59e0b;display:flex;align-items:center;}
+.ma-tb-trophy svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.ma-tb-pts-num{font-size:.78rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;}
+/* Botão tema */
+.ma-tb-theme-btn{
+  width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);color:#f59e0b;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;padding:0;
 }
-.tb-back:hover{border-color:var(--brd2);color:var(--txt);}
-.tb-back svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+.ma-tb-theme-btn svg{width:15px;height:15px;stroke:currentColor;}
+.ma-tb-theme-btn:hover{border-color:rgba(245,158,11,.4);}
+/* Botão 3 pontinhos */
+.ma-tb-menu-btn{
+  width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;padding:0;
+}
+.ma-tb-menu-btn svg{width:16px;height:16px;stroke:currentColor;pointer-events:none;}
+.ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;}
+/* Dropdown menu */
+.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none;}
+.ma-menu-overlay.open{display:block;}
+.ma-menu-dd{
+  position:fixed;top:62px;right:10px;
+  background:#0f0f1e;border:1px solid #252540;border-radius:16px;
+  min-width:240px;z-index:10001;
+  box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;
+  opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;
+  transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right;
+}
+.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all;}
+.ma-menu-user{padding:14px 16px 12px;border-bottom:1px solid #1e1e35;}
+.ma-mu-name{font-size:.85rem;font-weight:700;color:#fff;display:block;margin-bottom:3px;}
+.ma-mu-pts{font-size:.6rem;color:rgba(255,255,255,.35);}
+.ma-menu-sec{padding:5px 0;}
+.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35;}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s;}
+.ma-mi:hover{background:#161628;color:#e8e8f0;}
+.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0;}
+.ma-mi.gold{color:#f59e0b;}.ma-mi.red{color:#ef4444;}
 
 /* ══ HERO HEADER ══ */
 .page-hero{
@@ -360,10 +390,11 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 
 <div class="toast" id="toast"></div>
 
-<!-- TOPBAR -->
-<nav class="topbar">
-  <a class="tb-logo" href="index.html">
-    <svg width="110" height="34" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
+<!-- TOPBAR PADRÃO -->
+<nav class="ma-topbar">
+  <!-- LOGO HORIZONTAL — M branco + linha dupla azul + ACADEMY -->
+  <a class="ma-tb-logo" href="index.html">
+    <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
       <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
       <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
       <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
@@ -371,16 +402,54 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
       <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
     </svg>
   </a>
-  <div class="tb-sep"></div>
-  <span class="tb-title">Meus Cursos</span>
-  <div class="tb-spacer"></div>
-  <a class="tb-pts" href="painel.html">
-    <span class="tb-pts-icon">
+  <div class="ma-tb-sep"></div>
+  <span class="ma-tb-page-name">Cursos</span>
+  <div class="ma-tb-spacer"></div>
+
+  <!-- TROFÉU + PONTOS -->
+  <a class="ma-tb-pts-block" href="painel.html">
+    <span class="ma-tb-trophy">
       <svg viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg>
     </span>
-    <span class="tb-pts-num" id="tbPts">000</span>
+    <span class="ma-tb-pts-num" id="maPtsNum">000</span>
   </a>
+
+  <!-- TEMA -->
+  <button class="ma-tb-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema">
+    <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+
+  <!-- 3 PONTINHOS -->
+  <button class="ma-tb-menu-btn" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="5" r="1" fill="currentColor"/>
+      <circle cx="12" cy="12" r="1" fill="currentColor"/>
+      <circle cx="12" cy="19" r="1" fill="currentColor"/>
+    </svg>
+  </button>
 </nav>
+
+<!-- DROPDOWN MENU -->
+<div class="ma-menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="ma-menu-dd" id="menuDd">
+  <div class="ma-menu-user" id="menuUserSec"></div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">🎓</span>Meus Cursos</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Meu Painel</a>
+    <a class="ma-mi" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🤝</span>Indicações</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🗺️</span>Trilhas</a>
+    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
+  </div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
+  </div>
+  <div class="ma-menu-sec" id="menuAuthSec"></div>
+</div>
 
 <!-- HERO -->
 <div class="page-hero">
@@ -517,8 +586,49 @@ var EXP_M=3*365*24*3600e3, EXP_I=365*24*3600e3;
 function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
 function gA(){try{return JSON.parse(localStorage.getItem('ma_access'))||{};}catch(e){return{};}}
 function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0};}catch(e){return{total:0};}}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
-function isCourseUnlocked(c){
+/* ═══ MENU 3 PONTINHOS ═══ */
+function toggleMenu(){
+  var dd=document.getElementById('menuDd');
+  var ov=document.getElementById('menuOverlay');
+  dd.classList.toggle('open');
+  ov.classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('menuDd').classList.remove('open');
+  document.getElementById('menuOverlay').classList.remove('open');
+}
+function updateMenuUser(){
+  var u=gU(),p=gP();
+  var us=document.getElementById('menuUserSec');
+  var as=document.getElementById('menuAuthSec');
+  if(u){
+    if(us)us.innerHTML='<div style="padding:0"><span class="ma-mu-name">'+u.name.split(' ')[0]+'</span><div class="ma-mu-pts">'+p.total.toLocaleString('pt-BR')+' pontos</div></div>';
+    if(as)as.innerHTML='<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
+  }else{
+    if(us)us.innerHTML='<div><span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span></div>';
+    if(as)as.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
+  }
+}
+function doLogout(){localStorage.removeItem('ma_user');closeMenu();location.reload();}
+
+/* ═══ TEMA ═══ */
+var _light=localStorage.getItem('ma_theme')==='light';
+function applyTheme(){
+  document.body.classList.toggle('light',_light);
+  document.getElementById('iconSun').style.display=_light?'block':'none';
+  document.getElementById('iconMoon').style.display=_light?'none':'block';
+}
+function toggleTheme(){_light=!_light;localStorage.setItem('ma_theme',_light?'light':'dark');applyTheme();}
+
+/* ═══ PONTOS NA TOPBAR ═══ */
+function updatePts(){
+  var p=gP();var total=p.total;
+  var str=total<1000?String(total).padStart(3,'0'):total.toLocaleString('pt-BR');
+  var el=document.getElementById('maPtsNum');
+  if(el)el.textContent=str;
+}
   var ac=gA(),now=Date.now();
   if(ac.master&&ac.masterTs&&now-ac.masterTs<(ac.expiry||EXP_M))return true;
   var raw=localStorage.getItem(c.ak);
@@ -547,11 +657,6 @@ function showToast(msg){
 function renderCursos(){
   var grid=document.getElementById('coursesGrid');
   var u=gU();
-  var p=gP();
-  var pts=p.total;
-  var str=pts<1000?String(pts).padStart(3,'0'):pts.toLocaleString('pt-BR');
-  var ptEl=document.getElementById('tbPts');
-  if(ptEl)ptEl.textContent=str;
 
   var totalPct=0, concluidos=0;
   var html='';
@@ -579,7 +684,7 @@ function renderCursos(){
 
     var onclick=unlocked
       ?'onclick="window.location.href=\''+c.file+'\'"'
-      :'onclick="showToast(\'🔒 Acesse os planos para desbloquear este curso\')"';
+      :'onclick="showToast(\'🔒 Acesse os planos para desbloquear\')"';
 
     html+='<div class="course-card'+(unlocked?'':' locked')+'" '+onclick+' style="--card-color:'+c.color+';">';
     html+='<div class="card-accent"></div>';
@@ -595,9 +700,9 @@ function renderCursos(){
 
     html+='<div class="card-footer">';
     html+='<div class="card-stats">';
-    html+='<span class="card-stat"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'+c.modules+' módulos</span>';
-    html+='<span class="card-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 15.5"/></svg>'+c.hours+'h</span>';
-    html+='<span class="card-stat"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'+c.topics+' aulas</span>';
+    html+='<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'+c.modules+' módulos</span>';
+    html+='<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 15.5"/></svg>'+c.hours+'h</span>';
+    html+='<span class="card-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'+c.topics+' aulas</span>';
     html+='</div>';
     html+='<div class="card-prog-row">';
     html+='<div class="card-prog-bar"><div class="card-prog-fill" style="width:'+prog.pct+'%;background:'+progColor+';"></div></div>';
@@ -606,9 +711,8 @@ function renderCursos(){
     html+='</div>';
 
     if(unlocked){
-      html+='<div class="card-arrow"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div>';
+      html+='<div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></div>';
     }
-
     html+='</div>'; // course-card
   });
 
@@ -621,12 +725,17 @@ function renderCursos(){
   document.getElementById('sumProgFill').style.width=avgPct+'%';
 
   // CTA banner
-  if(temBloqueado&&!u){
+  if(temBloqueado){
     document.getElementById('ctaBanner').style.display='block';
   }
 }
 
-document.addEventListener('DOMContentLoaded',renderCursos);
+document.addEventListener('DOMContentLoaded',function(){
+  applyTheme();
+  updatePts();
+  updateMenuUser();
+  renderCursos();
+});
 </script>
 </body>
 </html>
