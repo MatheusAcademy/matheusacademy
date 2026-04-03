@@ -1758,11 +1758,30 @@ document.addEventListener('DOMContentLoaded',function(){
   initTheme();
   // Init
   initSidebar();setupEvents();updateTopbar();buildSidebar();initHighlight();setBottomNavActive();updateLessonCoverMini();initFloatingPen();buildModuleCarousel();
-  // Polling de pontos
   // Polling de pontos — unificado no timer principal acima
   // Sessão
   var _ss=Date.now();
   function saveSession(){var dur=Math.floor((Date.now()-_ss)/60000);var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}s.count=(s.count||0)+1;s.lastDuration=dur;var today=new Date().toLocaleDateString('pt-BR'),yest=new Date(Date.now()-86400000).toLocaleDateString('pt-BR');if(s.lastStudyDate===yest)s.streak=(s.streak||0)+1;else if(s.lastStudyDate!==today)s.streak=1;s.lastStudyDate=today;localStorage.setItem('ma_sessions',JSON.stringify(s));}
   window.addEventListener('beforeunload',saveSession);window.addEventListener('pagehide',saveSession);
+
+  /* ── TIME TRACKER — carregar shared/time-tracker.js nos cursos ── */
+  (function loadTimeTracker(){
+    if(window.MA_TimeTracker)return; // já carregado
+    var s=document.createElement('script');
+    // Detectar caminho correto (cursos podem estar na raiz ou em subpasta)
+    var base=document.querySelector('script[src*="course-engine"]');
+    var basePath=base?base.src.replace('course-engine.js',''):'shared/';
+    // Se o src não tem 'shared/', usar caminho relativo padrão
+    if(basePath.indexOf('shared')===-1)basePath=basePath+'shared/';
+    s.src=basePath+'time-tracker.js';
+    s.onerror=function(){
+      // Fallback: tentar caminho alternativo
+      var s2=document.createElement('script');
+      s2.src='shared/time-tracker.js';
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s);
+  })();
+
   grantMission('aula');
 });
