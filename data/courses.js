@@ -57,25 +57,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    id: 'mp',
-    courseKey: 'mp',
-    name: 'Mestre em Persuasão',
-    desc: 'Domine a arte de influenciar. Psicologia, comunicação e copywriting.',
-    file: 'mestre-em-persuasao.html',
-    cat: 'PNL',
-    modules: 217,
-    topics: 1522,
-    hours: 508,
-    quizzes: 217,
-    salt: 'MP_HENRY_2026_MASTER',
-    ak: 'mp_auth',
-    storagePrefix: 'mp_',
-    icon: '🎯',
-    color: '#ec4899',
-    addedTs: 1743206400000,
-    active: true
-  },
-  {
     id: 'bm',
     courseKey: 'bm',
     name: 'Caso Banco Master',
