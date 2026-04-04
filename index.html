@@ -1482,7 +1482,10 @@ function makeCard(c) {
   var gi = c.id ? c.id.split('').reduce(function(a,ch){return a+ch.charCodeAt(0);},0) % 8 : 0;
   // Usar capa própria se existir (input hidden cov-XX), senão gerar automaticamente
   var covEl = document.getElementById('cov-' + c.id);
-  var img = (covEl && covEl.value) ? covEl.value : (makeSVGCover(c.id) || makeAutoCover(c, gi));
+  var img = c.coverImg                              // 1. capa IA gerada pelo GitHub Action
+         || (covEl && covEl.value)                   // 2. input hidden legado
+         || makeSVGCover(c.id)                       // 3. SVG gerado por código
+         || makeAutoCover(c, gi);                    // 4. capa genérica automática
   var h = '<div class="cc" data-file="' + c.file + '">';
   h += '<div class="cc-img"><img src="' + img + '" alt="' + c.name + '" loading="lazy">';
   if (un && !c.free) h += '<div class="cc-badge live">&#10003; Liberado</div>';
