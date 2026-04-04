@@ -1,7 +1,7 @@
 var MA_COURSES = [
   {
     id: 'gp',
-    coverImg: 'assets/capas/gp.jpg',
+    coverImg: 'assets/capas/gp.svg',
     courseKey: 'geo',
     name: 'Geopolítica Avançada',
     desc: 'Entenda o mundo como ele funciona. Teoria, conflitos e economia global.',
@@ -21,7 +21,7 @@ var MA_COURSES = [
   },
   {
     id: 'bm',
-    coverImg: 'assets/capas/bm.jpg',
+    coverImg: 'assets/capas/bm.svg',
     courseKey: 'bm',
     name: 'Caso Banco Master',
     desc: 'A maior fraude bancária do Brasil. R$52bi, CPI e delação premiada.',
@@ -42,7 +42,7 @@ var MA_COURSES = [
   },
   {
     id: 'ii',
-    coverImg: 'assets/capas/ii.jpg',
+    coverImg: 'assets/capas/ii.svg',
     courseKey: 'ii',
     name: 'Guerra Israel x Irã',
     desc: 'O conflito que mudou o mundo. De 2025 à escalada de 2026.',
@@ -63,7 +63,7 @@ var MA_COURSES = [
   },
   {
     id: 'cp',
-    coverImg: 'assets/capas/cp.jpg',
+    coverImg: 'assets/capas/cp.svg',
     courseKey: 'cp',
     name: 'Copa do Mundo 2026',
     desc: 'Tudo sobre o maior evento esportivo do mundo. Análise completa.',
@@ -84,7 +84,7 @@ var MA_COURSES = [
   },
   {
     id: 'bc',
-    coverImg: 'assets/capas/bc.jpg',
+    coverImg: 'assets/capas/bc.svg',
     name: 'Bitcoin — A Moeda que Mudou a História do Mundo',
     desc: '',
     file: 'bitcoin-curso.html',
@@ -103,7 +103,7 @@ var MA_COURSES = [
   },
   {
     id: 'ctp',
-    coverImg: 'assets/capas/ctp.jpg',
+    coverImg: 'assets/capas/ctp.svg',
     name: 'Dominando o Tráfego Pago - Completo',
     desc: 'O Dominando o Tráfego Pago é a especialização mais completa do mercado brasileiro',
     file: 'curso-trafego-pago.html',
@@ -122,7 +122,7 @@ var MA_COURSES = [
   },
   {
     id: 'ctep',
-    coverImg: 'assets/capas/ctep.jpg',
+    coverImg: 'assets/capas/ctep.svg',
     name: 'Técnicas de Persuasão',
     desc: '',
     file: 'curso-tecnicas-persuasao.html',
@@ -141,7 +141,7 @@ var MA_COURSES = [
   },
   {
     id: 'nlf',
-    coverImg: 'assets/capas/nlf.jpg',
+    coverImg: 'assets/capas/nlf.svg',
     name: 'Lei FELCA e o Modelo Chinês de Censura no Brasil',
     desc: '',
     file: 'noticia-lei-felca.html',
@@ -161,7 +161,7 @@ var MA_COURSES = [
   },
   {
     id: 'ie',
-    coverImg: 'assets/capas/ie.jpg',
+    coverImg: 'assets/capas/ie.svg',
     name: 'Inteligência Emocional',
     desc: 'A formação completa em inteligência emocional — do autoconhecimento à maestria. Aprenda a dominar suas emoções, melhorar relacionamentos, liderar com impacto e viver com mais equilíbrio e propósito.',
     file: 'curso-inteligencia-emocional.html',
@@ -200,7 +200,6 @@ var MA_CATS = [
 var MA_TRAILS = [
   {
     id: 'empreendedor',
-    coverImg: 'assets/capas/empreendedor.jpg',
     icon: '🚀',
     color: 'rgba(91,127,255,.1)',
     borderColor: 'rgba(91,127,255,.4)',
@@ -211,7 +210,6 @@ var MA_TRAILS = [
   },
   {
     id: 'estrategista',
-    coverImg: 'assets/capas/estrategista.jpg',
     icon: '🌍',
     color: 'rgba(34,197,94,.1)',
     borderColor: 'rgba(34,197,94,.35)',
@@ -222,7 +220,6 @@ var MA_TRAILS = [
   },
   {
     id: 'cidadao',
-    coverImg: 'assets/capas/cidadao.jpg',
     icon: '🏛️',
     color: 'rgba(59,130,246,.1)',
     borderColor: 'rgba(59,130,246,.35)',
@@ -233,7 +230,6 @@ var MA_TRAILS = [
   },
   {
     id: 'completa',
-    coverImg: 'assets/capas/completa.jpg',
     icon: '👑',
     color: 'rgba(245,158,11,.1)',
     borderColor: 'rgba(245,158,11,.35)',
@@ -271,4 +267,3 @@ function MA_buildTrails() {
     return { id: trail.id, icon: trail.icon, color: trail.color, borderColor: trail.borderColor, name: trail.name, desc: trail.desc, badge: trail.badge, courses: resolved };
   }).filter(function(t){ return t.courses.length > 0; });
 }
-
