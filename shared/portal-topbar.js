@@ -285,10 +285,32 @@ function ptInitTopbar() {
     ptUpdatePtsFromEvent(e.detail);
   });
   
-  // Quando Firebase estiver pronto, sincroniza
-  document.addEventListener('maFirebaseReady', function() {
+  // CORREÇÃO: quando Firebase estiver pronto, registra observer de auth
+  // que atualiza a topbar sempre que o estado de login mudar
+  function _setupFirebaseSync() {
+    // Sincroniza imediatamente
     ptSyncFromFirebase();
-  });
+
+    // Registra observer de autenticação para manter XP sempre atualizado
+    if (window.maAuth) {
+      window.maAuth.onAuthStateChanged(function(authUser) {
+        if (authUser) {
+          // Pequeno delay para garantir que MAStore terminou de iniciar
+          setTimeout(ptSyncFromFirebase, 300);
+        } else {
+          var el = document.getElementById('maPtsNum');
+          if (el) { el.textContent = '0'; el._prev = 0; }
+          ptUpdateMenuUser();
+        }
+      });
+    }
+  }
+
+  if (window.__maFirebaseReady) {
+    _setupFirebaseSync();
+  } else {
+    document.addEventListener('maFirebaseReady', _setupFirebaseSync, { once: true });
+  }
 }
 
 /**
