@@ -2192,3 +2192,123 @@ body.focus-mode .floating-pen{display:block !important;}
   80% {transform:translateX(-50%) translateY(2px)   scale(1.3,.5); opacity:.8;}
   100%{transform:translateX(-50%) translateY(2px)   scale(0);  opacity:0;}
 }
+/* ═══════════════════════════════════════════════════════════════
+   MATHEUS ACADEMY — ADDITIONS: Navegação Módulos + Sidebar + Balão
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── BOTÕES NAVEGAÇÃO ENTRE MÓDULOS ── */
+.ml-module-nav{
+  display:flex;
+  gap:10px;
+  padding:20px 16px 8px;
+  justify-content:space-between;
+  align-items:stretch;
+}
+.ml-nav-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
+  min-width:0;
+  padding:13px 14px;
+  border-radius:13px;
+  border:1.5px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);
+  color:var(--txt);
+  font-family:var(--font);
+  cursor:pointer;
+  transition:all .2s;
+  text-align:left;
+}
+.ml-nav-btn:hover{border-color:rgba(74,126,255,.5);background:rgba(74,126,255,.09);}
+.ml-nav-btn:active{transform:scale(.97);}
+.ml-nav-btn svg{flex-shrink:0;width:17px;height:17px;stroke:var(--pri,#5b7fff);}
+.ml-nav-info{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;}
+.ml-nav-label{font-size:.52rem;font-weight:700;color:var(--txt3,#4a4a6a);text-transform:uppercase;letter-spacing:.08em;}
+.ml-nav-name{font-size:.7rem;font-weight:700;color:var(--txt,#e8e8f0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ml-nav-prev{flex-direction:row;}
+.ml-nav-next{flex-direction:row-reverse;text-align:right;}
+.ml-nav-next .ml-nav-info{align-items:flex-end;}
+.ml-nav-locked{opacity:.55;}
+.ml-nav-locked:hover{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.05);}
+.ml-nav-finished{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.06);}
+.ml-nav-finished svg{stroke:#22c55e;}
+body.light .ml-nav-btn{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.12);}
+body.light .ml-nav-name{color:#1a1a2e;}
+body.light .ml-nav-label{color:#8888a8;}
+
+/* ── SIDEBAR: TÓPICOS COM NOME COMPLETO ── */
+.sb-topic-item{
+  position:relative;
+  align-items:flex-start !important;
+  padding:7px 10px 7px 12px !important;
+  gap:8px;
+}
+.sb-topic-name{
+  flex:1;
+  font-size:.67rem !important;
+  line-height:1.38;
+  white-space:normal !important;
+  word-break:break-word;
+}
+.sb-topic-dot{
+  flex-shrink:0;
+  margin-top:2px;
+}
+.sb-topic-locked{
+  opacity:.72;
+  cursor:pointer;
+}
+.sb-topic-locked:hover{
+  background:rgba(239,68,68,.06) !important;
+}
+
+/* ── BALÃO DE ASSINATURA (sidebar) ── */
+.sb-subscribe-balloon{
+  position:absolute;
+  left:0;right:0;
+  top:calc(100% + 2px);
+  z-index:9999;
+  background:#0e0e1c;
+  border:1px solid rgba(91,127,255,.4);
+  border-radius:14px;
+  padding:14px 14px 12px;
+  box-shadow:0 14px 48px rgba(0,0,0,.8);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:7px;
+  text-align:center;
+  animation:ssbIn .2s cubic-bezier(.2,0,.3,1);
+}
+@keyframes ssbIn{
+  from{opacity:0;transform:translateY(-8px) scale(.94);}
+  to  {opacity:1;transform:none;}
+}
+.ssb-close{
+  position:absolute;top:8px;right:10px;
+  background:none;border:none;
+  color:rgba(255,255,255,.35);
+  font-size:.75rem;cursor:pointer;
+  padding:2px 5px;line-height:1;
+  transition:color .15s;
+}
+.ssb-close:hover{color:#fff;}
+.ssb-icon{font-size:1.4rem;}
+.ssb-title{font-size:.78rem;font-weight:800;color:#fff;margin-top:2px;}
+.ssb-text{font-size:.63rem;color:rgba(255,255,255,.55);line-height:1.45;}
+.ssb-btn{
+  margin-top:4px;
+  padding:9px 20px;
+  border-radius:10px;
+  border:none;
+  background:#5b7fff;
+  color:#fff;
+  font-family:var(--font);
+  font-size:.73rem;
+  font-weight:800;
+  cursor:pointer;
+  width:100%;
+  transition:filter .15s;
+}
+.ssb-btn:hover{filter:brightness(1.15);}
