@@ -2312,3 +2312,51 @@ body.light .ml-nav-label{color:#8888a8;}
   transition:filter .15s;
 }
 .ssb-btn:hover{filter:brightness(1.15);}
+
+/* ══════════════════════════════════════════════════════
+   PATCH 2026-04 — 4 CORREÇÕES
+   ══════════════════════════════════════════════════════ */
+
+/* ── CORREÇÃO 1: Nome do módulo nos cards da capa sempre visível ── */
+/* Mesmo em cards bloqueados (.locked), o nome aparece legível */
+.mod-card.locked .mod-card-name,
+.mod-card.locked .mod-card-name-visible {
+  color: var(--txt) !important;       /* mesmo texto branco que desbloqueado */
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Texto auxiliar dentro do card bloqueado */
+.mod-card-locked-hint {
+  color: rgba(239,68,68,.7) !important;
+  font-size: .52rem !important;
+  font-weight: 700;
+  gap: 4px;
+}
+.mod-card-locked-hint span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── CORREÇÃO 2: Cursor de pointer em cards bloqueados (indica clicável) ── */
+.mod-card.locked {
+  cursor: pointer !important;
+}
+.mod-card.locked:hover {
+  border-color: rgba(239,68,68,.4) !important;
+  box-shadow: 0 0 20px rgba(239,68,68,.12) !important;
+}
+.mod-card.locked:hover .mod-card-cover {
+  filter: brightness(.85);
+}
+
+/* ── CORREÇÃO 4: Bottom-nav — botão CURSOS sempre clicável e visível ── */
+/* Garante que nenhum overlay ou pointer-events bloqueie o clique */
+.bottom-nav .bn-item,
+#bottom-nav .bn-item {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+/* Garante z-index adequado do nav */
+.bottom-nav { z-index: 9990 !important; }
