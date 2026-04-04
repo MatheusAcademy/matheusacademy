@@ -910,36 +910,30 @@ function selectTopic(mi,ti,canAcc){
   if(_isMobile())closeSidebarMobile();
   grantMission('aula');
 
-  /* Se já está no mesmo módulo renderizado, não re-renderiza tudo —
-     apenas abre o tópico e scrolla. Evita o DOM ser destruído e recriado. */
+  /* Se o módulo já está renderizado, reaproveita o DOM sem re-renderizar */
   var existingItem=document.getElementById('ml_topic_'+mi+'_'+ti);
   if(existingItem){
-    /* DOM já existe — calcula posição ANTES de qualquer mudança */
     var hdr=existingItem.querySelector('.ml-topic-hdr')||existingItem;
     var topbarH=56, tabsH=48, gap=12;
     var offsetTop=hdr.getBoundingClientRect().top + window.scrollY - (topbarH + tabsH + gap);
-    /* Expande sem fechar outros */
     existingItem.classList.add('t-open');
-    window.scrollTo({top:Math.max(0,offsetTop),behavior:'smooth'});
-    /* Marca como visto */
+    window.scrollTo({top:Math.max(0,offsetTop), behavior:'smooth'});
     var mod0=MODS[mi],t0=mod0.topics[ti];
     var prog0=gProg(),key0=mod0.id+'_'+t0.id;
     if(!prog0[key0]){prog0[key0]=true;sProg(prog0);buildSidebar();}
     return;
   }
 
-  /* DOM ainda não existe — precisa renderizar o módulo primeiro */
+  /* DOM não existe — renderiza o módulo e abre o tópico */
   renderModLesson(mi);
   setTimeout(function(){
     var item=document.getElementById('ml_topic_'+mi+'_'+ti);
     if(!item){window.scrollTo({top:0,behavior:'instant'});return;}
-    /* DOM recém criado — todos os tópicos estão fechados, posição é precisa */
     var hdr=item.querySelector('.ml-topic-hdr')||item;
     var topbarH=56, tabsH=48, gap=12;
     var offsetTop=hdr.getBoundingClientRect().top + window.scrollY - (topbarH + tabsH + gap);
     item.classList.add('t-open');
-    window.scrollTo({top:Math.max(0,offsetTop),behavior:'smooth'});
-    /* Marca como visto */
+    window.scrollTo({top:Math.max(0,offsetTop), behavior:'smooth'});
     var mod=MODS[mi],t=mod.topics[ti];
     var prog=gProg(),key=mod.id+'_'+t.id;
     if(!prog[key]){prog[key]=true;sProg(prog);buildSidebar();}
@@ -1092,6 +1086,53 @@ function renderModLesson(mi){
     html+='</div></div></div>';
   }
 
+  /* ── Navegação entre módulos (Anterior / Próximo) ── */
+  var prevMi=mi-1, nextMi=mi+1;
+  var hasPrev=prevMi>=0, hasNext=nextMi<MODS.length;
+  var canNext=hasNext&&(isUnlocked()||nextMi<COURSE.freeModules);
+
+  html+='<div class="ml-module-nav">';
+
+  /* Botão ANTERIOR */
+  if(hasPrev){
+    var prevMod=MODS[prevMi];
+    html+='<button class="ml-nav-btn ml-nav-prev" onclick="renderModLesson('+prevMi+');window.scrollTo({top:0,behavior:\'smooth\'})">'
+      +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+      +'<div class="ml-nav-info">'
+      +'<span class="ml-nav-label">← Módulo anterior</span>'
+      +'<span class="ml-nav-name">'+prevMod.name+'</span>'
+      +'</div>'
+      +'</button>';
+  } else {
+    /* placeholder invisível para manter o next alinhado à direita */
+    html+='<div style="flex:1"></div>';
+  }
+
+  /* Botão PRÓXIMO */
+  if(hasNext){
+    var nextMod=MODS[nextMi];
+    if(canNext){
+      html+='<button class="ml-nav-btn ml-nav-next" onclick="renderModLesson('+nextMi+');window.scrollTo({top:0,behavior:\'smooth\'})">'
+        +'<div class="ml-nav-info">'
+        +'<span class="ml-nav-label">Próximo módulo →</span>'
+        +'<span class="ml-nav-name">'+nextMod.name+'</span>'
+        +'</div>'
+        +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+        +'</button>';
+    } else {
+      /* Módulo bloqueado — abre modal de planos */
+      html+='<button class="ml-nav-btn ml-nav-next ml-nav-locked" onclick="openM(\'plans\')">'
+        +'<div class="ml-nav-info">'
+        +'<span class="ml-nav-label">🔒 Próximo módulo</span>'
+        +'<span class="ml-nav-name">'+nextMod.name+'</span>'
+        +'</div>'
+        +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+        +'</button>';
+    }
+  }
+
+  html+='</div>';
+
   /* ── Rodapé social ── */
   html+='<div class="ml-social-footer">'
     +'<span class="ml-social-label">Siga e entre na comunidade</span>'
@@ -1150,33 +1191,27 @@ function renderModLesson(mi){
   }
 }
 
-/* ── TOGGLE DO TÓPICO ── */
 function mlToggleTopic(mi,ti){
   var item=document.getElementById('ml_topic_'+mi+'_'+ti);
   if(!item)return;
   var isOpen=item.classList.contains('t-open');
 
   if(isOpen){
-    /* ── FECHAR: só fecha este tópico, não mexe nos outros ── */
+    /* Fechar: só fecha este tópico, não mexe nos outros */
     item.classList.remove('t-open');
     return;
   }
 
-  /* ── ABRIR: NÃO fecha os outros tópicos ──
-     O DOM não muda antes do getBoundingClientRect(),
-     então a posição calculada é 100% precisa. */
+  /* Abrir: NÃO fecha os outros tópicos.
+     Posição calculada ANTES de qualquer mudança no DOM — 100% precisa. */
   var hdr=item.querySelector('.ml-topic-hdr')||item;
   var topbarH=56, tabsH=48, gap=12;
-
-  /* Posição do header no momento do clique — DOM ainda não mudou */
   var offsetTop=hdr.getBoundingClientRect().top + window.scrollY - (topbarH + tabsH + gap);
 
-  /* Expande o tópico */
   item.classList.add('t-open');
   _curModIdx=mi; _curTopIdx=ti;
 
-  /* Scroll imediato para onde o header estava — sem esperar o DOM expandir */
-  window.scrollTo({top: Math.max(0, offsetTop), behavior:'smooth'});
+  window.scrollTo({top:Math.max(0,offsetTop), behavior:'smooth'});
 
   /* Marcar como visto — SEM pontos */
   var mod=MODS[mi], t=mod.topics[ti];
@@ -1479,7 +1514,7 @@ function mlFinishQuiz(mi,corrects){
 
 /* Abre o tópico para revisão (chamado pelo alerta de dificuldade) */
 function mlReviewTopic(mi,ti){
-  /* mlToggleTopic não fecha os outros — scroll direto para o tópico */
+  // mlToggleTopic já cuida do scroll para o título
   mlToggleTopic(mi,ti);
 }
 
