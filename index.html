@@ -718,6 +718,7 @@
     <a class="idx-mi" href="trilhas.html"><span class="idx-mi-i">🛤️</span>Trilhas</a>
     <a class="idx-mi gold" href="loja.html"><span class="idx-mi-i">🛒</span>Loja de XP</a>
     <a class="idx-mi" href="mural.html"><span class="idx-mi-i">🏅</span>Mural</a>
+    <a class="idx-mi" href="planos.html" style="color:#f59e0b"><span class="idx-mi-i">💎</span>Planos &amp; Assinaturas</a>
   </div>
   <div class="idx-menu-sec" id="idxMenuAuthSec"></div>
 </div>
@@ -1863,10 +1864,10 @@ function _idxUpdMenu(user,p,lv){
   if(!uS||!aS)return;
   if(user){var next=_IDX_LVS[_IDX_LVS.indexOf(lv)+1];var pct=next?Math.max(0,Math.min(100,Math.round((p.total-lv.m)/(lv.max-lv.m)*100))):100;
     uS.innerHTML='<div class="idx-mu-user"><span class="idx-mu-name">'+user.name.split(' ')[0]+'</span><span class="idx-mu-lv '+lv.c+'"><span class="idx-lv-dot"></span>'+lv.n+'</span><div class="idx-mu-pts"><b>'+p.total.toLocaleString('pt-BR')+'</b> pontos'+(next?' · faltam '+(next.m-p.total).toLocaleString('pt-BR')+' p/ '+next.n:'')+'</div></div><div class="idx-mu-xp"><div class="idx-xp-labels"><span>'+lv.n+'</span>'+(next?'<span>'+next.n+'</span>':'<span>Máximo!</span>')+'</div><div class="idx-xp-bg"><div class="idx-xp-fill" style="width:'+pct+'%"></div></div></div>';
-    aS.innerHTML='<button class="idx-mi red" onclick="doLogout()"><span class="idx-mi-i">🚪</span>Sair da conta</button>';
+    aS.innerHTML='<a class="idx-mi" href="planos.html" style="color:#f59e0b"><span class="idx-mi-i">&#128142;</span>Planos &amp; Assinaturas</a><button class="idx-mi red" onclick="doLogout()"><span class="idx-mi-i">&#x1F6AA;</span>Sair da conta</button>';
   }else{
     uS.innerHTML='<div class="idx-mu-user"><span class="idx-mu-name" style="color:#8888a8">Visitante</span><span style="font-size:.6rem;color:#44445a;display:block;margin-bottom:10px">Faça login para pontuar</span></div>';
-    aS.innerHTML='<a class="idx-mi" href="index.html" onclick="openM(\'login\');return false"><span class="idx-mi-i">&#128273;</span>Entrar</a><a class="idx-mi gold" href="index.html" onclick="openM(\'plans\');return false"><span class="idx-mi-i">&#128142;</span>Ver Planos</a>';
+    aS.innerHTML='<a class="idx-mi" href="index.html" onclick="openM(\'login\');return false"><span class="idx-mi-i">&#128273;</span>Entrar</a><a class="idx-mi" href="planos.html" style="color:#f59e0b"><span class="idx-mi-i">&#128142;</span>Planos &amp; Assinaturas</a>';
   }
 }
 // ═══════════════════════════════ PLAN BANNER INTELIGENTE ═══════════════════════════════
@@ -2291,12 +2292,12 @@ function maLogout(){localStorage.removeItem('ma_user');closeMaMenu();location.hr
         +'<span class="ma-mu-level '+lv.c+'"><span class="ma-lv-dot"></span>'+lv.n+'</span>'
         +'<div class="ma-mu-pts"><b>'+p.total.toLocaleString('pt-BR')+'</b> pontos'+(next?'<span class="ma-mu-next">· faltam '+(next.m-p.total).toLocaleString('pt-BR')+' p/ '+next.n+'</span>':'')+'</div></div>'
         +'<div class="ma-mu-xp"><div class="ma-xp-labels"><span>'+lv.n+'</span>'+(next?'<span>'+next.n+'</span>':'<span>Máximo!</span>')+'</div><div class="ma-xp-bg"><div class="ma-xp-fill" style="width:'+pct+'%"></div></div></div>';
-      aS.innerHTML='<button class="ma-mi red" onclick="maLogout()"><span class="ma-mi-icon">🚪</span>Sair da conta</button>';
+      aS.innerHTML='<a class="ma-mi gold" href="planos.html"><span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a><button class="ma-mi red" onclick="maLogout()"><span class="ma-mi-icon">🚪</span>Sair da conta</button>';
     }else{
       uS.innerHTML='<div class="ma-menu-user"><span class="ma-mu-name" style="color:#8888a8">Visitante</span><span style="font-size:.6rem;color:#44445a;display:block;margin-bottom:10px">Faça login para pontuar</span></div>';
       aS.innerHTML='<a class="ma-mi" href="index.html" onclick="localStorage.setItem(\'ma_open_modal\',\'login\');return true"><span class="ma-mi-icon">🔑</span>Entrar</a>'
         +'<a class="ma-mi" href="index.html" onclick="localStorage.setItem(\'ma_open_modal\',\'register\');return true"><span class="ma-mi-icon">📝</span>Criar Conta</a>'
-        +'<a class="ma-mi gold" href="index.html" onclick="localStorage.setItem(\'ma_open_modal\',\'plans\');return true"><span class="ma-mi-icon">💎</span>Ver Planos</a>';
+        +'<a class="ma-mi gold" href="planos.html"><span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a>';
     }
     // v3 FIX: sincroniza async com Firebase quando disponível
     if(window.MAStore&&MAStore.getUser){MAStore.getUser().then(function(usr){if(usr&&typeof usr.xp_total==='number'){var _pN=document.getElementById('maPtsNum');if(_pN)_pN.textContent=usr.xp_total.toLocaleString('pt-BR');}});}
