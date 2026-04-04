@@ -1357,12 +1357,16 @@ async function doRegister() {
     await MA_DB.updateUsuario(user.uid, { telefone: ph, cidade: ct });
     // Sincronizar localStorage com dados do Firebase
     var dados = await MA_DB.getUsuario(user.uid);
+    // v3 FIX: Salvar xp_total=0 no cadastro (conta nova)
     localStorage.setItem('ma_user', JSON.stringify({
       uid: user.uid, name: nm, email: em,
       phone: ph, city: ct,
       plano: dados ? dados.plano : 'gratuito',
-      cursos: dados ? (dados.cursos_comprados || []) : []
+      cursos: dados ? (dados.cursos_comprados || []) : [],
+      xp_total: 0
     }));
+    // Remove chave legada
+    localStorage.removeItem('ma_points');
     // Notificar por email (mantém formsubmit)
     try { fetch('https://formsubmit.co/ajax/portal.matheushenry@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:'Novo Cadastro - Matheus Academy',Nome:nm,Email:em,WhatsApp:ph,Cidade:ct,Data:new Date().toLocaleString('pt-BR'),_template:'table'})}); } catch(e2) {}
     btn.disabled=false; btn.textContent='Criar Conta Grátis';
@@ -1387,7 +1391,7 @@ async function doLogin() {
   try {
     var user = await MA_AUTH.login(em, pw);
     var dados = await MA_DB.getUsuario(user.uid);
-    // Sincronizar dados do Firebase no localStorage (cache local)
+    // v3 FIX: Salvar xp_total JUNTO com o ma_user — nunca em dois passos
     localStorage.setItem('ma_user', JSON.stringify({
       uid: user.uid,
       name: (dados && dados.nome) || user.displayName || em.split('@')[0],
@@ -1395,18 +1399,12 @@ async function doLogin() {
       phone: (dados && dados.telefone) || '',
       city: (dados && dados.cidade) || '',
       plano: (dados && dados.plano) || 'gratuito',
-      cursos: (dados && dados.cursos_comprados) || []
+      cursos: (dados && dados.cursos_comprados) || [],
+      xp_total: (dados && typeof dados.xp_total === 'number') ? dados.xp_total : 0
     }));
-    // v3 FIX: Sincronizar XP do Firestore → localStorage com xp_total (NUNCA ma_points)
+    // Remove chave legada para evitar conflito
+    localStorage.removeItem('ma_points');
     if (dados) {
-      if (dados.xp_total !== undefined) {
-        // Atualiza o ma_user com xp_total para que a topbar leia corretamente
-        var uCache = JSON.parse(localStorage.getItem('ma_user')||'{}');
-        uCache.xp_total = dados.xp_total;
-        localStorage.setItem('ma_user', JSON.stringify(uCache));
-        // Remove chave legada para evitar conflito
-        localStorage.removeItem('ma_points');
-      }
       if (dados.streak_atual) {
         var s = {current: dados.streak_atual, record: dados.streak_record||0};
         localStorage.setItem('ma_streak2', JSON.stringify(s));
@@ -2100,7 +2098,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('maFirebaseReady', function() {
     MA_AUTH.onAuthChange(function(firebaseUser) {
       if (firebaseUser) {
-        // Atualizar cache local com dados frescos do Firestore
+        // v3 FIX: Atualizar cache local com xp_total SEMPRE incluído
         MA_DB.getUsuario(firebaseUser.uid).then(function(dados) {
           if (dados) {
             localStorage.setItem('ma_user', JSON.stringify({
@@ -2111,9 +2109,14 @@ document.addEventListener('DOMContentLoaded', function() {
               city: dados.cidade || '',
               foto: firebaseUser.photoURL || '',
               plano: dados.plano || 'gratuito',
-              cursos: dados.cursos_comprados || []
+              cursos: dados.cursos_comprados || [],
+              xp_total: typeof dados.xp_total === 'number' ? dados.xp_total : 0
             }));
+            // Remove chave legada
+            localStorage.removeItem('ma_points');
             upUI();
+            // Atualiza topbar após salvar cache
+            if (window.updTopbar) window.updTopbar();
           }
         }).catch(function(){});
       }
@@ -2193,6 +2196,23 @@ function maLogout(){localStorage.removeItem('ma_user');closeMaMenu();location.hr
   (function(){if(!gU())return;var today=new Date().toLocaleDateString('pt-BR');var ms;try{ms=JSON.parse(localStorage.getItem('ma_missions'))||{};}catch(e){ms={};}if(!ms.done||ms.date!==today)ms={date:today,done:{}};if(!ms.done.aula){ms.done.aula=true;localStorage.setItem('ma_missions',JSON.stringify(ms));window.MA_addPoints('Missão: Acessou a plataforma',10);}})();
   var _ss=Date.now();function _saveSess(){var dur=Math.floor((Date.now()-_ss)/60000);var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}s.count=(s.count||0)+1;s.lastDuration=dur;var today=new Date().toLocaleDateString('pt-BR'),yest=new Date(Date.now()-86400000).toLocaleDateString('pt-BR');if(s.lastStudyDate===yest)s.streak=(s.streak||0)+1;else if(s.lastStudyDate!==today)s.streak=1;s.lastStudyDate=today;localStorage.setItem('ma_sessions',JSON.stringify(s));}
   window.addEventListener('beforeunload',_saveSess);window.addEventListener('pagehide',_saveSess);
+  // v3 FIX: Anti-flash-zero — carrega imediatamente do cache local
+  // Isso evita o "pisca 0" enquanto Firebase carrega
+  (function _immediateXPFromCache(){
+    try {
+      var _u = JSON.parse(localStorage.getItem('ma_user')||'null');
+      if (_u && typeof _u.xp_total === 'number' && _u.xp_total > 0) {
+        var _pN = document.getElementById('maPtsNum');
+        var _pE = document.getElementById('maPtsLive');
+        if (_pN) { _pN.textContent = _u.xp_total.toLocaleString('pt-BR'); }
+        if (_pE) { _pE.classList.add('show'); }
+        var _bN = document.getElementById('maFptsNum');
+        var _bE = document.getElementById('maFpts');
+        if (_bN) { _bN.textContent = _u.xp_total.toLocaleString('pt-BR'); }
+        if (_bE) { _bE.style.display = 'flex'; }
+      }
+    } catch(e) {}
+  })();
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',window.updTopbar);else window.updTopbar();
 })();
 </script>
