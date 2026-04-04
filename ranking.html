@@ -226,8 +226,22 @@ body{padding-bottom:58px!important}
 </nav>
 <script>
 (function(){
-  function up(){try{var p=JSON.parse(localStorage.getItem('ma_points')||'{}');var el=document.getElementById('maTbPtsN');if(el)el.textContent=(p.total||0).toLocaleString('pt-BR');}catch(e){}}
-  function uu(){try{var u=JSON.parse(localStorage.getItem('ma_user')||'null');var s=document.getElementById('maMenuUser'),a=document.getElementById('maMenuAuth');var pts=JSON.parse(localStorage.getItem('ma_points')||'{}');if(u&&u.email){if(s)s.innerHTML='<span class="ma-mu-name">'+(u.name||u.email)+'</span><div class="ma-mu-pts"><b>'+(pts.total||0).toLocaleString('pt-BR')+'</b> XP</div>';if(a)a.innerHTML='<button class="ma-mi red" onclick="maTbLogout()"><span class="ma-mi-i">🚪</span>Sair da conta</button>';}}catch(e){}}
+  function up(){
+    try{
+      // v3 FIX: Lê xp_total do Firebase (via MAStore ou ma_user) — NUNCA de ma_points
+      var xp=0;
+      if(window.MAStore&&MAStore.getTotalPointsSync){xp=MAStore.getTotalPointsSync();}
+      else{var u=JSON.parse(localStorage.getItem('ma_user')||'null');xp=(u&&typeof u.xp_total==='number')?u.xp_total:0;}
+      var el=document.getElementById('maTbPtsN');if(el)el.textContent=xp.toLocaleString('pt-BR');
+      // Sincroniza async com Firebase sempre que possível
+      if(window.MAStore&&MAStore.getUser){MAStore.getUser().then(function(usr){if(usr&&typeof usr.xp_total==='number'){var el2=document.getElementById('maTbPtsN');if(el2)el2.textContent=usr.xp_total.toLocaleString('pt-BR');}});}
+    }catch(e){}
+  }
+  function uu(){try{var u=JSON.parse(localStorage.getItem('ma_user')||'null');var s=document.getElementById('maMenuUser'),a=document.getElementById('maMenuAuth');
+    // v3 FIX: Lê xp_total do ma_user (Firebase) — NUNCA de ma_points
+    var xp=(u&&typeof u.xp_total==='number')?u.xp_total:0;
+    if(window.MAStore&&MAStore.getTotalPointsSync){xp=MAStore.getTotalPointsSync();}
+    if(u&&u.email){if(s)s.innerHTML='<span class="ma-mu-name">'+(u.name||u.email)+'</span><div class="ma-mu-pts"><b>'+xp.toLocaleString('pt-BR')+'</b> XP</div>';if(a)a.innerHTML='<button class="ma-mi red" onclick="maTbLogout()"><span class="ma-mi-i">🚪</span>Sair da conta</button>';}}catch(e){}}
   window.maTbToggle=function(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOv');if(!d||!o)return;var on=d.classList.toggle('on');o.classList.toggle('on',on);if(on)uu();};
   window.maTbClose=function(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOv');if(d)d.classList.remove('on');if(o)o.classList.remove('on');};
   window.maTbLogout=function(){maTbClose();if(window.MAStore&&MAStore.logout){MAStore.logout();return;}if(window.MA_AUTH&&MA_AUTH.logout){MA_AUTH.logout().catch(function(){});}localStorage.removeItem('ma_user');location.href='index.html';};
@@ -462,10 +476,10 @@ async function renderRank(tab){
   showRankLoading(tab);
   await loadRankingFirestore();
 
-  // Sincronizar XP do aluno logado para o Firestore (garante dados frescos)
-  var u=gU(), p=gP();
-  if(u && u.uid && window.MA_DB && p.total > 0){
-    MA_DB.updateUsuario(u.uid, {xp_total: p.total}).catch(function(){});
+  // v3 FIX: NÃO sobrescrever Firestore com localStorage — Firebase é a fonte de verdade
+  // Atualiza o cache local com dados frescos do Firebase
+  if(window.MAStore && MAStore.syncFromFirebase){
+    MAStore.syncFromFirebase().catch(function(){});
   }
 
   var players = getTabPlayers(tab);
@@ -638,8 +652,12 @@ function maLogout(){if(window.MA_AUTH)MA_AUTH.logout().catch(function(){});local
     }
   };
   window.MA_addPoints=window.MA_addPoints||function(src,pts){
-    if(!gU())return 0;var p=gP();p.total+=pts;p.history.unshift({source:src,pts:pts,question:'',date:new Date().toLocaleDateString('pt-BR')});
-    localStorage.setItem('ma_points',JSON.stringify(p));_bumpPts();return pts;
+    // v3 FIX: Usa MAStore (Firebase) como fonte oficial — NUNCA ma_points legado
+    if(!gU())return 0;
+    if(window.MAStore&&MAStore.addPoints){
+      MAStore.addPoints(src,pts).then(function(){_bumpPts();});
+    }
+    return pts;
   };
   function _bumpPts(){playCashSound();var el=document.getElementById('maPtsLive');if(el){el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');}var b=document.getElementById('maFpts');if(b){b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');}window.updTopbar();}
   var _lp=null;setInterval(function(){var p=gP();if(_lp!==null&&p.total>_lp)_bumpPts();_lp=p.total;},1500);
@@ -1126,7 +1144,9 @@ function getStudyData7(){
 
 function renderProgress(){
   var s=getStreak();
-  var pts=gs('ma_points',{total:0});
+  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
+  var _xpTotal=(window.MAStore&&MAStore.getTotalPointsSync)?MAStore.getTotalPointsSync():(function(){try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');return(_u&&typeof _u.xp_total==='number')?_u.xp_total:0;}catch(e){return 0;}})();
+  var pts={total:_xpTotal};
   var sess=gs('ma_sessions',{});
   var el=function(id){return document.getElementById(id);};
   // stat cards
@@ -1788,7 +1808,9 @@ function _getWeekKey(){var d=new Date();return d.getFullYear()+'W'+Math.floor(d.
    ════════════════════════════════════════ */
 var _lastPts=null;
 function _pollPoints(){
-  var p=gs2('ma_points',{total:0});
+  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
+  var xp=(window.MAStore&&MAStore.getTotalPointsSync)?MAStore.getTotalPointsSync():(function(){try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');return(_u&&typeof _u.xp_total==='number')?_u.xp_total:0;}catch(e){return 0;}})();
+  var p={total:xp};
   if(_lastPts!==null&&p.total>_lastPts){
     var diff=p.total-_lastPts;
     if(diff>=5){
@@ -3239,12 +3261,13 @@ function _hookMotivEvents(){
     setTimeout(function(){maeShowMotiv('module_complete','','','','');},800);
   };
   // Hook MA_addPoints for level-up detection
+  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
   var _lastLv=null;
   var LVLS_V4=[0,1000,3000,7000,15000,50000,200000,1000000];
   function _getLv(pts){for(var i=LVLS_V4.length-1;i>=0;i--)if(pts>=LVLS_V4[i])return i;return 0;}
   setInterval(function(){
-    var p=JSON.parse(localStorage.getItem('ma_points')||'{"total":0}');
-    var lv=_getLv(p.total);
+    var xp=(window.MAStore&&MAStore.getTotalPointsSync)?MAStore.getTotalPointsSync():(function(){try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');return(_u&&typeof _u.xp_total==='number')?_u.xp_total:0;}catch(e){return 0;}})();
+    var lv=_getLv(xp);
     if(_lastLv!==null&&lv>_lastLv)maeShowMotiv('level_up','','','','');
     _lastLv=lv;
   },2000);
