@@ -863,7 +863,7 @@ function buildSidebar(){
   // Atualizar carrossel de módulos
   buildModuleCarousel();
 }
-function toggleSbMod(mi,canAcc){if(!canAcc){openM('plans');return;}var hdr=document.getElementById('sbModHdr'+mi),tops=document.getElementById('sbTopics'+mi);if(hdr)hdr.classList.toggle('open');if(tops)tops.classList.toggle('open');}
+function toggleSbMod(mi,canAcc){if(!canAcc){openLockScreen();return;}var hdr=document.getElementById('sbModHdr'+mi),tops=document.getElementById('sbTopics'+mi);if(hdr)hdr.classList.toggle('open');if(tops)tops.classList.toggle('open');}
 function filterModules(val){_filterStr=val.trim().toLowerCase();buildSidebar();if(_filterStr){document.querySelectorAll('.sb-topics').forEach(el=>el.classList.add('open'));document.querySelectorAll('.sb-mod-hdr').forEach(el=>el.classList.add('open'));}}
 
 /* Controle do puller — só aparece em aula (não na capa) */
@@ -909,29 +909,37 @@ function selectTopic(mi,ti,canAcc){
   showTabs();switchTab('conteudo');
   if(_isMobile())closeSidebarMobile();
   grantMission('aula');
+
+  /* Se já está no mesmo módulo renderizado, não re-renderiza tudo —
+     apenas abre o tópico e scrolla. Evita o DOM ser destruído e recriado. */
+  var existingItem=document.getElementById('ml_topic_'+mi+'_'+ti);
+  if(existingItem){
+    /* DOM já existe — calcula posição ANTES de qualquer mudança */
+    var hdr=existingItem.querySelector('.ml-topic-hdr')||existingItem;
+    var topbarH=56, tabsH=48, gap=12;
+    var offsetTop=hdr.getBoundingClientRect().top + window.scrollY - (topbarH + tabsH + gap);
+    /* Expande sem fechar outros */
+    existingItem.classList.add('t-open');
+    window.scrollTo({top:Math.max(0,offsetTop),behavior:'smooth'});
+    /* Marca como visto */
+    var mod0=MODS[mi],t0=mod0.topics[ti];
+    var prog0=gProg(),key0=mod0.id+'_'+t0.id;
+    if(!prog0[key0]){prog0[key0]=true;sProg(prog0);buildSidebar();}
+    return;
+  }
+
+  /* DOM ainda não existe — precisa renderizar o módulo primeiro */
   renderModLesson(mi);
-  // Após render, expande o tópico correto e scrolla para o título
-  // Usa setTimeout para aguardar o DOM ser inserido pelo renderModLesson
   setTimeout(function(){
     var item=document.getElementById('ml_topic_'+mi+'_'+ti);
     if(!item){window.scrollTo({top:0,behavior:'instant'});return;}
-    // Fecha todos os tópicos do módulo
-    document.querySelectorAll('[id^="ml_topic_'+mi+'_"]').forEach(function(el){
-      el.classList.remove('t-open');
-    });
-    // Calcula posição ANTES de expandir
+    /* DOM recém criado — todos os tópicos estão fechados, posição é precisa */
     var hdr=item.querySelector('.ml-topic-hdr')||item;
-    var topbarH=56,tabsH=48;
-    var offsetTop=hdr.getBoundingClientRect().top+window.scrollY-(topbarH+tabsH+12);
-    // Expande
+    var topbarH=56, tabsH=48, gap=12;
+    var offsetTop=hdr.getBoundingClientRect().top + window.scrollY - (topbarH + tabsH + gap);
     item.classList.add('t-open');
-    // CORREÇÃO 3: duplo rAF garante scroll correto após expansão do DOM
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        window.scrollTo({top:Math.max(0,offsetTop),behavior:'smooth'});
-      });
-    });
-    // Marca como visto sem pontos
+    window.scrollTo({top:Math.max(0,offsetTop),behavior:'smooth'});
+    /* Marca como visto */
     var mod=MODS[mi],t=mod.topics[ti];
     var prog=gProg(),key=mod.id+'_'+t.id;
     if(!prog[key]){prog[key]=true;sProg(prog);buildSidebar();}
@@ -1147,37 +1155,33 @@ function mlToggleTopic(mi,ti){
   var item=document.getElementById('ml_topic_'+mi+'_'+ti);
   if(!item)return;
   var isOpen=item.classList.contains('t-open');
-  // Fecha todos do mesmo módulo
-  document.querySelectorAll('[id^="ml_topic_'+mi+'_"]').forEach(function(el){
-    el.classList.remove('t-open');
-  });
-  if(!isOpen){
-    // Calcula posição do header ANTES de expandir (posição é estável)
-    var hdr=item.querySelector('.ml-topic-hdr');
-    var target=hdr||item;
-    var topbarH=56;
-    var tabsH=48;
-    var offsetTop=target.getBoundingClientRect().top+window.scrollY-(topbarH+tabsH+12);
-    // CORREÇÃO 3: salva scrollY ANTES de expandir para restaurar caso o DOM mude o scroll
-    var savedScrollY=window.scrollY;
-    // Adiciona a classe de expansão
-    item.classList.add('t-open');
-    _curModIdx=mi;_curTopIdx=ti;
-    // CORREÇÃO 3: após a expansão, o browser pode pular para o final
-    // Usa duplo requestAnimationFrame para garantir que o layout já foi calculado
-    // e então aplica o scroll correto (para o título do tópico, não para o final)
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        // Se a página rolou para baixo do esperado (bug do browser), corrige
-        var targetScroll=Math.max(0,offsetTop);
-        window.scrollTo({top:targetScroll,behavior:'smooth'});
-      });
-    });
-    // Marcar como visto — SEM pontos (pontos só de módulo concluído)
-    var mod=MODS[mi],t=mod.topics[ti];
-    var prog=gProg(),key=mod.id+'_'+t.id;
-    if(!prog[key]){prog[key]=true;sProg(prog);buildSidebar();}
+
+  if(isOpen){
+    /* ── FECHAR: só fecha este tópico, não mexe nos outros ── */
+    item.classList.remove('t-open');
+    return;
   }
+
+  /* ── ABRIR: NÃO fecha os outros tópicos ──
+     O DOM não muda antes do getBoundingClientRect(),
+     então a posição calculada é 100% precisa. */
+  var hdr=item.querySelector('.ml-topic-hdr')||item;
+  var topbarH=56, tabsH=48, gap=12;
+
+  /* Posição do header no momento do clique — DOM ainda não mudou */
+  var offsetTop=hdr.getBoundingClientRect().top + window.scrollY - (topbarH + tabsH + gap);
+
+  /* Expande o tópico */
+  item.classList.add('t-open');
+  _curModIdx=mi; _curTopIdx=ti;
+
+  /* Scroll imediato para onde o header estava — sem esperar o DOM expandir */
+  window.scrollTo({top: Math.max(0, offsetTop), behavior:'smooth'});
+
+  /* Marcar como visto — SEM pontos */
+  var mod=MODS[mi], t=mod.topics[ti];
+  var prog=gProg(), key=mod.id+'_'+t.id;
+  if(!prog[key]){prog[key]=true; sProg(prog); buildSidebar();}
 }
 
 /* Som de check — lápis riscando papel */
@@ -1475,7 +1479,7 @@ function mlFinishQuiz(mi,corrects){
 
 /* Abre o tópico para revisão (chamado pelo alerta de dificuldade) */
 function mlReviewTopic(mi,ti){
-  // mlToggleTopic já cuida do scroll para o título
+  /* mlToggleTopic não fecha os outros — scroll direto para o tópico */
   mlToggleTopic(mi,ti);
 }
 
@@ -2173,9 +2177,7 @@ function buildModuleCarousel(){
       var pct=mod.topics.length?Math.round(doneT/mod.topics.length*100):0;
       var isDone=pct===100;
       var cls='mod-card'+(isDone?' done':'')+(canAcc?'':' locked');
-      // CORREÇÃO 1+2: título sempre visível. Clique em locked vai para pagamento (não lockscreen)
-      var clickAction=canAcc?'openModModal('+mi+')':'modCardLockedClick()';
-      html+='<div class="'+cls+'" onclick="'+clickAction+'" data-mi="'+mi+'">';
+      html+='<div class="'+cls+'" onclick="openModModal('+mi+')" data-mi="'+mi+'">';
       // Capa do card
       html+='<div class="mod-card-cover">';
       html+='<div class="mod-card-cover-bg"></div>';
@@ -2193,14 +2195,10 @@ function buildModuleCarousel(){
       // Lock
       html+='<div class="mod-card-lock">🔒</div>';
       html+='</div>';
-      // Info — CORREÇÃO 1: nome do módulo SEMPRE visível (classe sem filtro de acesso)
+      // Info
       html+='<div class="mod-card-info">';
-      html+='<span class="mod-card-name mod-card-name-visible">'+mod.name+'</span>';
-      if(!canAcc){
-        html+='<div class="mod-card-meta mod-card-locked-hint"><span>🔒 Clique para desbloquear</span></div>';
-      }else{
-        html+='<div class="mod-card-meta"><span>'+mod.topics.length+' tópicos</span></div>';
-      }
+      html+='<span class="mod-card-name">'+mod.name+'</span>';
+      html+='<div class="mod-card-meta"><span>'+mod.topics.length+' tópicos</span></div>';
       html+='<div class="mod-card-prog"><div class="mod-card-prog-fill" style="width:'+pct+'%"></div></div>';
       html+='</div>';
       html+='</div>';
@@ -2208,12 +2206,6 @@ function buildModuleCarousel(){
     html+='</div>';
   });
   section.innerHTML=html;
-}
-
-/* CORREÇÃO 2: card bloqueado redireciona para pagamento */
-function modCardLockedClick(){
-  // Tenta abrir modal de planos (permite comprar dentro da plataforma)
-  openM('plans');
 }
 
 /* ═══ MODAL DE MÓDULO ═══ */
@@ -2701,46 +2693,10 @@ function _hideFocusBtn(){
 
 /* ═══ BOTTOM NAV ATIVO ═══ */
 function setBottomNavActive(){
-  // Ativa o item "Cursos" visualmente (página atual = curso)
-  var bnCursos=document.getElementById('bn-cursos');
-  if(bnCursos)bnCursos.classList.add('active');
-
-  // CORREÇÃO 4: garante que o link/botão CURSOS no bottom-nav
-  // SEMPRE redireciona para cursos.html — em TODAS as páginas do site
-  function _fixCursosNav(){
-    // Busca todos os elementos do bottom-nav que contenham o texto "CURSOS"
-    var allNavItems=document.querySelectorAll('.bn-item, .bottom-nav a, .bottom-nav button, #bottom-nav a, #bottom-nav button');
-    allNavItems.forEach(function(el){
-      var txt=(el.textContent||el.innerText||'').trim().toUpperCase();
-      if(txt.indexOf('CURSO')!==-1){
-        // Remove link antigo e força navegação para cursos.html
-        if(el.tagName==='A'){el.href='cursos.html';}
-        // Remove onclick anterior que possa sobrescrever
-        el.removeAttribute('onclick');
-        // Adiciona listener de alta prioridade
-        el.addEventListener('click',function(e){
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          window.location.href='cursos.html';
-        },true); // capture=true para capturar antes de outros listeners
-      }
-    });
-    // Também garante via ID específico
-    var bn=document.getElementById('bn-cursos');
-    if(bn){
-      if(bn.tagName==='A')bn.href='cursos.html';
-      bn.addEventListener('click',function(e){
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        window.location.href='cursos.html';
-      },true);
-    }
-  }
-
-  // Aplica imediatamente e após 500ms (captura nav gerado dinamicamente)
-  _fixCursosNav();
-  setTimeout(_fixCursosNav,500);
-  setTimeout(_fixCursosNav,1500);
+  var path=window.location.pathname;
+  var map={'/painel':'.bn-cursos','/ranking':'#bn-ranking','/perfil':'#bn-perfil'};
+  // na página do curso, ativar "Cursos"
+  document.getElementById('bn-cursos')&&document.getElementById('bn-cursos').classList.add('active');
 }
 
 /* ═══ SETUP DE EVENTOS ═══ */
