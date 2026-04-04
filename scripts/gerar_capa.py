@@ -1,702 +1,648 @@
 #!/usr/bin/env python3
 """
-Matheus Academy - Gerador de Capas v4 PREMIUM
-DALL-E 3 gera fundo + Python adiciona:
-- Titulo bold com sombra
-- Bandeiras reais (internet ou PIL fallback)
-- Logos de empresas (Meta, Google, TikTok, Bitcoin, etc)
-- Silhuetas de lideres identificaveis
-- Fotos de lugares famosos quando disponivel
-- Dados e numeros reais
+Matheus Academy - Gerador Automatico de Capas v5 SVG
+- Gera capa SVG cinematografica APENAS para cursos NOVOS (sem capa ainda)
+- Se ja tem capa = nao sobrescreve (voce pode trocar manualmente)
+- Zero custo, zero IA externa, 100% controlado
 """
-import os, re, time, io, math, urllib.request, ssl
+import os, re, time, math
 from pathlib import Path
-import requests
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
 
-OPENAI_KEY   = os.environ.get('OPENAI_API_KEY', '')
 COURSES_FILE = 'data/courses.js'
 CAPAS_DIR    = Path('assets/capas')
-QUALITY      = 'hd'
-SIZE         = '1024x1792'
-STYLE        = 'vivid'
-DELAY_ENTRE  = 4
 
-def log(msg):
-    print(f"  {msg}", flush=True)
+def log(msg): print(f"  {msg}", flush=True)
 
-# ── DOWNLOAD COM FALLBACK ──────────────────────────────────────────────────────
-def baixar_imagem(url, fallback_fn=None):
-    """Tenta baixar imagem. Se falhar, usa fallback PIL."""
-    try:
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        req = urllib.request.Request(url, headers={
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36',
-            'Accept': 'image/png,image/jpeg,image/*',
-        })
-        with urllib.request.urlopen(req, context=ctx, timeout=15) as resp:
-            data = resp.read()
-        img = Image.open(io.BytesIO(data)).convert('RGBA')
-        log(f"OK download: {url[:60]}...")
-        return img
-    except Exception as e:
-        log(f"Fallback (sem internet): {str(e)[:50]}")
-        if fallback_fn:
-            return fallback_fn()
-        return None
-
-# ── FONTES ────────────────────────────────────────────────────────────────────
-def get_font(size, bold=True):
-    cands = [
-        '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf' if bold else '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
-        '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf' if bold else '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
-        '/usr/share/fonts/truetype/freefont/FreeSansBold.ttf' if bold else '/usr/share/fonts/truetype/freefont/FreeSans.ttf',
-    ]
-    for c in cands:
-        try: return ImageFont.truetype(c, size)
-        except: continue
-    return ImageFont.load_default()
-
-# ── BANDEIRAS ─────────────────────────────────────────────────────────────────
-def draw_star(d, cx, cy, r, color):
-    pts = []
-    for i in range(5):
-        a = math.radians(-90 + i*72)
-        pts.append((cx + r*math.cos(a), cy + r*math.sin(a)))
-        a2 = math.radians(-90 + i*72 + 36)
-        pts.append((cx + r*0.38*math.cos(a2), cy + r*0.38*math.sin(a2)))
-    d.polygon(pts, fill=color)
-
-def _flag_brasil(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (0,155,58,255))
-    d = ImageDraw.Draw(img)
-    d.polygon([(w//2,4),(w-4,h//2),(w//2,h-4),(4,h//2)], fill=(255,223,0,255))
-    r = h//5
-    cx, cy = w//2, h//2
-    d.ellipse([cx-r,cy-r,cx+r,cy+r], fill=(0,39,118,255))
-    d.rectangle([cx-r,cy-2,cx+r,cy+2], fill=(255,255,255,255))
-    return img
-
-def _flag_eua(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (255,255,255,255))
-    d = ImageDraw.Draw(img)
-    fh = h/13
-    for i in range(13):
-        if i%2==0: d.rectangle([0,int(i*fh),w,int((i+1)*fh)], fill=(178,34,52,255))
-    d.rectangle([0,0,w//2,int(fh*7)], fill=(60,59,110,255))
-    for row in range(5):
-        for col in range(6 if row%2==0 else 5):
-            sx = 5+col*9+(4 if row%2==1 else 0)
-            sy = 3+row*8
-            if sx<w//2 and sy<int(fh*7):
-                d.ellipse([sx-2,sy-2,sx+2,sy+2], fill=(255,255,255,255))
-    return img
-
-def _flag_china(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (222,41,16,255))
-    d = ImageDraw.Draw(img)
-    draw_star(d, 15, 12, 11, (255,213,0,255))
-    draw_star(d, 30, 5,  5,  (255,213,0,255))
-    draw_star(d, 36, 14, 5,  (255,213,0,255))
-    draw_star(d, 32, 24, 5,  (255,213,0,255))
-    draw_star(d, 22, 30, 5,  (255,213,0,255))
-    return img
-
-def _flag_russia(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (255,255,255,255))
-    d = ImageDraw.Draw(img)
-    f = h//3
-    d.rectangle([0,f,w,f*2], fill=(0,57,166,255))
-    d.rectangle([0,f*2,w,h], fill=(213,43,30,255))
-    return img
-
-def _flag_israel(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (255,255,255,255))
-    d = ImageDraw.Draw(img)
-    azul = (0,56,184,255)
-    f = h//5
-    d.rectangle([0,f,w,f*2], fill=azul)
-    d.rectangle([0,f*3,w,f*4], fill=azul)
-    cx, cy, r = w//2, h//2, h//5
-    for tri, inv in [(0, False),(1, True)]:
-        pts = []
-        for i in range(6):
-            a = math.radians(i*60 + (90 if inv else -90))
-            pts.append((cx + r*math.cos(a), cy + (r//3 if inv else -r//3) + r*0.6*math.sin(a)))
-        d.polygon(pts, outline=azul, width=2)
-    return img
-
-def _flag_ira(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (255,255,255,255))
-    d = ImageDraw.Draw(img)
-    f = h//3
-    d.rectangle([0,0,w,f],   fill=(36,124,60,255))
-    d.rectangle([0,f*2,w,h], fill=(186,0,0,255))
-    cx, cy = w//2, h//2
-    d.ellipse([cx-8,cy-8,cx+8,cy+8], fill=(186,0,0,255))
-    return img
-
-def _flag_mexico(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (255,255,255,255))
-    d = ImageDraw.Draw(img)
-    fw = w//3
-    d.rectangle([0,0,fw,h],   fill=(0,104,71,255))
-    d.rectangle([fw*2,0,w,h], fill=(206,17,38,255))
-    d.ellipse([w//2-8,h//2-8,w//2+8,h//2+8], fill=(100,80,40,200))
-    return img
-
-def _flag_canada(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (255,255,255,255))
-    d = ImageDraw.Draw(img)
-    fw = w//4
-    d.rectangle([0,0,fw,h],   fill=(255,0,0,255))
-    d.rectangle([fw*3,0,w,h], fill=(255,0,0,255))
-    draw_star(d, w//2, h//2, 16, (255,0,0,255))
-    return img
-
-def _flag_palestina(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (255,255,255,255))
-    d = ImageDraw.Draw(img)
-    f = h//3
-    d.rectangle([0,0,w,f],   fill=(0,0,0,255))
-    d.rectangle([0,f*2,w,h], fill=(0,150,57,255))
-    d.polygon([(0,0),(w//3,h//2),(0,h)], fill=(206,17,38,255))
-    return img
-
-def _flag_ucrania(w=120, h=80):
-    img = Image.new('RGBA', (w, h), (0,91,187,255))
-    d = ImageDraw.Draw(img)
-    d.rectangle([0,h//2,w,h], fill=(255,213,0,255))
-    return img
-
-# Bandeiras via internet (flagcdn.com) com fallback PIL
-BANDEIRAS_CDN = {
-    'BR': ('https://flagcdn.com/w160/br.png', _flag_brasil),
-    'US': ('https://flagcdn.com/w160/us.png', _flag_eua),
-    'CN': ('https://flagcdn.com/w160/cn.png', _flag_china),
-    'RU': ('https://flagcdn.com/w160/ru.png', _flag_russia),
-    'IL': ('https://flagcdn.com/w160/il.png', _flag_israel),
-    'IR': ('https://flagcdn.com/w160/ir.png', _flag_ira),
-    'MX': ('https://flagcdn.com/w160/mx.png', _flag_mexico),
-    'CA': ('https://flagcdn.com/w160/ca.png', _flag_canada),
-    'PS': ('https://flagcdn.com/w160/ps.png', _flag_palestina),
-    'UA': ('https://flagcdn.com/w160/ua.png', _flag_ucrania),
-}
-
-def get_bandeira(codigo, w=110, h=74):
-    url, fallback = BANDEIRAS_CDN.get(codigo, (None, None))
-    if url:
-        img = baixar_imagem(url, fallback)
-        if img:
-            return img.resize((w, h), Image.LANCZOS)
-    if fallback:
-        return fallback(w, h)
-    return None
-
-# ── LOGOS DE EMPRESAS ─────────────────────────────────────────────────────────
-def logo_bitcoin(size=90):
-    img = Image.new('RGBA', (size,size), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    d.ellipse([0,0,size-1,size-1], fill=(247,147,26,255))
-    try:
-        font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', int(size*0.56))
-        d.text((size//2+2,size//2), 'B', font=font, fill=(255,255,255,255), anchor='mm')
-    except: pass
-    return img
-
-def logo_meta(w=130, h=44):
-    img = Image.new('RGBA', (w,h), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    try:
-        font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 30)
-        d.text((w//2,h//2), 'Meta', font=font, fill=(0,114,255,255), anchor='mm')
-    except: d.text((5,5),'META',fill=(0,114,255,255))
-    return img
-
-def logo_google(w=130, h=44):
-    img = Image.new('RGBA', (w,h), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    try:
-        font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 26)
-        cores = [(66,133,244,255),(234,67,53,255),(251,188,4,255),(66,133,244,255),(52,168,83,255),(234,67,53,255)]
-        letras = list('Google')
-        x = 4
-        for letra, cor in zip(letras, cores):
-            d.text((x, h//2), letra, font=font, fill=cor, anchor='lm')
-            bb = d.textbbox((x,h//2), letra, font=font, anchor='lm')
-            x = bb[2]+1
-    except: d.text((4,8),'Google',fill=(66,133,244,255))
-    return img
-
-def logo_tiktok(size=90):
-    img = Image.new('RGBA', (size,size), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    d.rounded_rectangle([0,0,size-1,size-1], radius=16, fill=(0,0,0,255))
-    try:
-        font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', int(size*0.42))
-        d.text((size//2+3,size//2+3),'TK',font=font,fill=(0,255,239,180),anchor='mm')
-        d.text((size//2-3,size//2-3),'TK',font=font,fill=(254,44,85,180),anchor='mm')
-        d.text((size//2,size//2),'TK',font=font,fill=(255,255,255,255),anchor='mm')
-    except: pass
-    return img
-
-def logo_youtube(w=130, h=44):
-    img = Image.new('RGBA', (w,h), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    d.rounded_rectangle([0,4,w-1,h-4], radius=8, fill=(255,0,0,255))
-    tri_pts = [(w//2-10,h//2-10),(w//2+14,h//2),(w//2-10,h//2+10)]
-    d.polygon(tri_pts, fill=(255,255,255,255))
-    return img
-
-def logo_openai(size=90):
-    img = Image.new('RGBA', (size,size), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    d.ellipse([0,0,size-1,size-1], fill=(16,16,16,255))
-    try:
-        font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', int(size*0.35))
-        d.text((size//2,size//2),'AI',font=font,fill=(255,255,255,255),anchor='mm')
-    except: pass
-    return img
-
-def logo_banco_central(w=130, h=60):
-    img = Image.new('RGBA', (w,h), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    d.rounded_rectangle([0,0,w-1,h-1], radius=6, fill=(0,83,156,255))
-    try:
-        font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 16)
-        d.text((w//2,h//2-8),'BANCO',font=font,fill=(255,255,255,255),anchor='mm')
-        d.text((w//2,h//2+10),'CENTRAL',font=font,fill=(255,213,0,255),anchor='mm')
-    except: pass
-    return img
-
-# ── SILHUETAS DE LIDERES (sem foto real) ──────────────────────────────────────
-def silhueta_presidente_eua(h=160):
-    """Silhueta reconhecivel - cabelo caracteristico tipo Trump"""
-    w = int(h*0.7)
-    img = Image.new('RGBA', (w,h), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    cx = w//2
-    cor = (255,255,255,220)
-    # Cabelo loiro volumoso (caracteristico)
-    d.ellipse([cx-26,2,cx+26,38], fill=(*cor[:3],180))
-    d.polygon([(cx-26,20),(cx-32,4),(cx-20,2)], fill=(255,220,100,200))
-    d.polygon([(cx+26,20),(cx+32,4),(cx+20,2)], fill=(255,220,100,200))
-    # Rosto
-    d.ellipse([cx-20,10,cx+20,48], fill=cor)
-    # Gravata vermelha
-    d.polygon([(cx-5,50),(cx+5,50),(cx+3,90),(cx,95),(cx-3,90)], fill=(200,0,0,255))
-    # Corpo terno preto
-    d.polygon([(cx-28,48),(cx+28,48),(cx+35,h),(cx-35,h)], fill=(40,40,40,230))
-    # Lapelas
-    d.polygon([(cx-28,48),(cx-5,50),(cx-20,75)], fill=(255,255,255,200))
-    d.polygon([(cx+28,48),(cx+5,50),(cx+20,75)], fill=(255,255,255,200))
-    return img
-
-def silhueta_lider_china(h=160):
-    """Silhueta de lider chines - uniforme Mao"""
-    w = int(h*0.7)
-    img = Image.new('RGBA', (w,h), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    cx = w//2
-    cor = (255,255,255,220)
-    # Cabelo preto liso
-    d.ellipse([cx-22,2,cx+22,40], fill=(20,20,20,240))
-    # Rosto
-    d.ellipse([cx-18,12,cx+18,46], fill=cor)
-    # Uniforme Mao (gola alta verde)
-    d.polygon([(cx-25,45),(cx+25,45),(cx+32,h),(cx-32,h)], fill=(60,100,60,240))
-    d.rectangle([cx-8,45,cx+8,60], fill=(60,100,60,240))
-    return img
-
-def silhueta_tecnico_futbol(h=160):
-    """Silhueta de tecnico de futebol com prancheta"""
-    w = int(h*0.7)
-    img = Image.new('RGBA', (w,h), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    cx = w//2
-    cor = (255,255,255,210)
-    d.ellipse([cx-20,2,cx+20,42], fill=cor)
-    d.polygon([(cx-26,40),(cx+26,40),(cx+30,h),(cx-30,h)], fill=(0,80,160,230))
-    # Prancheta
-    d.rounded_rectangle([cx+20,60,cx+50,100], radius=3, fill=(200,200,200,220))
-    d.line([(cx+25,70),(cx+45,70)], fill=(0,0,0,200), width=2)
-    d.line([(cx+25,78),(cx+45,78)], fill=(0,0,0,200), width=2)
-    d.line([(cx+25,86),(cx+40,86)], fill=(0,0,0,200), width=2)
-    return img
-
-def silhueta_empresario(h=160):
-    """Silhueta de empresario tech"""
-    w = int(h*0.7)
-    img = Image.new('RGBA', (w,h), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    cx = w//2
-    cor = (255,255,255,210)
-    d.ellipse([cx-20,2,cx+20,42], fill=cor)
-    # Camiseta preta (Steve Jobs / Zuckerberg style)
-    d.polygon([(cx-26,40),(cx+26,40),(cx+30,h),(cx-30,h)], fill=(20,20,20,240))
-    # Gola redonda
-    d.arc([cx-10,38,cx+10,52], 0, 180, fill=(40,40,40,200), width=3)
-    return img
-
-# ── ELEMENTOS POR CURSO ───────────────────────────────────────────────────────
-ELEMENTOS_CURSO = {
+# ── TEMAS VISUAIS POR CURSO ───────────────────────────────────────────────────
+TEMAS = {
     'gp': {
-        'bandeiras': [('US','EUA'),('CN','CHINA'),('RU','RUSSIA')],
-        'logos':     [],
-        'silhuetas': [silhueta_presidente_eua, silhueta_lider_china],
-        'sub':       'PODER  CONFLITO  GEOPOLITICA GLOBAL',
-        'cor':       (212,175,55),
-        'tags':      ['GUERRA COMERCIAL','OTAN','BRICS','HEGEMONIA'],
+        'nome': 'GEOPOLITICA AVANCADA',
+        'sub':  'PODER · CONFLITO · ECONOMIA GLOBAL',
+        'cor1': '#1a1200', 'cor2': '#0a0800',
+        'accent': '#f59e0b', 'accent2': '#d97706',
+        'icone': '🌍',
+        'elementos': 'globe',
     },
     'bm': {
-        'bandeiras': [('BR','BRASIL')],
-        'logos':     [logo_banco_central],
-        'silhuetas': [],
-        'sub':       'R$52 BILHOES  CPI  FRAUDE BANCARIA',
-        'cor':       (220,38,38),
-        'tags':      ['R$52.000.000.000','CPI 2025','POLICIA FEDERAL','STF'],
+        'nome': 'CASO BANCO MASTER',
+        'sub':  'R$52 BILHOES · CPI · FRAUDE',
+        'cor1': '#1a0000', 'cor2': '#0d0000',
+        'accent': '#dc2626', 'accent2': '#991b1b',
+        'icone': '🏦',
+        'elementos': 'bank',
     },
     'ii': {
-        'bandeiras': [('IL','ISRAEL'),('IR','IRA')],
-        'logos':     [],
-        'silhuetas': [],
-        'sub':       'GUERRA  ORIENTE MEDIO  2025',
-        'cor':       (249,115,22),
-        'tags':      ['IRON DOME','MISSEIS BALÍSTICOS','HEZBOLLAH','IRGC'],
+        'nome': 'GUERRA ISRAEL x IRA',
+        'sub':  'ORIENTE MEDIO · 2025',
+        'cor1': '#0a0014', 'cor2': '#05000a',
+        'accent': '#f97316', 'accent2': '#3b82f6',
+        'icone': '⚔️',
+        'elementos': 'war',
     },
     'cp': {
-        'bandeiras': [('BR','BRASIL'),('US','EUA'),('MX','MEXICO')],
-        'logos':     [],
-        'silhuetas': [silhueta_tecnico_futbol],
-        'sub':       'FIFA WORLD CUP 2026  EUA  MEXICO  CANADA',
-        'cor':       (34,197,94),
-        'tags':      ['48 SELECOES','104 JOGOS','3 PAISES','O HEXA VEM?'],
+        'nome': 'COPA DO MUNDO 2026',
+        'sub':  'EUA · MEXICO · CANADA',
+        'cor1': '#001400', 'cor2': '#000a00',
+        'accent': '#f59e0b', 'accent2': '#16a34a',
+        'icone': '🏆',
+        'elementos': 'trophy',
     },
     'bc': {
-        'bandeiras': [],
-        'logos':     [logo_bitcoin],
-        'silhuetas': [silhueta_empresario],
-        'sub':       'ATH $109.000  HALVING 2024  ETF APROVADO',
-        'cor':       (249,115,22),
-        'tags':      ['$109K ATH','HALVING 2024','ETF BITCOIN','BLOCKCHAIN'],
+        'nome': 'BITCOIN',
+        'sub':  'ATH $109K · HALVING · ETF',
+        'cor1': '#140800', 'cor2': '#0a0400',
+        'accent': '#f97316', 'accent2': '#fb923c',
+        'icone': '₿',
+        'elementos': 'bitcoin',
     },
     'ctp': {
-        'bandeiras': [],
-        'logos':     [logo_meta, logo_google, logo_tiktok, logo_youtube],
-        'silhuetas': [silhueta_empresario],
-        'sub':       'META  GOOGLE  TIKTOK  YOUTUBE  ROAS 8.4x',
-        'cor':       (59,130,246),
-        'tags':      ['ROAS 8.4x','CTR 4.7%','CPC R$0,38','CONV 12.3%'],
+        'nome': 'TRAFEGO PAGO',
+        'sub':  'META · GOOGLE · TIKTOK · ROAS 8.4x',
+        'cor1': '#000a1a', 'cor2': '#00050f',
+        'accent': '#3b82f6', 'accent2': '#60a5fa',
+        'icone': '📊',
+        'elementos': 'ads',
     },
     'ctep': {
-        'bandeiras': [],
-        'logos':     [],
-        'silhuetas': [],
-        'sub':       'INFLUENCIA  PNL  PERSUASAO  PSICOLOGIA',
-        'cor':       (168,85,247),
-        'tags':      ['ESCASSEZ','RECIPROCIDADE','PROVA SOCIAL','RAPPORT'],
+        'nome': 'TECNICAS DE PERSUASAO',
+        'sub':  'INFLUENCIA · PNL · PSICOLOGIA',
+        'cor1': '#0d0014', 'cor2': '#080009',
+        'accent': '#a855f7', 'accent2': '#c084fc',
+        'icone': '🧠',
+        'elementos': 'brain',
     },
     'nlf': {
-        'bandeiras': [('BR','BRASIL'),('CN','CHINA')],
-        'logos':     [],
-        'silhuetas': [silhueta_lider_china],
-        'sub':       'CENSURA  VIGILANCIA  INTERNET  FELCA 2025',
-        'cor':       (220,38,38),
-        'tags':      ['ERROR 403','VPN BLOQUEADO','ACESSO NEGADO','FELCA'],
+        'nome': 'LEI FELCA',
+        'sub':  'CENSURA · VIGILANCIA · INTERNET',
+        'cor1': '#140000', 'cor2': '#0a0005',
+        'accent': '#dc2626', 'accent2': '#7c3aed',
+        'icone': '🔒',
+        'elementos': 'eye',
     },
     'ie': {
-        'bandeiras': [],
-        'logos':     [],
-        'silhuetas': [],
-        'sub':       'AUTOCONHECIMENTO  EMPATIA  MOTIVACAO  SUCESSO',
-        'cor':       (244,63,94),
-        'tags':      ['DANIEL GOLEMAN','5 PILARES','QE > QI','LIDERANÇA'],
+        'nome': 'INTELIGENCIA EMOCIONAL',
+        'sub':  'AUTOCONHECIMENTO · EMPATIA · SUCESSO',
+        'cor1': '#140008', 'cor2': '#0a0005',
+        'accent': '#f43f5e', 'accent2': '#fb7185',
+        'icone': '❤️',
+        'elementos': 'heart',
     },
 }
 
-PROMPTS = {
-    'gp':   'Ultra realistic cinematic 8K: dramatic dark war room at night, massive illuminated world map on wall showing tension zones, chess pieces on dark oak table, classified documents, multiple screens. No text. No flags. Photorealistic. Dark gold and navy blue. Volumetric god rays.',
-    'bm':   'Ultra realistic cinematic 8K crime documentary: massive cracked steel bank vault door open revealing fire and burning cash inside, police investigation tape, emergency red lights flashing, dark abandoned bank hall, smoke. No text. Photorealistic. Crimson red and dark charcoal.',
-    'ii':   'Ultra realistic cinematic 8K war documentary: massive explosion of fire over Middle Eastern desert city skyline at dusk, military jets silhouettes, smoke columns rising dramatically, cinematic war atmosphere. No text. Photorealistic. Split orange and cold blue cinematic.',
-    'cp':   'Ultra realistic cinematic 8K sports: FIFA World Cup golden trophy alone on stadium grass, single dramatic spotlight from above, massive packed 80000 spectator stadium bokeh background, volumetric fog on grass, confetti. No text. Photorealistic. Cinematic gold and deep blue.',
-    'bc':   'Ultra realistic cinematic 8K finance: giant golden coin rising from darkness like a sun over crumbling old stone bank buildings, parabolic chart going vertical to sky, digital light streams replacing old finance. No text. Photorealistic. Dark gold and electric blue neon.',
-    'ctp':  'Ultra realistic cinematic 8K tech entrepreneurship: dark futuristic command center, massive curved holographic dashboard with rocket trajectory performance chart exploding upward, digital money particles, data streams. No text. Photorealistic. Electric blue and gold.',
-    'ctep': 'Ultra realistic cinematic 8K psychology: anatomically detailed glowing human brain floating in absolute darkness, electric purple synaptic lightning bolts firing between neural pathways, chess pieces floating, mysterious atmosphere. No text. Photorealistic. Deep purple and electric violet.',
-    'nlf':  'Ultra realistic cinematic 8K dystopian surveillance: massive circuit board surveillance eye watching through cracked screen, iron chains on glowing cables, dark server room with red warning lights. No text. Photorealistic. Crimson red and dark charcoal.',
-    'ie':   'Ultra realistic cinematic 8K human potential: serene human silhouette in meditation with glowing heart visible through chest radiating rose gold light in concentric waves, ember particles rising in dark void. No text. Photorealistic. Warm rose gold and deep violet.',
+TEMA_DEFAULT = {
+    'nome': 'NOVO CURSO',
+    'sub':  'MATHEUS ACADEMY',
+    'cor1': '#000a1a', 'cor2': '#00050f',
+    'accent': '#5b7fff', 'accent2': '#818cf8',
+    'icone': '🎓',
+    'elementos': 'default',
 }
 
-PROMPTS_CAT = {
-    'Geopolitica':     'Ultra realistic cinematic 8K: dramatic war room, world map tension zones glowing, chess pieces. No text. No flags. Photorealistic. Dark gold.',
-    'Atualize-se':     'Ultra realistic cinematic 8K: dramatic newsroom at night, glowing screens urgency. No text. Photorealistic. Red and white news lighting.',
-    'Negocios':        'Ultra realistic cinematic 8K: dark executive boardroom, city skyline, financial charts growth. No text. Photorealistic. Gold and dark blue.',
-    'PNL':             'Ultra realistic cinematic 8K: glowing brain neural pathways darkness, mysterious psychological atmosphere. No text. Photorealistic. Purple cinematic.',
-    'Desenvolvimento': 'Ultra realistic cinematic 8K: silhouette mountain summit glowing energy epic landscape. No text. Photorealistic. Warm golden light.',
-    'Tecnologia':      'Ultra realistic cinematic 8K: futuristic digital environment holographic interfaces electric blue. No text. Photorealistic.',
-    '_default':        'Ultra realistic cinematic 8K: dramatic academy environment light shafts knowledge atmosphere. No text. Photorealistic. Dramatic cinematic lighting.',
+# ── ELEMENTOS VISUAIS SVG POR TIPO ────────────────────────────────────────────
+def elementos_globe():
+    return '''
+    <!-- Meridianos e paralelos -->
+    <g opacity="0.15" stroke="#f59e0b" stroke-width="0.5" fill="none">
+      <ellipse cx="512" cy="380" rx="280" ry="280"/>
+      <ellipse cx="512" cy="380" rx="280" ry="100"/>
+      <ellipse cx="512" cy="380" rx="280" ry="180"/>
+      <ellipse cx="512" cy="380" rx="100" ry="280"/>
+      <ellipse cx="512" cy="380" rx="180" ry="280"/>
+      <line x1="512" y1="100" x2="512" y2="660"/>
+    </g>
+    <!-- Continentes abstratos -->
+    <g opacity="0.3">
+      <ellipse cx="380" cy="320" rx="90" ry="60" fill="#1d3a1a" stroke="#22c55e" stroke-width="1"/>
+      <ellipse cx="580" cy="280" rx="70" ry="50" fill="#1a1d3a" stroke="#3b82f6" stroke-width="1"/>
+      <ellipse cx="460" cy="430" rx="55" ry="40" fill="#1d1a3a" stroke="#a855f7" stroke-width="1"/>
+      <ellipse cx="640" cy="400" rx="45" ry="35" fill="#3a1a1a" stroke="#ef4444" stroke-width="1"/>
+    </g>
+    <!-- Pontos de tensao -->
+    <circle cx="520" cy="340" r="8" fill="#ef4444" opacity="0.9"/>
+    <circle cx="520" cy="340" r="18" fill="none" stroke="#ef4444" stroke-width="1.5" opacity="0.5"/>
+    <circle cx="520" cy="340" r="30" fill="none" stroke="#ef4444" stroke-width="1" opacity="0.25"/>
+    <circle cx="390" cy="310" r="6" fill="#3b82f6" opacity="0.8"/>
+    <circle cx="390" cy="310" r="14" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.4"/>
+    <circle cx="620" cy="370" r="6" fill="#ef4444" opacity="0.8"/>
+    <circle cx="620" cy="370" r="14" fill="none" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
+    <!-- Linhas de conexao -->
+    <path d="M390,310 Q505,260 520,340" fill="none" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+    <path d="M620,370 Q570,300 520,340" fill="none" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+    <!-- Pecas de xadrez -->
+    <g fill="#f59e0b" opacity="0.2">
+      <rect x="200" y="580" width="20" height="50" rx="3"/>
+      <circle cx="210" cy="570" r="15"/>
+      <rect x="280" y="600" width="20" height="40" rx="3"/>
+      <circle cx="290" cy="590" r="13"/>
+      <rect x="740" y="580" width="20" height="50" rx="3"/>
+      <circle cx="750" cy="570" r="15"/>
+    </g>'''
+
+def elementos_bank():
+    return '''
+    <!-- Predio bancario -->
+    <g opacity="0.4">
+      <rect x="262" y="200" width="500" height="400" fill="#1a0000" stroke="#dc2626" stroke-width="1.5"/>
+      <polygon points="262,200 512,120 762,200" fill="#0d0000" stroke="#dc2626" stroke-width="1.5"/>
+      <!-- Colunas -->
+      <rect x="290" y="220" width="30" height="380" fill="#111" stroke="#dc2626" stroke-width="0.5" opacity="0.8"/>
+      <rect x="360" y="220" width="30" height="380" fill="#111" stroke="#dc2626" stroke-width="0.5" opacity="0.8"/>
+      <rect x="430" y="220" width="30" height="380" fill="#111" stroke="#dc2626" stroke-width="0.5" opacity="0.8"/>
+      <rect x="500" y="220" width="30" height="380" fill="#111" stroke="#dc2626" stroke-width="0.5" opacity="0.8"/>
+      <rect x="570" y="220" width="30" height="380" fill="#111" stroke="#dc2626" stroke-width="0.5" opacity="0.8"/>
+      <rect x="640" y="220" width="30" height="380" fill="#111" stroke="#dc2626" stroke-width="0.5" opacity="0.8"/>
+      <rect x="710" y="220" width="30" height="380" fill="#111" stroke="#dc2626" stroke-width="0.5" opacity="0.8"/>
+    </g>
+    <!-- Cofre quebrado -->
+    <circle cx="512" cy="420" r="100" fill="#0a0000" stroke="#dc2626" stroke-width="3" opacity="0.8"/>
+    <circle cx="512" cy="420" r="75" fill="none" stroke="#dc2626" stroke-width="2" opacity="0.5"/>
+    <!-- Raios do cofre -->
+    <g stroke="#dc2626" stroke-width="2" opacity="0.6">
+      <line x1="512" y1="320" x2="512" y2="340"/>
+      <line x1="512" y1="500" x2="512" y2="520"/>
+      <line x1="412" y1="420" x2="432" y2="420"/>
+      <line x1="592" y1="420" x2="612" y2="420"/>
+    </g>
+    <!-- Notas caindo -->
+    <g opacity="0.5" fill="#22c55e">
+      <rect x="350" y="490" width="40" height="20" rx="2" transform="rotate(-15,370,500)"/>
+      <rect x="580" y="510" width="40" height="20" rx="2" transform="rotate(10,600,520)"/>
+      <rect x="450" y="540" width="40" height="20" rx="2" transform="rotate(-5,470,550)"/>
+      <rect x="630" y="470" width="40" height="20" rx="2" transform="rotate(20,650,480)"/>
+    </g>
+    <!-- R$52bi -->
+    <text x="512" y="430" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="900" font-size="36" opacity="0.9">R$52bi</text>'''
+
+def elementos_war():
+    return '''
+    <!-- Explosao central -->
+    <radialGradient id="expGrad" cx="50%" cy="55%" r="40%">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#dc2626" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <rect x="0" y="0" width="1024" height="1792" fill="url(#expGrad)"/>
+    <!-- Ondas de explosao -->
+    <circle cx="512" cy="900" r="150" fill="none" stroke="#f97316" stroke-width="2" opacity="0.4"/>
+    <circle cx="512" cy="900" r="250" fill="none" stroke="#f97316" stroke-width="1.5" opacity="0.3"/>
+    <circle cx="512" cy="900" r="380" fill="none" stroke="#f97316" stroke-width="1" opacity="0.2"/>
+    <!-- Misseis -->
+    <g opacity="0.5" stroke="#ffffff" stroke-width="2">
+      <line x1="200" y1="600" x2="480" y2="880"/>
+      <line x1="820" y1="580" x2="545" y2="870"/>
+      <line x1="300" y1="400" x2="495" y2="860"/>
+    </g>
+    <!-- Silhueta cidade -->
+    <g fill="#0a0010" opacity="0.7">
+      <rect x="50" y="1000" width="60" height="200"/>
+      <rect x="130" y="950" width="80" height="250"/>
+      <rect x="230" y="1020" width="50" height="180"/>
+      <rect x="640" y="960" width="70" height="240"/>
+      <rect x="730" y="990" width="90" height="210"/>
+      <rect x="840" y="940" width="60" height="260"/>
+      <rect x="920" y="1010" width="50" height="190"/>
+    </g>'''
+
+def elementos_trophy():
+    return '''
+    <!-- Estadio -->
+    <ellipse cx="512" cy="500" rx="400" ry="320" fill="none" stroke="#16a34a" stroke-width="2" opacity="0.5"/>
+    <ellipse cx="512" cy="500" rx="340" ry="260" fill="none" stroke="#16a34a" stroke-width="1" opacity="0.3"/>
+    <!-- Gramado -->
+    <ellipse cx="512" cy="500" rx="280" ry="200" fill="#052e16" opacity="0.6"/>
+    <ellipse cx="512" cy="500" rx="200" ry="145" fill="#065f46" opacity="0.5"/>
+    <ellipse cx="512" cy="500" rx="120" ry="90" fill="#052e16" opacity="0.5"/>
+    <circle cx="512" cy="500" r="50" fill="none" stroke="#fff" stroke-width="1" opacity="0.2"/>
+    <!-- Taca dourada -->
+    <path d="M452,320 C432,320 420,340 420,360 C420,400 440,430 470,445 L465,480 L445,495 L575,495 L555,480 L550,445 C580,430 600,400 600,360 C600,340 588,320 568,320 Z" fill="#f59e0b" opacity="0.9"/>
+    <rect x="480" y="490" width="60" height="8" rx="2" fill="#d97706"/>
+    <ellipse cx="512" cy="498" rx="50" ry="8" fill="#f59e0b"/>
+    <!-- Brilho na taca -->
+    <path d="M452,320 C432,320 420,340 420,360 C420,400 440,430 470,445 L465,480 L445,495 L575,495 L555,480 L550,445 C580,430 600,400 600,360 C600,340 588,320 568,320 Z" fill="none" stroke="#fde68a" stroke-width="2" opacity="0.6"/>
+    <!-- Estrelas -->
+    <text x="512" y="400" text-anchor="middle" fill="#7c2d12" font-size="18" opacity="0.8">★★★★★★</text>
+    <!-- Holofotes -->
+    <g opacity="0.15" stroke="#f59e0b" stroke-width="30" stroke-linecap="round">
+      <line x1="100" y1="150" x2="500" y2="490"/>
+      <line x1="924" y1="150" x2="524" y2="490"/>
+    </g>'''
+
+def elementos_bitcoin():
+    return '''
+    <!-- Grade de mercado -->
+    <g opacity="0.06" stroke="#f97316" stroke-width="0.5">
+      <line x1="0" y1="200" x2="1024" y2="200"/>
+      <line x1="0" y1="350" x2="1024" y2="350"/>
+      <line x1="0" y1="500" x2="1024" y2="500"/>
+      <line x1="0" y1="650" x2="1024" y2="650"/>
+      <line x1="128" y1="0" x2="128" y2="900"/>
+      <line x1="256" y1="0" x2="256" y2="900"/>
+      <line x1="384" y1="0" x2="384" y2="900"/>
+      <line x1="512" y1="0" x2="512" y2="900"/>
+      <line x1="640" y1="0" x2="640" y2="900"/>
+      <line x1="768" y1="0" x2="768" y2="900"/>
+      <line x1="896" y1="0" x2="896" y2="900"/>
+    </g>
+    <!-- Grafico candlestick -->
+    <g>
+      <line x1="100" y1="720" x2="100" y2="640" stroke="#22c55e" stroke-width="1.5"/>
+      <rect x="92" y="680" width="16" height="40" fill="#22c55e" opacity="0.8"/>
+      <line x1="160" y1="680" x2="160" y2="590" stroke="#22c55e" stroke-width="1.5"/>
+      <rect x="152" y="630" width="16" height="45" fill="#22c55e" opacity="0.8"/>
+      <line x1="220" y1="650" x2="220" y2="570" stroke="#ef4444" stroke-width="1.5"/>
+      <rect x="212" y="600" width="16" height="40" fill="#ef4444" opacity="0.8"/>
+      <line x1="280" y1="580" x2="280" y2="480" stroke="#22c55e" stroke-width="1.5"/>
+      <rect x="272" y="510" width="16" height="50" fill="#22c55e" opacity="0.8"/>
+      <line x1="340" y1="500" x2="340" y2="400" stroke="#22c55e" stroke-width="1.5"/>
+      <rect x="332" y="420" width="16" height="60" fill="#22c55e" opacity="0.8"/>
+      <line x1="400" y1="440" x2="400" y2="360" stroke="#ef4444" stroke-width="1.5"/>
+      <rect x="392" y="380" width="16" height="40" fill="#ef4444" opacity="0.8"/>
+      <line x1="460" y1="380" x2="460" y2="280" stroke="#22c55e" stroke-width="1.5"/>
+      <rect x="452" y="300" width="16" height="60" fill="#22c55e" opacity="0.8"/>
+      <line x1="520" y1="300" x2="520" y2="200" stroke="#22c55e" stroke-width="1.5"/>
+      <rect x="512" y="220" width="16" height="60" fill="#22c55e" opacity="0.8"/>
+    </g>
+    <!-- Linha de tendencia ATH -->
+    <polyline points="100,720 160,660 220,630 280,550 340,470 400,420 460,350 520,270 580,220 640,180" fill="none" stroke="#f97316" stroke-width="2.5" opacity="0.8"/>
+    <circle cx="640" cy="180" r="8" fill="#f97316"/>
+    <text x="660" y="175" fill="#f97316" font-family="Arial" font-weight="700" font-size="20">ATH $109K</text>
+    <!-- Simbolo Bitcoin grande -->
+    <circle cx="512" cy="520" r="160" fill="#f97316" opacity="0.12"/>
+    <circle cx="512" cy="520" r="140" fill="none" stroke="#f97316" stroke-width="2" opacity="0.3"/>
+    <text x="512" y="575" text-anchor="middle" fill="#f97316" font-family="Arial" font-weight="900" font-size="140" opacity="0.25">₿</text>'''
+
+def elementos_ads():
+    return '''
+    <!-- Dashboard frame -->
+    <rect x="62" y="80" width="900" height="620" rx="8" fill="#070d18" stroke="#1e3a5f" stroke-width="1.5" opacity="0.9"/>
+    <rect x="62" y="80" width="900" height="36" rx="8" fill="#0d1421"/>
+    <!-- Botoes mac style -->
+    <circle cx="90" cy="98" r="7" fill="#ef4444" opacity="0.7"/>
+    <circle cx="114" cy="98" r="7" fill="#f59e0b" opacity="0.7"/>
+    <circle cx="138" cy="98" r="7" fill="#22c55e" opacity="0.7"/>
+    <text x="512" y="103" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="13" letter-spacing="2">ADS MANAGER — DASHBOARD</text>
+    <!-- Cards de metricas -->
+    <rect x="90" y="130" width="190" height="100" rx="4" fill="#111827" stroke="#1e3a5f" stroke-width="0.5"/>
+    <text x="185" y="165" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="13" letter-spacing="1">ROAS</text>
+    <text x="185" y="205" text-anchor="middle" fill="#22c55e" font-family="Arial" font-weight="900" font-size="38">8.4x</text>
+    <rect x="300" y="130" width="190" height="100" rx="4" fill="#111827" stroke="#1e3a5f" stroke-width="0.5"/>
+    <text x="395" y="165" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="13" letter-spacing="1">CTR</text>
+    <text x="395" y="205" text-anchor="middle" fill="#3b82f6" font-family="Arial" font-weight="900" font-size="38">4.7%</text>
+    <rect x="510" y="130" width="190" height="100" rx="4" fill="#111827" stroke="#1e3a5f" stroke-width="0.5"/>
+    <text x="605" y="165" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="13" letter-spacing="1">CPC</text>
+    <text x="605" y="205" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="900" font-size="32">R$0,38</text>
+    <rect x="720" y="130" width="200" height="100" rx="4" fill="#111827" stroke="#1e3a5f" stroke-width="0.5"/>
+    <text x="820" y="165" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="13" letter-spacing="1">CONV.</text>
+    <text x="820" y="205" text-anchor="middle" fill="#a855f7" font-family="Arial" font-weight="900" font-size="38">12.3%</text>
+    <!-- Grafico de barras crescente -->
+    <rect x="90" y="244" width="830" height="200" rx="4" fill="#0d1421" stroke="#1e3a5f" stroke-width="0.5"/>
+    <text x="110" y="268" fill="#6b7280" font-family="Arial" font-size="12" letter-spacing="1">RECEITA DIARIA (R$)</text>
+    <g fill="#3b82f6">
+      <rect x="110" y="400" width="35" height="35" opacity="0.6"/>
+      <rect x="165" y="385" width="35" height="50" opacity="0.65"/>
+      <rect x="220" y="370" width="35" height="65" opacity="0.7"/>
+      <rect x="275" y="380" width="35" height="55" opacity="0.65"/>
+      <rect x="330" y="355" width="35" height="80" opacity="0.75"/>
+      <rect x="385" y="335" width="35" height="100" opacity="0.8"/>
+      <rect x="440" y="345" width="35" height="90" opacity="0.75"/>
+      <rect x="495" y="318" width="35" height="117" opacity="0.85"/>
+      <rect x="550" y="300" width="35" height="135" opacity="0.9"/>
+      <rect x="605" y="308" width="35" height="127" opacity="0.85"/>
+    </g>
+    <rect x="660" y="282" width="35" height="153" fill="#22c55e" opacity="1"/>
+    <rect x="715" y="268" width="35" height="167" fill="#22c55e" opacity="1"/>
+    <rect x="770" y="252" width="35" height="183" fill="#22c55e" opacity="1"/>
+    <rect x="825" y="240" width="55" height="195" fill="#22c55e" opacity="1"/>
+    <!-- Labels plataformas -->
+    <text x="110" y="462" fill="#4b7bff" font-family="Arial" font-weight="900" font-size="14">META ADS</text>
+    <text x="320" y="462" fill="#ea4335" font-family="Arial" font-weight="900" font-size="14">GOOGLE ADS</text>
+    <text x="580" y="462" fill="#00f2ea" font-family="Arial" font-weight="900" font-size="14">TIKTOK ADS</text>
+    <text x="780" y="462" fill="#ff0000" font-family="Arial" font-weight="900" font-size="14">YOUTUBE</text>
+    <!-- Funil -->
+    <rect x="90" y="480" width="830" height="180" rx="4" fill="#0d1421" stroke="#1e3a5f" stroke-width="0.5"/>
+    <text x="110" y="504" fill="#6b7280" font-family="Arial" font-size="12" letter-spacing="1">FUNIL DE CONVERSAO</text>
+    <polygon points="90,520 930,520 860,640 160,640" fill="#3b82f6" opacity="0.12" stroke="#3b82f6" stroke-width="1"/>
+    <polygon points="160,520 860,520 800,580 220,580" fill="#3b82f6" opacity="0.2"/>
+    <polygon points="220,520 800,520 750,560 270,560" fill="#3b82f6" opacity="0.35"/>
+    <text x="512" y="548" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="700" font-size="16">TRAFEGO → LEADS → VENDAS</text>'''
+
+def elementos_brain():
+    return '''
+    <!-- Cerebro glowing -->
+    <radialGradient id="brainGlow" cx="50%" cy="45%" r="40%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#7c3aed" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <rect x="0" y="0" width="1024" height="1792" fill="url(#brainGlow)"/>
+    <!-- Contorno cerebro -->
+    <path d="M312,180 C260,180 210,230 210,290 C210,330 225,365 250,388 C228,408 215,438 215,470 C215,530 258,578 312,578 C328,592 350,600 375,600 L649,600 C674,600 696,592 712,578 C766,578 809,530 809,470 C809,438 796,408 774,388 C799,365 814,330 814,290 C814,230 764,180 712,180 C698,162 678,152 655,152 L369,152 C346,152 326,162 312,180 Z" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.6"/>
+    <!-- Divisao hemisferios -->
+    <line x1="512" y1="152" x2="512" y2="600" stroke="#a855f7" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+    <!-- Sulcos -->
+    <path d="M270,250 Q340,230 400,260 Q460,230 520,260 Q580,230 640,260 Q700,230 754,250" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.5"/>
+    <path d="M250,320 Q320,300 390,325 Q460,300 530,325 Q600,300 670,325 Q720,300 770,320" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.45"/>
+    <path d="M240,395 Q315,375 385,400 Q455,375 525,400 Q595,375 665,400 Q730,375 780,395" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.4"/>
+    <path d="M248,468 Q320,448 395,470 Q468,448 540,470 Q613,448 685,470 Q748,448 776,468" fill="none" stroke="#7c3aed" stroke-width="1.4" opacity="0.35"/>
+    <path d="M265,535 Q340,515 415,535 Q490,515 565,535 Q635,515 706,535 Q750,515 759,535" fill="none" stroke="#7c3aed" stroke-width="1.2" opacity="0.3"/>
+    <!-- Neuronios -->
+    <circle cx="320" cy="270" r="8" fill="#a855f7" opacity="0.9"/>
+    <circle cx="512" cy="230" r="8" fill="#ec4899" opacity="0.9"/>
+    <circle cx="704" cy="270" r="8" fill="#3b82f6" opacity="0.9"/>
+    <circle cx="280" cy="390" r="7" fill="#a855f7" opacity="0.8"/>
+    <circle cx="420" cy="350" r="7" fill="#ec4899" opacity="0.8"/>
+    <circle cx="512" cy="440" r="9" fill="#a855f7" opacity="0.95"/>
+    <circle cx="604" cy="350" r="7" fill="#3b82f6" opacity="0.8"/>
+    <circle cx="744" cy="390" r="7" fill="#a855f7" opacity="0.8"/>
+    <!-- Sinapses -->
+    <line x1="320" y1="270" x2="512" y2="230" stroke="#a855f7" stroke-width="1.5" opacity="0.6"/>
+    <line x1="512" y1="230" x2="704" y2="270" stroke="#ec4899" stroke-width="1.5" opacity="0.6"/>
+    <line x1="320" y1="270" x2="280" y2="390" stroke="#a855f7" stroke-width="1.2" opacity="0.5"/>
+    <line x1="512" y1="230" x2="420" y2="350" stroke="#ec4899" stroke-width="1.2" opacity="0.5"/>
+    <line x1="512" y1="230" x2="604" y2="350" stroke="#3b82f6" stroke-width="1.2" opacity="0.5"/>
+    <line x1="420" y1="350" x2="512" y2="440" stroke="#a855f7" stroke-width="1.2" opacity="0.5"/>
+    <line x1="604" y1="350" x2="512" y2="440" stroke="#3b82f6" stroke-width="1.2" opacity="0.5"/>
+    <!-- Pecas de xadrez -->
+    <g opacity="0.2" fill="#a855f7">
+      <rect x="180" y="480" width="30" height="60" rx="4"/>
+      <circle cx="195" cy="470" r="20"/>
+      <rect x="794" y="480" width="30" height="60" rx="4"/>
+      <circle cx="809" cy="470" r="20"/>
+    </g>'''
+
+def elementos_eye():
+    return '''
+    <!-- Olho de vigilancia -->
+    <ellipse cx="512" cy="420" rx="320" ry="210" fill="none" stroke="#dc2626" stroke-width="2.5" opacity="0.7"/>
+    <!-- Palpebras -->
+    <path d="M192,420 Q352,220 512,200 Q672,220 832,420" fill="#050010" stroke="#dc2626" stroke-width="1.5" opacity="0.6"/>
+    <path d="M192,420 Q352,620 512,640 Q672,620 832,420" fill="#050010" stroke="#dc2626" stroke-width="1.5" opacity="0.6"/>
+    <!-- Iris -->
+    <circle cx="512" cy="420" r="140" fill="none" stroke="#dc2626" stroke-width="2" opacity="0.6"/>
+    <circle cx="512" cy="420" r="100" fill="#1a0010" stroke="#dc2626" stroke-width="1.5" opacity="0.7"/>
+    <!-- Pupila -->
+    <circle cx="512" cy="420" r="60" fill="#dc2626" opacity="0.85"/>
+    <circle cx="512" cy="420" r="30" fill="#050005"/>
+    <!-- Reflexo -->
+    <circle cx="488" cy="398" r="14" fill="#fff" opacity="0.25"/>
+    <!-- Raios de vigilancia -->
+    <g stroke="#dc2626" stroke-width="1" opacity="0.2">
+      <line x1="512" y1="210" x2="512" y2="130"/>
+      <line x1="832" y1="420" x2="920" y2="420"/>
+      <line x1="192" y1="420" x2="104" y2="420"/>
+      <line x1="750" y1="258" x2="820" y2="200"/>
+      <line x1="274" y1="258" x2="204" y2="200"/>
+    </g>
+    <!-- Cadeado -->
+    <rect x="432" y="580" width="160" height="130" rx="10" fill="#111" stroke="#dc2626" stroke-width="2" opacity="0.9"/>
+    <path d="M462,580 Q462,520 512,520 Q562,520 562,580" fill="none" stroke="#dc2626" stroke-width="3" opacity="0.8"/>
+    <circle cx="512" cy="628" r="22" fill="none" stroke="#dc2626" stroke-width="2" opacity="0.8"/>
+    <rect x="505" y="628" width="14" height="35" rx="4" fill="#dc2626" opacity="0.8"/>
+    <!-- Codigo ao fundo -->
+    <g font-family="monospace" font-size="13" opacity="0.08" fill="#ef4444">
+      <text x="30" y="100">01101100 CENSURA_ATIVA=TRUE</text>
+      <text x="30" y="130">FIREWALL_ON ACCESS_DENIED 403</text>
+      <text x="30" y="160">VPN_BLOCKED INTERNET_RESTRICTED</text>
+      <text x="30" y="190">KEYWORD_BLOCKED: LIBERDADE</text>
+      <text x="30" y="220">DEEP_PACKET_INSPECTION=ON</text>
+    </g>
+    <!-- Selos -->
+    <rect x="80" y="720" width="240" height="55" fill="none" stroke="#dc2626" stroke-width="2" opacity="0.8"/>
+    <text x="200" y="750" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="900" font-size="18" letter-spacing="2">CENSURADO</text>
+    <text x="200" y="768" text-anchor="middle" fill="#dc2626" font-family="Arial" font-size="12" letter-spacing="1">ERROR 403</text>
+    <rect x="704" y="720" width="240" height="55" fill="#7c3aed" opacity="0.3" stroke="#7c3aed" stroke-width="2"/>
+    <text x="824" y="750" text-anchor="middle" fill="#c4b5fd" font-family="Arial" font-weight="900" font-size="18" letter-spacing="2">BLOQUEADO</text>
+    <text x="824" y="768" text-anchor="middle" fill="#c4b5fd" font-family="Arial" font-size="12" letter-spacing="1">VPN DETECT</text>'''
+
+def elementos_heart():
+    return '''
+    <!-- Silhueta em meditacao -->
+    <!-- Cabeca -->
+    <circle cx="512" cy="280" r="70" fill="none" stroke="#f43f5e" stroke-width="1.5" opacity="0.4"/>
+    <circle cx="512" cy="280" r="70" fill="#f43f5e" opacity="0.04"/>
+    <!-- Pescoco -->
+    <rect x="490" y="348" width="44" height="40" rx="6" fill="none" stroke="#f43f5e" stroke-width="1" opacity="0.3"/>
+    <!-- Tronco -->
+    <path d="M270,580 L320,388 L512,378 L704,388 L754,580 Q730,630 512,640 Q294,630 270,580 Z" fill="none" stroke="#f43f5e" stroke-width="1.5" opacity="0.38"/>
+    <!-- Coracao luminoso -->
+    <path d="M512,510 C512,510 452,470 452,432 C452,410 468,396 486,396 C496,397 504,403 512,412 C520,403 528,397 538,396 C556,396 572,410 572,432 C572,470 512,510 512,510 Z" fill="#f43f5e" opacity="0.9"/>
+    <!-- Brilho do coracao -->
+    <circle cx="512" cy="450" r="80" fill="#f43f5e" opacity="0.15"/>
+    <circle cx="512" cy="450" r="130" fill="none" stroke="#f43f5e" stroke-width="1.5" opacity="0.25"/>
+    <circle cx="512" cy="450" r="180" fill="none" stroke="#f43f5e" stroke-width="1" opacity="0.15"/>
+    <circle cx="512" cy="450" r="240" fill="none" stroke="#f43f5e" stroke-width="0.8" opacity="0.08"/>
+    <!-- Pulso cardiaco -->
+    <polyline points="80,540 160,540 195,490 230,595 265,470 300,540 340,540 512,540 580,540 615,505 650,580 685,520 720,540 944,540" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" opacity="0.7"/>
+    <!-- Particulas de luz -->
+    <g fill="#f43f5e" opacity="0.5">
+      <circle cx="200" cy="320" r="4"/>
+      <circle cx="280" cy="240" r="3"/>
+      <circle cx="180" cy="440" r="5"/>
+      <circle cx="820" cy="300" r="4"/>
+      <circle cx="760" cy="220" r="3"/>
+      <circle cx="840" cy="420" r="5"/>
+      <circle cx="350" cy="160" r="3"/>
+      <circle cx="650" cy="155" r="3"/>
+      <circle cx="450" cy="130" r="4"/>
+      <circle cx="570" cy="145" r="3"/>
+    </g>
+    <!-- Labels 5 pilares -->
+    <text x="512" y="70" text-anchor="middle" fill="#f43f5e" font-family="Arial" font-weight="700" font-size="18" opacity="0.8" letter-spacing="2">AUTOCONHECIMENTO</text>
+    <text x="95" y="240" text-anchor="middle" fill="#fb7185" font-family="Arial" font-weight="700" font-size="15" opacity="0.75">AUTO-</text>
+    <text x="95" y="260" text-anchor="middle" fill="#fb7185" font-family="Arial" font-weight="700" font-size="15" opacity="0.75">CONTROLE</text>
+    <text x="929" y="240" text-anchor="middle" fill="#fb7185" font-family="Arial" font-weight="700" font-size="15" opacity="0.75">EMPATIA</text>
+    <text x="85" y="480" text-anchor="middle" fill="#fda4af" font-family="Arial" font-weight="700" font-size="14" opacity="0.7">HAB.</text>
+    <text x="85" y="498" text-anchor="middle" fill="#fda4af" font-family="Arial" font-weight="700" font-size="14" opacity="0.7">SOCIAIS</text>
+    <text x="939" y="480" text-anchor="middle" fill="#fda4af" font-family="Arial" font-weight="700" font-size="14" opacity="0.7">MOTI-</text>
+    <text x="939" y="498" text-anchor="middle" fill="#fda4af" font-family="Arial" font-weight="700" font-size="14" opacity="0.7">VACAO</text>'''
+
+def elementos_default():
+    return '''
+    <!-- Simbolo academico -->
+    <circle cx="512" cy="420" r="200" fill="none" stroke="#5b7fff" stroke-width="1.5" opacity="0.3"/>
+    <circle cx="512" cy="420" r="150" fill="none" stroke="#5b7fff" stroke-width="1" opacity="0.2"/>
+    <text x="512" y="470" text-anchor="middle" fill="#5b7fff" font-family="Arial" font-size="120" opacity="0.2">🎓</text>
+    <!-- Raios de luz -->
+    <g stroke="#5b7fff" stroke-width="1" opacity="0.1">
+      <line x1="512" y1="220" x2="512" y2="100"/>
+      <line x1="654" y1="278" x2="722" y2="172"/>
+      <line x1="712" y1="420" x2="840" y2="420"/>
+      <line x1="654" y1="562" x2="722" y2="668"/>
+      <line x1="370" y1="278" x2="302" y2="172"/>
+      <line x1="312" y1="420" x2="184" y2="420"/>
+    </g>'''
+
+ELEMENTOS_MAP = {
+    'globe': elementos_globe,
+    'bank': elementos_bank,
+    'war': elementos_war,
+    'trophy': elementos_trophy,
+    'bitcoin': elementos_bitcoin,
+    'ads': elementos_ads,
+    'brain': elementos_brain,
+    'eye': elementos_eye,
+    'heart': elementos_heart,
+    'default': elementos_default,
 }
 
-# ── COMPOSICAO FINAL ──────────────────────────────────────────────────────────
-def compor_capa(img_fundo, curso):
-    w, h = img_fundo.size
-    result = img_fundo.copy().convert('RGBA')
-    ov     = Image.new('RGBA', (w, h), (0,0,0,0))
-    d      = ImageDraw.Draw(ov)
+# ── GERADOR SVG PRINCIPAL ─────────────────────────────────────────────────────
+def gerar_svg(curso_id, curso_nome, horas, modulos, topicos):
+    tema = TEMAS.get(curso_id, TEMA_DEFAULT.copy())
+    tema['nome'] = curso_nome.upper()
 
-    cid   = curso['id']
-    nome  = curso['nome'].upper()
-    elem  = ELEMENTOS_CURSO.get(cid, {
-        'bandeiras':[], 'logos':[], 'silhuetas':[],
-        'sub': curso.get('cat',''), 'cor':(91,127,255), 'tags':[]
-    })
-    cor  = elem['cor']
-    sub  = elem['sub']
-    tags = elem.get('tags', [])
+    cor1   = tema['cor1']
+    cor2   = tema['cor2']
+    accent = tema['accent']
+    acc2   = tema['accent2']
+    sub    = tema['sub']
+    elem   = ELEMENTOS_MAP.get(tema['elementos'], elementos_default)()
 
-    # Gradiente escuro EMBAIXO (area do titulo)
-    gh = int(h * 0.55)
-    for y in range(gh):
-        alpha = int(240 * (y/gh)**1.6)
-        d.rectangle([0, h-gh+y, w, h-gh+y+1], fill=(0,0,0,alpha))
-
-    # Gradiente escuro em CIMA (area das bandeiras/logos)
-    th = int(h * 0.30)
-    for y in range(th):
-        alpha = int(190 * (1-y/th)**1.4)
-        d.rectangle([0, y, w, y+1], fill=(0,0,0,alpha))
-
-    # Linha colorida topo
-    d.rectangle([0, 0, w, 10], fill=(*cor, 255))
-
-    # ── BANDEIRAS (topo) ──────────────────────────────────────────────────────
-    bnd_list = elem.get('bandeiras', [])
-    if bnd_list:
-        bw, bh = 110, 74
-        gap = 20
-        n = len(bnd_list)
-        total_w = n*bw + (n-1)*gap
-        bx0 = (w - total_w) // 2
-        by  = 22
-        font_lbl = get_font(22)
-        for i, (codigo, label) in enumerate(bnd_list):
-            bx = bx0 + i*(bw+gap)
-            flag = get_bandeira(codigo, bw, bh)
-            if flag:
-                # Sombra
-                shadow = Image.new('RGBA', (bw+8, bh+8), (0,0,0,120))
-                ov.paste(shadow, (bx-2, by+2), shadow)
-                # Borda branca
-                bordered = Image.new('RGBA', (bw+4, bh+4), (255,255,255,240))
-                bordered.paste(flag.resize((bw,bh), Image.LANCZOS), (2,2))
-                ov.paste(bordered, (bx-2, by-2), bordered)
-            # Label
-            lx = bx + bw//2
-            ly = by + bh + 10
-            d.text((lx+2, ly+2), label, font=font_lbl, fill=(0,0,0,220), anchor='mt')
-            d.text((lx,   ly),   label, font=font_lbl, fill=(255,255,255,255), anchor='mt')
-
-    # ── LOGOS (abaixo das bandeiras ou no topo) ───────────────────────────────
-    logos_fns = elem.get('logos', [])
-    if logos_fns and not bnd_list:
-        # Logos no centro-topo quando nao tem bandeiras
-        logos_imgs = []
-        for fn in logos_fns[:4]:
-            try:
-                lg = fn()
-                logos_imgs.append(lg)
-            except: pass
-        if logos_imgs:
-            total_lw = sum(l.size[0] for l in logos_imgs) + (len(logos_imgs)-1)*16
-            lx0 = (w - total_lw) // 2
-            ly0 = 30
-            for lg in logos_imgs:
-                ov.paste(lg, (lx0, ly0), lg)
-                lx0 += lg.size[0] + 16
-    elif logos_fns and bnd_list:
-        # Logos menores abaixo das bandeiras
-        bh_total = 74 + 10 + 22 + 10  # bandeira + label
-        logos_imgs = []
-        for fn in logos_fns[:4]:
-            try:
-                lg = fn()
-                # Redimensionar para caber
-                ratio = 35 / max(lg.size)
-                new_w = int(lg.size[0]*ratio)
-                new_h = int(lg.size[1]*ratio)
-                lg = lg.resize((new_w, new_h), Image.LANCZOS)
-                logos_imgs.append(lg)
-            except: pass
-        if logos_imgs:
-            total_lw = sum(l.size[0] for l in logos_imgs) + (len(logos_imgs)-1)*12
-            lx0 = (w - total_lw) // 2
-            ly0 = 22 + bh_total + 10
-            for lg in logos_imgs:
-                ov.paste(lg, (lx0, ly0), lg)
-                lx0 += lg.size[0] + 12
-
-    # ── SILHUETAS (laterais) ──────────────────────────────────────────────────
-    silhuetas_fns = elem.get('silhuetas', [])
-    if silhuetas_fns:
-        sil_h = int(h * 0.35)
-        posicoes = [(30, h - sil_h - 180), (w - 130, h - sil_h - 180)]
-        for i, fn_sil in enumerate(silhuetas_fns[:2]):
-            try:
-                sil = fn_sil(sil_h)
-                sx, sy = posicoes[i]
-                if sx + sil.size[0] < w and sy > 0:
-                    # Sombra difusa
-                    sil_blur = sil.copy().filter(ImageFilter.GaussianBlur(8))
-                    sil_shadow = Image.new('RGBA', sil.size, (0,0,0,0))
-                    dark = Image.new('RGBA', sil.size, (0,0,0,160))
-                    sil_shadow.paste(dark, mask=sil_blur.split()[3])
-                    ov.paste(sil_shadow, (sx+5, sy+5), sil_shadow)
-                    ov.paste(sil, (sx, sy), sil)
-            except Exception as e:
-                log(f"Silhueta erro: {e}")
-
-    # ── TAGS FLUTUANTES (contexto) ────────────────────────────────────────────
-    if tags:
-        font_tag = get_font(20, bold=False)
-        ty_base  = h - int(h*0.52) + 20
-        for i, tag in enumerate(tags[:4]):
-            tx = 30 + (i % 2) * (w//2 - 40)
-            ty = ty_base + (i // 2) * 36
-            # Pill background
-            bb = d.textbbox((tx, ty), tag, font=font_tag)
-            pad = 8
-            d.rounded_rectangle([bb[0]-pad, bb[1]-4, bb[2]+pad, bb[3]+4],
-                                  radius=6, fill=(0,0,0,140))
-            d.rounded_rectangle([bb[0]-pad, bb[1]-4, bb[2]+pad, bb[3]+4],
-                                  radius=6, outline=(*cor, 100), width=1)
-            d.text((tx, ty), tag, font=font_tag, fill=(*cor, 220))
-
-    # ── TITULO PRINCIPAL ──────────────────────────────────────────────────────
-    font_titulo = get_font(78)
-    font_sub    = get_font(28)
-    font_meta   = get_font(22, bold=False)
-
-    palavras = nome.split()
+    # Quebrar titulo em linhas
+    palavras = tema['nome'].split()
     linhas, atual = [], ''
     for p in palavras:
-        teste = (atual+' '+p).strip()
-        bb = d.textbbox((0,0), teste, font=font_titulo)
-        if bb[2] > w-80 and atual:
-            linhas.append(atual); atual = p
+        teste = (atual + ' ' + p).strip()
+        if len(teste) > 16 and atual:
+            linhas.append(atual)
+            atual = p
         else:
             atual = teste
     if atual: linhas.append(atual)
 
-    line_h = 88
-    total_lh = len(linhas)*line_h
-    ty = h - 55 - int(h*0.18) - total_lh
+    font_size = 88 if max(len(l) for l in linhas) <= 12 else 72 if max(len(l) for l in linhas) <= 16 else 58
+    line_h    = font_size + 10
+    total_h   = len(linhas) * line_h
+    ty_start  = 1792 - 80 - int(1792 * 0.18) - total_h
 
+    titulo_svg = ''
     for i, linha in enumerate(linhas):
-        lx = w//2
-        ly = ty + i*line_h
-        # Sombra multipla
-        for dx, dy in [(4,4),(3,3),(2,2)]:
-            d.text((lx+dx,ly+dy), linha, font=font_titulo, fill=(0,0,0,180), anchor='mt')
-        # Texto branco
-        d.text((lx, ly), linha, font=font_titulo, fill=(255,255,255,255), anchor='mt',
-               stroke_width=4, stroke_fill=(0,0,0,200))
+        y = ty_start + i * line_h + font_size
+        titulo_svg += f'''
+    <text x="516" y="{y+3}" text-anchor="middle" fill="#000000" font-family="Arial Black, Arial" font-weight="900" font-size="{font_size}" opacity="0.5">{linha}</text>
+    <text x="512" y="{y}" text-anchor="middle" fill="#ffffff" font-family="Arial Black, Arial" font-weight="900" font-size="{font_size}" stroke="#000000" stroke-width="6" paint-order="stroke">{linha}</text>'''
 
-    # Linha decorativa
-    sep_y = ty + len(linhas)*line_h + 14
-    for px in range(60, w-60):
-        alpha = int(230 * math.sin(math.pi*(px-60)/(w-120)))
-        d.point((px, sep_y), fill=(*cor, alpha))
-        d.point((px, sep_y+1), fill=(*cor, alpha))
-        d.point((px, sep_y+2), fill=(*cor, alpha//2))
+    sep_y = ty_start + total_h + 14
+    meta_txt = f"{horas}H  |  {modulos} MODULOS  |  {topicos} TOPICOS"
 
-    # Subtitulo
-    d.text((w//2, sep_y+16), sub, font=font_sub, fill=(*cor, 245), anchor='mt',
-           stroke_width=2, stroke_fill=(0,0,0,190))
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1792" width="1024" height="1792">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="{cor1}"/>
+      <stop offset="100%" stop-color="{cor2}"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="{accent}" stop-opacity="0"/>
+      <stop offset="50%" stop-color="{accent}"/>
+      <stop offset="100%" stop-color="{accent}" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="acc2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="{accent}"/>
+      <stop offset="100%" stop-color="{acc2}"/>
+    </linearGradient>
+    <linearGradient id="fadeBottom" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="55%" stop-color="#000000" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.98"/>
+    </linearGradient>
+    <linearGradient id="fadeTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
 
-    # Metadados
-    meta = f"{curso.get('hours','?')}H  |  {curso.get('modules','?')} MODULOS  |  {curso.get('topics','?')} TOPICOS"
-    d.text((w//2, h-30), meta, font=font_meta, fill=(200,200,200,220), anchor='mb',
-           stroke_width=1, stroke_fill=(0,0,0,160))
+  <!-- Fundo -->
+  <rect width="1024" height="1792" fill="url(#bg)"/>
 
-    result = Image.alpha_composite(result, ov)
-    return result.convert('RGB')
+  <!-- Elementos visuais tematicos -->
+  {elem}
 
-# ── EXTRACAO CURSOS ───────────────────────────────────────────────────────────
+  <!-- Gradiente escuro embaixo (area do titulo) -->
+  <rect width="1024" height="1792" fill="url(#fadeBottom)"/>
+
+  <!-- Gradiente escuro em cima -->
+  <rect width="1024" height="340" fill="url(#fadeTop)"/>
+
+  <!-- Linha de cor no topo -->
+  <rect x="0" y="0" width="1024" height="10" fill="url(#acc2)"/>
+
+  <!-- TITULO -->
+  {titulo_svg}
+
+  <!-- Linha decorativa -->
+  <rect x="60" y="{sep_y}" width="904" height="5" fill="url(#acc)" opacity="0.9" rx="2"/>
+
+  <!-- Subtitulo -->
+  <text x="512" y="{sep_y + 40}" text-anchor="middle" fill="{accent}" font-family="Arial" font-weight="700" font-size="26" opacity="0.95"
+    stroke="#000000" stroke-width="3" paint-order="stroke">{sub}</text>
+
+  <!-- Metadados -->
+  <text x="512" y="{1792 - 35}" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="22" opacity="0.85"
+    stroke="#000000" stroke-width="3" paint-order="stroke">{meta_txt}</text>
+
+  <!-- Barra lateral esquerda -->
+  <rect x="0" y="0" width="8" height="1792" fill="url(#acc2)" opacity="0.8"/>
+
+</svg>'''
+    return svg
+
+# ── EXTRAIR CURSOS ────────────────────────────────────────────────────────────
 def extrair_cursos(conteudo):
     cursos = []
     for m in re.compile(r'\{\s*(?:[^{}]|\{[^{}]*\})*\s*\}', re.DOTALL).finditer(conteudo):
         b = m.group(0)
-        id_m = re.search(r"id:\s*['\"](\w+)['\"]", b)
-        nm_m = re.search(r"name:\s*['\"]([^'\"]+)['\"]", b)
-        if id_m and nm_m:
-            cursos.append({
-                'id':      id_m.group(1),
-                'nome':    nm_m.group(1),
-                'desc':    (re.search(r"desc:\s*['\"]([^'\"]+)['\"]", b) or type('',(),{'group':lambda s,x:''})()).group(1),
-                'cat':     (re.search(r"cat:\s*['\"]([^'\"]+)['\"]",  b) or type('',(),{'group':lambda s,x:'_default'})()).group(1),
-                'hours':   (re.search(r"hours:\s*(\d+)",    b) or type('',(),{'group':lambda s,x:'?'})()).group(1),
-                'modules': (re.search(r"modules:\s*(\d+)",  b) or type('',(),{'group':lambda s,x:'?'})()).group(1),
-                'topics':  (re.search(r"topics:\s*(\d+)",   b) or type('',(),{'group':lambda s,x:'?'})()).group(1),
-            })
+        id_m  = re.search(r"id:\s*['\"](\w+)['\"]", b)
+        nm_m  = re.search(r"name:\s*['\"]([^'\"]+)['\"]", b)
+        if not (id_m and nm_m): continue
+        cursos.append({
+            'id':      id_m.group(1),
+            'nome':    nm_m.group(1),
+            'hours':   (re.search(r"hours:\s*(\d+)",   b) or type('',(),{'group':lambda s,x:'0'})()).group(1),
+            'modules': (re.search(r"modules:\s*(\d+)", b) or type('',(),{'group':lambda s,x:'0'})()).group(1),
+            'topics':  (re.search(r"topics:\s*(\d+)",  b) or type('',(),{'group':lambda s,x:'0'})()).group(1),
+        })
     return cursos
 
+def detectar_novos(cursos):
+    novos = []
+    for c in cursos:
+        jpg = CAPAS_DIR / f"{c['id']}.jpg"
+        png = CAPAS_DIR / f"{c['id']}.png"
+        svg = CAPAS_DIR / f"{c['id']}.svg"
+        if not jpg.exists() and not png.exists() and not svg.exists():
+            log(f"Novo sem capa: {c['nome']} [{c['id']}]")
+            novos.append(c)
+        else:
+            log(f"Ja tem capa: {c['nome']} [{c['id']}] — mantendo")
+    return novos
+
 def gerar_capa(curso):
-    if not OPENAI_KEY:
-        log("OPENAI_API_KEY nao configurada!"); return False
-
-    prompt = PROMPTS.get(curso['id'])
-    if not prompt:
-        cat_key = next((k for k in PROMPTS_CAT if k in curso['cat']), '_default')
-        prompt  = PROMPTS_CAT[cat_key]
-
-    log(f"DALL-E 3: {curso['nome']}...")
-    try:
-        r = requests.post(
-            'https://api.openai.com/v1/images/generations',
-            headers={'Authorization':f'Bearer {OPENAI_KEY}','Content-Type':'application/json'},
-            json={'model':'dall-e-3','prompt':prompt,'n':1,'size':SIZE,'quality':QUALITY,'style':STYLE},
-            timeout=120
-        )
-        if r.status_code != 200:
-            log(f"Erro DALL-E: {r.json().get('error',{}).get('message',r.text)}"); return False
-
-        url       = r.json()['data'][0]['url']
-        img_bytes = requests.get(url, timeout=60).content
-        fundo     = Image.open(io.BytesIO(img_bytes)).convert('RGBA').resize((1024,1792), Image.LANCZOS)
-
-        log(f"Compondo elementos...")
-        final = compor_capa(fundo, curso)
-
-        CAPAS_DIR.mkdir(parents=True, exist_ok=True)
-        path = CAPAS_DIR / f"{curso['id']}.jpg"
-        final.save(str(path), 'JPEG', quality=93)
-        log(f"Salvo: {path} ({path.stat().st_size//1024}KB)")
-        return True
-    except requests.exceptions.Timeout:
-        log(f"Timeout: {curso['nome']}"); return False
-    except Exception as e:
-        log(f"Erro: {e}"); return False
+    svg = gerar_svg(
+        curso['id'], curso['nome'],
+        curso['hours'], curso['modules'], curso['topics']
+    )
+    CAPAS_DIR.mkdir(parents=True, exist_ok=True)
+    path = CAPAS_DIR / f"{curso['id']}.svg"
+    path.write_text(svg, encoding='utf-8')
+    log(f"Capa SVG salva: {path}")
+    return True
 
 def atualizar_courses_js(cp, gerados):
     txt = Path(cp).read_text(encoding='utf-8')
     for cid in gerados:
-        url = f"assets/capas/{cid}.jpg"
+        url = f"assets/capas/{cid}.svg"
         pat = f"id: '{cid}'"
         if pat in txt:
             pos = txt.find(pat)
-            if 'coverImg' not in txt[pos:pos+500]:
+            if 'coverImg' not in txt[pos:pos+400]:
                 txt = txt.replace(pat, f"id: '{cid}',\n    coverImg: '{url}'", 1)
-                log(f"coverImg: {cid}")
+                log(f"coverImg adicionado: {cid}")
     Path(cp).write_text(txt, encoding='utf-8')
 
 def main():
     log("="*50)
-    log("MATHEUS ACADEMY - GERADOR DE CAPAS v4 PREMIUM")
-    log("DALL-E 3 + Bandeiras Reais + Logos + Silhuetas")
+    log("MATHEUS ACADEMY - GERADOR SVG AUTOMATICO v5")
+    log("Gera capa apenas para cursos NOVOS")
     log("="*50)
-    if not OPENAI_KEY:
-        log("Configure OPENAI_API_KEY nos Secrets do GitHub!"); exit(1)
 
     cp = Path(COURSES_FILE)
     if not cp.exists(): cp = Path('courses.js')
@@ -706,14 +652,19 @@ def main():
     cursos = extrair_cursos(txt)
     log(f"Cursos encontrados: {len(cursos)}")
 
+    novos = detectar_novos(cursos)
+    if not novos:
+        log("Nenhum curso novo! Nada a fazer.")
+        exit(0)
+
+    log(f"Capas a gerar: {len(novos)}")
     ok = []
-    for i, c in enumerate(cursos):
-        log(f"[{i+1}/{len(cursos)}] {c['nome']}")
+    for c in novos:
+        log(f"Gerando: {c['nome']}")
         if gerar_capa(c): ok.append(c['id'])
-        if i < len(cursos)-1: time.sleep(DELAY_ENTRE)
 
     if ok: atualizar_courses_js(str(cp), ok)
-    log(f"Concluido: {len(ok)}/{len(cursos)} capas geradas.")
+    log(f"Concluido! {len(ok)} capas geradas.")
 
 if __name__ == '__main__':
     main()
