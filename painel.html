@@ -330,7 +330,8 @@ body{padding-bottom:58px!important}
 <script>
 (function(){
   function up(){try{var p=JSON.parse(localStorage.getItem('ma_points')||'{}');var el=document.getElementById('maTbPtsN');if(el)el.textContent=(p.total||0).toLocaleString('pt-BR');}catch(e){}}
-  function uu(){try{var u=JSON.parse(localStorage.getItem('ma_user')||'null');var s=document.getElementById('maMenuUser'),a=document.getElementById('maMenuAuth');var pts=JSON.parse(localStorage.getItem('ma_points')||'{}');if(u&&u.email){if(s)s.innerHTML='<span class="ma-mu-name">'+(u.name||u.email)+'</span><div class="ma-mu-pts"><b>'+(pts.total||0).toLocaleString('pt-BR')+'</b> XP</div>';if(a)a.innerHTML='<button class="ma-mi red" onclick="maTbLogout()"><span class="ma-mi-i">🚪</span>Sair da conta</button>';}}catch(e){}}
+  function uu(){try{var u=JSON.parse(localStorage.getItem('ma_user')||'null');var s=document.getElementById('maMenuUser'),a=document.getElementById('maMenuAuth');var xptotal=0;if(u&&typeof u.xp_total==='number')xptotal=u.xp_total;else{try{xptotal=JSON.parse(localStorage.getItem('ma_points')||'{}').total||0;}catch(ex){}}
+      if(u&&u.email){if(s)s.innerHTML='<span class="ma-mu-name">'+(u.name||u.email)+'</span><div class="ma-mu-pts"><b>'+xptotal.toLocaleString('pt-BR')+'</b> XP</div>';if(a)a.innerHTML='<button class="ma-mi red" onclick="maTbLogout()"><span class="ma-mi-i">🚪</span>Sair da conta</button>';}}catch(e){}}
   window.maTbToggle=function(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOv');if(!d||!o)return;var on=d.classList.toggle('on');o.classList.toggle('on',on);if(on)uu();};
   window.maTbClose=function(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOv');if(d)d.classList.remove('on');if(o)o.classList.remove('on');};
   window.maTbLogout=function(){maTbClose();if(window.MAStore&&MAStore.logout){MAStore.logout();return;}if(window.MA_AUTH&&MA_AUTH.logout){MA_AUTH.logout().catch(function(){});}localStorage.removeItem('ma_user');location.href='index.html';};
@@ -526,7 +527,18 @@ var FQ=[{q:'Qual rede social tem maior potencial para tráfego pago no Brasil?',
 // STORAGE
 // ═════════════════════════════════════════════
 function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
-function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};}catch(e){return{total:0,history:[]};}}
+function gP(){
+  try{
+    // Fonte correta: ma_user.xp_total (Firebase v3)
+    var u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    if(u&&typeof u.xp_total==='number'){
+      // Mescla com histórico do ma_points se existir
+      var legacy=JSON.parse(localStorage.getItem('ma_points')||'{}');
+      return {total:u.xp_total, history:legacy.history||[]};
+    }
+    // Fallback legado
+    return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};
+  }catch(e){return{total:0,history:[]};}}
 function gS(){try{return JSON.parse(localStorage.getItem('ma_sessions'))||{streak:0};}catch(e){return{streak:0};}}
 function gAch(){try{return JSON.parse(localStorage.getItem('ma_achievements'))||[];}catch(e){return[];}}
 function addAch(id){var a=gAch();if(a.indexOf(id)<0){a.push(id);localStorage.setItem('ma_achievements',JSON.stringify(a));}}
@@ -541,6 +553,10 @@ function addPts(src,pts){
   var u=gU();if(!u)return 0;
   var p=gP();p.total+=pts;p.history.unshift({source:src,pts:pts,date:new Date().toLocaleDateString('pt-BR')});
   localStorage.setItem('ma_points',JSON.stringify(p));
+  // Salvar também em ma_user.xp_total (fonte correta do Firebase v3)
+  try{var usr=JSON.parse(localStorage.getItem('ma_user')||'null');if(usr){usr.xp_total=p.total;localStorage.setItem('ma_user',JSON.stringify(usr));}}catch(ex){}
+  // Usar MAStore.addPoints se disponível (salva no Firebase)
+  if(window.MAStore&&typeof MAStore.addPoints==='function'){MAStore.addPoints(src,pts).catch(function(){});}
   checkAch(p.total,p.history.length);
   cashSound();bumpBadge();render();return pts;
 }
@@ -572,9 +588,16 @@ function render(){
   var fb=document.getElementById('fBadge'),fn=document.getElementById('fBadgeN'),fl=document.getElementById('fBadgeLv');
   if(u){if(tp)tp.classList.add('show');if(tn)tn.textContent=p.total.toLocaleString('pt-BR');if(tl)tl.textContent=lv.n;if(fb){fb.classList.add('show');if(fn)fn.textContent=p.total.toLocaleString('pt-BR');if(fl)fl.textContent=lv.n;}}
   // Hero
-  var av=localStorage.getItem('ma_avatar');var avEl=document.getElementById('heroAv');
-  if(av&&avEl)avEl.innerHTML='<img src="'+av+'" alt="">';
-  else if(avEl&&u)avEl.textContent=u.name.charAt(0).toUpperCase();
+  var av=localStorage.getItem('ma_avatar');
+  // Tenta pegar foto do Firebase Auth se não tiver avatar salvo
+  if(!av&&window.firebase&&firebase.auth&&firebase.auth().currentUser&&firebase.auth().currentUser.photoURL){
+    av=firebase.auth().currentUser.photoURL;
+    localStorage.setItem('ma_avatar',av);
+  }
+  if(!av&&u&&u.foto){av=u.foto;localStorage.setItem('ma_avatar',av);}
+  var avEl=document.getElementById('heroAv');
+  if(av&&avEl)avEl.innerHTML='<img src="'+av+'" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+  else if(avEl&&u)avEl.textContent=(u.name||'U').charAt(0).toUpperCase();
   var hn=document.getElementById('heroName');if(hn)hn.textContent=u?u.name:'Aluno';
   var hlv=document.getElementById('heroLvBadge');if(hlv){hlv.innerHTML='<span class="lv-dot"></span>'+lv.n;hlv.className='hero-lv-badge '+lv.c;}
   var hs=document.getElementById('heroStreak');if(hs)hs.textContent=ss.streak||0;
@@ -3496,5 +3519,7 @@ document.addEventListener('keydown',function(e){
 </script>
 <!-- FIM MA BUSCA GLOBAL -->
 
+
+<script src="shared/points-fix.js"></script>
 </body>
 </html>
