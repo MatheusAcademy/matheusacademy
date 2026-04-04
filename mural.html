@@ -170,7 +170,12 @@ body{padding-bottom:58px!important}
 </nav>
 <script>
 (function(){
-  function maTbUpdatePts(){try{var p=JSON.parse(localStorage.getItem('ma_points')||'{}');var el=document.getElementById('maTbPtsN');if(el)el.textContent=(p.total||0).toLocaleString('pt-BR');}catch(e){}}
+  function maTbUpdatePts(){try{
+    var u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    var pts=(u&&u.xp_total)||0;
+    if(!pts){var p=JSON.parse(localStorage.getItem('ma_points')||'{}');pts=p.total||0;}
+    var el=document.getElementById('maTbPtsN');if(el)el.textContent=pts.toLocaleString('pt-BR');
+  }catch(e){}}
   function maTbUpdateUser(){
     try{
       var u=JSON.parse(localStorage.getItem('ma_user')||'null');
@@ -300,7 +305,12 @@ window.addMyConquest=function(){
 };
 
 (function(){
-  var u=null,p={total:0};try{u=JSON.parse(localStorage.getItem('ma_user'));}catch(e){}try{p=JSON.parse(localStorage.getItem('ma_points'))||{total:0};}catch(e){}
+  var u=null,p={total:0};
+  try{u=JSON.parse(localStorage.getItem('ma_user'));}catch(e){}
+  try{
+    if(u&&typeof u.xp_total==='number')p={total:u.xp_total};
+    else p=JSON.parse(localStorage.getItem('ma_points'))||{total:0};
+  }catch(e){}
   var ptsEl=document.getElementById('maPtsLive');if(u&&ptsEl){ptsEl.classList.add('show');document.getElementById('maPtsNum').textContent=p.total.toLocaleString('pt-BR');}
   var fp=document.getElementById('maFpts');if(u&&fp)fp.style.display='flex';
   if(fp){document.getElementById('maFptsNum').textContent=p.total.toLocaleString('pt-BR');}
@@ -339,5 +349,6 @@ document.addEventListener('DOMContentLoaded',renderMural);
   </a>
 </nav>
 
+<script src="shared/points-fix.js"></script>
 </body>
 </html>
