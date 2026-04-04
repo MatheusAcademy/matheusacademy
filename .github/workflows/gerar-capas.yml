@@ -5,15 +5,19 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   gerar-capa:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Instalar dependencias Python
         run: |
@@ -25,16 +29,15 @@ jobs:
         run: |
           python3 scripts/gerar_capa.py
 
-      - name: Commit capas geradas
+      - name: Commit e push das capas
         run: |
           git config --global user.name "Matheus Academy Bot"
           git config --global user.email "bot@matheusacademy.com.br"
           git add assets/capas/
-          git add data/courses.js
-          git add courses.js
+          git add data/ || true
           if git diff --staged --quiet; then
-            echo "Nenhuma mudanca."
+            echo "Nenhuma mudanca para commitar."
           else
-            git commit -m "Capas IA geradas [skip ci]"
-            git push
+            git commit -m "Capas IA geradas automaticamente [skip ci]"
+            git push origin HEAD:main
           fi
