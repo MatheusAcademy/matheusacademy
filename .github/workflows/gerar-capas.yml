@@ -3,8 +3,7 @@ name: Gerar Capa IA - Novo Curso
 on:
   push:
     branches: [main, master]
-    paths:
-      - 'data/courses.js'
+  workflow_dispatch:
 
 jobs:
   gerar-capa:
@@ -15,8 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
 
       - name: Instalar dependencias Python
         run: |
@@ -34,9 +31,10 @@ jobs:
           git config --global user.email "bot@matheusacademy.com.br"
           git add assets/capas/
           git add data/courses.js
+          git add courses.js
           if git diff --staged --quiet; then
-            echo "Nenhuma capa nova."
+            echo "Nenhuma mudanca."
           else
-            git commit -m "Capas IA geradas automaticamente [skip ci]"
+            git commit -m "Capas IA geradas [skip ci]"
             git push
           fi
