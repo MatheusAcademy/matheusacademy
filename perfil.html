@@ -198,6 +198,8 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .nt{font-size:.76rem;font-weight:700;color:#fff;display:block}
 .ns{font-size:.63rem;color:var(--txt2);display:block;margin-top:2px}
 </style>
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
 <script src="firebase-config.js"></script>
 </head>
 <body>
@@ -273,19 +275,31 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 var LEVELS=[{n:'Iniciante',c:'ma-lvc0',m:0,max:999},{n:'Aprendiz',c:'ma-lvc1',m:1000,max:2999},{n:'Profissional',c:'ma-lvc2',m:3000,max:6999},{n:'Especialista',c:'ma-lvc3',m:7000,max:14999},{n:'Elite',c:'ma-lvc4',m:15000,max:9999999}];
 function getLv(t){for(var i=LEVELS.length-1;i>=0;i--)if(t>=LEVELS[i].m)return LEVELS[i];return LEVELS[0];}
 function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
-function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};}catch(e){return{total:0,history:[]};}}
+function gP(){
+  try{
+    // Fonte correta: ma_user.xp_total (salvo pelo Firebase v3)
+    var _u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    if(_u&&typeof _u.xp_total==='number'&&_u.xp_total>0){
+      var _l=JSON.parse(localStorage.getItem('ma_points')||'{}');
+      return{total:_u.xp_total,history:_l.history||[]};
+    }
+    return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};
+  }catch(e){return{total:0,history:[]};}}
 function gs(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
 function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function he(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-var COURSE_DEFS=[
-  {prefix:'dt_',icon:'📊',name:'Tráfego Pago'},
-  {prefix:'ni_',icon:'💼',name:'Negócios Inteligentes'},
-  {prefix:'geo_',icon:'🌍',name:'Geopolítica Avançada'},
-  {prefix:'nl_',icon:'💡',name:'Nichos Lucrativos'},
-  {prefix:'pb_',icon:'🏛️',name:'Política Brasileira'},
-  {prefix:'mp_',icon:'🎯',name:'Mestre em Persuasão'}
-];
+// COURSE_DEFS — gerado de data/courses.js (atualiza automaticamente)
+var COURSE_DEFS = (typeof MA_COURSES !== 'undefined')
+  ? MA_COURSES.filter(function(c){return c.active!==false;}).map(function(c){
+      return {prefix:c.storagePrefix, icon:c.icon, name:c.name, ak:c.ak};
+    })
+  : [
+      {prefix:'dt_',icon:'📊',name:'Tráfego Pago'},
+      {prefix:'ni_',icon:'💼',name:'Negócios Inteligentes'},
+      {prefix:'geo_',icon:'🌍',name:'Geopolítica Avançada'},
+      {prefix:'nl_',icon:'💡',name:'Nichos Lucrativos'}
+    ];
 function getCProg(pfx){
   var done=0,total=0;
   try{for(var k in localStorage){if(k.indexOf(pfx+'mod_')===0){total++;var v=localStorage.getItem(k);if(v==='done'||v==='true'||v==='1')done++;}}}catch(e){}
@@ -398,18 +412,42 @@ function buildHistory(hist){
 /* ── RENDER ── */
 function renderPage(){
   var u=gU();var page=document.getElementById('mainPage');
-  if(!u){page.innerHTML='<div class="not-logged"><span class="nl-icon">👤</span><div class="nl-title">Faça login para ver seu perfil</div><p class="nl-sub">Acesse sua conta para visualizar pontos, progresso, conquistas e muito mais!</p><a class="nl-btn" href="index.html">Entrar na Conta →</a></div>';return;}
+  if(!page)return;
+
+  // Se sem user no localStorage, tenta Firebase Auth direto
+  if(!u||!u.email){
+    if(window.firebase&&firebase.auth&&firebase.auth().currentUser){
+      var cu=firebase.auth().currentUser;
+      u={uid:cu.uid,email:cu.email||'',name:cu.displayName||cu.email||'Aluno',foto:cu.photoURL||''};
+      try{var ex=JSON.parse(localStorage.getItem('ma_user')||'{}');u.xp_total=ex.xp_total||0;u.city=ex.city||'';u.phone=ex.phone||'';if(!u.foto&&ex.foto)u.foto=ex.foto;}catch(e){}
+      localStorage.setItem('ma_user',JSON.stringify(u));
+      if(u.foto)localStorage.setItem('ma_avatar',u.foto);
+    }
+  }
+
+  if(!u||!u.email){
+    page.innerHTML='<div class="not-logged"><span class="nl-icon">👤</span><div class="nl-title">Faça login para ver seu perfil</div><p class="nl-sub">Acesse sua conta para visualizar pontos, progresso, conquistas e muito mais!</p><a class="nl-btn" href="index.html">Entrar na Conta →</a></div>';
+    return;
+  }
+  // Garante campos mínimos para não crashar
+  u.name=u.name||u.email||'Aluno';
   var p=gP(),lv=getLv(p.total),nxt=LEVELS[LEVELS.indexOf(lv)+1];
   var pct=nxt?Math.max(0,Math.min(100,Math.round((p.total-lv.m)/(nxt.m-lv.m)*100))):100;
   var streak=gs('ma_streak2',{current:0,max:0});
   var notes=gs('mae_notes_v3',[]),owned=gs('mae_shop_owned',[]);
   var totalDone=0;COURSE_DEFS.forEach(function(c){totalDone+=getCProg(c.prefix).done;});
   var completedCourses=0;COURSE_DEFS.forEach(function(c){var pr=getCProg(c.prefix);if(pr.pct===100&&pr.total>0)completedCourses++;});
-  var savedAv=localStorage.getItem('ma_avatar');
+  // Foto: 1) avatar customizado, 2) u.foto (Firestore), 3) Google Auth photoURL
+  var savedAv = localStorage.getItem('ma_avatar') || '';
+  if(!savedAv && u.foto) { savedAv = u.foto; localStorage.setItem('ma_avatar', u.foto); }
+  if(!savedAv && window.firebase && firebase.auth && firebase.auth().currentUser && firebase.auth().currentUser.photoURL) {
+    savedAv = firebase.auth().currentUser.photoURL;
+    localStorage.setItem('ma_avatar', savedAv);
+  }
   var avColors=['#5b7fff','#a855f7','#22c55e','#f59e0b','#ef4444','#0ea5e9','#e879f9'];
   var avBg=avColors[(u.name||'A').charCodeAt(0)%avColors.length];
   var avLetter=(u.name||'?').charAt(0).toUpperCase();
-  var avHtml=savedAv?'<img src="'+savedAv+'" alt="foto">':'<span style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:'+avBg+';border-radius:50%;font-size:1.9rem;font-weight:900;font-family:var(--serif)">'+avLetter+'</span>';
+  var avHtml=savedAv?'<img src="'+savedAv+'" alt="foto" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':'<span style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:'+avBg+';border-radius:50%;font-size:1.9rem;font-weight:900;font-family:var(--serif)">'+avLetter+'</span>';
   var rankData=gs('ma_ranking_data',[]);
   var rankPos=1,rankPct='Top 10%';
   if(rankData.length>1){var sorted=rankData.slice().sort(function(a,b){return b.pts-a.pts;});var mi=sorted.findIndex(function(r){return r.mine;});if(mi>=0)rankPos=mi+1;var pv=Math.round((rankPos/rankData.length)*100);if(pv<=5)rankPct='Top 5%';else if(pv<=10)rankPct='Top 10%';else if(pv<=25)rankPct='Top 25%';else if(pv<=50)rankPct='Top 50%';else rankPct='Top '+(100-pv)+'%';}
@@ -519,7 +557,7 @@ async function sha256(msg){var buf=await crypto.subtle.digest('SHA-256',new Text
 function updTopbar(){
   var u=gU(),p=gP();var ptsEl=document.getElementById('maPtsLive');
   if(u&&ptsEl){ptsEl.classList.add('show');document.getElementById('maPtsNum').textContent=p.total.toLocaleString('pt-BR');var lv=getLv(p.total);document.getElementById('maPtsLv').textContent=lv.n;}
-  var mn=document.getElementById('maMenuName');if(mn&&u)mn.textContent=u.name.split(' ')[0];
+  var mn=document.getElementById('maMenuName');if(mn&&u)mn.textContent=(u.name||u.email||'').split(' ')[0];
   if(u){
     var lv=getLv(p.total),nxt=LEVELS[LEVELS.indexOf(lv)+1];var mu=document.getElementById('maMenuUser');
     if(!mu.querySelector('.ma-mu-level')){var sp=document.createElement('span');sp.className='ma-mu-level '+lv.c;sp.innerHTML='<span class="ma-lv-dot"></span>'+lv.n;mu.appendChild(sp);}
@@ -565,7 +603,132 @@ function showNotif(txt,type){
   window.addEventListener('beforeunload',sv);window.addEventListener('pagehide',sv);
 })();
 
-document.addEventListener('DOMContentLoaded',function(){updTopbar();renderPage();});
+document.addEventListener('DOMContentLoaded', function() {
+  updTopbar();
+
+  // Tenta renderizar imediatamente com dados do localStorage
+  var localUser = null;
+  try { localUser = JSON.parse(localStorage.getItem('ma_user') || 'null'); } catch(e){}
+
+  if (localUser && localUser.email) {
+    renderPage(); // Tem dados locais — renderiza já
+  } else {
+    // Sem dados locais — mostra spinner e aguarda Firebase
+    var page = document.getElementById('mainPage');
+    if (page) {
+      page.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px">'
+        + '<div style="width:44px;height:44px;border:3px solid rgba(91,127,255,.2);border-top-color:#5b7fff;border-radius:50%;animation:_spin .8s linear infinite"></div>'
+        + '<div style="font-size:.78rem;color:#8888a8">Carregando perfil...</div>'
+        + '<style>@keyframes _spin{to{transform:rotate(360deg)}}</style>'
+        + '</div>';
+    }
+  }
+
+  var _rendered = !!localUser;
+
+  // Quando Firebase estiver pronto, sincroniza e re-renderiza
+  function _onFirebaseReady() {
+    // Pega foto do currentUser imediatamente (Google Auth)
+    if (window.firebase && firebase.auth && firebase.auth().currentUser) {
+      var cu = firebase.auth().currentUser;
+      if (cu.photoURL && !localStorage.getItem('ma_avatar')) {
+        localStorage.setItem('ma_avatar', cu.photoURL);
+      }
+    }
+
+    // Busca dados completos do Firestore via MAStore
+    if (window.MAStore && typeof MAStore.getUser === 'function') {
+      MAStore.getUser().then(function(userData) {
+        if (userData) {
+          try {
+            var local = JSON.parse(localStorage.getItem('ma_user') || '{}');
+            // Sincroniza campos do Firestore
+            local.xp_total  = userData.xp_total  || local.xp_total  || 0;
+            local.name       = userData.nome       || local.name      || '';
+            local.email      = userData.email      || local.email     || '';
+            local.plano      = userData.plano      || local.plano     || 'gratuito';
+            local.city       = userData.cidade     || local.city      || '';
+            local.phone      = userData.telefone   || local.phone     || '';
+            // Foto: Firestore > Google Auth
+            if (userData.foto) {
+              local.foto = userData.foto;
+              localStorage.setItem('ma_avatar', userData.foto);
+            } else if (window.firebase && firebase.auth && firebase.auth().currentUser && firebase.auth().currentUser.photoURL) {
+              local.foto = firebase.auth().currentUser.photoURL;
+              if (!localStorage.getItem('ma_avatar')) localStorage.setItem('ma_avatar', local.foto);
+            }
+            localStorage.setItem('ma_user', JSON.stringify(local));
+          } catch(ex) {}
+          renderPage();
+          updTopbar();
+          _rendered = true;
+        } else if (!_rendered) {
+          _tryAuthFallback();
+        }
+      }).catch(function() { if (!_rendered) _tryAuthFallback(); });
+    } else {
+      _tryAuthFallback();
+    }
+  }
+
+  // Fallback: usa firebase.auth().onAuthStateChanged diretamente
+  function _tryAuthFallback() {
+    if (window.firebase && firebase.auth) {
+      firebase.auth().onAuthStateChanged(function(fbUser) {
+        if (fbUser) {
+          try {
+            var local = JSON.parse(localStorage.getItem('ma_user') || '{}');
+            if (!local.uid)    local.uid   = fbUser.uid;
+            if (!local.email)  local.email = fbUser.email || '';
+            if (!local.name)   local.name  = fbUser.displayName || fbUser.email || 'Aluno';
+            if (fbUser.photoURL) {
+              local.foto = fbUser.photoURL;
+              localStorage.setItem('ma_avatar', fbUser.photoURL);
+            }
+            localStorage.setItem('ma_user', JSON.stringify(local));
+          } catch(ex) {}
+          renderPage();
+          updTopbar();
+          _rendered = true;
+        } else if (!_rendered) {
+          renderPage(); // Mostra tela de "faça login"
+          _rendered = true;
+        }
+      });
+    } else if (!_rendered) {
+      renderPage();
+    }
+  }
+
+  // Timeout de segurança: 6s máximo de espera
+  setTimeout(function() { if (!_rendered) { renderPage(); _rendered = true; } }, 6000);
+
+  // Dispara lógica Firebase
+  if (window.__maFirebaseReady) {
+    _onFirebaseReady();
+  } else {
+    document.addEventListener('maFirebaseReady', _onFirebaseReady, { once: true });
+  }
+
+  // Polling para atualizar pontos a cada 3s
+  setInterval(function() {
+    var pn = document.getElementById('maPtsNum');
+    if (pn) {
+      var _u2 = null;
+      try { _u2 = JSON.parse(localStorage.getItem('ma_user') || 'null'); } catch(e) {}
+      var pts = (_u2 && _u2.xp_total) || 0;
+      if (!pts) {
+        var _p2 = null;
+        try { _p2 = JSON.parse(localStorage.getItem('ma_points') || '{}'); } catch(e) {}
+        pts = (_p2 && _p2.total) || 0;
+      }
+      if (pn.textContent !== pts.toLocaleString('pt-BR')) {
+        pn.textContent = pts.toLocaleString('pt-BR');
+      }
+    }
+  }, 3000);
+});
 </script>
+<script src="shared/points-fix.js"></script>
 </body>
 </html>
