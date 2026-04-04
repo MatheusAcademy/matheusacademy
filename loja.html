@@ -184,7 +184,12 @@ body{padding-bottom:58px!important}
 </nav>
 <script>
 (function(){
-  function maTbUpdatePts(){try{var p=JSON.parse(localStorage.getItem('ma_points')||'{}');var el=document.getElementById('maTbPtsN');if(el)el.textContent=(p.total||0).toLocaleString('pt-BR');}catch(e){}}
+  function maTbUpdatePts(){try{
+    var u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    var pts=(u&&u.xp_total)||0;
+    if(!pts){var p=JSON.parse(localStorage.getItem('ma_points')||'{}');pts=p.total||0;}
+    var el=document.getElementById('maTbPtsN');if(el)el.textContent=pts.toLocaleString('pt-BR');
+  }catch(e){}}
   function maTbUpdateUser(){
     try{
       var u=JSON.parse(localStorage.getItem('ma_user')||'null');
@@ -252,7 +257,12 @@ var SHOP_ITEMS=[
   {id:'ebook_persuasao',icon:'🎯',name:'Ebook: Copywriting Master',desc:'Os 50 gatilhos mentais mais poderosos para vendas e persuasão.',cost:350,qty:null,rare:false},
 ];
 
-function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0};}catch(e){return{total:0};}}
+function gP(){
+  try{
+    var u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    if(u&&typeof u.xp_total==='number')return{total:u.xp_total};
+    return JSON.parse(localStorage.getItem('ma_points'))||{total:0};
+  }catch(e){return{total:0};}}
 function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
 function getOwned(){try{return JSON.parse(localStorage.getItem('mae_shop_owned')||'[]');}catch(e){return[];}}
 function getStock(){try{return JSON.parse(localStorage.getItem('mae_shop_stock')||'{}');}catch(e){return{};}}
@@ -312,6 +322,10 @@ function buyItem(id){
   if(!p.history)p.history=[];
   p.history.unshift({source:'Loja: '+item.name,pts:-item.cost,date:new Date().toLocaleDateString('pt-BR')});
   localStorage.setItem('ma_points',JSON.stringify(p));
+  // Sincroniza com ma_user.xp_total (fonte correta do Firebase v3)
+  try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');if(_u){_u.xp_total=p.total;localStorage.setItem('ma_user',JSON.stringify(_u));}}catch(ex){}
+  // Salva no Firebase via MAStore
+  if(window.MAStore&&typeof MAStore.addPoints==='function'){MAStore.addPoints('Loja: '+item.name,-item.cost).catch(function(){});}
   
   // Add to owned
   owned.push({id:id,name:item.name,icon:item.icon,date:new Date().toLocaleDateString('pt-BR'),ts:Date.now()});
@@ -386,5 +400,6 @@ document.addEventListener('DOMContentLoaded',renderShop);
   </a>
 </nav>
 
+<script src="shared/points-fix.js"></script>
 </body>
 </html>
