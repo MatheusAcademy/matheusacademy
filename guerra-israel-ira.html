@@ -2347,6 +2347,7 @@ var MODS = [
     ]
   }
 ];
+</script>
 <script>
 /* ══════════════════════════════════════════════════════════════
    MATHEUS ACADEMY — COURSE ENGINE JS v4
@@ -2916,7 +2917,17 @@ var COURSES=[
 function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
 function gA(){try{return JSON.parse(localStorage.getItem('ma_access'))||{};}catch(e){return {};}}
 function sA(a){localStorage.setItem('ma_access',JSON.stringify(a));}
-function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};}catch(e){return{total:0,history:[]};}}
+function gP(){
+  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
+  try{
+    if(window.MAStore&&MAStore.getTotalPointsSync){
+      return {total:MAStore.getTotalPointsSync(),history:[]};
+    }
+    var _u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    if(_u&&typeof _u.xp_total==='number') return {total:_u.xp_total,history:[]};
+  }catch(e){}
+  return {total:0,history:[]};
+}
 function gProg(){try{return JSON.parse(localStorage.getItem(COURSE.prefix+'prog'))||{};}catch(e){return {};}}
 function sProg(p){localStorage.setItem(COURSE.prefix+'prog',JSON.stringify(p));}
 function gHlData(){try{return JSON.parse(localStorage.getItem(COURSE.prefix+'hl'))||[];}catch(e){return[];}}
@@ -2999,10 +3010,11 @@ var LVS=[{n:'Iniciante',c:'ma-lvc0',m:0},{n:'Aprendiz',c:'ma-lvc1',m:1000},{n:'P
 function gLv(t){for(var i=LVS.length-1;i>=0;i--)if(t>=LVS[i].m)return LVS[i];return LVS[0];}
 function addPoints(src,pts){
   var u=gU();if(!u)return;
-  var p=gP();p.total+=pts;p.history.unshift({source:src,pts:pts,date:new Date().toLocaleDateString('pt-BR')});
-  localStorage.setItem('ma_points',JSON.stringify(p));
+  // v3 FIX: salva XP no Firebase (MAStore) — NUNCA em ma_points legado
+  if(window.MAStore&&MAStore.addPoints){
+    MAStore.addPoints(src,pts).then(function(){updateTopbar();});
+  }
   playCoinSound();
-  updateTopbar();
   showToast('⭐ +'+pts+' pontos — '+src,'pts');
 }
 window.MA_addPoints=addPoints;window.MA_getPoints=gP;
@@ -3579,7 +3591,7 @@ function mlFinishQuiz(mi,corrects){
   if(totalPts>0){addPoints('Quiz do Módulo '+(mi+1),totalPts);}
   else if(totalPts<0){
     var p=gP();p.total=Math.max(0,p.total+totalPts);
-    localStorage.setItem('ma_points',JSON.stringify(p));updateTopbar();
+    if(window.MAStore&&MAStore.addPoints){MAStore.addPoints('Quiz: '+totalPts+' pts',0).catch(function(){});}updateTopbar();
     showToast('📉 '+(totalPts)+' pontos pelas respostas incorretas','');
   }
 
