@@ -249,7 +249,6 @@
     <a class="ma-mi" href="trilhas.html">     <span class="ma-mi-icon">🗺️</span>Trilhas</a>
     <a class="ma-mi" href="loja.html">        <span class="ma-mi-icon">🛒</span>Loja de XP</a>
     <a class="ma-mi" href="mural.html">       <span class="ma-mi-icon">📌</span>Mural</a>
-    <a class="ma-mi gold" href="planos.html"> <span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a>
   </div>
   <div class="ma-menu-sec" id="ptMenuAuth"></div>
 </div>
