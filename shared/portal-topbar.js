@@ -27,6 +27,7 @@
     'trilhas.html'     : '🗺️ Trilhas',
     'loja.html'        : '🛒 Loja de XP',
     'mural.html'       : '📌 Mural',
+    'planos.html'      : '💎 Planos',
     'admin-codigos.html': '🔑 Admin'
   };
 
@@ -155,6 +156,19 @@
     body.light .ma-mi { color: #5a5a7a; }
     body.light .ma-mi:hover { background: #f0f2f8; color: #1a1a2e; }
     body.light .ma-menu-sec + .ma-menu-sec { border-top-color: #e8eaf2; }
+
+    /* ══ BOTÃO PLANOS NA TOPBAR ══ */
+    .ma-tb-plans-btn {
+      display: flex; align-items: center; gap: 5px;
+      padding: 5px 12px; border-radius: 20px; flex-shrink: 0;
+      font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+      text-decoration: none; color: #f59e0b;
+      border: 1px solid rgba(245,158,11,.35);
+      background: rgba(245,158,11,.08);
+      transition: all .2s; white-space: nowrap;
+    }
+    .ma-tb-plans-btn:hover { background: rgba(245,158,11,.18); border-color: rgba(245,158,11,.6); }
+    @media (max-width: 400px) { .ma-tb-plans-btn span.ma-tb-plans-label { display: none; } }
   `;
   document.head.appendChild(style);
 
@@ -178,6 +192,11 @@
   <div class="ma-tb-sep"></div>
   <span class="ma-tb-page-name" id="tbPageName">${pageName}</span>
   <div class="ma-tb-spacer"></div>
+
+  <!-- BOTÃO PLANOS — visível sempre na topbar -->
+  <a class="ma-tb-plans-btn" href="planos.html" id="maTopbarPlansBtn">
+    💎 <span class="ma-tb-plans-label">Planos</span>
+  </a>
 
   <!-- TROFÉU + PONTOS -->
   <a class="ma-tb-pts-block" id="maPtsLive" href="painel.html">
@@ -232,9 +251,8 @@
     <a class="ma-mi" href="mural.html">       <span class="ma-mi-icon">📌</span>Mural</a>
   </div>
   <div class="ma-menu-sec">
-    <a class="ma-mi gold" href="index.html"
-       onclick="localStorage.setItem('ma_open_modal','plans');return true">
-      <span class="ma-mi-icon">💎</span>Ver Planos
+    <a class="ma-mi gold" href="planos.html">
+      <span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas
     </a>
   </div>
   <div class="ma-menu-sec" id="ptMenuAuth"></div>
@@ -264,6 +282,21 @@
 function ptInitTopbar() {
   // Atualiza pontos imediatamente com dados do cache
   ptUpdatePts();
+
+  // Oculta/mostra botão Planos conforme o plano do usuário
+  (function _ptUpdPlansBtn() {
+    var btn = document.getElementById('maTopbarPlansBtn');
+    if (!btn) return;
+    try {
+      var u = window.MAStore ? MAStore.getUserSync() : JSON.parse(localStorage.getItem('ma_user') || 'null');
+      var plano = u ? (u.plano || 'gratuito').toLowerCase() : 'gratuito';
+      // Master tem tudo: botão fica discreto mas visível (pode querer ver dias restantes)
+      if (plano === 'master') {
+        btn.style.opacity = '.45';
+        btn.title = 'Voc\u00ea j\u00e1 tem o Plano Master 3 Anos \u2014 acesso completo!';
+      }
+    } catch(e) {}
+  })();
 
   // Tema salvo
   var saved = localStorage.getItem('ma_theme');
