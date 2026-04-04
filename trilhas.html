@@ -174,7 +174,12 @@ body{padding-bottom:58px!important}
 </nav>
 <script>
 (function(){
-  function maTbUpdatePts(){try{var p=JSON.parse(localStorage.getItem('ma_points')||'{}');var el=document.getElementById('maTbPtsN');if(el)el.textContent=(p.total||0).toLocaleString('pt-BR');}catch(e){}}
+  function maTbUpdatePts(){try{
+    var u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    var pts=(u&&u.xp_total)||0;
+    if(!pts){var p=JSON.parse(localStorage.getItem('ma_points')||'{}');pts=p.total||0;}
+    var el=document.getElementById('maTbPtsN');if(el)el.textContent=pts.toLocaleString('pt-BR');
+  }catch(e){}}
   function maTbUpdateUser(){
     try{
       var u=JSON.parse(localStorage.getItem('ma_user')||'null');
@@ -209,20 +214,83 @@ body{padding-bottom:58px!important}
 
 
 <script>
-// ═══ FONTE ÚNICA: trilhas e cursos vêm de data/courses.js ═══
-// Para editar trilhas ou adicionar cursos, edite APENAS data/courses.js
-// Nota: MA_buildTrails inclui TODOS os cursos das trilhas (mesmo inactive)
-// porque as trilhas mostram o caminho completo independente do status
-var TRILHAS = (function(){
-  return MA_TRAILS.map(function(trail){
-    var resolved = [];
-    trail.courseIds.forEach(function(cid){
-      var c = MA_COURSES.find(function(x){ return x.id === cid; });
-      if(c) resolved.push({ key: c.id, icon: c.icon, name: c.name, file: c.file });
-    });
-    return { id: trail.id, icon: trail.icon, color: trail.color, borderColor: trail.borderColor, name: trail.name, desc: trail.desc, badge: trail.badge, courses: resolved };
-  }).filter(function(t){ return t.courses.length > 0; });
-})();
+// ═══ TRILHAS DINÂMICAS — geradas automaticamente de data/courses.js ═══
+// Trilha de Notícias: todos os cursos com free:true
+// Trilha de Cursos: todos os cursos pagos, agrupados por categoria
+// Atualiza automaticamente quando novos cursos são adicionados
+
+// Separar cursos em notícias e cursos regulares
+var _allCursos = MA_getActiveCourses ? MA_getActiveCourses() : MA_COURSES.filter(function(c){return c.active!==false;});
+var _noticias = _allCursos.filter(function(c){return c.free===true || c.ak==='free';});
+var _cursosRegulares = _allCursos.filter(function(c){return !c.free && c.ak!=='free';});
+
+// Gerar trilhas dinâmicas
+var TRILHAS = [];
+
+// 1. Trilha de Notícias (sempre primeiro)
+if(_noticias.length > 0){
+  TRILHAS.push({
+    id: 'noticias',
+    icon: '📰',
+    color: 'rgba(239,68,68,.1)',
+    borderColor: 'rgba(239,68,68,.4)',
+    name: 'Trilha Notícias em Destaque',
+    desc: 'Análises completas dos acontecimentos mais relevantes do momento.',
+    badge: '📰 Leitor Atualizado',
+    courses: _noticias.map(function(c){return {key:c.id,icon:c.icon,name:c.name,file:c.file,free:true};}),
+    isNoticias: true
+  });
+}
+
+// 2. Trilhas de Cursos por categoria
+var _catMap = {};
+_cursosRegulares.forEach(function(c){
+  var cat = c.cat || 'Geral';
+  if(!_catMap[cat]) _catMap[cat] = [];
+  _catMap[cat].push(c);
+});
+
+var _catIcons = {
+  'Negócios': {icon:'💼', color:'rgba(59,130,246,.1)', border:'rgba(59,130,246,.4)', badge:'💼 Empreendedor'},
+  'Geopolítica': {icon:'🌍', color:'rgba(34,197,94,.1)', border:'rgba(34,197,94,.35)', badge:'🌍 Estrategista Global'},
+  'PNL': {icon:'🧠', color:'rgba(168,85,247,.1)', border:'rgba(168,85,247,.4)', badge:'🧠 Mestre da Comunicação'},
+  'Desenvolvimento': {icon:'🚀', color:'rgba(245,158,11,.1)', border:'rgba(245,158,11,.4)', badge:'🚀 Desenvolvido'},
+  'Tecnologia': {icon:'💻', color:'rgba(0,212,255,.1)', border:'rgba(0,212,255,.4)', badge:'💻 Tech Expert'},
+  'Psicologia': {icon:'🧩', color:'rgba(233,121,249,.1)', border:'rgba(233,121,249,.4)', badge:'🧩 Observador'},
+  'Geral': {icon:'🎓', color:'rgba(91,127,255,.1)', border:'rgba(91,127,255,.4)', badge:'🎓 Conhecimento Geral'}
+};
+
+Object.keys(_catMap).forEach(function(cat){
+  var meta = _catIcons[cat] || _catIcons['Geral'];
+  var cursosNaCat = _catMap[cat];
+  TRILHAS.push({
+    id: 'cat_' + cat.toLowerCase().replace(/\s+/g,'_'),
+    icon: meta.icon,
+    color: meta.color,
+    borderColor: meta.border,
+    name: 'Trilha ' + cat,
+    desc: cursosNaCat.length + ' curso(s) disponível(is) nesta área de conhecimento.',
+    badge: meta.badge,
+    courses: cursosNaCat.map(function(c){return {key:c.id,icon:c.icon,name:c.name,file:c.file,free:false};}),
+    isNoticias: false
+  });
+});
+
+// 3. Trilha Completa (se tiver mais de 1 curso regular)
+if(_cursosRegulares.length > 1){
+  TRILHAS.push({
+    id: 'completa',
+    icon: '👑',
+    color: 'rgba(245,158,11,.1)',
+    borderColor: 'rgba(245,158,11,.4)',
+    name: '👑 Trilha Completa Matheus Academy',
+    desc: 'O percurso definitivo. Todos os ' + _cursosRegulares.length + ' cursos principais da plataforma.',
+    badge: '👑 Mestre Academy',
+    courses: _cursosRegulares.map(function(c){return {key:c.id,icon:c.icon,name:c.name,file:c.file,free:false};}),
+    isNoticias: false,
+    isCompleta: true
+  });
+}
 
 function getCourseProgress(key){
   // Busca o storagePrefix correto em MA_COURSES pelo id do curso
@@ -257,6 +325,7 @@ function renderTrilhas(){
         +'<div class="tci-num">'+(i+1)+'</div>'
         +'<span class="tci-icon">'+c.icon+'</span>'
         +'<span class="tci-name">'+c.name+'</span>'
+        +(c.free?'<span style="font-size:.48rem;background:rgba(34,197,94,.15);color:#22c55e;padding:1px 6px;border-radius:4px;font-weight:700">GRÁTIS</span>':'')
         +'<span class="tci-pct">'+p.pct+'%</span>'
         +'<span class="tci-check">'+(isDone?'✅':'')+'</span>'
         +'</div>';
@@ -330,5 +399,6 @@ document.addEventListener('DOMContentLoaded',renderTrilhas);
   </a>
 </nav>
 
+<script src="shared/points-fix.js"></script>
 </body>
 </html>
