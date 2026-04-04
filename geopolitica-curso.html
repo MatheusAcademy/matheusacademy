@@ -2053,7 +2053,17 @@ var COURSES=[
 function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
 function gA(){try{return JSON.parse(localStorage.getItem('ma_access'))||{};}catch(e){return {};}}
 function sA(a){localStorage.setItem('ma_access',JSON.stringify(a));}
-function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};}catch(e){return{total:0,history:[]};}}
+function gP(){
+  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
+  try{
+    if(window.MAStore&&MAStore.getTotalPointsSync){
+      return {total:MAStore.getTotalPointsSync(),history:[]};
+    }
+    var _u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    if(_u&&typeof _u.xp_total==='number') return {total:_u.xp_total,history:[]};
+  }catch(e){}
+  return {total:0,history:[]};
+}
 function gProg(){try{return JSON.parse(localStorage.getItem(COURSE.prefix+'prog'))||{};}catch(e){return {};}}
 function sProg(p){localStorage.setItem(COURSE.prefix+'prog',JSON.stringify(p));}
 function gHlData(){try{return JSON.parse(localStorage.getItem(COURSE.prefix+'hl'))||[];}catch(e){return[];}}
@@ -2136,10 +2146,11 @@ var LVS=[{n:'Iniciante',c:'ma-lvc0',m:0},{n:'Aprendiz',c:'ma-lvc1',m:1000},{n:'P
 function gLv(t){for(var i=LVS.length-1;i>=0;i--)if(t>=LVS[i].m)return LVS[i];return LVS[0];}
 function addPoints(src,pts){
   var u=gU();if(!u)return;
-  var p=gP();p.total+=pts;p.history.unshift({source:src,pts:pts,date:new Date().toLocaleDateString('pt-BR')});
-  localStorage.setItem('ma_points',JSON.stringify(p));
+  // v3 FIX: salva XP no Firebase (MAStore) — NUNCA em ma_points legado
+  if(window.MAStore&&MAStore.addPoints){
+    MAStore.addPoints(src,pts).then(function(){updateTopbar();});
+  }
   playCoinSound();
-  updateTopbar();
   showToast('⭐ +'+pts+' pontos — '+src,'pts');
 }
 window.MA_addPoints=addPoints;window.MA_getPoints=gP;
@@ -3045,7 +3056,7 @@ document.addEventListener('DOMContentLoaded',function(){
   setActiveColor('amarelo');
   // Init
   initSidebar();setupEvents();updateTopbar();buildSidebar();initHighlight();setBottomNavActive();updateLessonCoverMini();initFloatingPen();buildModuleCarousel();
-  // Polling de pontos
+  // Polling de pontos — v3 FIX: usa MAStore/xp_total
   var _lp=null;setInterval(function(){var p=gP();if(_lp!==null&&p.total>_lp)updateTopbar();_lp=p.total;},1500);
   // Sessão
   var _ss=Date.now();
