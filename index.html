@@ -407,6 +407,22 @@ button{cursor:pointer;font-family:var(--font)}
 ::-webkit-scrollbar-track{background:var(--bg2)}
 ::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--pri)}
+
+/* ═══ CORREÇÕES CRÍTICAS DE LAYOUT ═══ */
+/* Garantir que .cc-body seja sempre visível e correto */
+.cc .cc-body { display:block !important; }
+.cc .cc-body h4 { display:-webkit-box !important; }
+/* Garantir que a imagem não mostre o texto embutido do SVG (se houver) */
+.cc .cc-img img { 
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+/* Remover qualquer estilo antigo conflitante */
+.ebook-card .cc-img { display:none }
+/* Stats e botão NUNCA aparecem nos cards */
+.cc .cc-stats, .cc .ccs, .cc .cc-btn, .cc .cc-body p { display:none !important; }
+/* Seção stats bar */
+.stats { display:flex; flex-wrap:wrap; }
 </style>
 <style id="hide-floats">
 #mae-btn,#maeChatBtn,#maeChatWin,.ma-fpts,#maFpts,.points-badge,#fBadge,.f-badge{display:none!important}
@@ -652,6 +668,73 @@ function geoPat(c) {
    makeAutoCover — CAPA AUTOMÁTICA CINEMATOGRÁFICA 600×300
    Gerada automaticamente para QUALQUER curso/notícia adicionado
    ══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   makeCardCover — CAPA SIMPLES SEM TEXTO para cards de carrossel
+   Chamada pelo makeCard() — visual puro, texto vem do cc-body
+   ══════════════════════════════════════════════════════════════ */
+function makeCardCover(course, gi) {
+  var pfx = 'cv' + Math.abs((course.id||course.name||'x').split('').reduce(function(a,c){return a*31+c.charCodeAt(0)|0;},0)).toString(36).substring(0,8);
+  var icon = course.icon || '\uD83D\uDCDA';
+  var nameLow = (course.name || '').toLowerCase();
+  var autoGi = gi;
+  if(/tráfego|traffic|ads|meta|google|marketing/i.test(nameLow)) autoGi = 0;
+  else if(/negócio|business|empreend|lucro|renda|dinheiro|financ/i.test(nameLow)) autoGi = 1;
+  else if(/geopolít|guerra|conflito|mundo|global|internac/i.test(nameLow)) autoGi = 2;
+  else if(/nicho|produto|venda|ecommerce|digital/i.test(nameLow)) autoGi = 3;
+  else if(/banco|fraude|corrup/i.test(nameLow)) autoGi = 4;
+  else if(/cripto|bitcoin|invest|bolsa|mercado/i.test(nameLow)) autoGi = 5;
+  else if(/ia|inteligência artificial|tech|tecnolog/i.test(nameLow)) autoGi = 6;
+  else if(/saúde|mental|psicolog|emocion|persuasão|pnl/i.test(nameLow)) autoGi = 7;
+  else if(/lei|direito|felca|censura|política/i.test(nameLow)) autoGi = 8;
+  else if(/copa|futebol|esporte/i.test(nameLow)) autoGi = 9;
+  var PALETTES = [
+    {c1:'#4A7EFF',c2:'#00d4ff',bg1:'#060318',bg2:'#0a0520'},
+    {c1:'#22c55e',c2:'#4ade80',bg1:'#020c06',bg2:'#051a0a'},
+    {c1:'#f59e0b',c2:'#fbbf24',bg1:'#0c0600',bg2:'#150a00'},
+    {c1:'#a855f7',c2:'#ec4899',bg1:'#0a0212',bg2:'#120318'},
+    {c1:'#ef4444',c2:'#f97316',bg1:'#0c0202',bg2:'#180400'},
+    {c1:'#06b6d4',c2:'#0ea5e9',bg1:'#00080f',bg2:'#000d18'},
+    {c1:'#84cc16',c2:'#22d3ee',bg1:'#020a02',bg2:'#031408'},
+    {c1:'#e879f9',c2:'#c084fc',bg1:'#0a0014',bg2:'#130020'},
+    {c1:'#f43f5e',c2:'#fb7185',bg1:'#0c0108',bg2:'#1a0510'},
+    {c1:'#fbbf24',c2:'#34d399',bg1:'#030a05',bg2:'#051208'},
+  ];
+  var p = PALETTES[autoGi % PALETTES.length];
+  var hash = Math.abs((course.id||course.name||'x').split('').reduce(function(a,c){return a*53+c.charCodeAt(0)|0;},7));
+  var pType = hash % 4;
+  var geo = '';
+  if(pType===0){
+    geo='<circle cx="150" cy="75" r="48" fill="none" stroke="'+p.c1+'" stroke-width="0.9" opacity="0.22"/>'
+      +'<circle cx="150" cy="75" r="30" fill="none" stroke="'+p.c2+'" stroke-width="0.5" opacity="0.16"/>';
+  } else if(pType===1){
+    geo='<polygon points="150,22 236,105 64,105" fill="none" stroke="'+p.c1+'" stroke-width="0.9" opacity="0.2"/>'
+      +'<polygon points="150,38 214,100 86,100" fill="none" stroke="'+p.c2+'" stroke-width="0.5" opacity="0.14"/>';
+  } else if(pType===2){
+    geo='<polygon points="150,20 226,53 226,107 150,140 74,107 74,53" fill="none" stroke="'+p.c1+'" stroke-width="0.9" opacity="0.2"/>'
+      +'<circle cx="150" cy="80" r="25" fill="none" stroke="'+p.c2+'" stroke-width="0.5" opacity="0.15"/>';
+  } else {
+    geo='<polygon points="150,22 240,80 150,138 60,80" fill="none" stroke="'+p.c1+'" stroke-width="0.9" opacity="0.2"/>'
+      +'<polygon points="150,40 210,80 150,120 90,80" fill="none" stroke="'+p.c2+'" stroke-width="0.5" opacity="0.14"/>';
+  }
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 170">'
+    +'<defs>'
+    +'<linearGradient id="'+pfx+'bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="'+p.bg1+'"/><stop offset="100%" stop-color="'+p.bg2+'"/></linearGradient>'
+    +'<linearGradient id="'+pfx+'hl" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="'+p.c1+'" stop-opacity="0"/><stop offset="50%" stop-color="'+p.c1+'" stop-opacity="0.35"/><stop offset="100%" stop-color="'+p.c2+'" stop-opacity="0"/></linearGradient>'
+    +'<linearGradient id="'+pfx+'bt" x1="0" y1="0" x2="0" y2="1"><stop offset="40%" stop-color="rgba(0,0,0,0)"/><stop offset="100%" stop-color="rgba(0,0,0,0.65)"/></linearGradient>'
+    +'<filter id="'+pfx+'gl"><feGaussianBlur stdDeviation="10"/></filter>'
+    +'</defs>'
+    +'<rect width="300" height="170" fill="url(#'+pfx+'bg)"/>'
+    +'<g opacity="0.04" stroke="'+p.c1+'" stroke-width="0.35"><line x1="0" y1="42" x2="300" y2="42"/><line x1="0" y1="85" x2="300" y2="85"/><line x1="0" y1="127" x2="300" y2="127"/><line x1="75" y1="0" x2="75" y2="170"/><line x1="150" y1="0" x2="150" y2="170"/><line x1="225" y1="0" x2="225" y2="170"/></g>'
+    +'<circle cx="150" cy="75" r="55" fill="'+p.c1+'" opacity="0.09" filter="url(#'+pfx+'gl)"/>'
+    +geo
+    +'<text x="150" y="92" text-anchor="middle" font-size="36" opacity="0.88">'+icon+'</text>'
+    +'<rect x="0" y="100" width="300" height="70" fill="url(#'+pfx+'bt)"/>'
+    +'<rect x="0" y="0" width="3" height="170" fill="url(#'+pfx+'hl)" opacity="0.8"/>'
+    +'</svg>'
+  );
+}
+
 function makeAutoCover(course, gi, isSoon) {
   var pfx = 'ac' + Math.abs((course.id||course.name||'x').split('').reduce(function(a,c){return a*31+c.charCodeAt(0)|0;},0)).toString(36).substring(0,8);
   var name = (course.name || '').toUpperCase();
@@ -1183,23 +1266,19 @@ function goTo(file) { saveRecent(file); location.href = file; }
 // ═══════════════════════════════ MAKE CARD ═══════════════════════════════
 function makeCard(c) {
   var un = isUn(c.file);
-  // Índice de cor baseado no id do curso (para makeAutoCover)
-  var gi = c.id ? c.id.split('').reduce(function(a,ch){return a+ch.charCodeAt(0);},0) % 8 : 0;
-  // Usar capa própria se existir (input hidden cov-XX), senão gerar automaticamente
+  var gi = c.id ? c.id.split('').reduce(function(a,ch){return a+ch.charCodeAt(0);},0) % 10 : 0;
+  // Usar capa do input hidden se existir, senão gerar capa SIMPLES (sem texto embutido)
   var covEl = document.getElementById('cov-' + c.id);
-  var img = (covEl && covEl.value) ? covEl.value : (makeSVGCover(c.id) || makeAutoCover(c, gi));
+  var img = (covEl && covEl.value) ? covEl.value : makeCardCover(c, gi);
   var h = '<div class="cc" data-file="' + c.file + '">';
   h += '<div class="cc-img"><img src="' + img + '" alt="' + c.name + '" loading="lazy">';
-  // Badge GRÁTIS ou LIBERADO no canto superior esquerdo
   if (c.free) h += '<div class="cc-badge free">&#127873; Grátis</div>';
   else if (un) h += '<div class="cc-badge live">&#10003; Liberado</div>';
-  // Horas no canto superior direito (estilo BP)
   if (c.hours && c.hours > 0) h += '<div class="cc-badge-hrs">' + c.hours + 'h</div>';
   h += '</div>';
-  // Corpo: categoria · módulos acima do título
   h += '<div class="cc-body">';
   var catLabel = (c.cat || 'Curso').toUpperCase();
-  h += '<div class="cc-cat">' + catLabel + ' &middot; ' + c.modules + ' m\u00f3d.</div>';
+  h += '<div class="cc-cat">' + catLabel + ' &middot; ' + c.modules + ' mód.</div>';
   h += '<h4>' + c.name + '</h4>';
   h += '</div>';
   h += '</div>';
