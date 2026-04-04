@@ -232,8 +232,6 @@
    CARDS DE CURSO - TAMANHOS PROPORCIONAIS E UNIFORMES
    ══════════════════════════════════════════════════════════════════════════════ */
 .cc{
-  min-width:calc((100vw - 100px)/3.3);
-  max-width:calc((100vw - 100px)/3.3);
   background:var(--card);
   border:1.5px solid var(--brd);
   border-radius:14px;
@@ -242,7 +240,6 @@
   flex-shrink:0;
   display:flex;
   flex-direction:column;
-  /* SEM efeitos de transição elétricos */
   transition:transform .2s ease-out;
 }
 /* REMOVER efeito elétrico do hover - apenas elevação sutil */
@@ -309,8 +306,7 @@
 @keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
 @media(max-width:480px){.points-badge{bottom:16px;right:12px;padding:7px 12px}.points-value{font-size:.88rem}.points-label{font-size:.52rem}}
 .footer{border-top:1px solid var(--brd);padding:28px 24px;text-align:center;margin-top:24px}.footer-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.footer-links a{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:8px;font-size:.7rem;font-weight:600;text-decoration:none;border:1px solid var(--brd);color:inherit}.footer-links a:hover{border-color:var(--pri)}.footer-links .tg{color:#0088cc}.footer-links .ig{color:#e1306c}.footer-brand{font-size:.6rem;color:var(--txt3)}.footer-brand b{color:var(--txt2)}
-@media(max-width:1400px){.cc{min-width:calc((min(100vw,1400px) - 100px)/3.3);max-width:calc((min(100vw,1400px) - 100px)/3.3)}}
-@media(max-width:1023px){.cc{min-width:calc((100vw - 80px)/2.5);max-width:calc((100vw - 80px)/2.5)}.row-wrap{padding:0}.row-wrap .arr-btn{display:none!important}.row-inner{padding:12px 16px 18px}}
+@media(max-width:1023px){.row-wrap{padding:0}.row-wrap .arr-btn{display:none!important}.row-inner{padding:12px 16px 18px}}
 @media(max-width:640px){.hero h2{font-size:1.5rem}.hero{padding:36px 16px 0}.stats{gap:16px;margin:0 12px}.stat b{font-size:1.1rem}.hdr{padding:0 12px}.hdr-btn{padding:5px 8px;font-size:.6rem}.cr{flex-direction:column}.section-hdr{padding:14px 16px 6px}.cat-sec-inner{padding:14px 16px 6px}}
 /* ── Mobile: esconder lupa, sininho e emoji dinheiro no cabeçalho ── */
 @media(max-width:640px){
@@ -514,15 +510,15 @@
 
 /* ── BODY DO CARD: apenas título + categoria ── */
 .cc-body {
-  padding: 8px 2px 0 2px !important;
+  padding: 6px 4px 4px 4px !important;
   min-height: unset !important;
   background: transparent !important;
 }
 .cc-body h4 {
-  font-size: 0.82rem !important;
+  font-size: 0.72rem !important;
   font-weight: 700 !important;
   color: #fff !important;
-  line-height: 1.35 !important;
+  line-height: 1.3 !important;
   margin-bottom: 2px !important;
 }
 .cc-body p {
@@ -582,9 +578,9 @@
   padding: 0 !important;
 }
 
-/* ── ROW INNER: gap maior ── */
+/* ── ROW INNER: gap ajustado para 6 cards ── */
 .row-inner {
-  gap: 12px !important;
+  gap: 10px !important;
   padding: 10px 4px 16px !important;
 }
 
@@ -602,26 +598,55 @@
   display: none !important;
 }
 
-/* ── DESKTOP: mais cards por linha ── */
-@media (min-width: 1024px) {
+/* ── DESKTOP GRANDE (>1400px): 6 cards por linha ── */
+@media (min-width: 1400px) {
   .cc {
-    min-width: calc((min(100vw,1400px) - 100px)/4.2) !important;
-    max-width: calc((min(100vw,1400px) - 100px)/4.2) !important;
+    min-width: calc((min(100vw,1600px) - 130px) / 6.15) !important;
+    max-width: calc((min(100vw,1600px) - 130px) / 6.15) !important;
   }
 }
 
-/* ── MOBILE: cards menores, mais respiro ── */
+/* ── DESKTOP MÉDIO (1024–1399px): 6 cards por linha ── */
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .cc {
+    min-width: calc((100vw - 120px) / 6.15) !important;
+    max-width: calc((100vw - 120px) / 6.15) !important;
+  }
+}
+
+/* ── TABLET (768–1023px): 4 cards por linha ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .cc {
+    min-width: calc((100vw - 80px) / 4.15) !important;
+    max-width: calc((100vw - 80px) / 4.15) !important;
+  }
+}
+
+/* ── MOBILE MÉDIO (481–767px): 3 cards por linha ── */
+@media (min-width: 481px) and (max-width: 767px) {
+  .cc {
+    min-width: calc((100vw - 60px) / 3.1) !important;
+    max-width: calc((100vw - 60px) / 3.1) !important;
+  }
+}
+
+/* ── MOBILE PEQUENO (≤480px): 2 cards por linha ── */
 @media (max-width: 480px) {
   .cc {
-    min-width: calc((100vw - 36px)/2) !important;
-    max-width: calc((100vw - 36px)/2) !important;
+    min-width: calc((100vw - 40px) / 2.1) !important;
+    max-width: calc((100vw - 40px) / 2.1) !important;
   }
   .cc-img {
     aspect-ratio: 3/4 !important;
     height: auto !important;
   }
+  .cc-body {
+    padding: 8px 10px !important;
+    min-height: 56px !important;
+  }
   .cc-body h4 {
-    font-size: 0.70rem !important;
+    font-size: 0.62rem !important;
+    line-height: 1.2 !important;
   }
   .section-hdr h3 {
     font-size: 0.95rem !important;
@@ -631,7 +656,7 @@
   }
   .row-inner {
     padding: 8px 12px 14px !important;
-    gap: 10px !important;
+    gap: 8px !important;
   }
 }
 
