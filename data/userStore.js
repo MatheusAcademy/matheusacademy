@@ -727,6 +727,20 @@ document.addEventListener('ma:pointsUpdate', function(e) {
    ══════════════════════════════════════════════════════════ */
 
 (function() {
+  // v3 FIX ANTI-FLASH-ZERO: mostra cache local imediatamente ao carregar
+  // para que o XP apareça antes do Firebase responder
+  (function _showCacheImmediate() {
+    try {
+      var _u = JSON.parse(localStorage.getItem('ma_user')||'null');
+      if (_u && typeof _u.xp_total === 'number' && _u.xp_total > 0) {
+        var _xp = _u.xp_total;
+        document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN, #maTbPtsN, #hdrPtsNum').forEach(function(el) {
+          el.textContent = _xp.toLocaleString('pt-BR');
+        });
+      }
+    } catch(e) {}
+  })();
+
   // Quando Firebase estiver pronto, faz TUDO: registra observer + sincroniza
   function _onFirebaseReady() {
     console.log('[MAStore v3] Firebase pronto, configurando observer de auth...');
@@ -736,22 +750,34 @@ document.addEventListener('ma:pointsUpdate', function(e) {
     if (window.MA_AUTH) {
       MA_AUTH.onAuthChange(async function(authUser) {
         if (authUser) {
+          // v3 FIX: ANTES de buscar Firestore, mostra o cache para evitar piscar 0
+          try {
+            var _cached = JSON.parse(localStorage.getItem('ma_user')||'null');
+            if (_cached && typeof _cached.xp_total === 'number' && _cached.xp_total > 0) {
+              document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN, #maTbPtsN, #hdrPtsNum').forEach(function(el) {
+                el.textContent = _cached.xp_total.toLocaleString('pt-BR');
+              });
+            }
+          } catch(e2) {}
+
           // Usuário logado — busca dados frescos do Firestore
           var user = await MAStore.getUser();
           if (user) {
             var total = user.xp_total || 0;
             // Atualiza TODOS os elementos de XP na página
-            document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN').forEach(function(el) {
+            document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN, #maTbPtsN, #hdrPtsNum').forEach(function(el) {
               el.textContent = total.toLocaleString('pt-BR');
             });
             // Chama ptSyncFromFirebase se existir (portal-topbar)
             if (window.ptSyncFromFirebase) ptSyncFromFirebase();
+            // Chama updTopbar se existir (index.html)
+            if (window.updTopbar) window.updTopbar();
             console.log('[MAStore v3] Auth OK —', user.nome, '| XP:', total);
           }
         } else {
           // Usuário deslogado — limpa cache
           MAStore.invalidateCache();
-          document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN').forEach(function(el) {
+          document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN, #maTbPtsN, #hdrPtsNum').forEach(function(el) {
             el.textContent = '0';
           });
         }
