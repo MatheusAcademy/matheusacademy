@@ -219,7 +219,8 @@ window.MA_DB = {
   async sincronizarLocal(uid) {
     const db = await _maWaitDb();
     const update = {};
-    try { const p=JSON.parse(localStorage.getItem('ma_points')||'{}'); if(p.total) update.xp_total=p.total; } catch(e){}
+    // v3 FIX: NÃO sincroniza ma_points legado — Firebase é a fonte de verdade
+    // Apenas sincroniza dados que não têm origem no Firebase
     try { const s=JSON.parse(localStorage.getItem('ma_streak2')||'{}'); if(s.current) update.streak_atual=s.current; if(s.record) update.streak_record=s.record; } catch(e){}
     try { const m=parseInt(localStorage.getItem('ma_study_total_min')||'0'); if(m) update.total_minutos_estudo=m; } catch(e){}
     try { const prog=JSON.parse(localStorage.getItem('ma_course_progress')||'{}'); Object.keys(prog).forEach(k=>{update[`progresso.${k}`]=prog[k];}); } catch(e){}
@@ -243,14 +244,19 @@ window.MA_ACESSO = {
       const dados = await MA_DB.getUsuario(user.uid);
       const acesso = await MA_DB.temAcesso(user.uid, courseKey);
       if (dados) {
+        // v3 FIX: inclui xp_total para que a topbar leia XP correto do cache
         localStorage.setItem('ma_user', JSON.stringify({
           uid: user.uid,
           nome: dados.nome || user.displayName,
+          name: dados.nome || user.displayName,
           email: dados.email || user.email,
           foto: user.photoURL || '',
           plano: dados.plano,
-          cursos: dados.cursos_comprados
+          cursos: dados.cursos_comprados,
+          xp_total: dados.xp_total || 0  // ← CORREÇÃO: sempre salvar xp_total
         }));
+        // Remove chave legada que causava conflito
+        localStorage.removeItem('ma_points');
       }
       return { user, acesso, dados };
     } catch(e) {
