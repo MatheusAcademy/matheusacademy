@@ -60,7 +60,7 @@
   box-shadow:0 12px 40px rgba(0,0,0,.85);
 }
 /* Imagem de capa */
-.ebook-cover img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#03030a}
+.ebook-cover img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;background:#03030a}
 /* Overlay de nome — DENTRO da capa, na base */
 .p-name-bar{position:absolute;bottom:0;left:0;right:0;padding:28px 10px 10px;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.7) 50%,rgba(0,0,0,.3) 80%,transparent 100%);z-index:4}
 .p-name-bar span{display:block;font-size:.6rem;font-weight:800;color:#fff;line-height:1.25;text-shadow:0 1px 4px rgba(0,0,0,.9);font-family:var(--serif);word-break:break-word}
@@ -255,7 +255,7 @@
   position:relative;
 }
 .cc.soon{cursor:default;opacity:.55}.cc.soon:hover{transform:none!important}
-.cc-img{aspect-ratio:3/4;width:100%;background:#03030a;position:relative;overflow:hidden;flex-shrink:0}.cc-img img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;opacity:.97;transition:opacity .2s}.cc:hover .cc-img img{opacity:1}
+.cc-img{aspect-ratio:3/4;width:100%;background:#03030a;position:relative;overflow:hidden;flex-shrink:0}.cc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:.97;transition:opacity .2s}.cc:hover .cc-img img{opacity:1}
 .cc-badge{position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:6px;font-size:.5rem;font-weight:700;text-transform:uppercase}.cc-badge.live{background:var(--grn);color:#fff}.cc-badge.free{background:var(--orn);color:#fff}
 .soon-img{background:var(--bg3);display:flex;align-items:center;justify-content:center}.soon-special{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(245,158,11,.1))}.soon-special .soon-label{color:#ef4444;font-weight:800}.soon-ebook{background:linear-gradient(135deg,rgba(75,139,255,.1),rgba(168,85,247,.1))}.soon-ebook .soon-label{color:#a855f7}.soon-label{font-size:.8rem;font-weight:700;color:var(--orn)}
 /* Body do card - altura FIXA para alinhamento */
@@ -1177,14 +1177,14 @@ function buildEbooks() {
 
   function cardHtml(c, gi) {
     var isFree = !!c.free;
-    var customCover = makeSVGCover(c.id) || makeAutoCover(c, gi);
+    var customCover = c.coverImg || makeSVGCover(c.id) || makeAutoCover(c, gi);
     var badgeTxt = isFree ? 'GR&Aacute;TIS' : (c.hours + 'h');
     var btnCls = isFree ? 'btn-free' : 'btn-paid';
     var btnTxt = isFree ? '&#127873; Acesse Gr&aacute;tis' : 'Acessar Curso';
     var h = '<div class="ebook-card" data-file="' + c.file + '" style="--glow:' + GLOW[gi] + '">';
     h += '<div class="ebook-cover">';
     h += '<span class="p-badge ' + (isFree ? 'pfree' : 'ppaid') + '">' + badgeTxt + '</span>';
-    h += '<img src="' + customCover + '" alt="' + c.name + '" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#03030a">';
+    h += '<img src="' + customCover + '" alt="' + c.name + '" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;background:#03030a">';
     h += '<div class="p-img-cover"></div>';
     h += '<div class="p-name-bar"><span>' + c.name + '</span></div>';
     h += '<div class="ebook-balloon">';
@@ -1533,7 +1533,7 @@ function rC() {
       var coverSrc = makeAutoCover(fakeCourse, gi, true);
       h += '<div class="cc soon">';
       h += '<div class="cc-img" style="position:relative;overflow:hidden">';
-      h += '<img src="' + coverSrc + '" alt="' + s + '" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#03030a;opacity:.55">';
+      h += '<img src="' + coverSrc + '" alt="' + s + '" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;background:#03030a;opacity:.55">';
       h += '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(3,3,10,.45)">';
       h += '<span style="background:rgba(0,0,0,.65);padding:4px 12px;border-radius:20px;font-size:.6rem;font-weight:700;color:#fff;letter-spacing:.08em">' + lbl + '</span>';
       h += '</div></div>';
