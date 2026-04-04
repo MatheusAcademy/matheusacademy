@@ -249,11 +249,7 @@
     <a class="ma-mi" href="trilhas.html">     <span class="ma-mi-icon">🗺️</span>Trilhas</a>
     <a class="ma-mi" href="loja.html">        <span class="ma-mi-icon">🛒</span>Loja de XP</a>
     <a class="ma-mi" href="mural.html">       <span class="ma-mi-icon">📌</span>Mural</a>
-  </div>
-  <div class="ma-menu-sec">
-    <a class="ma-mi gold" href="planos.html">
-      <span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas
-    </a>
+    <a class="ma-mi gold" href="planos.html"> <span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a>
   </div>
   <div class="ma-menu-sec" id="ptMenuAuth"></div>
 </div>
@@ -456,13 +452,17 @@ function ptUpdateMenuUser() {
   if (u && (u.email || u.nome)) {
     sec.innerHTML  = '<span class="ma-mu-name">' + (u.nome || u.name || u.email) + '</span>'
                    + '<div class="ma-mu-pts"><b>' + total.toLocaleString('pt-BR') + '</b> XP</div>';
-    auth.innerHTML = '<button class="ma-mi red" onclick="ptLogout()">'
+    auth.innerHTML = '<a class="ma-mi gold" href="planos.html">'
+                   + '<span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a>'
+                   + '<button class="ma-mi red" onclick="ptLogout()">'
                    + '<span class="ma-mi-icon">🚪</span>Sair da conta</button>';
   } else {
     sec.innerHTML  = '<span class="ma-mu-name" style="color:#8888a8">Visitante</span>'
                    + '<div class="ma-mu-pts">Faça login para salvar seu progresso</div>';
     auth.innerHTML = '<a class="ma-mi" href="index.html">'
-                   + '<span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a>';
+                   + '<span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a>'
+                   + '<a class="ma-mi gold" href="planos.html">'
+                   + '<span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a>';
   }
 }
 
