@@ -563,19 +563,54 @@ function buildHistory(hist){
 /* ── RENDER ── */
 function renderPage(){
   var u=gU();var page=document.getElementById('mainPage');
-  if(!u){page.innerHTML='<div class="not-logged"><span class="nl-icon">👤</span><div class="nl-title">Faça login para ver seu perfil</div><p class="nl-sub">Acesse sua conta para visualizar pontos, progresso, conquistas e muito mais!</p><a class="nl-btn" href="index.html">Entrar na Conta →</a></div>';return;}
+  if(!page) return;
+  
+  // Tenta construir user a partir de Firebase Auth se localStorage está vazio
+  if(!u || !u.email){
+    // Tenta Firebase Auth currentUser diretamente
+    if(window.firebase && firebase.auth && firebase.auth().currentUser){
+      var cu = firebase.auth().currentUser;
+      u = {
+        uid: cu.uid,
+        email: cu.email || '',
+        name: cu.displayName || cu.email || 'Aluno',
+        foto: cu.photoURL || '',
+        xp_total: 0
+      };
+      // Mescla com o que existe no localStorage
+      try{
+        var existing = JSON.parse(localStorage.getItem('ma_user')||'{}');
+        u.xp_total = existing.xp_total || 0;
+        u.city = existing.city || '';
+        u.phone = existing.phone || '';
+        if(!u.foto && existing.foto) u.foto = existing.foto;
+        localStorage.setItem('ma_user', JSON.stringify(u));
+        if(u.foto) localStorage.setItem('ma_avatar', u.foto);
+      }catch(ex){}
+    }
+  }
+  
+  if(!u || !u.email){
+    page.innerHTML='<div class="not-logged"><span class="nl-icon">👤</span><div class="nl-title">Faça login para ver seu perfil</div><p class="nl-sub">Acesse sua conta para visualizar pontos, progresso, conquistas e muito mais!</p><a class="nl-btn" href="index.html">Entrar na Conta →</a></div>';
+    return;
+  }
+  
+  // Garantir campos mínimos para não crashar
+  u.name = u.name || u.email || 'Aluno';
+  u.email = u.email || '';
+
   var p=gP(),lv=getLv(p.total),nxt=LEVELS[LEVELS.indexOf(lv)+1];
   var pct=nxt?Math.max(0,Math.min(100,Math.round((p.total-lv.m)/(nxt.m-lv.m)*100))):100;
   var streak=gs('ma_streak2',{current:0,max:0});
   var notes=gs('mae_notes_v3',[]),owned=gs('mae_shop_owned',[]);
   var totalDone=0;COURSE_DEFS.forEach(function(c){totalDone+=getCProg(c.prefix).done;});
   var completedCourses=0;COURSE_DEFS.forEach(function(c){var pr=getCProg(c.prefix);if(pr.pct===100&&pr.total>0)completedCourses++;});
-  var savedAv=localStorage.getItem('ma_avatar');
-  // Auto-preencher com foto do Google se não tiver avatar customizado
-  if(!savedAv&&u&&u.foto){savedAv=u.foto;localStorage.setItem('ma_avatar',u.foto);}
-  if(!savedAv&&window.firebase&&firebase.auth&&firebase.auth().currentUser&&firebase.auth().currentUser.photoURL){
-    savedAv=firebase.auth().currentUser.photoURL;
-    localStorage.setItem('ma_avatar',savedAv);
+  // Prioridade de foto: 1) avatar customizado salvo, 2) u.foto (Firebase/Google), 3) firebase.auth().currentUser.photoURL
+  var savedAv = localStorage.getItem('ma_avatar') || '';
+  if(!savedAv && u && u.foto) { savedAv = u.foto; localStorage.setItem('ma_avatar', u.foto); }
+  if(!savedAv && window.firebase && firebase.auth && firebase.auth().currentUser) {
+    var _cu = firebase.auth().currentUser;
+    if(_cu && _cu.photoURL) { savedAv = _cu.photoURL; localStorage.setItem('ma_avatar', savedAv); }
   }
   var avColors=['#5b7fff','#a855f7','#22c55e','#f59e0b','#ef4444','#0ea5e9','#e879f9'];
   var avBg=avColors[(u.name||'A').charCodeAt(0)%avColors.length];
@@ -738,45 +773,130 @@ function showNotif(txt,type){
 
 document.addEventListener('DOMContentLoaded',function(){
   updTopbar();
-  renderPage(); // Renderiza com dados locais imediatamente
 
-  // Após Firebase pronto, re-renderiza com dados frescos
+  /* ══════════════════════════════════════════════════════════
+     INIT ROBUSTO — nunca deixa a página em branco
+     
+     Fluxo:
+     1. Mostra spinner imediatamente
+     2. Tenta renderizar com localStorage (síncrono, rápido)
+     3. Se não tem usuário no localStorage, aguarda Firebase Auth
+     4. Quando Firebase traz dados, re-renderiza com dados frescos
+     ══════════════════════════════════════════════════════════ */
+
+  var _rendered = false;
+
+  // Mostra spinner enquanto aguarda dados
+  var page = document.getElementById('mainPage');
+  if(page && !localStorage.getItem('ma_user')){
+    page.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px">'
+      + '<div style="width:44px;height:44px;border:3px solid rgba(91,127,255,.2);border-top-color:#5b7fff;border-radius:50%;animation:spin .8s linear infinite"></div>'
+      + '<div style="font-size:.78rem;color:#8888a8">Carregando seu perfil...</div>'
+      + '<style>@keyframes spin{to{transform:rotate(360deg)}}</style>'
+      + '</div>';
+  }
+
+  // Tenta renderizar com dados locais imediatamente
+  var localUser = null;
+  try { localUser = JSON.parse(localStorage.getItem('ma_user')||'null'); } catch(e){}
+  if(localUser && localUser.email){
+    renderPage();
+    _rendered = true;
+  }
+
+  // Função executada quando Firebase estiver pronto
   function _onFbReady(){
-    if(window.MAStore&&typeof MAStore.getUser==='function'){
+    // Tenta via MAStore primeiro (Firestore completo)
+    if(window.MAStore && typeof MAStore.getUser === 'function'){
       MAStore.getUser().then(function(userData){
         if(userData){
-          // Atualizar ma_user local com dados do Firestore
-          try{
-            var local=JSON.parse(localStorage.getItem('ma_user')||'{}');
-            local.xp_total=userData.xp_total||0;
-            local.foto=userData.foto||local.foto||'';
-            if(!local.foto&&window.firebase&&firebase.auth&&firebase.auth().currentUser){
-              local.foto=firebase.auth().currentUser.photoURL||'';
-            }
-            localStorage.setItem('ma_user',JSON.stringify(local));
-          }catch(ex){}
-          renderPage(); // Re-renderiza com dados corretos
-          updTopbar();
+          _syncAndRender(userData, null);
+        } else {
+          // MAStore não retornou dados, tenta via Firebase Auth direto
+          _tryFirebaseAuth();
         }
-      }).catch(function(){});
-    }else if(window.firebase&&firebase.auth){
+      }).catch(function(){ _tryFirebaseAuth(); });
+    } else {
+      _tryFirebaseAuth();
+    }
+  }
+
+  // Fallback: usa Firebase Auth diretamente
+  function _tryFirebaseAuth(){
+    if(window.firebase && firebase.auth){
+      // onAuthStateChanged garante que pegamos o usuário mesmo após refresh
       firebase.auth().onAuthStateChanged(function(fbUser){
         if(fbUser){
-          try{
-            var local=JSON.parse(localStorage.getItem('ma_user')||'{}');
-            if(!local.foto&&fbUser.photoURL){
-              local.foto=fbUser.photoURL;
-              localStorage.setItem('ma_avatar',fbUser.photoURL);
-              localStorage.setItem('ma_user',JSON.stringify(local));
-            }
-          }catch(ex){}
+          _syncAndRender(null, fbUser);
+        } else if(!_rendered){
+          // Definitivamente não logado
           renderPage();
         }
       });
+    } else if(!_rendered){
+      renderPage();
     }
   }
-  if(window.__maFirebaseReady)_onFbReady();
-  else document.addEventListener('maFirebaseReady',_onFbReady,{once:true});
+
+  // Sincroniza ma_user e re-renderiza
+  function _syncAndRender(firestoreData, fbUser){
+    try{
+      var local = JSON.parse(localStorage.getItem('ma_user')||'{}');
+      
+      // Preenche com dados do Firestore
+      if(firestoreData){
+        local.xp_total = firestoreData.xp_total || local.xp_total || 0;
+        local.name = firestoreData.nome || local.name || '';
+        local.email = firestoreData.email || local.email || '';
+        local.plano = firestoreData.plano || local.plano || 'gratuito';
+        local.city = firestoreData.cidade || local.city || '';
+        local.phone = firestoreData.telefone || local.phone || '';
+        if(firestoreData.foto) local.foto = firestoreData.foto;
+      }
+      
+      // Preenche com dados do Firebase Auth (foto do Google)
+      if(fbUser){
+        if(!local.email && fbUser.email) local.email = fbUser.email;
+        if(!local.name && fbUser.displayName) local.name = fbUser.displayName;
+        if(fbUser.photoURL && !local.foto){
+          local.foto = fbUser.photoURL;
+          localStorage.setItem('ma_avatar', fbUser.photoURL);
+        }
+        if(!local.uid && fbUser.uid) local.uid = fbUser.uid;
+      }
+
+      // Também tenta foto do currentUser caso não veio pelo fbUser
+      if(!local.foto && window.firebase && firebase.auth && firebase.auth().currentUser){
+        var cu = firebase.auth().currentUser;
+        if(cu.photoURL){
+          local.foto = cu.photoURL;
+          localStorage.setItem('ma_avatar', cu.photoURL);
+        }
+        if(!local.name && cu.displayName) local.name = cu.displayName;
+        if(!local.email && cu.email) local.email = cu.email;
+      }
+
+      // Salva localmente
+      if(local.email || local.uid){
+        localStorage.setItem('ma_user', JSON.stringify(local));
+      }
+    }catch(ex){ console.error('[perfil] Erro ao sincronizar:', ex); }
+
+    renderPage();
+    updTopbar();
+    _rendered = true;
+  }
+
+  // Dispara lógica Firebase
+  if(window.__maFirebaseReady){
+    _onFbReady();
+  } else {
+    document.addEventListener('maFirebaseReady', _onFbReady, {once:true});
+    // Timeout de segurança: se Firebase demorar mais de 6s, renderiza com o que tem
+    setTimeout(function(){
+      if(!_rendered){ renderPage(); _rendered = true; }
+    }, 6000);
+  }
 });
 </script>
 
