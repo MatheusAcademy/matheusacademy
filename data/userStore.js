@@ -727,34 +727,45 @@ document.addEventListener('ma:pointsUpdate', function(e) {
    ══════════════════════════════════════════════════════════ */
 
 (function() {
-  // Quando Firebase estiver pronto, sincroniza
-  document.addEventListener('maFirebaseReady', async function() {
-    console.log('[MAStore v3] Firebase pronto, sincronizando...');
-    
-    // Carrega dados do usuário
-    var user = await MAStore.getUser();
-    
-    if (user) {
-      // Atualiza UI com pontos do Firebase
-      var total = user.xp_total || 0;
-      var ptsEl = document.getElementById('maPtsNum');
-      if (ptsEl) {
-        ptsEl.textContent = total.toLocaleString('pt-BR');
-      }
-      
-      console.log('[MAStore v3] Usuário:', user.nome, '| XP:', total);
-    }
-  });
+  // Quando Firebase estiver pronto, faz TUDO: registra observer + sincroniza
+  function _onFirebaseReady() {
+    console.log('[MAStore v3] Firebase pronto, configurando observer de auth...');
 
-  // Observer para mudanças de auth
-  if (window.MA_AUTH) {
-    MA_AUTH.onAuthChange(async function(authUser) {
-      if (authUser) {
-        await MAStore.syncFromFirebase();
-      } else {
-        MAStore.invalidateCache();
-      }
-    });
+    // CORREÇÃO RAIZ: registra o observer DENTRO do evento maFirebaseReady
+    // para garantir que window.MA_AUTH já existe
+    if (window.MA_AUTH) {
+      MA_AUTH.onAuthChange(async function(authUser) {
+        if (authUser) {
+          // Usuário logado — busca dados frescos do Firestore
+          var user = await MAStore.getUser();
+          if (user) {
+            var total = user.xp_total || 0;
+            // Atualiza TODOS os elementos de XP na página
+            document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN').forEach(function(el) {
+              el.textContent = total.toLocaleString('pt-BR');
+            });
+            // Chama ptSyncFromFirebase se existir (portal-topbar)
+            if (window.ptSyncFromFirebase) ptSyncFromFirebase();
+            console.log('[MAStore v3] Auth OK —', user.nome, '| XP:', total);
+          }
+        } else {
+          // Usuário deslogado — limpa cache
+          MAStore.invalidateCache();
+          document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN').forEach(function(el) {
+            el.textContent = '0';
+          });
+        }
+      });
+    } else {
+      console.warn('[MAStore v3] MA_AUTH não disponível no maFirebaseReady');
+    }
+  }
+
+  // Se Firebase já carregou (página recarregada com cache), executa direto
+  if (window.__maFirebaseReady) {
+    _onFirebaseReady();
+  } else {
+    document.addEventListener('maFirebaseReady', _onFirebaseReady, { once: true });
   }
 })();
 
