@@ -430,6 +430,235 @@
 .ma-lvc7{background:linear-gradient(135deg,rgba(255,215,0,.22),rgba(255,100,0,.15));color:#ffd700;border:1px solid rgba(255,215,0,.3)}.ma-lvc7 .ma-lv-dot,.ma-lvc7 .idx-lv-dot{background:linear-gradient(135deg,#ffd700,#ff8c00)}
 .lv-color-5{color:#00b4ff}.lv-color-6{color:#50c8ff}.lv-color-7{color:#ffd700}
 
+
+/* ══════════════════════════════════════════════════════════════════════
+   LAYOUT BRASIL PARALELO — APLICADO NA MATHEUS ACADEMY
+   Cards sem box, sem botão, sem stats — título abaixo da imagem
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── CARDS DE CURSO: sem caixa, sem borda ── */
+.cc {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.cc:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+.cc.touch-active {
+  transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+.cc.soon {
+  opacity: 0.55;
+}
+
+/* ── THUMBNAIL: bordas arredondadas, hover com scale ── */
+.cc-img {
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  height: 140px !important;
+  position: relative !important;
+  transition: transform 0.3s ease !important;
+}
+.cc:hover .cc-img {
+  transform: scale(1.04) !important;
+}
+.cc.touch-active .cc-img {
+  transform: scale(1.04) !important;
+}
+
+/* ── OCULTAR: stats (módulos/tópicos/horas/quizzes) ── */
+.cc-stats, .ccs {
+  display: none !important;
+}
+
+/* ── OCULTAR: botão Acessar Curso ── */
+.cc-btn {
+  display: none !important;
+}
+
+/* ── BODY DO CARD: apenas título + categoria ── */
+.cc-body {
+  padding: 8px 2px 0 2px !important;
+  min-height: unset !important;
+  background: transparent !important;
+}
+.cc-body h4 {
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  line-height: 1.35 !important;
+  margin-bottom: 2px !important;
+}
+.cc-body p {
+  display: none !important;
+}
+
+/* ── CATEGORIA ACIMA DO TÍTULO ── */
+.cc-category {
+  font-size: 0.56rem !important;
+  color: #666 !important;
+  margin-bottom: 2px !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+}
+
+/* ── BADGE menor e mais discreto ── */
+.cc-badge {
+  font-size: 0.48rem !important;
+  padding: 2px 7px !important;
+  border-radius: 4px !important;
+}
+
+/* ── TÍTULOS DE SEÇÃO: limpos, sem ícone, sem subtítulo ── */
+.section-hdr h3 {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  font-family: 'Outfit', sans-serif !important;
+  letter-spacing: -0.2px !important;
+}
+.section-hdr p {
+  display: none !important;
+}
+.section-hdr {
+  padding: 20px 24px 10px !important;
+}
+
+/* ── CATEGORIA DAS SEÇÕES ── */
+.cat-sec-title {
+  font-size: 1.0rem !important;
+  font-weight: 700 !important;
+  font-family: 'Outfit', sans-serif !important;
+  letter-spacing: -0.2px !important;
+}
+.cat-sec-sub {
+  display: none !important;
+}
+.cat-sec-inner {
+  padding: 20px 24px 8px !important;
+}
+
+/* ── ESPAÇAMENTO ENTRE SEÇÕES ── */
+.cat-sec {
+  margin-bottom: 8px !important;
+}
+.section-wrap {
+  padding: 0 !important;
+}
+
+/* ── ROW INNER: gap maior ── */
+.row-inner {
+  gap: 12px !important;
+  padding: 10px 4px 16px !important;
+}
+
+/* ── CARDS DE CARROSSEL SEM BORDA ── */
+.cc.soon:hover {
+  transform: none !important;
+}
+.cc.soon .cc-img {
+  transition: none !important;
+}
+
+/* ── SECTION HDR "Continuar Assistindo" e "Últimos Lançamentos" ── */
+#continuarSection .section-hdr p,
+.section-wrap .section-hdr p {
+  display: none !important;
+}
+
+/* ── DESKTOP: mais cards por linha ── */
+@media (min-width: 1024px) {
+  .cc {
+    min-width: calc((min(100vw,1400px) - 100px)/4.2) !important;
+    max-width: calc((min(100vw,1400px) - 100px)/4.2) !important;
+  }
+}
+
+/* ── MOBILE: cards menores, mais respiro ── */
+@media (max-width: 480px) {
+  .cc {
+    min-width: calc((100vw - 36px)/2) !important;
+    max-width: calc((100vw - 36px)/2) !important;
+  }
+  .cc-img {
+    height: 100px !important;
+  }
+  .cc-body h4 {
+    font-size: 0.70rem !important;
+  }
+  .section-hdr h3 {
+    font-size: 0.95rem !important;
+  }
+  .cat-sec-title {
+    font-size: 0.9rem !important;
+  }
+  .row-inner {
+    padding: 8px 12px 14px !important;
+    gap: 10px !important;
+  }
+}
+
+/* ── SEÇÃO "Todos os Cursos" header ── */
+.sec h3 {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+.sec p {
+  display: none !important;
+}
+
+/* ── CURSOR pointer no card inteiro ── */
+.cc {
+  cursor: pointer !important;
+}
+
+/* ── HERO TAGS: mais discretas ── */
+.tags {
+  margin-bottom: 18px !important;
+}
+
+/* ══ EXTRA: seção "Continuar Assistindo" ══ */
+#continuarSection .section-hdr h3::before {
+  content: '' !important;
+}
+
+/* ── HERO: mais compacto estilo BP ── */
+.hero {
+  padding: 36px 24px 0 !important;
+}
+.hero h2 {
+  font-size: 1.6rem !important;
+  margin-bottom: 4px !important;
+}
+.hero .sub {
+  font-size: 0.78rem !important;
+  margin-bottom: 12px !important;
+}
+.tags {
+  gap: 6px !important;
+  margin-bottom: 16px !important;
+}
+.tag {
+  font-size: 0.58rem !important;
+  padding: 4px 11px !important;
+}
+@media (max-width: 480px) {
+  .hero {
+    padding: 28px 14px 0 !important;
+  }
+  .hero h2 {
+    font-size: 1.25rem !important;
+  }
+}
 </style>
 <style id="hide-floats">
 #mae-btn,#maeChatBtn,#maeChatWin,.ma-fpts,#maFpts,.points-badge,#fBadge,.f-badge{display:none!important}
@@ -515,7 +744,7 @@
 </div>
 
 <div id="continuarSection" style="display:none">
-  <div class="section-hdr"><h3>&#9654; Continuar Assistindo</h3><p>Retome de onde você parou</p></div>
+  <div class="section-hdr"><h3>Continuar Leitura</h3></div>
   <div class="row-wrap">
     <button class="arr-btn ap" data-scroll="continuarOuter" data-dir="-1">&#8249;</button>
     <div class="row-outer" id="continuarOuter"><div class="row-inner" id="continuarRow"></div></div>
@@ -524,7 +753,7 @@
 </div>
 
 <div class="section-wrap">
-  <div class="section-hdr"><h3>&#127381; Últimos Lançamentos</h3><p>Os cursos mais recentes, do mais novo ao mais antigo</p></div>
+  <div class="section-hdr"><h3>Últimos Lançamentos</h3></div>
   <div class="row-wrap">
     <button class="arr-btn ap" data-scroll="lancOuter" data-dir="-1">&#8249;</button>
     <div class="row-outer" id="lancOuter"><div class="row-inner" id="lancRow"></div></div>
@@ -532,7 +761,7 @@
   </div>
 </div>
 
-<div class="sec"><h3>Todos os Cursos</h3><p>Todos os cursos com 1º tópico gratuito. Escolha e comece agora!</p></div>
+<div class="sec"><h3>Todos os Cursos</h3></div>
 <div id="courseGrid"></div>
 
 <footer class="footer">
@@ -1338,14 +1567,11 @@ function makeCard(c) {
   if (un && !c.free) h += '<div class="cc-badge live">&#10003; Liberado</div>';
   if (c.free) h += '<div class="cc-badge free">&#127873; Grátis</div>';
   h += '</div>';
-  h += '<div class="cc-body"><h4>' + c.name + '</h4><p>' + c.desc + '</p></div>';
-  h += '<div class="cc-stats">'
-    + '<div class="ccs"><b>' + c.modules + '</b><span>Módulos</span></div>'
-    + '<div class="ccs"><b>' + c.topics + '</b><span>Tópicos</span></div>'
-    + '<div class="ccs"><b>' + c.hours + 'h</b><span>Horas</span></div>'
-    + '<div class="ccs"><b>' + c.quizzes + '</b><span>Quizzes</span></div>'
-    + '</div>';
-  h += '<div class="cc-btn">Acessar Curso</div>';
+  h += '<div class="cc-body">';
+  h += '<div class="cc-category">' + (c.cat || 'Curso') + ' \u00b7 ' + c.modules + ' m\u00f3d.</div>';
+  h += '<h4>' + c.name + '</h4>';
+  h += '</div>';
+  // Stats e botão removidos - estilo Brasil Paralelo
   h += '</div>';
   return h;
 }
