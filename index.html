@@ -204,6 +204,24 @@
 .stats{display:flex;justify-content:center;gap:28px;padding:20px;margin:0 24px;border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}.stat{text-align:center}.stat b{font-size:1.4rem;font-weight:800;color:var(--pri);display:block}.stat span{font-size:.55rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
 .code-area{max-width:500px;margin:0 auto 10px;padding:0 24px}.code-box{background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:16px;text-align:center}.code-box h4{font-size:.8rem;font-weight:700;color:var(--pri);margin-bottom:8px}.cr{display:flex;gap:8px}.code-box input{flex:1;padding:10px;background:var(--bg);border:1.5px solid var(--brd);border-radius:8px;color:var(--txt);font-family:var(--font);font-size:.85rem;outline:none;text-align:center;letter-spacing:.15em;text-transform:uppercase}.code-box input:focus{border-color:var(--pri)}.code-box button{padding:10px 18px;border:none;border-radius:8px;background:var(--pri3);color:#fff;font-family:var(--font);font-size:.78rem;font-weight:700;cursor:pointer}
 .code-ok{color:var(--grn);font-size:.7rem}.code-err{color:var(--red);font-size:.7rem}
+/* ══ PLAN BANNER ══ */
+.plan-banner-box{max-width:500px;margin:0 auto;border-radius:14px;padding:18px 20px;text-align:center;position:relative;overflow:hidden}
+.plan-banner-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pri),#00d4ff,transparent);opacity:.8}
+.plan-banner-box.plan-master{background:linear-gradient(135deg,rgba(91,127,255,.13) 0%,rgba(0,212,255,.08) 100%);border:1px solid rgba(91,127,255,.35)}
+.plan-banner-box.plan-mensal{background:linear-gradient(135deg,rgba(168,85,247,.13) 0%,rgba(91,127,255,.08) 100%);border:1px solid rgba(168,85,247,.35)}
+.plan-banner-box.plan-individual{background:linear-gradient(135deg,rgba(245,158,11,.10) 0%,rgba(91,127,255,.07) 100%);border:1px solid rgba(245,158,11,.3)}
+.plan-banner-box.plan-free{background:linear-gradient(135deg,rgba(30,30,60,.9) 0%,rgba(20,20,45,.95) 100%);border:1px solid rgba(91,127,255,.2)}
+.pbn-icon{font-size:1.5rem;margin-bottom:6px}
+.pbn-title{font-size:.9rem;font-weight:800;color:#fff;margin-bottom:4px;line-height:1.3}
+.pbn-title span{color:var(--pri)}
+.pbn-sub{font-size:.7rem;color:#a0a0c0;margin-bottom:10px;line-height:1.5}
+.pbn-sub b{color:#fff}
+.pbn-days{display:inline-flex;align-items:center;gap:6px;background:rgba(91,127,255,.15);border:1px solid rgba(91,127,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;color:var(--pri);margin-bottom:10px}
+.pbn-cta{display:inline-block;padding:8px 22px;border-radius:8px;font-size:.75rem;font-weight:700;text-decoration:none;transition:all .2s;cursor:pointer;border:none;font-family:var(--font)}
+.pbn-cta.pri{background:var(--pri3);color:#fff}
+.pbn-cta.pri:hover{filter:brightness(1.15)}
+.pbn-cta.sec{background:transparent;border:1px solid rgba(91,127,255,.4);color:var(--pri)}
+.pbn-cta.sec:hover{background:rgba(91,127,255,.12)}
 .section-wrap{padding:6px 0 4px}.section-hdr{padding:16px 24px 8px}.section-hdr h3{font-family:var(--serif);font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:3px}.section-hdr p{font-size:.7rem;color:var(--txt2)}
 .cat-sec{padding:4px 0 12px}.cat-sec-inner{padding:16px 24px 6px}.cat-sec-title{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff}.cat-sec-title.special{color:#ef4444}.cat-sec-title.ebook{color:#a855f7}.cat-sec-sub{font-size:.7rem;color:var(--txt2);margin-top:3px}
 .row-wrap{position:relative;padding:0 50px}
@@ -733,13 +751,20 @@
 </div>
 
 <div class="code-area" id="codeArea" style="display:none">
-  <div class="code-box">
-    <h4>&#128273; Inserir Código de Acesso</h4>
-    <div class="cr">
-      <input type="text" id="codeInput" placeholder="DIGITE SEU CÓDIGO" maxlength="8">
-      <button id="codeBtn">Ativar</button>
+  <!-- BANNER INTELIGENTE DE PLANO -->
+  <div id="planBanner" style="display:none">
+    <div class="plan-banner-box" id="planBannerBox"></div>
+  </div>
+  <!-- CAIXA DE CÓDIGO: só aparece para usuários sem plano ativo ou com curso individual -->
+  <div id="codeBoxWrap" style="display:none">
+    <div class="code-box">
+      <h4>&#128273; Inserir Código de Acesso</h4>
+      <div class="cr">
+        <input type="text" id="codeInput" placeholder="DIGITE SEU CÓDIGO" maxlength="8">
+        <button id="codeBtn">Ativar</button>
+      </div>
+      <div id="codeMsg" style="margin-top:8px"></div>
     </div>
-    <div id="codeMsg" style="margin-top:8px"></div>
   </div>
 </div>
 
@@ -1844,6 +1869,103 @@ function _idxUpdMenu(user,p,lv){
     aS.innerHTML='<a class="idx-mi" href="index.html" onclick="openM(\'login\');return false"><span class="idx-mi-i">&#128273;</span>Entrar</a><a class="idx-mi gold" href="index.html" onclick="openM(\'plans\');return false"><span class="idx-mi-i">&#128142;</span>Ver Planos</a>';
   }
 }
+// ═══════════════════════════════ PLAN BANNER INTELIGENTE ═══════════════════════════════
+// Substitui o balão de código por mensagem personalizada conforme o plano do aluno
+async function _idxUpdPlanBanner(user) {
+  var bannerWrap  = document.getElementById('planBanner');
+  var bannerBox   = document.getElementById('planBannerBox');
+  var codeBoxWrap = document.getElementById('codeBoxWrap');
+  if (!bannerWrap || !bannerBox || !codeBoxWrap) return;
+
+  // Busca dados frescos do Firebase se disponível
+  var userData = user;
+  if (window.MAStore && MAStore.getUser) {
+    try { var fresh = await MAStore.getUser(); if (fresh) userData = fresh; } catch(e) {}
+  }
+
+  var plano        = (userData.plano || 'gratuito').toLowerCase();
+  var cursosComp   = userData.cursos_comprados || userData.cursos || [];
+  var expiresAt    = userData.expires_at || userData.expiresAt || userData.plano_expira || null;
+  var nome         = (userData.nome || userData.name || 'Aluno').split(' ')[0];
+
+  // Calcula dias restantes se tiver data de expiração
+  function _diasRestantes(ts) {
+    if (!ts) return null;
+    var msRestante = ts - Date.now();
+    if (msRestante <= 0) return 0;
+    return Math.ceil(msRestante / (1000 * 60 * 60 * 24));
+  }
+
+  var dias = _diasRestantes(expiresAt);
+
+  // ── Decide o que mostrar ──
+  // CASO 1: Master (3 anos) → sem caixa de código, banner azul premium
+  if (plano === 'master') {
+    bannerBox.className = 'plan-banner-box plan-master';
+    var diasTxt = dias !== null
+      ? '<div class="pbn-days">&#128197; ' + dias.toLocaleString('pt-BR') + ' dias de acesso restantes</div>'
+      : '<div class="pbn-days">&#128197; Acesso completo ativo — Plano Master 3 Anos</div>';
+    bannerBox.innerHTML =
+      '<div class="pbn-icon">&#128142;</div>' +
+      '<div class="pbn-title">Ol\u00e1, <span>' + nome + '</span>! Seu acesso est\u00e1 ativo.</div>' +
+      diasTxt +
+      '<div class="pbn-sub">Voc\u00ea tem acesso <b>total e ilimitado</b> a todo o conte\u00fado da Matheus Academy atrav\u00e9s do seu <b>Plano Master 3 Anos</b>. Aproveite!</div>' +
+      '<a class="pbn-cta pri" href="painel.html">&#128202; Ver meu painel</a>';
+    bannerWrap.style.display  = 'block';
+    codeBoxWrap.style.display = 'none';
+    return;
+  }
+
+  // CASO 2: Mensal → banner roxo, mostra dias restantes
+  if (plano === 'mensal' || plano === 'anual') {
+    var nomePlano = plano === 'anual' ? 'Anual' : 'Mensal';
+    bannerBox.className = 'plan-banner-box plan-mensal';
+    var diasTxtM = dias !== null
+      ? '<div class="pbn-days">&#128197; ' + dias.toLocaleString('pt-BR') + ' dias restantes — Plano ' + nomePlano + '</div>'
+      : '<div class="pbn-days">&#128197; Plano ' + nomePlano + ' ativo</div>';
+    bannerBox.innerHTML =
+      '<div class="pbn-icon">&#9889;</div>' +
+      '<div class="pbn-title">Ol\u00e1, <span>' + nome + '</span>! Assinatura ativa.</div>' +
+      diasTxtM +
+      '<div class="pbn-sub">Voc\u00ea tem acesso completo a <b>todos os cursos</b> da Matheus Academy com seu <b>Plano ' + nomePlano + '</b>. Continue estudando!</div>' +
+      '<a class="pbn-cta pri" href="painel.html">&#128202; Ver meu painel</a>' +
+      '&nbsp;<a class="pbn-cta sec" href="planos.html">Fazer upgrade</a>';
+    bannerWrap.style.display  = 'block';
+    codeBoxWrap.style.display = 'none';
+    return;
+  }
+
+  // CASO 3: Individual (tem cursos comprados mas sem plano ativo)
+  if (cursosComp.length > 0) {
+    // Encontra nomes dos cursos comprados
+    var nomesComp = [];
+    if (typeof COURSES !== 'undefined') {
+      cursosComp.forEach(function(ck) {
+        var c = COURSES.find(function(x) { return (x.courseKey || x.file) === ck || x.file === ck; });
+        if (c) nomesComp.push(c.name);
+      });
+    }
+    var listaTxt = nomesComp.length > 0
+      ? '<b>' + nomesComp.join(', ') + '</b>'
+      : cursosComp.length + ' curso(s)';
+    bannerBox.className = 'plan-banner-box plan-individual';
+    bannerBox.innerHTML =
+      '<div class="pbn-icon">&#128218;</div>' +
+      '<div class="pbn-title">Ol\u00e1, <span>' + nome + '</span>! Acesso liberado.</div>' +
+      '<div class="pbn-sub">Voc\u00ea tem acesso ao(s) curso(s): ' + listaTxt + '.<br>Assine o <b>Plano Master</b> e tenha acesso a <b>todos os cursos</b> por apenas R$&nbsp;297,55.</div>' +
+      '<a class="pbn-cta pri" href="planos.html">&#128142; Ver todos os planos</a>' +
+      '&nbsp;<a class="pbn-cta sec" href="https://pay.kiwify.com.br/uzERliL" target="_blank">Assinar Master 3 Anos</a>';
+    bannerWrap.style.display  = 'block';
+    // Para individual, AINDA mostra a caixa de código (pode ter mais códigos de outros cursos)
+    codeBoxWrap.style.display = 'block';
+    return;
+  }
+
+  // CASO 4: Sem plano e sem cursos → só caixa de código
+  bannerWrap.style.display  = 'none';
+  codeBoxWrap.style.display = 'block';
+}
+
 // Polling pontos
 (function(){var _lp=null;setInterval(function(){var p=getPoints?getPoints():{total:0};if(_lp!==null&&p.total>_lp){_idxCash();var pN=document.getElementById('hdrPtsNum'),pL=document.getElementById('hdrPtsLv'),pEl=document.getElementById('hdrPtsEl');var lv=_idxGLv(p.total);if(pN)pN.textContent=p.total.toLocaleString('pt-BR');if(pL)pL.textContent=lv.n;if(pEl){pEl.classList.remove('bump');void pEl.offsetWidth;pEl.classList.add('bump');}updatePointsBadge();}_lp=p.total;},1500);})();
 function upUI() {
@@ -1871,6 +1993,7 @@ function upUI() {
     menuBtn.addEventListener('click', toggleIdxMenu);
     hr.appendChild(ptsA); hr.appendChild(nameDiv); hr.appendChild(menuBtn);
     ca.style.display = 'block';
+    _idxUpdPlanBanner(user); // ← NOVO: renderiza banner inteligente ou caixa de código
     _idxUpdMenu(user, p, lv);
     // Welcome toast automático: desabilitado (aparece só ao completar módulo)
   } else {
