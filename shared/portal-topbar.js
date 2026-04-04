@@ -304,11 +304,12 @@ function ptUpdatePts() {
   if (window.MAStore && window.MAStore.getTotalPointsSync) {
     total = MAStore.getTotalPointsSync();
   } 
-  // Fallback: localStorage
+  // Fallback: localStorage ma_user.xp_total (escrito pelo Firebase)
   else {
     try {
-      var pts = JSON.parse(localStorage.getItem('ma_points') || '{}');
-      total = pts.total || 0;
+      var localUser = JSON.parse(localStorage.getItem('ma_user') || 'null');
+      // v3 FIX: lê xp_total do ma_user — NUNCA ma_points legado
+      total = (localUser && typeof localUser.xp_total === 'number') ? localUser.xp_total : 0;
     } catch(e) {}
   }
   
@@ -385,11 +386,15 @@ function ptUpdateMenuUser() {
   if (window.MAStore && window.MAStore.getUserSync) {
     u = MAStore.getUserSync();
     total = u ? (u.xp_total || 0) : 0;
+    // Se MAStore tem cache com xp_total mais preciso, usa ele
+    if (window.MAStore.getTotalPointsSync) {
+      total = MAStore.getTotalPointsSync();
+    }
   } else {
     try {
       u = JSON.parse(localStorage.getItem('ma_user') || 'null');
-      var pts = JSON.parse(localStorage.getItem('ma_points') || '{}');
-      total = pts.total || 0;
+      // v3 FIX: lê xp_total do ma_user (escrito pelo Firebase) — NUNCA ma_points legado
+      total = (u && typeof u.xp_total === 'number') ? u.xp_total : 0;
     } catch(e) {}
   }
   
