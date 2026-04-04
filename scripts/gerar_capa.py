@@ -70,23 +70,85 @@ PROMPTS_POR_CATEGORIA = {
 
 # Prompts específicos para cursos já conhecidos (prioridade sobre categoria)
 PROMPTS_ESPECIFICOS = {
-    'gp': 'Ultra realistic cinematic YouTube thumbnail, dramatic storytelling scene about global geopolitics and world power conflicts, highly detailed, 8K, photorealistic style. Main subject: shadowy silhouette of powerful figure before massive glowing world map, chess pieces as nations on dark oak table. Lighting: volumetric gold fog, strong contrast deep shadows. Background: war room with glowing map screens, smoke particles, bokeh. Color grading: cinematic dark gold and navy blue, high contrast. DOF, ultra sharp. NO cartoon, NO flat design, NO illustration.',
+    'gp': '''Ultra realistic cinematic Netflix-style thumbnail, 8K photorealistic.
+TITLE TEXT overlaid on image: bold white glowing text "GEOPOLITICA AVANCADA" at bottom third.
+Main scene: dramatic war room at night — shadowy silhouette of a powerful leader standing before a massive illuminated world map on wall, chess pieces as nations (USA flag, China flag, Russia flag pieces) on dark oak table, classified documents scattered. Real world map showing tension zones glowing red: Middle East, Ukraine, Taiwan.
+Logos/flags: USA flag, China flag, Russia flag visible as chess piece symbols.
+Real data overlaid: "27 MODULOS • 271 TOPICOS • 90 HORAS".
+Lighting: volumetric gold cinematic fog, god rays through venetian blinds, dramatic shadows, film noir atmosphere.
+Color grading: dark gold, deep navy blue, high contrast. DOF bokeh background. Ultra sharp foreground.
+NO cartoon, NO flat design, PHOTOREALISTIC only.''',
 
-    'bm': 'Ultra realistic cinematic YouTube thumbnail, dramatic storytelling scene about the biggest financial fraud scandal in Brazilian banking history, highly detailed, 8K, photorealistic style. Main subject: cracked heavy vault door opening to darkness revealing burning cash inside, crime scene atmosphere with police tape. Lighting: cinematic red orange fire light, volumetric smoke, emergency lights. Background: abandoned bank ruins at night, smoldering, depth blur bokeh. Color grading: cinematic red and dark charcoal, high contrast. NO cartoon, NO flat design.',
+    'bm': '''Ultra realistic cinematic crime documentary Netflix-style thumbnail, 8K photorealistic.
+TITLE TEXT overlaid: bold red glowing text "CASO BANCO MASTER" center-bottom, "R$52 BILHOES" in yellow above.
+Main scene: burning Brazilian bank vault cracked open, stacks of real Brazilian reais (R$) banknotes on fire inside, police investigation tape "POLICIA FEDERAL" across frame, CPI congressional hearing gavel, newspaper headlines "FRAUDE BANCARIA" visible.
+Real logos: Banco Master logo on cracked wall, CPI Brazil seal, STF symbol.
+Real numbers: "R$52.000.000.000" burning in the scene.
+Lighting: emergency red sirens flashing, fire orange glow from vault, smoke, volumetric emergency lighting.
+Color grading: cinematic deep red and dark charcoal, high contrast investigative documentary style.
+NO cartoon, PHOTOREALISTIC crime scene only.''',
 
-    'ii': 'Ultra realistic cinematic YouTube thumbnail, dramatic storytelling scene about the Israel Iran military conflict in the Middle East 2025, highly detailed, 8K, photorealistic style. Main subject: two opposing symbolic national flags splitting apart as massive light explosion erupts between them over desert city. Lighting: split cinematic orange explosion one side cold blue other, volumetric smoke. Background: Middle East city skyline at dusk, fire, depth blur bokeh. Color grading: cinematic blue vs orange split, high contrast. NO cartoon.',
+    'ii': '''Ultra realistic cinematic war documentary Netflix-style thumbnail, 8K photorealistic.
+TITLE TEXT overlaid: "ISRAEL x IRA" bold white text center, "GUERRA 2025" below in red.
+Main scene: split composition — left side Israeli flag waving over Jerusalem skyline with Iron Dome missiles, right side Iranian flag over Tehran with ballistic missiles launching, massive explosion of light erupting at center between both nations, smoke and fire.
+Real flags: Israel Star of David flag (blue white), Iran flag (green white red with emblem) both clearly visible and realistic.
+Real landmarks: Dome of the Rock Jerusalem left, Tehran Milad Tower right silhouette.
+Lighting: split orange explosion center, cold blue left Israel side, hot red right Iran side, volumetric war smoke.
+Color grading: cinematic split complementary, high contrast war journalism style.
+NO cartoon, PHOTOREALISTIC flags and landmarks.''',
 
-    'cp': 'Ultra realistic cinematic YouTube thumbnail, dramatic storytelling scene about FIFA World Cup 2026 USA Mexico Canada, highly detailed, 8K, photorealistic style. Main subject: golden World Cup trophy alone on stadium pitch, dramatic single spotlight from above, volumetric fog rising from grass. Scene: low angle looking up, massive packed stadium background. Lighting: golden spotlight halo, stadium bokeh lights, fog catching beams. Color grading: cinematic gold and deep blue, high contrast. NO cartoon.',
+    'cp': '''Ultra realistic cinematic sports Netflix-style thumbnail, 8K photorealistic.
+TITLE TEXT overlaid: "COPA DO MUNDO 2026" bold gold glowing text top, "O HEXA VEM?" in green bottom.
+Main scene: FIFA World Cup golden trophy in dramatic spotlight on stadium grass, massive 80000 crowd stadium background blurred bokeh lights, Brazilian green-yellow flag waves prominently, USA Mexico Canada host nation flags visible in crowd, confetti falling.
+Real elements: Official FIFA World Cup 2026 trophy design (realistic gold metallic), Brazilian flag (green yellow diamond blue circle stars), stadium Metlife USA silhouette.
+Real data: "48 SELECOES • 104 JOGOS • 3 PAISES" overlaid in small text.
+Lighting: single dramatic spotlight from above creating golden halo on trophy, stadium flood lights bokeh background, volumetric fog on grass.
+Color grading: cinematic gold and deep midnight blue, epic sports documentary style.
+NO cartoon, PHOTOREALISTIC trophy and flags.''',
 
-    'bc': 'Ultra realistic cinematic YouTube thumbnail, dramatic storytelling scene about Bitcoin cryptocurrency revolutionizing world finance, highly detailed, 8K, photorealistic style. Main subject: giant glowing golden Bitcoin symbol rising like a sun from darkness, stock charts reflected in metallic surface. Lighting: dramatic volumetric gold orange rays, neon blue chart reflections. Background: dark financial district, crumbling bank pillars replaced by digital light, bokeh. Color grading: cinematic gold and electric blue, high contrast. NO cartoon.',
+    'bc': '''Ultra realistic cinematic financial revolution Netflix-style thumbnail, 8K photorealistic.
+TITLE TEXT overlaid: "BITCOIN" massive bold orange glowing title top, "A MOEDA QUE MUDOU O MUNDO" white below, "$109.000 ATH" in gold corner.
+Main scene: giant golden Bitcoin coin (B symbol) rising like a sun from darkness over crumbling old stone bank buildings, real Bitcoin price chart candlestick going parabolic to $109K ATH overlaid on image, digital light streams replacing old finance.
+Real logos: Bitcoin official orange B logo symbol, Bloomberg/Reuters price chart style ticker.
+Real data: "$109,000 ATH 2025", "HALVING 2024", "ETF APROVADO" text elements in scene.
+Lighting: dramatic volumetric orange gold rays from Bitcoin like sunrise, cold blue neon chart data reflections, crumbling stone bank in dark shadow.
+Color grading: cinematic warm gold and electric blue, financial revolution documentary style.
+NO cartoon, PHOTOREALISTIC Bitcoin symbol and charts.''',
 
-    'ctp': 'Ultra realistic cinematic YouTube thumbnail, dramatic storytelling scene about mastering paid digital advertising for massive online revenue, highly detailed, 8K, photorealistic style. Main subject: dark silhouette at enormous curved holographic screens showing ROAS 8x performance charts exploding upward, money as digital particles. Lighting: electric blue and neon, volumetric data streams, screen glow haze. Background: dark futuristic command center, blue cascading data. Color grading: cinematic electric blue and gold, high contrast. NO cartoon.',
+    'ctp': '''Ultra realistic cinematic entrepreneurship Netflix-style thumbnail, 8K photorealistic.
+TITLE TEXT overlaid: "TRAFEGO PAGO" bold blue glowing title, "DOMINANDO OS ADS" below, "ROAS 8.4x" in green corner badge.
+Main scene: dark silhouette entrepreneur at curved holographic dashboard showing real Meta Ads, Google Ads, TikTok Ads interfaces with exploding metrics — ROAS 8.4x green arrow up, CTR 4.7%, CPC R$0.38, revenue chart going vertical to the right, digital money particles flowing.
+Real platform logos: Meta (Facebook Instagram) blue logo, Google Ads colorful G, TikTok black logo, YouTube red logo visible on holographic screens.
+Real metrics displayed: "ROAS 8.4x", "R$ 0,38 CPC", "CTR 4.7%", "CONVERSAO 12.3%" as holographic data.
+Lighting: electric blue neon from screens, volumetric digital data streams, dark futuristic command center atmosphere.
+Color grading: cinematic electric blue and gold accents, high contrast tech entrepreneurship style.
+NO cartoon, PHOTOREALISTIC interfaces and logos.''',
 
-    'ctep': 'Ultra realistic cinematic YouTube thumbnail, dramatic storytelling scene about psychological persuasion and influence over the human mind, highly detailed, 8K, photorealistic style. Main subject: detailed glowing translucent human brain in absolute darkness, electric synaptic lightning bolts firing between neural pathways, purple bioluminescence within. Lighting: bioluminescent violet from brain interior, electric neural sparks, absolute darkness contrast. Color grading: cinematic deep purple and electric violet, extreme contrast. NO cartoon.',
+    'ctep': '''Ultra realistic cinematic psychology Netflix-style thumbnail, 8K photorealistic.
+TITLE TEXT overlaid: "TECNICAS DE PERSUASAO" bold purple glowing title, "O PODER DA INFLUENCIA" white subtitle.
+Main scene: detailed anatomically correct glowing human brain floating in absolute darkness, visible electric purple synaptic lightning bolts firing between neural pathways, chess pieces being moved by invisible hand around the brain representing psychological manipulation, mirror reflections showing different emotional states.
+Real psychological concepts as floating text elements: "ESCASSEZ", "RECIPROCIDADE", "PROVA SOCIAL", "AUTORIDADE", "RAPPORT" glowing around brain.
+Lighting: bioluminescent violet purple light emanating from brain interior, electric neural spark flashes, absolute black void contrast, mysterious atmosphere.
+Color grading: cinematic deep purple and electric violet, extreme high contrast dark psychology documentary style.
+NO cartoon, PHOTOREALISTIC brain anatomy and neural effects.''',
 
-    'nlf': 'Ultra realistic cinematic YouTube thumbnail, dramatic storytelling scene about internet censorship and digital surveillance like China Great Firewall in Brazil, highly detailed, 8K, photorealistic style. Main subject: massive digital eye made of circuits and binary code through cracked surveillance screen, heavy iron padlock on glowing fiber optic cable. Lighting: red warning emergency light, computer screen glow, atmospheric danger. Background: dark server room screens flashing ERROR 403 CENSORED in red, code rain. Color grading: cinematic crimson red and dark charcoal, high contrast. NO cartoon.',
+    'nlf': '''Ultra realistic cinematic dystopian Netflix-style thumbnail, 8K photorealistic.
+TITLE TEXT overlaid: "LEI FELCA" bold red warning title, "CENSURA NO BRASIL" below, "MODELO CHINES" in red alert style.
+Main scene: massive digital surveillance eye made of circuit boards and binary code watching through cracked screen, heavy iron padlock chained around glowing fiber optic internet cable, Chinese Great Firewall visual — screens showing "ACESSO NEGADO" "ERROR 403" "CENSURADO" in red, Brazil flag cracked with digital chains overlaid.
+Real flags/symbols: Brazil flag (green yellow blue) with cracks and digital chains, China flag (red yellow stars) in background glow, VPN blocked symbol.
+Real text elements: "VPN BLOQUEADO", "ACESSO NEGADO 403", "MONITORADO", "FELCA 2025" as warning overlays.
+Lighting: red emergency warning light, cold surveillance blue screen glow, dark server room atmosphere, ominous shadows.
+Color grading: cinematic crimson red and dark charcoal, dystopian surveillance documentary style.
+NO cartoon, PHOTOREALISTIC flags and surveillance elements.''',
 
-    'ie': 'Ultra realistic cinematic YouTube thumbnail, dramatic storytelling scene about emotional intelligence mastering human emotions for success, highly detailed, 8K, photorealistic style. Main subject: calm human silhouette in meditation with luminous glowing heart visible through chest, warm rose gold light radiating in concentric waves. Lighting: bioluminescent heart glow, volumetric emotional light waves, surrounding darkness contrast. Background: dark serene void, floating ember particles upward, bokeh. Color grading: cinematic warm rose gold and deep violet, high contrast. NO cartoon.'
+    'ie': '''Ultra realistic cinematic human potential Netflix-style thumbnail, 8K photorealistic.
+TITLE TEXT overlaid: "INTELIGENCIA EMOCIONAL" bold rose gold glowing title, "DOMINE SUAS EMOCOES" white subtitle.
+Main scene: calm human silhouette in meditation pose with luminous anatomically visible glowing heart radiating warm rose gold light outward in visible concentric emotional waves, five pillars of emotional intelligence floating as glowing labels: "AUTOCONHECIMENTO", "AUTOCONTROLE", "EMPATIA", "MOTIVACAO", "HAB. SOCIAIS", serene dark void with floating golden ember particles rising like stars.
+Real EQ model: Daniel Goleman 5 pillars visible as holographic text elements around the figure.
+Real visual: heartbeat ECG pulse line integrated into composition, brain-heart connection neural light thread.
+Lighting: warm bioluminescent rose gold heart glow, volumetric emotional light waves expanding outward, contrasting dark void, warm ember particles.
+Color grading: cinematic warm rose gold and deep violet, high contrast human potential documentary style.
+NO cartoon, PHOTOREALISTIC human silhouette and effects.'
 }
 
 
@@ -146,15 +208,10 @@ def extrair_cursos_do_js(conteudo):
 
 
 def detectar_novos_cursos(cursos_atuais):
-    """Detecta cursos que ainda não têm capa gerada."""
-    novos = []
+    """Retorna TODOS os cursos — regera capas sempre, mesmo as existentes."""
     for curso in cursos_atuais:
-        capa_path = CAPAS_DIR / f"{curso['id']}.jpg"
-        capa_path_png = CAPAS_DIR / f"{curso['id']}.png"
-        if not capa_path.exists() and not capa_path_png.exists():
-            novos.append(curso)
-            log(f"Novo curso sem capa: {curso['nome']} [{curso['id']}]", '🆕')
-    return novos
+        log(f"Vai gerar capa: {curso['nome']} [{curso['id']}]", '🎨')
+    return cursos_atuais
 
 
 def gerar_capa_dalle(curso):
