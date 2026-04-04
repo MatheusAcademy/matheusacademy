@@ -1397,12 +1397,15 @@ async function doLogin() {
       plano: (dados && dados.plano) || 'gratuito',
       cursos: (dados && dados.cursos_comprados) || []
     }));
-    // Sincronizar XP e progresso do Firestore → localStorage
+    // v3 FIX: Sincronizar XP do Firestore → localStorage com xp_total (NUNCA ma_points)
     if (dados) {
-      if (dados.xp_total) {
-        var p = {total: dados.xp_total, history: []};
-        try { var ph2 = JSON.parse(localStorage.getItem('ma_points')||'{}'); p.history = ph2.history||[]; } catch(e2){}
-        localStorage.setItem('ma_points', JSON.stringify(p));
+      if (dados.xp_total !== undefined) {
+        // Atualiza o ma_user com xp_total para que a topbar leia corretamente
+        var uCache = JSON.parse(localStorage.getItem('ma_user')||'{}');
+        uCache.xp_total = dados.xp_total;
+        localStorage.setItem('ma_user', JSON.stringify(uCache));
+        // Remove chave legada para evitar conflito
+        localStorage.removeItem('ma_points');
       }
       if (dados.streak_atual) {
         var s = {current: dados.streak_atual, record: dados.streak_record||0};
@@ -1994,24 +1997,28 @@ function addEbookTouchSwipe() {
 
 // ═══════════════════════════════════════════════════════════
 // SISTEMA DE PONTOS
-// Estrutura localStorage: ma_points = { total, history: [{source, pts, date, question}] }
+// v3 FIX: Firebase é a fonte de verdade — lê do MAStore ou ma_user.xp_total
 // ═══════════════════════════════════════════════════════════
 function getPoints() {
-  try { return JSON.parse(localStorage.getItem('ma_points')) || {total:0, history:[]}; }
+  try {
+    // Prioridade 1: MAStore (Firebase)
+    if (window.MAStore && MAStore.getTotalPointsSync) {
+      return {total: MAStore.getTotalPointsSync(), history: []};
+    }
+    // Prioridade 2: ma_user.xp_total (cache do Firebase)
+    var u = JSON.parse(localStorage.getItem('ma_user')||'null');
+    if (u && typeof u.xp_total === 'number') return {total: u.xp_total, history: []};
+    return {total:0, history:[]};
+  }
   catch(e) { return {total:0, history:[]}; }
 }
 
 function addPoints(source, pts, question) {
   if (!gU()) return; // só pontua se logado
-  var p = getPoints();
-  p.total += pts;
-  p.history.unshift({
-    source: source,
-    pts: pts,
-    question: question,
-    date: new Date().toLocaleDateString('pt-BR')
-  });
-  localStorage.setItem('ma_points', JSON.stringify(p));
+  // v3 FIX: salva no Firebase via MAStore — NUNCA em ma_points legado
+  if (window.MAStore && MAStore.addPoints) {
+    MAStore.addPoints(source, pts).then(function() { upUI(); });
+  }
   updatePointsBadge();
   // Animação de bump
   var badge = document.getElementById('pointsBadge');
@@ -2133,7 +2140,15 @@ function maLogout(){localStorage.removeItem('ma_user');closeMaMenu();location.hr
 (function(){
   var LVS=[{n:'Iniciante',c:'ma-lvc0',m:0,max:999},{n:'Aprendiz',c:'ma-lvc1',m:1000,max:2999},{n:'Profissional',c:'ma-lvc2',m:3000,max:6999},{n:'Especialista',c:'ma-lvc3',m:7000,max:14999},{n:'Elite',c:'ma-lvc4',m:15000,max:49999},{n:'Elite I',c:'ma-lvc5',m:50000,max:199999},{n:'Elite II',c:'ma-lvc6',m:200000,max:999999},{n:'Elite III',c:'ma-lvc7',m:1000000,max:9999999}];
   function gLv(t){for(var i=LVS.length-1;i>=0;i--)if(t>=LVS[i].m)return LVS[i];return LVS[0];}
-  function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};}catch(e){return{total:0,history:[]};}}
+  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
+  function gP(){
+    try{
+      if(window.MAStore&&MAStore.getTotalPointsSync) return {total:MAStore.getTotalPointsSync(),history:[]};
+      var _u=JSON.parse(localStorage.getItem('ma_user')||'null');
+      if(_u&&typeof _u.xp_total==='number') return {total:_u.xp_total,history:[]};
+    }catch(e){}
+    return {total:0,history:[]};
+  }
   function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
   window.updTopbar=function(){
     var u=gU(),p=gP(),lv=gLv(p.total);
@@ -2157,13 +2172,23 @@ function maLogout(){localStorage.removeItem('ma_user');closeMaMenu();location.hr
         +'<a class="ma-mi" href="index.html" onclick="localStorage.setItem(\'ma_open_modal\',\'register\');return true"><span class="ma-mi-icon">📝</span>Criar Conta</a>'
         +'<a class="ma-mi gold" href="index.html" onclick="localStorage.setItem(\'ma_open_modal\',\'plans\');return true"><span class="ma-mi-icon">💎</span>Ver Planos</a>';
     }
+    // v3 FIX: sincroniza async com Firebase quando disponível
+    if(window.MAStore&&MAStore.getUser){MAStore.getUser().then(function(usr){if(usr&&typeof usr.xp_total==='number'){var _pN=document.getElementById('maPtsNum');if(_pN)_pN.textContent=usr.xp_total.toLocaleString('pt-BR');}});}
   };
   window.MA_addPoints=window.MA_addPoints||function(src,pts){
-    if(!gU())return 0;var p=gP();p.total+=pts;p.history.unshift({source:src,pts:pts,question:'',date:new Date().toLocaleDateString('pt-BR')});
-    localStorage.setItem('ma_points',JSON.stringify(p));_bumpPts();return pts;
+    // v3 FIX: salva no Firebase via MAStore — NUNCA em ma_points legado
+    if(!gU())return 0;
+    if(window.MAStore&&MAStore.addPoints){MAStore.addPoints(src,pts).then(function(){window.updTopbar();});}
+    _bumpPts();return pts;
   };
   function _bumpPts(){playCashSound();var el=document.getElementById('maPtsLive');if(el){el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');}var b=document.getElementById('maFpts');if(b){b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');}window.updTopbar();}
-  var _lp=null;setInterval(function(){var p=gP();if(_lp!==null&&p.total>_lp)_bumpPts();_lp=p.total;},1500);
+  // v3 FIX: polling usa gP() que já lê do Firebase
+  var _lp=null;setInterval(function(){var _xp=gP().total;if(_lp!==null&&_xp>_lp)_bumpPts();_lp=_xp;},1500);
+  // v3 FIX: sincroniza com Firebase quando pronto
+  function _syncFirebase(){if(window.MAStore&&MAStore.syncFromFirebase){MAStore.syncFromFirebase().then(function(){window.updTopbar();});}}
+  if(window.__maFirebaseReady){_syncFirebase();}else{document.addEventListener('maFirebaseReady',_syncFirebase,{once:true});}
+  // v3 FIX: escuta mudanças de auth para atualizar topbar
+  document.addEventListener('maFirebaseReady',function(){if(window.maAuth){window.maAuth.onAuthStateChanged(function(au){if(au){setTimeout(function(){_syncFirebase();window.updTopbar();},300);}else{window.updTopbar();}});}});
   (function(){var r=new URLSearchParams(window.location.search).get('ref');if(r){var mc=localStorage.getItem('ma_ref_code');if(!mc||mc!==r.toUpperCase())localStorage.setItem('indicadoPor',r.toUpperCase());}})();
   (function(){if(!gU())return;var today=new Date().toLocaleDateString('pt-BR');var ms;try{ms=JSON.parse(localStorage.getItem('ma_missions'))||{};}catch(e){ms={};}if(!ms.done||ms.date!==today)ms={date:today,done:{}};if(!ms.done.aula){ms.done.aula=true;localStorage.setItem('ma_missions',JSON.stringify(ms));window.MA_addPoints('Missão: Acessou a plataforma',10);}})();
   var _ss=Date.now();function _saveSess(){var dur=Math.floor((Date.now()-_ss)/60000);var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}s.count=(s.count||0)+1;s.lastDuration=dur;var today=new Date().toLocaleDateString('pt-BR'),yest=new Date(Date.now()-86400000).toLocaleDateString('pt-BR');if(s.lastStudyDate===yest)s.streak=(s.streak||0)+1;else if(s.lastStudyDate!==today)s.streak=1;s.lastStudyDate=today;localStorage.setItem('ma_sessions',JSON.stringify(s));}
@@ -2619,7 +2644,9 @@ function getStudyData7(){
 
 function renderProgress(){
   var s=getStreak();
-  var pts=gs('ma_points',{total:0});
+  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
+  var _xp=(window.MAStore&&MAStore.getTotalPointsSync)?MAStore.getTotalPointsSync():(function(){try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');return(_u&&typeof _u.xp_total==='number')?_u.xp_total:0;}catch(e){return 0;}})();
+  var pts={total:_xp};
   var sess=gs('ma_sessions',{});
   var el=function(id){return document.getElementById(id);};
   // stat cards
@@ -3281,7 +3308,9 @@ function _getWeekKey(){var d=new Date();return d.getFullYear()+'W'+Math.floor(d.
    ════════════════════════════════════════ */
 var _lastPts=null;
 function _pollPoints(){
-  var p=gs2('ma_points',{total:0});
+  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
+  var _xp=(window.MAStore&&MAStore.getTotalPointsSync)?MAStore.getTotalPointsSync():(function(){try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');return(_u&&typeof _u.xp_total==='number')?_u.xp_total:0;}catch(e){return 0;}})();
+  var p={total:_xp};
   if(_lastPts!==null&&p.total>_lastPts){
     var diff=p.total-_lastPts;
     if(diff>=5){
@@ -4732,12 +4761,13 @@ function _hookMotivEvents(){
     setTimeout(function(){maeShowMotiv('module_complete','','','','');},800);
   };
   // Hook MA_addPoints for level-up detection
+  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
   var _lastLv=null;
   var LVLS_V4=[0,1000,3000,7000,15000,50000,200000,1000000];
   function _getLv(pts){for(var i=LVLS_V4.length-1;i>=0;i--)if(pts>=LVLS_V4[i])return i;return 0;}
   setInterval(function(){
-    var p=JSON.parse(localStorage.getItem('ma_points')||'{"total":0}');
-    var lv=_getLv(p.total);
+    var _xp=(window.MAStore&&MAStore.getTotalPointsSync)?MAStore.getTotalPointsSync():(function(){try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');return(_u&&typeof _u.xp_total==='number')?_u.xp_total:0;}catch(e){return 0;}})();
+    var lv=_getLv(_xp);
     if(_lastLv!==null&&lv>_lastLv)maeShowMotiv('level_up','','','','');
     _lastLv=lv;
   },2000);
