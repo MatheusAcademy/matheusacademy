@@ -304,7 +304,13 @@ body{padding-bottom:58px!important}
 </nav>
 <script>
 (function(){
-  function maTbUpdatePts(){try{var p=JSON.parse(localStorage.getItem('ma_points')||'{}');var el=document.getElementById('maTbPtsN');if(el)el.textContent=(p.total||0).toLocaleString('pt-BR');}catch(e){}}
+  function maTbUpdatePts(){try{
+    var u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    var pts=0;
+    if(u&&typeof u.xp_total==='number')pts=u.xp_total;
+    else{var p=JSON.parse(localStorage.getItem('ma_points')||'{}');pts=p.total||0;}
+    var el=document.getElementById('maTbPtsN');if(el)el.textContent=pts.toLocaleString('pt-BR');
+  }catch(e){}}
   function maTbUpdateUser(){
     try{
       var u=JSON.parse(localStorage.getItem('ma_user')||'null');
@@ -356,7 +362,15 @@ body{padding-bottom:58px!important}
 var LEVELS=[{n:'Iniciante',c:'ma-lvc0',m:0,max:999},{n:'Aprendiz',c:'ma-lvc1',m:1000,max:2999},{n:'Profissional',c:'ma-lvc2',m:3000,max:6999},{n:'Especialista',c:'ma-lvc3',m:7000,max:14999},{n:'Elite',c:'ma-lvc4',m:15000,max:9999999}];
 function getLv(t){for(var i=LEVELS.length-1;i>=0;i--)if(t>=LEVELS[i].m)return LEVELS[i];return LEVELS[0];}
 function gU(){try{return JSON.parse(localStorage.getItem('ma_user'));}catch(e){return null;}}
-function gP(){try{return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};}catch(e){return{total:0,history:[]};}}
+function gP(){
+  try{
+    var u=JSON.parse(localStorage.getItem('ma_user')||'null');
+    if(u&&typeof u.xp_total==='number'){
+      var legacy=JSON.parse(localStorage.getItem('ma_points')||'{}');
+      return {total:u.xp_total, history:legacy.history||[]};
+    }
+    return JSON.parse(localStorage.getItem('ma_points'))||{total:0,history:[]};
+  }catch(e){return{total:0,history:[]};}}
 function gs(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
 function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function he(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -557,6 +571,12 @@ function renderPage(){
   var totalDone=0;COURSE_DEFS.forEach(function(c){totalDone+=getCProg(c.prefix).done;});
   var completedCourses=0;COURSE_DEFS.forEach(function(c){var pr=getCProg(c.prefix);if(pr.pct===100&&pr.total>0)completedCourses++;});
   var savedAv=localStorage.getItem('ma_avatar');
+  // Auto-preencher com foto do Google se não tiver avatar customizado
+  if(!savedAv&&u&&u.foto){savedAv=u.foto;localStorage.setItem('ma_avatar',u.foto);}
+  if(!savedAv&&window.firebase&&firebase.auth&&firebase.auth().currentUser&&firebase.auth().currentUser.photoURL){
+    savedAv=firebase.auth().currentUser.photoURL;
+    localStorage.setItem('ma_avatar',savedAv);
+  }
   var avColors=['#5b7fff','#a855f7','#22c55e','#f59e0b','#ef4444','#0ea5e9','#e879f9'];
   var avBg=avColors[(u.name||'A').charCodeAt(0)%avColors.length];
   var avLetter=(u.name||'?').charAt(0).toUpperCase();
@@ -716,7 +736,48 @@ function showNotif(txt,type){
   window.addEventListener('beforeunload',sv);window.addEventListener('pagehide',sv);
 })();
 
-document.addEventListener('DOMContentLoaded',function(){updTopbar();renderPage();});
+document.addEventListener('DOMContentLoaded',function(){
+  updTopbar();
+  renderPage(); // Renderiza com dados locais imediatamente
+
+  // Após Firebase pronto, re-renderiza com dados frescos
+  function _onFbReady(){
+    if(window.MAStore&&typeof MAStore.getUser==='function'){
+      MAStore.getUser().then(function(userData){
+        if(userData){
+          // Atualizar ma_user local com dados do Firestore
+          try{
+            var local=JSON.parse(localStorage.getItem('ma_user')||'{}');
+            local.xp_total=userData.xp_total||0;
+            local.foto=userData.foto||local.foto||'';
+            if(!local.foto&&window.firebase&&firebase.auth&&firebase.auth().currentUser){
+              local.foto=firebase.auth().currentUser.photoURL||'';
+            }
+            localStorage.setItem('ma_user',JSON.stringify(local));
+          }catch(ex){}
+          renderPage(); // Re-renderiza com dados corretos
+          updTopbar();
+        }
+      }).catch(function(){});
+    }else if(window.firebase&&firebase.auth){
+      firebase.auth().onAuthStateChanged(function(fbUser){
+        if(fbUser){
+          try{
+            var local=JSON.parse(localStorage.getItem('ma_user')||'{}');
+            if(!local.foto&&fbUser.photoURL){
+              local.foto=fbUser.photoURL;
+              localStorage.setItem('ma_avatar',fbUser.photoURL);
+              localStorage.setItem('ma_user',JSON.stringify(local));
+            }
+          }catch(ex){}
+          renderPage();
+        }
+      });
+    }
+  }
+  if(window.__maFirebaseReady)_onFbReady();
+  else document.addEventListener('maFirebaseReady',_onFbReady,{once:true});
+});
 </script>
 
 <nav class="ma-bnav">
@@ -746,5 +807,6 @@ document.addEventListener('DOMContentLoaded',function(){updTopbar();renderPage()
   </a>
 </nav>
 
+<script src="shared/points-fix.js"></script>
 </body>
 </html>
