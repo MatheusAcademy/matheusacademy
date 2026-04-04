@@ -60,7 +60,7 @@
   box-shadow:0 12px 40px rgba(0,0,0,.85);
 }
 /* Imagem de capa */
-.ebook-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.ebook-cover img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#03030a}
 /* Overlay de nome — DENTRO da capa, na base */
 .p-name-bar{position:absolute;bottom:0;left:0;right:0;padding:28px 10px 10px;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.7) 50%,rgba(0,0,0,.3) 80%,transparent 100%);z-index:4}
 .p-name-bar span{display:block;font-size:.6rem;font-weight:800;color:#fff;line-height:1.25;text-shadow:0 1px 4px rgba(0,0,0,.9);font-family:var(--serif);word-break:break-word}
@@ -258,7 +258,7 @@
   position:relative;
 }
 .cc.soon{cursor:default;opacity:.55}.cc.soon:hover{transform:none!important}
-.cc-img{height:140px;background:#000;position:relative;overflow:hidden;flex-shrink:0}.cc-img img{width:100%;height:100%;object-fit:cover;opacity:.92;transition:opacity .2s}.cc:hover .cc-img img{opacity:1}
+.cc-img{aspect-ratio:3/4;width:100%;background:#03030a;position:relative;overflow:hidden;flex-shrink:0}.cc-img img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;opacity:.97;transition:opacity .2s}.cc:hover .cc-img img{opacity:1}
 .cc-badge{position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:6px;font-size:.5rem;font-weight:700;text-transform:uppercase}.cc-badge.live{background:var(--grn);color:#fff}.cc-badge.free{background:var(--orn);color:#fff}
 .soon-img{background:var(--bg3);display:flex;align-items:center;justify-content:center}.soon-special{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(245,158,11,.1))}.soon-special .soon-label{color:#ef4444;font-weight:800}.soon-ebook{background:linear-gradient(135deg,rgba(75,139,255,.1),rgba(168,85,247,.1))}.soon-ebook .soon-label{color:#a855f7}.soon-label{font-size:.8rem;font-weight:700;color:var(--orn)}
 /* Body do card - altura FIXA para alinhamento */
@@ -325,7 +325,7 @@
 /* ── Mobile 480px: Cards proporcionais ── */
 @media(max-width:480px){
   .cc{min-width:calc((100vw - 40px)/2);max-width:calc((100vw - 40px)/2)}
-  .cc-img{height:110px}
+  .cc-img{aspect-ratio:3/4}
   .cc-body{padding:10px;min-height:70px}
   .cc-body h4{font-size:.72rem;line-height:1.25}
   .cc-body p{font-size:.58rem;-webkit-line-clamp:2}
@@ -481,9 +481,19 @@
 .cc-img {
   border-radius: 10px !important;
   overflow: hidden !important;
-  height: 140px !important;
+  aspect-ratio: 3/4 !important;
+  width: 100% !important;
+  height: auto !important;
+  background: #03030a !important;
   position: relative !important;
   transition: transform 0.3s ease !important;
+}
+.cc-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block !important;
 }
 .cc:hover .cc-img {
   transform: scale(1.04) !important;
@@ -607,7 +617,8 @@
     max-width: calc((100vw - 36px)/2) !important;
   }
   .cc-img {
-    height: 100px !important;
+    aspect-ratio: 3/4 !important;
+    height: auto !important;
   }
   .cc-body h4 {
     font-size: 0.70rem !important;
@@ -1679,7 +1690,7 @@ function buildEbooks() {
     var h = '<div class="ebook-card" data-file="' + c.file + '" style="--glow:' + GLOW[gi] + '">';
     h += '<div class="ebook-cover">';
     h += '<span class="p-badge ' + (isFree ? 'pfree' : 'ppaid') + '">' + badgeTxt + '</span>';
-    h += '<img src="' + customCover + '" alt="' + c.name + '" style="width:100%;height:100%;object-fit:cover;display:block">';
+    h += '<img src="' + customCover + '" alt="' + c.name + '" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#03030a">';
     h += '<div class="p-img-cover"></div>';
     h += '<div class="p-name-bar"><span>' + c.name + '</span></div>';
     h += '<div class="ebook-balloon">';
@@ -2025,7 +2036,7 @@ function rC() {
       var coverSrc = makeAutoCover(fakeCourse, gi, true);
       h += '<div class="cc soon">';
       h += '<div class="cc-img" style="position:relative;overflow:hidden">';
-      h += '<img src="' + coverSrc + '" alt="' + s + '" style="width:100%;height:100%;object-fit:cover;opacity:.55">';
+      h += '<img src="' + coverSrc + '" alt="' + s + '" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#03030a;opacity:.55">';
       h += '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(3,3,10,.45)">';
       h += '<span style="background:rgba(0,0,0,.65);padding:4px 12px;border-radius:20px;font-size:.6rem;font-weight:700;color:#fff;letter-spacing:.08em">' + lbl + '</span>';
       h += '</div></div>';
@@ -5306,14 +5317,14 @@ function _hookMotivEvents(){
   },2000);
 }
 
-function _welcomeMotiv(){};
+function _welcomeMotiv(){
   if(!u)return;
   // Show banner first, then full motiv after delay
   var streak=JSON.parse(localStorage.getItem('ma_streak2')||'{}');
   var sk=streak.current||0;
   if(sk>=7)_showBannerMotiv('🔥 '+sk+' dias seguidos! Você é incrível!');
-  else // banner welcome on load: disabled
-  setTimeout(function(){maeShowMotiv('welcome','','','','');},3000);
+  else { // banner welcome on load: disabled
+  setTimeout(function(){maeShowMotiv('welcome','','','','');},3000); }
 }
 
 /* ═══════════════════════════════════════
