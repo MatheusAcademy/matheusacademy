@@ -1,0 +1,44 @@
+name: 🎨 Gerar Capa IA — Novo Curso
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'data/courses.js'   # Dispara APENAS quando courses.js mudar
+
+jobs:
+  gerar-capa:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # Precisa para fazer commit das imagens de volta
+
+    steps:
+      - name: 📥 Checkout do repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2   # Precisa de 2 commits para comparar o diff
+
+      - name: 🐍 Instalar Python e dependências
+        run: |
+          python3 -m pip install requests pillow
+
+      - name: 🔍 Detectar novos cursos e gerar capas
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python3 scripts/gerar_capa.py
+
+      - name: 💾 Commit e Push das novas capas
+        run: |
+          git config --global user.name "Matheus Academy Bot"
+          git config --global user.email "bot@matheusacademy.com.br"
+          git add assets/capas/
+          git add data/courses.js
+
+          # Só faz commit se tiver algo novo
+          if git diff --staged --quiet; then
+            echo "✅ Nenhuma capa nova para commitar."
+          else
+            git commit -m "🎨 Auto-gerado: capas IA para novos cursos [skip ci]"
+            git push
+          fi
