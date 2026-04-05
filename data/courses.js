@@ -1,7 +1,7 @@
 var MA_COURSES = [
   {
     id: 'gp',
-    coverImg: 'assets/capas/gp.svg',
+    coverImg: 'assets/capas/gp.png',
     courseKey: 'geo',
     name: 'Geopolítica Avançada',
     desc: 'Entenda o mundo como ele funciona. Teoria, conflitos e economia global.',
@@ -42,7 +42,7 @@ var MA_COURSES = [
   },
   {
     id: 'ii',
-    coverImg: 'assets/capas/ii.svg',
+    coverImg: 'assets/capas/ii.png',
     courseKey: 'ii',
     name: 'Guerra Israel x Irã',
     desc: 'O conflito que mudou o mundo. De 2025 à escalada de 2026.',
@@ -63,7 +63,7 @@ var MA_COURSES = [
   },
   {
     id: 'cp',
-    coverImg: 'assets/capas/cp.svg',
+    coverImg: 'assets/capas/cp.png',
     courseKey: 'cp',
     name: 'Copa do Mundo 2026',
     desc: 'Tudo sobre o maior evento esportivo do mundo. Análise completa.',
@@ -84,7 +84,7 @@ var MA_COURSES = [
   },
   {
     id: 'bc',
-    coverImg: 'assets/capas/bc.svg',
+    coverImg: 'assets/capas/bc.png',
     name: 'Bitcoin — A Moeda que Mudou a História do Mundo',
     desc: '',
     file: 'bitcoin-curso.html',
@@ -103,7 +103,7 @@ var MA_COURSES = [
   },
   {
     id: 'ctp',
-    coverImg: 'assets/capas/ctp.svg',
+    coverImg: 'assets/capas/ctp.png',
     name: 'Dominando o Tráfego Pago - Completo',
     desc: 'O Dominando o Tráfego Pago é a especialização mais completa do mercado brasileiro',
     file: 'curso-trafego-pago.html',
@@ -122,7 +122,7 @@ var MA_COURSES = [
   },
   {
     id: 'ctep',
-    coverImg: 'assets/capas/ctep.svg',
+    coverImg: 'assets/capas/ctep.png',
     name: 'Técnicas de Persuasão',
     desc: '',
     file: 'curso-tecnicas-persuasao.html',
@@ -141,7 +141,7 @@ var MA_COURSES = [
   },
   {
     id: 'nlf',
-    coverImg: 'assets/capas/nlf.svg',
+    coverImg: 'assets/capas/nlf.png',
     name: 'Lei FELCA e o Modelo Chinês de Censura no Brasil',
     desc: '',
     file: 'noticia-lei-felca.html',
@@ -161,7 +161,7 @@ var MA_COURSES = [
   },
   {
     id: 'ie',
-    coverImg: 'assets/capas/ie.svg',
+    coverImg: 'assets/capas/ie.png',
     name: 'Inteligência Emocional',
     desc: 'A formação completa em inteligência emocional — do autoconhecimento à maestria. Aprenda a dominar suas emoções, melhorar relacionamentos, liderar com impacto e viver com mais equilíbrio e propósito.',
     file: 'curso-inteligencia-emocional.html',
