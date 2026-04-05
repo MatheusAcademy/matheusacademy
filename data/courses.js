@@ -21,7 +21,7 @@ var MA_COURSES = [
   },
   {
     id: 'bm',
-    coverImg: 'assets/capas/bm.svg',
+    coverImg: 'assets/capas/bm.png',
     courseKey: 'bm',
     name: 'Caso Banco Master',
     desc: 'A maior fraude bancária do Brasil. R$52bi, CPI e delação premiada.',
@@ -260,7 +260,6 @@ function MA_buildTrails() {
   return MA_TRAILS.map(function(trail) {
     var resolved = [];
     trail.courseIds.forEach(function(cid) {
-      // Trilhas incluem TODOS os cursos (mesmo inactive) — mostram o caminho completo
       var c = MA_COURSES.find(function(x){ return x.id === cid; });
       if (c) resolved.push({ key: c.id, icon: c.icon, name: c.name, file: c.file });
     });
