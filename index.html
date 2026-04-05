@@ -718,6 +718,7 @@
     <a class="idx-mi" href="trilhas.html"><span class="idx-mi-i">🛤️</span>Trilhas</a>
     <a class="idx-mi gold" href="loja.html"><span class="idx-mi-i">🛒</span>Loja de XP</a>
     <a class="idx-mi" href="mural.html"><span class="idx-mi-i">🏅</span>Mural</a>
+    <a class="idx-mi" href="planos.html" style="color:#f59e0b"><span class="idx-mi-i">💎</span>Planos &amp; Assinaturas</a>
   </div>
   <div class="idx-menu-sec" id="idxMenuAuthSec"></div>
 </div>
@@ -926,685 +927,295 @@ function geoPat(c) {
 }
 
 /* Gera capa automática para qualquer curso/notícia/ebook — usa nome, ícone e cor */
-// ================================================================
-// MATHEUS ACADEMY — makeSVGCover v2 (CAPAS REDESENHADAS)
-// Substitui a função makeSVGCover() no index.html
-// Cobre todos os 9 cursos: gp, bm, ii, cp, bc, ctp, ctep, nlf, ie
-// ================================================================
-
-function makeSVGCover(id) {
-  var s = '';
-
-  // ── GEOPOLÍTICA AVANÇADA ──────────────────────────────────────
-  if (id === 'gp') {
-    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
-      + '<defs>'
-      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="40%" style="stop-color:#0e0a00"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
-      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0"/><stop offset="50%" style="stop-color:#f59e0b;stop-opacity:.7"/><stop offset="100%" style="stop-color:#ef4444;stop-opacity:0"/></linearGradient>'
-      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#f59e0b"/><stop offset="100%" style="stop-color:#ef4444"/></linearGradient>'
-      + '<radialGradient id="glow" cx="50%" cy="42%" r="38%"><stop offset="0%" style="stop-color:#f59e0b;stop-opacity:.18"/><stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0"/></radialGradient>'
-      + '</defs>'
-      // Fundo
-      + '<rect width="300" height="400" fill="url(#a)"/>'
-      + '<rect width="300" height="400" fill="url(#glow)"/>'
-      // Grade perspectiva (linhas horizontais)
-      + '<g opacity=".07" stroke="#f59e0b" stroke-width=".4">'
-      + '<line x1="0" y1="30" x2="300" y2="30"/><line x1="0" y1="55" x2="300" y2="55"/><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="108" x2="300" y2="108"/><line x1="0" y1="140" x2="300" y2="140"/>'
-      + '<line x1="0" y1="175" x2="300" y2="175"/><line x1="0" y1="215" x2="300" y2="215"/><line x1="0" y1="260" x2="300" y2="260"/><line x1="0" y1="310" x2="300" y2="310"/>'
-      + '</g>'
-      // Globo terrestre (círculos e linhas de latitude/longitude)
-      + '<circle cx="150" cy="112" r="70" fill="none" stroke="#f59e0b" stroke-width=".6" opacity=".25"/>'
-      + '<circle cx="150" cy="112" r="70" fill="#f59e0b" opacity=".03"/>'
-      + '<ellipse cx="150" cy="112" rx="70" ry="28" fill="none" stroke="#f59e0b" stroke-width=".4" opacity=".18"/>'
-      + '<ellipse cx="150" cy="112" rx="70" ry="50" fill="none" stroke="#f59e0b" stroke-width=".3" opacity=".12"/>'
-      + '<ellipse cx="150" cy="112" rx="28" ry="70" fill="none" stroke="#ef4444" stroke-width=".35" opacity=".15"/>'
-      + '<line x1="80" y1="112" x2="220" y2="112" stroke="url(#c)" stroke-width=".5" opacity=".4"/>'
-      + '<line x1="150" y1="42" x2="150" y2="182" stroke="url(#c)" stroke-width=".5" opacity=".4"/>'
-      // Pontos capitais no globo
-      + '<circle cx="130" cy="100" r="2.5" fill="#f59e0b" opacity=".9"/>'
-      + '<circle cx="175" cy="108" r="2.5" fill="#ef4444" opacity=".9"/>'
-      + '<circle cx="148" cy="125" r="2" fill="#4A7EFF" opacity=".9"/>'
-      + '<circle cx="162" cy="96" r="1.8" fill="#22c55e" opacity=".8"/>'
-      + '<circle cx="118" cy="118" r="1.8" fill="#a855f7" opacity=".8"/>'
-      // Linhas conectando capitais
-      + '<line x1="130" y1="100" x2="175" y2="108" stroke="#f59e0b" stroke-width=".5" opacity=".35" stroke-dasharray="2,2"/>'
-      + '<line x1="175" y1="108" x2="148" y2="125" stroke="#ef4444" stroke-width=".5" opacity=".3" stroke-dasharray="2,2"/>'
-      + '<line x1="130" y1="100" x2="162" y2="96" stroke="#4A7EFF" stroke-width=".4" opacity=".3" stroke-dasharray="2,2"/>'
-      // Labels países
-      + '<text x="108" y="98" fill="#f59e0b" font-family="Arial" font-weight="700" font-size="6.5" opacity=".65" letter-spacing="1">EUA</text>'
-      + '<text x="178" y="106" fill="#ef4444" font-family="Arial" font-weight="700" font-size="6.5" opacity=".65" letter-spacing="1">RUS</text>'
-      + '<text x="136" y="136" fill="#4A7EFF" font-family="Arial" font-weight="700" font-size="6" opacity=".55" letter-spacing="1">CHI</text>'
-      + '<text x="164" y="93" fill="#22c55e" font-family="Arial" font-weight="700" font-size="6" opacity=".55" letter-spacing="1">EUR</text>'
-      // Linha divisória decorativa
-      + '<rect x="0" y="188" width="300" height="2" fill="url(#b)"/>'
-      + '<rect x="30" y="192" width="240" height=".5" fill="url(#b)" opacity=".4"/>'
-      // Títulos
-      + '<text x="150" y="224" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="900" font-size="11" letter-spacing="5" opacity=".7">MATHEUS ACADEMY</text>'
-      + '<text x="150" y="256" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="26" letter-spacing="2">GEOPOLÍTICA</text>'
-      + '<text x="150" y="282" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="22" letter-spacing="3">AVANÇADA</text>'
-      + '<rect x="50" y="291" width="200" height="1.2" fill="url(#b)"/>'
-      // Subtítulo e tags
-      + '<text x="150" y="314" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="8" letter-spacing="2.5">PODER · CONFLITO · ECONOMIA GLOBAL</text>'
-      + '<text x="150" y="332" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">EUA · CHINA · RÚSSIA · MÉDIO ORIENTE</text>'
-      // Badge horas
-      + '<rect x="94" y="346" width="112" height="22" rx="11" fill="url(#c)" opacity=".12"/>'
-      + '<rect x="94" y="346" width="112" height="22" rx="11" fill="none" stroke="#f59e0b" stroke-width=".6" opacity=".35"/>'
-      + '<text x="150" y="361" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">90H · 27 MÓDULOS</text>'
-      // Marca d\'água
-      + '<text x="150" y="388" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-      // Cantos decorativos
-      + '<path d="M0,0 L22,0 L0,22 Z" fill="#f59e0b" opacity=".14"/>'
-      + '<path d="M300,0 L278,0 L300,22 Z" fill="#ef4444" opacity=".14"/>'
-      + '<path d="M0,400 L22,400 L0,378 Z" fill="#ef4444" opacity=".1"/>'
-      + '<path d="M300,400 L278,400 L300,378 Z" fill="#f59e0b" opacity=".1"/>'
-      + '</svg>';
-
-  // ── CASO BANCO MASTER ─────────────────────────────────────────
-  } else if (id === 'bm') {
-    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
-      + '<defs>'
-      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0a0a0f"/><stop offset="45%" style="stop-color:#1c0505"/><stop offset="100%" style="stop-color:#0a0a0f"/></linearGradient>'
-      + '<linearGradient id="r" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#dc2626;stop-opacity:0"/><stop offset="50%" style="stop-color:#dc2626;stop-opacity:.6"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:0"/></linearGradient>'
-      + '<linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0"/><stop offset="50%" style="stop-color:#f59e0b;stop-opacity:.5"/><stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0"/></linearGradient>'
-      + '<radialGradient id="glow" cx="50%" cy="38%" r="40%"><stop offset="0%" style="stop-color:#dc2626;stop-opacity:.15"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:0"/></radialGradient>'
-      + '</defs>'
-      + '<rect width="300" height="400" fill="url(#a)"/>'
-      + '<rect width="300" height="400" fill="url(#glow)"/>'
-      // Grade sutil
-      + '<g opacity=".055" stroke="#dc2626" stroke-width=".4">'
-      + '<line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="100" x2="300" y2="100"/><line x1="0" y1="150" x2="300" y2="150"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="250" x2="300" y2="250"/><line x1="0" y1="300" x2="300" y2="300"/><line x1="0" y1="350" x2="300" y2="350"/>'
-      + '<line x1="60" y1="0" x2="60" y2="400"/><line x1="120" y1="0" x2="120" y2="400"/><line x1="180" y1="0" x2="180" y2="400"/><line x1="240" y1="0" x2="240" y2="400"/>'
-      + '</g>'
-      // Prédio bancário estilizado
-      + '<rect x="106" y="55" width="88" height="95" rx="2" fill="none" stroke="#dc2626" stroke-width=".7" opacity=".22"/>'
-      + '<rect x="112" y="62" width="76" height="82" rx="1" fill="#dc2626" opacity=".04"/>'
-      // Colunas do prédio
-      + '<rect x="116" y="68" width="8" height="68" rx="1" fill="none" stroke="#dc2626" stroke-width=".5" opacity=".2"/>'
-      + '<rect x="132" y="68" width="8" height="68" rx="1" fill="none" stroke="#dc2626" stroke-width=".5" opacity=".2"/>'
-      + '<rect x="148" y="68" width="8" height="68" rx="1" fill="none" stroke="#dc2626" stroke-width=".5" opacity=".2"/>'
-      + '<rect x="164" y="68" width="8" height="68" rx="1" fill="none" stroke="#dc2626" stroke-width=".5" opacity=".2"/>'
-      + '<rect x="180" y="68" width="8" height="68" rx="1" fill="none" stroke="#dc2626" stroke-width=".5" opacity=".2"/>'
-      // Frontão do prédio
-      + '<polygon points="96,55 204,55 150,28" fill="none" stroke="#dc2626" stroke-width=".6" opacity=".25"/>'
-      + '<line x1="150" y1="28" x2="150" y2="55" stroke="#f59e0b" stroke-width=".5" opacity=".3"/>'
-      // Valor em destaque
-      + '<rect x="60" y="108" width="80" height="32" rx="4" fill="#dc2626" opacity=".08" stroke="#dc2626" stroke-width=".5" opacity2=".3"/>'
-      + '<text x="95" y="121" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="900" font-size="10" opacity=".85" letter-spacing="1">R$ 52</text>'
-      + '<text x="95" y="133" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="700" font-size="8" opacity=".7" letter-spacing="1">BILHÕES</text>'
-      + '<rect x="165" y="108" width="72" height="32" rx="4" fill="#f59e0b" opacity=".06" stroke="#f59e0b" stroke-width=".5" opacity2=".25"/>'
-      + '<text x="199" y="121" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="900" font-size="9" opacity=".8" letter-spacing="1">FRAUDE</text>'
-      + '<text x="199" y="133" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="7.5" opacity=".7" letter-spacing="1">BILIONÁRIA</text>'
-      // Linha separadora principal
-      + '<rect x="0" y="168" width="300" height="2.5" fill="url(#r)"/>'
-      + '<rect x="20" y="173" width="260" height=".8" fill="url(#r)" opacity=".3"/>'
-      // CARIMBO VERMELHO decorativo
-      + '<rect x="174" y="178" width="94" height="32" rx="3" fill="none" stroke="#dc2626" stroke-width="1.2" opacity=".35"/>'
-      + '<text x="221" y="188" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="900" font-size="7" letter-spacing="2" opacity=".7">INVESTIGADO</text>'
-      + '<text x="221" y="200" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="700" font-size="7" letter-spacing="1.5" opacity=".55">CPI · BRDE · STF</text>'
-      // Título principal
-      + '<text x="150" y="235" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="20" letter-spacing="2">CASO BANCO</text>'
-      + '<text x="150" y="265" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="900" font-size="32" letter-spacing="2">MASTER</text>'
-      + '<rect x="40" y="273" width="220" height="1.5" fill="url(#r)"/>'
-      // Subtítulos
-      + '<text x="150" y="296" text-anchor="middle" fill="#9898b0" font-family="Arial" font-weight="700" font-size="8.5" letter-spacing="2">A MAIOR FRAUDE BANCÁRIA DO BRASIL</text>'
-      + '<text x="150" y="314" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">R$52BI · CPI · DELAÇÃO · OPERAÇÃO FISCAL</text>'
-      // Tags bottom
-      + '<rect x="55" y="330" width="190" height="22" rx="11" fill="#dc2626" opacity=".1"/>'
-      + '<rect x="55" y="330" width="190" height="22" rx="11" fill="none" stroke="#dc2626" stroke-width=".6" opacity=".4"/>'
-      + '<text x="150" y="345" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">📺 ACESSO GRATUITO</text>'
-      + '<text x="150" y="385" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-      // Cantos
-      + '<path d="M0,0 L24,0 L0,24 Z" fill="#dc2626" opacity=".12"/>'
-      + '<path d="M300,0 L276,0 L300,24 Z" fill="#dc2626" opacity=".12"/>'
-      + '<path d="M0,400 L24,400 L0,376 Z" fill="#f59e0b" opacity=".1"/>'
-      + '<path d="M300,400 L276,400 L300,376 Z" fill="#f59e0b" opacity=".1"/>'
-      + '</svg>';
-
-  // ── GUERRA ISRAEL x IRÃ ───────────────────────────────────────
-  } else if (id === 'ii') {
-    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
-      + '<defs>'
-      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#04040c"/><stop offset="50%" style="stop-color:#0a0d1a"/><stop offset="100%" style="stop-color:#04040c"/></linearGradient>'
-      + '<linearGradient id="dual" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#1a5cff;stop-opacity:0"/><stop offset="25%" style="stop-color:#1a5cff;stop-opacity:.5"/><stop offset="50%" style="stop-color:#888;stop-opacity:.2"/><stop offset="75%" style="stop-color:#dc2626;stop-opacity:.5"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:0"/></linearGradient>'
-      + '<radialGradient id="glB" cx="33%" cy="38%" r="28%"><stop offset="0%" style="stop-color:#1a5cff;stop-opacity:.2"/><stop offset="100%" style="stop-color:#1a5cff;stop-opacity:0"/></radialGradient>'
-      + '<radialGradient id="glR" cx="67%" cy="38%" r="28%"><stop offset="0%" style="stop-color:#dc2626;stop-opacity:.2"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:0"/></radialGradient>'
-      + '</defs>'
-      + '<rect width="300" height="400" fill="url(#a)"/>'
-      + '<rect width="300" height="400" fill="url(#glB)"/>'
-      + '<rect width="300" height="400" fill="url(#glR)"/>'
-      // Grade
-      + '<g opacity=".04" stroke="#888" stroke-width=".4">'
-      + '<line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="100" x2="300" y2="100"/><line x1="0" y1="150" x2="300" y2="150"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="300" x2="300" y2="300"/><line x1="150" y1="0" x2="150" y2="400"/>'
-      + '</g>'
-      // Divisória central
-      + '<line x1="150" y1="20" x2="150" y2="185" stroke="#888" stroke-width=".8" opacity=".2" stroke-dasharray="3,4"/>'
-      // Lado ISRAEL — brasão/escudo estilizado
-      + '<circle cx="80" cy="110" r="48" fill="none" stroke="#1a5cff" stroke-width=".6" opacity=".25"/>'
-      + '<circle cx="80" cy="110" r="36" fill="none" stroke="#1a5cff" stroke-width=".4" opacity=".2"/>'
-      // Estrela de Davi estilizada
-      + '<polygon points="80,76 91,96 72,96" fill="none" stroke="#1a5cff" stroke-width="1.2" opacity=".6"/>'
-      + '<polygon points="80,130 69,110 88,110" fill="none" stroke="#1a5cff" stroke-width="1.2" opacity=".6"/>'
-      + '<text x="80" y="116" text-anchor="middle" fill="#1a5cff" font-family="Arial" font-weight="900" font-size="13" opacity=".5" letter-spacing="1">✡</text>'
-      + '<text x="80" y="146" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="12" letter-spacing="2" opacity=".9">ISRAEL</text>'
-      + '<text x="80" y="158" text-anchor="middle" fill="#1a5cff" font-family="Arial" font-size="7" letter-spacing="2" opacity=".6">IDF · MOSSAD</text>'
-      // Lado IRÃ
-      + '<circle cx="220" cy="110" r="48" fill="none" stroke="#dc2626" stroke-width=".6" opacity=".25"/>'
-      + '<circle cx="220" cy="110" r="36" fill="none" stroke="#dc2626" stroke-width=".4" opacity=".2"/>'
-      // Crescente islâmico estilizado
-      + '<path d="M230,80 A30,30 0 1,0 230,140 A20,20 0 1,1 230,80" fill="none" stroke="#dc2626" stroke-width="1.2" opacity=".55"/>'
-      + '<text x="220" y="116" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="900" font-size="16" opacity=".5">☪</text>'
-      + '<text x="220" y="146" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="12" letter-spacing="2" opacity=".9">IRÃ</text>'
-      + '<text x="220" y="158" text-anchor="middle" fill="#dc2626" font-family="Arial" font-size="7" letter-spacing="2" opacity=".6">IRGC · HEZBOLLAH</text>'
-      // Vs central
-      + '<rect x="132" y="98" width="36" height="36" rx="18" fill="#0a0d1a"/>'
-      + '<rect x="132" y="98" width="36" height="36" rx="18" fill="none" stroke="#f59e0b" stroke-width=".8" opacity=".5"/>'
-      + '<text x="150" y="121" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="900" font-size="14" opacity=".9">VS</text>'
-      // Linha separadora
-      + '<rect x="0" y="188" width="300" height="2.5" fill="url(#dual)"/>'
-      // Título
-      + '<text x="150" y="224" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="28" letter-spacing="3">GUERRA</text>'
-      + '<text x="150" y="252" text-anchor="middle" fill="#1a5cff" font-family="Arial" font-weight="900" font-size="16" letter-spacing="3">ISRAEL</text>'
-      + '<text x="150" y="268" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="900" font-size="13" opacity=".8">×</text>'
-      + '<text x="150" y="288" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="900" font-size="16" letter-spacing="3">IRÃ</text>'
-      + '<rect x="40" y="296" width="220" height="1.2" fill="url(#dual)"/>'
-      + '<text x="150" y="318" text-anchor="middle" fill="#9898b0" font-family="Arial" font-weight="700" font-size="8" letter-spacing="2">O CONFLITO QUE RECONFIGUROU O MUNDO</text>'
-      + '<text x="150" y="336" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">JUNHO 2025 — PRESENTE</text>'
-      // Badge
-      + '<rect x="70" y="350" width="160" height="22" rx="11" fill="#f59e0b" opacity=".1"/>'
-      + '<rect x="70" y="350" width="160" height="22" rx="11" fill="none" stroke="#f59e0b" stroke-width=".6" opacity=".4"/>'
-      + '<text x="150" y="365" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">📺 ACESSO GRATUITO</text>'
-      + '<text x="150" y="388" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-      + '<path d="M0,0 L20,0 L0,20 Z" fill="#1a5cff" opacity=".14"/>'
-      + '<path d="M300,0 L280,0 L300,20 Z" fill="#dc2626" opacity=".14"/>'
-      + '</svg>';
-
-  // ── COPA DO MUNDO 2026 ────────────────────────────────────────
-  } else if (id === 'cp') {
-    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
-      + '<defs>'
-      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#071428"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
-      + '<linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#fde68a"/><stop offset="50%" style="stop-color:#f59e0b"/><stop offset="100%" style="stop-color:#d97706"/></linearGradient>'
-      + '<linearGradient id="gline" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0"/><stop offset="50%" style="stop-color:#f59e0b;stop-opacity:.6"/><stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0"/></linearGradient>'
-      + '<radialGradient id="glow" cx="50%" cy="38%" r="40%"><stop offset="0%" style="stop-color:#f59e0b;stop-opacity:.12"/><stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0"/></radialGradient>'
-      + '</defs>'
-      + '<rect width="300" height="400" fill="url(#a)"/>'
-      + '<rect width="300" height="400" fill="url(#glow)"/>'
-      // Grade fina azul
-      + '<g opacity=".055" stroke="#4A7EFF" stroke-width=".35">'
-      + '<line x1="0" y1="40" x2="300" y2="40"/><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="120" x2="300" y2="120"/><line x1="0" y1="160" x2="300" y2="160"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="280" x2="300" y2="280"/><line x1="0" y1="340" x2="300" y2="340"/>'
-      + '<line x1="60" y1="0" x2="60" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="240" y1="0" x2="240" y2="400"/>'
-      + '</g>'
-      // Taça do mundial (forma simplificada)
-      + '<rect x="126" y="48" width="48" height="48" rx="24" fill="url(#gold)" opacity=".15"/>'
-      // Corpo da taça
-      + '<path d="M120,55 C110,55 100,65 102,80 C104,96 118,108 136,115 L136,130 L120,140 L180,140 L164,130 L164,115 C182,108 196,96 198,80 C200,65 190,55 180,55 Z" fill="none" stroke="#f59e0b" stroke-width="1.2" opacity=".45"/>'
-      // Interior taça preenchido suave
-      + '<path d="M122,58 C112,58 104,67 106,81 C108,95 120,106 136,113 L136,128 L126,136 L174,136 L164,128 L164,113 C180,106 192,95 194,81 C196,67 188,58 178,58 Z" fill="url(#gold)" opacity=".06"/>'
-      // Estrela no topo da taça
-      + '<text x="150" y="88" text-anchor="middle" fill="#fde68a" font-family="Arial" font-weight="900" font-size="22" opacity=".75">★</text>'
-      // Base da taça
-      + '<rect x="134" y="140" width="32" height="6" rx="2" fill="#f59e0b" opacity=".3"/>'
-      + '<rect x="122" y="146" width="56" height="6" rx="3" fill="#f59e0b" opacity=".2"/>'
-      // Número 2026 espetacular
-      + '<rect x="0" y="164" width="300" height="2" fill="url(#gline)"/>'
-      + '<text x="150" y="212" text-anchor="middle" fill="url(#gold)" font-family="Arial" font-weight="900" font-size="58" letter-spacing="3" opacity=".9">2026</text>'
-      + '<rect x="20" y="218" width="260" height="2" fill="url(#gline)"/>'
-      // Título
-      + '<text x="150" y="242" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="19" letter-spacing="3">COPA DO MUNDO</text>'
-      // Subtítulo países
-      + '<text x="150" y="262" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="9" letter-spacing="3">EUA · MÉXICO · CANADÁ</text>'
-      // Linha fina separadora
-      + '<rect x="60" y="272" width="180" height=".8" fill="url(#gline)"/>'
-      + '<text x="150" y="292" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="900" font-size="14" letter-spacing="2" opacity=".9">O HEXA VEM?</text>'
-      + '<text x="150" y="312" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">48 SELEÇÕES · 3 PAÍSES · 104 JOGOS</text>'
-      // Bandeirinha do Brasil estilizada
-      + '<rect x="96" y="326" width="108" height="20" rx="2" fill="#009c3b" opacity=".15"/>'
-      + '<rect x="96" y="326" width="108" height="20" rx="2" fill="none" stroke="#009c3b" stroke-width=".6" opacity=".4"/>'
-      + '<text x="150" y="340" text-anchor="middle" fill="#fde68a" font-family="Arial" font-weight="700" font-size="8.5" letter-spacing="2">🇧🇷 VAI, BRASIL!</text>'
-      // Badge gratuito
-      + '<rect x="75" y="352" width="150" height="22" rx="11" fill="#4A7EFF" opacity=".08"/>'
-      + '<rect x="75" y="352" width="150" height="22" rx="11" fill="none" stroke="#4A7EFF" stroke-width=".6" opacity=".35"/>'
-      + '<text x="150" y="367" text-anchor="middle" fill="#4A7EFF" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">📺 ACESSO GRATUITO</text>'
-      + '<text x="150" y="388" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-      + '<path d="M0,0 L20,0 L0,20 Z" fill="#f59e0b" opacity=".12"/>'
-      + '<path d="M300,0 L280,0 L300,20 Z" fill="#4A7EFF" opacity=".12"/>'
-      + '<path d="M0,400 L20,400 L0,380 Z" fill="#4A7EFF" opacity=".08"/>'
-      + '<path d="M300,400 L280,400 L300,380 Z" fill="#f59e0b" opacity=".1"/>'
-      + '</svg>';
-
-  // ── BITCOIN ───────────────────────────────────────────────────
-  } else if (id === 'bc') {
-    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
-      + '<defs>'
-      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#0f0a00"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
-      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f7931a;stop-opacity:0"/><stop offset="50%" style="stop-color:#f7931a;stop-opacity:.65"/><stop offset="100%" style="stop-color:#f7931a;stop-opacity:0"/></linearGradient>'
-      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#f7931a"/><stop offset="100%" style="stop-color:#ffb74d"/></linearGradient>'
-      + '<radialGradient id="glow" cx="50%" cy="38%" r="42%"><stop offset="0%" style="stop-color:#f7931a;stop-opacity:.18"/><stop offset="100%" style="stop-color:#f7931a;stop-opacity:0"/></radialGradient>'
-      + '</defs>'
-      + '<rect width="300" height="400" fill="url(#a)"/>'
-      + '<rect width="300" height="400" fill="url(#glow)"/>'
-      // Grade hex-style
-      + '<g opacity=".055" stroke="#f7931a" stroke-width=".4">'
-      + '<line x1="0" y1="40" x2="300" y2="40"/><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="120" x2="300" y2="120"/><line x1="0" y1="160" x2="300" y2="160"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="280" x2="300" y2="280"/><line x1="0" y1="340" x2="300" y2="340"/>'
-      + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/>'
-      + '</g>'
-      // Gráfico de preço (candlestick lines)
-      + '<polyline points="42,155 60,130 80,142 100,105 118,118 140,88 160,108 178,82 195,92 212,72 228,85 248,62" fill="none" stroke="url(#c)" stroke-width="1.6" opacity=".65" stroke-linejoin="round" stroke-linecap="round"/>'
-      + '<circle cx="248" cy="62" r="3.5" fill="#f7931a" opacity=".9"/>'
-      // Símbolo Bitcoin grande
-      + '<circle cx="150" cy="112" r="50" fill="none" stroke="#f7931a" stroke-width=".8" opacity=".2"/>'
-      + '<circle cx="150" cy="112" r="36" fill="#f7931a" opacity=".06"/>'
-      + '<circle cx="150" cy="112" r="36" fill="none" stroke="#f7931a" stroke-width=".5" opacity=".18"/>'
-      // Símbolo ₿
-      + '<text x="150" y="126" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="38" opacity=".75">₿</text>'
-      // Divisória
-      + '<rect x="0" y="172" width="300" height="2" fill="url(#b)"/>'
-      + '<rect x="20" y="176" width="260" height=".6" fill="url(#b)" opacity=".4"/>'
-      // Título
-      + '<text x="150" y="207" text-anchor="middle" fill="#f7931a" font-family="Arial" font-weight="900" font-size="10" letter-spacing="4" opacity=".65">MATHEUS ACADEMY</text>'
-      + '<text x="150" y="238" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="26" letter-spacing="1">BITCOIN</text>'
-      + '<text x="150" y="260" text-anchor="middle" fill="url(#c)" font-family="Arial" font-size="10" letter-spacing="2.5" font-weight="600">A MOEDA QUE MUDOU O MUNDO</text>'
-      + '<rect x="50" y="268" width="200" height="1.2" fill="url(#b)"/>'
-      // Subtítulo e stats
-      + '<text x="150" y="290" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="8" letter-spacing="2">BLOCKCHAIN · HALVING · MINERAÇÃO</text>'
-      + '<text x="150" y="308" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">WALL ST · ETF · RESERVA DE VALOR</text>'
-      // Badge horas
-      + '<rect x="86" y="322" width="128" height="22" rx="11" fill="url(#c)" opacity=".12"/>'
-      + '<rect x="86" y="322" width="128" height="22" rx="11" fill="none" stroke="#f7931a" stroke-width=".6" opacity=".4"/>'
-      + '<text x="150" y="337" text-anchor="middle" fill="#f7931a" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">30H · 35 MÓDULOS</text>'
-      + '<text x="150" y="385" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-      + '<path d="M0,0 L22,0 L0,22 Z" fill="#f7931a" opacity=".14"/>'
-      + '<path d="M300,0 L278,0 L300,22 Z" fill="#f7931a" opacity=".1"/>'
-      + '<path d="M0,400 L22,400 L0,378 Z" fill="#ffb74d" opacity=".1"/>'
-      + '<path d="M300,400 L278,400 L300,378 Z" fill="#f7931a" opacity=".1"/>'
-      + '</svg>';
-
-  // ── DOMINANDO O TRÁFEGO PAGO ──────────────────────────────────
-  } else if (id === 'ctp') {
-    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
-      + '<defs>'
-      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#060418"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
-      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#4A7EFF;stop-opacity:0"/><stop offset="50%" style="stop-color:#4A7EFF;stop-opacity:.65"/><stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0"/></linearGradient>'
-      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#4A7EFF"/><stop offset="100%" style="stop-color:#00d4ff"/></linearGradient>'
-      + '<radialGradient id="glow" cx="50%" cy="40%" r="42%"><stop offset="0%" style="stop-color:#4A7EFF;stop-opacity:.16"/><stop offset="100%" style="stop-color:#4A7EFF;stop-opacity:0"/></radialGradient>'
-      + '</defs>'
-      + '<rect width="300" height="400" fill="url(#a)"/>'
-      + '<rect width="300" height="400" fill="url(#glow)"/>'
-      // Grade
-      + '<g opacity=".055" stroke="#4A7EFF" stroke-width=".4">'
-      + '<line x1="0" y1="40" x2="300" y2="40"/><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="120" x2="300" y2="120"/><line x1="0" y1="160" x2="300" y2="160"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="280" x2="300" y2="280"/>'
-      + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/>'
-      + '</g>'
-      // Funil de ads (representação visual)
-      + '<polygon points="80,48 220,48 195,85 105,85" fill="url(#c)" opacity=".08"/>'
-      + '<polygon points="80,48 220,48 195,85 105,85" fill="none" stroke="url(#c)" stroke-width=".8" opacity=".4"/>'
-      + '<polygon points="105,88 195,88 178,122 122,122" fill="url(#c)" opacity=".06"/>'
-      + '<polygon points="105,88 195,88 178,122 122,122" fill="none" stroke="url(#c)" stroke-width=".7" opacity=".3"/>'
-      + '<polygon points="122,125 178,125 165,155 135,155" fill="url(#c)" opacity=".05"/>'
-      + '<polygon points="122,125 178,125 165,155 135,155" fill="none" stroke="url(#c)" stroke-width=".6" opacity=".25"/>'
-      // Labels do funil
-      + '<text x="150" y="68" text-anchor="middle" fill="#4A7EFF" font-family="Arial" font-weight="700" font-size="7.5" letter-spacing="2" opacity=".8">TRÁFEGO · ALCANCE</text>'
-      + '<text x="150" y="108" text-anchor="middle" fill="#6aaeff" font-family="Arial" font-weight="700" font-size="7" letter-spacing="2" opacity=".7">ENGAJAMENTO</text>'
-      + '<text x="150" y="142" text-anchor="middle" fill="#00d4ff" font-family="Arial" font-weight="700" font-size="7" letter-spacing="2" opacity=".7">CONVERSÃO</text>'
-      // Seta de retorno no funil (ROAS)
-      + '<text x="230" y="102" text-anchor="middle" fill="#00d4ff" font-family="Arial" font-weight="900" font-size="9" opacity=".7">ROAS</text>'
-      + '<text x="230" y="116" text-anchor="middle" fill="#00d4ff" font-family="Arial" font-weight="700" font-size="8" opacity=".55">↑ ROI</text>'
-      // Plataformas icons — textos
-      + '<text x="40" y="72" text-anchor="middle" fill="#1877f2" font-family="Arial" font-weight="900" font-size="9" opacity=".75">META</text>'
-      + '<text x="40" y="84" text-anchor="middle" fill="#1877f2" font-family="Arial" font-size="7" opacity=".55">ADS</text>'
-      + '<text x="265" y="72" text-anchor="middle" fill="#ea4335" font-family="Arial" font-weight="900" font-size="9" opacity=".75">GOOGLE</text>'
-      + '<text x="265" y="84" text-anchor="middle" fill="#ea4335" font-family="Arial" font-size="7" opacity=".55">ADS</text>'
-      + '<text x="40" y="110" text-anchor="middle" fill="#ff0050" font-family="Arial" font-weight="900" font-size="9" opacity=".65">TIKTOK</text>'
-      + '<text x="265" y="110" text-anchor="middle" fill="#ff0000" font-family="Arial" font-weight="900" font-size="9" opacity=".65">YOUTUBE</text>'
-      // Divisória
-      + '<rect x="0" y="172" width="300" height="2" fill="url(#b)"/>'
-      // Título
-      + '<text x="150" y="205" text-anchor="middle" fill="#4A7EFF" font-family="Arial" font-weight="900" font-size="10" letter-spacing="4" opacity=".6">MATHEUS ACADEMY</text>'
-      + '<text x="150" y="234" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="22" letter-spacing="1">DOMINANDO O</text>'
-      + '<text x="150" y="260" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="22" letter-spacing="1">TRÁFEGO PAGO</text>'
-      + '<rect x="40" y="268" width="220" height="1.2" fill="url(#b)"/>'
-      + '<text x="150" y="288" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="8" letter-spacing="2">DO ZERO AO EXPERT EM PAID ADS</text>'
-      + '<text x="150" y="306" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">META · GOOGLE · TIKTOK · YOUTUBE</text>'
-      // Stats badges
-      + '<rect x="26" y="320" width="68" height="36" rx="6" fill="#4A7EFF" opacity=".08"/>'
-      + '<rect x="26" y="320" width="68" height="36" rx="6" fill="none" stroke="#4A7EFF" stroke-width=".5" opacity=".35"/>'
-      + '<text x="60" y="335" text-anchor="middle" fill="#4A7EFF" font-family="Arial" font-weight="900" font-size="11">380h</text>'
-      + '<text x="60" y="348" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7" letter-spacing="1">HORAS</text>'
-      + '<rect x="116" y="320" width="68" height="36" rx="6" fill="#00d4ff" opacity=".07"/>'
-      + '<rect x="116" y="320" width="68" height="36" rx="6" fill="none" stroke="#00d4ff" stroke-width=".5" opacity=".3"/>'
-      + '<text x="150" y="335" text-anchor="middle" fill="#00d4ff" font-family="Arial" font-weight="900" font-size="11">217</text>'
-      + '<text x="150" y="348" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7" letter-spacing="1">MÓDULOS</text>'
-      + '<rect x="206" y="320" width="68" height="36" rx="6" fill="#4A7EFF" opacity=".08"/>'
-      + '<rect x="206" y="320" width="68" height="36" rx="6" fill="none" stroke="#4A7EFF" stroke-width=".5" opacity=".35"/>'
-      + '<text x="240" y="335" text-anchor="middle" fill="#4A7EFF" font-family="Arial" font-weight="900" font-size="11">1519</text>'
-      + '<text x="240" y="348" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7" letter-spacing="1">TÓPICOS</text>'
-      + '<text x="150" y="385" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-      + '<path d="M0,0 L22,0 L0,22 Z" fill="#4A7EFF" opacity=".14"/>'
-      + '<path d="M300,0 L278,0 L300,22 Z" fill="#00d4ff" opacity=".12"/>'
-      + '<path d="M0,400 L22,400 L0,378 Z" fill="#00d4ff" opacity=".1"/>'
-      + '<path d="M300,400 L278,400 L300,378 Z" fill="#4A7EFF" opacity=".1"/>'
-      + '</svg>';
-
-  // ── TÉCNICAS DE PERSUASÃO ─────────────────────────────────────
-  } else if (id === 'ctep') {
-    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
-      + '<defs>'
-      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#0d0318"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
-      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#a855f7;stop-opacity:0"/><stop offset="50%" style="stop-color:#a855f7;stop-opacity:.6"/><stop offset="100%" style="stop-color:#ec4899;stop-opacity:0"/></linearGradient>'
-      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#a855f7"/><stop offset="100%" style="stop-color:#ec4899"/></linearGradient>'
-      + '<radialGradient id="glow" cx="50%" cy="38%" r="42%"><stop offset="0%" style="stop-color:#a855f7;stop-opacity:.15"/><stop offset="100%" style="stop-color:#a855f7;stop-opacity:0"/></radialGradient>'
-      + '</defs>'
-      + '<rect width="300" height="400" fill="url(#a)"/>'
-      + '<rect width="300" height="400" fill="url(#glow)"/>'
-      // Grade
-      + '<g opacity=".05" stroke="#a855f7" stroke-width=".4">'
-      + '<line x1="0" y1="40" x2="300" y2="40"/><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="120" x2="300" y2="120"/><line x1="0" y1="160" x2="300" y2="160"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="280" x2="300" y2="280"/>'
-      + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/>'
-      + '</g>'
-      // Ondas de influência (círculos concêntricos de pulso)
-      + '<circle cx="150" cy="105" r="20" fill="url(#c)" opacity=".12"/>'
-      + '<circle cx="150" cy="105" r="20" fill="none" stroke="url(#c)" stroke-width="1.5" opacity=".7"/>'
-      + '<circle cx="150" cy="105" r="36" fill="none" stroke="#a855f7" stroke-width=".8" opacity=".4"/>'
-      + '<circle cx="150" cy="105" r="52" fill="none" stroke="#a855f7" stroke-width=".6" opacity=".28"/>'
-      + '<circle cx="150" cy="105" r="68" fill="none" stroke="#a855f7" stroke-width=".4" opacity=".18"/>'
-      // Ícone cérebro/pessoa no centro
-      + '<text x="150" y="113" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="20" opacity=".85">🧠</text>'
-      // Palavras chave ao redor
-      + '<text x="76" y="60" text-anchor="middle" fill="#a855f7" font-family="Arial" font-weight="700" font-size="7" letter-spacing="1" opacity=".65">ÂNCORA</text>'
-      + '<text x="228" y="60" text-anchor="middle" fill="#ec4899" font-family="Arial" font-weight="700" font-size="7" letter-spacing="1" opacity=".65">RAPPORT</text>'
-      + '<text x="50" y="108" text-anchor="middle" fill="#a855f7" font-family="Arial" font-weight="700" font-size="7" letter-spacing="1" opacity=".6">GATILHO</text>'
-      + '<text x="254" y="108" text-anchor="middle" fill="#ec4899" font-family="Arial" font-weight="700" font-size="7" letter-spacing="1" opacity=".6">PROVA SOC</text>'
-      + '<text x="76" y="152" text-anchor="middle" fill="#a855f7" font-family="Arial" font-weight="700" font-size="7" letter-spacing="1" opacity=".55">ESCASSEZ</text>'
-      + '<text x="228" y="152" text-anchor="middle" fill="#ec4899" font-family="Arial" font-weight="700" font-size="7" letter-spacing="1" opacity=".55">AUTORIDADE</text>'
-      // Linhas conectando palavras ao centro
-      + '<line x1="100" y1="65" x2="134" y2="90" stroke="#a855f7" stroke-width=".4" opacity=".25" stroke-dasharray="2,3"/>'
-      + '<line x1="200" y1="65" x2="166" y2="90" stroke="#ec4899" stroke-width=".4" opacity=".25" stroke-dasharray="2,3"/>'
-      + '<line x1="82" y1="108" x2="114" y2="108" stroke="#a855f7" stroke-width=".4" opacity=".2" stroke-dasharray="2,3"/>'
-      + '<line x1="218" y1="108" x2="186" y2="108" stroke="#ec4899" stroke-width=".4" opacity=".2" stroke-dasharray="2,3"/>'
-      // Divisória
-      + '<rect x="0" y="170" width="300" height="2" fill="url(#b)"/>'
-      // Título
-      + '<text x="150" y="204" text-anchor="middle" fill="#a855f7" font-family="Arial" font-weight="900" font-size="10" letter-spacing="4" opacity=".6">MATHEUS ACADEMY</text>'
-      + '<text x="150" y="234" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="21" letter-spacing="1">TÉCNICAS DE</text>'
-      + '<text x="150" y="262" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="22" letter-spacing="1">PERSUASÃO</text>'
-      + '<rect x="50" y="270" width="200" height="1.2" fill="url(#b)"/>'
-      + '<text x="150" y="292" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="8" letter-spacing="2">INFLUÊNCIA · PNL · COMUNICAÇÃO</text>'
-      + '<text x="150" y="310" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">VENDAS · LIDERANÇA · NEGOCIAÇÃO</text>'
-      // Badge horas
-      + '<rect x="86" y="324" width="128" height="22" rx="11" fill="url(#c)" opacity=".1"/>'
-      + '<rect x="86" y="324" width="128" height="22" rx="11" fill="none" stroke="#a855f7" stroke-width=".6" opacity=".4"/>'
-      + '<text x="150" y="339" text-anchor="middle" fill="#a855f7" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">48H · 27 MÓDULOS</text>'
-      + '<text x="150" y="385" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-      + '<path d="M0,0 L22,0 L0,22 Z" fill="#a855f7" opacity=".14"/>'
-      + '<path d="M300,0 L278,0 L300,22 Z" fill="#ec4899" opacity=".12"/>'
-      + '<path d="M0,400 L22,400 L0,378 Z" fill="#ec4899" opacity=".1"/>'
-      + '<path d="M300,400 L278,400 L300,378 Z" fill="#a855f7" opacity=".1"/>'
-      + '</svg>';
-
-  // ── LEI FELCA ─────────────────────────────────────────────────
-  } else if (id === 'nlf') {
-    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
-      + '<defs>'
-      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#0a0212"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
-      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ef4444;stop-opacity:0"/><stop offset="30%" style="stop-color:#ef4444;stop-opacity:.5"/><stop offset="70%" style="stop-color:#dc2626;stop-opacity:.5"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:0"/></linearGradient>'
-      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#ef4444"/><stop offset="100%" style="stop-color:#7c3aed"/></linearGradient>'
-      + '<radialGradient id="glow" cx="50%" cy="38%" r="42%"><stop offset="0%" style="stop-color:#ef4444;stop-opacity:.12"/><stop offset="100%" style="stop-color:#ef4444;stop-opacity:0"/></radialGradient>'
-      + '</defs>'
-      + '<rect width="300" height="400" fill="url(#a)"/>'
-      + '<rect width="300" height="400" fill="url(#glow)"/>'
-      // Grade sutil
-      + '<g opacity=".05" stroke="#ef4444" stroke-width=".4">'
-      + '<line x1="0" y1="40" x2="300" y2="40"/><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="120" x2="300" y2="120"/><line x1="0" y1="160" x2="300" y2="160"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="280" x2="300" y2="280"/>'
-      + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/>'
-      + '</g>'
-      // Câmera de vigilância estilizada
-      + '<rect x="115" y="52" width="60" height="38" rx="5" fill="none" stroke="#ef4444" stroke-width=".8" opacity=".4"/>'
-      + '<rect x="118" y="55" width="54" height="32" rx="4" fill="#ef4444" opacity=".05"/>'
-      // Lente
-      + '<circle cx="150" cy="71" r="14" fill="none" stroke="#ef4444" stroke-width=".7" opacity=".5"/>'
-      + '<circle cx="150" cy="71" r="9" fill="#ef4444" opacity=".08"/>'
-      + '<circle cx="150" cy="71" r="5" fill="#ef4444" opacity=".2"/>'
-      + '<circle cx="150" cy="71" r="2" fill="#ef4444" opacity=".5"/>'
-      // Ângulo câmera
-      + '<path d="M115,52 L90,38 L90,90 L115,90 Z" fill="none" stroke="#ef4444" stroke-width=".6" opacity=".3"/>'
-      + '<path d="M90,38 L115,52" stroke="#ef4444" stroke-width=".5" opacity=".25"/>'
-      + '<path d="M90,90 L115,90" stroke="#ef4444" stroke-width=".5" opacity=".25"/>'
-      // Onda de sinal
-      + '<path d="M186,58 Q198,58 198,71 Q198,84 186,84" fill="none" stroke="#ef4444" stroke-width=".7" opacity=".45"/>'
-      + '<path d="M193,52 Q210,52 210,71 Q210,90 193,90" fill="none" stroke="#ef4444" stroke-width=".55" opacity=".3"/>'
-      + '<path d="M200,46 Q222,46 222,71 Q222,96 200,96" fill="none" stroke="#ef4444" stroke-width=".4" opacity=".2"/>'
-      // Bandeira China
-      + '<rect x="38" y="112" width="60" height="40" rx="3" fill="#de2910" opacity=".18"/>'
-      + '<rect x="38" y="112" width="60" height="40" rx="3" fill="none" stroke="#de2910" stroke-width=".6" opacity=".45"/>'
-      + '<text x="58" y="137" text-anchor="middle" fill="#ffde00" font-family="Arial" font-weight="700" font-size="14" opacity=".8">★</text>'
-      + '<text x="75" y="128" text-anchor="middle" fill="#ffde00" font-family="Arial" font-size="7" opacity=".7">★</text>'
-      + '<text x="82" y="136" text-anchor="middle" fill="#ffde00" font-family="Arial" font-size="6" opacity=".65">★</text>'
-      + '<text x="78" y="146" text-anchor="middle" fill="#ffde00" font-family="Arial" font-size="6" opacity=".65">★</text>'
-      + '<text x="70" y="150" text-anchor="middle" fill="#ffde00" font-family="Arial" font-size="6" opacity=".7">★</text>'
-      // Seta chinesa →Brasil
-      + '<line x1="98" y1="133" x2="136" y2="133" stroke="url(#c)" stroke-width="1" opacity=".55" stroke-dasharray="3,2"/>'
-      + '<text x="117" y="128" text-anchor="middle" fill="#ef4444" font-family="Arial" font-size="8" opacity=".7">→</text>'
-      // Bandeira Brasil estilizada
-      + '<rect x="142" y="112" width="60" height="40" rx="3" fill="#009c3b" opacity=".12"/>'
-      + '<rect x="142" y="112" width="60" height="40" rx="3" fill="none" stroke="#009c3b" stroke-width=".6" opacity=".4"/>'
-      + '<text x="172" y="137" text-anchor="middle" fill="#002776" font-family="Arial" font-weight="900" font-size="13" opacity=".5">🇧🇷</text>'
-      // Cadeado direita
-      + '<rect x="218" y="116" width="46" height="34" rx="4" fill="none" stroke="#7c3aed" stroke-width=".7" opacity=".4"/>'
-      + '<path d="M228,116 Q228,106 240,106 Q252,106 252,116" fill="none" stroke="#7c3aed" stroke-width=".7" opacity=".4"/>'
-      + '<circle cx="240" cy="130" r="6" fill="none" stroke="#7c3aed" stroke-width=".7" opacity=".5"/>'
-      + '<line x1="240" y1="132" x2="240" y2="138" stroke="#7c3aed" stroke-width=".7" opacity=".5"/>'
-      // Divisória
-      + '<rect x="0" y="164" width="300" height="2" fill="url(#b)"/>'
-      // Título
-      + '<text x="150" y="196" text-anchor="middle" fill="#ef4444" font-family="Arial" font-weight="900" font-size="10" letter-spacing="3" opacity=".65">NOTÍCIA · ANÁLISE</text>'
-      + '<text x="150" y="224" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="20" letter-spacing="1">LEI FELCA E O</text>'
-      + '<text x="150" y="250" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="17" letter-spacing="1">MODELO CHINÊS</text>'
-      + '<text x="150" y="272" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="17" letter-spacing="1">DE CENSURA</text>'
-      + '<rect x="40" y="280" width="220" height="1.2" fill="url(#b)"/>'
-      + '<text x="150" y="302" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="8" letter-spacing="2">CENSURA · VIGILÂNCIA · LIBERDADE</text>'
-      + '<text x="150" y="320" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">CHINA · BRASIL · INTERNET · DIREITOS</text>'
-      // Badge gratuito
-      + '<rect x="70" y="334" width="160" height="22" rx="11" fill="#ef4444" opacity=".1"/>'
-      + '<rect x="70" y="334" width="160" height="22" rx="11" fill="none" stroke="#ef4444" stroke-width=".6" opacity=".4"/>'
-      + '<text x="150" y="349" text-anchor="middle" fill="#ef4444" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">📺 ACESSO GRATUITO</text>'
-      + '<text x="150" y="385" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-      + '<path d="M0,0 L22,0 L0,22 Z" fill="#ef4444" opacity=".14"/>'
-      + '<path d="M300,0 L278,0 L300,22 Z" fill="#7c3aed" opacity=".12"/>'
-      + '</svg>';
-
-  // ── INTELIGÊNCIA EMOCIONAL ────────────────────────────────────
-  } else if (id === 'ie') {
-    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
-      + '<defs>'
-      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#120a0a"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
-      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0"/><stop offset="50%" style="stop-color:#ff6b6b;stop-opacity:.6"/><stop offset="100%" style="stop-color:#ffa07a;stop-opacity:0"/></linearGradient>'
-      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#ff6b6b"/><stop offset="100%" style="stop-color:#ffa07a"/></linearGradient>'
-      + '<radialGradient id="glow" cx="50%" cy="38%" r="42%"><stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:.15"/><stop offset="100%" style="stop-color:#ff6b6b;stop-opacity:0"/></radialGradient>'
-      + '</defs>'
-      + '<rect width="300" height="400" fill="url(#a)"/>'
-      + '<rect width="300" height="400" fill="url(#glow)"/>'
-      // Grade
-      + '<g opacity=".05" stroke="#ff6b6b" stroke-width=".4">'
-      + '<line x1="0" y1="40" x2="300" y2="40"/><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="120" x2="300" y2="120"/><line x1="0" y1="160" x2="300" y2="160"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="280" x2="300" y2="280"/>'
-      + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/>'
-      + '</g>'
-      // Coração central (estilizado com forma geométrica)
-      + '<path d="M150,148 C150,148 105,120 105,88 C105,70 118,58 133,62 C140,64 146,68 150,74 C154,68 160,64 167,62 C182,58 195,70 195,88 C195,120 150,148 150,148 Z" fill="url(#c)" opacity=".12"/>'
-      + '<path d="M150,148 C150,148 105,120 105,88 C105,70 118,58 133,62 C140,64 146,68 150,74 C154,68 160,64 167,62 C182,58 195,70 195,88 C195,120 150,148 150,148 Z" fill="none" stroke="url(#c)" stroke-width="1.2" opacity=".55"/>'
-      // Pulso cardíaco dentro do coração
-      + '<polyline points="115,95 125,95 130,80 138,110 143,78 148,100 153,95 160,95 165,82 170,95 185,95" fill="none" stroke="#ff6b6b" stroke-width="1.2" opacity=".7" stroke-linejoin="round" stroke-linecap="round"/>'
-      // Anéis de equilíbrio ao redor
-      + '<circle cx="150" cy="100" r="62" fill="none" stroke="#ff6b6b" stroke-width=".5" opacity=".18"/>'
-      + '<circle cx="150" cy="100" r="75" fill="none" stroke="#ffa07a" stroke-width=".4" opacity=".12"/>'
-      // Pilares da inteligência emocional (ao redor)
-      + '<text x="60" y="55" text-anchor="middle" fill="#ff6b6b" font-family="Arial" font-weight="700" font-size="6.5" letter-spacing="1" opacity=".7">AUTO-</text>'
-      + '<text x="60" y="64" text-anchor="middle" fill="#ff6b6b" font-family="Arial" font-weight="700" font-size="6.5" letter-spacing="1" opacity=".7">CONHECIMENTO</text>'
-      + '<text x="240" y="55" text-anchor="middle" fill="#ffa07a" font-family="Arial" font-weight="700" font-size="6.5" letter-spacing="1" opacity=".7">EMPATIA</text>'
-      + '<text x="38" y="108" text-anchor="middle" fill="#ff6b6b" font-family="Arial" font-weight="700" font-size="6.5" letter-spacing="1" opacity=".65">AUTO-</text>'
-      + '<text x="38" y="117" text-anchor="middle" fill="#ff6b6b" font-family="Arial" font-weight="700" font-size="6.5" letter-spacing="1" opacity=".65">CONTROLE</text>'
-      + '<text x="262" y="108" text-anchor="middle" fill="#ffa07a" font-family="Arial" font-weight="700" font-size="6.5" letter-spacing="1" opacity=".65">MOTIVAÇÃO</text>'
-      + '<text x="65" y="155" text-anchor="middle" fill="#ff6b6b" font-family="Arial" font-weight="700" font-size="6.5" letter-spacing="1" opacity=".55">HAB. SOCIAIS</text>'
-      + '<text x="238" y="155" text-anchor="middle" fill="#ffa07a" font-family="Arial" font-weight="700" font-size="6.5" letter-spacing="1" opacity=".55">EQUILÍBRIO</text>'
-      // Linhas pontilhadas conectando
-      + '<line x1="90" y1="60" x2="110" y2="78" stroke="#ff6b6b" stroke-width=".4" opacity=".2" stroke-dasharray="2,3"/>'
-      + '<line x1="210" y1="60" x2="190" y2="78" stroke="#ffa07a" stroke-width=".4" opacity=".2" stroke-dasharray="2,3"/>'
-      + '<line x1="62" y1="108" x2="88" y2="100" stroke="#ff6b6b" stroke-width=".4" opacity=".18" stroke-dasharray="2,3"/>'
-      + '<line x1="238" y1="108" x2="212" y2="100" stroke="#ffa07a" stroke-width=".4" opacity=".18" stroke-dasharray="2,3"/>'
-      // Divisória
-      + '<rect x="0" y="168" width="300" height="2" fill="url(#b)"/>'
-      // Título
-      + '<text x="150" y="200" text-anchor="middle" fill="#ff6b6b" font-family="Arial" font-weight="900" font-size="10" letter-spacing="4" opacity=".6">MATHEUS ACADEMY</text>'
-      + '<text x="150" y="230" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="20" letter-spacing="1">INTELIGÊNCIA</text>'
-      + '<text x="150" y="258" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="22" letter-spacing="1">EMOCIONAL</text>'
-      + '<rect x="50" y="266" width="200" height="1.2" fill="url(#b)"/>'
-      + '<text x="150" y="288" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="8" letter-spacing="2">DO AUTOCONHECIMENTO À MAESTRIA</text>'
-      + '<text x="150" y="306" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">RELAÇÕES · LIDERANÇA · PROPÓSITO</text>'
-      // Badge horas
-      + '<rect x="86" y="320" width="128" height="22" rx="11" fill="url(#c)" opacity=".1"/>'
-      + '<rect x="86" y="320" width="128" height="22" rx="11" fill="none" stroke="#ff6b6b" stroke-width=".6" opacity=".4"/>'
-      + '<text x="150" y="335" text-anchor="middle" fill="#ff6b6b" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">35H · 20 MÓDULOS</text>'
-      + '<text x="150" y="385" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-      + '<path d="M0,0 L22,0 L0,22 Z" fill="#ff6b6b" opacity=".14"/>'
-      + '<path d="M300,0 L278,0 L300,22 Z" fill="#ffa07a" opacity=".12"/>'
-      + '<path d="M0,400 L22,400 L0,378 Z" fill="#ffa07a" opacity=".1"/>'
-      + '<path d="M300,400 L278,400 L300,378 Z" fill="#ff6b6b" opacity=".1"/>'
-      + '</svg>';
-  }
-
-  if (!s) return '';
-  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
-}
-// ================================================================
-// MATHEUS ACADEMY — makeAutoCover v2 (REDESENHADA)
-// Substitui a função makeAutoCover() no index.html
-// Usada para qualquer curso sem capa custom em makeSVGCover
-// ================================================================
-
 function makeAutoCover(course, gi, isSoon) {
+  // Prefixo único para evitar conflito de IDs entre múltiplos SVGs na página
   var pfx = 'ac' + Math.abs((course.id||course.name||'x').split('').reduce(function(a,c){return a*31+c.charCodeAt(0)|0;},0)).toString(36).substring(0,6);
   var name = (course.name || '').toUpperCase();
-  var icon = course.icon || '🎓';
-  var nameLow = (course.name || '').toLowerCase();
+  var icon = course.icon || '📚';
 
-  // Detecção de tema
+  // Detectar tema pelo nome para escolher paleta mais relevante
+  var nameLow = (course.name || '').toLowerCase();
   var autoGi = gi;
-  if(/tráfego|traffic|ads|meta|google|marketing/i.test(nameLow)) autoGi = 0;
-  else if(/negócio|business|empreend|lucro|renda|dinheiro|financ/i.test(nameLow)) autoGi = 1;
-  else if(/geopolít|guerra|conflito|mundo|global|internacional/i.test(nameLow)) autoGi = 2;
-  else if(/nicho|produto|venda|ecommerce|digital/i.test(nameLow)) autoGi = 3;
-  else if(/cripto|bitcoin|invest|bolsa|mercado/i.test(nameLow)) autoGi = 4;
-  else if(/ia|inteligência artificial|tech|tecnolog/i.test(nameLow)) autoGi = 5;
-  else if(/saúde|bem.estar|mental|psicolog|emocion/i.test(nameLow)) autoGi = 6;
-  else if(/bíblia|teolog|fé|deus|cristã/i.test(nameLow)) autoGi = 7;
+  if(/tráfego|traffic|ads|meta|google|marketing/i.test(nameLow)) autoGi = 0; // azul
+  else if(/negócio|business|empreend|lucro|renda|dinheiro|financ/i.test(nameLow)) autoGi = 1; // verde
+  else if(/geopolít|guerra|conflito|mundo|global|internacional/i.test(nameLow)) autoGi = 2; // dourado
+  else if(/nicho|produto|venda|ecommerce|digital/i.test(nameLow)) autoGi = 3; // roxo
+  else if(/cripto|bitcoin|invest|bolsa|mercado/i.test(nameLow)) autoGi = 5; // ciano
+  else if(/ia|inteligência artificial|tech|tecnolog/i.test(nameLow)) autoGi = 6; // lima
+  else if(/saúde|bem.estar|mental|psicolog/i.test(nameLow)) autoGi = 7; // rosa
+  else if(/direito|juridico|lei|contrato/i.test(nameLow)) autoGi = 4; // vermelho
 
   var PALETTES = [
-    {c1:'#4A7EFF',c2:'#00d4ff',bg:'#060418',acc:'#4A7EFF'},  // 0 azul/ads
-    {c1:'#22c55e',c2:'#4ade80',bg:'#05140a',acc:'#22c55e'},   // 1 verde/negócios
-    {c1:'#f59e0b',c2:'#ef4444',bg:'#0e0800',acc:'#f59e0b'},   // 2 dourado/geopolítica
-    {c1:'#a855f7',c2:'#ec4899',bg:'#0d0318',acc:'#a855f7'},   // 3 roxo/nichos
-    {c1:'#f7931a',c2:'#ffb74d',bg:'#0f0800',acc:'#f7931a'},   // 4 laranja/crypto
-    {c1:'#06b6d4',c2:'#0ea5e9',bg:'#00080f',acc:'#06b6d4'},   // 5 ciano/tech
-    {c1:'#ff6b6b',c2:'#ffa07a',bg:'#120505',acc:'#ff6b6b'},   // 6 coral/saúde
-    {c1:'#e9c46a',c2:'#f4a261',bg:'#100a02',acc:'#e9c46a'}    // 7 dourado-mel/bíblia
+    {c1:'#4A7EFF',c2:'#00d4ff',bg:'#0a0520'},
+    {c1:'#22c55e',c2:'#4ade80',bg:'#051a0a'},
+    {c1:'#f59e0b',c2:'#fbbf24',bg:'#1a0e00'},
+    {c1:'#a855f7',c2:'#ec4899',bg:'#1a0520'},
+    {c1:'#ef4444',c2:'#f97316',bg:'#1a0500'},
+    {c1:'#06b6d4',c2:'#0ea5e9',bg:'#00101a'},
+    {c1:'#84cc16',c2:'#22d3ee',bg:'#051a10'},
+    {c1:'#e879f9',c2:'#a855f7',bg:'#1a0028'}
   ];
   var p = PALETTES[autoGi % PALETTES.length];
 
-  // Quebrar nome em linhas
+  // Quebrar nome em até 2 linhas
   var words = name.split(' ');
   var line1 = '', line2 = '', cur = '';
   words.forEach(function(w) {
-    if ((cur + ' ' + w).trim().length <= 18) { cur = (cur + ' ' + w).trim(); }
+    if ((cur + ' ' + w).trim().length <= 16) { cur = (cur + ' ' + w).trim(); }
     else if (!line1) { line1 = cur; cur = w; }
     else { line2 = (line2 + ' ' + w).trim(); }
   });
   if (!line1) { line1 = cur; } else { line2 = (cur + ' ' + line2).trim(); }
-  var y1 = line2 ? '225' : '236';
-  var fs1 = line1.length > 16 ? '13' : line1.length > 12 ? '16' : '19';
-  var fs2 = line2.length > 16 ? '12' : '15';
+  var y1 = line2 ? '220' : '232';
+  var fs1 = line1.length > 14 ? '15' : line1.length > 10 ? '18' : '20';
+  var fs2 = line2.length > 14 ? '14' : '16';
 
-  // Stats do curso
-  var statsLine = [];
-  if (course.hours) statsLine.push(course.hours + 'H');
-  if (course.modules) statsLine.push(course.modules + ' MÓD');
-  if (course.topics) statsLine.push(course.topics + ' TÓP');
-  var statsText = statsLine.slice(0, 3).join(' · ');
+  // Badge Em Breve (só quando isSoon=true)
+  var soonBadge = isSoon
+    ? '<rect x="76" y="52" width="148" height="20" rx="10" fill="rgba(0,0,0,.7)"/>'
+      + '<text x="150" y="66" text-anchor="middle" fill="#f59e0b" font-family="Arial,sans-serif" font-weight="800" font-size="8.5" letter-spacing="3">EM BREVE</text>'
+    : '';
 
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
     + '<defs>'
-    + '<linearGradient id="'+pfx+'a" x1="0%" y1="0%" x2="100%" y2="100%">'
-    + '<stop offset="0%" style="stop-color:#03030a"/>'
-    + '<stop offset="50%" style="stop-color:'+p.bg+'"/>'
-    + '<stop offset="100%" style="stop-color:#03030a"/>'
-    + '</linearGradient>'
-    + '<linearGradient id="'+pfx+'b" x1="0%" y1="0%" x2="100%" y2="0%">'
-    + '<stop offset="0%" style="stop-color:'+p.c1+';stop-opacity:0"/>'
-    + '<stop offset="50%" style="stop-color:'+p.c1+';stop-opacity:.65"/>'
-    + '<stop offset="100%" style="stop-color:'+p.c2+';stop-opacity:0"/>'
-    + '</linearGradient>'
-    + '<linearGradient id="'+pfx+'c" x1="0%" y1="0%" x2="100%" y2="100%">'
-    + '<stop offset="0%" style="stop-color:'+p.c1+'"/>'
-    + '<stop offset="100%" style="stop-color:'+p.c2+'"/>'
-    + '</linearGradient>'
-    + '<radialGradient id="'+pfx+'g" cx="50%" cy="38%" r="42%">'
-    + '<stop offset="0%" style="stop-color:'+p.c1+';stop-opacity:.15"/>'
-    + '<stop offset="100%" style="stop-color:'+p.c1+';stop-opacity:0"/>'
-    + '</radialGradient>'
+    + '<linearGradient id="'+pfx+'a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="55%" style="stop-color:' + p.bg + '"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
+    + '<linearGradient id="'+pfx+'b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:' + p.c1 + ';stop-opacity:0"/><stop offset="50%" style="stop-color:' + p.c1 + ';stop-opacity:.55"/><stop offset="100%" style="stop-color:' + p.c2 + ';stop-opacity:0"/></linearGradient>'
+    + '<linearGradient id="'+pfx+'c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + p.c1 + '"/><stop offset="100%" style="stop-color:' + p.c2 + '"/></linearGradient>'
+    + '<filter id="'+pfx+'f"><feGaussianBlur stdDeviation="7"/></filter>'
     + '</defs>'
-    // Fundo + glow
     + '<rect width="300" height="400" fill="url(#'+pfx+'a)"/>'
-    + '<rect width="300" height="400" fill="url(#'+pfx+'g)"/>'
-    // Grade
-    + '<g opacity=".055" stroke="'+p.c1+'" stroke-width=".4">'
-    + '<line x1="0" y1="40" x2="300" y2="40"/><line x1="0" y1="80" x2="300" y2="80"/>'
-    + '<line x1="0" y1="120" x2="300" y2="120"/><line x1="0" y1="160" x2="300" y2="160"/>'
-    + '<line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="280" x2="300" y2="280"/>'
-    + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/>'
-    + '<line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/>'
-    + '<line x1="250" y1="0" x2="250" y2="400"/>'
-    + '</g>'
-    // Círculos decorativos (aura)
-    + '<circle cx="150" cy="105" r="70" fill="'+p.c1+'" opacity=".04"/>'
-    + '<circle cx="150" cy="105" r="55" fill="none" stroke="'+p.c1+'" stroke-width=".7" opacity=".2"/>'
-    + '<circle cx="150" cy="105" r="38" fill="none" stroke="'+p.c2+'" stroke-width=".5" opacity=".15"/>'
-    + '<circle cx="150" cy="105" r="22" fill="url(#'+pfx+'c)" opacity=".08"/>'
-    // Badge Em Breve
-    + (isSoon
-      ? '<rect x="76" y="30" width="148" height="22" rx="11" fill="rgba(0,0,0,.7)"/>'
-        + '<text x="150" y="45" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="800" font-size="9" letter-spacing="3">⏳ EM BREVE</text>'
-      : '')
-    // Ícone principal
-    + '<text x="150" y="121" text-anchor="middle" font-size="44">'+icon+'</text>'
-    // Linha de acento acima do ícone
-    + '<rect x="110" y="58" width="80" height="1.2" fill="url(#'+pfx+'b)" opacity=".5"/>'
-    // Divisória principal
-    + '<rect x="0" y="168" width="300" height="2" fill="url(#'+pfx+'b)"/>'
-    + '<rect x="20" y="172" width="260" height=".6" fill="url(#'+pfx+'b)" opacity=".4"/>'
-    // Label academy
-    + '<text x="150" y="196" text-anchor="middle" fill="'+p.c1+'" font-family="Arial" font-weight="900" font-size="9" letter-spacing="4" opacity=".6">MATHEUS ACADEMY</text>'
-    // Nome do curso
-    + '<text x="150" y="'+y1+'" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="900" font-size="'+fs1+'" letter-spacing="1.5">'+line1+'</text>'
-    + (line2 ? '<text x="150" y="248" text-anchor="middle" fill="url(#'+pfx+'c)" font-family="Arial" font-weight="900" font-size="'+fs2+'" letter-spacing="1.5">'+line2+'</text>' : '')
-    // Linha de separação após título
-    + '<rect x="50" y="258" width="200" height="1.2" fill="url(#'+pfx+'b)"/>'
-    // Stats do curso
-    + '<text x="150" y="278" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="8" letter-spacing="2.5">'+statsText+'</text>'
-    + '<text x="150" y="294" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">MATHEUS ACADEMY · 2026</text>'
-    // Badge CTA
-    + '<rect x="86" y="310" width="128" height="24" rx="12" fill="url(#'+pfx+'c)" opacity=".12"/>'
-    + '<rect x="86" y="310" width="128" height="24" rx="12" fill="none" stroke="'+p.c1+'" stroke-width=".6" opacity=".4"/>'
-    + '<text x="150" y="326" text-anchor="middle" fill="'+p.c2+'" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">'+(isSoon ? '⏳ EM BREVE' : '▶ ACESSAR CURSO')+'</text>'
-    // Linha fina de borda inferior decorativa
-    + '<rect x="0" y="358" width="300" height="1" fill="url(#'+pfx+'b)" opacity=".3"/>'
-    + '<text x="150" y="378" text-anchor="middle" fill="#3a3a52" font-family="Arial" font-size="7" letter-spacing="3">MATHEUS ACADEMY · 2026</text>'
-    // Cantos
-    + '<path d="M0,0 L22,0 L0,22 Z" fill="'+p.c1+'" opacity=".14"/>'
-    + '<path d="M300,0 L278,0 L300,22 Z" fill="'+p.c1+'" opacity=".12"/>'
-    + '<path d="M0,400 L22,400 L0,378 Z" fill="'+p.c2+'" opacity=".1"/>'
-    + '<path d="M300,400 L278,400 L300,378 Z" fill="'+p.c2+'" opacity=".1"/>'
+    + '<g opacity=".05" stroke="' + p.c1 + '" stroke-width=".4"><line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="100" x2="300" y2="100"/><line x1="0" y1="150" x2="300" y2="150"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="250" x2="300" y2="250"/><line x1="0" y1="300" x2="300" y2="300"/><line x1="0" y1="350" x2="300" y2="350"/><line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/></g>'
+    + '<circle cx="150" cy="118" r="72" fill="' + p.c1 + '" opacity=".08" filter="url(#'+pfx+'f)"/>'
+    + '<circle cx="150" cy="118" r="52" fill="none" stroke="' + p.c1 + '" stroke-width=".7" opacity=".22"/>'
+    + '<circle cx="150" cy="118" r="34" fill="none" stroke="' + p.c2 + '" stroke-width=".4" opacity=".18"/>'
+    + '<rect x="0" y="66" width="300" height=".8" fill="url(#'+pfx+'b)" opacity=".5"/>'
+    + '<rect x="0" y="170" width="300" height=".8" fill="url(#'+pfx+'b)" opacity=".5"/>'
+    + soonBadge
+    + '<text x="150" y="134" text-anchor="middle" font-size="46">' + icon + '</text>'
+    + '<rect x="0" y="188" width="300" height="1.5" fill="url(#'+pfx+'b)"/>'
+    + '<text x="150" y="' + y1 + '" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="' + fs1 + '" letter-spacing="1.5">' + line1 + '</text>'
+    + (line2 ? '<text x="150" y="242" text-anchor="middle" fill="url(#'+pfx+'c)" font-family="Arial,sans-serif" font-weight="900" font-size="' + fs2 + '" letter-spacing="1.5">' + line2 + '</text>' : '')
+    + '<rect x="60" y="256" width="180" height="1.2" fill="url(#'+pfx+'b)"/>'
+    + '<text x="150" y="282" text-anchor="middle" fill="#8888a8" font-family="Arial,sans-serif" font-size="8" letter-spacing="2.5">MATHEUS ACADEMY · 2026</text>'
+    + '<rect x="80" y="300" width="140" height="24" rx="12" fill="url(#'+pfx+'c)" opacity=".18"/>'
+    + '<text x="150" y="316" text-anchor="middle" fill="' + p.c2 + '" font-family="Arial,sans-serif" font-weight="700" font-size="9" letter-spacing="2">' + (isSoon ? '⏳ EM BREVE' : '▶ ACESSAR') + '</text>'
+    + '<rect x="108" y="345" width="84" height="18" rx="9" fill="none" stroke="' + p.c1 + '" stroke-width=".6" opacity=".4"/>'
+    + '<text x="150" y="357" text-anchor="middle" fill="' + p.c1 + '" font-family="Arial,sans-serif" font-size="7.5" font-weight="700" letter-spacing="2" opacity=".7">M ACADEMY</text>'
+    + '<path d="M0,0 L16,0 L0,16 Z" fill="' + p.c1 + '" opacity=".15"/>'
+    + '<path d="M300,0 L284,0 L300,16 Z" fill="' + p.c1 + '" opacity=".15"/>'
+    + '<path d="M0,400 L16,400 L0,384 Z" fill="' + p.c2 + '" opacity=".15"/>'
+    + '<path d="M300,400 L284,400 L300,384 Z" fill="' + p.c2 + '" opacity=".15"/>'
     + '</svg>'
   );
 }
+
+function makeSVGCover(id) {
+  var s = '';
+  if (id === 'bm') {
+    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
+      + '<defs><linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0a0a0f"/><stop offset="50%" style="stop-color:#200808"/><stop offset="100%" style="stop-color:#0a0a0f"/></linearGradient>'
+      + '<linearGradient id="r" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#dc2626;stop-opacity:0"/><stop offset="50%" style="stop-color:#dc2626;stop-opacity:.45"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:0"/></linearGradient></defs>'
+      + '<rect width="300" height="400" fill="url(#a)"/>'
+      + '<g opacity=".06" stroke="#dc2626" stroke-width=".5"><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="160" x2="300" y2="160"/><line x1="0" y1="240" x2="300" y2="240"/><line x1="0" y1="320" x2="300" y2="320"/><line x1="75" y1="0" x2="75" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="225" y1="0" x2="225" y2="400"/></g>'
+      + '<circle cx="150" cy="130" r="80" fill="none" stroke="#dc2626" stroke-width=".8" opacity=".12"/>'
+      + '<circle cx="150" cy="130" r="52" fill="none" stroke="#f59e0b" stroke-width=".5" opacity=".18"/>'
+      + '<text x="150" y="112" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="900" font-size="38" opacity=".28">R$52bi</text>'
+      + '<text x="150" y="148" text-anchor="middle" fill="#9898b0" font-family="Arial" font-size="9" letter-spacing="3">ROMBO ESTIMADO</text>'
+      + '<rect x="0" y="200" width="300" height="2" fill="url(#r)"/>'
+      + '<text x="150" y="240" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="900" font-size="22" letter-spacing="2">CASO BANCO</text>'
+      + '<text x="150" y="268" text-anchor="middle" fill="#dc2626" font-family="Arial" font-weight="900" font-size="26" letter-spacing="2">MASTER</text>'
+      + '<rect x="60" y="278" width="180" height="1.5" fill="url(#r)"/>'
+      + '<text x="150" y="306" text-anchor="middle" fill="#9898b0" font-family="Arial" font-weight="700" font-size="8.5" letter-spacing="2">A MAIOR FRAUDE BANCÁRIA</text>'
+      + '<text x="150" y="320" text-anchor="middle" fill="#9898b0" font-family="Arial" font-weight="700" font-size="8.5" letter-spacing="2">DO BRASIL</text>'
+      + '<text x="150" y="356" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2.5">R$52BI · CPI · DELAÇÃO PREMIADA</text>'
+      + '<text x="150" y="373" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7" letter-spacing="2">OPERAÇÃO COMPLIANCE ZERO · 2025</text>'
+      + '<path d="M0,0 L18,0 L0,18 Z" fill="#dc2626" opacity=".08"/><path d="M300,0 L282,0 L300,18 Z" fill="#dc2626" opacity=".08"/>'
+      + '<path d="M0,400 L18,400 L0,382 Z" fill="#f59e0b" opacity=".08"/><path d="M300,400 L282,400 L300,382 Z" fill="#f59e0b" opacity=".08"/>'
+      + '</svg>';
+  } else if (id === 'ii') {
+    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
+      + '<defs><linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0a0a0f"/><stop offset="50%" style="stop-color:#0e1a2e"/><stop offset="100%" style="stop-color:#1a0a00"/></linearGradient>'
+      + '<linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#4b8bff;stop-opacity:0"/><stop offset="30%" style="stop-color:#4b8bff;stop-opacity:.35"/><stop offset="70%" style="stop-color:#ef4444;stop-opacity:.35"/><stop offset="100%" style="stop-color:#ef4444;stop-opacity:0"/></linearGradient></defs>'
+      + '<rect width="300" height="400" fill="url(#a)"/>'
+      + '<g opacity=".05" stroke="#888" stroke-width=".5"><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="320" x2="300" y2="320"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/></g>'
+      + '<circle cx="90" cy="130" r="52" fill="none" stroke="#4b8bff" stroke-width=".8" opacity=".22"/>'
+      + '<circle cx="210" cy="130" r="52" fill="none" stroke="#ef4444" stroke-width=".8" opacity=".22"/>'
+      + '<text x="90" y="118" text-anchor="middle" fill="#4b8bff" font-family="Arial" font-weight="700" font-size="11" opacity=".55" letter-spacing="1">✡</text>'
+      + '<text x="90" y="136" text-anchor="middle" fill="#4b8bff" font-family="Arial" font-weight="800" font-size="12" opacity=".5" letter-spacing="1">ISRAEL</text>'
+      + '<text x="210" y="118" text-anchor="middle" fill="#ef4444" font-family="Arial" font-weight="700" font-size="14" opacity=".55">☪</text>'
+      + '<text x="210" y="136" text-anchor="middle" fill="#ef4444" font-family="Arial" font-weight="800" font-size="12" opacity=".5" letter-spacing="1">IRÃ</text>'
+      + '<text x="150" y="127" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="900" font-size="18" opacity=".7">✕</text>'
+      + '<line x1="90" y1="145" x2="120" y2="145" stroke="#4b8bff" stroke-width=".8" opacity=".35" stroke-dasharray="3,3"/>'
+      + '<line x1="180" y1="145" x2="210" y2="145" stroke="#ef4444" stroke-width=".8" opacity=".35" stroke-dasharray="3,3"/>'
+      + '<rect x="0" y="195" width="300" height="2" fill="url(#g)"/>'
+      + '<text x="150" y="232" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="900" font-size="28" letter-spacing="3">GUERRA</text>'
+      + '<text x="150" y="264" text-anchor="middle" fill="#4b8bff" font-family="Arial" font-weight="900" font-size="16" letter-spacing="2">ISRAEL</text>'
+      + '<text x="150" y="284" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="900" font-size="14">×</text>'
+      + '<text x="150" y="304" text-anchor="middle" fill="#ef4444" font-family="Arial" font-weight="900" font-size="16" letter-spacing="2">IRÃ</text>'
+      + '<rect x="50" y="314" width="200" height="1" fill="url(#g)"/>'
+      + '<text x="150" y="338" text-anchor="middle" fill="#9898b0" font-family="Arial" font-weight="700" font-size="8" letter-spacing="2">O CONFLITO QUE MUDOU O MUNDO</text>'
+      + '<text x="150" y="360" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="8" letter-spacing="2">JUNHO 2025 — ABRIL 2026</text>'
+      + '</svg>';
+  } else if (id === 'cp') {
+    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
+      + '<defs><linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0a0a0f"/><stop offset="50%" style="stop-color:#0a1530"/><stop offset="100%" style="stop-color:#0a0a0f"/></linearGradient>'
+      + '<linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#4b8bff;stop-opacity:0"/><stop offset="50%" style="stop-color:#4b8bff;stop-opacity:.4"/><stop offset="100%" style="stop-color:#4b8bff;stop-opacity:0"/></linearGradient>'
+      + '<linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#fbbf24"/><stop offset="100%" style="stop-color:#f59e0b"/></linearGradient></defs>'
+      + '<rect width="300" height="400" fill="url(#a)"/>'
+      + '<g opacity=".06" stroke="#4b8bff" stroke-width=".5"><line x1="0" y1="80" x2="300" y2="80"/><line x1="0" y1="160" x2="300" y2="160"/><line x1="0" y1="240" x2="300" y2="240"/><line x1="0" y1="320" x2="300" y2="320"/><line x1="75" y1="0" x2="75" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="225" y1="0" x2="225" y2="400"/></g>'
+      + '<circle cx="150" cy="130" r="80" fill="none" stroke="#4b8bff" stroke-width=".5" opacity=".15"/>'
+      + '<circle cx="150" cy="130" r="60" fill="none" stroke="#4b8bff" stroke-width=".4" opacity=".2"/>'
+      + '<ellipse cx="150" cy="130" rx="60" ry="25" fill="none" stroke="#4b8bff" stroke-width=".3" opacity=".2"/>'
+      + '<ellipse cx="150" cy="130" rx="25" ry="60" fill="none" stroke="#4b8bff" stroke-width=".3" opacity=".2"/>'
+      + '<polygon points="150,58 162,95 202,95 170,118 182,155 150,132 118,155 130,118 98,95 138,95" fill="url(#gold)" opacity=".22"/>'
+      + '<polygon points="150,70 159,96 186,96 165,112 173,138 150,122 127,138 135,112 114,96 141,96" fill="url(#gold)" opacity=".28"/>'
+      + '<rect x="0" y="195" width="300" height="2" fill="url(#g)"/>'
+      + '<text x="150" y="230" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="900" font-size="19" letter-spacing="3">COPA DO MUNDO</text>'
+      + '<text x="150" y="270" text-anchor="middle" fill="#4b8bff" font-family="Arial" font-weight="900" font-size="46" letter-spacing="5">2026</text>'
+      + '<text x="150" y="296" text-anchor="middle" fill="#9898b0" font-family="Arial" font-weight="400" font-size="9" letter-spacing="3">EUA · MÉXICO · CANADÁ</text>'
+      + '<rect x="50" y="308" width="200" height="1" fill="url(#g)"/>'
+      + '<text x="150" y="335" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="900" font-size="14" letter-spacing="2">O HEXA VEM?</text>'
+      + '<text x="150" y="360" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="8" letter-spacing="3">48 SELEÇÕES · 3 PAÍSES · 104 JOGOS</text>'
+      + '<path d="M0,0 L16,0 L0,16 Z" fill="#4b8bff" opacity=".08"/><path d="M300,0 L284,0 L300,16 Z" fill="#4b8bff" opacity=".08"/>'
+      + '<path d="M0,400 L16,400 L0,384 Z" fill="#f59e0b" opacity=".08"/><path d="M300,400 L284,400 L300,384 Z" fill="#f59e0b" opacity=".08"/>'
+      + '</svg>';
+  } else if (id === 'tp') {
+    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
+      + '<defs>'
+      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#0a0520"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
+      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#4A7EFF;stop-opacity:0"/><stop offset="50%" style="stop-color:#4A7EFF;stop-opacity:.6"/><stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0"/></linearGradient>'
+      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#4A7EFF"/><stop offset="100%" style="stop-color:#00d4ff"/></linearGradient>'
+      + '<filter id="gl"><feGaussianBlur stdDeviation="6"/></filter>'
+      + '</defs>'
+      + '<rect width="300" height="400" fill="url(#a)"/>'
+      + '<g opacity=".05" stroke="#4A7EFF" stroke-width=".4">'
+      + '<line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="100" x2="300" y2="100"/><line x1="0" y1="150" x2="300" y2="150"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="250" x2="300" y2="250"/><line x1="0" y1="300" x2="300" y2="300"/><line x1="0" y1="350" x2="300" y2="350"/>'
+      + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/>'
+      + '</g>'
+      + '<circle cx="150" cy="115" r="70" fill="#4A7EFF" opacity=".07" filter="url(#gl)"/>'
+      + '<circle cx="150" cy="115" r="48" fill="none" stroke="#4A7EFF" stroke-width=".6" opacity=".25"/>'
+      + '<circle cx="150" cy="115" r="30" fill="none" stroke="#00d4ff" stroke-width=".4" opacity=".2"/>'
+      + '<line x1="102" y1="95" x2="198" y2="95" stroke="#4A7EFF" stroke-width=".5" opacity=".3"/>'
+      + '<line x1="90" y1="115" x2="210" y2="115" stroke="url(#c)" stroke-width="1.2" opacity=".6"/>'
+      + '<line x1="102" y1="135" x2="198" y2="135" stroke="#4A7EFF" stroke-width=".5" opacity=".3"/>'
+      + '<text x="150" y="103" text-anchor="middle" fill="#4A7EFF" font-family="Arial" font-weight="900" font-size="11" letter-spacing="4" opacity=".7">META ADS</text>'
+      + '<text x="150" y="123" text-anchor="middle" fill="#00d4ff" font-family="Arial" font-weight="900" font-size="9" letter-spacing="3" opacity=".6">GOOGLE ADS</text>'
+      + '<rect x="0" y="186" width="300" height="1.5" fill="url(#b)"/>'
+      + '<text x="150" y="220" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="900" font-size="22" letter-spacing="1">DOMINANDO</text>'
+      + '<text x="150" y="248" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="20" letter-spacing="1">TRÁFEGO PAGO</text>'
+      + '<rect x="60" y="258" width="180" height="1.5" fill="url(#b)"/>'
+      + '<text x="150" y="284" text-anchor="middle" fill="#8888a8" font-family="Arial" font-size="8" letter-spacing="2.5">DO ZERO AO EXPERT EM ADS</text>'
+      + '<text x="150" y="310" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">META · GOOGLE · YOUTUBE · TIKTOK</text>'
+      + '<rect x="80" y="330" width="140" height="22" rx="11" fill="url(#c)" opacity=".15"/>'
+      + '<text x="150" y="345" text-anchor="middle" fill="#00d4ff" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">▶ ACESSAR CURSO</text>'
+      + '<text x="150" y="378" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7" letter-spacing="2">MATHEUS ACADEMY · 2026</text>'
+      + '<path d="M0,0 L16,0 L0,16 Z" fill="#4A7EFF" opacity=".12"/><path d="M300,0 L284,0 L300,16 Z" fill="#4A7EFF" opacity=".12"/>'
+      + '<path d="M0,400 L16,400 L0,384 Z" fill="#00d4ff" opacity=".12"/><path d="M300,400 L284,400 L300,384 Z" fill="#00d4ff" opacity=".12"/>'
+      + '</svg>';
+  } else if (id === 'ni') {
+    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
+      + '<defs>'
+      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#051a0a"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
+      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#22c55e;stop-opacity:0"/><stop offset="50%" style="stop-color:#22c55e;stop-opacity:.6"/><stop offset="100%" style="stop-color:#22c55e;stop-opacity:0"/></linearGradient>'
+      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#4ade80"/></linearGradient>'
+      + '<filter id="gl"><feGaussianBlur stdDeviation="6"/></filter>'
+      + '</defs>'
+      + '<rect width="300" height="400" fill="url(#a)"/>'
+      + '<g opacity=".05" stroke="#22c55e" stroke-width=".4">'
+      + '<line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="100" x2="300" y2="100"/><line x1="0" y1="150" x2="300" y2="150"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="250" x2="300" y2="250"/><line x1="0" y1="300" x2="300" y2="300"/><line x1="0" y1="350" x2="300" y2="350"/>'
+      + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/>'
+      + '</g>'
+      + '<circle cx="150" cy="115" r="70" fill="#22c55e" opacity=".07" filter="url(#gl)"/>'
+      + '<polygon points="150,70 195,100 195,145 150,165 105,145 105,100" fill="none" stroke="#22c55e" stroke-width=".7" opacity=".3"/>'
+      + '<polygon points="150,85 182,107 182,138 150,152 118,138 118,107" fill="none" stroke="#4ade80" stroke-width=".4" opacity=".2"/>'
+      + '<text x="150" y="125" text-anchor="middle" fill="#22c55e" font-family="Arial" font-weight="900" font-size="28" opacity=".3">$</text>'
+      + '<polyline points="108,155 125,135 142,142 162,118 180,108" fill="none" stroke="url(#c)" stroke-width="1.4" opacity=".7"/>'
+      + '<circle cx="180" cy="108" r="3" fill="#4ade80" opacity=".8"/>'
+      + '<rect x="0" y="186" width="300" height="1.5" fill="url(#b)"/>'
+      + '<text x="150" y="220" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="900" font-size="22" letter-spacing="1">NEGÓCIOS</text>'
+      + '<text x="150" y="248" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="20" letter-spacing="1">INTELIGENTES</text>'
+      + '<rect x="60" y="258" width="180" height="1.5" fill="url(#b)"/>'
+      + '<text x="150" y="284" text-anchor="middle" fill="#8888a8" font-family="Arial" font-size="8" letter-spacing="2.5">ESTRATÉGIA · LUCRO · ESCALA</text>'
+      + '<text x="150" y="310" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">GESTÃO · MARKETING · FINANÇAS</text>'
+      + '<rect x="80" y="330" width="140" height="22" rx="11" fill="url(#c)" opacity=".15"/>'
+      + '<text x="150" y="345" text-anchor="middle" fill="#4ade80" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">▶ ACESSAR CURSO</text>'
+      + '<text x="150" y="378" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7" letter-spacing="2">MATHEUS ACADEMY · 2026</text>'
+      + '<path d="M0,0 L16,0 L0,16 Z" fill="#22c55e" opacity=".12"/><path d="M300,0 L284,0 L300,16 Z" fill="#22c55e" opacity=".12"/>'
+      + '<path d="M0,400 L16,400 L0,384 Z" fill="#4ade80" opacity=".12"/><path d="M300,400 L284,400 L300,384 Z" fill="#4ade80" opacity=".12"/>'
+      + '</svg>';
+  } else if (id === 'gp') {
+    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
+      + '<defs>'
+      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#1a0a05"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
+      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ef4444;stop-opacity:0"/><stop offset="50%" style="stop-color:#f59e0b;stop-opacity:.6"/><stop offset="100%" style="stop-color:#ef4444;stop-opacity:0"/></linearGradient>'
+      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#f59e0b"/><stop offset="100%" style="stop-color:#ef4444"/></linearGradient>'
+      + '<filter id="gl"><feGaussianBlur stdDeviation="6"/></filter>'
+      + '</defs>'
+      + '<rect width="300" height="400" fill="url(#a)"/>'
+      + '<g opacity=".05" stroke="#f59e0b" stroke-width=".4">'
+      + '<line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="100" x2="300" y2="100"/><line x1="0" y1="150" x2="300" y2="150"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="250" x2="300" y2="250"/><line x1="0" y1="300" x2="300" y2="300"/>'
+      + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/>'
+      + '</g>'
+      + '<circle cx="150" cy="115" r="65" fill="#f59e0b" opacity=".06" filter="url(#gl)"/>'
+      + '<ellipse cx="150" cy="115" rx="52" ry="52" fill="none" stroke="#f59e0b" stroke-width=".6" opacity=".22"/>'
+      + '<ellipse cx="150" cy="115" rx="52" ry="22" fill="none" stroke="#ef4444" stroke-width=".4" opacity=".18"/>'
+      + '<ellipse cx="150" cy="115" rx="22" ry="52" fill="none" stroke="#f59e0b" stroke-width=".3" opacity=".15"/>'
+      + '<line x1="98" y1="115" x2="202" y2="115" stroke="url(#c)" stroke-width=".5" opacity=".4"/>'
+      + '<line x1="150" y1="63" x2="150" y2="167" stroke="url(#c)" stroke-width=".5" opacity=".4"/>'
+      + '<circle cx="150" cy="115" r="4" fill="#f59e0b" opacity=".6"/>'
+      + '<text x="108" y="111" fill="#4A7EFF" font-family="Arial" font-weight="700" font-size="7" opacity=".5">EUA</text>'
+      + '<text x="170" y="120" fill="#ef4444" font-family="Arial" font-weight="700" font-size="7" opacity=".5">RUS</text>'
+      + '<text x="135" y="98" fill="#22c55e" font-family="Arial" font-weight="700" font-size="7" opacity=".5">CHI</text>'
+      + '<rect x="0" y="186" width="300" height="1.5" fill="url(#b)"/>'
+      + '<text x="150" y="220" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="900" font-size="20" letter-spacing="2">GEOPOLÍTICA</text>'
+      + '<text x="150" y="248" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="20" letter-spacing="1">AVANÇADA</text>'
+      + '<rect x="60" y="258" width="180" height="1.5" fill="url(#b)"/>'
+      + '<text x="150" y="284" text-anchor="middle" fill="#8888a8" font-family="Arial" font-size="8" letter-spacing="2.5">PODER · CONFLITO · GEOPOLÍTICA</text>'
+      + '<text x="150" y="310" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">EUA · CHINA · RÚSSIA · MÉDIO ORIENTE</text>'
+      + '<rect x="80" y="330" width="140" height="22" rx="11" fill="url(#c)" opacity=".15"/>'
+      + '<text x="150" y="345" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">▶ ACESSAR CURSO</text>'
+      + '<text x="150" y="378" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7" letter-spacing="2">MATHEUS ACADEMY · 2026</text>'
+      + '<path d="M0,0 L16,0 L0,16 Z" fill="#f59e0b" opacity=".12"/><path d="M300,0 L284,0 L300,16 Z" fill="#ef4444" opacity=".12"/>'
+      + '<path d="M0,400 L16,400 L0,384 Z" fill="#ef4444" opacity=".12"/><path d="M300,400 L284,400 L300,384 Z" fill="#f59e0b" opacity=".12"/>'
+      + '</svg>';
+  } else if (id === 'nl') {
+    s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'
+      + '<defs>'
+      + '<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#03030a"/><stop offset="50%" style="stop-color:#1a0520"/><stop offset="100%" style="stop-color:#03030a"/></linearGradient>'
+      + '<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#a855f7;stop-opacity:0"/><stop offset="50%" style="stop-color:#a855f7;stop-opacity:.6"/><stop offset="100%" style="stop-color:#ec4899;stop-opacity:0"/></linearGradient>'
+      + '<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#a855f7"/><stop offset="100%" style="stop-color:#ec4899"/></linearGradient>'
+      + '<filter id="gl"><feGaussianBlur stdDeviation="6"/></filter>'
+      + '</defs>'
+      + '<rect width="300" height="400" fill="url(#a)"/>'
+      + '<g opacity=".05" stroke="#a855f7" stroke-width=".4">'
+      + '<line x1="0" y1="50" x2="300" y2="50"/><line x1="0" y1="100" x2="300" y2="100"/><line x1="0" y1="150" x2="300" y2="150"/><line x1="0" y1="200" x2="300" y2="200"/><line x1="0" y1="250" x2="300" y2="250"/><line x1="0" y1="300" x2="300" y2="300"/>'
+      + '<line x1="50" y1="0" x2="50" y2="400"/><line x1="100" y1="0" x2="100" y2="400"/><line x1="150" y1="0" x2="150" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/><line x1="250" y1="0" x2="250" y2="400"/>'
+      + '</g>'
+      + '<circle cx="150" cy="115" r="68" fill="#a855f7" opacity=".07" filter="url(#gl)"/>'
+      + '<polygon points="150,72 184,97 172,136 128,136 116,97" fill="none" stroke="#a855f7" stroke-width=".7" opacity=".28"/>'
+      + '<polygon points="150,82 178,103 168,130 132,130 122,103" fill="none" stroke="#ec4899" stroke-width=".4" opacity=".2"/>'
+      + '<circle cx="150" cy="107" r="18" fill="none" stroke="url(#c)" stroke-width=".6" opacity=".35"/>'
+      + '<text x="150" y="113" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="14" opacity=".4">$</text>'
+      + '<line x1="133" y1="136" x2="167" y2="136" stroke="url(#c)" stroke-width="1" opacity=".5"/>'
+      + '<text x="150" y="155" text-anchor="middle" fill="#a855f7" font-family="Arial" font-weight="700" font-size="7.5" letter-spacing="2" opacity=".5">TOP NICHOS 2026</text>'
+      + '<rect x="0" y="186" width="300" height="1.5" fill="url(#b)"/>'
+      + '<text x="150" y="220" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="900" font-size="22" letter-spacing="1">NICHOS</text>'
+      + '<text x="150" y="248" text-anchor="middle" fill="url(#c)" font-family="Arial" font-weight="900" font-size="20" letter-spacing="1">LUCRATIVOS</text>'
+      + '<rect x="60" y="258" width="180" height="1.5" fill="url(#b)"/>'
+      + '<text x="150" y="284" text-anchor="middle" fill="#8888a8" font-family="Arial" font-size="8" letter-spacing="2.5">ENCONTRE SEU NICHO MILIONÁRIO</text>'
+      + '<text x="150" y="310" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7.5" letter-spacing="2">VALIDAÇÃO · ESCALA · RENDA ONLINE</text>'
+      + '<rect x="80" y="330" width="140" height="22" rx="11" fill="url(#c)" opacity=".15"/>'
+      + '<text x="150" y="345" text-anchor="middle" fill="#ec4899" font-family="Arial" font-weight="700" font-size="9" letter-spacing="2">▶ ACESSAR CURSO</text>'
+      + '<text x="150" y="378" text-anchor="middle" fill="#5a5a76" font-family="Arial" font-size="7" letter-spacing="2">MATHEUS ACADEMY · 2026</text>'
+      + '<path d="M0,0 L16,0 L0,16 Z" fill="#a855f7" opacity=".12"/><path d="M300,0 L284,0 L300,16 Z" fill="#a855f7" opacity=".12"/>'
+      + '<path d="M0,400 L16,400 L0,384 Z" fill="#ec4899" opacity=".12"/><path d="M300,400 L284,400 L300,384 Z" fill="#ec4899" opacity=".12"/>'
+      + '</svg>';
+  }
+  if (!s) return '';
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+}
+
 // Scroll contínuo - VERSÃO v3.1 - VELOCIDADE REDUZIDA
 var _scrollX = 0, _scrollHalf = 0, _scrollRAF = null;
 var _scrollSpeed = 0.3; // velocidade base - BEM LENTA
