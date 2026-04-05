@@ -9,7 +9,7 @@
 <title>Matheus Academy</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;--card:#14141f;--brd:#1e1e32;--brd2:#2a2a44;--pri:#4b8bff;--pri3:#2563eb;--txt:#e8e8ef;--txt2:#9898b0;--txt3:#5a5a76;--grn:#22c55e;--red:#ef4444;--orn:#f59e0b;--neon:#00d4ff;--font:'Outfit',sans-serif;--serif:'Playfair Display',serif}
+:root{--bg:#000000;--bg2:#0a0a0a;--bg3:#121212;--card:#0a0a0a;--brd:#1a1a1a;--brd2:#222222;--pri:#4b8bff;--pri3:#2563eb;--txt:#e8e8ef;--txt2:#9898b0;--txt3:#5a5a76;--grn:#22c55e;--red:#ef4444;--orn:#f59e0b;--neon:#00d4ff;--font:'Outfit',sans-serif;--serif:'Playfair Display',serif}
 *{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh;overflow-x:hidden}::selection{background:var(--pri);color:#fff}
 #page-wrap{max-width:1400px;margin:0 auto}
 .hdr{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:1000}
@@ -675,6 +675,151 @@
   }
   .hero h2 {
     font-size: 1.25rem !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   ÉPICOS / NOTÍCIAS EM DESTAQUE — ESTILO BRASIL PARALELO
+   Card grande horizontal com imagem de fundo e texto overlay
+   ══════════════════════════════════════════════════════════════════════════════ */
+.epico-sec {
+  padding: 28px 20px 20px !important;
+}
+.epico-sec-title {
+  font-size: 1.3rem !important;
+  font-weight: 800 !important;
+  font-family: 'Playfair Display', serif !important;
+  color: #fff !important;
+  margin-bottom: 4px !important;
+  font-style: italic !important;
+}
+.epico-sec-sub {
+  font-size: 0.72rem !important;
+  color: #888 !important;
+  margin-bottom: 14px !important;
+}
+.epico-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.epico-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.epico-card:hover img {
+  transform: scale(1.03);
+}
+.epico-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.2) 70%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+}
+.epico-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(0,0,0,0.7);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.epico-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+.epico-subtitle {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@media (max-width: 600px) {
+  .epico-card {
+    aspect-ratio: 4/3;
+  }
+  .epico-title {
+    font-size: 1.1rem;
+  }
+  .epico-subtitle {
+    font-size: 0.68rem;
+    -webkit-line-clamp: 2;
+  }
+  .epico-sec-title {
+    font-size: 1.1rem !important;
+  }
+}
+/* Épicos row — carrossel horizontal de cards grandes */
+.epico-row-wrap {
+  position: relative;
+  padding: 0 50px;
+}
+.epico-row-outer {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.epico-row-outer::-webkit-scrollbar {
+  display: none;
+}
+.epico-row-inner {
+  display: flex;
+  gap: 14px;
+  padding: 8px 4px 16px;
+  width: max-content;
+}
+.epico-card-sm {
+  flex-shrink: 0;
+  width: calc(80vw - 60px);
+  max-width: 600px;
+  aspect-ratio: 16/9;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.epico-card-sm img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.epico-card-sm:hover img {
+  transform: scale(1.03);
+}
+@media (min-width: 768px) {
+  .epico-card-sm {
+    width: calc(50vw - 80px);
+    max-width: 500px;
+  }
+}
+@media (min-width: 1024px) {
+  .epico-card-sm {
+    width: calc(33vw - 60px);
+    max-width: 450px;
   }
 }
 </style>
@@ -1606,16 +1751,50 @@ function makeCard(c) {
 document.addEventListener('click', function(e) {
   var card = e.target.closest('.cc[data-file]');
   if (card) goTo(card.getAttribute('data-file'));
+  // Também para cards épicos
+  var epicoCard = e.target.closest('.epico-card[data-file], .epico-card-sm[data-file]');
+  if (epicoCard) goTo(epicoCard.getAttribute('data-file'));
 });
 
 // ═══════════════════════════════ RENDER CURSOS ═══════════════════════════════
+// Função auxiliar para criar card de notícia/épico em destaque
+function makeEpicoCard(c, isLarge) {
+  var un = isUn(c.file);
+  var gi = c.id ? c.id.split('').reduce(function(a,ch){return a+ch.charCodeAt(0);},0) % 8 : 0;
+  var covEl = document.getElementById('cov-' + c.id);
+  var img = c.coverImg || (covEl && covEl.value) || makeSVGCover(c.id) || makeAutoCover(c, gi);
+  var cardClass = isLarge ? 'epico-card' : 'epico-card-sm';
+  var badgeText = c.free ? 'GRÁTIS' : (un ? 'LIBERADO' : 'NOTÍCIA');
+  
+  var h = '<div class="' + cardClass + '" data-file="' + c.file + '">';
+  h += '<img src="' + img + '" alt="' + c.name + '" loading="lazy">';
+  h += '<div class="epico-overlay">';
+  h += '<div class="epico-badge">' + badgeText + '</div>';
+  h += '<div class="epico-title">' + c.name + '</div>';
+  if (c.desc) {
+    h += '<div class="epico-subtitle">' + c.desc + '</div>';
+  } else {
+    h += '<div class="epico-subtitle">' + (c.cat || 'Notícia') + ' · ' + c.modules + ' módulos · ' + c.topics + ' tópicos</div>';
+  }
+  h += '</div></div>';
+  return h;
+}
+
 function rC() {
   var grid = document.getElementById('courseGrid');
   if (!grid) return;
   var tM=0, tT=0, tH=0, h='';
+  
+  // Identificar cursos de notícias (categoria "Atualize-se!")
+  var noticiasCourses = COURSES.filter(function(c) {
+    return c.cat && (c.cat.toLowerCase().indexOf('atualize') >= 0 || c.cat.toLowerCase().indexOf('not\u00edcia') >= 0);
+  });
+  var noticiasIndex = 0;
 
   CATS.forEach(function(cat, ci) {
     if (!cat.courses.length && !cat.soon.length) return;
+    
+    // Renderiza a categoria normalmente
     h += '<div class="cat-sec"><div class="cat-sec-inner">';
     h += '<div class="cat-sec-title' + (cat.isSpecial?' special':'') + (cat.isEbook?' ebook':'') + '">' + cat.name + '</div>';
     h += '<div class="cat-sec-sub">' + cat.sub + '</div></div>';
@@ -1643,6 +1822,40 @@ function rC() {
       h += '<div class="cc-btn" style="background:var(--bg3);color:var(--txt3);cursor:default">' + lbl + '</div></div>';
     });
     h += '</div></div><button class="arr-btn an" data-scroll="ro' + ci + '" data-dir="1">&#8250;</button></div></div>';
+    
+    // A cada 2 categorias, adiciona uma seção "Épicos" com notícias em destaque
+    if ((ci + 1) % 2 === 0 && noticiasCourses.length > 0 && noticiasIndex < noticiasCourses.length) {
+      h += '<div class="epico-sec">';
+      h += '<div class="epico-sec-title">Épicos MA</div>';
+      h += '<div class="epico-sec-sub">Conheça o essencial da Matheus Academy e descubra novas histórias</div>';
+      
+      // Card grande principal
+      var mainNoticia = noticiasCourses[noticiasIndex];
+      if (mainNoticia) {
+        h += makeEpicoCard(mainNoticia, true);
+        noticiasIndex++;
+      }
+      
+      // Se houver mais notícias, mostra em carrossel menor
+      if (noticiasIndex < noticiasCourses.length) {
+        h += '<div class="epico-row-wrap">';
+        h += '<button class="arr-btn ap" data-scroll="epiRow' + ci + '" data-dir="-1">&#8249;</button>';
+        h += '<div class="epico-row-outer" id="epiRow' + ci + '"><div class="epico-row-inner">';
+        
+        var countSmall = 0;
+        while (noticiasIndex < noticiasCourses.length && countSmall < 4) {
+          h += makeEpicoCard(noticiasCourses[noticiasIndex], false);
+          noticiasIndex++;
+          countSmall++;
+        }
+        
+        h += '</div></div>';
+        h += '<button class="arr-btn an" data-scroll="epiRow' + ci + '" data-dir="1">&#8250;</button>';
+        h += '</div>';
+      }
+      
+      h += '</div>';
+    }
   });
   grid.innerHTML = h;
   aN('sCursos', COURSES.length, '');
@@ -3752,1767 +3965,4 @@ document.addEventListener('DOMContentLoaded',function(){
 #maeCsCard:hover{border-color:rgba(91,127,255,.5);transform:translateY(-1px)}
 #maeCsCard.show{display:block}
 .mae-cs-row{display:flex;align-items:center;gap:12px}
-.mae-cs-icon{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#5b7fff,#a855f7);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
-.mae-cs-info{flex:1;min-width:0}
-.mae-cs-label{font-size:.56rem;color:#8888aa;text-transform:uppercase;letter-spacing:.08em;font-weight:700;font-family:'Outfit',sans-serif}
-.mae-cs-course{font-size:.72rem;font-weight:700;color:#5b7fff;font-family:'Outfit',sans-serif;margin:2px 0}
-.mae-cs-module{font-size:.82rem;font-weight:800;color:#fff;font-family:'Outfit',sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mae-cs-btn{padding:8px 14px;border-radius:10px;background:linear-gradient(135deg,#5b7fff,#a855f7);color:#fff;border:none;font-size:.7rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;flex-shrink:0;white-space:nowrap}
-.mae-cs-time{font-size:.56rem;color:#44445a;font-family:'Outfit',sans-serif;margin-top:3px}
-
-/* ── FAVORITES PANE ── */
-.mae-fav-empty{padding:40px 20px;text-align:center}
-.mae-fav-empty-icon{font-size:2.2rem;display:block;margin-bottom:10px;opacity:.35}
-.mae-fav-empty-txt{font-size:.75rem;color:#44445a;font-family:'Outfit',sans-serif;line-height:1.5}
-.mae-fav-course-group{margin-bottom:14px}
-.mae-fav-course-label{font-size:.64rem;font-weight:800;color:#8888aa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:flex;align-items:center;gap:6px;font-family:'Outfit',sans-serif}
-.mae-fav-course-label::after{content:'';flex:1;height:1px;background:#1e1e35}
-.mae-fav-item{background:#111122;border:1px solid #1e1e35;border-radius:12px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:center;gap:10px;transition:border-color .2s}
-.mae-fav-item:hover{border-color:#282844}
-.mae-fav-star{font-size:1rem;flex-shrink:0;color:#f59e0b}
-.mae-fav-name{flex:1;font-size:.76rem;font-weight:700;color:#e8e8f0;font-family:'Outfit',sans-serif;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mae-fav-go{padding:6px 12px;border-radius:8px;background:rgba(91,127,255,.12);color:#5b7fff;border:1px solid rgba(91,127,255,.2);font-size:.62rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;white-space:nowrap;text-decoration:none}
-.mae-fav-go:hover{background:rgba(91,127,255,.22)}
-.mae-fav-del{width:24px;height:24px;border-radius:6px;background:transparent;border:none;color:#44445a;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;transition:all .2s}
-.mae-fav-del:hover{background:rgba(239,68,68,.1);color:#ef4444}
-
-/* ── NOTES PANE ── */
-.mae-notes-toolbar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.mae-notes-search{flex:1;min-width:120px;padding:7px 10px;background:#111122;border:1px solid #1e1e35;border-radius:8px;color:#e8e8f0;font-size:.7rem;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s}
-.mae-notes-search:focus{border-color:#5b7fff}
-.mae-notes-filter{padding:7px 10px;background:#111122;border:1px solid #1e1e35;border-radius:8px;color:#8888aa;font-size:.68rem;font-family:'Outfit',sans-serif;outline:none;cursor:pointer}
-.mae-notes-export{padding:7px 12px;border-radius:8px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#22c55e;font-size:.64rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;white-space:nowrap}
-.mae-notes-export:hover{background:rgba(34,197,94,.2)}
-.mae-notes-count{font-size:.62rem;color:#44445a;font-family:'Outfit',sans-serif;margin-bottom:10px}
-.mae-note-card{background:#111122;border:1px solid #1e1e35;border-radius:12px;padding:13px;margin-bottom:8px;position:relative}
-.mae-note-meta{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
-.mae-note-course-badge{padding:2px 8px;border-radius:6px;font-size:.52rem;font-weight:700;background:rgba(91,127,255,.12);color:#5b7fff;font-family:'Outfit',sans-serif}
-.mae-note-module{font-size:.62rem;color:#8888aa;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Outfit',sans-serif}
-.mae-note-date{font-size:.54rem;color:#44445a;flex-shrink:0;font-family:'Outfit',sans-serif}
-.mae-note-content{font-size:.76rem;color:#c8c8d8;line-height:1.55;font-family:'Outfit',sans-serif;word-break:break-word}
-.mae-note-del{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:5px;background:transparent;border:none;color:#44445a;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.mae-note-del:hover{background:rgba(239,68,68,.1);color:#ef4444}
-.mae-notes-empty{padding:40px 20px;text-align:center}
-.mae-notes-empty-icon{font-size:2.2rem;display:block;margin-bottom:10px;opacity:.35}
-.mae-notes-empty-txt{font-size:.75rem;color:#44445a;font-family:'Outfit',sans-serif}
-
-/* ── REVIEW PANE ── */
-.mae-rev-hero{background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(91,127,255,.08));border:1px solid rgba(34,197,94,.2);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center}
-.mae-rev-hero-title{font-size:.88rem;font-weight:800;color:#fff;font-family:'Playfair Display',serif;margin-bottom:4px}
-.mae-rev-hero-sub{font-size:.65rem;color:#8888aa;font-family:'Outfit',sans-serif}
-.mae-rev-progress-wrap{height:8px;background:#1a1a2e;border-radius:10px;overflow:hidden;margin:10px 0 6px}
-.mae-rev-progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#22c55e,#5b7fff);transition:width .6s ease}
-.mae-rev-pct{font-size:.64rem;color:#22c55e;font-weight:800;font-family:'Outfit',sans-serif}
-.mae-rev-item{background:#111122;border:1px solid #1e1e35;border-radius:12px;padding:13px;margin-bottom:8px;transition:border-color .2s}
-.mae-rev-item.done{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04)}
-.mae-rev-item-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.mae-rev-item-icon{width:32px;height:32px;border-radius:8px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
-.mae-rev-item.done .mae-rev-item-icon{background:rgba(34,197,94,.12)}
-.mae-rev-item-name{flex:1;font-size:.76rem;font-weight:700;color:#e8e8f0;font-family:'Outfit',sans-serif}
-.mae-rev-item-type{font-size:.52rem;padding:2px 7px;border-radius:5px;font-weight:700;font-family:'Outfit',sans-serif}
-.mae-rev-item-type.fav{background:rgba(245,158,11,.12);color:#f59e0b}
-.mae-rev-item-type.fail{background:rgba(239,68,68,.1);color:#ef4444}
-.mae-rev-checklist{display:flex;flex-direction:column;gap:5px}
-.mae-rev-check-item{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:7px;cursor:pointer;transition:background .15s}
-.mae-rev-check-item:hover{background:rgba(255,255,255,.03)}
-.mae-rev-check-item input[type=checkbox]{width:14px;height:14px;accent-color:#22c55e;cursor:pointer;flex-shrink:0}
-.mae-rev-check-label{font-size:.7rem;color:#8888aa;font-family:'Outfit',sans-serif;transition:color .2s;line-height:1.35}
-.mae-rev-check-item input:checked + .mae-rev-check-label{color:#22c55e;text-decoration:line-through}
-.mae-rev-complete-btn{width:100%;margin-top:14px;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;display:none}
-.mae-rev-complete-btn.show{display:block}
-.mae-rev-complete-btn:hover{transform:scale(1.02)}
-.mae-rev-history{margin-top:16px}
-.mae-rev-hist-title{font-size:.72rem;font-weight:800;color:#8888aa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-family:'Outfit',sans-serif}
-.mae-rev-hist-item{background:#111122;border:1px solid #1e1e35;border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
-.mae-rev-hist-course{flex:1;font-size:.72rem;font-weight:700;color:#e8e8f0;font-family:'Outfit',sans-serif}
-.mae-rev-hist-pct{font-size:.76rem;font-weight:900;color:#22c55e;font-family:'Playfair Display',serif}
-.mae-rev-hist-date{font-size:.58rem;color:#44445a;font-family:'Outfit',sans-serif}
-.mae-rev-empty{padding:30px 20px;text-align:center;font-size:.76rem;color:#44445a;font-family:'Outfit',sans-serif}
-
-/* ── LAST MODULE INDICATOR ── */
-.mae-last-mod-pill{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:3px 10px;border-radius:20px;
-  background:rgba(91,127,255,.15);border:1px solid rgba(91,127,255,.3);
-  font-size:.56rem;font-weight:700;color:#5b7fff;
-  font-family:'Outfit',sans-serif;
-}
-</style>
-
-<script>
-/* ════════════════════════════════════════════════════════════
-   MA ENGINE v3 — Favoritos + Caderno + Revisão Rápida
-   ════════════════════════════════════════════════════════════ */
-(function(){
-'use strict';
-
-function gs3(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
-function ss3(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-function today3(){return new Date().toLocaleDateString('pt-BR');}
-function _nid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
-function _ago(ts){var d=Date.now()-ts,s=Math.floor(d/1000),m=Math.floor(s/60),h=Math.floor(m/60),dy=Math.floor(h/24);if(dy>0)return dy+'d atrás';if(h>0)return h+'h atrás';if(m>0)return m+'m atrás';return 'agora';}
-
-/* ═══════════════════════════════════
-   PATCH: Extend mae-tabs to 6
-   ═══════════════════════════════════ */
-function _extendTabs(){
-  // Add new tab buttons
-  var tabs=document.querySelector('.mae-tabs');
-  if(!tabs||tabs.dataset.v3)return;
-  tabs.dataset.v3='1';
-  var newTabs=[
-    {i:3,icon:'⭐',label:'Favoritos'},
-    {i:4,icon:'📓',label:'Caderno'},
-    {i:5,icon:'📋',label:'Revisão'}
-  ];
-  newTabs.forEach(function(t){
-    var btn=document.createElement('button');
-    btn.className='mae-tab';btn.id='maeT'+t.i;
-    btn.onclick=function(){window.maeTab&&maeTab(t.i);};
-    btn.innerHTML=t.icon+' '+t.label;
-    tabs.appendChild(btn);
-  });
-  // Add new panes
-  var body=document.querySelector('.mae-body');
-  if(!body)return;
-  var paneHtml=[
-    // Pane 3: Favoritos
-    '<div class="mae-pane" id="maePane3">'
-    +'<div id="maeFavContent"><div class="mae-fav-empty"><span class="mae-fav-empty-icon">⭐</span><div class="mae-fav-empty-txt">Nenhum favorito ainda.<br>Marque módulos como favorito nos cursos!</div></div></div>'
-    +'</div>',
-    // Pane 4: Caderno
-    '<div class="mae-pane" id="maePane4">'
-    +'<div class="mae-notes-toolbar">'
-    +'<input class="mae-notes-search" id="maeNoteSearch" placeholder="🔍 Buscar anotações..." oninput="maeV3RenderNotes()">'
-    +'<select class="mae-notes-filter" id="maeNoteFilter" onchange="maeV3RenderNotes()"><option value="">Todos os cursos</option></select>'
-    +'<button class="mae-notes-export" onclick="maeV3ExportNotes()">📄 PDF</button>'
-    +'</div>'
-    +'<div class="mae-notes-count" id="maeNotesCount">0 anotações</div>'
-    +'<div id="maeNotesList"></div>'
-    +'</div>',
-    // Pane 5: Revisão
-    '<div class="mae-pane" id="maePane5">'
-    +'<div class="mae-rev-hero">'
-    +'<div class="mae-rev-hero-title">📋 Modo Revisão</div>'
-    +'<div class="mae-rev-hero-sub">Revise módulos favoritos e erros de quiz. Ganhe pontos bônus ao concluir 100%.</div>'
-    +'<div class="mae-rev-progress-wrap"><div class="mae-rev-progress-fill" id="maeRevFill" style="width:0%"></div></div>'
-    +'<div class="mae-rev-pct" id="maeRevPct">0% concluído</div>'
-    +'</div>'
-    +'<div id="maeRevModules"></div>'
-    +'<button class="mae-rev-complete-btn" id="maeRevCompleteBtn" onclick="maeV3CompleteReview()">🏆 Concluir Revisão e Ganhar Pontos!</button>'
-    +'<div class="mae-rev-history"><div class="mae-rev-hist-title">Histórico de Revisões</div><div id="maeRevHistory"></div></div>'
-    +'</div>'
-  ];
-  paneHtml.forEach(function(html){
-    var div=document.createElement('div');div.innerHTML=html;
-    while(div.firstChild)body.appendChild(div.firstChild);
-  });
-  // Patch maeTab to support 6 tabs
-  var _orig=window.maeTab;
-  window.maeTab=function(idx){
-    for(var i=0;i<6;i++){
-      var t=document.getElementById('maeT'+i),p=document.getElementById('maePane'+i);
-      if(t)t.classList.toggle('active',i===idx);
-      if(p)p.classList.toggle('active',i===idx);
-    }
-    if(idx===1&&window.renderMissions)renderMissions();
-    if(idx===2&&window.renderProgress)renderProgress();
-    if(idx===3)maeV3RenderFavorites();
-    if(idx===4)maeV3RenderNotes();
-    if(idx===5)maeV3RenderReview();
-  };
-}
-
-/* ═══════════════════════════════════
-   CONTINUE STUDYING CARD
-   ═══════════════════════════════════ */
-function _buildCsCard(){
-  if(document.getElementById('maeCsCard'))return;
-  var card=document.createElement('div');
-  card.id='maeCsCard';
-  card.innerHTML='<div class="mae-cs-row">'
-    +'<div class="mae-cs-icon">▶️</div>'
-    +'<div class="mae-cs-info">'
-      +'<div class="mae-cs-label">Continuar estudando</div>'
-      +'<div class="mae-cs-course" id="maeCsCourse">—</div>'
-      +'<div class="mae-cs-module" id="maeCsModule">Carregando...</div>'
-      +'<div class="mae-cs-time" id="maeCsTime"></div>'
-    +'</div>'
-    +'<button class="mae-cs-btn" onclick="maeV3GoLastModule()">▶ Continuar</button>'
-    +'</div>';
-  // Insert after .stats or after page hero
-  var target=document.querySelector('.stats')||document.querySelector('.hero')||document.querySelector('.page')||document.querySelector('.hero-card');
-  if(target&&target.parentNode){
-    target.parentNode.insertBefore(card,target.nextSibling);
-  }else if(document.querySelector('.page')){
-    document.querySelector('.page').prepend(card);
-  }
-  _updateCsCard();
-}
-
-function _updateCsCard(){
-  var last=gs3('mae_last_module',null);
-  var card=document.getElementById('maeCsCard');
-  if(!card)return;
-  if(!last||!last.url){card.classList.remove('show');return;}
-  card.classList.add('show');
-  var cn=document.getElementById('maeCsCourse'),mn=document.getElementById('maeCsModule'),tm=document.getElementById('maeCsTime');
-  if(cn)cn.textContent=last.courseName||'';
-  if(mn)mn.textContent=last.moduleName||'';
-  if(tm)tm.textContent=last.ts?_ago(last.ts):'';
-}
-
-window.maeV3GoLastModule=function(){
-  var last=gs3('mae_last_module',null);
-  if(last&&last.url)location.href=last.url;
-};
-
-/* ═══════════════════════════════════
-   FAVORITES SYSTEM
-   ═══════════════════════════════════ */
-function getFavs(){return gs3('mae_favorites_v3',[]);}
-function saveFavs(f){ss3('mae_favorites_v3',f);}
-
-window.maeFavoriteToggle=function(courseKey,courseName,moduleId,moduleName,url){
-  var favs=getFavs();
-  var idx=favs.findIndex(function(f){return f.courseKey===courseKey&&f.moduleId===moduleId;});
-  if(idx>=0){favs.splice(idx,1);saveFavs(favs);if(window.maeV2AddNotif)maeV2AddNotif('module','⭐','Favorito removido','"'+moduleName+'" removido dos favoritos.');return false;}
-  else{favs.push({id:_nid(),courseKey:courseKey,courseName:courseName,moduleId:moduleId,moduleName:moduleName,url:url||'#',ts:Date.now()});saveFavs(favs);if(window.maeV2AddNotif)maeV2AddNotif('module','⭐','Favorito adicionado!','"'+moduleName+'" adicionado aos favoritos de '+courseName+'.');return true;}
-};
-
-window.maeIsFavorite=function(courseKey,moduleId){
-  return getFavs().some(function(f){return f.courseKey===courseKey&&f.moduleId===moduleId;});
-};
-
-window.maeV3RenderFavorites=function(){
-  var favs=getFavs();
-  var el=document.getElementById('maeFavContent');if(!el)return;
-  if(!favs.length){
-    el.innerHTML='<div class="mae-fav-empty"><span class="mae-fav-empty-icon">⭐</span><div class="mae-fav-empty-txt">Nenhum favorito ainda.<br>Nos cursos, clique no ⭐ ao lado de qualquer módulo para salvá-lo aqui!</div></div>';
-    return;
-  }
-  // Group by course
-  var groups={};
-  favs.forEach(function(f){if(!groups[f.courseKey])groups[f.courseKey]={name:f.courseName,items:[]};groups[f.courseKey].items.push(f);});
-  var html='';
-  Object.keys(groups).forEach(function(k){
-    var g=groups[k];
-    html+='<div class="mae-fav-course-group"><div class="mae-fav-course-label">'+g.name+'</div>';
-    g.items.forEach(function(f){
-      html+='<div class="mae-fav-item">'
-        +'<span class="mae-fav-star">⭐</span>'
-        +'<span class="mae-fav-name">'+f.moduleName+'</span>'
-        +'<a class="mae-fav-go" href="'+f.url+'" target="_blank">Acessar</a>'
-        +'<button class="mae-fav-del" onclick="maeV3RemoveFav(\''+f.id+'\')">✕</button>'
-        +'</div>';
-    });
-    html+='</div>';
-  });
-  el.innerHTML=html;
-};
-
-window.maeV3RemoveFav=function(id){
-  var favs=getFavs().filter(function(f){return f.id!==id;});
-  saveFavs(favs);maeV3RenderFavorites();
-};
-
-/* ═══════════════════════════════════
-   LAST MODULE TRACKING
-   ═══════════════════════════════════ */
-window.maeSetLastModule=function(courseKey,courseName,moduleId,moduleName,url){
-  ss3('mae_last_module',{courseKey:courseKey,courseName:courseName,moduleId:moduleId,moduleName:moduleName,url:url||'#',ts:Date.now()});
-  _updateCsCard();
-};
-
-/* ═══════════════════════════════════
-   NOTES SYSTEM
-   ═══════════════════════════════════ */
-function getNotes(){return gs3('mae_notes_v3',[]);}
-function saveNotes(n){ss3('mae_notes_v3',n);}
-
-window.maeAddNoteV3=function(courseKey,courseName,moduleId,moduleName,content){
-  if(!content||!content.trim())return;
-  var notes=getNotes();
-  notes.unshift({id:_nid(),courseKey:courseKey,courseName:courseName,moduleId:moduleId,moduleName:moduleName,content:content.trim(),date:today3(),ts:Date.now()});
-  if(notes.length>200)notes=notes.slice(0,200);
-  saveNotes(notes);
-  _updateNotesProfileCount();
-  if(window.maeV2AddNotif)maeV2AddNotif('study','📓','Anotação salva!','"'+moduleName+'" — '+courseName+'. Total: '+notes.length+' anotações.');
-};
-
-window.maeDeleteNoteV3=function(id){
-  var notes=getNotes().filter(function(n){return n.id!==id;});
-  saveNotes(notes);_updateNotesProfileCount();maeV3RenderNotes();
-};
-
-function _updateNotesProfileCount(){
-  var n=getNotes().length;
-  var el=document.getElementById('maeNotesProfileCount');
-  if(el)el.textContent=n;
-  // Also update any profile stat that shows notes
-  var els=document.querySelectorAll('.mae-notes-profile-val');
-  els.forEach(function(e){e.textContent=n;});
-}
-
-window.maeV3RenderNotes=function(){
-  var notes=getNotes();
-  var search=(document.getElementById('maeNoteSearch')||{}).value||'';
-  var filter=(document.getElementById('maeNoteFilter')||{}).value||'';
-  // populate filter options
-  var filterEl=document.getElementById('maeNoteFilter');
-  if(filterEl&&filterEl.options.length<=1){
-    var courses={};notes.forEach(function(n){courses[n.courseKey]=n.courseName;});
-    Object.keys(courses).forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=courses[k];filterEl.appendChild(o);});
-  }
-  var filtered=notes.filter(function(n){
-    var matchSearch=!search||n.content.toLowerCase().indexOf(search.toLowerCase())>=0||n.moduleName.toLowerCase().indexOf(search.toLowerCase())>=0;
-    var matchFilter=!filter||n.courseKey===filter;
-    return matchSearch&&matchFilter;
-  });
-  var countEl=document.getElementById('maeNotesCount');
-  if(countEl)countEl.textContent=filtered.length+' de '+notes.length+' anotações'+(search||filter?' (filtrado)':'');
-  var list=document.getElementById('maeNotesList');if(!list)return;
-  if(!filtered.length){
-    list.innerHTML='<div class="mae-notes-empty"><span class="mae-notes-empty-icon">📓</span><div class="mae-notes-empty-txt">'+(notes.length?'Nenhuma anotação encontrada.':'Nenhuma anotação ainda.<br>Nos cursos, use o caderno para salvar anotações!')+'</div></div>';
-    return;
-  }
-  list.innerHTML=filtered.map(function(n){
-    return '<div class="mae-note-card">'
-      +'<button class="mae-note-del" onclick="maeDeleteNoteV3(\''+n.id+'\')" title="Deletar">✕</button>'
-      +'<div class="mae-note-meta">'
-        +'<span class="mae-note-course-badge">'+n.courseName+'</span>'
-        +'<span class="mae-note-module">'+n.moduleName+'</span>'
-        +'<span class="mae-note-date">'+n.date+'</span>'
-      +'</div>'
-      +'<div class="mae-note-content">'+n.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>'
-      +'</div>';
-  }).join('');
-};
-
-window.maeV3ExportNotes=function(){
-  var notes=getNotes();
-  if(!notes.length){alert('Nenhuma anotação para exportar.');return;}
-  var u=null;try{u=JSON.parse(localStorage.getItem('ma_user'));}catch(e){}
-  var userName=u?u.name:'Aluno';
-  var html='<!DOCTYPE html><html><head><meta charset="UTF-8">'
-    +'<title>Caderno de Estudos — Matheus Academy</title>'
-    +'<style>body{font-family:Arial,sans-serif;max-width:800px;margin:0 auto;padding:30px;color:#333}'
-    +'.header{text-align:center;margin-bottom:40px;padding-bottom:20px;border-bottom:3px solid #5b7fff}'
-    +'.header h1{font-size:28px;color:#5b7fff;margin:0 0 5px}'
-    +'.header .sub{font-size:14px;color:#666}'
-    +'.note{margin-bottom:24px;padding:16px;border:1px solid #e0e0e0;border-radius:8px;page-break-inside:avoid}'
-    +'.meta{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}'
-    +'.badge{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;background:#eef;color:#5b7fff}'
-    +'.module{font-size:12px;color:#888}'
-    +'.date{font-size:11px;color:#bbb;margin-left:auto}'
-    +'.content{font-size:14px;color:#444;line-height:1.6;white-space:pre-wrap}'
-    +'@media print{body{padding:15px}}'
-    +'</style></head><body>'
-    +'<div class="header"><h1>📓 Caderno de Estudos</h1>'
-    +'<div class="sub">'+userName+' · Matheus Academy · '+today3()+'</div></div>';
-  notes.forEach(function(n){
-    html+='<div class="note"><div class="meta"><span class="badge">'+n.courseName+'</span><span class="module">'+n.moduleName+'</span><span class="date">'+n.date+'</span></div><div class="content">'+n.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div></div>';
-  });
-  html+='<div style="text-align:center;margin-top:40px;font-size:12px;color:#bbb">'+notes.length+' anotações · Gerado pela Matheus Academy</div>'
-    +'</body></html>';
-  var win=window.open('','_blank');
-  if(win){win.document.write(html);win.document.close();setTimeout(function(){win.print();},500);}
-};
-
-/* ═══════════════════════════════════
-   REVIEW MODE
-   ═══════════════════════════════════ */
-var _revState={checked:{},modules:[]};
-
-window.maeMarkQuizFail=function(courseKey,courseName,moduleId,moduleName){
-  var fails=gs3('mae_quiz_fails',[]);
-  if(!fails.find(function(f){return f.courseKey===courseKey&&f.moduleId===moduleId;})){
-    fails.push({id:_nid(),courseKey:courseKey,courseName:courseName,moduleId:moduleId,moduleName:moduleName,ts:Date.now()});
-    if(fails.length>100)fails=fails.slice(0,100);
-    ss3('mae_quiz_fails',fails);
-  }
-};
-
-var _revConcepts={
-  'default':['Entendi o conceito principal','Consigo explicar com minhas palavras','Sei aplicar na prática','Revisei os exemplos','Fiz anotações do módulo']
-};
-
-window.maeV3RenderReview=function(){
-  var favs=getFavs();
-  var fails=gs3('mae_quiz_fails',[]);
-  // Combine: favs tagged as fav, fails tagged as fail
-  var mods={};
-  favs.forEach(function(f){var k=f.courseKey+'_'+f.moduleId;if(!mods[k])mods[k]={...f,type:'fav'};});
-  fails.forEach(function(f){var k=f.courseKey+'_'+f.moduleId;if(!mods[k])mods[k]={...f,type:'fail'};else mods[k].type='fail';});
-  var modList=Object.values(mods);
-  _revState.modules=modList;
-  var modsEl=document.getElementById('maeRevModules');if(!modsEl)return;
-  if(!modList.length){
-    modsEl.innerHTML='<div class="mae-rev-empty">📚 Nenhum módulo para revisar.<br>Favorite módulos nos cursos ou complete quizzes para ver aqui!</div>';
-    _updateRevProgress();
-    return;
-  }
-  var html='';
-  modList.forEach(function(m,i){
-    var concepts=_revConcepts['default'];
-    var allDone=concepts.every(function(c,ci){return _revState.checked[i+'_'+ci];});
-    html+='<div class="mae-rev-item'+(allDone?' done':'')+'" id="maeRevItem'+i+'">'
-      +'<div class="mae-rev-item-top">'
-        +'<div class="mae-rev-item-icon">'+(m.type==='fav'?'⭐':'❌')+'</div>'
-        +'<div class="mae-rev-item-name">'+m.moduleName+'<br><span style="font-size:.6rem;color:#8888aa">'+m.courseName+'</span></div>'
-        +'<span class="mae-rev-item-type '+(m.type==='fav'?'fav':'fail')+'">'+(m.type==='fav'?'Favorito':'Quiz falhou')+'</span>'
-      +'</div>'
-      +'<div class="mae-rev-checklist">';
-    concepts.forEach(function(c,ci){
-      var checked=_revState.checked[i+'_'+ci]?'checked':'';
-      html+='<label class="mae-rev-check-item"><input type="checkbox" '+(checked||'')+' onchange="maeV3RevCheck('+i+','+ci+',this.checked)"><span class="mae-rev-check-label">'+c+'</span></label>';
-    });
-    html+='</div></div>';
-  });
-  modsEl.innerHTML=html;
-  _updateRevProgress();
-  _renderRevHistory();
-};
-
-window.maeV3RevCheck=function(modIdx,conceptIdx,checked){
-  _revState.checked[modIdx+'_'+conceptIdx]=checked;
-  var m=_revState.modules[modIdx];
-  if(m){
-    var concepts=_revConcepts['default'];
-    var allDone=concepts.every(function(c,ci){return _revState.checked[modIdx+'_'+ci];});
-    var item=document.getElementById('maeRevItem'+modIdx);
-    if(item)item.classList.toggle('done',allDone);
-  }
-  _updateRevProgress();
-};
-
-function _updateRevProgress(){
-  var mods=_revState.modules;
-  if(!mods.length){
-    var f=document.getElementById('maeRevFill');var p=document.getElementById('maeRevPct');
-    if(f)f.style.width='0%';if(p)p.textContent='0% concluído';
-    var btn=document.getElementById('maeRevCompleteBtn');if(btn)btn.classList.remove('show');
-    return;
-  }
-  var concepts=_revConcepts['default'];
-  var total=mods.length*concepts.length;
-  var done=Object.values(_revState.checked).filter(Boolean).length;
-  var pct=total>0?Math.round(done/total*100):0;
-  var f=document.getElementById('maeRevFill');var p=document.getElementById('maeRevPct');
-  if(f)f.style.width=pct+'%';
-  if(p)p.textContent=pct+'% concluído';
-  var btn=document.getElementById('maeRevCompleteBtn');
-  if(btn)btn.classList.toggle('show',pct===100);
-}
-
-window.maeV3CompleteReview=function(){
-  var mods=_revState.modules;
-  var concepts=_revConcepts['default'];
-  var total=mods.length*concepts.length;
-  var done=Object.values(_revState.checked).filter(Boolean).length;
-  var pct=total>0?Math.round(done/total*100):0;
-  // Save to history
-  var courseNames=[...new Set(mods.map(function(m){return m.courseName;}))].join(', ');
-  var hist=gs3('mae_rev_history',[]);
-  hist.unshift({id:_nid(),courseNames:courseNames,modsCount:mods.length,pct:pct,date:today3(),ts:Date.now()});
-  if(hist.length>20)hist=hist.slice(0,20);
-  ss3('mae_rev_history',hist);
-  // Award bonus points
-  var bonus=Math.round(pct*2);
-  if(bonus>0&&window.MA_addPoints)MA_addPoints('Revisão Completa ('+pct+'%)',bonus);
-  if(window.maeV2AddNotif)maeV2AddNotif('points','🏆','Revisão concluída!','Você concluiu '+pct+'% da revisão e ganhou +'+bonus+' pts bônus!');
-  if(window.maeToast)maeToast('🏆 Revisão concluída! +'+bonus+' pts bônus!','complete');
-  _revState.checked={};
-  _renderRevHistory();
-  _updateRevProgress();
-  maeV3RenderReview();
-};
-
-function _renderRevHistory(){
-  var hist=gs3('mae_rev_history',[]);
-  var el=document.getElementById('maeRevHistory');if(!el)return;
-  if(!hist.length){el.innerHTML='<div class="mae-rev-empty" style="padding:10px 0">Nenhuma revisão concluída ainda.</div>';return;}
-  el.innerHTML=hist.slice(0,5).map(function(h){
-    return '<div class="mae-rev-hist-item">'
-      +'<div class="mae-rev-hist-course">'+h.courseNames+'<br><span style="font-size:.58rem;color:#44445a">'+h.modsCount+' módulos revisados</span></div>'
-      +'<div class="mae-rev-hist-pct">'+h.pct+'%</div>'
-      +'<div class="mae-rev-hist-date">'+h.date+'</div>'
-      +'</div>';
-  }).join('');
-}
-
-/* ═══════════════════════════════════
-   PROFILE: Notes count
-   ═══════════════════════════════════ */
-function _injectNotesInProfile(){
-  // Add notes count to profile stats if on perfil.html
-  var pstArea=document.querySelector('.profile-stats');
-  if(!pstArea||document.getElementById('maeProfileNotesCount'))return;
-  var notes=getNotes();
-  var div=document.createElement('div');
-  div.className='pst';
-  div.innerHTML='<b id="maeProfileNotesCount" style="font-size:1.2rem;font-weight:900;color:#5b7fff;display:block;line-height:1">'+notes.length+'</b><span style="font-size:.5rem;color:#8888aa;text-transform:uppercase;letter-spacing:.08em;margin-top:3px;display:block">Anotações</span>';
-  pstArea.appendChild(div);
-}
-
-/* ═══════════════════════════════════
-   INIT
-   ═══════════════════════════════════ */
-document.addEventListener('DOMContentLoaded',function(){
-  setTimeout(_extendTabs,100);
-  setTimeout(_buildCsCard,200);
-  setTimeout(_injectNotesInProfile,300);
-  _updateNotesProfileCount();
-  // expose for maeOpen hook
-  var _origOpen=window.maeOpen;
-  window.maeOpen=function(){
-    if(_origOpen)_origOpen();
-    // also init tabs extension
-    setTimeout(_extendTabs,50);
-  };
-});
-
-})();
-</script>
-<!-- FIM MA ENGINE v3 -->
-
-
-<!-- ══════════════════════════════════════════════════════════════
-     MA ENGINE v4 — Chat IA + Plano de Estudos + Motivação
-     ══════════════════════════════════════════════════════════════ -->
-<style id="mae-v4-css">
-/* ═══════════════════════════════
-   CHAT IA FLUTUANTE
-   ═══════════════════════════════ */
-#maeChatBtn{
-  position:fixed;bottom:192px;right:16px;
-  width:48px;height:48px;border-radius:14px;
-  background:linear-gradient(135deg,#22c55e,#16a34a);
-  border:none;color:#fff;font-size:1.3rem;cursor:pointer;
-  z-index:8985;box-shadow:0 4px 18px rgba(34,197,94,.45);
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:0;padding:0;line-height:1;
-  transition:all .2s;
-}
-#maeChatBtn:hover{transform:scale(1.08);box-shadow:0 6px 26px rgba(34,197,94,.6)}
-#maeChatBtn .chat-btn-lbl{font-size:.4rem;color:rgba(255,255,255,.8);font-family:'Outfit',sans-serif;font-weight:700;margin-top:1px}
-#maeChatBtn .chat-btn-badge{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:.44rem;font-weight:900;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px;border:2px solid #08080f;font-family:'Outfit',sans-serif}
-#maeChatBtn .chat-btn-badge.show{display:flex}
-
-/* CHAT WINDOW */
-#maeChatWin{
-  position:fixed;bottom:252px;right:16px;
-  width:340px;max-width:94vw;height:460px;
-  background:#0d0d1c;border:1px solid #1e1e35;
-  border-radius:18px;display:none;flex-direction:column;
-  box-shadow:0 12px 48px rgba(0,0,0,.75);z-index:8986;
-  animation:maeChatIn .25s cubic-bezier(.2,0,.3,1);
-}
-#maeChatWin.open{display:flex}
-@keyframes maeChatIn{from{transform:scale(.9) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
-.mae-chat-hdr{
-  display:flex;align-items:center;gap:9px;
-  padding:13px 14px 10px;border-bottom:1px solid #1e1e35;flex-shrink:0;
-}
-.mae-chat-hdr-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:maeChatPulse 2s infinite}
-@keyframes maeChatPulse{0%,100%{opacity:1}50%{opacity:.4}}
-.mae-chat-hdr-title{font-size:.78rem;font-weight:800;color:#fff;flex:1;font-family:'Outfit',sans-serif}
-.mae-chat-hdr-sub{font-size:.52rem;color:#8888aa;display:block;font-weight:500}
-.mae-chat-quota{padding:3px 9px;border-radius:7px;font-size:.56rem;font-weight:700;background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.2);white-space:nowrap;font-family:'Outfit',sans-serif}
-.mae-chat-quota.warn{background:rgba(245,158,11,.1);color:#f59e0b;border-color:rgba(245,158,11,.2)}
-.mae-chat-quota.empty{background:rgba(239,68,68,.1);color:#ef4444;border-color:rgba(239,68,68,.2)}
-.mae-chat-close{width:26px;height:26px;border-radius:50%;border:none;background:#1e1e35;color:#8888aa;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;font-family:inherit}
-.mae-chat-msgs{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px;overscroll-behavior:contain}
-.mae-chat-msgs::-webkit-scrollbar{width:3px}
-.mae-chat-msgs::-webkit-scrollbar-thumb{background:#1e1e35}
-.mae-msg{max-width:85%;padding:9px 12px;border-radius:12px;font-size:.74rem;line-height:1.5;font-family:'Outfit',sans-serif;word-break:break-word}
-.mae-msg.user{background:linear-gradient(135deg,#5b7fff,#4b6ef0);color:#fff;align-self:flex-end;border-radius:12px 12px 3px 12px}
-.mae-msg.ai{background:#111122;color:#d8d8e8;border:1px solid #1e1e35;align-self:flex-start;border-radius:12px 12px 12px 3px}
-.mae-msg.ai .mae-msg-name{font-size:.5rem;color:#5b7fff;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;display:block}
-.mae-msg.system{background:rgba(245,158,11,.08);color:#f59e0b;border:1px solid rgba(245,158,11,.2);border-radius:10px;font-size:.68rem;text-align:center;align-self:center;max-width:95%}
-.mae-typing{align-self:flex-start;background:#111122;border:1px solid #1e1e35;border-radius:12px 12px 12px 3px;padding:10px 14px;display:none}
-.mae-typing.show{display:flex;align-items:center;gap:4px}
-.mae-typing span{width:6px;height:6px;border-radius:50%;background:#5b7fff;animation:maeTyping 1.2s infinite}
-.mae-typing span:nth-child(2){animation-delay:.2s}
-.mae-typing span:nth-child(3){animation-delay:.4s}
-@keyframes maeTyping{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-4px);opacity:1}}
-.mae-chat-footer{padding:10px;border-top:1px solid #1e1e35;display:flex;gap:6px;flex-shrink:0}
-.mae-chat-input{flex:1;padding:8px 11px;background:#111122;border:1px solid #1e1e35;border-radius:10px;color:#e8e8f0;font-size:.74rem;font-family:'Outfit',sans-serif;outline:none;resize:none;max-height:70px;line-height:1.4;transition:border-color .2s}
-.mae-chat-input:focus{border-color:#5b7fff}
-.mae-chat-send{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#5b7fff,#a855f7);border:none;color:#fff;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;align-self:flex-end}
-.mae-chat-send:hover{transform:scale(1.05)}
-.mae-chat-send:disabled{opacity:.4;cursor:default;transform:none}
-/* API KEY SETUP */
-.mae-chat-setup{padding:16px;display:none;flex-direction:column;gap:10px;flex:1}
-.mae-chat-setup.show{display:flex}
-.mae-chat-setup-title{font-size:.82rem;font-weight:800;color:#fff;font-family:'Outfit',sans-serif;text-align:center}
-.mae-chat-setup-sub{font-size:.66rem;color:#8888aa;font-family:'Outfit',sans-serif;line-height:1.5;text-align:center}
-.mae-chat-setup-input{padding:9px 12px;background:#111122;border:1.5px solid #1e1e35;border-radius:9px;color:#e8e8f0;font-size:.72rem;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s}
-.mae-chat-setup-input:focus{border-color:#5b7fff}
-.mae-chat-setup-btn{padding:10px;border-radius:10px;background:linear-gradient(135deg,#5b7fff,#a855f7);border:none;color:#fff;font-size:.76rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif}
-.mae-chat-upgrade{padding:16px;display:none;flex-direction:column;align-items:center;gap:10px;flex:1;justify-content:center}
-.mae-chat-upgrade.show{display:flex}
-.mae-chat-upgrade-icon{font-size:2.5rem}
-.mae-chat-upgrade-title{font-size:.88rem;font-weight:800;color:#fff;font-family:'Outfit',sans-serif;text-align:center}
-.mae-chat-upgrade-sub{font-size:.7rem;color:#8888aa;font-family:'Outfit',sans-serif;text-align:center;line-height:1.5}
-.mae-chat-upgrade-btn{padding:10px 24px;border-radius:12px;background:linear-gradient(135deg,#f59e0b,#ef4444);border:none;color:#fff;font-size:.76rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif}
-
-/* ═══════════════════════════════
-   PLANO DE ESTUDOS
-   ═══════════════════════════════ */
-#maeSPModal{
-  position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);
-  z-index:9500;display:none;align-items:center;justify-content:center;padding:16px;
-}
-#maeSPModal.open{display:flex}
-#maeSPBox{
-  background:#0d0d1c;border:1px solid #1e1e35;border-radius:22px;
-  width:100%;max-width:420px;padding:28px;
-  box-shadow:0 20px 80px rgba(0,0,0,.8);
-  animation:maeSPIn .3s cubic-bezier(.2,0,.3,1);
-}
-@keyframes maeSPIn{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
-.mae-sp-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:6px;text-align:center}
-.mae-sp-sub{font-size:.76rem;color:#8888aa;text-align:center;margin-bottom:22px;line-height:1.5;font-family:'Outfit',sans-serif}
-.mae-sp-options{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.mae-sp-opt{
-  padding:13px 16px;border-radius:12px;border:1.5px solid #1e1e35;
-  background:#111122;cursor:pointer;transition:all .2s;
-  display:flex;align-items:center;gap:12px;
-}
-.mae-sp-opt:hover,.mae-sp-opt.selected{border-color:#5b7fff;background:rgba(91,127,255,.08)}
-.mae-sp-opt-icon{width:36px;height:36px;border-radius:9px;background:#1e1e35;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-.mae-sp-opt-info{flex:1}
-.mae-sp-opt-label{font-size:.8rem;font-weight:700;color:#fff;font-family:'Outfit',sans-serif}
-.mae-sp-opt-desc{font-size:.62rem;color:#8888aa;font-family:'Outfit',sans-serif;margin-top:2px}
-.mae-sp-btn{width:100%;padding:13px;border-radius:12px;background:linear-gradient(135deg,#5b7fff,#a855f7);border:none;color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s}
-.mae-sp-btn:hover{transform:scale(1.02)}
-.mae-sp-btn:disabled{opacity:.4;cursor:default;transform:none}
-/* DAILY PLAN BANNER */
-#maeSPBanner{
-  background:linear-gradient(135deg,rgba(91,127,255,.12),rgba(168,85,247,.08));
-  border:1px solid rgba(91,127,255,.25);border-radius:12px;
-  padding:11px 14px;margin:0 0 14px;display:none;
-  position:relative;font-family:'Outfit',sans-serif;
-}
-#maeSPBanner.show{display:block}
-.mae-spb-label{font-size:.56rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#5b7fff;margin-bottom:4px}
-.mae-spb-title{font-size:.82rem;font-weight:700;color:#fff}
-.mae-spb-modules{font-size:.66rem;color:#8888aa;margin-top:4px}
-.mae-spb-close{position:absolute;top:8px;right:10px;background:none;border:none;color:#44445a;cursor:pointer;font-size:.85rem}
-/* WEEK CARD */
-.mae-sp-week-card{background:#111122;border:1px solid #1e1e35;border-radius:14px;padding:14px;margin-bottom:14px}
-.mae-sp-week-title{font-size:.72rem;font-weight:800;color:#fff;margin-bottom:10px;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:space-between}
-.mae-sp-week-redo{font-size:.58rem;color:#5b7fff;cursor:pointer;font-weight:600}
-.mae-sp-day-row{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.mae-sp-day-row:last-child{border-bottom:none}
-.mae-sp-day-lbl{font-size:.6rem;font-weight:800;color:#8888aa;min-width:28px;flex-shrink:0;text-transform:uppercase;padding-top:2px;font-family:'Outfit',sans-serif}
-.mae-sp-day-lbl.today{color:#5b7fff}
-.mae-sp-day-tasks{flex:1;display:flex;flex-direction:column;gap:3px}
-.mae-sp-task{font-size:.68rem;color:#c8c8d8;font-family:'Outfit',sans-serif;line-height:1.3;display:flex;align-items:center;gap:5px}
-.mae-sp-task.done{color:#44445a;text-decoration:line-through}
-.mae-sp-task .task-check{font-size:.65rem;flex-shrink:0}
-.mae-sp-task .task-course{font-size:.54rem;color:#5b7fff;font-weight:700}
-.mae-sp-off{font-size:.64rem;color:#44445a;font-style:italic;font-family:'Outfit',sans-serif}
-
-/* ═══════════════════════════════
-   FRASES MOTIVACIONAIS
-   ═══════════════════════════════ */
-#maeMotivWrap{
-  position:fixed;top:50%;left:50%;
-  transform:translate(-50%,-50%) scale(.85);
-  z-index:9400;pointer-events:none;opacity:0;
-  transition:all .4s cubic-bezier(.2,0,.3,1);
-  text-align:center;width:320px;max-width:90vw;
-}
-#maeMotivWrap.show{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:all}
-.mae-motiv-card{
-  background:linear-gradient(135deg,#0f0f1e,#161628);
-  border:1.5px solid rgba(91,127,255,.3);border-radius:20px;
-  padding:28px 24px;box-shadow:0 16px 64px rgba(0,0,0,.8),0 0 40px rgba(91,127,255,.15);
-}
-.mae-motiv-emoji{font-size:3rem;display:block;margin-bottom:12px;animation:maeMotivFloat 2s ease-in-out infinite}
-@keyframes maeMotivFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.mae-motiv-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:6px;line-height:1.3}
-.mae-motiv-sub{font-size:.76rem;color:#8888aa;line-height:1.5;font-family:'Outfit',sans-serif}
-.mae-motiv-pts{font-size:.82rem;font-weight:800;color:#f59e0b;margin-top:8px;font-family:'Outfit',sans-serif}
-.mae-motiv-dismiss{margin-top:16px;padding:8px 20px;border-radius:10px;background:rgba(91,127,255,.15);border:1px solid rgba(91,127,255,.25);color:#5b7fff;font-size:.7rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s}
-.mae-motiv-dismiss:hover{background:rgba(91,127,255,.25)}
-/* confetti particles */
-.mae-conf{position:fixed;width:8px;height:8px;border-radius:2px;pointer-events:none;z-index:9399;animation:maeConf 1.2s ease-in forwards}
-@keyframes maeConf{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(120vh) rotate(720deg);opacity:0}}
-/* top banner motivational */
-#maeMotivBanner{
-  background:linear-gradient(135deg,rgba(91,127,255,.1),rgba(34,197,94,.08));
-  border-bottom:1px solid rgba(91,127,255,.15);
-  padding:8px 16px;display:none;align-items:center;justify-content:center;
-  gap:8px;font-size:.72rem;color:#c8c8d8;font-family:'Outfit',sans-serif;
-  position:relative;z-index:999;
-}
-#maeMotivBanner.show{display:flex}
-#maeMotivBanner .motiv-banner-close{position:absolute;right:12px;background:none;border:none;color:#44445a;cursor:pointer;font-size:.8rem}
-</style>
-
-<!-- ═══ PLANO DE ESTUDOS ═══ -->
-<div id="maeSPModal">
-  <div id="maeSPBox">
-    <div class="mae-sp-title">📅 Seu Plano de Estudos</div>
-    <div class="mae-sp-sub">Quanto tempo por semana você tem disponível para estudar? Vamos montar seu cronograma personalizado!</div>
-    <div class="mae-sp-options" id="maeSPOptions">
-      <div class="mae-sp-opt" onclick="maeSPSelect(2,this)" data-h="2">
-        <div class="mae-sp-opt-icon">⚡</div>
-        <div class="mae-sp-opt-info"><div class="mae-sp-opt-label">2 horas/semana</div><div class="mae-sp-opt-desc">Ritmo leve — 1 módulo por dia</div></div>
-      </div>
-      <div class="mae-sp-opt" onclick="maeSPSelect(4,this)" data-h="4">
-        <div class="mae-sp-opt-icon">📚</div>
-        <div class="mae-sp-opt-info"><div class="mae-sp-opt-label">4 horas/semana</div><div class="mae-sp-opt-desc">Ritmo médio — 2 módulos por dia</div></div>
-      </div>
-      <div class="mae-sp-opt" onclick="maeSPSelect(6,this)" data-h="6">
-        <div class="mae-sp-opt-icon">🔥</div>
-        <div class="mae-sp-opt-info"><div class="mae-sp-opt-label">6 horas/semana</div><div class="mae-sp-opt-desc">Ritmo intenso — 3 módulos por dia</div></div>
-      </div>
-      <div class="mae-sp-opt" onclick="maeSPSelect(10,this)" data-h="10">
-        <div class="mae-sp-opt-icon">🚀</div>
-        <div class="mae-sp-opt-info"><div class="mae-sp-opt-label">10+ horas/semana</div><div class="mae-sp-opt-desc">Modo imersão — máximo de módulos</div></div>
-      </div>
-    </div>
-    <button class="mae-sp-btn" id="maeSPConfirmBtn" onclick="maeSPConfirm()" disabled>Montar Meu Plano →</button>
-    <div style="text-align:center;margin-top:8px"><span style="font-size:.6rem;color:#44445a;cursor:pointer;font-family:'Outfit',sans-serif" onclick="maeSPSkip()">Pular por agora</span></div>
-  </div>
-</div>
-
-<!-- Daily Plan Banner -->
-<div id="maeSPBanner">
-  <button class="mae-spb-close" onclick="document.getElementById('maeSPBanner').classList.remove('show')">✕</button>
-  <div class="mae-spb-label">📅 Plano de hoje</div>
-  <div class="mae-spb-title" id="maeSPBannerTitle">Carregando seu plano...</div>
-  <div class="mae-spb-modules" id="maeSPBannerMods"></div>
-</div>
-
-<!-- ═══ FRASES MOTIVACIONAIS ═══ -->
-
-<script>
-/* ════════════════════════════════════════════════════════════
-   MA ENGINE v4 — Chat IA + Plano de Estudos + Motivação
-   ════════════════════════════════════════════════════════════ */
-(function(){
-'use strict';
-
-function gs4(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
-function ss4(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-function today4(){return new Date().toLocaleDateString('pt-BR');}
-function el(id){return document.getElementById(id);}
-
-/* ═══════════════════════════════════════
-   PLAN DETECTION
-   ═══════════════════════════════════════ */
-function getPlan(){
-  var ac=gs4('ma_access',{});
-  var now=Date.now();
-  if(ac.master&&ac.masterTs&&now-ac.masterTs<(ac.expiry||94608000000))return'master';
-  if(ac.monthly&&ac.monthlyTs&&now-ac.monthlyTs<2592000000)return'monthly';
-  if(ac.courses&&Object.keys(ac.courses).length>0)return'individual';
-  return'free';
-}
-var PLAN_LIMITS={master:99999,monthly:15,individual:5,free:3};
-
-/* ═══════════════════════════════════════
-   CHAT IA
-   ═══════════════════════════════════════ */
-var _chatState={
-  open:false,courseKey:'geral',courseName:'Matheus Academy',
-  messages:[],sending:false,
-  apiKey:localStorage.getItem('mae_api_key')||''
-};
-
-var COURSE_PROMPTS={
-  dt:'Você é o assistente de IA da Matheus Academy especializado em Dominando Tráfego Pago. Responda APENAS perguntas sobre tráfego pago, Meta Ads, Google Ads, campanhas, criativos, copywriting para anúncios, segmentação, ROAS, CTR, funis de conversão e assuntos relacionados. Se perguntarem sobre outros assuntos, redirecione gentilmente para o tema do curso. Seja direto, prático e didático. Responda em português do Brasil. Máximo 200 palavras por resposta.',
-  ni:'Você é o assistente de IA da Matheus Academy especializado em Negócios Inteligentes. Responda APENAS perguntas sobre empreendedorismo, gestão de negócios, fluxo de caixa, margens, precificação, MVP, marketing, vendas, gestão de equipes e assuntos relacionados. Seja direto e prático. Responda em português do Brasil. Máximo 200 palavras por resposta.',
-  geo:'Você é o assistente de IA da Matheus Academy especializado em Geopolítica Avançada. Responda APENAS perguntas sobre geopolítica, relações internacionais, BRICS, conflitos geopolíticos, economia global, diplomacia, poder militar, soft power, hard power e assuntos relacionados. Seja analítico e imparcial. Responda em português do Brasil. Máximo 200 palavras por resposta.',
-  nl:'Você é o assistente de IA da Matheus Academy especializado em Nichos Lucrativos. Responda APENAS perguntas sobre nichos de mercado, validação de nichos, copywriting, funis de vendas, produtos digitais, afiliados, tráfego orgânico, autoridade de nicho e assuntos relacionados. Seja prático e orientado a resultados. Responda em português do Brasil. Máximo 200 palavras por resposta.',
-  geral:'Você é o assistente de IA da Matheus Academy, uma plataforma de cursos online. Ajude alunos com dúvidas sobre os cursos disponíveis: Dominando Tráfego Pago, Negócios Inteligentes, Geopolítica Avançada, Nichos Lucrativos e Política Brasileira. Seja amigável, motivador e didático. Responda em português do Brasil. Máximo 200 palavras por resposta.'
-};
-
-function _getChatUsage(){
-  var u=gs4('mae_chat_usage',{date:'',count:0});
-  if(u.date!==today4())return{date:today4(),count:0};
-  return u;
-}
-function _setChatUsage(c){ss4('mae_chat_usage',{date:today4(),count:c});}
-function _getRemainingQuestions(){
-  var plan=getPlan();var limit=PLAN_LIMITS[plan];
-  if(limit>=9999)return 9999;
-  var used=_getChatUsage().count;
-  return Math.max(0,limit-used);
-}
-
-function _updateChatQuota(){
-  var remaining=_getRemainingQuestions();
-  var plan=getPlan();
-  var q=el('maeChatQuota');if(!q)return;
-  if(plan==='master'){q.textContent='∞ perguntas';q.className='mae-chat-quota';}
-  else if(remaining===0){q.textContent='0 restantes';q.className='mae-chat-quota empty';}
-  else if(remaining<=3){q.textContent=remaining+' restantes';q.className='mae-chat-quota warn';}
-  else{q.textContent=remaining+' restantes';q.className='mae-chat-quota';}
-  var badge=el('maeChatBadge');
-  if(badge)badge.classList.toggle('show',remaining===0&&plan!=='master');
-}
-
-function _showChatArea(){
-  var setup=el('maeChatSetup'),upgrade=el('maeChatUpgrade'),msgs=el('maeChatMsgs'),footer=el('maeChatFooter');
-  if(_chatState.serverUsage&&_chatState.serverUsage.remaining===0&&getPlan()!=='master'){
-    if(setup)setup.classList.remove('show');
-    if(upgrade){
-      upgrade.classList.add('show');
-      var sub=el('maeChatUpgradeSub');
-      var plan=getPlan();
-      var limits={individual:'Plano Individual: 5 perguntas/dia',free:'Visitante: 3 perguntas/dia',monthly:'Plano Monthly: 15 perguntas/dia'};
-      if(sub)sub.textContent=(limits[plan]||'')+'. Faça upgrade para ter mais perguntas diárias!';
-    }
-    if(msgs)msgs.style.display='none';
-    if(footer)footer.style.display='none';
-    return;
-  }
-  if(setup)setup.classList.remove('show');
-  if(upgrade)upgrade.classList.remove('show');
-  if(msgs)msgs.style.display='flex';
-  if(footer)footer.style.display='flex';
-  if(_chatState.messages.length===0)_addWelcomeMsg();
-}
-
-function _addWelcomeMsg(){
-  var plan=getPlan();
-  var planNames={master:'Master (ilimitado)',monthly:'Monthly (15/dia)',individual:'Individual (5/dia)',free:'Visitante (3/dia)'};
-  _appendMsg('ai','Olá! 👋 Sou o assistente IA da '+_chatState.courseName+'. Tire suas dúvidas sobre o conteúdo do curso! Seu plano: '+planNames[plan]+'.');
-}
-
-function _appendMsg(role,text){
-  var msgs=el('maeChatMsgs');if(!msgs)return;
-  var div=document.createElement('div');
-  div.className='mae-msg '+role;
-  if(role==='ai')div.innerHTML='<span class="mae-msg-name">Assistente IA</span>'+text.replace(/\n/g,'<br>');
-  else if(role==='system')div.textContent=text;
-  else div.textContent=text;
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
-}
-
-window.maeChatToggle=function(){
-  var win=el('maeChatWin');
-  if(!win)return;
-  if(win.classList.contains('open'))maeChatClose();
-  else{win.classList.add('open');_chatState.open=true;_showChatArea();_updateChatQuota();}
-};
-window.maeChatClose=function(){
-  var win=el('maeChatWin');if(win)win.classList.remove('open');_chatState.open=false;
-};
-window.maeChatSaveKey=function(){
-  var k=(el('maeChatApiInput')||{}).value||'';
-  if(!k.trim()){alert('Por favor, insira uma chave de API válida.');return;}
-  _chatState.apiKey=k.trim();
-  localStorage.setItem('mae_api_key',_chatState.apiKey);
-  _showChatArea();
-};
-window.maeOpenCourseChat=function(courseKey,courseName){
-  _chatState.courseKey=courseKey||'geral';
-  _chatState.courseName=courseName||'Matheus Academy';
-  _chatState.messages=[];
-  var sub=el('maeChatCourse');if(sub)sub.textContent=_chatState.courseName;
-  var msgs=el('maeChatMsgs');if(msgs)msgs.innerHTML='';
-  var win=el('maeChatWin');if(win&&!win.classList.contains('open'))win.classList.add('open');
-  _chatState.open=true;_showChatArea();_updateChatQuota();
-};
-window.maeChatSend=function(){
-  if(_chatState.sending)return;
-  var inp=el('maeChatInput');if(!inp)return;
-  var text=inp.value.trim();if(!text)return;
-  if(_getRemainingQuestions()===0&&getPlan()!=='master'){_showChatArea();return;}
-  inp.value='';inp.style.height='auto';
-  _chatState.messages.push({role:'user',content:text});
-  _appendMsg('user',text);
-  _chatState.sending=true;
-  var sendBtn=el('maeChatSendBtn');if(sendBtn)sendBtn.disabled=true;
-  var typing=el('maeChatTyping');if(typing)typing.classList.add('show');
-  _sendToAI(text);
-};
-
-async function _sendToAI(userText){
-  var msgs=_chatState.messages.map(function(m){return{role:m.role,content:m.content};});
-  var u=null;try{u=JSON.parse(localStorage.getItem('ma_user'));}catch(e){}
-  var workerUrl=localStorage.getItem('mae_worker_url')||'https://shiny-disk-b207ma-academy-ai.matheushenry1998.workers.dev';
-  try{
-    var res=await fetch(workerUrl+'/chat',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        messages:msgs,
-        courseKey:_chatState.courseKey,
-        plan:getPlan(),
-        userEmail:u?u.email:'anon'
-      })
-    });
-    var data=await res.json();
-    if(res.status===429||data.error==='limit_exceeded'){
-      _appendMsg('system','⛔ '+( data.message||'Limite diário atingido! Faça upgrade para continuar.'));
-      setTimeout(_showChatArea,600);
-      var typing=el('maeChatTyping');if(typing)typing.classList.remove('show');
-      var sendBtn=el('maeChatSendBtn');if(sendBtn)sendBtn.disabled=false;
-      _chatState.sending=false;return;
-    }
-    if(!res.ok||data.error){
-      _appendMsg('system','⚠️ '+(data.error||'Erro ao conectar. Tente novamente.'));
-    }else{
-      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Sem resposta.';
-      _chatState.messages.push({role:'assistant',content:reply});
-      _appendMsg('ai',reply);
-      // Update quota from server response
-      if(data._ma_usage){
-        _chatState.serverUsage=data._ma_usage;
-        _updateChatQuotaFromServer(data._ma_usage);
-      }
-    }
-  }catch(e){
-    _appendMsg('system','⚠️ Erro de conexão com o servidor. Verifique sua internet.');
-    console.error('Chat Worker error:',e);
-  }
-  var typing=el('maeChatTyping');if(typing)typing.classList.remove('show');
-  var sendBtn=el('maeChatSendBtn');if(sendBtn)sendBtn.disabled=false;
-  _chatState.sending=false;
-}
-
-function _updateChatQuotaFromServer(usage){
-  var q=el('maeChatQuota');if(!q)return;
-  if(usage.unlimited){q.textContent='∞ perguntas';q.className='mae-chat-quota';}
-  else if(usage.remaining<=0){q.textContent='0 restantes';q.className='mae-chat-quota empty';}
-  else if(usage.remaining<=3){q.textContent=usage.remaining+' restantes';q.className='mae-chat-quota warn';}
-  else{q.textContent=usage.remaining+' restantes';q.className='mae-chat-quota';}
-}
-
-/* ═══════════════════════════════════════
-   PLANO DE ESTUDOS
-   ═══════════════════════════════════════ */
-var _spHours=0;
-// ═══ Plano de estudos — cursos vêm de data/courses.js ═══
-var SP_COURSES = MA_getActiveCourses().filter(function(c){return !c.free;}).map(function(c){
-  return {key:c.id, name:c.name, modules:[c.name+' — Módulo 1',c.name+' — Módulo 2',c.name+' — Módulo 3',c.name+' — Módulo 4',c.name+' — Módulo 5',c.name+' — Módulo 6',c.name+' — Módulo 7',c.name+' — Módulo 8',c.name+' — Módulo 9',c.name+' — Módulo 10']};
-});
-var DAYS=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
-var DAY_OFF_IDX=6; // Domingo = descanso
-
-window.maeSPSelect=function(hours,el_){
-  _spHours=hours;
-  document.querySelectorAll('.mae-sp-opt').forEach(function(o){o.classList.remove('selected');});
-  if(el_)el_.classList.add('selected');
-  var btn=el('maeSPConfirmBtn');if(btn)btn.disabled=false;
-};
-
-window.maeSPConfirm=function(){
-  if(!_spHours)return;
-  var plan=_generateStudyPlan(_spHours);
-  ss4('mae_study_plan',{hoursPerWeek:_spHours,plan:plan,createdAt:today4(),done:{}});
-  el('maeSPModal').classList.remove('open');
-  _renderDailyBanner();
-  _renderWeekCard();
-  maeShowMotiv('plan','📅','Plano criado!','Seu cronograma personalizado está pronto. Siga o plano e ganhe pontos bônus!','');
-};
-
-window.maeSPSkip=function(){
-  ss4('mae_study_plan_skipped',true);
-  el('maeSPModal').classList.remove('open');
-};
-
-function _generateStudyPlan(hours){
-  // modules per day: hours/5days * 2mods per hour
-  var modsPerDay=Math.max(1,Math.round(hours/5*2));
-  var plan=[];
-  var allMods=[];
-  SP_COURSES.forEach(function(c){c.modules.forEach(function(m){allMods.push({courseKey:c.key,courseName:c.name,moduleName:m});});});
-  var modIdx=0;
-  for(var d=0;d<7;d++){
-    if(d===DAY_OFF_IDX){plan.push({day:DAYS[d],tasks:[],off:true});continue;}
-    var tasks=[];
-    for(var t=0;t<modsPerDay&&modIdx<allMods.length;t++,modIdx++){tasks.push(allMods[modIdx]);}
-    plan.push({day:DAYS[d],tasks:tasks,off:false});
-  }
-  return plan;
-}
-
-function _getTodayPlanIdx(){
-  var jsDay=new Date().getDay(); // 0=Sun,1=Mon...
-  // Map: 0=Sun→6, 1=Mon→0, 2=Tue→1, ...
-  return jsDay===0?6:jsDay-1;
-}
-
-function _renderDailyBanner(){
-  var sp=gs4('mae_study_plan',null);
-  if(!sp||!sp.plan)return;
-  var banner=el('maeSPBanner');if(!banner)return;
-  var todayIdx=_getTodayPlanIdx();
-  var todayPlan=sp.plan[todayIdx];
-  if(!todayPlan||todayPlan.off||!todayPlan.tasks.length){banner.classList.remove('show');return;}
-  var title=el('maeSPBannerTitle');var mods=el('maeSPBannerMods');
-  if(title)title.textContent='Estudo de '+DAYS[todayIdx]+' — '+todayPlan.tasks.length+' módulo(s) no plano';
-  if(mods)mods.textContent=todayPlan.tasks.map(function(t){return t.courseName+': '+t.moduleName;}).join(' · ');
-  banner.classList.add('show');
-  // Insert banner after topbar
-  var topbar=document.querySelector('.ma-topbar,.tb,.hdr,.topbar');
-  if(topbar&&topbar.parentNode)topbar.parentNode.insertBefore(banner,topbar.nextSibling);
-}
-
-function _renderWeekCard(){
-  var sp=gs4('mae_study_plan',null);
-  // Inject into MAE panel pane or painel.html
-  var insertArea=document.querySelector('#maePane2>.mae-stat-grid')||document.querySelector('#maePane2');
-  if(!sp||!sp.plan||!insertArea)return;
-  if(document.getElementById('maeSpWeekCard'))return;
-  var card=document.createElement('div');
-  card.id='maeSpWeekCard';card.className='mae-sp-week-card';
-  var todayIdx=_getTodayPlanIdx();
-  var done=sp.done||{};
-  var rowsHtml='';
-  sp.plan.forEach(function(dayPlan,i){
-    var isToday=i===todayIdx;
-    rowsHtml+='<div class="mae-sp-day-row"><div class="mae-sp-day-lbl'+(isToday?' today':'')+'">'+dayPlan.day+'</div>';
-    rowsHtml+='<div class="mae-sp-day-tasks">';
-    if(dayPlan.off){rowsHtml+='<span class="mae-sp-off">Descanso</span>';}
-    else if(!dayPlan.tasks.length){rowsHtml+='<span class="mae-sp-off">—</span>';}
-    else{dayPlan.tasks.forEach(function(t,ti){var k=i+'_'+ti;var isDone=done[k];rowsHtml+='<div class="mae-sp-task'+(isDone?' done':'')+'"><span class="task-check">'+(isDone?'✅':'⬜')+'</span><span class="task-course">'+t.courseName+'</span> '+t.moduleName+'</div>';});}
-    rowsHtml+='</div></div>';
-  });
-  card.innerHTML='<div class="mae-sp-week-title">📅 Plano da Semana <span class="mae-sp-week-redo" onclick="maeSPRedo()">Refazer</span></div>'+rowsHtml;
-  insertArea.parentNode.insertBefore(card,insertArea);
-}
-
-window.maeSPRedo=function(){
-  localStorage.removeItem('mae_study_plan');localStorage.removeItem('mae_study_plan_skipped');
-  el('maeSPModal').classList.add('open');
-};
-
-window.maeSPMarkDone=function(courseKey,moduleName){
-  var sp=gs4('mae_study_plan',null);if(!sp||!sp.plan)return;
-  var todayIdx=_getTodayPlanIdx();var day=sp.plan[todayIdx];if(!day||!day.tasks)return;
-  if(!sp.done)sp.done={};
-  day.tasks.forEach(function(t,ti){
-    if(t.courseKey===courseKey&&t.moduleName===moduleName){
-      var k=todayIdx+'_'+ti;
-      if(!sp.done[k]){sp.done[k]=true;ss4('mae_study_plan',sp);if(window.MA_addPoints)MA_addPoints('Plano de Estudos: '+moduleName,25);maeShowMotiv('plan','📅','Módulo do plano concluído!','Você seguiu seu cronograma e ganhou +25 pts bônus!','');}
-    }
-  });
-};
-
-/* ═══════════════════════════════════════
-   FRASES MOTIVACIONAIS
-   ═══════════════════════════════════════ */
-var MOTIV_PHRASES={
-  welcome:[
-    {emoji:'🌅',title:'Bem-vindo de volta!',sub:'Cada dia de estudo te coloca à frente da maioria. Vamos lá!'},
-    {emoji:'🚀',title:'Pronto para evoluir?',sub:'Consistência é o segredo dos grandes. Você está no caminho certo!'},
-    {emoji:'💪',title:'Mais um dia de crescimento!',sub:'Você está construindo algo grandioso. Continue!'},
-    {emoji:'🎯',title:'Foco total hoje!',sub:'Que módulo vamos conquistar hoje? Abra seu plano de estudos!'}
-  ],
-  module_complete:[
-    {emoji:'🎉',title:'Módulo concluído!',sub:'Você está cada vez mais preparado. O conhecimento é seu para sempre!'},
-    {emoji:'⚡',title:'Excelente progresso!',sub:'Continue esse ritmo incrível. Cada módulo é uma nova habilidade!'},
-    {emoji:'🏆',title:'Mais uma vitória!',sub:'Você avançou mais um passo na sua jornada de evolução!'},
-    {emoji:'📚',title:'Conhecimento adquirido!',sub:'Você está entre os alunos mais dedicados da plataforma!'}
-  ],
-  points_gain:[
-    {emoji:'⭐',title:'Pontos acumulados!',sub:'Continue evoluindo. Cada ponto te aproxima do próximo nível!'},
-    {emoji:'💎',title:'Você está crescendo!',sub:'Seu esforço está sendo recompensado. Não pare agora!'},
-    {emoji:'🎯',title:'Progresso confirmado!',sub:'Você está entre os alunos mais ativos da Matheus Academy!'}
-  ],
-  level_up:[
-    {emoji:'🌟',title:'NOVO NÍVEL DESBLOQUEADO!',sub:'Você subiu de nível! Seu esforço e dedicação estão valendo a pena!'},
-    {emoji:'👑',title:'Evolução confirmada!',sub:'Novo nível conquistado! Continue nessa jornada incrível!'},
-    {emoji:'🚀',title:'Subiu de nível!',sub:'Você é incrível! Continue estudando e chegue ao Elite III!'}
-  ],
-  streak:[
-    {emoji:'🔥',title:'Sequência incrível!',sub:'Você está construindo um hábito poderoso. Não pare agora!'},
-    {emoji:'💪',title:'Consistência é poder!',sub:'Você está entre os alunos mais constantes da plataforma!'}
-  ],
-  plan:[
-    {emoji:'📅',title:'Plano em dia!',sub:'Você está seguindo seu cronograma. Isso faz toda a diferença!'}
-  ]
-};
-
-var _motivQueue=[];var _motivShowing=false;var _motivT=null;
-var _shownWelcome=false;
-
-function _pickPhrase(type){
-  var arr=MOTIV_PHRASES[type];if(!arr||!arr.length)return null;
-  return arr[Math.floor(Math.random()*arr.length)];
-}
-
-function _confetti(){
-  var colors=['#5b7fff','#a855f7','#22c55e','#f59e0b','#ef4444','#fff'];
-  for(var i=0;i<18;i++){
-    (function(i){
-      setTimeout(function(){
-        var div=document.createElement('div');
-        div.className='mae-conf';
-        div.style.cssText='left:'+Math.random()*100+'vw;top:'+Math.random()*40+'vh;background:'+colors[Math.floor(Math.random()*colors.length)]+';transform:rotate('+Math.random()*360+'deg)';
-        document.body.appendChild(div);
-        setTimeout(function(){if(div.parentNode)div.parentNode.removeChild(div);},1300);
-      },i*55);
-    })(i);
-  }
-}
-
-window.maeShowMotiv=function(type,emoji,title,sub,pts){
-  var phrase=_pickPhrase(type)||{emoji:emoji||'🎉',title:title||'Parabéns!',sub:sub||'Continue evoluindo!'};
-  if(emoji)phrase.emoji=emoji;if(title)phrase.title=title;if(sub)phrase.sub=sub;
-  _motivQueue.push({...phrase,pts:pts});
-  if(!_motivShowing)_nextMotiv();
-};
-
-function _nextMotiv(){
-  if(!_motivQueue.length){_motivShowing=false;return;}
-  _motivShowing=true;
-  var p=_motivQueue.shift();
-  var w=el('maeMotivWrap');if(!w)return;
-  var emj=el('maeMotivEmoji'),ttl=el('maeMotivTitle'),sub=el('maeMotivSub'),pts=el('maeMotivPts');
-  if(emj)emj.textContent=p.emoji;
-  if(ttl)ttl.textContent=p.title;
-  if(sub)sub.textContent=p.sub;
-  if(pts){pts.style.display=p.pts?'block':'none';if(p.pts)pts.textContent=p.pts;}
-  w.classList.add('show');
-  if(p.emoji==='🌟'||p.emoji==='🏆'||p.emoji==='👑')_confetti();
-  if(_motivT)clearTimeout(_motivT);
-  _motivT=setTimeout(maeMotivHide,4500);
-}
-
-window.maeMotivHide=function(){
-  var w=el('maeMotivWrap');if(w)w.classList.remove('show');
-  if(_motivT)clearTimeout(_motivT);
-  _motivShowing=false;
-  setTimeout(_nextMotiv,500);
-};
-
-function _showBannerMotiv(text){
-  var b=el('maeMotivBanner'),t=el('maeMotivBannerText');
-  if(!b||!t)return;
-  t.textContent=text;b.classList.add('show');
-  setTimeout(function(){b.classList.remove('show');},5000);
-}
-
-/* HOOK INTO EXISTING EVENTS */
-function _hookMotivEvents(){
-  // Hook MA_moduleComplete
-  var _origMC=window.MA_moduleComplete;
-  window.MA_moduleComplete=function(modTitle,cards){
-    if(_origMC)_origMC(modTitle,cards);
-    setTimeout(function(){maeShowMotiv('module_complete','','','','');},800);
-  };
-  // Hook MA_addPoints for level-up detection
-  // v3 FIX: lê XP do Firebase (MAStore) — NUNCA de ma_points legado
-  var _lastLv=null;
-  var LVLS_V4=[0,1000,3000,7000,15000,50000,200000,1000000];
-  function _getLv(pts){for(var i=LVLS_V4.length-1;i>=0;i--)if(pts>=LVLS_V4[i])return i;return 0;}
-  setInterval(function(){
-    var _xp=(window.MAStore&&MAStore.getTotalPointsSync)?MAStore.getTotalPointsSync():(function(){try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');return(_u&&typeof _u.xp_total==='number')?_u.xp_total:0;}catch(e){return 0;}})();
-    var lv=_getLv(_xp);
-    if(_lastLv!==null&&lv>_lastLv)maeShowMotiv('level_up','','','','');
-    _lastLv=lv;
-  },2000);
-}
-
-function _welcomeMotiv(){};
-  if(!u)return;
-  // Show banner first, then full motiv after delay
-  var streak=JSON.parse(localStorage.getItem('ma_streak2')||'{}');
-  var sk=streak.current||0;
-  if(sk>=7)_showBannerMotiv('🔥 '+sk+' dias seguidos! Você é incrível!');
-  else // banner welcome on load: disabled
-  setTimeout(function(){maeShowMotiv('welcome','','','','');},3000);
-}
-
-/* ═══════════════════════════════════════
-   INIT
-   ═══════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded',function(){
-  // Chat quota update
-  _updateChatQuota();
-  // Set chat course label
-  var sub=el('maeChatCourse');if(sub)sub.textContent=_chatState.courseName;
-  // Study plan: show modal on first visit
-  var hasPlan=gs4('mae_study_plan',null);var skipped=gs4('mae_study_plan_skipped',false);
-  var u=null;try{u=JSON.parse(localStorage.getItem('ma_user'));}catch(e){}
-  if(u&&!hasPlan&&!skipped){setTimeout(function(){var m=el('maeSPModal');if(m)m.classList.add('open');},2500);}
-  if(hasPlan){setTimeout(_renderDailyBanner,300);setTimeout(_renderWeekCard,400);}
-  // Motivational
-  setTimeout(_hookMotivEvents,100);
-  // welcome disabled
-  // Study plan auto-mark when module complete
-  var _origSP=window.maeSPMarkDone;
-  window.MA_moduleComplete=window.MA_moduleComplete||function(){};
-  // ESC close chat
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')maeChatClose();});
-  // Chat input auto-resize
-  var inp=el('maeChatInput');
-  if(inp)inp.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,70)+'px';});
-});
-
-})();
-</script>
-<!-- FIM MA ENGINE v4 -->
-
-<!-- ═══════════════ MA BUSCA GLOBAL v1 ═══════════════ -->
-<style>
-#maeSG-ov{position:fixed;inset:0;background:rgba(0,0,0,.84);backdrop-filter:blur(14px);z-index:29999;display:none;align-items:flex-start;justify-content:center;padding:56px 14px 20px}
-#maeSG-ov.sg-open{display:flex}
-#maeSG-box{background:#0d0d1c;border:1.5px solid #252540;border-radius:18px;width:100%;max-width:600px;max-height:calc(100vh - 80px);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.85);display:flex;flex-direction:column;animation:sgIn .2s cubic-bezier(.2,0,.3,1)}
-@keyframes sgIn{from{transform:scale(.92) translateY(-16px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
-.sg-top{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #1e1e35;flex-shrink:0}
-.sg-search-icon{font-size:.95rem;color:#5b7fff;flex-shrink:0}
-#maeSG-input{flex:1;background:transparent;border:none;outline:none;font-size:.92rem;color:#fff;font-family:'Outfit',sans-serif;caret-color:#5b7fff}
-#maeSG-input::placeholder{color:#44445a}
-.sg-esc{padding:3px 8px;border-radius:5px;background:#1e1e35;font-size:.52rem;color:#8888aa;font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;flex-shrink:0;border:none}
-.sg-results{flex:1;overflow-y:auto;padding:6px 0;min-height:60px}
-.sg-results::-webkit-scrollbar{width:3px}
-.sg-results::-webkit-scrollbar-thumb{background:#1e1e35}
-.sg-sect{padding:6px 16px 3px;font-size:.54rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#44445a;font-family:'Outfit',sans-serif}
-.sg-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;transition:background .12s;text-decoration:none;border:none;background:transparent;width:100%;text-align:left;font-family:'Outfit',sans-serif}
-.sg-item:hover,.sg-item.sg-sel{background:rgba(91,127,255,.09)}
-.sg-item-ic{width:30px;height:30px;border-radius:8px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0}
-.sg-item-body{flex:1;min-width:0}
-.sg-item-title{font-size:.76rem;font-weight:700;color:#e8e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sg-item-sub{font-size:.6rem;color:#8888aa;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sg-item-badge{padding:2px 7px;border-radius:5px;font-size:.5rem;font-weight:700;background:rgba(91,127,255,.1);color:#5b7fff;flex-shrink:0;font-family:'Outfit',sans-serif}
-.sg-empty{padding:32px 20px;text-align:center;font-size:.76rem;color:#44445a;font-family:'Outfit',sans-serif}
-.sg-footer{padding:7px 14px;border-top:1px solid #1e1e35;display:flex;align-items:center;justify-content:space-between;font-size:.52rem;color:#44445a;font-family:'Outfit',sans-serif;flex-shrink:0}
-.sg-footer-kbds{display:flex;gap:8px;align-items:center}
-.sg-kbd{padding:2px 6px;border-radius:3px;background:#1e1e35;color:#8888aa;font-size:.5rem}
-.sg-trigger-btn{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(17,17,34,.7);color:#8888aa;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s;text-decoration:none}
-.sg-trigger-btn:hover{border-color:#5b7fff;color:#5b7fff;background:rgba(91,127,255,.1)}
-</style>
-<div id="maeSG-ov" onclick="if(event.target===this)maeSGClose()">
-  <div id="maeSG-box">
-    <div class="sg-top">
-      <span class="sg-search-icon">🔍</span>
-      <input id="maeSG-input" type="text" placeholder="Buscar páginas, cursos e anotações..." autocomplete="off">
-      <button class="sg-esc" onclick="maeSGClose()">ESC</button>
-    </div>
-    <div class="sg-results" id="maeSG-results"><div class="sg-empty">⌨️ Digite para buscar</div></div>
-    <div class="sg-footer">
-      <div class="sg-footer-kbds">
-        <span class="sg-kbd">↑↓</span><span>navegar</span>
-        <span class="sg-kbd">↵</span><span>abrir</span>
-        <span class="sg-kbd">ESC</span><span>fechar</span>
-      </div>
-      <span>Ctrl+K</span>
-    </div>
-  </div>
-</div>
-<script>
-(function(){
-'use strict';
-var _SG_PAGES=[
-  {ic:'🏠',t:'Início / Portal',u:'index.html',c:'Páginas'},
-  {ic:'⭐',t:'Meu Painel',u:'painel.html',c:'Páginas'},
-  {ic:'🏆',t:'Ranking',u:'ranking.html',c:'Páginas'},
-  {ic:'🔗',t:'Indicações',u:'indicacoes.html',c:'Páginas'},
-  {ic:'👤',t:'Meu Perfil',u:'perfil.html',c:'Páginas'},
-  {ic:'🛤️',t:'Trilhas de Aprendizado',u:'trilhas.html',c:'Páginas'},
-  {ic:'🛒',t:'Loja de XP',u:'loja.html',c:'Páginas'},
-  {ic:'🏅',t:'Mural de Conquistas',u:'mural.html',c:'Páginas'},
-];
-// ═══ Busca global — cursos vêm de data/courses.js ═══
-var _SG_COURSES = MA_getActiveCourses().map(function(c){
-  return {ic:c.icon, t:c.name, u:c.file, c:'Cursos'};
-});
-var _sgSel=0;
-function _sgH(){try{return JSON.parse(localStorage.getItem('maSG_hist')||'[]');}catch(e){return[];}}
-function _sgAH(q){if(!q.trim())return;var h=_sgH().filter(function(x){return x!==q;});h.unshift(q);h=h.slice(0,5);localStorage.setItem('maSG_hist',JSON.stringify(h));}
-function _sgN(){try{return JSON.parse(localStorage.getItem('mae_notes_v3')||'[]');}catch(e){return[];}}
-window.maeSGOpen=function(){
-  var ov=document.getElementById('maeSG-ov');if(!ov)return;
-  ov.classList.add('sg-open');document.body.style.overflow='hidden';
-  var inp=document.getElementById('maeSG-input');if(inp){inp.value='';inp.focus();}
-  _sgShow('');
-};
-window.maeSGClose=function(){
-  var ov=document.getElementById('maeSG-ov');if(ov)ov.classList.remove('sg-open');
-  document.body.style.overflow='';
-};
-function _sgItemHtml(ic,title,sub,u,badge){
-  return '<div class="sg-item" data-url="'+u+'" onclick="maeSGGo(\''+u+'\',\'\')">'
-    +'<div class="sg-item-ic">'+ic+'</div>'
-    +'<div class="sg-item-body"><div class="sg-item-title">'+title+'</div>'+(sub?'<div class="sg-item-sub">'+sub+'</div>':'')+'</div>'
-    +(badge?'<span class="sg-item-badge">'+badge+'</span>':'')
-    +'</div>';
-}
-function _sgShow(q){
-  var res=document.getElementById('maeSG-results');if(!res)return;
-  var ql=q.toLowerCase().trim();
-  _sgSel=0;
-  if(!ql){
-    var hist=_sgH();
-    if(!hist.length){res.innerHTML='<div class="sg-empty">⌨️ Digite para buscar páginas, cursos e anotações</div>';return;}
-    var h='<div class="sg-sect">🕐 Buscas recentes</div>';
-    hist.forEach(function(q2){h+='<div class="sg-item" onclick="document.getElementById(\'maeSG-input\').value=\''+q2.replace(/'/g,"\\'")+'\'';h+=';document.getElementById(\'maeSG-input\').dispatchEvent(new Event(\'input\'))"><div class="sg-item-ic">🕐</div><div class="sg-item-body"><div class="sg-item-title">'+q2+'</div></div></div>';});
-    res.innerHTML=h;return;
-  }
-  var html='';
-  var pgs=_SG_PAGES.filter(function(p){return p.t.toLowerCase().indexOf(ql)>=0;});
-  if(pgs.length){html+='<div class="sg-sect">📄 Páginas</div>';pgs.forEach(function(p){html+=_sgItemHtml(p.ic,p.t,'',p.u,'');});}
-  var crs=_SG_COURSES.filter(function(c){return c.t.toLowerCase().indexOf(ql)>=0;});
-  if(crs.length){html+='<div class="sg-sect">📚 Cursos</div>';crs.forEach(function(c){html+=_sgItemHtml(c.ic,c.t,'Acessar curso',c.u,'Curso');});}
-  var notes=_sgN().filter(function(n){return(n.content||'').toLowerCase().indexOf(ql)>=0||(n.moduleName||'').toLowerCase().indexOf(ql)>=0;}).slice(0,4);
-  if(notes.length){html+='<div class="sg-sect">📓 Anotações</div>';notes.forEach(function(n){var sn=(n.content||'').substring(0,70)+'…';html+=_sgItemHtml('📓',n.moduleName||'Anotação',sn,'painel.html',n.courseName||'');});}
-  if(!html)html='<div class="sg-empty">🔍 Nenhum resultado para "'+q.replace(/</g,'&lt;')+'"</div>';
-  res.innerHTML=html;
-}
-window.maeSGGo=function(u,q){if(q)_sgAH(q);maeSGClose();if(u&&u!=='#')location.href=u;};
-var _inp=null;
-document.addEventListener('DOMContentLoaded',function(){
-  _inp=document.getElementById('maeSG-input');
-  if(_inp)_inp.addEventListener('input',function(){_sgShow(this.value);});
-  // Injetar botão de busca na topbar
-  setTimeout(function(){
-    var btn=document.createElement('button');
-    btn.className='sg-trigger-btn';btn.title='Busca Global (Ctrl+K)';btn.innerHTML='🔍';
-    btn.addEventListener('click',maeSGOpen);
-    var tgt=document.querySelector('.ma-tb-menu-btn,.tb-menu-btn,.hdr-right');
-    if(tgt&&tgt.tagName!=='DIV')tgt.parentNode.insertBefore(btn,tgt);
-    else if(tgt){tgt.insertBefore(btn,tgt.firstChild);}
-  },200);
-});
-document.addEventListener('keydown',function(e){
-  if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();maeSGOpen();return;}
-  var ov=document.getElementById('maeSG-ov');if(!ov||!ov.classList.contains('sg-open'))return;
-  if(e.key==='Escape'){maeSGClose();return;}
-  var items=document.querySelectorAll('#maeSG-results .sg-item');
-  if(!items.length)return;
-  if(e.key==='ArrowDown'){e.preventDefault();_sgSel=(_sgSel+1)%items.length;}
-  else if(e.key==='ArrowUp'){e.preventDefault();_sgSel=(_sgSel-1+items.length)%items.length;}
-  else if(e.key==='Enter'){e.preventDefault();var u=items[_sgSel]&&items[_sgSel].getAttribute('data-url');if(u)maeSGGo(u,'');return;}
-  else return;
-  items.forEach(function(i,idx){i.classList.toggle('sg-sel',idx===_sgSel);});
-  if(items[_sgSel])items[_sgSel].scrollIntoView({block:'nearest'});
-});
-})();
-</script>
-<!-- FIM MA BUSCA GLOBAL -->
-
-<!-- ═══════════════════════════════════════════════════════════════════════════════
-     MATHEUS ACADEMY FIXES v2.0
-     FIX 1: Duplo glow corrigido | FIX 2: Carrossel rápido infinito
-     FIX 3: Favoritos com long press | FIX 4: Logo interativa com som
-     ═══════════════════════════════════════════════════════════════════════════════ -->
-<script>
-(function(){
-'use strict';
-
-// ═══════════════════════════════════════════════════════════════════════════
-// CONFIGURAÇÕES
-// ═══════════════════════════════════════════════════════════════════════════
-var MA_FIX_CONFIG = {
-  longPressDuration: 500,
-  vibrationDuration: 50,
-  inflateScale: 1.15
-};
-
-// ═══════════════════════════════════════════════════════════════════════════
-// SISTEMA DE ÁUDIO - Som da logo (igual página de cursos)
-// ═══════════════════════════════════════════════════════════════════════════
-var MA_AudioCtx = null;
-
-function maPlayLogoSound() {
-  try {
-    if (!MA_AudioCtx) MA_AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    var ctx = MA_AudioCtx;
-    var osc = ctx.createOscillator();
-    var gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(800, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1);
-    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.2);
-    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.3);
-  } catch(e) {}
-}
-
-function maPlayFavAddSound() {
-  try {
-    if (!MA_AudioCtx) MA_AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    var ctx = MA_AudioCtx;
-    var osc = ctx.createOscillator();
-    var gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(523, ctx.currentTime);
-    osc.frequency.setValueAtTime(659, ctx.currentTime + 0.1);
-    osc.frequency.setValueAtTime(784, ctx.currentTime + 0.2);
-    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.35);
-  } catch(e) {}
-}
-
-function maPlayFavRemoveSound() {
-  try {
-    if (!MA_AudioCtx) MA_AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    var ctx = MA_AudioCtx;
-    var osc = ctx.createOscillator();
-    var gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(500, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.2);
-    gain.gain.setValueAtTime(0.15, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.25);
-  } catch(e) {}
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// FIX 1: GLOW ÚNICO ABSOLUTO v3.0 - Detecta card sob o dedo em tempo real
-// ═══════════════════════════════════════════════════════════════════════════
-var _currentGlowCard = null;
-
-function maRemoveAllGlow() {
-  // Remove glow de TODOS os cards
-  document.querySelectorAll('.ma-glow-active').forEach(function(c) {
-    c.classList.remove('ma-glow-active');
-  });
-  _currentGlowCard = null;
-}
-
-function maSetGlow(card) {
-  if (!card) return;
-  if (_currentGlowCard === card) return; // já está ativo
-  maRemoveAllGlow(); // remove de todos primeiro
-  card.classList.add('ma-glow-active');
-  _currentGlowCard = card;
-}
-
-function maGetCardUnderPoint(x, y) {
-  // Encontra o card que está sob o ponto (x, y)
-  var el = document.elementFromPoint(x, y);
-  if (!el) return null;
-  return el.closest('.ebook-card, .cc');
-}
-
-function maInitGlowFix() {
-  // ══════════════════════════════════════════════════════════════════
-  // MOUSE - Desktop
-  // ══════════════════════════════════════════════════════════════════
-  document.addEventListener('mousemove', function(e) {
-    var card = maGetCardUnderPoint(e.clientX, e.clientY);
-    if (card) {
-      maSetGlow(card);
-    } else if (_currentGlowCard) {
-      maRemoveAllGlow();
-    }
-  });
-  
-  document.addEventListener('mouseleave', function() {
-    maRemoveAllGlow();
-  });
-  
-  // ══════════════════════════════════════════════════════════════════
-  // TOUCH - Mobile - Detecta card sob o dedo em TEMPO REAL
-  // ══════════════════════════════════════════════════════════════════
-  document.addEventListener('touchstart', function(e) {
-    if (!e.touches.length) return;
-    var touch = e.touches[0];
-    var card = maGetCardUnderPoint(touch.clientX, touch.clientY);
-    if (card) {
-      maSetGlow(card);
-    }
-  }, {passive: true});
-  
-  document.addEventListener('touchmove', function(e) {
-    if (!e.touches.length) return;
-    var touch = e.touches[0];
-    var card = maGetCardUnderPoint(touch.clientX, touch.clientY);
-    if (card) {
-      maSetGlow(card); // Muda para o card sob o dedo INSTANTANEAMENTE
-    } else {
-      maRemoveAllGlow(); // Se não está sobre nenhum card, remove glow
-    }
-  }, {passive: true});
-  
-  document.addEventListener('touchend', function() {
-    // Delay curto para o usuário ver o último card destacado
-    setTimeout(maRemoveAllGlow, 800);
-  }, {passive: true});
-  
-  document.addEventListener('touchcancel', function() {
-    maRemoveAllGlow();
-  }, {passive: true});
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// FIX 3: SISTEMA DE FAVORITOS COM LONG PRESS
-// ═══════════════════════════════════════════════════════════════════════════
-var _maFavOverlay = null;
-var _maFavMenu = null;
-var _maFavCurrentCard = null;
-var _maFavLongPressTimer = null;
-var _maFavorites = new Set();
-
-function maLoadFavorites() {
-  try {
-    var saved = localStorage.getItem('ma_card_favorites');
-    if (saved) _maFavorites = new Set(JSON.parse(saved));
-  } catch(e) {}
-}
-
-function maSaveFavorites() {
-  try {
-    localStorage.setItem('ma_card_favorites', JSON.stringify(Array.from(_maFavorites)));
-  } catch(e) {}
-}
-
-function maGetCardId(card) {
-  return card.getAttribute('data-file') || 
-         card.dataset.courseId || 
-         card.querySelector('h4, .bal-name')?.textContent?.trim() ||
-         Array.from(card.parentElement?.children || []).indexOf(card).toString();
-}
-
-function maCreateFavOverlay() {
-  if (_maFavOverlay) return;
-  _maFavOverlay = document.createElement('div');
-  _maFavOverlay.className = 'ma-fav-overlay';
-  _maFavOverlay.addEventListener('click', maCloseFavMenu);
-  document.body.appendChild(_maFavOverlay);
-}
-
-function maCreateFavMenu() {
-  if (_maFavMenu) return;
-  _maFavMenu = document.createElement('div');
-  _maFavMenu.className = 'ma-fav-menu';
-  _maFavMenu.innerHTML = 
-    '<div class="ma-fav-menu-hdr"><h3>Opções do Curso</h3></div>' +
-    '<button class="ma-fav-opt add" data-action="add">' +
-      '<div class="ma-fav-heart">❤️</div>' +
-      '<div class="ma-fav-opt-txt"><p class="title">Adicionar aos Favoritos</p><p class="subtitle">Salve para acessar rapidamente</p></div>' +
-    '</button>' +
-    '<button class="ma-fav-opt remove" data-action="remove" style="display:none">' +
-      '<div class="ma-fav-heart">🤍</div>' +
-      '<div class="ma-fav-opt-txt"><p class="title">Remover dos Favoritos</p><p class="subtitle">Retirar da sua lista</p></div>' +
-    '</button>' +
-    '<button class="ma-fav-cancel">Cancelar</button>';
-  
-  _maFavMenu.querySelector('[data-action="add"]').addEventListener('click', maAddToFavorites);
-  _maFavMenu.querySelector('[data-action="remove"]').addEventListener('click', maRemoveFromFavorites);
-  _maFavMenu.querySelector('.ma-fav-cancel').addEventListener('click', maCloseFavMenu);
-  document.body.appendChild(_maFavMenu);
-}
-
-function maCreateFavBadge(card) {
-  if (card.querySelector('.ma-fav-badge')) return;
-  var badge = document.createElement('div');
-  badge.className = 'ma-fav-badge';
-  badge.innerHTML = '❤️';
-  var cardId = maGetCardId(card);
-  if (_maFavorites.has(cardId)) badge.classList.add('active');
-  var cover = card.querySelector('.ebook-cover, .cc-img');
-  if (cover) {
-    if (getComputedStyle(cover).position === 'static') cover.style.position = 'relative';
-    cover.appendChild(badge);
-  }
-}
-
-function maOpenFavMenu(card) {
-  _maFavCurrentCard = card;
-  var cardId = maGetCardId(card);
-  var isFav = _maFavorites.has(cardId);
-  _maFavMenu.querySelector('[data-action="add"]').style.display = isFav ? 'none' : 'flex';
-  _maFavMenu.querySelector('[data-action="remove"]').style.display = isFav ? 'flex' : 'none';
-  _maFavOverlay.classList.add('active');
-  _maFavMenu.classList.add('active');
-}
-
-function maCloseFavMenu() {
-  _maFavOverlay.classList.remove('active');
-  _maFavMenu.classList.remove('active');
-  _maFavCurrentCard = null;
-}
-
-function maAddToFavorites() {
-  if (!_maFavCurrentCard) return;
-  var cardId = maGetCardId(_maFavCurrentCard);
-  _maFavorites.add(cardId);
-  maSaveFavorites();
-  var badge = _maFavCurrentCard.querySelector('.ma-fav-badge');
-  if (badge) {
-    badge.classList.add('active', 'pulse');
-    setTimeout(function() { badge.classList.remove('pulse'); }, 600);
-  }
-  maPlayFavAddSound();
-  maShowToast('❤️', 'Adicionado aos favoritos!');
-  maCloseFavMenu();
-}
-
-function maRemoveFromFavorites() {
-  if (!_maFavCurrentCard) return;
-  var cardId = maGetCardId(_maFavCurrentCard);
-  _maFavorites.delete(cardId);
-  maSaveFavorites();
-  var badge = _maFavCurrentCard.querySelector('.ma-fav-badge');
-  if (badge) badge.classList.remove('active');
-  maPlayFavRemoveSound();
-  maShowToast('🤍', 'Removido dos favoritos');
-  maCloseFavMenu();
-}
-
-function maShowToast(icon, msg) {
-  var existing = document.querySelector('.ma-toast');
-  if (existing) existing.remove();
-  var toast = document.createElement('div');
-  toast.className = 'ma-toast';
-  toast.innerHTML = '<span class="ma-toast-icon">' + icon + '</span><span class="ma-toast-text">' + msg + '</span>';
-  document.body.appendChild(toast);
-  requestAnimationFrame(function() { toast.classList.add('active'); });
-  setTimeout(function() {
-    toast.classList.remove('active');
-    setTimeout(function() { toast.remove(); }, 400);
-  }, 2500);
-}
-
-function maStartLongPress(card) {
-  _maFavCurrentCard = card;
-  _maFavLongPressTimer = setTimeout(function() {
-    maOpenFavMenu(card);
-    if (navigator.vibrate) navigator.vibrate(MA_FIX_CONFIG.vibrationDuration);
-  }, MA_FIX_CONFIG.longPressDuration);
-}
-
-function maCancelLongPress() {
-  if (_maFavLongPressTimer) {
-    clearTimeout(_maFavLongPressTimer);
-    _maFavLongPressTimer = null;
-  }
-}
-
-function maInitFavorites() {
-  maLoadFavorites();
-  maCreateFavOverlay();
-  maCreateFavMenu();
-  
-  var cards = document.querySelectorAll('.ebook-card, .cc');
-  cards.forEach(function(card) {
-    maCreateFavBadge(card);
-    // Touch long press
-    card.addEventListener('touchstart', function(e) { maStartLongPress(card); }, {passive: true});
-    card.addEventListener('touchend', maCancelLongPress);
-    card.addEventListener('touchmove', maCancelLongPress);
-    // Mouse long press
-    card.addEventListener('mousedown', function(e) { if (e.button === 0) maStartLongPress(card); });
-    card.addEventListener('mouseup', maCancelLongPress);
-    card.addEventListener('mouseleave', maCancelLongPress);
-  });
-  
-  // Observer para cards novos
-  var obs = new MutationObserver(function(mutations) {
-    mutations.forEach(function(m) {
-      m.addedNodes.forEach(function(node) {
-        if (node.nodeType === 1) {
-          var newCards = node.querySelectorAll ? node.querySelectorAll('.ebook-card, .cc') : [];
-          newCards.forEach(function(card) {
-            maCreateFavBadge(card);
-            card.addEventListener('touchstart', function() { maStartLongPress(card); }, {passive: true});
-            card.addEventListener('touchend', maCancelLongPress);
-            card.addEventListener('touchmove', maCancelLongPress);
-          });
-        }
-      });
-    });
-  });
-  obs.observe(document.body, {childList: true, subtree: true});
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// FIX 4: LOGO INTERATIVA COM EFEITO INFLAR + SOM INFINITO
-// ═══════════════════════════════════════════════════════════════════════════
-function maAnimateLogo(logo, e) {
-  logo.classList.remove('ma-logo-inflating', 'ma-logo-glowing');
-  void logo.offsetWidth; // force reflow
-  logo.classList.add('ma-logo-inflating', 'ma-logo-glowing');
-  maPlayLogoSound();
-  
-  // Ripple effect
-  var ripple = document.createElement('div');
-  ripple.className = 'ma-logo-ripple';
-  var rect = logo.getBoundingClientRect();
-  var size = Math.max(rect.width, rect.height);
-  ripple.style.width = ripple.style.height = size + 'px';
-  ripple.style.left = ((rect.width - size) / 2) + 'px';
-  ripple.style.top = ((rect.height - size) / 2) + 'px';
-  if (getComputedStyle(logo).position === 'static') logo.style.position = 'relative';
-  logo.style.overflow = 'visible';
-  logo.appendChild(ripple);
-  setTimeout(function() { ripple.remove(); }, 600);
-  
-  setTimeout(function() {
-    logo.classList.remove('ma-logo-inflating', 'ma-logo-glowing');
-  }, 800);
-}
-
-function maInitLogoInteractive() {
-  // Hero logo na página inicial
-  var heroLogo = document.querySelector('.hero-logo');
-  if (heroLogo) {
-    heroLogo.style.cursor = 'pointer';
-    heroLogo.addEventListener('click', function(e) { maAnimateLogo(heroLogo, e); });
-  }
-  
-  // Logo da topbar
-  var topbarLogo = document.querySelector('.ma-tb-logo img');
-  if (topbarLogo) {
-    topbarLogo.style.cursor = 'pointer';
-    topbarLogo.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      maAnimateLogo(topbarLogo, e);
-    });
-  }
-  
-  // Logo no header principal
-  var headerLogo = document.querySelector('#logoBtn img, .hdr-left img');
-  if (headerLogo) {
-    headerLogo.style.cursor = 'pointer';
-    headerLogo.addEventListener('click', function(e) { maAnimateLogo(headerLogo, e); });
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// INICIALIZAÇÃO
-// ═══════════════════════════════════════════════════════════════════════════
-function maInitFixes() {
-  console.log('🚀 Matheus Academy Fixes v2.0 - Carregando...');
-  maInitGlowFix();
-  maInitFavorites();
-  maInitLogoInteractive();
-  console.log('✅ Fixes carregados: Glow único, Favoritos (long press), Logo interativa');
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', maInitFixes);
-} else {
-  setTimeout(maInitFixes, 100);
-}
-
-// Expor funções globais
-window.MA_Fixes = {
-  playLogoSound: maPlayLogoSound,
-  showToast: maShowToast
-};
-
-})();
-</script>
-<!-- FIM MATHEUS ACADEMY FIXES v2.0 -->
-
-</body>
-</html>
+.mae-cs-icon{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#5b7fff,#a855f7);display:flex;align-items:center;justify-content:c
