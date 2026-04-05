@@ -802,6 +802,15 @@ function initSidebar(){
 /* ═══ ACESSO ═══ */
 function isUnlocked(){
   if(COURSE.free)return true;
+  // v4 FIX: usa Firebase (ma_user) como fonte de verdade
+  var u=gU();
+  if(!u)return false;
+  var plano=(u.plano||'').toLowerCase();
+  if(plano==='master'||plano==='mensal'||plano==='anual')return true;
+  var cursos=u.cursos||u.cursos_comprados||[];
+  if(cursos.indexOf(COURSE.courseKey)>=0)return true;
+  if(cursos.indexOf(COURSE.ak)>=0)return true;
+  // fallback legado
   var ac=gA(),now=Date.now();
   if(ac.master&&ac.masterTs&&now-ac.masterTs<(ac.expiry||EXP_M))return true;
   var raw=localStorage.getItem(COURSE.ak);
@@ -910,30 +919,36 @@ function selectTopic(mi,ti,canAcc){
   if(_isMobile())closeSidebarMobile();
   grantMission('aula');
 
-  /* Se o módulo já está renderizado, reaproveita o DOM sem re-renderizar */
+  /* Se já está no mesmo módulo renderizado, não re-renderiza tudo —
+     apenas abre o tópico e scrolla. Evita o DOM ser destruído e recriado. */
   var existingItem=document.getElementById('ml_topic_'+mi+'_'+ti);
   if(existingItem){
+    /* DOM já existe — calcula posição ANTES de qualquer mudança */
     var hdr=existingItem.querySelector('.ml-topic-hdr')||existingItem;
     var topbarH=56, tabsH=48, gap=12;
     var offsetTop=hdr.getBoundingClientRect().top + window.scrollY - (topbarH + tabsH + gap);
+    /* Expande sem fechar outros */
     existingItem.classList.add('t-open');
-    window.scrollTo({top:Math.max(0,offsetTop), behavior:'smooth'});
+    window.scrollTo({top:Math.max(0,offsetTop),behavior:'smooth'});
+    /* Marca como visto */
     var mod0=MODS[mi],t0=mod0.topics[ti];
     var prog0=gProg(),key0=mod0.id+'_'+t0.id;
     if(!prog0[key0]){prog0[key0]=true;sProg(prog0);buildSidebar();}
     return;
   }
 
-  /* DOM não existe — renderiza o módulo e abre o tópico */
+  /* DOM ainda não existe — precisa renderizar o módulo primeiro */
   renderModLesson(mi);
   setTimeout(function(){
     var item=document.getElementById('ml_topic_'+mi+'_'+ti);
     if(!item){window.scrollTo({top:0,behavior:'instant'});return;}
+    /* DOM recém criado — todos os tópicos estão fechados, posição é precisa */
     var hdr=item.querySelector('.ml-topic-hdr')||item;
     var topbarH=56, tabsH=48, gap=12;
     var offsetTop=hdr.getBoundingClientRect().top + window.scrollY - (topbarH + tabsH + gap);
     item.classList.add('t-open');
-    window.scrollTo({top:Math.max(0,offsetTop), behavior:'smooth'});
+    window.scrollTo({top:Math.max(0,offsetTop),behavior:'smooth'});
+    /* Marca como visto */
     var mod=MODS[mi],t=mod.topics[ti];
     var prog=gProg(),key=mod.id+'_'+t.id;
     if(!prog[key]){prog[key]=true;sProg(prog);buildSidebar();}
@@ -1086,53 +1101,6 @@ function renderModLesson(mi){
     html+='</div></div></div>';
   }
 
-  /* ── Navegação entre módulos (Anterior / Próximo) ── */
-  var prevMi=mi-1, nextMi=mi+1;
-  var hasPrev=prevMi>=0, hasNext=nextMi<MODS.length;
-  var canNext=hasNext&&(isUnlocked()||nextMi<COURSE.freeModules);
-
-  html+='<div class="ml-module-nav">';
-
-  /* Botão ANTERIOR */
-  if(hasPrev){
-    var prevMod=MODS[prevMi];
-    html+='<button class="ml-nav-btn ml-nav-prev" onclick="renderModLesson('+prevMi+');window.scrollTo({top:0,behavior:\'smooth\'})">'
-      +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
-      +'<div class="ml-nav-info">'
-      +'<span class="ml-nav-label">← Módulo anterior</span>'
-      +'<span class="ml-nav-name">'+prevMod.name+'</span>'
-      +'</div>'
-      +'</button>';
-  } else {
-    /* placeholder invisível para manter o next alinhado à direita */
-    html+='<div style="flex:1"></div>';
-  }
-
-  /* Botão PRÓXIMO */
-  if(hasNext){
-    var nextMod=MODS[nextMi];
-    if(canNext){
-      html+='<button class="ml-nav-btn ml-nav-next" onclick="renderModLesson('+nextMi+');window.scrollTo({top:0,behavior:\'smooth\'})">'
-        +'<div class="ml-nav-info">'
-        +'<span class="ml-nav-label">Próximo módulo →</span>'
-        +'<span class="ml-nav-name">'+nextMod.name+'</span>'
-        +'</div>'
-        +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
-        +'</button>';
-    } else {
-      /* Módulo bloqueado — abre modal de planos */
-      html+='<button class="ml-nav-btn ml-nav-next ml-nav-locked" onclick="openM(\'plans\')">'
-        +'<div class="ml-nav-info">'
-        +'<span class="ml-nav-label">🔒 Próximo módulo</span>'
-        +'<span class="ml-nav-name">'+nextMod.name+'</span>'
-        +'</div>'
-        +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
-        +'</button>';
-    }
-  }
-
-  html+='</div>';
-
   /* ── Rodapé social ── */
   html+='<div class="ml-social-footer">'
     +'<span class="ml-social-label">Siga e entre na comunidade</span>'
@@ -1191,27 +1159,33 @@ function renderModLesson(mi){
   }
 }
 
+/* ── TOGGLE DO TÓPICO ── */
 function mlToggleTopic(mi,ti){
   var item=document.getElementById('ml_topic_'+mi+'_'+ti);
   if(!item)return;
   var isOpen=item.classList.contains('t-open');
 
   if(isOpen){
-    /* Fechar: só fecha este tópico, não mexe nos outros */
+    /* ── FECHAR: só fecha este tópico, não mexe nos outros ── */
     item.classList.remove('t-open');
     return;
   }
 
-  /* Abrir: NÃO fecha os outros tópicos.
-     Posição calculada ANTES de qualquer mudança no DOM — 100% precisa. */
+  /* ── ABRIR: NÃO fecha os outros tópicos ──
+     O DOM não muda antes do getBoundingClientRect(),
+     então a posição calculada é 100% precisa. */
   var hdr=item.querySelector('.ml-topic-hdr')||item;
   var topbarH=56, tabsH=48, gap=12;
+
+  /* Posição do header no momento do clique — DOM ainda não mudou */
   var offsetTop=hdr.getBoundingClientRect().top + window.scrollY - (topbarH + tabsH + gap);
 
+  /* Expande o tópico */
   item.classList.add('t-open');
   _curModIdx=mi; _curTopIdx=ti;
 
-  window.scrollTo({top:Math.max(0,offsetTop), behavior:'smooth'});
+  /* Scroll imediato para onde o header estava — sem esperar o DOM expandir */
+  window.scrollTo({top: Math.max(0, offsetTop), behavior:'smooth'});
 
   /* Marcar como visto — SEM pontos */
   var mod=MODS[mi], t=mod.topics[ti];
@@ -1514,7 +1488,7 @@ function mlFinishQuiz(mi,corrects){
 
 /* Abre o tópico para revisão (chamado pelo alerta de dificuldade) */
 function mlReviewTopic(mi,ti){
-  // mlToggleTopic já cuida do scroll para o título
+  /* mlToggleTopic não fecha os outros — scroll direto para o tópico */
   mlToggleTopic(mi,ti);
 }
 
@@ -1955,8 +1929,65 @@ function generateCert(){
 
 /* ═══ AUTH ═══ */
 function sMsg(id,t,tp){var el=document.getElementById(id);if(!el)return;el.innerHTML='<div class="msg-'+(tp==='ok'?'ok':'err')+'">'+t+'</div>';setTimeout(()=>{el.innerHTML='';},4000);}
-async function doLogin(){var em=document.getElementById('loginEmail').value.trim().toLowerCase();var pw=document.getElementById('loginPass').value;if(!em||!pw){sMsg('loginMsg','Preencha e-mail e senha','err');return;}var ph=await sha(pw+em);var us=JSON.parse(localStorage.getItem('ma_users')||'{}');if(!us[em]){sMsg('loginMsg','E-mail não encontrado','err');return;}if(us[em].passHash!==ph){sMsg('loginMsg','Senha incorreta','err');return;}localStorage.setItem('ma_user',JSON.stringify(us[em]));closeM('login');updateTopbar();buildSidebar();showToast('✅ Bem-vindo(a), '+us[em].name.split(' ')[0]+'!','ok');}
-async function doRegister(){var nm=document.getElementById('regName').value.trim();var em=document.getElementById('regEmail').value.trim().toLowerCase();var pw=document.getElementById('regPass').value;if(!nm||!em||!pw){sMsg('regMsg','Preencha todos os campos','err');return;}if(pw.length<6){sMsg('regMsg','Senha mínima 6 caracteres','err');return;}var ph=await sha(pw+em);var us=JSON.parse(localStorage.getItem('ma_users')||'{}');if(us[em]){sMsg('regMsg','E-mail já cadastrado','err');return;}us[em]={name:nm,email:em,passHash:ph,createdAt:new Date().toISOString()};localStorage.setItem('ma_users',JSON.stringify(us));localStorage.setItem('ma_user',JSON.stringify(us[em]));closeM('register');updateTopbar();showToast('🎉 Conta criada!','ok');}
+async function doLogin(){
+  var em=document.getElementById('loginEmail').value.trim().toLowerCase();
+  var pw=document.getElementById('loginPass').value;
+  if(!em||!pw){sMsg('loginMsg','Preencha e-mail e senha','err');return;}
+  var btn=document.getElementById('loginBtn');
+  if(btn){btn.disabled=true;btn.textContent='Entrando...';}
+  try{
+    if(window.MA_AUTH){
+      var user=await MA_AUTH.login(em,pw);
+      var dados=window.MA_DB?await MA_DB.getUsuario(user.uid):null;
+      localStorage.setItem('ma_user',JSON.stringify({
+        uid:user.uid,
+        name:(dados&&dados.nome)||user.displayName||em.split('@')[0],
+        email:em,
+        plano:(dados&&dados.plano)||'gratuito',
+        cursos:(dados&&dados.cursos_comprados)||[],
+        xp_total:(dados&&dados.xp_total)||0
+      }));
+      localStorage.removeItem('ma_points');
+      if(btn){btn.disabled=false;btn.textContent='Entrar';}
+      closeM('login');updateTopbar();buildSidebar();
+      showToast('✅ Bem-vindo(a), '+((dados&&dados.nome)||em.split('@')[0]).split(' ')[0]+'!','ok');
+    }
+  }catch(e){
+    if(btn){btn.disabled=false;btn.textContent='Entrar';}
+    var msg=e.code==='auth/user-not-found'?'E-mail não encontrado':
+            e.code==='auth/wrong-password'||e.code==='auth/invalid-credential'?'Senha incorreta':
+            e.code==='auth/invalid-email'?'E-mail inválido':'Erro: '+e.message;
+    sMsg('loginMsg',msg,'err');
+  }
+}
+async function doRegister(){
+  var nm=document.getElementById('regName').value.trim();
+  var em=document.getElementById('regEmail').value.trim().toLowerCase();
+  var pw=document.getElementById('regPass').value;
+  if(!nm||!em||!pw){sMsg('regMsg','Preencha todos os campos','err');return;}
+  if(pw.length<6){sMsg('regMsg','Senha mínima 6 caracteres','err');return;}
+  var btn=document.getElementById('regBtn');
+  if(btn){btn.disabled=true;btn.textContent='Cadastrando...';}
+  try{
+    if(window.MA_AUTH){
+      var user=await MA_AUTH.cadastrar(nm,em,pw);
+      localStorage.setItem('ma_user',JSON.stringify({
+        uid:user.uid,name:nm,email:em,
+        plano:'gratuito',cursos:[],xp_total:0
+      }));
+      localStorage.removeItem('ma_points');
+      if(btn){btn.disabled=false;btn.textContent='Criar Conta';}
+      closeM('register');updateTopbar();
+      showToast('🎉 Conta criada! Bem-vindo(a), '+nm.split(' ')[0]+'!','ok');
+    }
+  }catch(e){
+    if(btn){btn.disabled=false;btn.textContent='Criar Conta';}
+    var msg=e.code==='auth/email-already-in-use'?'E-mail já cadastrado':
+            e.code==='auth/weak-password'?'Senha fraca (mín. 6 chars)':
+            e.code==='auth/invalid-email'?'E-mail inválido':'Erro: '+e.message;
+    sMsg('regMsg',msg,'err');
+  }
+}
 var _re='';
 async function sendReset(){var em=document.getElementById('resetEmail').value.trim().toLowerCase();var us=JSON.parse(localStorage.getItem('ma_users')||'{}');if(!us[em]){sMsg('resetMsg','E-mail não encontrado','err');return;}_re=em;var code='';for(var i=0;i<6;i++)code+=Math.floor(Math.random()*10);localStorage.setItem('ma_rst_'+em,code);document.getElementById('resetCodeWrap').style.display='block';sMsg('resetMsg','Código gerado: '+code,'ok');}
 async function verifyReset(){var code=document.getElementById('resetCode').value.trim();var np=document.getElementById('resetNewPass').value;if(localStorage.getItem('ma_rst_'+_re)!==code){sMsg('resetMsg','Código inválido','err');return;}if(np.length<6){sMsg('resetMsg','Senha mínima 6 caracteres','err');return;}var ph=await sha(np+_re);var us=JSON.parse(localStorage.getItem('ma_users')||'{}');us[_re].passHash=ph;localStorage.setItem('ma_users',JSON.stringify(us));localStorage.removeItem('ma_rst_'+_re);sMsg('resetMsg','Senha atualizada!','ok');setTimeout(()=>{closeM('reset');openM('login');},1500);}
