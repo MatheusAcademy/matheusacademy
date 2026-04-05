@@ -686,6 +686,9 @@ var MAStore = (function() {
 
 })();
 
+// Expor MAStore globalmente para compatibilidade com course-engine.js
+window.MAStore = MAStore;
+
 /* ══════════════════════════════════════════════════════════
    FUNÇÕES GLOBAIS — Compatibilidade com código existente
    ══════════════════════════════════════════════════════════ */
