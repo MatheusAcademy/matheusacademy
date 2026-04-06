@@ -1054,6 +1054,20 @@ textarea{resize:vertical;min-height:54px}
       <div id="audit-list" style="max-height:300px;overflow-y:auto"></div>
     </div>
 
+    <!-- 9b. Histórico de Cursos Publicados -->
+    <div class="card" id="historico-pub-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">🗂️ Histórico de Cursos Publicados</div>
+          <div style="font-size:11px;color:var(--t2);margin-top:2px">Todos os cursos adicionados via admin, com data e hora</div>
+        </div>
+        <button class="btns" onclick="limparHistoricoPub()">🗑 Limpar</button>
+      </div>
+      <div id="historico-pub-list">
+        <div style="color:var(--t3);font-size:11px;padding:8px;text-align:center">Nenhum curso publicado via admin ainda.</div>
+      </div>
+    </div>
+
     <!-- 10. Backup local do courses.js -->
     <div class="card">
       <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">💾 Backup do courses.js</div>
@@ -2008,7 +2022,12 @@ async function publish(){
   var ok=await registerInCourses(meta,'rUp','');
   setProg(false,'',0,'');
   btn.disabled=false;
-  if(ok){resetForm();loadList();}
+  if(ok){
+    addAudit('✅ Publicou curso: "'+meta.name+'" (id: '+meta.id+', arquivo: '+meta.file+')');
+    addHistoricoPub(meta);
+    resetForm();
+    loadList();
+  }
 }
 
 // PUBLICAR MANUAL
@@ -2029,7 +2048,11 @@ async function pubManual(){
   setProg(true,'Registrando...',30,'2');
   var ok=await registerInCourses(meta,'rMn','2');
   setProg(false,'',0,'2');
-  if(ok) loadList();
+  if(ok){
+    addAudit('✅ Registrou curso manual: "'+meta.name+'" (id: '+meta.id+')');
+    addHistoricoPub(meta);
+    loadList();
+  }
 }
 
 // ATUALIZAR CAMPO (active/free)
@@ -2085,29 +2108,48 @@ async function loadList(){
   var fd=await res.json();
   var content=b64d(fd.content);
   var courses=[];
-  content.split(/(?=\n  \{\n\s+id:)/).forEach(function(b){
+  // Regex mais permissiva: divide em qualquer bloco que tenha id:
+  var blocks = content.split(/(?=\s*\{[\s\S]*?id:\s*['"])/);
+  blocks.forEach(function(b){
     var im=b.match(/id:\s*['"]([^'"]+)['"]/);
     var nm=b.match(/name:\s*['"]([^'"]+)['"]/);
     var ic=b.match(/icon:\s*['"]([^'"]*)['"]/);
     var am=b.match(/active:\s*(true|false)/);
     var fm=b.match(/free:\s*(true|false)/);
     var cm=b.match(/cat:\s*['"]([^'"]+)['"]/);
+    var ts=b.match(/addedTs:\s*(\d+)/);
     if(!im||!nm)return;
     if(b.indexOf('TEMPLATE')!==-1)return;
-    courses.push({id:im[1],name:nm[1],icon:ic?ic[1]:'📚',active:am?am[1]==='true':true,free:fm?fm[1]==='true':false,cat:cm?cm[1]:'—'});
+    // Ignora blocos que não são objetos de curso (ex: MA_CATS, variáveis soltas)
+    if(!b.match(/salt:\s*['"]/))return;
+    courses.push({
+      id:im[1],name:nm[1],icon:ic?ic[1]:'📚',
+      active:am?am[1]==='true':true,
+      free:fm?fm[1]==='true':false,
+      cat:cm?cm[1]:'—',
+      addedTs:ts?parseInt(ts[1]):0
+    });
   });
+  // Ordenar do mais recente para o mais antigo
+  courses.sort(function(a,b){return b.addedTs - a.addedTs;});
   el('cc').textContent='('+courses.length+' cursos)';
   var l=el('list');
-  if(!courses.length){l.innerHTML='<div style="color:var(--t3);font-size:12px;padding:8px">Nenhum curso encontrado.</div>';return;}
+  if(!courses.length){l.innerHTML='<div style="color:var(--t3);font-size:12px;padding:8px">Nenhum curso encontrado. Verifique a conexão com o GitHub.</div>';return;}
   l.innerHTML=courses.map(function(c2){
     var vb=c2.active?'<span class="cb ba">Visível</span>':'<span class="cb bo">Oculto</span>';
     var tb=c2.free?'<span class="cb bf">Grátis</span>':'<span class="cb bp">Pago</span>';
     var vCls=c2.active?'ab ao':'ab av', vTxt=c2.active?'🙈 Ocultar':'👁️ Visível', vVal=c2.active?'false':'true';
     var fCls=c2.free?'ab apd':'ab afr', fTxt=c2.free?'🔒 Tornar pago':'🎁 Gratuito', fVal=c2.free?'false':'true';
     var cid=c2.id, cn=escH(c2.name);
+    // Formatar data de publicação
+    var dataPub = '';
+    if(c2.addedTs > 0){
+      var d = new Date(c2.addedTs);
+      dataPub = ' · 📅 '+d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    }
     return '<div class="cr"><div class="cm">'
       +'<div class="ci2">'+c2.icon+'</div>'
-      +'<div class="cn"><b>'+cn+'</b><small>id: '+cid+' · '+c2.cat+'</small></div>'
+      +'<div class="cn"><b>'+cn+'</b><small>id: '+cid+' · '+c2.cat+dataPub+'</small></div>'
       +'<div class="cbs">'+vb+tb+'</div>'
       +'<button class="xb" onclick="togP(\''+cid+'\')">⋯</button>'
       +'</div><div class="ap" id="ap_'+cid+'">'
@@ -4067,7 +4109,84 @@ async function salvarOrdemCursos() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   7. CARREGAR ORDEM DOS CURSOS
+   11. HISTÓRICO DE CURSOS PUBLICADOS
+   ══════════════════════════════════════════════════════════════ */
+var _HP_KEY = 'ma_admin_historico_pub';
+
+function getHistoricoPub() {
+  try { return JSON.parse(localStorage.getItem(_HP_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveHistoricoPub(list) { localStorage.setItem(_HP_KEY, JSON.stringify(list)); }
+
+function addHistoricoPub(meta) {
+  var list = getHistoricoPub();
+  list.unshift({
+    id: meta.id,
+    name: meta.name,
+    cat: meta.cat,
+    icon: meta.icon || '🎓',
+    file: meta.file,
+    modules: meta.modules,
+    topics: meta.topics,
+    salt: meta.salt,
+    active: meta.active,
+    free: meta.free,
+    ts: Date.now()
+  });
+  // Manter apenas os últimos 100 registros
+  if (list.length > 100) list = list.slice(0, 100);
+  saveHistoricoPub(list);
+  renderHistoricoPub();
+}
+
+function renderHistoricoPub() {
+  var el2 = el('historico-pub-list'); if (!el2) return;
+  var items = getHistoricoPub();
+  if (!items.length) {
+    el2.innerHTML = '<div style="color:var(--t3);font-size:11px;padding:8px;text-align:center">Nenhum curso publicado via admin ainda.</div>';
+    return;
+  }
+  el2.innerHTML = items.map(function(p, i) {
+    var d = new Date(p.ts);
+    var dataStr = d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+    var statusV = p.active
+      ? '<span style="background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.2);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:700">VISÍVEL</span>'
+      : '<span style="background:rgba(245,158,11,.09);color:#fcd34d;border:1px solid rgba(245,158,11,.2);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:700">OCULTO</span>';
+    var statusA = p.free
+      ? '<span style="background:rgba(96,165,250,.1);color:var(--acc2);border:1px solid rgba(59,130,246,.2);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:700">GRÁTIS</span>'
+      : '<span style="background:rgba(167,139,250,.09);color:#c4b5fd;border:1px solid rgba(167,139,250,.2);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:700">PAGO</span>';
+    return '<div style="background:var(--card);border:1px solid var(--brd);border-radius:9px;padding:11px 14px;margin-bottom:7px;display:flex;align-items:flex-start;gap:10px">'
+      + '<div style="font-size:22px;flex-shrink:0;line-height:1">' + (p.icon || '🎓') + '</div>'
+      + '<div style="flex:1;min-width:0">'
+      + '<div style="font-size:13px;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + escH(p.name) + '</div>'
+      + '<div style="font-size:10px;color:var(--t3);font-family:var(--mono);margin-top:1px">id: ' + p.id + ' · ' + p.cat + ' · ' + (p.modules||'?') + ' módulos · ' + (p.topics||'?') + ' tópicos</div>'
+      + '<div style="font-size:10px;color:var(--t3);margin-top:2px">📄 ' + p.file + '</div>'
+      + '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px">' + statusV + statusA + '</div>'
+      + '</div>'
+      + '<div style="flex-shrink:0;text-align:right">'
+      + '<div style="font-size:10px;color:var(--t2);font-family:var(--mono);white-space:nowrap">📅 ' + dataStr + '</div>'
+      + '<button onclick="removerHistoricoPub(' + i + ')" style="margin-top:6px;background:none;border:none;color:var(--t3);cursor:pointer;font-size:13px;padding:2px 4px;border-radius:4px" title="Remover deste histórico">✕</button>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+function removerHistoricoPub(i) {
+  var list = getHistoricoPub(); list.splice(i, 1);
+  saveHistoricoPub(list); renderHistoricoPub();
+}
+
+function limparHistoricoPub() {
+  if (!confirm('Limpar todo o histórico de publicações?')) return;
+  saveHistoricoPub([]); renderHistoricoPub();
+}
+
+// Inicializar histórico ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+  renderHistoricoPub();
+});
+
+
    ══════════════════════════════════════════════════════════════ */
 async function carregarOrdemCursos() {
   var container = el('ordem-container');
