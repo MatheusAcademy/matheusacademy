@@ -1518,3 +1518,56 @@ body.light .ml-quiz-section{background:rgba(91,127,255,.04);border-color:rgba(91
 body.light .quiz-card{background:#fff;border-color:#e0e4f0;}
 body.light .quiz-opt{background:#f5f6fc;border-color:#d0d4e8;color:#3a3a5a;}
 body.light .quiz-opt:hover{border-color:var(--pri);background:rgba(91,127,255,.08);color:#1a1a2e;}
+
+/* ══════════════════════════════════════════════
+   FLASHCARD — altura mínima e texto completo
+   ══════════════════════════════════════════════ */
+.ml-flashcard{min-height:160px;height:auto;}
+.ml-fc-inner{position:relative;width:100%;min-height:160px;height:100%;transform-style:preserve-3d;transition:transform .45s;}
+.ml-fc-face{position:relative;width:100%;min-height:160px;padding:16px;border-radius:10px;backface-visibility:hidden;display:flex;flex-direction:column;gap:6px;}
+.ml-fc-front{background:var(--bg2);transform:none;}
+.ml-fc-back{background:rgba(245,158,11,.06);transform:rotateY(180deg);position:absolute;inset:0;}
+.ml-flashcard.flipped .ml-fc-front{backface-visibility:hidden;}
+.ml-fc-answer{font-size:.82rem;color:var(--txt);line-height:1.6;font-weight:500;white-space:normal;overflow:visible;}
+.ml-fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+
+/* ══════════════════════════════════════════════
+   BOTÕES NAVEGAÇÃO MÓDULO — Anterior / Próximo
+   ══════════════════════════════════════════════ */
+.ml-nav-btns{display:flex;gap:10px;padding:16px 12px 8px;flex-wrap:wrap;}
+.ml-nav-btn{display:flex;align-items:center;gap:7px;padding:11px 20px;border-radius:10px;font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:all .2s;flex:1;justify-content:center;min-width:140px;}
+.ml-nav-prev{background:var(--bg2);border:1.5px solid var(--brd2);color:var(--txt2);}
+.ml-nav-prev:hover{border-color:var(--pri);color:var(--pri);background:rgba(91,127,255,.08);}
+.ml-nav-next{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;box-shadow:0 4px 16px rgba(34,197,94,.3);}
+.ml-nav-next:hover{background:linear-gradient(135deg,#16a34a,#15803d);box-shadow:0 6px 20px rgba(34,197,94,.45);transform:translateY(-1px);}
+body.light .ml-nav-prev{background:#fff;border-color:#d0d4e8;color:#5a5a7a;}
+body.light .ml-nav-prev:hover{border-color:var(--pri);color:var(--pri);}
+
+/* ══════════════════════════════════════════════
+   RODAPÉ SOCIAL PREMIUM
+   ══════════════════════════════════════════════ */
+.ml-social-footer{margin:8px 0 0;padding:20px 16px 28px;border-top:1px solid var(--brd);}
+.ml-social-divider{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.ml-social-divider::before,.ml-social-divider::after{content:'';flex:1;height:1px;background:var(--brd);}
+.ml-social-divider span{font-size:.62rem;font-weight:800;color:var(--txt3);text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap;}
+.ml-social-links{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.ml-social-btn{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:12px;text-decoration:none;transition:all .2s;flex:1;min-width:160px;border:1.5px solid var(--brd2);background:var(--bg2);}
+.ml-social-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.ml-social-btn.ml-ig{border-color:rgba(225,48,108,.25);}
+.ml-social-btn.ml-ig:hover{background:rgba(225,48,108,.08);border-color:rgba(225,48,108,.5);}
+.ml-social-btn.ml-tg{border-color:rgba(42,171,238,.25);}
+.ml-social-btn.ml-tg:hover{background:rgba(42,171,238,.08);border-color:rgba(42,171,238,.5);}
+.ml-social-info{display:flex;flex-direction:column;gap:1px;}
+.ml-social-name{font-size:.78rem;font-weight:800;color:var(--txt);}
+.ml-social-handle{font-size:.65rem;color:var(--txt3);font-weight:500;}
+.ml-social-btn.ml-ig .ml-social-name{color:#E1306C;}
+.ml-social-btn.ml-ig svg{color:#E1306C;}
+.ml-social-btn.ml-tg .ml-social-name{color:#2AABEE;}
+.ml-social-btn.ml-tg svg{color:#2AABEE;}
+.ml-social-brand{text-align:center;font-size:.62rem;color:var(--txt3);font-weight:600;letter-spacing:.5px;}
+/* Tema claro */
+body.light .ml-social-footer{border-top-color:#e0e4f0;}
+body.light .ml-social-btn{background:#fff;border-color:#e0e4f0;}
+body.light .ml-social-name{color:#1a1a2e;}
+body.light .ml-social-btn.ml-ig .ml-social-name{color:#E1306C;}
+body.light .ml-social-btn.ml-tg .ml-social-name{color:#0088cc;}
