@@ -223,27 +223,6 @@ var MA_COURSES = [
     color: '#5b7fff',
     addedTs: 1775501767880,
     active: true
-  },
-  {
-    id: 'mmt',
-    courseKey: 'mmt',
-    coverImg: 'assets/capas/mmt.jpg',
-    name: 'O Mundo Está Mudando: Entenda as 3 Forças que Estão Redefinindo o Futuro Global',
-    desc: 'Geopolítica, Economia e Tecnologia: o novo jogo de poder mundial explicado de forma clara e prática para quem quer entender o futuro antes que ele chegue.',
-    file: 'curso-mundo-mudando.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 3,
-    topics: 9,
-    hours: 3,
-    quizzes: 10,
-    salt: 'MMT_HENRY_2026_MASTER',
-    ak: 'mmt_auth',
-    storagePrefix: 'mmt_',
-    icon: '📰',
-    color: '#3b82f6',
-    free: true,
-    addedTs: 1775505738174,
-    active: true
   }
 ];
 var MA_CATS = [
