@@ -2322,11 +2322,21 @@ function buildModuleCarousel(){
     var isActive=!isDone&&doneT>0;
     var cls='mod-scroll-card'+(isDone?' msc-done':isActive?' msc-active':canAcc?'':' msc-locked');
     html+='<div class="'+cls+'" onclick="'+(canAcc?'selectTopic('+mi+',0,true)':'openLockScreen()')+'" title="'+mod.name+'">';
-    // Numero do modulo
+    // Capa visual do card com logo M
+    html+='<div class="msc-cover">';
+    html+='<div class="msc-cover-grid"></div>';
+    // Logo M centralizada
+    html+='<svg class="msc-logo" viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg">';
+    html+='<text x="60" y="65" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="68" letter-spacing="-2" opacity=".9">M</text>';
+    html+='<line x1="8" y1="72" x2="112" y2="72" stroke="#4A7EFF" stroke-width="2.5"/>';
+    html+='<line x1="8" y1="78" x2="112" y2="78" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>';
+    html+='</svg>';
+    // Numero do modulo e badge de status
     html+='<div class="msc-num">';
     if(isDone) html+='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
     else if(!canAcc) html+='🔒';
     else html+=(mi+1);
+    html+='</div>';
     html+='</div>';
     // Info
     html+='<div class="msc-info">';
