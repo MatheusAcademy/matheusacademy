@@ -177,6 +177,26 @@ var MA_COURSES = [
     color: '#ff6b6b',
     addedTs: 1775250233247,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/geo.png',
+    id: 'geo',
+    name: 'Missão à Lua reacende corrida global',
+    desc: 'Artemis II coloca grandes potências em nova disputa pelo domínio espacial — e o que está em jogo vai muito além da exploração científica. Entenda tudo sobre a missão histórica lançada em 1º de abril de 2026.',
+    file: 'noticia-artemis-ii-v2.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 1,
+    topics: 7,
+    hours: 1,
+    quizzes: 8,
+    salt: 'GEO_HENRY_2026_MASTER',
+    ak: 'gp_auth',
+    storagePrefix: 'gp_',
+    icon: '📰',
+    color: '#5b7fff',
+    free: true,
+    addedTs: 1775501691536,
+    active: true
   }
 ];
 var MA_CATS = [
