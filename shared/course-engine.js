@@ -56,16 +56,12 @@
 
   <!-- LOGO HORIZONTAL EXATA — M branco + linha dupla azul + ACADEMY -->
   <a class="ma-tb-logo" href="index.html">
-    <svg width="110" height="32" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
-      <!-- M branco bold -->
-      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
-      <!-- Linha dupla azul abaixo do M -->
-      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
-      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
-      <!-- Separador vertical -->
+    <svg width="110" height="32" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg" class="tb-logo-svg">
+      <text class="tb-logo-m" x="36" y="52" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
+      <line class="tb-logo-line1" x1="4" y1="60" x2="70" y2="60" stroke-width="2.2"/>
+      <line class="tb-logo-line2" x1="4" y1="65" x2="70" y2="65" stroke-width="1" opacity=".4"/>
       <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
-      <!-- ACADEMY em azul à direita -->
-      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
+      <text class="tb-logo-academy" x="175" y="49" text-anchor="middle" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
     </svg>
   </a>
 
