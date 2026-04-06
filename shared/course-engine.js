@@ -1101,15 +1101,31 @@ function renderModLesson(mi){
     html+='</div></div></div>';
   }
 
-  /* ── Rodapé social ── */
+  /* ── Botões Módulo Anterior / Próximo Módulo ── */
+  var prevModBtn='', nextModBtnNav='';
+  if(mi>0){
+    prevModBtn='<button class="ml-nav-btn ml-nav-prev" onclick="selectTopic('+(mi-1)+',0,true);window.scrollTo({top:0,behavior:\'smooth\'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="15 18 9 12 15 6"/></svg>Módulo anterior</button>';
+  }
+  if(mi+1<MODS.length&&(isUnlocked()||mi+1<COURSE.freeModules)){
+    nextModBtnNav='<button class="ml-nav-btn ml-nav-next" onclick="selectTopic('+(mi+1)+',0,true);window.scrollTo({top:0,behavior:\'smooth\'})">Próximo módulo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="9 18 15 12 9 6"/></svg></button>';
+  }
+  if(prevModBtn||nextModBtnNav){
+    html+='<div class="ml-nav-btns">'+prevModBtn+nextModBtnNav+'</div>';
+  }
+
+  /* ── Rodapé social premium ── */
   html+='<div class="ml-social-footer">'
-    +'<span class="ml-social-label">Siga e entre na comunidade</span>'
+    +'<div class="ml-social-divider"><span>Faça parte da comunidade</span></div>'
     +'<div class="ml-social-links">'
-    +'<a class="ml-social-btn ml-ig" href="https://instagram.com/henrymentorias" target="_blank" rel="noopener">'
-    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>Instagram</a>'
-    +'<a class="ml-social-btn ml-tg" href="https://t.me/henrymentorias" target="_blank" rel="noopener">'
-    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5L2.5 9.5l6 2.5 2.5 7 3-4 5 4 2.5-16.5z"/><line x1="8.5" y1="12" x2="14.5" y2="9"/></svg>Grupo VIP Telegram</a>'
-    +'</div></div>';
+    +'<a class="ml-social-btn ml-ig" href="https://instagram.com/matheusacademy" target="_blank" rel="noopener">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>'
+    +'<div class="ml-social-info"><span class="ml-social-name">Instagram</span><span class="ml-social-handle">@matheusacademy</span></div></a>'
+    +'<a class="ml-social-btn ml-tg" href="https://t.me/+grupovipmatheus" target="_blank" rel="noopener">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><path d="M21.5 2.5L2.5 9.5l6 2.5 2.5 7 3-4 5 4 2.5-16.5z"/><line x1="8.5" y1="12" x2="14.5" y2="9"/></svg>'
+    +'<div class="ml-social-info"><span class="ml-social-name">Grupo VIP Telegram</span><span class="ml-social-handle">Acesso exclusivo</span></div></a>'
+    +'</div>'
+    +'<div class="ml-social-brand">Matheus Academy · Conhecimento que transforma</div>'
+    +'</div>';
 
   wrap.innerHTML=html;
   setTimeout(applyFontSize,30);
