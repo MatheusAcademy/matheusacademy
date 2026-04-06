@@ -46,7 +46,7 @@ body.light .ma-topbar{
   box-shadow:0 2px 16px rgba(15,15,35,.06);
   backdrop-filter:blur(20px);
 }
-body.light body.light .ma-topbar::before{opacity:0;}
+body.light .ma-topbar::before{opacity:0;}
 body.light .ma-tb-logo text{fill:#0f0f23 !important;}
 body.light .ma-tb-sep{background:rgba(99,102,241,.15);}
 body.light .ma-tb-course-name{color:#3d3d6b;}
@@ -127,7 +127,7 @@ body.light .sb-topic-dur{color:#b0b0cc;}
 body.light .sb-mod-badge{color:#16a34a;background:#dcfce7;border-color:#bbf7d0;}
 
 /* ══ CAPA DO CURSO CLARA ══ */
-body.light .course-cover{
+body.light body.light .course-cover{
   background:linear-gradient(160deg,#f0f4ff 0%,#fafbff 50%,#f0f7ff 100%);
 }
 body.light .cover-bg{
@@ -2186,21 +2186,21 @@ body.light .ma-tb-streak{background:rgba(245,158,11,.06);border-color:rgba(245,1
    BOTÃO CONTINUAR DE ONDE PAROU
    ══════════════════════════════════════════════ */
 .cover-continue-btn{
-  display:flex;align-items:center;gap:10px;
-  padding:13px 28px;border-radius:12px;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 24px;border-radius:24px;
   background:linear-gradient(135deg,#22c55e,#16a34a);
-  color:#fff;font-size:.9rem;font-weight:800;
+  color:#fff;font-size:.78rem;font-weight:700;
   border:none;cursor:pointer;
-  box-shadow:0 6px 24px rgba(34,197,94,.4);
-  transition:all .2s;margin:8px 0 16px;
-  width:100%;max-width:480px;
-  justify-content:center;
-  text-align:center;line-height:1.3;
+  box-shadow:0 4px 16px rgba(34,197,94,.35);
+  transition:all .2s;margin:8px auto 16px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:420px;
+  letter-spacing:.2px;
 }
 .cover-continue-btn:hover{
   background:linear-gradient(135deg,#16a34a,#15803d);
-  box-shadow:0 10px 32px rgba(34,197,94,.55);
-  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(34,197,94,.5);
+  transform:translateY(-1px);
 }
 
 /* ══════════════════════════════════════════════
@@ -2357,34 +2357,79 @@ body.light .trail-locked .trail-circle{background:#e8eaf2;border-color:#d0d4e8;}
 body.light .trail-name{color:#3a3a5a;}
 
 /* ══════════════════════════════════════════════
-   CARROSSEL DE MÓDULOS — 5 por linha, scroll
+   CARDS DE MÓDULO — grade 4 colunas com logo M
    ══════════════════════════════════════════════ */
 .mod-scroll-track{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  padding:8px 4px 16px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  padding:8px 4px 20px;
   width:100%;
-  justify-content:center;
+  max-width:960px;
+  margin:0 auto;
 }
 .mod-scroll-card{
-  width:calc(20% - 8px);
-  min-width:140px;
-  max-width:180px;
   background:var(--bg2);
   border:1.5px solid var(--brd2);
-  border-radius:12px;
-  padding:12px 10px;
+  border-radius:14px;
   cursor:pointer;
-  transition:all .2s;
-  display:flex;flex-direction:column;gap:6px;
+  transition:all .25s;
+  display:flex;flex-direction:column;
   position:relative;overflow:hidden;
 }
 .mod-scroll-card:hover{
   border-color:rgba(91,127,255,.5);
-  background:var(--bg3);
-  transform:translateY(-2px);
-  box-shadow:0 8px 24px rgba(0,0,0,.3);
+  transform:translateY(-3px);
+  box-shadow:0 12px 32px rgba(0,0,0,.4);
+}
+/* Capa do card com logo M */
+.msc-cover{
+  position:relative;
+  height:90px;
+  background:linear-gradient(135deg,#070714 0%,#0d0d22 50%,#070714 100%);
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.mod-scroll-card.msc-done .msc-cover{
+  background:linear-gradient(135deg,#052e16 0%,#065f2a 50%,#052e16 100%);
+}
+.mod-scroll-card.msc-active .msc-cover{
+  background:linear-gradient(135deg,#0f0f35 0%,#1a1a55 50%,#0f0f35 100%);
+}
+.msc-cover-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(74,126,255,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(74,126,255,.08) 1px,transparent 1px);
+  background-size:18px 18px;
+}
+.msc-logo{
+  width:70px;height:52px;
+  position:relative;z-index:2;
+  opacity:.85;
+  transition:opacity .2s,transform .2s;
+}
+.mod-scroll-card:hover .msc-logo{opacity:1;transform:scale(1.05);}
+/* Número do módulo — canto superior direito */
+.msc-num{
+  position:absolute;top:7px;left:8px;
+  width:24px;height:24px;border-radius:50%;
+  background:rgba(0,0,0,.5);
+  border:1.5px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:900;color:rgba(255,255,255,.8);
+  z-index:3;backdrop-filter:blur(4px);
+}
+.msc-num svg{width:12px;height:12px;stroke:#22c55e;}
+.mod-scroll-card.msc-done .msc-num{
+  background:rgba(34,197,94,.3);
+  border-color:rgba(34,197,94,.6);
+}
+.mod-scroll-card.msc-active .msc-num{
+  background:rgba(91,127,255,.3);
+  border-color:rgba(91,127,255,.6);
+  color:#fff;
 }
 .mod-scroll-card.msc-done{
   border-color:rgba(34,197,94,.4);
@@ -2417,7 +2462,7 @@ body.light .trail-name{color:#3a3a5a;}
   color:var(--pri);
 }
 /* Info */
-.msc-info{display:flex;flex-direction:column;gap:2px;flex:1;}
+.msc-info{display:flex;flex-direction:column;gap:2px;flex:1;padding:10px 10px 8px;}
 .msc-label{font-size:.5rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;}
 .msc-name{
   font-size:.68rem;font-weight:700;color:var(--txt);
@@ -2436,12 +2481,12 @@ body.light .mod-scroll-card{background:#fff;border-color:#e0e4f0;}
 body.light .mod-scroll-card:hover{border-color:rgba(91,127,255,.4);background:#f5f6fc;}
 body.light .msc-num{background:#f0f2f8;border-color:#d0d4e8;color:#5a5a7a;}
 body.light .msc-name{color:#1a1a2e;}
-/* Responsivo — 3 por linha em mobile */
-@media(max-width:768px){
-  .mod-scroll-card{width:calc(33.33% - 8px);min-width:100px;}
+/* Responsivo */
+@media(max-width:900px){
+  .mod-scroll-track{grid-template-columns:repeat(3,1fr);}
 }
-@media(max-width:480px){
-  .mod-scroll-card{width:calc(50% - 6px);min-width:90px;}
+@media(max-width:600px){
+  .mod-scroll-track{grid-template-columns:repeat(2,1fr);}
 }
 
 /* ══════════════════════════════════════════════
