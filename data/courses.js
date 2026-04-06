@@ -216,6 +216,25 @@ var MA_COURSES = [
     color: '#5b7fff',
     addedTs: 1775501767880,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/psico.jpg',
+    id: 'psico',
+    name: 'Psicologia Comportamental',
+    desc: 'Do comportamento automático à ação consciente: domine os princípios da psicologia comportamental para transformar padrões, melhorar relações e alcançar resultados extraordinários.',
+    file: 'curso-psicologia-comportamental.html',
+    cat: 'Psicologia',
+    modules: 27,
+    topics: 189,
+    hours: 12,
+    quizzes: 81,
+    salt: 'PSICO_HENRY_2026_MASTER',
+    ak: 'psico_auth',
+    storagePrefix: 'psico_',
+    icon: '🧩',
+    color: '#a855f7',
+    addedTs: 1775504795174,
+    active: true
   }
 ];
 var MA_CATS = [
