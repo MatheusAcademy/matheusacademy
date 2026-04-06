@@ -756,9 +756,11 @@ function openSidebar(){
   var sb=document.getElementById('courseSidebar');
   var ov=document.getElementById('sidebarOverlay');
   var puller=document.getElementById('sbPuller');
+  var main=document.getElementById('courseMain');
   if(sb)sb.classList.add('sb-open');
   if(ov)ov.classList.add('show');
   if(puller)puller.classList.add('sb-open');
+  if(main&&window.innerWidth>768)main.style.marginLeft='var(--sidebar-w)';
   localStorage.setItem('ma_sidebar','1');
 }
 
@@ -767,9 +769,11 @@ function closeSidebar(){
   var sb=document.getElementById('courseSidebar');
   var ov=document.getElementById('sidebarOverlay');
   var puller=document.getElementById('sbPuller');
+  var main=document.getElementById('courseMain');
   if(sb)sb.classList.remove('sb-open');
   if(ov)ov.classList.remove('show');
   if(puller)puller.classList.remove('sb-open');
+  if(main)main.style.marginLeft='0';
   localStorage.setItem('ma_sidebar','0');
 }
 
