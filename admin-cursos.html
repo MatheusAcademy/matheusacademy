@@ -1799,8 +1799,8 @@ async function testGH(){
       setSt('r','❌ Token sem permissão de escrita! Crie novo token em github.com/settings/tokens com scope "repo" completo.');
       return;
     }
-    // 3. Testar escrita real: criar arquivo de teste e deletar
-    var testPath = 'assets/capas/_test_write.txt';
+    // 3. Testar escrita real com nome único (timestamp para evitar conflito de SHA)
+    var testPath = 'assets/capas/_test_' + Date.now() + '.txt';
     var testContent = btoa('test');
     var putR = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/'+testPath,{
       method:'PUT',headers:gh(),
@@ -1811,7 +1811,7 @@ async function testGH(){
       setSt('r','❌ Token sem permissão de escrita ('+putR.status+'): '+(pe.message||'verifique o scope do token'));
       return;
     }
-    // Deletar arquivo de teste
+    // Deletar arquivo de teste imediatamente
     try{
       var delD = await putR.json();
       var delSha = delD.content && delD.content.sha;
