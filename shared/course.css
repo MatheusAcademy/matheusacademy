@@ -1754,3 +1754,205 @@ body.light .ml-footer-brand b{color:#44446a;}
 /* Puller segue a sidebar */
 .course-sidebar.sb-open + .sb-puller,
 .sb-puller.sb-open{left:var(--sidebar-w)!important;}
+
+/* ══════════════════════════════════════════════
+   STREAK NA TOPBAR
+   ══════════════════════════════════════════════ */
+.ma-tb-streak{
+  display:flex;align-items:center;gap:4px;
+  padding:5px 10px;border-radius:9px;
+  border:1px solid rgba(245,158,11,.3);
+  background:rgba(245,158,11,.08);
+  text-decoration:none;
+  transition:all .2s;flex-shrink:0;
+}
+.ma-tb-streak:hover{border-color:rgba(245,158,11,.6);background:rgba(245,158,11,.15);}
+.ma-tb-streak-fire{font-size:.85rem;line-height:1;}
+.ma-tb-streak-num{font-size:.78rem;font-weight:900;color:#f59e0b;font-variant-numeric:tabular-nums;}
+.ma-tb-streak-lbl{font-size:.55rem;color:rgba(245,158,11,.7);font-weight:600;}
+.ma-tb-streak.streak-hot{
+  border-color:rgba(239,68,68,.5);
+  background:rgba(239,68,68,.1);
+  animation:streakPulse 2s ease-in-out infinite;
+}
+.ma-tb-streak.streak-hot .ma-tb-streak-num{color:#ef4444;}
+.ma-tb-streak.streak-hot .ma-tb-streak-lbl{color:rgba(239,68,68,.7);}
+@keyframes streakPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.3);}
+  50%{box-shadow:0 0 0 6px rgba(239,68,68,.0);}
+}
+body.light .ma-tb-streak{background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.25);}
+
+/* ══════════════════════════════════════════════
+   BOTÃO CONTINUAR DE ONDE PAROU
+   ══════════════════════════════════════════════ */
+.cover-continue-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 28px;border-radius:12px;
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:#fff;font-size:.9rem;font-weight:800;
+  border:none;cursor:pointer;
+  box-shadow:0 6px 24px rgba(34,197,94,.4);
+  transition:all .2s;margin:8px 0 16px;
+  width:100%;max-width:480px;
+  justify-content:center;
+  text-align:center;line-height:1.3;
+}
+.cover-continue-btn:hover{
+  background:linear-gradient(135deg,#16a34a,#15803d);
+  box-shadow:0 10px 32px rgba(34,197,94,.55);
+  transform:translateY(-2px);
+}
+
+/* ══════════════════════════════════════════════
+   MODAL CONCLUSÃO DO CURSO
+   ══════════════════════════════════════════════ */
+.course-complete-modal{
+  position:fixed;inset:0;z-index:99000;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(8px);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s;
+}
+.course-complete-modal.show{opacity:1;pointer-events:all;}
+.ccm-box{
+  background:linear-gradient(135deg,#0d0d1e 0%,#111133 100%);
+  border:1.5px solid rgba(91,127,255,.4);
+  border-radius:20px;
+  padding:36px 32px;
+  text-align:center;
+  max-width:420px;width:90%;
+  box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 60px rgba(91,127,255,.15);
+  animation:ccmPop .45s cubic-bezier(.2,0,.3,1.4);
+}
+@keyframes ccmPop{
+  0%{transform:scale(.7);opacity:0;}
+  100%{transform:scale(1);opacity:1;}
+}
+.ccm-icon{font-size:3.5rem;margin-bottom:12px;animation:ccmBounce 1s ease infinite alternate;}
+@keyframes ccmBounce{0%{transform:translateY(0);}100%{transform:translateY(-8px);}}
+.ccm-title{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:8px;}
+.ccm-sub{font-size:.85rem;color:var(--txt2);margin-bottom:16px;line-height:1.5;}
+.ccm-sub b{color:#fff;}
+.ccm-pts{
+  font-size:.82rem;font-weight:700;color:#f59e0b;
+  background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);
+  border-radius:20px;padding:6px 18px;display:inline-block;margin-bottom:24px;
+}
+.ccm-btns{display:flex;flex-direction:column;gap:10px;}
+.ccm-btn-cert{
+  padding:13px 24px;border-radius:10px;
+  background:linear-gradient(135deg,var(--pri),#7c3aed);
+  color:#fff;font-weight:800;font-size:.88rem;
+  border:none;cursor:pointer;
+  box-shadow:0 6px 20px rgba(91,127,255,.4);
+  transition:all .2s;
+}
+.ccm-btn-cert:hover{opacity:.9;transform:translateY(-1px);}
+.ccm-btn-close{
+  padding:11px 24px;border-radius:10px;
+  background:transparent;border:1.5px solid var(--brd2);
+  color:var(--txt2);font-weight:600;font-size:.82rem;
+  cursor:pointer;transition:all .2s;
+}
+.ccm-btn-close:hover{border-color:var(--pri);color:#fff;}
+
+/* ══════════════════════════════════════════════
+   CONFETE — animação de queda
+   ══════════════════════════════════════════════ */
+@keyframes confettiFall{
+  0%{transform:translateY(0) rotate(0deg);opacity:1;}
+  70%{opacity:1;}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
+}
+
+/* ══════════════════════════════════════════════
+   MAPA VISUAL DE TRILHA — capa do curso
+   ══════════════════════════════════════════════ */
+.trail-map{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  padding:8px 0 16px;
+  width:100%;
+  max-width:800px;
+  margin:0 auto;
+}
+.trail-node{
+  display:flex;flex-direction:column;align-items:center;
+  gap:6px;cursor:pointer;
+  transition:transform .2s;
+  width:80px;
+}
+.trail-node:hover{transform:translateY(-3px);}
+.trail-circle{
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;font-weight:900;
+  border:3px solid transparent;
+  transition:all .25s;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+}
+.trail-circle svg{width:20px;height:20px;}
+/* Estados */
+.trail-done .trail-circle{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  border-color:#22c55e;
+  box-shadow:0 4px 20px rgba(34,197,94,.5);
+  color:#fff;
+}
+.trail-active .trail-circle{
+  background:linear-gradient(135deg,var(--pri),#4a6fff);
+  border-color:var(--pri);
+  box-shadow:0 4px 20px rgba(91,127,255,.5);
+  color:#fff;
+  animation:trailPulse 2s ease-in-out infinite;
+}
+.trail-idle .trail-circle{
+  background:var(--bg3);
+  border-color:var(--brd2);
+  color:var(--txt3);
+}
+.trail-locked .trail-circle{
+  background:var(--bg2);
+  border-color:var(--brd);
+  color:var(--txt3);
+  opacity:.6;
+}
+@keyframes trailPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(91,127,255,.5);}
+  50%{box-shadow:0 4px 30px rgba(91,127,255,.9);}
+}
+.trail-label{
+  display:flex;flex-direction:column;align-items:center;
+  gap:1px;text-align:center;
+}
+.trail-num{font-size:.5rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;}
+.trail-name{
+  font-size:.55rem;color:var(--txt2);font-weight:600;
+  line-height:1.2;max-width:72px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  text-align:center;
+}
+.trail-done .trail-name{color:var(--grn);}
+.trail-active .trail-name{color:#fff;font-weight:700;}
+.trail-locked .trail-name{color:var(--txt3);}
+/* Barra de progresso mini */
+.trail-prog-bar{width:60px;height:3px;background:var(--brd2);border-radius:2px;overflow:hidden;margin-top:2px;}
+.trail-prog-fill{height:100%;background:var(--pri);border-radius:2px;transition:width .4s;}
+/* Conector entre nós */
+.trail-connector{
+  width:24px;height:3px;
+  background:var(--brd2);
+  border-radius:2px;
+  margin-bottom:28px;
+  flex-shrink:0;
+}
+.trail-connector.trail-conn-done{background:linear-gradient(90deg,#22c55e,#16a34a);}
+/* Tema claro */
+body.light .trail-idle .trail-circle{background:#f0f2f8;border-color:#d0d4e8;color:#7a7a9a;}
+body.light .trail-locked .trail-circle{background:#e8eaf2;border-color:#d0d4e8;}
+body.light .trail-name{color:#3a3a5a;}
