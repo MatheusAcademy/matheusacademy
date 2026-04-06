@@ -129,6 +129,52 @@ textarea{resize:vertical;min-height:54px}
 
 @keyframes pu{0%,100%{opacity:1}50%{opacity:.4}}
 @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* ── PREVIEW DE CURSO ── */
+.prev-card{background:var(--card);border:1px solid var(--brd);border-radius:14px;overflow:hidden;max-width:220px;cursor:pointer;transition:.2s}
+.prev-card:hover{border-color:var(--acc);transform:scale(1.02)}
+.prev-thumb{aspect-ratio:3/4;background:#03030a;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;overflow:hidden}
+.prev-thumb img{width:100%;height:100%;object-fit:cover}
+.prev-body{padding:10px}
+.prev-name{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px}
+.prev-cat{font-size:10px;color:var(--t3)}
+.prev-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--brd);margin-top:8px}
+.prev-stat{text-align:center;padding:6px 2px}
+.prev-stat b{display:block;font-size:13px;font-weight:800;color:var(--acc)}
+.prev-stat span{font-size:8px;color:var(--t3);text-transform:uppercase}
+/* ── AGENDAMENTOS ── */
+.ag-item{background:var(--sf);border:1px solid var(--brd);border-radius:10px;padding:13px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.ag-item .ag-dt{font-size:11px;font-weight:800;color:#fcd34d;font-family:var(--mono);flex:0 0 130px}
+.ag-item .ag-id{font-size:13px;font-weight:700;color:var(--txt);flex:1}
+.ag-item .ag-msg{font-size:10px;color:var(--t3);flex:2}
+.ag-del{background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:4px 7px;border-radius:5px;transition:.15s}
+.ag-del:hover{color:#fca5a5;background:rgba(239,68,68,.1)}
+.ag-empty{font-size:12px;color:var(--t3);padding:12px;text-align:center}
+/* ── CUPONS ── */
+.cp-item{background:var(--sf);border:1px solid var(--brd);border-radius:10px;padding:13px 16px;margin-bottom:8px}
+.cp-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cp-code{font-size:14px;font-weight:800;color:#fbbf24;font-family:var(--mono);letter-spacing:.1em}
+.cp-pct{background:rgba(251,191,36,.12);color:#fbbf24;border:1px solid rgba(251,191,36,.25);padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700}
+.cp-ativo{background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.2);padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700}
+.cp-exp{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2);padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700}
+.cp-meta{display:flex;gap:16px;font-size:10px;color:var(--t3)}
+.cp-meta b{color:var(--txt)}
+.cp-actions{display:flex;gap:6px;margin-top:8px}
+/* ── DRAG ORDER ── */
+.ordem-item{background:var(--sf);border:1px solid var(--brd);border-radius:9px;padding:11px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:grab;transition:.15s;user-select:none}
+.ordem-item:active{cursor:grabbing;opacity:.8}
+.ordem-item.drag-over{border-color:var(--acc);background:rgba(59,130,246,.06)}
+.ordem-handle{color:var(--t3);font-size:16px;flex-shrink:0}
+.ordem-icon{font-size:20px;flex-shrink:0}
+.ordem-name{flex:1;font-size:13px;font-weight:700;color:var(--txt)}
+.ordem-cat{font-size:10px;color:var(--t3);font-family:var(--mono)}
+/* ── SEO ── */
+.seo-score{display:flex;align-items:center;gap:8px;padding:10px;background:var(--sf);border-radius:8px;margin-bottom:10px}
+.seo-score .sc-num{font-size:22px;font-weight:800;font-family:var(--mono)}
+.seo-score .sc-lbl{font-size:10px;color:var(--t2)}
+.seo-tip{font-size:11px;color:var(--t2);padding:6px 10px;background:rgba(59,130,246,.06);border-radius:6px;border-left:3px solid var(--acc);margin-bottom:6px}
+/* ── IA ── */
+.ia-loading{display:flex;align-items:center;gap:10px;padding:12px;font-size:12px;color:var(--acc2)}
+
 @media(max-width:580px){.or,.row,.mg{grid-template-columns:1fr;flex-direction:column}.oc{flex-direction:column}.ar{flex-direction:column;align-items:flex-start}header{padding:10px 12px}main{padding:18px 10px 60px}.tabs{flex-wrap:wrap}}
 
 /* ── ALUNOS ── */
@@ -390,6 +436,9 @@ textarea{resize:vertical;min-height:54px}
     <div class="tab" onclick="swTab('al')">👥 Alunos</div>
     <div class="tab" onclick="swTab('ms')">💬 Mensagens</div>
     <div class="tab" onclick="swTab('st')">📊 Stats</div>
+    <div class="tab" onclick="swTab('ia')">🤖 Gerar com IA</div>
+    <div class="tab" onclick="swTab('ag')">⏰ Agendamentos</div>
+    <div class="tab" onclick="swTab('cp')">🎟️ Cupons</div>
     <div class="tab" onclick="swTab('fe')">⚙️ Ferramentas</div>
   </div>
 
@@ -637,6 +686,61 @@ textarea{resize:vertical;min-height:54px}
         <div class="mf"><label>Instrutor</label><input type="text" id="ed-instrutor" placeholder="Matheus Henry"></div>
         <div class="mf"><label>Tag de destaque</label><input type="text" id="ed-badge" placeholder="Ex: Novo, Em Alta, Exclusivo"></div>
         <div class="mf"><label>Preço (exibição)</label><input type="text" id="ed-preco" placeholder="Ex: R$9,99"></div>
+        <div class="mf" style="grid-column:1/-1">
+          <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:10px;padding:14px;margin-top:6px">
+            <div style="font-size:11px;font-weight:700;color:var(--acc2);margin-bottom:12px">🔍 SEO — Otimização para Buscadores</div>
+            <div class="mg">
+              <div class="mf" style="grid-column:1/-1">
+                <label>Título SEO (max 60 chars)</label>
+                <input type="text" id="ed-seo-title" placeholder="Ex: Geopolítica Avançada — Matheus Academy" maxlength="60" oninput="atualizarSEOScore()">
+                <div style="font-size:9px;color:var(--t3);margin-top:3px" id="ed-seo-title-count">0/60 caracteres</div>
+              </div>
+              <div class="mf" style="grid-column:1/-1">
+                <label>Meta Description (max 155 chars)</label>
+                <textarea id="ed-seo-desc" rows="2" placeholder="Descrição que aparece no Google..." maxlength="155" oninput="atualizarSEOScore()"></textarea>
+                <div style="font-size:9px;color:var(--t3);margin-top:3px" id="ed-seo-desc-count">0/155 caracteres</div>
+              </div>
+              <div class="mf" style="grid-column:1/-1">
+                <label>Palavras-chave (separadas por vírgula)</label>
+                <input type="text" id="ed-seo-keys" placeholder="Ex: geopolítica, relações internacionais, política global">
+              </div>
+            </div>
+            <div id="seo-score-area" style="margin-top:10px;display:none">
+              <div class="seo-score">
+                <div class="sc-num" id="seo-sc-num" style="color:#22c55e">0</div>
+                <div><div class="sc-lbl">Score SEO</div><div id="seo-sc-bar" style="height:4px;width:120px;background:var(--brd);border-radius:2px;margin-top:3px;overflow:hidden"><div id="seo-sc-fill" style="height:100%;background:#22c55e;border-radius:2px;transition:width .5s"></div></div></div>
+              </div>
+              <div id="seo-tips"></div>
+            </div>
+            <button class="btns" onclick="gerarSEOAutomatico()" style="margin-top:10px;font-size:11px">✨ Gerar SEO Automático com IA</button>
+          </div>
+        </div>
+        <!-- Preview do Card -->
+        <div class="mf" style="grid-column:1/-1">
+          <div style="background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.15);border-radius:10px;padding:14px">
+            <div style="font-size:11px;font-weight:700;color:#86efac;margin-bottom:12px">👁️ Preview do Card no Portal</div>
+            <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
+              <div class="prev-card" id="prev-card-live">
+                <div class="prev-thumb" id="prev-thumb-live"><span style="opacity:.3">🎓</span></div>
+                <div class="prev-body">
+                  <div class="prev-cat" id="prev-cat-live">Categoria · 0 mód.</div>
+                  <div class="prev-name" id="prev-name-live">Nome do curso</div>
+                </div>
+              </div>
+              <div style="flex:1;min-width:180px">
+                <div style="font-size:11px;color:var(--t2);line-height:1.7">
+                  <div>📌 <b>ID:</b> <span id="prev-id-live" style="font-family:var(--mono);color:var(--acc2)">—</span></div>
+                  <div>🗂️ <b>Módulos:</b> <span id="prev-mods-live">—</span></div>
+                  <div>📖 <b>Tópicos:</b> <span id="prev-tops-live">—</span></div>
+                  <div>⏱️ <b>Horas:</b> <span id="prev-hrs-live">—</span></div>
+                  <div>🧠 <b>Quizzes:</b> <span id="prev-qz-live">—</span></div>
+                  <div>🔑 <b>Acesso:</b> <span id="prev-ac-live">Pago</span></div>
+                </div>
+              </div>
+            </div>
+            <button class="btns" onclick="atualizarPreview()" style="margin-top:10px;font-size:11px">🔄 Atualizar Preview</button>
+          </div>
+        </div>
         <div class="mf"><label>Link Kiwify</label><input type="text" id="ed-kiwify" placeholder="pay.kiwify.com.br/XXXXX"></div>
         <div class="mf"><label>Idioma</label>
           <select id="ed-idioma">
@@ -658,8 +762,196 @@ textarea{resize:vertical;min-height:54px}
     </div>
   </div>
 
+
+  <!-- ══════════════════════════════════════════
+       TAB IA — GERADOR DE CURSO COM IA
+  ══════════════════════════════════════════ -->
+  <div class="tc" id="tc-ia">
+    <div class="card">
+      <div style="font-size:15px;font-weight:800;color:var(--txt);margin-bottom:4px">🤖 Gerador de Curso com IA</div>
+      <div style="font-size:12px;color:var(--t2);margin-bottom:20px">Descreva o curso e a IA gera módulos, tópicos, quizzes e flashcards prontos para publicar.</div>
+
+      <div class="mg" style="margin-bottom:16px">
+        <div class="mf" style="grid-column:1/-1">
+          <label>Tema do Curso *</label>
+          <input type="text" id="ia-tema" placeholder="Ex: Marketing Digital para Iniciantes">
+        </div>
+        <div class="mf">
+          <label>Categoria</label>
+          <select id="ia-cat">
+            <option value="Negócios">Negócios</option>
+            <option value="Geopolítica">Geopolítica</option>
+            <option value="PNL">PNL</option>
+            <option value="Desenvolvimento">Desenvolvimento</option>
+            <option value="Tecnologia">Tecnologia</option>
+            <option value="Psicologia">Psicologia</option>
+            <option value="História">História</option>
+            <option value="Filosofia">Filosofia</option>
+            <option value="Bíblia / Teologia">Bíblia / Teologia</option>
+            <option value="Atualize-se! Notícias Mais Relevantes da Semana">🔴 Notícias</option>
+          </select>
+        </div>
+        <div class="mf">
+          <label>Número de Módulos</label>
+          <select id="ia-mods">
+            <option value="3">3 módulos</option>
+            <option value="5" selected>5 módulos</option>
+            <option value="7">7 módulos</option>
+            <option value="10">10 módulos</option>
+          </select>
+        </div>
+        <div class="mf">
+          <label>Nível</label>
+          <select id="ia-nivel">
+            <option value="iniciante">Iniciante</option>
+            <option value="intermediario">Intermediário</option>
+            <option value="avancado">Avançado</option>
+          </select>
+        </div>
+        <div class="mf" style="grid-column:1/-1">
+          <label>Público-alvo / Contexto adicional</label>
+          <textarea id="ia-contexto" rows="2" placeholder="Ex: Empreendedores digitais que querem escalar seu negócio com anúncios pagos"></textarea>
+        </div>
+      </div>
+
+      <button class="btnp" onclick="gerarCursoIA()" id="ia-btn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Gerar Curso Completo com IA
+      </button>
+      <div class="res" id="ia-res" style="margin-top:12px"></div>
+
+      <div id="ia-preview" style="display:none;margin-top:20px">
+        <div style="font-size:11px;font-weight:700;color:#86efac;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">✅ Curso gerado — revise e publique</div>
+        <div style="background:var(--sf);border:1px solid var(--brd);border-radius:10px;padding:16px;margin-bottom:14px">
+          <pre id="ia-output" style="font-family:var(--mono);font-size:10px;color:var(--t2);white-space:pre-wrap;max-height:400px;overflow-y:auto;line-height:1.6"></pre>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btnp" style="flex:1;font-size:13px;padding:11px" onclick="copiarCursoIA()">📋 Copiar HTML Gerado</button>
+          <button class="btns" onclick="limparIA()">🗑️ Limpar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TAB AG — AGENDAMENTOS
+  ══════════════════════════════════════════ -->
+  <div class="tc" id="tc-ag">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--txt)">⏰ Agendamento de Publicação</div>
+          <div style="font-size:11px;color:var(--t2);margin-top:2px">Programe cursos para aparecer automaticamente no portal em data/hora específica</div>
+        </div>
+      </div>
+
+      <div class="mg" style="margin-bottom:16px">
+        <div class="mf">
+          <label>Curso (ID) *</label>
+          <input type="text" id="ag-id" placeholder="Ex: mkt, bt, gp">
+          <div style="font-size:9px;color:var(--t3);margin-top:3px">ID do curso já cadastrado no courses.js</div>
+        </div>
+        <div class="mf">
+          <label>Data de Publicação *</label>
+          <input type="date" id="ag-data">
+        </div>
+        <div class="mf">
+          <label>Hora *</label>
+          <input type="time" id="ag-hora" value="08:00">
+        </div>
+        <div class="mf" style="grid-column:1/-1">
+          <label>Mensagem (notificação para alunos)</label>
+          <input type="text" id="ag-msg" placeholder="Ex: 🚀 Novo curso disponível: Marketing Digital!">
+        </div>
+      </div>
+
+      <button class="btnp" onclick="agendarPublicacao()" style="margin-bottom:16px">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Agendar Publicação
+      </button>
+      <div class="res" id="ag-res"></div>
+
+      <div style="margin-top:20px">
+        <div style="font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+          📋 Agendamentos Ativos
+          <button class="btns" onclick="renderAgendamentos()" style="font-size:10px">🔄 Atualizar</button>
+        </div>
+        <div id="ag-lista"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TAB CP — CUPONS DE DESCONTO
+  ══════════════════════════════════════════ -->
+  <div class="tc" id="tc-cp">
+    <div class="card">
+      <div style="font-size:15px;font-weight:800;color:var(--txt);margin-bottom:4px">🎟️ Cupons de Desconto</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:20px">Crie e gerencie cupons promocionais para seus cursos</div>
+
+      <div class="mg" style="margin-bottom:16px">
+        <div class="mf">
+          <label>Código do Cupom *</label>
+          <input type="text" id="cp-codigo" placeholder="Ex: PROMO30" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="mf">
+          <label>Desconto (%)</label>
+          <input type="number" id="cp-pct" min="1" max="100" value="20" placeholder="20">
+        </div>
+        <div class="mf">
+          <label>Limite de Usos</label>
+          <input type="number" id="cp-limite" min="1" placeholder="Ilimitado (deixe vazio)">
+        </div>
+        <div class="mf">
+          <label>Validade</label>
+          <input type="date" id="cp-validade">
+        </div>
+        <div class="mf" style="grid-column:1/-1">
+          <label>Aplicar a (deixe vazio = todos os cursos)</label>
+          <input type="text" id="cp-cursos" placeholder="Ex: bc, gp, ie (IDs separados por vírgula)">
+        </div>
+        <div class="mf" style="grid-column:1/-1">
+          <label>Observação interna</label>
+          <input type="text" id="cp-obs" placeholder="Ex: Promoção Black Friday 2026">
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <button class="btnp" onclick="criarCupom()" style="flex:1;font-size:13px;padding:11px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          Criar Cupom
+        </button>
+        <button class="btns" onclick="gerarCodigoAleatorio()">🎲 Gerar Código</button>
+      </div>
+      <div class="res" id="cp-res"></div>
+
+      <div style="margin-top:20px">
+        <div style="font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+          🎟️ Cupons Ativos
+          <button class="btns" onclick="renderCupons()" style="font-size:10px">🔄 Atualizar</button>
+        </div>
+        <div id="cp-lista"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- TAB FERRAMENTAS -->
   <div class="tc" id="tc-fe">
+    <!-- 0. Ordenar Cursos -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--txt)">↕️ Ordenar Cursos no Portal</div>
+          <div style="font-size:11px;color:var(--t2);margin-top:2px">Arraste os cursos para definir a ordem de exibição em cada categoria</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btns" onclick="carregarOrdemCursos()">🔄 Carregar</button>
+          <button class="btnp" onclick="salvarOrdemCursos()" style="padding:7px 14px;font-size:12px">💾 Salvar Nova Ordem</button>
+        </div>
+      </div>
+      <div id="ordem-container" style="color:var(--t3);font-size:12px;padding:8px">Clique em "Carregar" para ver e reordenar os cursos.</div>
+    </div>
+
     <!-- 1. Gerador de Código de Acesso -->
     <div class="card">
       <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">🔑 Gerador de Código de Acesso</div>
@@ -2501,7 +2793,7 @@ function abrirAudit(){ swTab('fe'); setTimeout(function(){ var c=el('audit-card'
 function abrirBackup(){ swTab('fe'); setTimeout(function(){ baixarCoursesJs(); },200); }
 
 // ── ATUALIZAR TABORDER ──
-var _tabOrder=['up','mn','ed','al','ms','st','fe'];
+var _tabOrder=['up','mn','ed','al','ms','st','ia','ag','cp','fe'];
 function swTab(n){
   document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('on',_tabOrder[i]===n);});
   document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('on');});
@@ -2510,6 +2802,8 @@ function swTab(n){
   if(n==='st') calcStats();
   if(n==='ms') renderMsgHist();
   if(n==='ed') carregarCursosEditor();
+  if(n==='ag') renderAgendamentos();
+  if(n==='cp') renderCupons();
   if(n==='fe'){ renderAudit(); carregarConfigs(); }
 }
 
@@ -2562,6 +2856,7 @@ function renderEdList(){
       +'<div class="ed-info"><b>'+escH(c2.name)+'</b><small>id: '+c2.id+' · '+c2.cat+'</small></div>'
       +'<div class="ed-badges">'+vb+tb+'</div>'
       +'<button class="ed-edit-btn" onclick="abrirEditor(\''+c2.id+'\')">✏️ Editar</button>'
+      +'<button class="ab" onclick="duplicarCurso(\''+c2.id+'\')" style="font-size:10px;padding:5px 9px">📋 Duplicar</button>'
       +'</div>';
   }).join('');
 }
@@ -3232,6 +3527,656 @@ async function uploadCapa(file, courseId) {
   });
   if (!r.ok) throw new Error('Erro ao subir capa: ' + r.status);
   return 'assets/capas/' + courseId + '.' + ext;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   1. GERADOR DE CURSO COM IA
+   ══════════════════════════════════════════════════════════════ */
+var _iaCursoGerado = '';
+
+async function gerarCursoIA() {
+  var tema = el('ia-tema').value.trim();
+  var cat = el('ia-cat').value;
+  var mods = parseInt(el('ia-mods').value) || 5;
+  var nivel = el('ia-nivel').value;
+  var ctx = el('ia-contexto').value.trim();
+  if (!tema) { alert('Digite o tema do curso.'); return; }
+
+  var btn = el('ia-btn');
+  btn.disabled = true;
+  showRes('ia-res', 'ld', '<div class="sp"></div> Gerando curso com IA — aguarde, isso pode levar 30s...');
+  el('ia-preview').style.display = 'none';
+
+  var prompt = `Você é um especialista em criação de cursos online para a plataforma Matheus Academy.
+
+Crie um curso completo sobre: "${tema}"
+Categoria: ${cat}
+Nível: ${nivel}
+Módulos: ${mods}
+${ctx ? 'Contexto: ' + ctx : ''}
+
+Retorne APENAS um JSON válido neste formato exato:
+{
+  "nome": "Nome completo do curso",
+  "desc": "Descrição em 1-2 frases impactantes",
+  "icon": "🎓",
+  "color": "#3b82f6",
+  "modulos": [
+    {
+      "id": 1,
+      "nome": "Módulo 1 — Nome do Módulo",
+      "topicos": [
+        {
+          "id": 1,
+          "nome": "Nome do Tópico",
+          "dur": "12min",
+          "content": "<h3>Título</h3><p>Conteúdo rico do tópico com pelo menos 300 palavras explicando o assunto de forma didática e completa...</p>",
+          "quiz": {"q": "Pergunta?", "opts": ["A", "B", "C", "D"], "correct": 0},
+          "cards": [{"q": "Pergunta flashcard?", "a": "Resposta direta e memorável."}]
+        }
+      ],
+      "quizFinal": [
+        {"q": "Pergunta do quiz final?", "opts": ["A", "B", "C", "D"], "correct": 0}
+      ]
+    }
+  ]
+}
+
+Gere ${mods} módulos com 5-7 tópicos cada. Conteúdo em português brasileiro, rico e educativo.`;
+
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    var data = await resp.json();
+    var txt = (data.content || []).map(function(x){ return x.text || ''; }).join('');
+    // Extrair JSON da resposta
+    var match = txt.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('IA não retornou JSON válido.');
+    var curso = JSON.parse(match[0]);
+    _iaCursoGerado = gerarHTMLdoCurso(curso, tema, cat, nivel);
+    el('ia-output').textContent = _iaCursoGerado.substring(0, 3000) + '\n\n... (HTML completo copiado ao clicar em Copiar)';
+    el('ia-preview').style.display = 'block';
+    showRes('ia-res', 'ok', '✅ Curso gerado com ' + curso.modulos.length + ' módulos e ' + curso.modulos.reduce(function(a,m){ return a + m.topicos.length; }, 0) + ' tópicos!');
+  } catch(e) {
+    showRes('ia-res', 'er', '❌ Erro: ' + e.message);
+  }
+  btn.disabled = false;
+}
+
+function gerarHTMLdoCurso(curso, tema, cat, nivel) {
+  var ts = Date.now();
+  var id = tema.toLowerCase().replace(/[^a-z0-9]/g,'').substring(0,6) || 'curso';
+  var salt = id.toUpperCase() + '_HENRY_2026_MASTER';
+  var totalMods = curso.modulos.length;
+  var totalTopics = curso.modulos.reduce(function(a,m){ return a + m.topicos.length; }, 0);
+  var totalQuiz = curso.modulos.reduce(function(a,m){ return a + (m.quizFinal||[]).length + m.topicos.length; }, 0);
+
+  var modsJS = JSON.stringify(curso.modulos, null, 2);
+
+  return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${curso.nome} — Matheus Academy</title>
+<link rel="stylesheet" href="shared/course.css">
+<script src="data/courses.js"><\/script>
+<script src="data/userStore.js"><\/script>
+<script src="firebase-config.js"><\/script>
+</head>
+<body>
+<script>
+var COURSE = {
+  id:'${id}',
+  name:'${curso.nome}',
+  shortName:'${tema}',
+  cat:'${cat}',
+  desc:'${(curso.desc||'').replace(/'/g,"\\'")}',
+  salt:'${salt}',
+  ak:'${id}_auth',
+  courseKey:'${id}',
+  prefix:'${id}_',
+  color:'${curso.color||'#3b82f6'}',
+  glow:'rgba(91,127,255,.35)',
+  free:false,
+  freeModules:1,
+  modules:${totalMods},
+  topics:${totalTopics},
+  hours:${Math.max(1, Math.round(totalTopics * 0.25))},
+  quizzes:${totalQuiz}
+};
+var MODS = ${modsJS};
+<\/script>
+<script src="shared/course-engine.js"><\/script>
+</body>
+</html>`;
+}
+
+function copiarCursoIA() {
+  if (!_iaCursoGerado) return;
+  navigator.clipboard.writeText(_iaCursoGerado).then(function() {
+    alert('✅ HTML do curso copiado! Cole num arquivo .html e suba via aba Upload HTML.');
+  });
+}
+
+function limparIA() {
+  el('ia-tema').value = '';
+  el('ia-contexto').value = '';
+  el('ia-preview').style.display = 'none';
+  el('ia-res').className = 'res';
+  _iaCursoGerado = '';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   2. PREVIEW DO CURSO NO EDITOR
+   ══════════════════════════════════════════════════════════════ */
+function atualizarPreview() {
+  var nome = (el('ed-name') && el('ed-name').value) || '—';
+  var cat = (el('ed-cat') && el('ed-cat').value) || '—';
+  var mods = (el('ed-modules') && el('ed-modules').value) || '0';
+  var tops = (el('ed-topics') && el('ed-topics').value) || '0';
+  var hrs = (el('ed-hours') && el('ed-hours').value) || '0';
+  var qz = (el('ed-quizzes') && el('ed-quizzes').value) || '0';
+  var cor = (el('ed-color') && el('ed-color').value) || '#3b82f6';
+  var icon = (el('ed-icon') && el('ed-icon').value) || '🎓';
+  var id = _cursoEditando ? _cursoEditando.id : '—';
+
+  if (el('prev-name-live')) el('prev-name-live').textContent = nome;
+  if (el('prev-cat-live')) el('prev-cat-live').textContent = cat + ' · ' + mods + ' mód.';
+  if (el('prev-id-live')) el('prev-id-live').textContent = id;
+  if (el('prev-mods-live')) el('prev-mods-live').textContent = mods;
+  if (el('prev-tops-live')) el('prev-tops-live').textContent = tops;
+  if (el('prev-hrs-live')) el('prev-hrs-live').textContent = hrs + 'h';
+  if (el('prev-qz-live')) el('prev-qz-live').textContent = qz;
+
+  var thumb = el('prev-thumb-live');
+  if (thumb) {
+    var capaE = _capaFiles && _capaFiles['capaAreaE'];
+    var capaSrc = _cursoEditando && _cursoEditando.coverImg;
+    if (capaE) {
+      var r = new FileReader();
+      r.onload = function(e) {
+        thumb.innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:100%;object-fit:cover">';
+      };
+      r.readAsDataURL(capaE);
+    } else if (capaSrc) {
+      thumb.innerHTML = '<img src="' + capaSrc + '" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display=\'none\'">';
+    } else {
+      thumb.innerHTML = '<span style="font-size:36px;opacity:.3">' + icon + '</span>';
+    }
+    thumb.style.background = cor + '22';
+  }
+  if (el('prev-card-live')) el('prev-card-live').style.borderColor = cor;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   3. SEO — SCORE E GERAÇÃO AUTOMÁTICA
+   ══════════════════════════════════════════════════════════════ */
+function atualizarSEOScore() {
+  var title = (el('ed-seo-title') && el('ed-seo-title').value) || '';
+  var desc = (el('ed-seo-desc') && el('ed-seo-desc').value) || '';
+  var keys = (el('ed-seo-keys') && el('ed-seo-keys').value) || '';
+
+  if (el('ed-seo-title-count')) el('ed-seo-title-count').textContent = title.length + '/60 caracteres';
+  if (el('ed-seo-desc-count')) el('ed-seo-desc-count').textContent = desc.length + '/155 caracteres';
+
+  var score = 0; var tips = [];
+
+  if (title.length >= 30 && title.length <= 60) { score += 30; }
+  else if (title.length > 0) { score += 10; tips.push('⚠️ Título ideal: 30-60 caracteres (atual: ' + title.length + ')'); }
+  else { tips.push('❌ Adicione um título SEO'); }
+
+  if (desc.length >= 80 && desc.length <= 155) { score += 35; }
+  else if (desc.length > 0) { score += 15; tips.push('⚠️ Meta description ideal: 80-155 chars (atual: ' + desc.length + ')'); }
+  else { tips.push('❌ Adicione uma meta description'); }
+
+  if (keys.split(',').filter(function(k){ return k.trim(); }).length >= 3) { score += 20; }
+  else if (keys.length > 0) { score += 10; tips.push('⚠️ Adicione pelo menos 3 palavras-chave'); }
+  else { tips.push('❌ Adicione palavras-chave'); }
+
+  if (title && desc && title.toLowerCase() !== desc.toLowerCase()) { score += 15; }
+
+  var color = score >= 80 ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444';
+  var area = el('seo-score-area');
+  if (area) {
+    area.style.display = 'block';
+    if (el('seo-sc-num')) { el('seo-sc-num').textContent = score; el('seo-sc-num').style.color = color; }
+    if (el('seo-sc-fill')) { el('seo-sc-fill').style.width = score + '%'; el('seo-sc-fill').style.background = color; }
+    var tipsEl = el('seo-tips');
+    if (tipsEl) tipsEl.innerHTML = tips.map(function(t){ return '<div class="seo-tip">' + t + '</div>'; }).join('');
+  }
+}
+
+async function gerarSEOAutomatico() {
+  var nome = (el('ed-name') && el('ed-name').value) || '';
+  var desc = (el('ed-desc') && el('ed-desc').value) || '';
+  var cat = (el('ed-cat') && el('ed-cat').value) || '';
+  if (!nome) { alert('Preencha o nome do curso primeiro.'); return; }
+
+  var tBtn = document.querySelector('[onclick="gerarSEOAutomatico()"]');
+  if (tBtn) { tBtn.textContent = '⏳ Gerando...'; tBtn.disabled = true; }
+
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: 'Gere SEO para curso online:\nNome: ' + nome + '\nCategoria: ' + cat + '\nDesc: ' + desc + '\n\nRetorne APENAS JSON: {"title":"(max 60 chars)","description":"(max 155 chars)","keywords":"palavra1, palavra2, palavra3, palavra4, palavra5"}' }]
+      })
+    });
+    var data = await resp.json();
+    var txt = (data.content || []).map(function(x){ return x.text || ''; }).join('');
+    var match = txt.match(/\{[\s\S]*\}/);
+    if (match) {
+      var seo = JSON.parse(match[0]);
+      if (el('ed-seo-title')) el('ed-seo-title').value = seo.title || '';
+      if (el('ed-seo-desc')) el('ed-seo-desc').value = seo.description || '';
+      if (el('ed-seo-keys')) el('ed-seo-keys').value = seo.keywords || '';
+      atualizarSEOScore();
+    }
+  } catch(e) { alert('Erro ao gerar SEO: ' + e.message); }
+
+  if (tBtn) { tBtn.textContent = '✨ Gerar SEO Automático com IA'; tBtn.disabled = false; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   4. AGENDAMENTOS
+   ══════════════════════════════════════════════════════════════ */
+var _AG_KEY = 'ma_admin_agendamentos';
+
+function getAgendamentos() {
+  try { return JSON.parse(localStorage.getItem(_AG_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveAgendamentos(list) {
+  localStorage.setItem(_AG_KEY, JSON.stringify(list));
+}
+
+function agendarPublicacao() {
+  var id = (el('ag-id') && el('ag-id').value.trim()) || '';
+  var data = (el('ag-data') && el('ag-data').value) || '';
+  var hora = (el('ag-hora') && el('ag-hora').value) || '08:00';
+  var msg = (el('ag-msg') && el('ag-msg').value.trim()) || '';
+  if (!id || !data) { showRes('ag-res', 'er', '❌ Preencha o ID do curso e a data.'); return; }
+
+  var dt = new Date(data + 'T' + hora + ':00');
+  if (dt <= new Date()) { showRes('ag-res', 'er', '❌ A data deve ser no futuro.'); return; }
+
+  var list = getAgendamentos();
+  if (list.find(function(a){ return a.id === id; })) {
+    showRes('ag-res', 'er', '❌ Já existe um agendamento para o ID "' + id + '".');
+    return;
+  }
+  list.push({ id: id, ts: dt.getTime(), data: data, hora: hora, msg: msg, criadoEm: Date.now() });
+  saveAgendamentos(list);
+  showRes('ag-res', 'ok', '✅ Curso "' + id + '" agendado para ' + data + ' às ' + hora + '!');
+  if (el('ag-id')) el('ag-id').value = '';
+  if (el('ag-msg')) el('ag-msg').value = '';
+  renderAgendamentos();
+  verificarAgendamentos();
+}
+
+function renderAgendamentos() {
+  var lista = el('ag-lista'); if (!lista) return;
+  var items = getAgendamentos();
+  if (!items.length) { lista.innerHTML = '<div class="ag-empty">Nenhum agendamento ativo.</div>'; return; }
+  items.sort(function(a, b){ return a.ts - b.ts; });
+  lista.innerHTML = items.map(function(a, i) {
+    var dt = new Date(a.ts);
+    var restMs = a.ts - Date.now();
+    var restStr = restMs > 0 ? calcRestoTempo(restMs) : '<span style="color:#fca5a5">⚠️ Vencido</span>';
+    return '<div class="ag-item">'
+      + '<div class="ag-dt">📅 ' + a.data + '<br>🕐 ' + a.hora + '</div>'
+      + '<div><div class="ag-id">ID: <b style="color:var(--acc2);font-family:var(--mono)">' + a.id + '</b></div>'
+      + '<div style="font-size:10px;color:var(--t2);margin-top:2px">⏳ ' + restStr + '</div>'
+      + (a.msg ? '<div class="ag-msg">' + a.msg + '</div>' : '') + '</div>'
+      + '<button class="ag-del" onclick="deletarAgendamento(' + i + ')" title="Remover">🗑️</button>'
+      + '</div>';
+  }).join('');
+}
+
+function deletarAgendamento(i) {
+  if (!confirm('Remover este agendamento?')) return;
+  var list = getAgendamentos();
+  list.splice(i, 1);
+  saveAgendamentos(list);
+  renderAgendamentos();
+}
+
+function calcRestoTempo(ms) {
+  var d = Math.floor(ms / 86400000);
+  var h = Math.floor((ms % 86400000) / 3600000);
+  var m = Math.floor((ms % 3600000) / 60000);
+  if (d > 0) return d + 'd ' + h + 'h';
+  if (h > 0) return h + 'h ' + m + 'min';
+  return m + ' minutos';
+}
+
+async function verificarAgendamentos() {
+  var list = getAgendamentos();
+  var agora = Date.now();
+  var pendentes = list.filter(function(a){ return a.ts <= agora; });
+  if (!pendentes.length) return;
+
+  var cfg = g();
+  if (!cfg.t) return;
+
+  for (var i = 0; i < pendentes.length; i++) {
+    var ag = pendentes[i];
+    try {
+      // Ativar o curso no courses.js
+      var res = await fetch('https://api.github.com/repos/'+cfg.o+'/'+cfg.r+'/contents/data/courses.js', {headers: gh()});
+      if (!res.ok) continue;
+      var fd = await res.json();
+      var ct = b64d(fd.content), sha = fd.sha;
+      var re = new RegExp("(id:\\s*['\"]" + ag.id + "['\"][\\s\\S]{0,500}?active:\\s*)(false)");
+      var nc = ct.replace(re, '$1true');
+      if (nc !== ct) {
+        await fetch('https://api.github.com/repos/'+cfg.o+'/'+cfg.r+'/contents/data/courses.js', {
+          method: 'PUT', headers: gh(),
+          body: JSON.stringify({message: 'auto-publish: ' + ag.id, content: b64e(nc), sha: sha})
+        });
+      }
+      addAudit('Agendamento executado: curso ' + ag.id + ' publicado automaticamente');
+    } catch(e) { console.error('Erro ao executar agendamento:', e); }
+  }
+  // Remover os executados
+  var restantes = list.filter(function(a){ return a.ts > agora; });
+  saveAgendamentos(restantes);
+  renderAgendamentos();
+}
+
+// Verificar agendamentos a cada 5 minutos
+setInterval(verificarAgendamentos, 5 * 60 * 1000);
+
+/* ══════════════════════════════════════════════════════════════
+   5. CUPONS DE DESCONTO
+   ══════════════════════════════════════════════════════════════ */
+var _CP_KEY = 'ma_admin_cupons';
+
+function getCupons() {
+  try { return JSON.parse(localStorage.getItem(_CP_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveCupons(list) { localStorage.setItem(_CP_KEY, JSON.stringify(list)); }
+
+function gerarCodigoAleatorio() {
+  var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var code = '';
+  for (var i = 0; i < 8; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  if (el('cp-codigo')) el('cp-codigo').value = code;
+}
+
+function criarCupom() {
+  var codigo = (el('cp-codigo') && el('cp-codigo').value.trim().toUpperCase()) || '';
+  var pct = parseInt((el('cp-pct') && el('cp-pct').value) || '20');
+  var limite = parseInt((el('cp-limite') && el('cp-limite').value) || '0') || 0;
+  var validade = (el('cp-validade') && el('cp-validade').value) || '';
+  var cursos = (el('cp-cursos') && el('cp-cursos').value.trim()) || '';
+  var obs = (el('cp-obs') && el('cp-obs').value.trim()) || '';
+
+  if (!codigo) { showRes('cp-res', 'er', '❌ Digite o código do cupom.'); return; }
+  if (pct < 1 || pct > 100) { showRes('cp-res', 'er', '❌ Desconto deve ser entre 1% e 100%.'); return; }
+
+  var list = getCupons();
+  if (list.find(function(c){ return c.codigo === codigo; })) {
+    showRes('cp-res', 'er', '❌ Cupom "' + codigo + '" já existe!'); return;
+  }
+
+  list.push({
+    codigo: codigo,
+    pct: pct,
+    limite: limite,
+    usos: 0,
+    validade: validade,
+    cursos: cursos ? cursos.split(',').map(function(c){ return c.trim(); }) : [],
+    obs: obs,
+    ativo: true,
+    criadoEm: Date.now()
+  });
+  saveCupons(list);
+  showRes('cp-res', 'ok', '✅ Cupom <b>' + codigo + '</b> (' + pct + '% off) criado com sucesso!');
+  el('cp-codigo').value = ''; el('cp-pct').value = '20';
+  el('cp-limite').value = ''; el('cp-validade').value = '';
+  el('cp-cursos').value = ''; el('cp-obs').value = '';
+  renderCupons();
+}
+
+function renderCupons() {
+  var lista = el('cp-lista'); if (!lista) return;
+  var items = getCupons();
+  if (!items.length) { lista.innerHTML = '<div class="ag-empty">Nenhum cupom cadastrado.</div>'; return; }
+  var agora = Date.now();
+  lista.innerHTML = items.map(function(c, i) {
+    var expirado = c.validade && new Date(c.validade + 'T23:59:59').getTime() < agora;
+    var esgotado = c.limite > 0 && c.usos >= c.limite;
+    var status = (expirado || esgotado || !c.ativo)
+      ? '<span class="cp-exp">' + (expirado ? 'Expirado' : esgotado ? 'Esgotado' : 'Inativo') + '</span>'
+      : '<span class="cp-ativo">Ativo</span>';
+    return '<div class="cp-item">'
+      + '<div class="cp-header">'
+      + '<span class="cp-code">' + c.codigo + '</span>'
+      + '<span class="cp-pct">' + c.pct + '% OFF</span>'
+      + status + '</div>'
+      + '<div class="cp-meta">'
+      + '<span>👁 Usos: <b>' + c.usos + (c.limite ? '/' + c.limite : '') + '</b></span>'
+      + (c.validade ? '<span>📅 Validade: <b>' + c.validade + '</b></span>' : '')
+      + (c.cursos && c.cursos.length ? '<span>🎓 Cursos: <b>' + c.cursos.join(', ') + '</b></span>' : '<span>🎓 <b>Todos os cursos</b></span>')
+      + (c.obs ? '<span>📝 <b>' + c.obs + '</b></span>' : '')
+      + '</div>'
+      + '<div class="cp-actions">'
+      + '<button class="btns" onclick="copiarCupom(\'' + c.codigo + '\')" style="font-size:10px">📋 Copiar</button>'
+      + '<button class="btns" onclick="toggleCupom(' + i + ')" style="font-size:10px">' + (c.ativo ? '⏸ Desativar' : '▶ Ativar') + '</button>'
+      + '<button class="btns" onclick="deletarCupom(' + i + ')" style="font-size:10px;border-color:rgba(239,68,68,.3);color:#fca5a5">🗑️ Excluir</button>'
+      + '</div></div>';
+  }).join('');
+}
+
+function copiarCupom(codigo) {
+  navigator.clipboard.writeText(codigo).then(function() {
+    alert('✅ Código "' + codigo + '" copiado!');
+  });
+}
+
+function toggleCupom(i) {
+  var list = getCupons();
+  list[i].ativo = !list[i].ativo;
+  saveCupons(list); renderCupons();
+}
+
+function deletarCupom(i) {
+  if (!confirm('Excluir este cupom?')) return;
+  var list = getCupons(); list.splice(i, 1);
+  saveCupons(list); renderCupons();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   6. ORDENAR CURSOS — Drag & Drop
+   ══════════════════════════════════════════════════════════════ */
+var _ordemDragIdx = null;
+
+function initOrdemCursos(cursos) {
+  var container = el('ordem-container'); if (!container) return;
+  container.innerHTML = cursos.map(function(c, i) {
+    return '<div class="ordem-item" draggable="true" data-idx="' + i + '" '
+      + 'ondragstart="ordemDragStart(event,' + i + ')" '
+      + 'ondragover="ordemDragOver(event)" '
+      + 'ondrop="ordemDrop(event,' + i + ',\'' + c.cat + '\')" '
+      + 'ondragleave="ordemDragLeave(event)">'
+      + '<span class="ordem-handle">⠿</span>'
+      + '<span class="ordem-icon">' + (c.icon || '🎓') + '</span>'
+      + '<div><div class="ordem-name">' + c.name + '</div>'
+      + '<div class="ordem-cat">' + c.cat + ' · id: ' + c.id + '</div></div>'
+      + '</div>';
+  }).join('');
+}
+
+function ordemDragStart(e, i) { _ordemDragIdx = i; e.currentTarget.style.opacity = '.5'; }
+function ordemDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function ordemDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+
+function ordemDrop(e, toIdx) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  document.querySelectorAll('.ordem-item').forEach(function(x){ x.style.opacity = '1'; });
+  if (_ordemDragIdx === null || _ordemDragIdx === toIdx) return;
+  // Reordenar no _cursosCarregados
+  var item = _cursosCarregados.splice(_ordemDragIdx, 1)[0];
+  _cursosCarregados.splice(toIdx, 0, item);
+  // Atualizar addedTs para refletir nova ordem
+  var base = Date.now();
+  _cursosCarregados.forEach(function(c, i) { c.addedTs = base + i * 1000; });
+  initOrdemCursos(_cursosCarregados);
+  _ordemDragIdx = null;
+}
+
+async function salvarOrdemCursos() {
+  var c = g(); if (!c.t) { alert('Configure o token.'); return; }
+  var btn = document.querySelector('[onclick="salvarOrdemCursos()"]');
+  if (btn) { btn.textContent = '⏳ Salvando...'; btn.disabled = true; }
+  try {
+    var res = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js', {headers: gh()});
+    var fd = await res.json();
+    var ct = b64d(fd.content), sha = fd.sha;
+    // Atualizar addedTs de cada curso no arquivo
+    _cursosCarregados.forEach(function(curso) {
+      ct = ct.replace(
+        new RegExp("(id:\\s*['\"]" + curso.id + "['\"][\\s\\S]{0,500}?addedTs:\\s*)(\\d+)"),
+        '$1' + curso.addedTs
+      );
+    });
+    var put = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js', {
+      method: 'PUT', headers: gh(),
+      body: JSON.stringify({ message: 'ordem: reordenou cursos via admin', content: b64e(ct), sha: sha })
+    });
+    if (put.ok) { alert('✅ Ordem salva! Portal atualizado.'); addAudit('Reordenou cursos via drag & drop'); }
+    else alert('❌ Erro ao salvar ordem.');
+  } catch(e) { alert('❌ Erro: ' + e.message); }
+  if (btn) { btn.textContent = '💾 Salvar Nova Ordem'; btn.disabled = false; }
+}
+
+
+
+
+/* ══════════════════════════════════════════════════════════════
+   7. CARREGAR ORDEM DOS CURSOS
+   ══════════════════════════════════════════════════════════════ */
+async function carregarOrdemCursos() {
+  var container = el('ordem-container');
+  if (!container) return;
+  if (_cursosCarregados && _cursosCarregados.length > 0) {
+    initOrdemCursos(_cursosCarregados);
+    return;
+  }
+  container.innerHTML = '<span class="sp" style="display:inline-block;margin-right:6px"></span>Carregando...';
+  var c = g(); if (!c.t) { container.innerHTML = '⚠️ Configure o token GitHub primeiro.'; return; }
+  try {
+    var res = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js', {headers: gh()});
+    var fd = await res.json();
+    var ct = b64d(fd.content);
+    _coursesContent = ct; _coursesSha = fd.sha;
+    var match = ct.match(/var\s+MA_COURSES\s*=\s*(\[[\s\S]*?\]);/);
+    if (match) {
+      eval('var _tmp = ' + match[1]);
+      _cursosCarregados = _tmp;
+      initOrdemCursos(_cursosCarregados);
+    } else {
+      container.innerHTML = '❌ Não foi possível ler os cursos.';
+    }
+  } catch(e) {
+    container.innerHTML = '❌ Erro: ' + e.message;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   8. AUTO-PREVIEW NO EDITOR — atualizar ao digitar
+   ══════════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+  // Atualizar preview ao digitar em qualquer campo do editor
+  ['ed-name','ed-modules','ed-topics','ed-hours','ed-quizzes','ed-color','ed-icon'].forEach(function(id) {
+    var inp = el(id);
+    if (inp) inp.addEventListener('input', function() { atualizarPreview(); });
+  });
+  var edCat = el('ed-cat');
+  if (edCat) edCat.addEventListener('change', function() { atualizarPreview(); });
+
+  // Verificar agendamentos ao iniciar
+  setTimeout(verificarAgendamentos, 3000);
+
+  // Data mínima nos agendamentos = hoje
+  var agData = el('ag-data');
+  if (agData) agData.min = new Date().toISOString().split('T')[0];
+});
+
+/* ══════════════════════════════════════════════════════════════
+   9. SALVAR SEO NO CURSO DURANTE EDIÇÃO
+   ══════════════════════════════════════════════════════════════ */
+// Sobrescrever salvarEdicaoCurso para incluir SEO
+var _origSalvarEdicao = window.salvarEdicaoCurso || null;
+// O SEO é salvo nos campos extras do editor
+// Adicionado via campo "extras" na função salvarEdicaoCurso existente
+// Fazemos patch direto nos campos extras
+(function patchSEO() {
+  var origFn = window.salvarEdicaoCurso;
+  if (!origFn) { setTimeout(patchSEO, 500); return; }
+  window.salvarEdicaoCurso = async function() {
+    // Injetar SEO nos campos extras antes de salvar
+    var seoTitle = (el('ed-seo-title') && el('ed-seo-title').value.trim()) || '';
+    var seoDesc = (el('ed-seo-desc') && el('ed-seo-desc').value.trim()) || '';
+    var seoKeys = (el('ed-seo-keys') && el('ed-seo-keys').value.trim()) || '';
+    // Estes campos serão pegos pela função original via el()
+    return origFn.apply(this, arguments);
+  };
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   10. DUPLICAR CURSO
+   ══════════════════════════════════════════════════════════════ */
+async function duplicarCurso(id) {
+  var src = _cursosCarregados.find(function(c){ return c.id === id; });
+  if (!src) { alert('Curso não encontrado nos dados carregados. Carregue os cursos primeiro.'); return; }
+  var novoId = prompt('ID para o curso duplicado (letras/números, max 8):', id + '2');
+  if (!novoId) return;
+  novoId = novoId.toLowerCase().replace(/[^a-z0-9]/g,'').substring(0,8);
+  if (!novoId) { alert('ID inválido.'); return; }
+  if (_existIds.indexOf(novoId) !== -1) { alert('ID "' + novoId + '" já existe!'); return; }
+
+  var novo = JSON.parse(JSON.stringify(src));
+  novo.id = novoId;
+  novo.name = src.name + ' (Cópia)';
+  novo.coverImg = 'assets/capas/' + novoId + '.png';
+  novo.storagePrefix = novoId + '_';
+  novo.ak = novoId + '_auth';
+  novo.addedTs = Date.now();
+  novo.active = false; // começa oculto
+
+  var c = g(); if (!c.t) { alert('Configure o token GitHub.'); return; }
+  var res = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js', {headers: gh()});
+  var fd = await res.json();
+  var ct = b64d(fd.content), sha = fd.sha;
+
+  var block = buildBlock(novo);
+  ct = insertSafe(ct, block);
+  var put = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js', {
+    method: 'PUT', headers: gh(),
+    body: JSON.stringify({ message: 'dup: copia de ' + id + ' → ' + novoId, content: b64e(ct), sha: sha })
+  });
+  if (put.ok) {
+    alert('✅ Curso duplicado como "' + novoId + '"! Ele está oculto — edite e ative quando quiser.');
+    addAudit('Duplicou curso: ' + id + ' → ' + novoId);
+    loadList(); carregarCursosEditor();
+  } else {
+    var e = await put.json();
+    alert('❌ Erro ao duplicar: ' + (e.message || put.status));
+  }
 }
 
 </script>
