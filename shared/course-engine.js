@@ -1390,39 +1390,77 @@ var _mlModSynth=null,_mlModMi=-1;
 function mlToggleModAudio(mi){
   var btn=document.getElementById('ml_abtn_'+mi);
   var st=document.getElementById('ml_ast_'+mi);
-  // Para áudio de outro módulo
-  if(_mlModSynth&&_mlModMi!==mi){
-    _mlModSynth.cancel();_mlModSynth=null;
+  var spdEl=document.getElementById('ml_aspd_'+mi);
+  var spd=parseFloat(spdEl?spdEl.value:1)||1;
+  if(_mlAudioEl&&_mlModMi===mi&&!_mlAudioEl.paused){
+    _mlAudioEl.pause();
+    if(btn)btn.classList.remove('playing');
+    if(st)st.textContent='Pausado';
+    return;
+  }
+  if(_mlAudioEl&&_mlModMi===mi&&_mlAudioEl.paused){
+    _mlAudioEl.playbackRate=spd;_mlAudioEl.play();
+    if(btn)btn.classList.add('playing');
+    if(st)st.textContent='Narrando...';
+    return;
+  }
+  if(_mlAudioEl){
+    _mlAudioEl.pause();_mlAudioEl.src='';_mlAudioEl=null;
     var ob=document.getElementById('ml_abtn_'+_mlModMi);
     var os=document.getElementById('ml_ast_'+_mlModMi);
-    if(ob)ob.textContent='▶️';if(os)os.textContent='Clique ▶️ para ouvir';
+    if(ob)ob.classList.remove('playing');
+    if(os)os.textContent='Clique para ouvir';
   }
-  // Pausa se já tocando este módulo
-  if(_mlModSynth&&_mlModMi===mi){
-    _mlModSynth.cancel();_mlModSynth=null;
-    if(btn)btn.textContent='▶️';if(st)st.textContent='Clique ▶️ para ouvir';return;
-  }
-  // Monta texto de todos os tópicos do módulo
-  var mod=MODS[mi];
-  var txt='';
+  var mod=MODS[mi];var txt='';
   mod.topics.forEach(function(t){
     var tmp=document.createElement('div');tmp.innerHTML=t.content||'';
-    var t2=tmp.textContent||'';
-    if(t2.trim())txt+=t.name+'. '+t2+' ';
+    var t2=(tmp.textContent||'').replace(/\s+/g,' ').trim();
+    if(t2)txt+=t.name+'. '+t2+' ';
   });
-  if(!txt.trim()){showToast('Sem conteúdo para narrar','warn');return;}
-  var spd=parseFloat(document.getElementById('ml_aspd_'+mi)&&document.getElementById('ml_aspd_'+mi).value||1);
-  var utt=new SpeechSynthesisUtterance(txt);
-  utt.lang='pt-BR';utt.rate=spd;
-  utt.onstart=function(){if(btn)btn.textContent='⏸️';if(st)st.textContent='Narrando módulo...';};
-  utt.onend=utt.onerror=function(){if(btn)btn.textContent='▶️';if(st)st.textContent='Concluído';_mlModSynth=null;};
-  window.speechSynthesis.speak(utt);
-  _mlModSynth=window.speechSynthesis;_mlModMi=mi;
-}
-function mlChangeModSpeed(mi,val){
-  if(_mlModSynth&&_mlModMi===mi){mlToggleModAudio(mi);setTimeout(function(){mlToggleModAudio(mi);},100);}
+  if(!txt.trim()){showToast('Sem conteudo para narrar','warn');return;}
+  if(btn)btn.classList.add('playing');
+  if(st)st.textContent='Gerando audio IA...';
+  _mlModMi=mi;
+  var ttsUrl=window.MA_TTS_URL||'';
+  if(!ttsUrl){
+    // Fallback navegador se nao configurado
+    var utt=new SpeechSynthesisUtterance(txt.slice(0,2000));
+    utt.lang='pt-BR';utt.rate=spd;
+    utt.onstart=function(){if(st)st.textContent='Narrando...';};
+    utt.onend=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluido';};
+    window.speechSynthesis.speak(utt);
+    return;
+  }
+  fetch(ttsUrl,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({text:txt.slice(0,4000),voice:window.MA_TTS_VOICE||'onyx'})
+  })
+  .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.blob();})
+  .then(function(blob){
+    var url=URL.createObjectURL(blob);
+    _mlAudioEl=new Audio(url);
+    _mlAudioEl.playbackRate=spd;
+    _mlAudioEl.play();
+    if(btn)btn.classList.add('playing');
+    if(st)st.textContent='Narrando com voz IA...';
+    _mlAudioEl.onended=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluido';URL.revokeObjectURL(url);_mlAudioEl=null;};
+    _mlAudioEl.onerror=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Erro';_mlAudioEl=null;};
+  })
+  .catch(function(e){
+    console.error('TTS:',e);
+    if(btn)btn.classList.remove('playing');
+    if(st)st.textContent='Usando voz do navegador...';
+    var utt2=new SpeechSynthesisUtterance(txt.slice(0,2000));
+    utt2.lang='pt-BR';utt2.rate=spd;
+    utt2.onend=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluido';};
+    window.speechSynthesis.speak(utt2);
+  });
 }
 
+function mlChangeModSpeed(mi,val){
+  if(_mlAudioEl&&_mlModMi===mi)_mlAudioEl.playbackRate=parseFloat(val)||1;
+}
 /* ── TOGGLE QUIZ ── */
 function mlToggleQuiz(mi){
   var sec=document.getElementById('ml_quiz_sec_'+mi);
@@ -1964,6 +2002,8 @@ function grantMission(type){
 
 /* ═══ CHAT IA ═══ */
 var CHAT_URL='https://shiny-disk-b207ma-academy-ai.matheushenry1998.workers.dev/chat';
+window.MA_TTS_URL='https://ma-tts.matheushenry1998.workers.dev';
+window.MA_TTS_VOICE='onyx';
 var _chatHist=[];
 function addMsg(role,content){var msgs=document.getElementById('chatMessages');var d=document.createElement('div');d.className='chat-msg '+(role==='user'?'user':'bot');d.innerHTML='<div class="chat-avatar">'+(role==='user'?'👤':'🤖')+'</div><div class="chat-bubble">'+content+'</div>';msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 function addTyping(){var msgs=document.getElementById('chatMessages');var d=document.createElement('div');d.className='chat-msg bot';d.id='chatTyping';d.innerHTML='<div class="chat-avatar">🤖</div><div class="chat-bubble"><div class="chat-typing"><span></span><span></span><span></span></div></div>';msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
