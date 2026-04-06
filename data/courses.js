@@ -85,6 +85,7 @@ var MA_COURSES = [
   {
     id: 'bc',
     coverImg: 'assets/capas/bc.png',
+    courseKey: 'bc',
     name: 'Bitcoin — A Moeda que Mudou a História do Mundo',
     desc: '',
     file: 'bitcoin-curso.html',
@@ -104,6 +105,7 @@ var MA_COURSES = [
   {
     id: 'ctp',
     coverImg: 'assets/capas/ctp.png',
+    courseKey: 'ctp',
     name: 'Dominando o Tráfego Pago - Completo',
     desc: 'O Dominando o Tráfego Pago é a especialização mais completa do mercado brasileiro',
     file: 'curso-trafego-pago.html',
@@ -123,6 +125,7 @@ var MA_COURSES = [
   {
     id: 'ctep',
     coverImg: 'assets/capas/ctep.png',
+    courseKey: 'ctep',
     name: 'Técnicas de Persuasão',
     desc: '',
     file: 'curso-tecnicas-persuasao.html',
@@ -142,6 +145,7 @@ var MA_COURSES = [
   {
     id: 'nlf',
     coverImg: 'assets/capas/nlf.png',
+    courseKey: 'nlf',
     name: 'Lei FELCA e o Modelo Chinês de Censura no Brasil',
     desc: '',
     file: 'noticia-lei-felca.html',
@@ -162,6 +166,7 @@ var MA_COURSES = [
   {
     id: 'ie',
     coverImg: 'assets/capas/ie.png',
+    courseKey: 'ie',
     name: 'Inteligência Emocional',
     desc: 'A formação completa em inteligência emocional — do autoconhecimento à maestria. Aprenda a dominar suas emoções, melhorar relacionamentos, liderar com impacto e viver com mais equilíbrio e propósito.',
     file: 'curso-inteligencia-emocional.html',
@@ -181,6 +186,7 @@ var MA_COURSES = [
   {
     coverImg: 'assets/capas/lua.png',
     id: 'lua',
+    courseKey: 'lua',
     name: 'Missão à Lua reacende corrida global',
     desc: 'Artemis II coloca grandes potências em nova disputa pelo domínio espacial — e o que está em jogo vai muito além da exploração científica. Entenda tudo sobre a missão histórica lançada em 1º de abril de 2026.',
     file: 'noticia-artemis-ii-v2.html',
@@ -201,6 +207,7 @@ var MA_COURSES = [
   {
     coverImg: 'assets/capas/ia.png',
     id: 'ia',
+    courseKey: 'ia',
     name: 'Inteligência Artificial na Prática',
     desc: 'Do zero ao avançado: domine a Inteligência Artificial com aplicações reais, ferramentas modernas e estratégias práticas para transformar sua carreira e seus negócios.',
     file: 'curso-ia-pratica.html',
@@ -220,6 +227,7 @@ var MA_COURSES = [
   {
     coverImg: 'assets/capas/mmt.jpg',
     id: 'mmt',
+    courseKey: 'mmt',
     name: 'O Mundo Está Mudando: Entenda as 3 Forças que Estão Redefinindo o Futuro Global',
     desc: 'Geopolítica, Economia e Tecnologia: o novo jogo de poder mundial explicado de forma clara e prática para quem quer entender o futuro antes que ele chegue.',
     file: 'curso-mundo-mudando.html',
@@ -240,6 +248,7 @@ var MA_COURSES = [
   {
     coverImg: 'assets/capas/tb.jpg',
     id: 'tb',
+    courseKey: 'tb',
     name: 'Teologia Bíblica do Básico ao Avançado',
     desc: 'Do Gênesis ao Apocalipse: compreenda o plano redentor de Deus, os grandes temas bíblicos e a teologia sistemática com profundidade, clareza e base nas Escrituras.',
     file: 'curso-teologia-biblica.html',
