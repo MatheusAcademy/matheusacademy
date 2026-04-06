@@ -1105,9 +1105,9 @@ function renderModLesson(mi){
   html+='<div class="ml-social-footer">'
     +'<span class="ml-social-label">Siga e entre na comunidade</span>'
     +'<div class="ml-social-links">'
-    +'<a class="ml-social-btn ml-ig" href="https://instagram.com/matheusacademy" target="_blank" rel="noopener">'
+    +'<a class="ml-social-btn ml-ig" href="https://instagram.com/henrymentorias" target="_blank" rel="noopener">'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>Instagram</a>'
-    +'<a class="ml-social-btn ml-tg" href="https://t.me/matheusacademy" target="_blank" rel="noopener">'
+    +'<a class="ml-social-btn ml-tg" href="https://t.me/henrymentorias" target="_blank" rel="noopener">'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5L2.5 9.5l6 2.5 2.5 7 3-4 5 4 2.5-16.5z"/><line x1="8.5" y1="12" x2="14.5" y2="9"/></svg>Grupo VIP Telegram</a>'
     +'</div></div>';
 
