@@ -1423,12 +1423,7 @@ textarea{resize:vertical;min-height:54px}
 // ================================================================
 
 // ── CONFIGURAÇÃO DA SENHA ──
-// Para trocar a senha: gere o hash SHA-256 da nova senha em:
-// https://emn178.github.io/online-tools/sha256.html
-// e substitua o valor abaixo.
-
-// Senha padrão: matheus2026admin
-var ADMIN_HASH = 'd5a8a6feebd3d5c7e64d21ceb4bc6b1852ccb043176fb8b9a6f3c7c02d217039';
+var ADMIN_SENHA = 'matheus2026admin';
 
 // Sessão dura 8 horas (em ms)
 var SESSION_DURATION = 8 * 60 * 60 * 1000;
@@ -1516,6 +1511,12 @@ function sha256JS(ascii) {
 
 // ── VERIFICAR SESSÃO ATIVA ──
 function verificarSessao() {
+  // Limpar bloqueio expirado automaticamente
+  var bloqueioTs = parseInt(localStorage.getItem(KEY_BLOQUEIO)||'0');
+  if (bloqueioTs && (Date.now() - bloqueioTs) >= BLOCK_TIME) {
+    localStorage.removeItem(KEY_BLOQUEIO);
+    localStorage.removeItem(KEY_TENTATIVAS);
+  }
   try {
     var s = JSON.parse(localStorage.getItem(KEY_SESSION)||'{}');
     if (s.ts && (Date.now() - s.ts) < SESSION_DURATION) {
@@ -1538,8 +1539,7 @@ function liberar() {
 }
 
 // ── TENTAR LOGIN ──
-async function tentarLogin() {
-  // Verificar bloqueio
+function tentarLogin() {
   var bloqueioTs = parseInt(localStorage.getItem(KEY_BLOQUEIO)||'0');
   if (bloqueioTs && (Date.now() - bloqueioTs) < BLOCK_TIME) {
     mostrarBloqueio(bloqueioTs);
@@ -1550,41 +1550,24 @@ async function tentarLogin() {
   var senhaInput = el('lock-senha');
   var senha = senhaInput.value;
 
-  if (!senha) {
-    senhaInput.style.borderColor = '#ef4444';
-    senhaInput.focus();
-    return;
-  }
+  if (!senha) { senhaInput.style.borderColor = '#ef4444'; senhaInput.focus(); return; }
 
-  // Loading
-  btn.disabled = true;
-  btn.innerHTML = '<div class="sp" style="border-top-color:#fff;width:16px;height:16px;border-width:2px"></div> Verificando...';
-
-  var hash = await sha256Hex(senha);
-
-  if (hash === ADMIN_HASH) {
-    // ✅ Senha correta
+  if (senha === ADMIN_SENHA) {
     btn.innerHTML = '✅ Acesso liberado!';
     btn.style.background = '#22c55e';
     setTimeout(liberar, 600);
   } else {
-    // ❌ Senha errada
-    btn.disabled = false;
     btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Entrar no Admin';
-
     senhaInput.value = '';
     senhaInput.style.borderColor = '#ef4444';
     senhaInput.style.boxShadow = '0 0 0 3px rgba(239,68,68,.13)';
     el('lock-erro').style.display = 'block';
     senhaInput.focus();
 
-    // Contabilizar tentativas
     var tent = parseInt(localStorage.getItem(KEY_TENTATIVAS)||'0') + 1;
     localStorage.setItem(KEY_TENTATIVAS, tent);
-
     var restantes = MAX_TENTATIVAS - tent;
     if (restantes <= 0) {
-      // Bloquear
       localStorage.setItem(KEY_BLOQUEIO, Date.now());
       localStorage.removeItem(KEY_TENTATIVAS);
       mostrarBloqueio(Date.now());
@@ -1593,13 +1576,6 @@ async function tentarLogin() {
       av.style.display = 'block';
       av.textContent = '⚠️ Atenção: ' + restantes + ' tentativa(s) restante(s) antes do bloqueio.';
     }
-
-    // Pequena animação de shake
-    var card = el('lock-senha').parentElement.parentElement;
-    card.style.transform = 'translateX(-6px)';
-    setTimeout(function(){ card.style.transform = 'translateX(6px)'; }, 80);
-    setTimeout(function(){ card.style.transform = 'translateX(-4px)'; }, 160);
-    setTimeout(function(){ card.style.transform = 'translateX(0)'; }, 240);
   }
 }
 
