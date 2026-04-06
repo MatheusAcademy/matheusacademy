@@ -1088,19 +1088,20 @@ function renderModLesson(mi){
       +'</div>';
     html+='<div class="ml-fc-body" style="max-height:9999px"><div class="ml-fc-grid" id="ml_fc_grid_'+mi+'">';
     allCards.forEach(function(c,ci){
-      html+='<div class="ml-flashcard" id="ml_fc_'+mi+'_'+ci+'" onclick="mlFlipCard('+mi+','+ci+')">'
+      html+='<div class="ml-flashcard" id="ml_fc_'+mi+'_'+ci+'" onclick="mlFlipCard('+mi+','+ci+')">' 
         +'<div class="ml-fc-inner">'
         +'<div class="ml-fc-face ml-fc-front">'
-        +'<span class="ml-fc-suit">✦</span><span class="ml-fc-suit-br">✦</span>'
-        +'<div class="ml-fc-qmark">?</div>'
-        +'<div class="ml-fc-front-hint">Toque para revelar</div>'
+        +'<div class="ml-fc-front-header"><span class="ml-fc-tag-front">📖 Pergunta</span><span class="ml-fc-qicon">?</span></div>'
+        +'<div class="ml-fc-question">'+c.q+'</div>'
+        +'<div class="ml-fc-flip-hint">🔄 Clique para ver a resposta</div>'
         +'</div>'
         +'<div class="ml-fc-face ml-fc-back">'
         +'<div class="ml-fc-back-glow"></div>'
-        +'<div class="ml-fc-back-tag">✅ Resposta</div>'
-        +'<div class="ml-fc-back-q">'+c.q+'</div>'
+        +'<div class="ml-fc-front-header"><span class="ml-fc-tag-back">✅ Resposta</span></div>'
+        +'<div class="ml-fc-back-q-label">💬 '+c.q+'</div>'
         +'<div class="ml-fc-answer">'+c.a+'</div>'
         +'</div></div></div>';
+
     });
     html+='</div></div></div>';
   }
@@ -1419,14 +1420,19 @@ function mlFinishQuiz(mi,corrects){
     }
   });
 
-  // Pontos — quiz correto dá 0 pontos diretos; pontos vêm de MÓDULO concluído
-  // Erros: desconto aplicado (pode ir a 0, nunca negativo)
-  if(totalPts<0){
-    // v3 FIX: desconto via MAStore (Firebase) — NUNCA em ma_points legado
-    if(window.MAStore&&MAStore.addPoints){
-      MAStore.addPoints('Desconto quiz',totalPts).then(function(){updateTopbar();});
+  // Pontos do quiz — desconto por erros, bônus por acertos
+  if(totalPts!==0&&window.MAStore&&MAStore.addPoints){
+    MAStore.addPoints(
+      totalPts>0?'Quiz: acertos':'Quiz: erros',
+      totalPts
+    ).then(function(){
+      updateTopbar(); // atualiza moedas na topbar imediatamente
+    });
+    if(totalPts>0){
+      showToast('⭐ +'+totalPts+' pontos pelos acertos!','pts');
+    } else {
+      showToast('📉 '+totalPts+' pontos pelas respostas incorretas','');
     }
-    showToast('📉 '+(totalPts)+' pontos pelas respostas incorretas','');
   }
 
   // Score final
