@@ -73,6 +73,13 @@
   <span class="ma-tb-course-name" id="tbCourseName">Curso</span>
   <div class="ma-tb-spacer"></div>
 
+  <!-- STREAK -->
+  <a class="ma-tb-streak" id="maStreakLive" href="painel.html" title="Dias consecutivos de estudo">
+    <span class="ma-tb-streak-fire">🔥</span>
+    <span class="ma-tb-streak-num" id="maStreakNum">0</span>
+    <span class="ma-tb-streak-lbl">dias</span>
+  </a>
+
   <!-- TROFÉU + PONTOS -->
   <a class="ma-tb-pts-block" id="maPtsLive" href="painel.html">
     <span class="ma-tb-trophy">
@@ -214,6 +221,9 @@
             <span class="cover-stat-lbl">Quizzes</span>
           </div>
         </div>
+
+        <!-- BOTAO CONTINUAR DE ONDE PAROU -->
+        <button class="cover-continue-btn" id="coverContinueBtn" style="display:none"></button>
 
         <!-- PROGRESSO — sempre visível logo abaixo dos stats -->
         <div class="cover-progress" id="coverProgressWrap">
@@ -401,6 +411,20 @@
 
 <!-- Timer -->
 <div class="study-timer"><span class="st-icon">⏱️</span><span class="st-time" id="stTime">00:00</span><span>estudando</span></div>
+
+<!-- MODAL CONCLUSAO DO CURSO -->
+<div class="course-complete-modal" id="courseCompleteModal">
+  <div class="ccm-box">
+    <div class="ccm-icon">&#127942;</div>
+    <h2 class="ccm-title">Curso Concluido!</h2>
+    <p class="ccm-sub">Parabens! Voce finalizou <b id="ccmCourseName"></b> com sucesso!</p>
+    <div class="ccm-pts">&#11088; +1.000 pontos conquistados!</div>
+    <div class="ccm-btns">
+      <button class="ccm-btn-cert" onclick="closeCourseCompleteModal();switchTab('certificado')">&#127942; Baixar Certificado</button>
+      <button class="ccm-btn-close" onclick="closeCourseCompleteModal()">Continuar Estudando</button>
+    </div>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════════
      BOTTOM NAV BAR — ESTILO APP MOBILE
@@ -723,6 +747,16 @@ window.MA_addPoints=addPoints;window.MA_getPoints=gP;
 /* ═══ TOPBAR ═══ */
 function updateTopbar(){
   var u=gU(),p=gP(),lv=gLv(p.total);
+  /* Streak */
+  var _ss;try{_ss=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){_ss={};}
+  var streakNum=document.getElementById('maStreakNum');
+  var streakEl=document.getElementById('maStreakLive');
+  if(streakNum)streakNum.textContent=(_ss.streak||0);
+  if(streakEl){
+    streakEl.style.display=(_ss.streak&&_ss.streak>0)?'flex':'none';
+    if(_ss.streak>=7)streakEl.classList.add('streak-hot');
+    else streakEl.classList.remove('streak-hot');
+  }
   /* Pontos — formata com zeros à esquerda para números pequenos */
   var pEl=document.getElementById('maPtsLive');
   var pN=document.getElementById('maPtsNum');
@@ -866,7 +900,21 @@ function buildSidebar(){
   document.getElementById('sbProgPct').textContent=pct+'%';
   updateCertPct(pct);
   // Atualizar capa
-  // Atualizar progresso na capa — sempre visível
+  // Botao continuar de onde parou
+  var lastMi=parseInt(localStorage.getItem(COURSE.prefix+'lastMod'));
+  var lastTi=parseInt(localStorage.getItem(COURSE.prefix+'lastTopic'));
+  var btnCont=document.getElementById('coverContinueBtn');
+  if(btnCont&&!isNaN(lastMi)&&MODS[lastMi]){
+    var lastMod=MODS[lastMi];
+    var lastTop=lastMod.topics[lastTi]||lastMod.topics[0];
+    btnCont.style.display='flex';
+    btnCont.innerHTML='\u25b6\ufe0f Continuar \u2014 '+lastMod.name+(lastTop?' \u2023 '+lastTop.name:'');
+    btnCont.onclick=function(){selectTopic(lastMi,lastTi||0,true);};
+  } else if(btnCont&&done===0){
+    btnCont.style.display='none';
+  }
+
+  // Atualizar progresso na capa \u2014 sempre visível
   var cpw=document.getElementById('coverProgressWrap');
   if(cpw){
     cpw.style.display='block';
@@ -918,6 +966,9 @@ function startCourse(){
 function selectTopic(mi,ti,canAcc){
   if(!canAcc){openLockScreen();return;}
   _curModIdx=mi;_curTopIdx=ti;
+  // Salvar ultimo topico para "continuar de onde parou"
+  localStorage.setItem(COURSE.prefix+'lastMod',mi);
+  localStorage.setItem(COURSE.prefix+'lastTopic',ti);
   buildSidebar();
   showTabs();switchTab('conteudo');
   if(_isMobile())closeSidebarMobile();
@@ -1294,11 +1345,39 @@ function checkCourseCompletion(){
   var allModsDone=MODS.every(function(_,mi){return prog['mod_done_'+mi];});
   if(allModsDone&&!prog[key]){
     prog[key]=true;
-    prog['cert_pts_granted']=true; // evita duplicação com generateCert
+    prog['cert_pts_granted']=true;
     sProg(prog);
-    addPoints('Curso concluído: '+COURSE.name,1000);
-    showMotiv('🏆','Curso Concluído!','Você finalizou "'+COURSE.name+'" com sucesso! Parabéns!','+1.000 pontos');
+    addPoints('Curso concluido: '+COURSE.name,1000);
+    setTimeout(function(){ showCourseCompleteModal(); }, 800);
   }
+}
+
+function showCourseCompleteModal(){
+  launchConfetti();
+  var modal=document.getElementById('courseCompleteModal');
+  if(modal)modal.classList.add('show');
+}
+function closeCourseCompleteModal(){
+  var modal=document.getElementById('courseCompleteModal');
+  if(modal)modal.classList.remove('show');
+}
+function launchConfetti(){
+  var colors=['#5b7fff','#22c55e','#f59e0b','#ec4899','#00d4ff','#a855f7'];
+  var count=0;
+  var interval=setInterval(function(){
+    if(count>120){clearInterval(interval);return;}
+    count++;
+    var el=document.createElement('div');
+    el.style.cssText='position:fixed;top:-10px;left:'+Math.random()*100+'vw;'
+      +'width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;'
+      +'background:'+colors[Math.floor(Math.random()*colors.length)]+';'
+      +'border-radius:'+(Math.random()>0.5?'50%':'2px')+';'
+      +'z-index:99999;pointer-events:none;'
+      +'animation:confettiFall '+(1.5+Math.random()*2)+'s linear forwards;'
+      +'transform:rotate('+Math.random()*360+'deg);';
+    document.body.appendChild(el);
+    setTimeout(function(){el.remove();},3500);
+  },30);
 }
 
 /* ── STREAK 7 DIAS CONSECUTIVOS → +500 pts ── */
@@ -2253,47 +2332,28 @@ function buildModuleCarousel(){
   if(!section||!MODS||!MODS.length)return;
   var prog=gProg();
   var unlocked=isUnlocked();
-  // Divide módulos em fileiras de 4
-  var rows=[];
-  for(var i=0;i<MODS.length;i+=4)rows.push(MODS.slice(i,i+4));
-  var html='';
-  rows.forEach(function(row,ri){
-    html+='<div class="mod-row">';
-    row.forEach(function(mod,ci){
-      var mi=ri*4+ci;
-      var canAcc=unlocked||mi<COURSE.freeModules;
-      var doneT=mod.topics.filter(function(t){return prog[mod.id+'_'+t.id];}).length;
-      var pct=mod.topics.length?Math.round(doneT/mod.topics.length*100):0;
-      var isDone=pct===100;
-      var cls='mod-card'+(isDone?' done':'')+(canAcc?'':' locked');
-      html+='<div class="'+cls+'" onclick="openModModal('+mi+')" data-mi="'+mi+'">';
-      // Capa do card
-      html+='<div class="mod-card-cover">';
-      html+='<div class="mod-card-cover-bg"></div>';
-      html+='<div class="mod-card-cover-grid"></div>';
-      html+='<div class="mod-card-cover-num">Módulo '+(mi+1)+'</div>';
-      // Logo M pequena
-      html+='<div class="mod-card-logo">';
-      html+='<svg viewBox="0 0 120 90" width="60" height="45" xmlns="http://www.w3.org/2000/svg">';
-      html+='<text x="60" y="65" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="68" letter-spacing="-2">M</text>';
-      html+='<line x1="8" y1="72" x2="112" y2="72" stroke="#4A7EFF" stroke-width="2.5"/>';
-      html+='<line x1="8" y1="78" x2="112" y2="78" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>';
-      html+='</svg></div>';
-      // Badge concluído
-      html+='<div class="mod-card-done-badge">✓</div>';
-      // Lock
-      html+='<div class="mod-card-lock">🔒</div>';
-      html+='</div>';
-      // Info
-      html+='<div class="mod-card-info">';
-      html+='<span class="mod-card-name">'+mod.name+'</span>';
-      html+='<div class="mod-card-meta"><span>'+mod.topics.length+' tópicos</span></div>';
-      html+='<div class="mod-card-prog"><div class="mod-card-prog-fill" style="width:'+pct+'%"></div></div>';
-      html+='</div>';
-      html+='</div>';
-    });
+  var html='<div class="trail-map">';
+  MODS.forEach(function(mod,mi){
+    var canAcc=unlocked||mi<COURSE.freeModules;
+    var doneT=mod.topics.filter(function(t){return prog[mod.id+'_'+t.id];}).length;
+    var pct=mod.topics.length?Math.round(doneT/mod.topics.length*100):0;
+    var isDone=pct===100;
+    var isActive=!isDone&&doneT>0;
+    var isLocked=!canAcc;
+    var stateClass=isDone?'trail-done':isActive?'trail-active':isLocked?'trail-locked':'trail-idle';
+    var icon=isDone?'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':isLocked?'🔒':(mi+1);
+    // Linha conectora (exceto no primeiro)
+    if(mi>0)html+='<div class="trail-connector'+(isDone||MODS[mi-1]&&prog['mod_done_'+(mi-1)]?' trail-conn-done':'')+'"></div>';
+    html+='<div class="trail-node '+stateClass+'" onclick="'+(canAcc?'openModModal('+mi+')':'openLockScreen()')+'" title="'+mod.name+'">';
+    html+='<div class="trail-circle">'+icon+'</div>';
+    html+='<div class="trail-label">';
+    html+='<span class="trail-num">Mod.'+(mi+1)+'</span>';
+    html+='<span class="trail-name">'+mod.name+'</span>';
+    if(isActive&&pct>0)html+='<div class="trail-prog-bar"><div class="trail-prog-fill" style="width:'+pct+'%"></div></div>';
+    html+='</div>';
     html+='</div>';
   });
+  html+='</div>';
   section.innerHTML=html;
 }
 
@@ -2930,6 +2990,8 @@ document.addEventListener('DOMContentLoaded',function(){
   document.documentElement.style.setProperty('--course-glow',COURSE.glow);
   // Capa
   document.getElementById('coverBadge').textContent='⚡ '+COURSE.cat;
+  var _ccmName=document.getElementById('ccmCourseName');
+  if(_ccmName)_ccmName.textContent=COURSE.name;
   document.getElementById('coverTitle').textContent=COURSE.name;
   document.getElementById('coverDesc').textContent=COURSE.desc||'';
   document.getElementById('coverMods').textContent=COURSE.modules;
