@@ -244,26 +244,6 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775505738174,
     active: true
-  },
-  {
-    id: 'tb',
-    courseKey: 'tb',
-    coverImg: 'assets/capas/tb.jpg',
-    name: 'Teologia Bíblica do Básico ao Avançado',
-    desc: 'Do Gênesis ao Apocalipse: compreenda o plano redentor de Deus, os grandes temas bíblicos e a teologia sistemática com profundidade, clareza e base nas Escrituras.',
-    file: 'curso-teologia-biblica.html',
-    cat: 'Bíblia / Teologia',
-    modules: 127,
-    topics: 381,
-    hours: 127,
-    quizzes: 381,
-    salt: 'TB_HENRY_2026_MASTER',
-    ak: 'tb_auth',
-    storagePrefix: 'tb_',
-    icon: '✝️',
-    color: '#7c3aed',
-    addedTs: 1775506695365,
-    active: true
   }
 ];
 var MA_CATS = [
