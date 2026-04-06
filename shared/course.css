@@ -1889,66 +1889,91 @@ body.light .quiz-opt{background:#f5f6fc;border-color:#d0d4e8;color:#3a3a5a;}
 body.light .quiz-opt:hover{border-color:var(--pri);background:rgba(91,127,255,.08);color:#1a1a2e;}
 
 /* ══════════════════════════════════════════════
-   FLASHCARD — Design premium com pergunta na frente
+   FLASHCARD — Design premium, altura automática
    ══════════════════════════════════════════════ */
-.ml-fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;padding:4px 2px;}
+.ml-fc-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;
+  padding:4px 2px;
+  align-items:start; /* cards com alturas diferentes ficam alinhados ao topo */
+}
 .ml-flashcard{
-  min-height:200px;
-  perspective:1000px;
   cursor:pointer;
   border-radius:14px;
   position:relative;
+  /* SEM altura fixa — cresce conforme o conteúdo */
 }
 .ml-fc-inner{
-  position:relative;
-  width:100%;min-height:200px;
+  width:100%;
   transform-style:preserve-3d;
   transition:transform .55s cubic-bezier(.4,0,.2,1);
   border-radius:14px;
+  position:relative;
 }
 .ml-flashcard.flipped .ml-fc-inner{transform:rotateY(180deg);}
+
+/* FRENTE — visível por padrão */
 .ml-fc-face{
-  position:absolute;inset:0;
-  padding:18px 16px;
   border-radius:14px;
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
-  display:flex;flex-direction:column;gap:10px;
-  min-height:200px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:18px 16px;
 }
-/* FRENTE — fundo escuro com borda azul */
 .ml-fc-front{
   background:linear-gradient(135deg,var(--bg2) 0%,rgba(91,127,255,.06) 100%);
   border:1.5px solid rgba(91,127,255,.3);
   box-shadow:0 4px 20px rgba(91,127,255,.1);
+  position:relative; /* não absolute — ocupa espaço real */
 }
 .ml-flashcard:hover .ml-fc-front{
   border-color:rgba(91,127,255,.6);
   box-shadow:0 8px 28px rgba(91,127,255,.2);
 }
-/* VERSO — fundo dourado/verde com glow */
+
+/* VERSO — escondido atrás, só aparece ao virar */
 .ml-fc-back{
+  position:absolute; /* absoluto para não ocupar espaço quando escondido */
+  inset:0;
   background:linear-gradient(135deg,rgba(34,197,94,.08) 0%,rgba(245,158,11,.06) 100%);
   border:1.5px solid rgba(34,197,94,.35);
   box-shadow:0 4px 20px rgba(34,197,94,.12);
   transform:rotateY(180deg);
+  border-radius:14px;
+  padding:18px 16px;
+  display:flex;flex-direction:column;gap:10px;
+  overflow:auto; /* scroll se o texto for muito longo */
 }
+
+/* Quando virado — frente fica absoluta, verso ocupa espaço */
+.ml-flashcard.flipped .ml-fc-front{
+  position:absolute;
+  inset:0;
+}
+.ml-flashcard.flipped .ml-fc-back{
+  position:relative;
+  inset:auto;
+}
+
 /* Header frente/verso */
 .ml-fc-front-header{
   display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:4px;
+  margin-bottom:4px;flex-shrink:0;
 }
 .ml-fc-tag-front{
   font-size:.55rem;font-weight:800;text-transform:uppercase;
   letter-spacing:1.2px;color:var(--pri);
   background:rgba(91,127,255,.12);border:1px solid rgba(91,127,255,.25);
-  border-radius:20px;padding:2px 9px;
+  border-radius:20px;padding:2px 9px;white-space:nowrap;
 }
 .ml-fc-tag-back{
   font-size:.55rem;font-weight:800;text-transform:uppercase;
   letter-spacing:1.2px;color:var(--grn);
   background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);
-  border-radius:20px;padding:2px 9px;
+  border-radius:20px;padding:2px 9px;white-space:nowrap;
 }
 .ml-fc-qicon{
   width:28px;height:28px;border-radius:50%;
@@ -1957,45 +1982,61 @@ body.light .quiz-opt:hover{border-color:var(--pri);background:rgba(91,127,255,.0
   font-size:.85rem;font-weight:900;color:var(--pri);
   flex-shrink:0;
 }
-/* Pergunta na frente */
+/* Pergunta na frente — texto completo, sem corte */
 .ml-fc-question{
   font-size:.88rem;font-weight:700;color:var(--txt);
-  line-height:1.5;flex:1;
+  line-height:1.55;
+  word-break:break-word;
+  white-space:normal;
 }
 /* Hint de virar */
 .ml-fc-flip-hint{
   font-size:.6rem;color:var(--txt3);
   display:flex;align-items:center;gap:4px;
-  margin-top:auto;padding-top:8px;
-  border-top:1px solid var(--brd);
+  padding-top:10px;margin-top:auto;
+  border-top:1px solid var(--brd);flex-shrink:0;
 }
-/* Label pergunta no verso */
+/* Pergunta repetida no verso */
 .ml-fc-back-q-label{
-  font-size:.72rem;color:rgba(255,255,255,.45);
+  font-size:.72rem;color:rgba(255,255,255,.4);
   font-style:italic;line-height:1.4;
   padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.08);
-  margin-bottom:4px;
+  word-break:break-word;
 }
-/* Resposta no verso */
+/* Resposta no verso — texto completo */
 .ml-fc-answer{
   font-size:.85rem;color:var(--txt);
-  line-height:1.65;font-weight:500;
-  flex:1;
+  line-height:1.7;font-weight:500;
+  word-break:break-word;
+  white-space:normal;
 }
 .ml-fc-back-glow{
   position:absolute;inset:0;border-radius:14px;
   box-shadow:inset 0 0 30px rgba(34,197,94,.06);
   pointer-events:none;
 }
+
 /* Tema claro */
-body.light .ml-fc-front{background:linear-gradient(135deg,#fff 0%,rgba(91,127,255,.04) 100%);border-color:rgba(91,127,255,.25);}
-body.light .ml-fc-back{background:linear-gradient(135deg,rgba(34,197,94,.05) 0%,rgba(245,158,11,.04) 100%);border-color:rgba(34,197,94,.3);}
-body.light .ml-fc-question{color:#0a0a1e;}
-body.light .ml-fc-answer{color:#1a1a2e;}
-body.light .ml-fc-back-q-label{color:rgba(0,0,0,.4);}
-body.light .ml-fc-flip-hint{color:#9090b0;}
-
-
+body.light .ml-fc-front{
+  background:linear-gradient(135deg,#fff 0%,#f7f8ff 100%);
+  border-color:rgba(99,102,241,.2);
+  box-shadow:0 4px 16px rgba(99,102,241,.08);
+}
+body.light .ml-flashcard:hover .ml-fc-front{
+  border-color:rgba(99,102,241,.4);
+  box-shadow:0 8px 24px rgba(99,102,241,.15);
+}
+body.light .ml-fc-back{
+  background:linear-gradient(135deg,#f0fdf4 0%,#f7fff4 100%);
+  border-color:rgba(22,163,74,.3);
+}
+body.light .ml-fc-tag-front{color:#4f6ef7;background:rgba(99,102,241,.08);border-color:rgba(99,102,241,.2);}
+body.light .ml-fc-tag-back{color:#16a34a;background:#dcfce7;border-color:#bbf7d0;}
+body.light .ml-fc-qicon{background:rgba(99,102,241,.08);border-color:rgba(99,102,241,.2);color:#4f6ef7;}
+body.light .ml-fc-question{color:#0f0f23;}
+body.light .ml-fc-flip-hint{color:#b0b0cc;border-top-color:rgba(99,102,241,.1);}
+body.light .ml-fc-back-q-label{color:#8888b0;border-bottom-color:rgba(22,163,74,.12);}
+body.light .ml-fc-answer{color:#1a1a3e;}
 /* ══════════════════════════════════════════════
    BOTÕES NAVEGAÇÃO MÓDULO — Anterior / Próximo
    ══════════════════════════════════════════════ */
