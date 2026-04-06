@@ -676,6 +676,53 @@ textarea{resize:vertical;min-height:54px}
             <div class="capa-nome" id="capaNomeE"></div>
           </div>
         </div>
+        <!-- ══ SUBSTITUIÇÃO DE HTML DO CURSO ══ -->
+        <div class="mf" style="grid-column:1/-1">
+          <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.25);border-radius:12px;padding:16px;margin-top:4px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <span style="font-size:16px">🔄</span>
+              <div>
+                <div style="font-size:12px;font-weight:800;color:#fcd34d">Substituir HTML do Curso</div>
+                <div style="font-size:10px;color:var(--t2);margin-top:1px">Faça upload de um novo HTML — os dados (módulos, tópicos, quizzes) serão lidos automaticamente</div>
+              </div>
+            </div>
+
+            <!-- Dropzone do novo HTML -->
+            <div id="sub-html-area" style="border:2px dashed rgba(245,158,11,.4);border-radius:10px;padding:22px;text-align:center;cursor:pointer;transition:.2s;position:relative;background:rgba(245,158,11,.03);margin-bottom:12px"
+              ondragover="event.preventDefault();this.style.borderColor='#fbbf24';this.style.background='rgba(245,158,11,.08)'"
+              ondragleave="this.style.borderColor='rgba(245,158,11,.4)';this.style.background='rgba(245,158,11,.03)'"
+              ondrop="subHtmlDrop(event)">
+              <input type="file" id="sub-html-file" accept=".html" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%" onchange="subHtmlChosen(this)">
+              <div style="font-size:28px;margin-bottom:6px">📄</div>
+              <div id="sub-html-nome" style="font-size:13px;font-weight:700;color:#fcd34d">Arraste o novo HTML aqui ou clique</div>
+              <div style="font-size:10px;color:var(--t3);margin-top:3px">Apenas arquivos .html</div>
+            </div>
+
+            <!-- Preview dos dados lidos do novo HTML -->
+            <div id="sub-html-preview" style="display:none;background:rgba(0,0,0,.2);border:1px solid rgba(245,158,11,.2);border-radius:9px;padding:13px;margin-bottom:12px">
+              <div style="font-size:10px;font-weight:700;color:#fcd34d;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">✅ Dados lidos do novo HTML</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;font-size:11px">
+                <div style="color:var(--t2)">📦 Módulos: <b id="sub-r-mods" style="color:var(--txt)">—</b></div>
+                <div style="color:var(--t2)">📖 Tópicos: <b id="sub-r-tops" style="color:var(--txt)">—</b></div>
+                <div style="color:var(--t2)">🧠 Quizzes: <b id="sub-r-qz" style="color:var(--txt)">—</b></div>
+                <div style="color:var(--t2)">⏱️ Horas est.: <b id="sub-r-hrs" style="color:var(--txt)">—</b></div>
+                <div style="color:var(--t2);grid-column:1/-1">📄 Arquivo: <b id="sub-r-file" style="color:#fcd34d;font-family:var(--mono)">—</b></div>
+              </div>
+              <div id="sub-aviso-manual" style="display:none;margin-top:8px;padding:7px 10px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:7px;font-size:10px;color:#fcd34d">
+                ⚠️ Não encontrei <code>var MODS</code> no HTML. Os campos foram mantidos — revise módulos/tópicos/quizzes manualmente.
+              </div>
+            </div>
+
+            <!-- Botão de aplicar -->
+            <button id="sub-html-btn" onclick="aplicarSubstituicaoHTML()" disabled
+              style="width:100%;background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.4);border-radius:9px;padding:11px;font-family:var(--sans);font-size:13px;font-weight:700;cursor:not-allowed;opacity:.5;transition:.2s">
+              🔄 Aplicar substituição no GitHub
+            </button>
+            <div id="sub-html-res" style="margin-top:10px;display:none;padding:9px 12px;border-radius:8px;font-size:12px;font-weight:500"></div>
+          </div>
+        </div>
+        <!-- ══ FIM SUBSTITUIÇÃO HTML ══ -->
+
         <div class="mf" style="grid-column:1/-1"><label>Descrição Longa / Ementa</label><textarea id="ed-longdesc" rows="3" placeholder="O que o aluno vai aprender..."></textarea></div>
         <div class="mf"><label>Nível</label>
           <select id="ed-nivel">
@@ -4233,6 +4280,223 @@ var _origSalvarEdicao = window.salvarEdicaoCurso || null;
     return origFn.apply(this, arguments);
   };
 })();
+
+/* ══════════════════════════════════════════════════════════════
+   10-A. SUBSTITUIÇÃO DE HTML DO CURSO
+   ══════════════════════════════════════════════════════════════ */
+
+var _subHtmlFile = null;      // File object do novo HTML
+var _subHtmlContent = '';     // Conteúdo texto do HTML
+var _subHtmlParsed = null;    // Dados extraídos {mods,tops,qz,hrs}
+
+// Drag & drop
+function subHtmlDrop(e) {
+  e.preventDefault();
+  var area = document.getElementById('sub-html-area');
+  area.style.borderColor = 'rgba(245,158,11,.4)';
+  area.style.background = 'rgba(245,158,11,.03)';
+  var f = e.dataTransfer.files[0];
+  if (f) processarSubHtml(f);
+}
+
+// Input file change
+function subHtmlChosen(inp) {
+  if (inp.files && inp.files[0]) processarSubHtml(inp.files[0]);
+}
+
+// Processar o HTML carregado — ler e fazer parse
+function processarSubHtml(file) {
+  if (!file.name.endsWith('.html')) {
+    alert('❌ Apenas arquivos .html são aceitos.');
+    return;
+  }
+  _subHtmlFile = file;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    _subHtmlContent = e.target.result;
+    var parsed = parsearHTMLCurso(_subHtmlContent, file.name);
+    _subHtmlParsed = parsed;
+    mostrarPreviewSubHtml(parsed, file.name);
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+// Extrair dados do HTML — lê var MODS, var COURSE ou conta elementos
+function parsearHTMLCurso(html, filename) {
+  var mods = 0, tops = 0, qz = 0, hrs = 0;
+  var encontrouMods = false;
+
+  // Tentar extrair var MODS = [...]
+  var modsMatch = html.match(/var\s+MODS\s*=\s*(\[[\s\S]*?\]);/);
+  if (modsMatch) {
+    try {
+      eval('var _mods = ' + modsMatch[1]);
+      mods = _mods.length;
+      tops = 0; qz = 0;
+      _mods.forEach(function(m) {
+        if (m.topics && Array.isArray(m.topics)) tops += m.topics.length;
+        else if (typeof m.topics === 'number') tops += m.topics;
+        if (m.quiz && Array.isArray(m.quiz)) qz += m.quiz.length;
+        else if (m.quizzes) qz += parseInt(m.quizzes)||0;
+      });
+      encontrouMods = true;
+    } catch(ex) { console.warn('Erro parse MODS:', ex); }
+  }
+
+  // Tentar var COURSE = {...} como fallback
+  if (!encontrouMods) {
+    var courseMatch = html.match(/var\s+COURSE\s*=\s*(\{[\s\S]*?\});/);
+    if (courseMatch) {
+      try {
+        eval('var _c = ' + courseMatch[1]);
+        if (_c.modules) mods = parseInt(_c.modules)||0;
+        if (_c.topics)  tops = parseInt(_c.topics)||0;
+        if (_c.quizzes) qz   = parseInt(_c.quizzes)||0;
+        if (_c.hours)   hrs  = parseInt(_c.hours)||0;
+        encontrouMods = true;
+      } catch(ex) { console.warn('Erro parse COURSE:', ex); }
+    }
+  }
+
+  // Fallback: contar elementos no HTML
+  if (!encontrouMods) {
+    // Contar data-mod, data-topic, quiz-item etc.
+    var modMatches  = html.match(/data-mod[="\s]/g);
+    var topMatches  = html.match(/data-topic[="\s]/g);
+    var qzMatches   = html.match(/quiz-item|class="quiz"/g);
+    if (modMatches) mods = modMatches.length;
+    if (topMatches) tops = topMatches.length;
+    if (qzMatches)  qz   = qzMatches.length;
+  }
+
+  // Estimar horas se não veio: ~12 min por tópico
+  if (!hrs && tops > 0) hrs = Math.ceil(tops * 12 / 60);
+
+  return { mods: mods, tops: tops, qz: qz, hrs: hrs, encontrouMods: encontrouMods };
+}
+
+// Mostrar preview dos dados extraídos
+function mostrarPreviewSubHtml(parsed, filename) {
+  document.getElementById('sub-r-mods').textContent = parsed.mods || '?';
+  document.getElementById('sub-r-tops').textContent = parsed.tops || '?';
+  document.getElementById('sub-r-qz').textContent   = parsed.qz  || '?';
+  document.getElementById('sub-r-hrs').textContent  = parsed.hrs || '?';
+  document.getElementById('sub-r-file').textContent = filename;
+
+  var aviso = document.getElementById('sub-aviso-manual');
+  if (aviso) aviso.style.display = parsed.encontrouMods ? 'none' : 'block';
+
+  document.getElementById('sub-html-preview').style.display = 'block';
+  document.getElementById('sub-html-nome').textContent = '✅ ' + filename;
+
+  // Preencher automaticamente os campos do editor
+  if (parsed.mods > 0) { var em = el('ed-modules'); if(em) em.value = parsed.mods; }
+  if (parsed.tops > 0) { var et = el('ed-topics');  if(et) et.value = parsed.tops; }
+  if (parsed.qz  > 0) { var eq = el('ed-quizzes'); if(eq) eq.value = parsed.qz;  }
+  if (parsed.hrs > 0) { var eh = el('ed-hours');   if(eh) eh.value = parsed.hrs; }
+  // Atualizar o campo de arquivo HTML com o nome do novo arquivo
+  var ef = el('ed-file'); if(ef) ef.value = filename;
+
+  // Habilitar botão
+  var btn = document.getElementById('sub-html-btn');
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  btn.style.cursor = 'pointer';
+  btn.style.background = 'rgba(245,158,11,.2)';
+
+  // Atualizar preview visual
+  if (typeof atualizarPreview === 'function') atualizarPreview();
+}
+
+// Executar substituição no GitHub
+async function aplicarSubstituicaoHTML() {
+  if (!_subHtmlFile || !_subHtmlContent) { alert('❌ Nenhum HTML selecionado.'); return; }
+  if (!_cursoEditando) { alert('❌ Nenhum curso selecionado para editar.'); return; }
+
+  var c = g(); if (!c.t) { mostrarResSubHtml('er', '❌ Configure o token GitHub primeiro.'); return; }
+
+  var btn = document.getElementById('sub-html-btn');
+  btn.disabled = true; btn.textContent = '⏳ Enviando...';
+
+  var filename = _subHtmlFile.name;
+  var id = _cursoEditando.id;
+
+  try {
+    mostrarResSubHtml('ld', '<span class="sp" style="display:inline-block;margin-right:6px"></span> Verificando arquivo existente no GitHub...');
+
+    // 1. Verificar se o arquivo já existe (pegar SHA para update)
+    var oldFilename = el('ed-file') ? el('ed-file').value.trim() : '';
+    var targetPath = filename; // Usa o nome do novo arquivo
+    var checkRes = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/'+targetPath, { headers: gh() });
+    var existingSha = null;
+    if (checkRes.ok) {
+      var checkData = await checkRes.json();
+      existingSha = checkData.sha;
+    }
+
+    // 2. Fazer upload do novo HTML
+    mostrarResSubHtml('ld', '<span class="sp" style="display:inline-block;margin-right:6px"></span> Enviando novo HTML para o GitHub...');
+    var htmlBase64 = btoa(unescape(encodeURIComponent(_subHtmlContent)));
+    var uploadBody = {
+      message: 'sub: substitui HTML do curso "' + id + '" → ' + filename,
+      content: htmlBase64
+    };
+    if (existingSha) uploadBody.sha = existingSha;
+
+    var uploadRes = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/'+targetPath, {
+      method: 'PUT', headers: gh(),
+      body: JSON.stringify(uploadBody)
+    });
+
+    if (!uploadRes.ok) {
+      var uploadErr = await uploadRes.json();
+      mostrarResSubHtml('er', '❌ Erro ao enviar HTML: ' + (uploadErr.message || uploadRes.status));
+      btn.disabled = false; btn.textContent = '🔄 Aplicar substituição no GitHub';
+      return;
+    }
+
+    // 3. Se o nome do arquivo mudou, excluir o arquivo antigo
+    if (oldFilename && oldFilename !== filename) {
+      mostrarResSubHtml('ld', '<span class="sp" style="display:inline-block;margin-right:6px"></span> Removendo HTML antigo...');
+      var oldCheck = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/'+oldFilename, { headers: gh() });
+      if (oldCheck.ok) {
+        var oldData = await oldCheck.json();
+        await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/'+oldFilename, {
+          method: 'DELETE', headers: gh(),
+          body: JSON.stringify({ message: 'sub: remove HTML antigo ' + oldFilename, sha: oldData.sha })
+        });
+      }
+    }
+
+    // 4. Salvar as edições no courses.js (aproveita o salvarEdicaoCurso)
+    mostrarResSubHtml('ld', '<span class="sp" style="display:inline-block;margin-right:6px"></span> Atualizando courses.js...');
+    await salvarEdicaoCurso();
+
+    mostrarResSubHtml('ok', '✅ HTML substituído com sucesso! Arquivo: <b>' + filename + '</b> · Módulos: <b>' + (_subHtmlParsed ? _subHtmlParsed.mods : '—') + '</b> · Tópicos: <b>' + (_subHtmlParsed ? _subHtmlParsed.tops : '—') + '</b>');
+    addAudit('Substituiu HTML do curso "' + id + '": ' + (oldFilename||'?') + ' → ' + filename);
+
+    // Resetar área de substituição
+    _subHtmlFile = null; _subHtmlContent = ''; _subHtmlParsed = null;
+    document.getElementById('sub-html-preview').style.display = 'none';
+    document.getElementById('sub-html-nome').textContent = 'Arraste o novo HTML aqui ou clique';
+    document.getElementById('sub-html-file').value = '';
+    btn.textContent = '✅ Substituído!';
+    setTimeout(function(){ btn.textContent = '🔄 Aplicar substituição no GitHub'; btn.disabled = false; btn.style.opacity='1'; }, 3000);
+
+  } catch(err) {
+    mostrarResSubHtml('er', '❌ Erro inesperado: ' + err.message);
+    btn.disabled = false; btn.textContent = '🔄 Aplicar substituição no GitHub';
+  }
+}
+
+function mostrarResSubHtml(tipo, msg) {
+  var d = document.getElementById('sub-html-res');
+  d.style.display = 'block';
+  d.innerHTML = msg;
+  if (tipo === 'ok') { d.style.background='rgba(34,197,94,.09)'; d.style.border='1px solid rgba(34,197,94,.25)'; d.style.color='#86efac'; }
+  else if (tipo === 'er') { d.style.background='rgba(239,68,68,.09)'; d.style.border='1px solid rgba(239,68,68,.25)'; d.style.color='#fca5a5'; }
+  else { d.style.background='rgba(59,130,246,.09)'; d.style.border='1px solid rgba(59,130,246,.25)'; d.style.color='var(--acc2)'; }
+}
 
 /* ══════════════════════════════════════════════════════════════
    10. DUPLICAR CURSO
