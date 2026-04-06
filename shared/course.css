@@ -1625,39 +1625,36 @@ body.light .highlight-toolbar::after{border-top-color:rgba(99,102,241,.2);}
   .cover-stat-lbl{font-size:.42rem;}
   .cover-cta{padding:13px 28px;font-size:.84rem;}
 
-  /* ── Mini-capa da aula — sticky acima das tabs no mobile ── */
+  /* ── Mini-capa da aula — compacta no mobile, flui normalmente ── */
   .lesson-cover-mini{
-    padding:10px 14px 10px;
+    padding:10px 14px;
     gap:10px;
-    position:sticky;
-    top:var(--topbar-h);
-    z-index:101;           /* maior que tabs-wrap (100) → fica na frente */
+    /* NÃO sticky — flui com o conteúdo, fica sempre acima dos módulos */
   }
   /* Logo menor na mini-capa */
-  .lesson-cover-mini .logo-svg{width:70px !important;height:56px !important;}
+  .lesson-cover-mini .logo-svg{width:64px !important;height:52px !important;}
   .lcm-title{font-size:.82rem;margin-bottom:3px;}
   .lcm-desc{font-size:.6rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .lcm-badge{font-size:.42rem;padding:2px 8px;margin-bottom:4px;}
   .lcm-line{margin-bottom:4px;}
 
-  /* ── Tabs — ficam sticky ABAIXO da mini-capa ── */
-  /* A mini-capa tem ~88px de altura; tabs ficam logo abaixo */
+  /* ── Tabs — sticky logo abaixo da topbar (comportamento padrão correto) ── */
   .tabs-wrap{
-    top:calc(var(--topbar-h) + 88px);
+    top:var(--topbar-h);
     z-index:100;
     padding-right:6px;
   }
   /* Tabs menores e mais compactas */
-  .ctab{padding:10px 11px;font-size:.58rem;gap:3px;}
+  .ctab{padding:10px 11px;font-size:.58rem;}
   .back-to-cover-btn{height:28px;padding:0 9px;font-size:.52rem;}
 
-  /* ── Controles áudio+fonte — sticky abaixo das tabs ── */
+  /* ── Controles áudio+fonte — sticky logo abaixo das tabs (tabs ~40px) ── */
   .ml-controls-bar{
-    top:calc(var(--topbar-h) + 88px + 40px);
+    top:calc(var(--topbar-h) + 40px);
     padding:6px 12px;gap:0;flex-wrap:nowrap;
   }
   .ml-audio-ctrl{
-    top:calc(var(--topbar-h) + 88px + 40px);
+    top:calc(var(--topbar-h) + 40px);
   }
 
   /* ── Módulos da capa ── */
