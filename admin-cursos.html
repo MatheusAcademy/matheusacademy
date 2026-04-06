@@ -1789,9 +1789,41 @@ async function testGH(){
   if(!c.t){setSt('','Preencha o token');return;}
   setSt('y','Conectando...');
   try{
+    // 1. Verificar acesso ao repo
     var r=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r,{headers:gh()});
-    if(r.ok){setSt('g','Conectado ✓  '+c.o+'/'+c.r);await loadCoursesData();loadList();}
-    else setSt('r','Erro '+r.status+' — verifique token/repositório');
+    if(!r.ok){setSt('r','Erro '+r.status+' — verifique token/repositório');return;}
+    var rj=await r.json();
+    // 2. Verificar permissão de escrita pelo campo permissions
+    var perm = rj.permissions;
+    if(perm && !perm.push){
+      setSt('r','❌ Token sem permissão de escrita! Crie novo token em github.com/settings/tokens com scope "repo" completo.');
+      return;
+    }
+    // 3. Testar escrita real: criar arquivo de teste e deletar
+    var testPath = 'assets/capas/_test_write.txt';
+    var testContent = btoa('test');
+    var putR = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/'+testPath,{
+      method:'PUT',headers:gh(),
+      body:JSON.stringify({message:'test write permission',content:testContent})
+    });
+    if(!putR.ok){
+      var pe = await putR.json();
+      setSt('r','❌ Token sem permissão de escrita ('+putR.status+'): '+(pe.message||'verifique o scope do token'));
+      return;
+    }
+    // Deletar arquivo de teste
+    try{
+      var delD = await putR.json();
+      var delSha = delD.content && delD.content.sha;
+      if(delSha){
+        await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/'+testPath,{
+          method:'DELETE',headers:gh(),
+          body:JSON.stringify({message:'remove test file',sha:delSha})
+        });
+      }
+    }catch(e2){}
+    setSt('g','✅ Conectado · leitura ✓ · escrita ✓ — '+c.o+'/'+c.r);
+    await loadCoursesData();loadList();
   }catch(e){setSt('r','Erro: '+e.message);}
 }
 function setSt(c,t){
@@ -1829,7 +1861,7 @@ function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
 function buildBlock(m){
   var fr=m.free?"\n    free: true,":'';
   return "  {\n"
-    +"    coverImg: '"+esc(m.coverImg||('assets/capas/'+m.id+'.png'))+"',\n"
+    +"    coverImg: '"+esc(m.coverImg||('assets/capas/'+m.id+'.jpg'))+"',\n"
     +"    id: '"+esc(m.id)+"',\n"
     +"    name: '"+esc(m.name)+"',\n"
     +"    desc: '"+esc(m.desc)+"',\n"
@@ -3524,80 +3556,76 @@ function capaDrop(e, areaId, fileId, previewId, nomeId, txtId) {
   reader.readAsDataURL(file);
 }
 
-// Sobe a capa para assets/capas/{id}.png no GitHub
+// Sobe a capa para assets/capas/{id}.jpg no GitHub
 async function uploadCapa(file, courseId) {
   if (!file) return null;
   var cfg = g();
   if (!cfg.t || !cfg.o || !cfg.r) {
-    throw new Error('Token GitHub não configurado. Configure o token nas configurações do admin.');
+    throw new Error('Token GitHub não configurado. Configure o token antes de subir a capa.');
   }
 
-  // ── Comprimir imagem antes do upload (max 800px, qualidade 85%) ──
+  // Comprimir e converter para JPEG (max 800x1100, qualidade 85%)
   var b64 = await new Promise(function(res, rej) {
     var img = new Image();
     var url = URL.createObjectURL(file);
     img.onload = function() {
-      var maxW = 800, maxH = 1100;
-      var w = img.width, h = img.height;
-      if (w > maxW || h > maxH) {
-        var ratio = Math.min(maxW/w, maxH/h);
-        w = Math.round(w*ratio); h = Math.round(h*ratio);
-      }
-      var canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      var ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, w, h);
-      var dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      URL.revokeObjectURL(url);
-      res(dataUrl.split(',')[1]);
+      try {
+        var maxW = 800, maxH = 1100;
+        var w = img.width, h = img.height;
+        if (w > maxW || h > maxH) {
+          var ratio = Math.min(maxW / w, maxH / h);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(url);
+        res(canvas.toDataURL('image/jpeg', 0.85).split(',')[1]);
+      } catch(e) { rej(e); }
     };
     img.onerror = function() {
-      // Fallback: usar arquivo original sem compressão
-      var reader = new FileReader();
-      reader.onload = function(e) { res(e.target.result.split(',')[1]); };
-      reader.onerror = rej;
-      reader.readAsDataURL(file);
       URL.revokeObjectURL(url);
+      // Fallback: ler arquivo original sem compressão
+      var r2 = new FileReader();
+      r2.onload = function(ev) { res(ev.target.result.split(',')[1]); };
+      r2.onerror = rej;
+      r2.readAsDataURL(file);
     };
     img.src = url;
   });
 
-  // Sempre salvar como .jpg após compressão
   var path = 'assets/capas/' + courseId + '.jpg';
 
-  // Verificar se já existe (para pegar SHA)
+  // Buscar SHA se arquivo já existe (necessário para update)
   var sha = null;
   try {
-    var chk = await fetch('https://api.github.com/repos/'+cfg.o+'/'+cfg.r+'/contents/'+path,
-      {headers:{'Authorization':'token '+cfg.t,'Accept':'application/vnd.github.v3+json'}});
-    if (chk.ok) { var d = await chk.json(); sha = d.sha; }
-    // Tentar também .png se .jpg não existir
-    if (!chk.ok) {
-      var chk2 = await fetch('https://api.github.com/repos/'+cfg.o+'/'+cfg.r+'/contents/assets/capas/'+courseId+'.png',
-        {headers:{'Authorization':'token '+cfg.t,'Accept':'application/vnd.github.v3+json'}});
-      if (chk2.ok) { var d2 = await chk2.json(); sha = d2.sha; }
+    var chk = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/' + path,
+      { headers: { 'Authorization': 'token ' + cfg.t, 'Accept': 'application/vnd.github.v3+json' } });
+    if (chk.ok) { sha = (await chk.json()).sha; }
+    // Verificar também .png caso o arquivo antigo exista com essa extensão
+    if (!sha) {
+      var chk2 = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/assets/capas/' + courseId + '.png',
+        { headers: { 'Authorization': 'token ' + cfg.t, 'Accept': 'application/vnd.github.v3+json' } });
+      if (chk2.ok) { sha = (await chk2.json()).sha; }
     }
   } catch(e) {}
 
-  // Upload para o GitHub
-  var body = {message: 'capa: ' + courseId, content: b64};
+  // PUT no GitHub
+  var body = { message: 'capa: ' + courseId, content: b64 };
   if (sha) body.sha = sha;
-  var r = await fetch('https://api.github.com/repos/'+cfg.o+'/'+cfg.r+'/contents/'+path, {
+  var r = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/' + path, {
     method: 'PUT',
-    headers: {'Authorization':'token '+cfg.t,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+    headers: { 'Authorization': 'token ' + cfg.t, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
     body: JSON.stringify(body)
   });
   if (!r.ok) {
-    var errData = {};
-    try { errData = await r.json(); } catch(e2) {}
-    var msg = errData.message || ('HTTP ' + r.status);
-    console.error('uploadCapa ERRO:', msg, errData);
-    throw new Error('Capa não subiu: ' + msg + '. Verifique se o token tem permissão de escrita (scope: repo).');
+    var err = {};
+    try { err = await r.json(); } catch(e) {}
+    throw new Error('HTTP ' + r.status + ': ' + (err.message || 'verifique se o token tem permissão de escrita (scope: repo)'));
   }
-  console.log('✅ Capa subida:', path, '(' + Math.round(b64.length*0.75/1024) + 'KB)');
   return path;
 }
-
 
 /* ══════════════════════════════════════════════════════════════
    1. GERADOR DE CURSO COM IA
