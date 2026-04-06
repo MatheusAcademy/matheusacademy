@@ -11,6 +11,17 @@
 .mlc-play-btn.loading{background:rgba(91,127,255,0.15)!important;cursor:wait!important;pointer-events:none;}
 .mlc-play-btn.loading svg{animation:mlc-spin 1s linear infinite;}
 @keyframes mlc-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* Parágrafos clicáveis para ouvir a partir dali */
+.lesson-content h1[title],.lesson-content h2[title],.lesson-content h3[title],
+.lesson-content h4[title],.lesson-content h5[title],.lesson-content h6[title],
+.lesson-content p[title],.lesson-content li[title]{
+  border-radius:4px;transition:background .15s;
+}
+.lesson-content h1[title]:hover,.lesson-content h2[title]:hover,.lesson-content h3[title]:hover,
+.lesson-content h4[title]:hover,.lesson-content h5[title]:hover,.lesson-content h6[title]:hover,
+.lesson-content p[title]:hover,.lesson-content li[title]:hover{
+  background:rgba(91,127,255,0.08);outline:1px solid rgba(91,127,255,0.2);
+}
 </style>
 <div class="toast" id="toast"></div>
 
@@ -1013,6 +1024,8 @@ function renderModLesson(mi){
     +'<option value="1.25">1.25x</option>'
     +'<option value="1.5">1.5x</option>'
     +'<option value="2">2x</option>'
+    +'<option value="2.5">2.5x</option>'
+    +'<option value="3">3x</option>'
     +'</select>'
     +'</div>'
     +'<div class="mlc-sep"></div>'
@@ -1247,6 +1260,12 @@ function mlToggleTopic(mi,ti){
   var mod=MODS[mi], t=mod.topics[ti];
   var prog=gProg(), key=mod.id+'_'+t.id;
   if(!prog[key]){prog[key]=true; sProg(prog); buildSidebar();}
+
+  /* Pré-carrega áudio do 1º bloco para play instantâneo */
+  setTimeout(function(){
+    _mlPreload(mi,ti);
+    _mlBindTopicClicks(mi,ti);
+  },100);
 }
 
 /* Som de check — lápis riscando papel */
@@ -1390,137 +1409,247 @@ function checkStreak(){
   }
 }
 
-/* ── ÁUDIO DO MÓDULO — voz IA instantânea, anti-duplo-clique ── */
+/* ══════════════════════════════════════════════════════
+   SISTEMA DE ÁUDIO IA — v3
+   • Pré-carrega o 1º parágrafo ao abrir tópico (play instantâneo)
+   • Clique em qualquer parágrafo/título → narra a partir dali
+   • Fila automática: termina um bloco → carrega o próximo
+   • Anti-duplo-clique com AbortController
+   • Velocidade até 3x
+   ══════════════════════════════════════════════════════ */
+
 var _mlModMi=-1,_mlAudioEl=null,_mlLoading=false,_mlAbort=null;
+var _mlQueue=[],_mlQueueIdx=0,_mlQueueMi=-1;   // fila de blocos de texto
+var _mlPreCache={};                              // {mi_ti_0: blobUrl} pré-carregado
 
-function _mlStopTudo(){
-  // Para fetch em andamento
-  if(_mlAbort){try{_mlAbort.abort();}catch(e){}}_mlAbort=null;
-  // Para áudio em reprodução
-  if(_mlAudioEl){try{_mlAudioEl.pause();_mlAudioEl.src='';}catch(e){}}_mlAudioEl=null;
-  // Mata qualquer voz do navegador (Web Speech API)
-  try{window.speechSynthesis.cancel();}catch(e){}
-  // Limpa estado do botão anterior
-  var ob=document.getElementById('ml_abtn_'+_mlModMi);
-  var os=document.getElementById('ml_ast_'+_mlModMi);
-  if(ob)ob.classList.remove('playing','loading');
-  if(os)os.textContent='Clique para ouvir';
-  _mlLoading=false;
+/* ── helpers ── */
+function _mlGetSpd(mi){
+  var el=document.getElementById('ml_aspd_'+mi);
+  return parseFloat(el?el.value:1)||1;
 }
-
-function mlToggleModAudio(mi){
+function _mlSetBtn(mi,state){
+  // state: 'loading' | 'playing' | 'paused' | 'idle'
   var btn=document.getElementById('ml_abtn_'+mi);
   var st=document.getElementById('ml_ast_'+mi);
-  var spdEl=document.getElementById('ml_aspd_'+mi);
-  var spd=parseFloat(spdEl?spdEl.value:1)||1;
+  if(!btn)return;
+  btn.classList.remove('playing','loading');
+  if(state==='loading'){btn.classList.add('loading');if(st)st.textContent='⏳ Gerando...';}
+  else if(state==='playing'){btn.classList.add('playing');if(st)st.textContent='🎙️ Narrando com IA...';}
+  else if(state==='paused'){if(st)st.textContent='⏸ Pausado';}
+  else{if(st)st.textContent='Clique para ouvir';}
+}
 
-  // ── Se está carregando (loading) → cancela tudo e para ──
-  if(_mlLoading){
-    _mlStopTudo();
-    _mlModMi=mi;
+/* ── Para tudo imediatamente ── */
+function _mlStopTudo(clearBtn){
+  if(_mlAbort){try{_mlAbort.abort();}catch(e){}}_mlAbort=null;
+  if(_mlAudioEl){try{_mlAudioEl.pause();_mlAudioEl.src='';}catch(e){}}_mlAudioEl=null;
+  try{window.speechSynthesis.cancel();}catch(e){}
+  _mlLoading=false;_mlQueue=[];_mlQueueIdx=0;
+  if(clearBtn!==false)_mlSetBtn(_mlModMi,'idle');
+}
+
+/* ── Extrai blocos de texto de um elemento HTML ──
+   Divide por <h1-h6> e <p> para permitir clique em ponto específico ── */
+function _mlExtrairBlocos(htmlStr,prefixo){
+  var tmp=document.createElement('div');tmp.innerHTML=htmlStr||'';
+  var blocos=[];
+  // Primeiro bloco: nome do tópico (prefixo)
+  if(prefixo)blocos.push(prefixo+'. ');
+  tmp.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li').forEach(function(el){
+    var t=(el.textContent||'').replace(/\s+/g,' ').trim();
+    if(t.length>10)blocos.push(t);
+  });
+  return blocos;
+}
+
+/* ── Faz fetch TTS e retorna blobUrl (Promise) ── */
+function _mlFetchTTS(texto,abortSignal){
+  var ttsUrl=window.MA_TTS_URL||'';
+  if(!ttsUrl)return Promise.reject(new Error('no-url'));
+  return fetch(ttsUrl,{
+    method:'POST',
+    signal:abortSignal,
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({text:texto.slice(0,1000),voice:window.MA_TTS_VOICE||'onyx'})
+  }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.blob();})
+    .then(function(b){return URL.createObjectURL(b);});
+}
+
+/* ── PRÉ-CARREGA o 1º bloco quando o tópico é aberto ── */
+function _mlPreload(mi,ti){
+  var ttsUrl=window.MA_TTS_URL||'';if(!ttsUrl)return;
+  var cacheKey=mi+'_'+ti;
+  if(_mlPreCache[cacheKey])return; // já carregado
+  var mod=MODS[mi];if(!mod||!mod.topics[ti])return;
+  var t=mod.topics[ti];
+  var blocos=_mlExtrairBlocos(t.content,t.name);
+  if(!blocos.length)return;
+  var texto=blocos.slice(0,2).join(' ').slice(0,1000); // título + 1º parágrafo
+  _mlPreCache[cacheKey]='loading';
+  var ac=new AbortController();
+  _mlFetchTTS(texto,ac.signal)
+    .then(function(url){_mlPreCache[cacheKey]=url;})
+    .catch(function(){_mlPreCache[cacheKey]=null;});
+}
+
+/* ── Toca um blobUrl e ao terminar chama onEnd ── */
+function _mlPlayUrl(blobUrl,spd,onEnd,onErr){
+  if(_mlAudioEl){try{_mlAudioEl.pause();_mlAudioEl.src='';}catch(e){}}_mlAudioEl=null;
+  var audio=new Audio(blobUrl);
+  audio.playbackRate=spd;
+  _mlAudioEl=audio;
+  audio.play().catch(function(e){if(onErr)onErr(e);});
+  audio.onended=onEnd||null;
+  audio.onerror=onErr||null;
+}
+
+/* ── Toca a fila a partir de _mlQueueIdx ── */
+function _mlPlayQueue(mi){
+  if(_mlQueueIdx>=_mlQueue.length){
+    // Fila terminou
+    _mlSetBtn(mi,'idle');
+    _mlQueue=[];_mlQueueIdx=0;_mlAudioEl=null;
     return;
   }
+  var texto=_mlQueue[_mlQueueIdx];
+  var spd=_mlGetSpd(mi);
+  _mlSetBtn(mi,'loading');
+  _mlAbort=new AbortController();
+  var reqIdx=_mlQueueIdx,reqMi=mi;
+  _mlFetchTTS(texto,_mlAbort.signal)
+    .then(function(url){
+      if(_mlModMi!==reqMi||_mlQueueIdx!==reqIdx){URL.revokeObjectURL(url);return;}
+      _mlAbort=null;_mlLoading=false;
+      _mlSetBtn(mi,'playing');
+      _mlPlayUrl(url,spd,function(){
+        URL.revokeObjectURL(url);
+        _mlQueueIdx++;
+        _mlPlayQueue(mi); // próximo bloco
+      },function(){
+        URL.revokeObjectURL(url);
+        _mlSetBtn(mi,'idle');
+      });
+    })
+    .catch(function(e){
+      if(e.name==='AbortError')return;
+      _mlLoading=false;_mlAbort=null;
+      _mlSetBtn(mi,'idle');
+    });
+}
 
-  // ── Se já está tocando este módulo → pausa/retoma ──
+/* ── TOGGLE PRINCIPAL (botão ▶️) ── */
+function mlToggleModAudio(mi){
+  var spd=_mlGetSpd(mi);
+
+  // Se carregando → cancela
+  if(_mlLoading){_mlStopTudo();_mlModMi=mi;return;}
+
+  // Se tocando este módulo → pausa/retoma
   if(_mlAudioEl&&_mlModMi===mi){
     if(!_mlAudioEl.paused){
       _mlAudioEl.pause();
-      if(btn)btn.classList.remove('playing');
-      if(st)st.textContent='⏸ Pausado';
+      _mlSetBtn(mi,'paused');
     } else {
-      _mlAudioEl.playbackRate=spd;_mlAudioEl.play();
-      if(btn)btn.classList.add('playing');
-      if(st)st.textContent='🎙️ Narrando...';
+      _mlAudioEl.playbackRate=spd;
+      _mlAudioEl.play();
+      _mlSetBtn(mi,'playing');
     }
     return;
   }
 
-  // ── Para qualquer áudio anterior e começa novo ──
-  _mlStopTudo();
+  // Para áudio anterior
+  _mlStopTudo(false);
+  _mlSetBtn(_mlModMi,'idle');
   _mlModMi=mi;
 
-  // ── Pega APENAS o tópico aberto na tela ──
-  var mod=MODS[mi];var txt='';
-  var topicoAberto=null;
+  // Monta fila com o tópico aberto
+  var mod=MODS[mi];
+  var topicoAberto=null,topicoAbertoIdx=-1;
   mod.topics.forEach(function(t,ti){
     var body=document.getElementById('ml_tbody_'+mi+'_'+ti);
-    if(body&&body.offsetHeight>0&&body.style.display!=='none'){topicoAberto=t;}
+    if(body&&body.offsetHeight>0&&body.style.display!=='none'){topicoAberto=t;topicoAbertoIdx=ti;}
   });
-  if(topicoAberto){
-    var tmp=document.createElement('div');tmp.innerHTML=topicoAberto.content||'';
-    txt=(topicoAberto.name+'. '+(tmp.textContent||'').replace(/\s+/g,' ').trim()).slice(0,1200);
-  } else {
-    txt=('Módulo '+mod.name+'. Tópicos: '+mod.topics.map(function(t){return t.name;}).join(', ')+'.').slice(0,600);
-  }
-  if(!txt.trim()){showToast('Abra um tópico para narrar','warn');return;}
 
-  // ── Bloqueia novos cliques durante o loading ──
-  _mlLoading=true;
-  if(btn){btn.classList.add('loading');btn.classList.remove('playing');}
-  if(st)st.textContent='⏳ Gerando áudio...';
-
-  var ttsUrl=window.MA_TTS_URL||'';
-  if(!ttsUrl){
-    // Fallback: voz do navegador
-    _mlLoading=false;
-    if(btn)btn.classList.remove('loading');
-    var utt=new SpeechSynthesisUtterance(txt);
-    utt.lang='pt-BR';utt.rate=spd;
-    utt.onstart=function(){if(btn)btn.classList.add('playing');if(st)st.textContent='Narrando...';};
-    utt.onend=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluído';};
-    window.speechSynthesis.speak(utt);
+  if(!topicoAberto){
+    // Nenhum tópico aberto → lista os módulos
+    _mlQueue=[('Módulo '+mod.name+'. Tópicos: '+mod.topics.map(function(t){return t.name;}).join(', ')+'.').slice(0,600)];
+    _mlQueueIdx=0;_mlQueueMi=mi;
+    _mlLoading=true;
+    _mlPlayQueue(mi);
     return;
   }
 
-  // ── Fetch com AbortController para cancelar se o aluno clicar de novo ──
-  _mlAbort=new AbortController();
-  var reqMi=mi; // captura o mi desta requisição
-  fetch(ttsUrl,{
-    method:'POST',
-    signal:_mlAbort.signal,
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({text:txt,voice:window.MA_TTS_VOICE||'onyx'})
-  })
-  .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.blob();})
-  .then(function(blob){
-    // Se o módulo mudou enquanto carregava → descarta
-    if(_mlModMi!==reqMi){URL.revokeObjectURL(URL.createObjectURL(blob));return;}
+  var blocos=_mlExtrairBlocos(topicoAberto.content,topicoAberto.name);
+  if(!blocos.length){showToast('Sem conteúdo para narrar','warn');return;}
+  _mlQueue=blocos;_mlQueueIdx=0;_mlQueueMi=mi;
+
+  // Verifica se já tem pré-cache do 1º bloco
+  var cacheKey=mi+'_'+topicoAbertoIdx;
+  var cached=_mlPreCache[cacheKey];
+  if(cached&&cached!=='loading'){
+    // ✅ INSTANTÂNEO — usa o cache
+    _mlPreCache[cacheKey]=null; // consome o cache
     _mlLoading=false;
-    _mlAbort=null;
-    var url=URL.createObjectURL(blob);
-    _mlAudioEl=new Audio(url);
-    _mlAudioEl.playbackRate=spd;
-    _mlAudioEl.play();
-    if(btn){btn.classList.remove('loading');btn.classList.add('playing');}
-    if(st)st.textContent='🎙️ Narrando com IA...';
-    _mlAudioEl.onended=function(){
-      if(btn)btn.classList.remove('playing');
-      if(st)st.textContent='Concluído';
-      URL.revokeObjectURL(url);_mlAudioEl=null;
-    };
-    _mlAudioEl.onerror=function(){
-      if(btn)btn.classList.remove('playing','loading');
-      if(st)st.textContent='Erro no áudio';
-      _mlAudioEl=null;
-    };
-  })
-  .catch(function(e){
-    if(e.name==='AbortError')return; // cancelado intencionalmente — ignora
-    console.error('TTS erro:',e);
-    _mlLoading=false;_mlAbort=null;
-    if(btn)btn.classList.remove('loading','playing');
-    // Fallback voz navegador
-    if(st)st.textContent='Voz do navegador...';
-    try{window.speechSynthesis.cancel();}catch(ex){}
-    var utt2=new SpeechSynthesisUtterance(txt);
-    utt2.lang='pt-BR';utt2.rate=spd;
-    utt2.onend=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluído';};
-    window.speechSynthesis.speak(utt2);
+    _mlSetBtn(mi,'playing');
+    _mlPlayUrl(cached,spd,function(){
+      URL.revokeObjectURL(cached);
+      _mlQueueIdx=1; // pula o 1º bloco (já tocou)
+      _mlPlayQueue(mi);
+    },function(){_mlSetBtn(mi,'idle');});
+  } else {
+    // Sem cache → carrega normalmente
+    _mlLoading=true;
+    _mlPlayQueue(mi);
+  }
+}
+
+/* ── CLIQUE EM PARÁGRAFO/TÍTULO — ouve a partir dali ── */
+function mlClickParagraph(mi,ti,elIndex){
+  var mod=MODS[mi];if(!mod||!mod.topics[ti])return;
+  var t=mod.topics[ti];
+  var blocos=_mlExtrairBlocos(t.content,t.name);
+  if(!blocos.length)return;
+  // Para o que está tocando
+  _mlStopTudo(false);
+  _mlSetBtn(_mlModMi,'idle');
+  _mlModMi=mi;
+  // Começa da posição clicada
+  _mlQueue=blocos;
+  _mlQueueIdx=Math.max(0,Math.min(elIndex,blocos.length-1));
+  _mlQueueMi=mi;
+  _mlLoading=true;
+  _mlPlayQueue(mi);
+  // Visual: botão ativo
+  _mlSetBtn(mi,'loading');
+}
+
+/* ── Registra cliques em parágrafos/títulos do tópico ── */
+function _mlBindTopicClicks(mi,ti){
+  var content=document.getElementById('ml_content_'+mi+'_'+ti);
+  if(!content||content.dataset.mlBound)return;
+  content.dataset.mlBound='1';
+  var mod=MODS[mi];if(!mod||!mod.topics[ti])return;
+  var t=mod.topics[ti];
+  var blocos=_mlExtrairBlocos(t.content,t.name);
+  // Mapeia cada elemento clicável ao índice do bloco correspondente
+  var els=content.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li');
+  els.forEach(function(el,idx){
+    // Encontra o índice do bloco correspondente (pula o prefixo)
+    var blocoIdx=idx+1; // +1 porque o prefixo ocupa o índice 0
+    if(blocoIdx>=blocos.length)return;
+    el.style.cursor='pointer';
+    el.title='Ouvir a partir daqui';
+    el.addEventListener('click',function(e){
+      // Só ativa se o áudio estiver tocando este módulo ou inativo
+      e.stopPropagation();
+      mlClickParagraph(mi,ti,blocoIdx);
+    });
   });
 }
 
 function mlChangeModSpeed(mi,val){
-  if(_mlAudioEl&&_mlModMi===mi)_mlAudioEl.playbackRate=parseFloat(val)||1;
+  var spd=parseFloat(val)||1;
+  if(_mlAudioEl&&_mlModMi===mi)_mlAudioEl.playbackRate=spd;
 }
 /* ── TOGGLE QUIZ ── */
 function mlToggleQuiz(mi){
