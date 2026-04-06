@@ -123,10 +123,6 @@
 <!-- BOTÃO MODO FOCO -->
 <button class="focus-mode-btn" id="focusModeBtn" onclick="toggleFocusMode()" title="Modo Foco">⛶</button>
 
-<!-- PUXADOR LATERAL — externo, sempre visível no desktop -->
-<div class="sb-puller" id="sbPuller" onclick="toggleSidebar()" title="Mostrar/ocultar menu lateral">
-  <svg viewBox="0 0 10 10"><polyline points="7 2 3 5 7 8"/></svg>
-</div>
 
 <!-- LAYOUT PRINCIPAL -->
 <div class="app-layout">
@@ -789,11 +785,9 @@ function openSidebar(){
   _sidebarOpen=true;
   var sb=document.getElementById('courseSidebar');
   var ov=document.getElementById('sidebarOverlay');
-  var puller=document.getElementById('sbPuller');
   var main=document.getElementById('courseMain');
   if(sb)sb.classList.add('sb-open');
   if(ov)ov.classList.add('show');
-  if(puller)puller.classList.add('sb-open');
   if(main&&window.innerWidth>768)main.style.marginLeft='var(--sidebar-w)';
   localStorage.setItem('ma_sidebar','1');
 }
@@ -802,11 +796,9 @@ function closeSidebar(){
   _sidebarOpen=false;
   var sb=document.getElementById('courseSidebar');
   var ov=document.getElementById('sidebarOverlay');
-  var puller=document.getElementById('sbPuller');
   var main=document.getElementById('courseMain');
   if(sb)sb.classList.remove('sb-open');
   if(ov)ov.classList.remove('show');
-  if(puller)puller.classList.remove('sb-open');
   if(main)main.style.marginLeft='0';
   localStorage.setItem('ma_sidebar','0');
 }
@@ -928,15 +920,8 @@ function toggleSbMod(mi,canAcc){if(!canAcc){openLockScreen();return;}var hdr=doc
 function filterModules(val){_filterStr=val.trim().toLowerCase();buildSidebar();if(_filterStr){document.querySelectorAll('.sb-topics').forEach(el=>el.classList.add('open'));document.querySelectorAll('.sb-mod-hdr').forEach(el=>el.classList.add('open'));}}
 
 /* Controle do puller — só aparece em aula (não na capa) */
-function _showPuller(){
-  var p=document.getElementById('sbPuller');
-  // No mobile não mostra puxador (usa o botão ☰ da topbar)
-  if(p&&window.innerWidth>=769)p.style.display='flex';
-}
-function _hidePuller(){
-  var p=document.getElementById('sbPuller');
-  if(p)p.style.display='none';
-}
+function _showPuller(){}
+function _hidePuller(){}
 
 /* ═══ MOSTRAR ABAS / CAPA ═══ */
 function showCoverIfNeeded(){
@@ -2332,25 +2317,30 @@ function buildModuleCarousel(){
   if(!section||!MODS||!MODS.length)return;
   var prog=gProg();
   var unlocked=isUnlocked();
-  var html='<div class="trail-map">';
+  var html='<div class="mod-scroll-track">';
   MODS.forEach(function(mod,mi){
     var canAcc=unlocked||mi<COURSE.freeModules;
     var doneT=mod.topics.filter(function(t){return prog[mod.id+'_'+t.id];}).length;
     var pct=mod.topics.length?Math.round(doneT/mod.topics.length*100):0;
     var isDone=pct===100;
     var isActive=!isDone&&doneT>0;
-    var isLocked=!canAcc;
-    var stateClass=isDone?'trail-done':isActive?'trail-active':isLocked?'trail-locked':'trail-idle';
-    var icon=isDone?'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':isLocked?'🔒':(mi+1);
-    // Linha conectora (exceto no primeiro)
-    if(mi>0)html+='<div class="trail-connector'+(isDone||MODS[mi-1]&&prog['mod_done_'+(mi-1)]?' trail-conn-done':'')+'"></div>';
-    html+='<div class="trail-node '+stateClass+'" onclick="'+(canAcc?'openModModal('+mi+')':'openLockScreen()')+'" title="'+mod.name+'">';
-    html+='<div class="trail-circle">'+icon+'</div>';
-    html+='<div class="trail-label">';
-    html+='<span class="trail-num">Mod.'+(mi+1)+'</span>';
-    html+='<span class="trail-name">'+mod.name+'</span>';
-    if(isActive&&pct>0)html+='<div class="trail-prog-bar"><div class="trail-prog-fill" style="width:'+pct+'%"></div></div>';
+    var cls='mod-scroll-card'+(isDone?' msc-done':isActive?' msc-active':canAcc?'':' msc-locked');
+    html+='<div class="'+cls+'" onclick="'+(canAcc?'selectTopic('+mi+',0,true)':'openLockScreen()')+'" title="'+mod.name+'">';
+    // Numero do modulo
+    html+='<div class="msc-num">';
+    if(isDone) html+='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    else if(!canAcc) html+='🔒';
+    else html+=(mi+1);
     html+='</div>';
+    // Info
+    html+='<div class="msc-info">';
+    html+='<span class="msc-label">Mod.'+(mi+1)+'</span>';
+    html+='<span class="msc-name">'+mod.name+'</span>';
+    html+='<span class="msc-meta">'+mod.topics.length+' aulas</span>';
+    html+='</div>';
+    // Progresso
+    if(pct>0&&!isDone) html+='<div class="msc-prog"><div class="msc-prog-fill" style="width:'+pct+'%"></div></div>';
+    if(isDone) html+='<div class="msc-done-bar"></div>';
     html+='</div>';
   });
   html+='</div>';
