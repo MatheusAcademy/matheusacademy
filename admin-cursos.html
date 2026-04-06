@@ -115,6 +115,18 @@ textarea{resize:vertical;min-height:54px}
 .ecs{display:flex;flex-wrap:wrap;gap:4px}
 .ec{background:var(--card);border:1px solid var(--brd);border-radius:5px;padding:2px 7px;font-size:10px;font-family:var(--mono);color:var(--t3)}
 @keyframes sp{to{transform:rotate(360deg)}}
+/* ── UPLOAD DE CAPA ── */
+.capa-upload-area{border:2px dashed var(--brd);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:.2s;position:relative;background:var(--card);margin-bottom:10px}
+.capa-upload-area:hover,.capa-upload-area.drag{border-color:var(--acc);background:rgba(59,130,246,.04)}
+.capa-upload-area.tem-img{border-color:var(--grn);border-style:solid;background:rgba(34,197,94,.04)}
+.capa-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.capa-preview{width:80px;height:107px;object-fit:cover;border-radius:8px;border:2px solid var(--grn);display:none;margin:0 auto 6px}
+.capa-upload-area.tem-img .capa-preview{display:block}
+.capa-upload-txt{font-size:11px;color:var(--t2);font-weight:600}
+.capa-upload-area.tem-img .capa-upload-txt{color:var(--grn)}
+.capa-nome{font-size:10px;color:var(--grn);font-family:var(--mono);margin-top:3px;display:none}
+.capa-upload-area.tem-img .capa-nome{display:block}
+
 @keyframes pu{0%,100%{opacity:1}50%{opacity:.4}}
 @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media(max-width:580px){.or,.row,.mg{grid-template-columns:1fr;flex-direction:column}.oc{flex-direction:column}.ar{flex-direction:column;align-items:flex-start}header{padding:10px 12px}main{padding:18px 10px 60px}.tabs{flex-wrap:wrap}}
@@ -436,6 +448,15 @@ textarea{resize:vertical;min-height:54px}
             <div style="font-size:9px;color:#fcd34d;margin-top:3px">⚠️ Deve ser idêntico ao do HTML</div>
           </div>
           <div class="mf"><label>Cor hex</label><input type="text" id="mColor" placeholder="#3b82f6"></div>
+          <div class="mf" style="grid-column:1/-1">
+            <label>🖼️ Capa do Curso (PNG/JPG — proporção 3:4)</label>
+            <div class="capa-upload-area" id="capaArea" ondragover="capaDrag(event,'capaArea',1)" ondragleave="capaDrag(event,'capaArea',0)" ondrop="capaDrop(event,'capaArea','capaFile','capaPreview','capaNome','capaUploadTxt')">
+              <input type="file" id="capaFile" accept="image/png,image/jpeg,image/jpg" onchange="capaChosen(this,'capaArea','capaPreview','capaNome','capaUploadTxt')">
+              <img class="capa-preview" id="capaPreview" src="" alt="preview">
+              <div class="capa-upload-txt" id="capaUploadTxt">📸 Arraste a capa aqui ou clique<br><span style="font-size:9px;color:var(--t3)">PNG ou JPG · proporção 3:4 recomendada (ex: 300×400px)</span></div>
+              <div class="capa-nome" id="capaNome"></div>
+            </div>
+          </div>
           <div class="mf"><label>storagePrefix</label><input type="text" id="mPrefix" placeholder="ss_"></div>
           <div class="mf"><label>ak (auth key)</label><input type="text" id="mAk" placeholder="ss_auth"></div>
         </div>
@@ -505,6 +526,15 @@ textarea{resize:vertical;min-height:54px}
         <div class="mf"><label>Quizzes</label><input type="number" id="nQuizzes" placeholder="9" min="0"></div>
         <div class="mf"><label>Salt *</label><input type="text" id="nSalt" placeholder="SS_HENRY_2026_MASTER"><div style="font-size:9px;color:#fcd34d;margin-top:3px">⚠️ Idêntico ao do HTML</div></div>
         <div class="mf"><label>Cor hex</label><input type="text" id="nColor" placeholder="#dc2626"></div>
+        <div class="mf" style="grid-column:1/-1">
+          <label>🖼️ Capa do Curso (PNG/JPG — proporção 3:4)</label>
+          <div class="capa-upload-area" id="capaAreaN" ondragover="capaDrag(event,'capaAreaN',1)" ondragleave="capaDrag(event,'capaAreaN',0)" ondrop="capaDrop(event,'capaAreaN','capaFileN','capaPreviewN','capaNomeN','capaUploadTxtN')">
+            <input type="file" id="capaFileN" accept="image/png,image/jpeg,image/jpg" onchange="capaChosen(this,'capaAreaN','capaPreviewN','capaNomeN','capaUploadTxtN')">
+            <img class="capa-preview" id="capaPreviewN" src="" alt="preview">
+            <div class="capa-upload-txt" id="capaUploadTxtN">📸 Arraste a capa aqui ou clique<br><span style="font-size:9px;color:var(--t3)">PNG ou JPG · proporção 3:4 recomendada</span></div>
+            <div class="capa-nome" id="capaNomeN"></div>
+          </div>
+        </div>
         <div class="mf"><label>storagePrefix</label><input type="text" id="nPrefix" placeholder="ss_"></div>
         <div class="mf"><label>ak</label><input type="text" id="nAk" placeholder="ss_auth"></div>
       </div>
@@ -586,6 +616,15 @@ textarea{resize:vertical;min-height:54px}
         <div class="mf"><label>Auth Key (ak)</label><input type="text" id="ed-ak"></div>
         <div class="mf"><label>Storage Prefix</label><input type="text" id="ed-prefix"></div>
         <div class="mf"><label>Cor hex</label><input type="text" id="ed-color" placeholder="#3b82f6"></div>
+        <div class="mf" style="grid-column:1/-1">
+          <label>🖼️ Substituir Capa (PNG/JPG — deixe vazio para manter a atual)</label>
+          <div class="capa-upload-area" id="capaAreaE" ondragover="capaDrag(event,'capaAreaE',1)" ondragleave="capaDrag(event,'capaAreaE',0)" ondrop="capaDrop(event,'capaAreaE','capaFileE','capaPreviewE','capaNomeE','capaUploadTxtE')">
+            <input type="file" id="capaFileE" accept="image/png,image/jpeg,image/jpg" onchange="capaChosen(this,'capaAreaE','capaPreviewE','capaNomeE','capaUploadTxtE')">
+            <img class="capa-preview" id="capaPreviewE" src="" alt="preview">
+            <div class="capa-upload-txt" id="capaUploadTxtE">📸 Arraste a nova capa aqui ou clique<br><span style="font-size:9px;color:var(--t3)">Opcional — só envie se quiser trocar a capa atual</span></div>
+            <div class="capa-nome" id="capaNomeE"></div>
+          </div>
+        </div>
         <div class="mf" style="grid-column:1/-1"><label>Descrição Longa / Ementa</label><textarea id="ed-longdesc" rows="3" placeholder="O que o aluno vai aprender..."></textarea></div>
         <div class="mf"><label>Nível</label>
           <select id="ed-nivel">
@@ -1502,6 +1541,7 @@ function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
 function buildBlock(m){
   var fr=m.free?"\n    free: true,":'';
   return "  {\n"
+    +"    coverImg: '"+esc(m.coverImg||('assets/capas/'+m.id+'.png'))+"',\n"
     +"    id: '"+esc(m.id)+"',\n"
     +"    name: '"+esc(m.name)+"',\n"
     +"    desc: '"+esc(m.desc)+"',\n"
@@ -1566,6 +1606,7 @@ function getMeta(pf){
     quizzes:parseInt(el(pf+'Quizzes').value)||0,
     salt:el(pf+'Salt').value.trim(),
     ak:el(pf+'Ak').value.trim(),
+    coverImg:'assets/capas/'+el(pf+'Id').value.trim()+'.png',
     storagePrefix:el(pf+'Prefix').value.trim(),
     icon:el(pf+'Icon').value.trim()||'🎓',
     color:el(pf+'Color').value.trim()||'#3b82f6',
@@ -1632,6 +1673,8 @@ async function registerInCourses(meta, rId, sfx){
 
 // PUBLICAR (upload + registro)
 async function publish(){
+  // Upload da capa se selecionada
+  var capaFile = _capaFiles['capaArea'];
   if(!_fc){alert('Selecione um arquivo HTML.');return;}
   var c=g(); if(!c.t){alert('Configure e teste o token primeiro.');return;}
   var meta=getMeta('m');
@@ -1657,6 +1700,16 @@ async function publish(){
     btn.disabled=false; setProg(false,'',0,''); return;
   }
 
+  // 2.5 Upload da capa se selecionada
+  if (capaFile && meta.id) {
+    setProg(true,'Subindo capa do curso...',60,'');
+    try {
+      meta.coverImg = await uploadCapa(capaFile, meta.id);
+    } catch(e) {
+      console.warn('Erro ao subir capa (ignorado):', e);
+    }
+  }
+
   setProg(true,'Registrando no courses.js...',70,'');
 
   // 3. Registrar
@@ -1668,9 +1721,19 @@ async function publish(){
 
 // PUBLICAR MANUAL
 async function pubManual(){
+  var capaFileN = _capaFiles['capaAreaN'];
   var c=g(); if(!c.t){alert('Configure e teste o token primeiro.');return;}
   var meta=getMeta('n');
   if(!validate(meta,'rMn'))return;
+  // Upload da capa se selecionada
+  if (capaFileN && meta.id) {
+    setProg(true,'Subindo capa...',20,'2');
+    try {
+      meta.coverImg = await uploadCapa(capaFileN, meta.id);
+    } catch(e) {
+      console.warn('Erro ao subir capa (ignorado):', e);
+    }
+  }
   setProg(true,'Registrando...',30,'2');
   var ok=await registerInCourses(meta,'rMn','2');
   setProg(false,'',0,'2');
@@ -3071,6 +3134,85 @@ function calcTimeStats(){
   if(!today.totalSec&&!totalSec)html='<div style="color:var(--t3);font-size:11px;padding:8px">Nenhum dado ainda. O aluno precisa acessar o portal com o <b>time-tracker.js</b> instalado.</div>';
   div.innerHTML=html;
 }
+
+/* ══════════════════════════════════════════════
+   UPLOAD DE CAPA — funções compartilhadas
+   ══════════════════════════════════════════════ */
+var _capaFiles = {}; // armazena File por área: {capaArea: File, capaAreaN: File, capaAreaE: File}
+
+function capaChosen(input, areaId, previewId, nomeId, txtId) {
+  var file = input.files[0];
+  if (!file) return;
+  _capaFiles[areaId] = file;
+  var area = el(areaId);
+  var preview = el(previewId);
+  var nome = el(nomeId);
+  var txt = el(txtId);
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    preview.src = e.target.result;
+    area.classList.add('tem-img');
+    nome.textContent = file.name + ' (' + (file.size/1024).toFixed(0) + 'KB)';
+    txt.innerHTML = '✅ Capa selecionada!';
+  };
+  reader.readAsDataURL(file);
+}
+
+function capaDrag(e, areaId, on) {
+  e.preventDefault();
+  el(areaId).classList.toggle('drag', !!on);
+}
+
+function capaDrop(e, areaId, fileId, previewId, nomeId, txtId) {
+  e.preventDefault();
+  el(areaId).classList.remove('drag');
+  var file = e.dataTransfer.files[0];
+  if (!file || !file.type.startsWith('image/')) return;
+  _capaFiles[areaId] = file;
+  var area = el(areaId);
+  var preview = el(previewId);
+  var nome = el(nomeId);
+  var txt = el(txtId);
+  var reader = new FileReader();
+  reader.onload = function(e2) {
+    preview.src = e2.target.result;
+    area.classList.add('tem-img');
+    nome.textContent = file.name + ' (' + (file.size/1024).toFixed(0) + 'KB)';
+    txt.innerHTML = '✅ Capa selecionada!';
+  };
+  reader.readAsDataURL(file);
+}
+
+// Sobe a capa para assets/capas/{id}.png no GitHub
+async function uploadCapa(file, courseId) {
+  if (!file) return null;
+  var ext = file.name.split('.').pop().toLowerCase();
+  var path = 'assets/capas/' + courseId + '.' + ext;
+  var reader = new FileReader();
+  var b64 = await new Promise(function(res) {
+    reader.onload = function(e) { res(e.target.result.split(',')[1]); };
+    reader.readAsDataURL(file);
+  });
+  // Verificar se já existe (para pegar SHA)
+  var cfg = getConfig();
+  var sha = null;
+  try {
+    var chk = await fetch('https://api.github.com/repos/'+cfg.owner+'/'+cfg.repo+'/contents/'+path,
+      {headers:{'Authorization':'token '+cfg.token,'Accept':'application/vnd.github.v3+json'}});
+    if (chk.ok) { var d = await chk.json(); sha = d.sha; }
+  } catch(e) {}
+  // Upload
+  var body = {message: 'capa: ' + courseId, content: b64};
+  if (sha) body.sha = sha;
+  var r = await fetch('https://api.github.com/repos/'+cfg.owner+'/'+cfg.repo+'/contents/'+path, {
+    method: 'PUT',
+    headers: {'Authorization':'token '+cfg.token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error('Erro ao subir capa: ' + r.status);
+  return 'assets/capas/' + courseId + '.' + ext;
+}
+
 </script>
 </body>
 </html>
