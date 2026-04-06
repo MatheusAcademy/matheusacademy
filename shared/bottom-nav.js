@@ -31,8 +31,10 @@
       background: rgba(4,4,10,.99);
       border-top: 1px solid rgba(255,255,255,.07);
       display: flex; align-items: center; justify-content: space-around;
-      z-index: 9990; padding: 0 8px;
-      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 9990;
+      /* Safe-area: respeita bordas laterais e inferior do iPhone */
+      padding: 0 max(4px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(4px, env(safe-area-inset-left));
+      box-sizing: border-box;
     }
     .bottom-nav::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
