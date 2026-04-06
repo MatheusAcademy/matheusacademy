@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>O Mundo Está Mudando — Matheus Academy</title>
+<link rel="stylesheet" href="shared/course.css">
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
+<script src="firebase-config.js"></script>
+
+<!-- ══════════════════════════════════════
+     SCRIPT 1 — COURSE
+     ══════════════════════════════════════ -->
+<script>
+var COURSE = {
+  id:        "mmt",
+  name:      "O Mundo Está Mudando: Entenda as 3 Forças que Estão Redefinindo o Futuro Global",
+  shortName: "Mundo em Transformação",
+  ak:        "mmt_auth",
+  salt:      "MMT_HENRY_2026_MASTER",
+  courseKey: "mmt",
+  prefix:    "mmt_",
+  color:     "#3b82f6",
+  glow:      "rgba(59,130,246,.35)",
+  cat:       "Geopolítica",
+  desc:      "Geopolítica, Economia e Tecnologia: o novo jogo de poder mundial explicado de forma clara e prática para quem quer entender o futuro antes que ele chegue.",
+  modules:   3,
+  topics:    9,
+  hours:     3,
+  quizzes:   9
+};
+</script>
+
+<!-- ══════════════════════════════════════
+     SCRIPT 2 — MODS
+     ══════════════════════════════════════ -->
+<script>
+var MODS = [
+
+/* ════════════════════════════════════════════════════════════════
+   MÓDULO 1 — Geopolítica: O Tabuleiro que Governa o Mundo
+   ════════════════════════════════════════════════════════════════ */
+{
+  id:1, title:"Geopolítica: O Tabuleiro que Governa o Mundo", free:true,
+  topics:[
+    {
+      id:"1-1",
+      title:"A ordem mundial está se desfazendo — e isso afeta você diretamente",
+      content:`<h3>🌍 O mundo que você conhece está acabando</h3>
+<p>Desde o fim da Segunda Guerra Mundial, em 1945, o mundo funcionou segundo uma lógica clara e relativamente estável: os Estados Unidos eram a potência dominante, o dólar era a moeda do planeta, as instituições internacionais — ONU, FMI, Banco Mundial, OMC — serviam de árbitros dos conflitos, e o comércio global crescia sem parar, gerando prosperidade sem precedentes na história humana.</p>
+<p>Essa arquitetura produziu 80 anos de paz entre as grandes potências. Não foi perfeita — guerras locais aconteceram, injustiças foram cometidas, crises econômicas vieram e foram. Mas o marco geral segurou. Agora esse marco está se quebrando — em câmera lenta, mas de forma irreversível.</p>
+<h3>📡 Os sinais que a maioria ignorou</h3>
+<p>O Brexit em 2016 foi o primeiro grande sinal: uma das maiores economias do mundo decidiu abandonar o maior bloco comercial do planeta, apostando na soberania nacional acima da integração global. No mesmo ano, a eleição de Donald Trump nos EUA sinalizou que a população americana estava cansada de arcar com os custos da liderança global. Em 2020, a pandemia de COVID-19 exposou a fragilidade das cadeias de suprimentos globais — quando a China fechou, o mundo inteiro sentiu falta de tudo, de máscaras a chips. Em 2022, a invasão da Ucrânia pela Rússia quebrou o último tabu: a guerra voltou à Europa, e o sistema de sanções e contra-sanções que se seguiu mostrou que a economia global estava sendo deliberadamente usada como arma.</p>
+<p>Esses não são eventos isolados. São todos sintomas do mesmo fenômeno: a dissolução da ordem mundial que você cresceu achando que era permanente.</p>
+<h3>🔄 O que está mudando de verdade — as 3 forças</h3>
+<p>Três transformações simultâneas e profundamente interligadas estão redesenhando o mapa do poder global neste momento:</p>
+<ul>
+<li><strong>Geopolítica:</strong> o fim da era de unipolaridade americana e o retorno das grandes potências rivais — China, Rússia, Índia, e até blocos regionais como o Golfo Pérsico</li>
+<li><strong>Economia:</strong> a desglobalização silenciosa, a ascensão do Sul Global, a crise do modelo neoliberal e a busca por novas moedas de reserva</li>
+<li><strong>Tecnologia:</strong> a inteligência artificial, os semicondutores, a vigilância digital e a disputa pelo controle da infraestrutura do século XXI</li>
+</ul>
+<p>Essas três forças não operam em separado — elas se retroalimentam e se amplificam. Uma mudança na geopolítica afeta diretamente a economia; uma ruptura tecnológica altera o equilíbrio de poder militar; uma crise econômica força realinhamentos geopolíticos inesperados. Compreender cada uma — e sobretudo como interagem — é a habilidade estratégica mais valiosa do século XXI.</p>
+<h3>💡 Por que isso não é "coisa de governo"</h3>
+<p>Você pode estar pensando: isso é assunto de diplomatas, de grandes empresas, de presidentes. Errado. As mudanças que estão acontecendo no tabuleiro global chegam diretamente à sua vida: no preço dos alimentos, no valor do dólar frente ao real, na disponibilidade de empregos, nas oportunidades de negócio, na segurança da sua poupança e no tipo de tecnologia que você vai usar daqui a 5 anos.</p>
+<blockquote>💡 <strong>Insight estratégico:</strong> As maiores fortunas da história foram construídas por pessoas que entenderam as grandes transições antes da maioria — não porque tinham sorte, mas porque tinham informação e sabiam interpretá-la. Este curso é sobre desenvolver exatamente essa capacidade de leitura do mundo.</blockquote>`,
+      quiz:{q:"Qual evento de 2020 exposou a fragilidade das cadeias de suprimentos globais e a dependência de um único país?",opts:["A eleição de Joe Biden nos EUA","A pandemia de COVID-19, quando o fechamento da China causou falta de insumos no mundo inteiro","O acordo de paz entre Israel e os Emirados Árabes","A crise climática nas cadeias produtivas europeias"],ans:1},
+      flashcard:{front:"Quais são as 3 forças simultâneas que estão redesenhando o mapa do poder global?",back:"1. Geopolítica — fim da unipolaridade americana. 2. Economia — desglobalização e ascensão do Sul Global. 3. Tecnologia — IA, semicondutores e disputa pelo controle digital."}
+    },
+    {
+      id:"1-2",
+      title:"China vs. EUA: a rivalidade que define o século XXI",
+      content:`<h3>🐉 O maior fenômeno econômico da história humana</h3>
+<p>Em 1978, a China era um país pobre, fechado e devastado pelas políticas do maoísmo. Seu PIB era menor que o do Brasil. Em 2024, é a segunda maior economia do mundo, a maior manufatureira e exportadora do planeta, detém as maiores reservas cambiais da história e está em posição de ultrapassar os EUA como maior economia global ainda nesta década — dependendo de como se mede.</p>
+<p>Esse salto não tem precedente na história. Nenhum país cresceu tão rápido, por tanto tempo, em tão grande escala. Entre 1978 e 2018, a China cresceu em média 9,5% ao ano — sua economia dobrava de tamanho a cada 7-8 anos. Nesse processo, tirou 800 milhões de pessoas da pobreza extrema, o maior feito de redução da pobreza na história documentada da humanidade.</p>
+<h3>⚔️ De parceiro a rival estratégico</h3>
+<p>Durante os anos 1990 e 2000, o Ocidente apostou numa teoria: integrando a China ao capitalismo global, ela gradualmente se democratizaria e se tornaria um parceiro responsável da ordem internacional. Essa aposta fracassou. Sob Xi Jinping — no poder desde 2012 e líder vitalício desde 2018 — a China tornou-se mais autoritária internamente e mais assertiva externamente, reivindicando o Mar do Sul da China, pressionando Taiwan, reprimindo Hong Kong e construindo a maior rede de infraestrutura e influência geopolítica que o mundo já viu: a Nova Rota da Seda, presente em mais de 140 países.</p>
+<ul>
+<li><strong>Made in China 2025:</strong> plano declarado para dominar as 10 indústrias tecnológicas do futuro</li>
+<li><strong>Nova Rota da Seda (BRI):</strong> US$ 1 trilhão em infraestrutura em 140+ países — portos, ferrovias, fibra ótica</li>
+<li><strong>Expansão militar:</strong> segundo maior orçamento de defesa do mundo, crescendo 7% ao ano</li>
+<li><strong>Tecnologia:</strong> líder global em IA aplicada, 5G, energia solar, veículos elétricos e vigilância digital</li>
+</ul>
+<h3>🦅 Os EUA: ainda dominantes, mas não mais hegemônicos</h3>
+<p>Cuidado com o erro oposto: os EUA estão longe de serem uma potência em colapso. Ainda possuem o maior PIB nominal do mundo (US$ 27 trilhões), as melhores universidades do planeta, o dólar como moeda de reserva global, a OTAN como sistema de alianças sem precedente histórico, e as empresas de tecnologia mais valiosas da Terra — Apple, Microsoft, Google, Nvidia, Amazon, Meta. Mas a capacidade americana de impor sua vontade unilateralmente diminuiu drasticamente, e as fraturas internas — polarização política, dívida de US$ 35 trilhões, desindustrialização da classe média — enfraquecem a posição estratégica americana de dentro para fora.</p>
+<blockquote>⚠️ <strong>O paradoxo central:</strong> China e EUA trocam mais de US$ 600 bilhões em comércio por ano — são os maiores parceiros comerciais um do outro, ao mesmo tempo em que são rivais estratégicos que competem em tecnologia, militarmente e por influência geopolítica. Essa interdependência-rivalidade é o fenômeno mais perigoso e mais complexo da política mundial atual.</blockquote>
+<h3>🇧🇷 O Brasil no cruzamento do fogo</h3>
+<p>O Brasil é o maior parceiro comercial da China na América Latina — a China compra nosso agro, minério e petróleo. Mas os EUA controlam o sistema financeiro global que o Brasil usa, são nossos aliados de segurança tradicionais e o principal destino do nosso capital intelectual. Escolher um lado seria um erro estratégico grave. Navegar com autonomia entre os dois é a decisão mais importante da política externa brasileira para os próximos 20 anos — e exige compreender profundamente a dinâmica dessa rivalidade.</p>`,
+      quiz:{q:"Qual é o paradoxo central da rivalidade EUA-China que a torna mais complexa que a Guerra Fria com a URSS?",opts:["A China tem armas nucleares mais avançadas do que a URSS tinha","China e EUA são rivais estratégicos e ao mesmo tempo os maiores parceiros comerciais um do outro","A rivalidade envolve espaço sideral e não apenas território terrestre","A China tem mais aliados formais do que a URSS jamais teve"],ans:1},
+      flashcard:{front:"O que foi a teoria do 'parceiro responsável' em relação à China e por que fracassou?",back:"A aposta ocidental de que integrar a China ao capitalismo global a faria democratizar. Fracassou porque sob Xi Jinping a China ficou mais autoritária internamente e mais assertiva externamente."}
+    },
+    {
+      id:"1-3",
+      title:"Os novos blocos de poder: BRICS, OTAN e o Sul Global",
+      content:`<h3>🌐 O mundo está se reorganizando em blocos</h3>
+<p>Durante a era unipolar americana, a lógica era simples: ou você estava alinhado com o Ocidente, ou era considerado adversário. Esse modelo binário está sendo substituído por algo muito mais complexo e fluido: a emergência de múltiplos polos de poder, com países que se recusam a escolher lados e negociam com todos ao mesmo tempo. Esse fenômeno tem um nome: <strong>multipolaridade</strong> — e está transformando completamente as regras do jogo geopolítico.</p>
+<h3>🧱 O BRICS: de clube econômico a desafiante geopolítico</h3>
+<p>O BRICS foi criado em 2009 como uma ideia de economistas do Goldman Sachs para agrupar as maiores economias emergentes: Brasil, Rússia, Índia, China e África do Sul. No começo era mais símbolo do que substância. Mas em 2023-2024, o BRICS expandiu dramaticamente: adicionou Arábia Saudita, Emirados Árabes, Irã, Etiópia e Egito. Em 2025, mais países foram admitidos ou pediram adesão. O BRICS hoje representa mais de 40% da população mundial e cerca de 30% do PIB global.</p>
+<p>O objetivo declarado mais ambicioso é criar uma alternativa ao dólar para transações internacionais entre membros — o que, se concretizado, seria o maior desafio à hegemonia financeira americana desde Bretton Woods em 1944.</p>
+<h3>🛡️ A OTAN: velha aliança, novo propósito</h3>
+<p>Criada em 1949 para conter a URSS, a OTAN parecia sem propósito após a queda do comunismo em 1991. A invasão da Ucrânia em 2022 ressuscitou a aliança com energia renovada. Países que eram neutros por décadas — Finlândia e Suécia — pediram adesão. O orçamento de defesa europeu aumentou dramaticamente. A OTAN hoje tem 32 membros e discute expandir sua influência para o Indo-Pacífico.</p>
+<h3>🌍 O Sul Global: recusando-se a escolher lados</h3>
+<p>O conceito de "Sul Global" — países da África, América Latina, Ásia e Oriente Médio que não são nem o Ocidente nem a China/Rússia — está ganhando força política real. A Índia de Modi é o exemplo mais sofisticado: mantém relações com EUA, Rússia e China simultaneamente, compra armas de todos, negocia com todos e recusa-se a ser vassalo de qualquer potência. Brasil, Turquia, Arábia Saudita e Indonésia seguem lógica semelhante.</p>
+<blockquote>💡 <strong>A nova regra do jogo:</strong> No mundo multipolar, a vantagem não é ter o aliado mais poderoso — é ter a maior autonomia estratégica. Países que conseguem negociar com múltiplos polos sem depender exclusivamente de nenhum têm mais poder do que aqueles completamente alinhados a uma única potência.</blockquote>
+<h3>📊 Como gerar valor com esse conhecimento</h3>
+<p>Entender a reorganização em blocos abre oportunidades concretas: identificar mercados emergentes antes da maioria, entender quais commodities e setores serão valorizados em cada cenário geopolítico, posicionar negócios para servir múltiplos mercados em vez de depender de um único, e compreender como políticas públicas brasileiras serão influenciadas por esses realinhamentos — o que afeta desde câmbio até regulação setorial.</p>
+<h3>🔮 Preparação para o futuro</h3>
+<p>O mundo multipolar que está emergindo não é necessariamente mais violento — mas é significativamente mais imprevisível. Para prosperar nele, você precisa desenvolver a capacidade de ler cenários múltiplos, questionar narrativas únicas e entender que a "verdade" geopolítica depende sempre do ponto de vista de quem a conta. Informação diversificada de fontes múltiplas é a vacina contra a manipulação.</p>
+<h3>⚖️ Moral do módulo</h3>
+<p>Geopolítica não é assunto de elite — é o contexto invisível que molda cada decisão econômica, cada política pública e cada oportunidade de negócio. Quem entende o tabuleiro antes que as peças se movam tem vantagem estratégica real. E o tabuleiro nunca esteve se movendo tão rápido quanto agora.</p>`,
+      quiz:{q:"O que distingue a estratégia geopolítica da Índia no mundo multipolar atual?",opts:["A Índia escolheu o alinhamento total com os EUA contra a China","A Índia mantém relações com EUA, Rússia e China simultaneamente, recusando-se a ser vassalo de qualquer potência","A Índia lidera militarmente o bloco BRICS contra o Ocidente","A Índia escolheu neutralidade total, sem relações comerciais com nenhuma grande potência"],ans:1},
+      flashcard:{front:"Qual é o objetivo mais ambicioso do BRICS expandido e por que ele desafia a hegemonia americana?",back:"Criar uma alternativa ao dólar para transações entre membros — o que, se concretizado, seria o maior desafio à hegemonia financeira americana desde Bretton Woods em 1944."}
+    }
+  ],
+  quizFinal:[
+    {q:"Qual evento de 2022 ressuscitou a OTAN com energia renovada e levou países neutros como Finlândia e Suécia a pedir adesão?",opts:["A crise de mísseis de Taiwan","A invasão da Ucrânia pela Rússia","A guerra comercial entre EUA e China em semicondutores","A crise energética europeia pós-pandemia"],ans:1},
+    {q:"O que significa o conceito de 'multipolaridade' na geopolítica atual?",opts:["O mundo controlado por múltiplas organizações internacionais como ONU e FMI","A emergência de múltiplos polos de poder onde países negociam com todos sem se alinhar exclusivamente a nenhum","O aumento do número de países com armas nucleares","A fragmentação do comércio global em blocos comerciais regionais fechados"],ans:1},
+    {q:"Por que a estratégia de 'autonomia estratégica' — negociar com múltiplos polos — é considerada vantajosa no mundo multipolar?",opts:["Porque evita que o país seja alvo de sanções econômicas","Porque países com autonomia estratégica têm mais poder de barganha e não ficam reféns de nenhuma potência única","Porque é exigência formal para participar do BRICS e da OTAN simultaneamente","Porque reduz os custos militares ao não precisar de alianças de defesa"],ans:1}
+  ]
+},
+
+/* ════════════════════════════════════════════════════════════════
+   MÓDULO 2 — Economia: A Grande Reconfiguração Financeira Global
+   ════════════════════════════════════════════════════════════════ */
+{
+  id:2, title:"Economia: A Grande Reconfiguração Financeira Global", free:false,
+  topics:[
+    {
+      id:"2-1",
+      title:"Desglobalização: quando o mundo parou de se integrar",
+      content:`<h3>📦 O fim da globalização como você conheceu</h3>
+<p>Por 30 anos após a queda do Muro de Berlim em 1989, a palavra de ordem foi globalização: livre comércio, cadeias de suprimentos espalhadas pelo mundo inteiro, capitais circulando livremente, fronteiras cada vez mais irrelevantes. O resultado foi prosperidade sem precedentes — mas também desindustrialização de países desenvolvidos, aumento brutal da desigualdade dentro das nações e dependência estratégica perigosa em cadeias que atravessavam fronteiras rivais.</p>
+<p>A pandemia de 2020 foi o catalisador que acelerou uma tendência que já estava em curso: a <strong>desglobalização</strong>, ou mais precisamente, a <strong>regionalização das cadeias de suprimentos</strong>. Os EUA passaram a falar em "friend-shoring" — produzir com aliados confiáveis em vez de com o mais barato. A Europa passou a priorizar autonomia estratégica em energia, chips e defesa. A China acelerou a política de "dual circulation" — depender menos das exportações e mais do mercado interno. O mundo está se reorganizando em blocos econômicos regionais, e essa transição vai remodelar completamente onde e como as riquezas são produzidas nas próximas décadas.</p>
+<h3>🏭 O reshoring e o nearshoring: fábricas voltando para perto</h3>
+<p>Uma das grandes tendências econômicas dos anos 2020 é o <strong>reshoring</strong> (trazer a produção de volta para o país de origem) e o <strong>nearshoring</strong> (mover a produção para países vizinhos e aliados). Os EUA aprovaram o CHIPS Act (US$ 52 bilhões para semicondutores) e o Inflation Reduction Act (US$ 369 bilhões para energia limpa e indústria). A Europa está subsidiando massivamente sua indústria de chips, baterias e energia renovável. Resultado: fábricas que passaram décadas na Ásia estão voltando para América do Norte e Europa — ou migrando para o México, Índia e Sudeste Asiático.</p>
+<ul>
+<li><strong>México:</strong> principal beneficiário do nearshoring americano — exportações industriais explodiram</li>
+<li><strong>Índia:</strong> destino preferencial de fábricas saindo da China — Apple fabrica iPhones na Índia</li>
+<li><strong>Vietnã e Indonésia:</strong> absorvendo manufatura de baixo e médio valor saindo da China</li>
+<li><strong>Brasil:</strong> com potencial enorme, mas burocracia e custo Brasil ainda são obstáculos sérios</li>
+</ul>
+<blockquote>💡 <strong>Oportunidade para o Brasil:</strong> O Brasil tem todos os ingredientes para ser um grande beneficiário do nearshoring e da desglobalização: recursos naturais abundantes, energia renovável barata (solar e eólica), agronegócio de classe mundial, população jovem e território continental. O que falta é reforma estrutural da burocracia e dos impostos. Quem entender isso antes pode posicionar negócios e investimentos para capturar essa onda.</blockquote>`,
+      quiz:{q:"O que é o conceito de 'friend-shoring' adotado pelos EUA na nova política econômica?",opts:["Importar apenas de países com quem os EUA têm tratados de livre comércio","Produzir com aliados confiáveis em vez de simplesmente com o produtor mais barato","Exportar tecnologia apenas para países democráticos","Criar zonas francas para empresas de países aliados nos EUA"],ans:1},
+      flashcard:{front:"O que é desglobalização e qual evento foi seu principal catalisador?",back:"A reversão da integração global com regionalização das cadeias de suprimentos. Principal catalisador: a pandemia de 2020, que exposou perigosas dependências estratégicas em cadeias que cruzavam fronteiras rivais."}
+    },
+    {
+      id:"2-2",
+      title:"O dólar sob ameaça: a guerra das moedas e o futuro do sistema financeiro",
+      content:`<h3>💵 Por que o dólar domina o mundo — e por quanto tempo ainda?</h3>
+<p>Desde o acordo de Bretton Woods em 1944, o dólar americano é a moeda de reserva global: a maioria das transações internacionais é feita em dólares, a maioria das reservas dos bancos centrais do mundo são mantidas em dólares, o petróleo é precificado em dólares, e o sistema de pagamentos internacional (SWIFT) é controlado por infraestrutura sob influência americana. Isso dá aos EUA um poder extraordinário — o chamado "privilégio exorbitante": podem imprimir dinheiro para pagar suas dívidas sem a inflação que isso causaria a qualquer outro país.</p>
+<p>Mas esse privilégio está sendo questionado como nunca antes na história do pós-guerra. Quando os EUA congelaram US$ 300 bilhões em reservas russas após a invasão da Ucrânia em 2022, enviaram uma mensagem clara para todos os países do mundo: guardar reservas em dólares é uma escolha política, não apenas econômica — e pode ser usada contra você. A partir daí, a busca por alternativas ao dólar acelerou dramaticamente.</p>
+<h3>🌍 As iniciativas de desdolarização</h3>
+<ul>
+<li><strong>China e Rússia:</strong> comércio bilateral em yuan e rublo, sem dólares</li>
+<li><strong>Arábia Saudita e China:</strong> primeiras vendas de petróleo em yuan — quebrando décadas de petrodólar</li>
+<li><strong>BRICS:</strong> debate ativo sobre criação de uma moeda comum ou sistema de pagamentos alternativo ao SWIFT</li>
+<li><strong>Índia:</strong> acordos bilaterais para comércio em rúpia com dezenas de países</li>
+<li><strong>Moedas digitais de bancos centrais (CBDCs):</strong> mais de 130 países desenvolvendo moedas digitais nacionais que poderiam criar sistemas paralelos ao dólar</li>
+</ul>
+<blockquote>⚠️ <strong>Cuidado com o exagero:</strong> O dólar não vai desaparecer como moeda de reserva global no curto prazo — não há alternativa suficientemente líquida, confiável e escalável ainda. Mas sua participação nas reservas globais caiu de 71% em 2000 para cerca de 58% em 2024. Essa erosão gradual, se continuar, terá consequências enormes para o sistema financeiro global nas próximas décadas.</blockquote>
+<h3>📊 O que isso significa para o real brasileiro</h3>
+<p>O Brasil é um dos países mais expostos à volatilidade do dólar do mundo. Nossa dívida externa, nosso comércio, nossas importações de combustíveis e insumos — tudo é precificado em dólar. Quando o dólar sobe, a inflação brasileira sobe. Quando os juros americanos sobem, o capital foge do Brasil para os EUA. Compreender a dinâmica do dólar não é teoria financeira abstrata — é a diferença entre proteger ou destruir seu patrimônio no Brasil.</p>`,
+      quiz:{q:"Qual evento de 2022 acelerou drasticamente a busca por alternativas ao dólar entre países emergentes e rivais dos EUA?",opts:["A crise bancária americana com a falência do Silicon Valley Bank","O congelamento de US$ 300 bilhões em reservas russas pelos EUA após a invasão da Ucrânia","A criação do yuan digital pela China","A retirada dos EUA do acordo de Paris sobre clima"],ans:1},
+      flashcard:{front:"O que é o 'privilégio exorbitante' dos EUA e por que ele está sendo questionado?",back:"A capacidade dos EUA de imprimir dólares sem inflação proporcional, pois o dólar é a moeda de reserva global. Está sendo questionado porque o uso do SWIFT como arma (congelamento das reservas russas) mostrou que depender do dólar é um risco geopolítico."}
+    },
+    {
+      id:"2-3",
+      title:"Commodities, energia e o Brasil como potência do futuro",
+      content:`<h3>⚡ A transição energética está redesenhando o poder global</h3>
+<p>Por um século, o petróleo foi o recurso energético que determinava poder geopolítico. Os países do Oriente Médio, da Rússia e da Venezuela construíram seu poder internacional sobre o petróleo. Os EUA tornaram-se a maior potência do século XX em parte porque tinham petróleo e controlavam quem tinha acesso a ele. Mas a transição para a economia de baixo carbono está redistribuindo esse poder de forma dramática — e o Brasil está numa posição estratégica excepcional nesse novo mapa.</p>
+<h3>🔋 Os novos recursos estratégicos da transição energética</h3>
+<p>A economia verde não elimina a dependência de recursos naturais — ela muda quais recursos são estratégicos. O petróleo perde relevância; outros materiais ganham:</p>
+<ul>
+<li><strong>Lítio:</strong> essencial para baterias de carros elétricos e armazenamento de energia — Bolívia, Argentina e Chile têm o "triângulo do lítio", a maior reserva do mundo</li>
+<li><strong>Cobre:</strong> necessário em quantidades enormes para redes elétricas e veículos elétricos — Chile e Peru são líderes mundiais</li>
+<li><strong>Terras raras:</strong> elementos essenciais para turbinas eólicas, motores elétricos e eletrônicos — China controla 60%+ da produção mundial</li>
+<li><strong>Hidrogênio verde:</strong> o combustível do futuro industrial — e o Brasil tem vantagem competitiva enorme pela disponibilidade de energia solar e eólica barata</li>
+<li><strong>Proteína animal e vegetal:</strong> com 8 bilhões de pessoas no mundo (chegando a 10 bilhões), a segurança alimentar é questão de soberania — e o Brasil é o maior exportador de proteína do mundo</li>
+</ul>
+<h3>🇧🇷 O Brasil como superpotência de recursos do século XXI</h3>
+<p>O Brasil é um caso único no mundo: é o maior exportador global de soja, carne bovina, carne de frango, suco de laranja, açúcar e café. Tem a maior reserva de água doce do mundo. Tem o maior pré-sal do mundo ocidental. Tem capacidade instalada de energia renovável que cresce mais rápido que qualquer grande economia. Tem o Cerrado e a Amazônia — os dois maiores sumidouros de carbono do planeta, que valerão fortunas nos mercados de crédito de carbono que estão sendo criados.</p>
+<blockquote>💡 <strong>O paradoxo brasileiro:</strong> O Brasil tem todos os recursos para ser uma das maiores potências do século XXI. Mas exporta quase tudo como matéria-prima — soja em grão, minério bruto, petróleo cru — sem agregar o valor que multiplicaria a riqueza gerada. A diferença entre ser potência de recursos e potência industrial é exatamente essa: processar antes de exportar. Esse é o maior desafio econômico estratégico do Brasil.</blockquote>
+<h3>📊 Como gerar valor com esse conhecimento</h3>
+<p>Entender a reconfiguração econômica global abre oportunidades práticas imediatas: investimentos em setores de commodities estratégicas (agro, energia, mineração), identificação de mercados em expansão no Sul Global, posicionamento em negócios relacionados à transição energética (solar, eólica, hidrogênio verde, veículos elétricos), e compreensão de como o câmbio e os juros brasileiros serão afetados pelos movimentos do dólar global.</p>
+<h3>🔮 Preparação para o futuro</h3>
+<p>A grande questão econômica do Brasil nos próximos 20 anos é: vai aproveitar a janela de oportunidade que a transição energética e a reconfiguração das cadeias globais estão abrindo, ou vai continuar exportando commodities brutas enquanto outros agregam valor? A resposta depende de reformas estruturais, investimento em tecnologia e formação de capital humano — e depende de cidadãos que entendam o jogo para exigir as políticas certas.</p>
+<h3>⚖️ Moral do módulo</h3>
+<p>A economia global não é um mercado neutro e meritocrático — é um campo de batalha onde países usam tarifas, sanções, moedas, padrões tecnológicos e acesso a recursos como armas. Quem entende as regras reais do jogo econômico global não é enganado pelas narrativas simplistas. E o Brasil, com todos os seus recursos, tem muito mais poder nesse jogo do que a maioria dos brasileiros imagina.</p>`,
+      quiz:{q:"Qual é o principal desafio econômico estratégico do Brasil, segundo a análise deste tópico?",opts:["Reduzir a dependência de investimentos estrangeiros no setor financeiro","Parar de exportar matérias-primas brutas e começar a agregar valor industrialmente antes de exportar","Eliminar os acordos comerciais com a China para proteger a indústria nacional","Criar uma moeda alternativa ao real para reduzir a dependência do dólar"],ans:1},
+      flashcard:{front:"Por que o Brasil é considerado uma 'superpotência de recursos' para o século XXI?",back:"Porque é líder mundial em exportação de soja, carne, açúcar e café; tem as maiores reservas de água doce, pré-sal no Ocidente, energia renovável barata, Cerrado e Amazônia como sumidouros de carbono de valor crescente."}
+    }
+  ],
+  quizFinal:[
+    {q:"O que é o 'nearshoring' e por que o México é seu principal beneficiário atualmente?",opts:["Nearshoring é a digitalização de serviços financeiros — o México lidera por ter o maior setor fintech da América Latina","Nearshoring é mover a produção para países vizinhos e aliados — o México beneficia por ser vizinho dos EUA e ter acordos comerciais sólidos como o USMCA","Nearshoring é a substituição de trabalhadores humanos por robôs nas fábricas — o México lidera por ter mão de obra barata para operar essas máquinas","Nearshoring é a exportação de serviços digitais — o México lidera por ter grande número de programadores qualificados"],ans:1},
+    {q:"Por que o congelamento das reservas russas em 2022 foi um ponto de inflexão para o sistema do dólar?",opts:["Porque provou que os EUA podiam controlar a inflação globalmente","Porque mostrou a todos os países que guardar reservas em dólares é uma escolha geopolítica que pode ser usada como arma contra eles","Porque reduziu imediatamente a participação do dólar de 71% para 58% nas reservas mundiais","Porque levou a China a lançar imediatamente o yuan digital como substituto do dólar"],ans:1},
+    {q:"Quais recursos naturais são considerados estratégicos na transição energética, substituindo parcialmente o papel do petróleo?",opts:["Carvão, gás natural e urânio","Lítio, cobre, terras raras e hidrogênio verde","Ouro, prata e diamantes industriais","Madeira, borracha e fibras naturais para bioeconomia"],ans:1}
+  ]
+},
+
+/* ════════════════════════════════════════════════════════════════
+   MÓDULO 3 — Tecnologia: O Poder que Está Reescrevendo Tudo
+   ════════════════════════════════════════════════════════════════ */
+{
+  id:3, title:"Tecnologia: O Poder que Está Reescrevendo Tudo", free:false,
+  topics:[
+    {
+      id:"3-1",
+      title:"Semicondutores e IA: a corrida armamentista do século XXI",
+      content:`<h3>💻 O chip que controla o mundo</h3>
+<p>Se o petróleo foi o recurso estratégico do século XX, o semicondutor — o chip eletrônico — é o recurso estratégico do século XXI. Tudo que funciona com eletricidade depende de chips: smartphones, carros, geladeiras, aviões de guerra, mísseis, satélites, data centers de IA, sistemas bancários, infraestrutura elétrica. Quem controla a produção dos chips mais avançados controla o futuro tecnológico, econômico e militar do planeta.</p>
+<p>E o problema geopolítico central é precisamente este: a maioria dos chips mais avançados do mundo — os que movem inteligência artificial, supercomputação e sistemas militares de última geração — é produzida por apenas uma empresa no planeta: a <strong>TSMC</strong> (Taiwan Semiconductor Manufacturing Company), localizada em Taiwan. Uma ilha de 36.000 km² que a China reivindica como território seu desde 1949.</p>
+<h3>🗺️ A cadeia mais frágil e mais crítica do mundo</h3>
+<ul>
+<li><strong>Design dos chips:</strong> EUA e Grã-Bretanha — Nvidia, AMD, Qualcomm, ARM</li>
+<li><strong>Software de design (EDA):</strong> quase monopólio americano — Cadence e Synopsys</li>
+<li><strong>Equipamentos de litografia:</strong> monopólio holandês — ASML. Sem essa máquina, ninguém fabrica chips avançados no mundo</li>
+<li><strong>Fabricação avançada:</strong> TSMC (Taiwan) com 90%+ dos chips de ponta do mundo</li>
+<li><strong>Materiais e insumos:</strong> Japão e Coreia do Sul</li>
+</ul>
+<p>Em 2022, os EUA usaram essa cadeia como arma: proibiram a exportação de chips avançados e dos equipamentos ASML para a China. A resposta chinesa foi acelerar massivamente o investimento em semicondutores domésticos — US$ 150 bilhões previstos até 2030. Em 2025, a startup chinesa <strong>DeepSeek</strong> lançou um modelo de IA de alto desempenho desenvolvido com chips menos avançados e fração do custo americano, derrubando ações da Nvidia em 17% num único dia e revelando que a China pode ser mais inovadora do que os controles de exportação supunham.</p>
+<blockquote>⚠️ <strong>O cenário mais perigoso do planeta:</strong> Se a China invadir Taiwan, a produção global de chips avançados poderia parar imediatamente. Economistas estimam que isso causaria uma recessão global pior que 2008. É por isso que Taiwan é o ponto geopolítico mais tenso e mais monitorado do planeta neste momento.</blockquote>`,
+      quiz:{q:"Por que Taiwan é considerado o ponto geopolítico mais perigoso do planeta atualmente?",opts:["Porque Taiwan tem o maior arsenal nuclear não declarado da Ásia","Porque a TSMC, localizada em Taiwan, fabrica 90%+ dos chips avançados do mundo, e a China reivindica a ilha como seu território","Porque Taiwan é a maior base militar americana no Indo-Pacífico","Porque Taiwan controla os cabos submarinos de fibra ótica que conectam a Ásia ao resto do mundo"],ans:1},
+      flashcard:{front:"O que a empresa chinesa DeepSeek revelou em janeiro de 2025 sobre a corrida de IA?",back:"Que a China pode desenvolver IA competitiva com chips menos avançados e custo muito menor — desafiando a estratégia americana de controlar a China cortando seu acesso a chips de ponta."}
+    },
+    {
+      id:"3-2",
+      title:"Inteligência Artificial: como ela está mudando economia, poder e seu trabalho",
+      content:`<h3>🤖 A IA não é apenas tecnologia — é poder estrutural</h3>
+<p>Em novembro de 2022, a OpenAI lançou o ChatGPT. Em dois meses, tinha 100 milhões de usuários — o crescimento mais rápido de qualquer produto na história documentada. Isso não foi apenas um fenômeno tecnológico: foi o momento em que a inteligência artificial saiu dos laboratórios e chegou à vida cotidiana de centenas de milhões de pessoas ao mesmo tempo, com velocidade que nenhum governo, empresa ou trabalhador conseguiu antecipar adequadamente.</p>
+<p>Em 2026, os modelos de IA já superam médicos humanos em diagnósticos de imagem, advogados em análise de contratos, programadores em código de propósito específico, e analistas financeiros em processamento de dados. Agentes de IA autônomos executam tarefas complexas de múltiplos passos com mínima supervisão humana. O impacto no mercado de trabalho é real, imediato e profundo — e apenas começa.</p>
+<h3>💼 O impacto no mercado de trabalho: quem perde, quem ganha</h3>
+<p>A IA não vai eliminar "o trabalho" — vai eliminar <em>tarefas</em> dentro dos trabalhos e eliminar alguns trabalhos inteiros. A distinção importa:</p>
+<ul>
+<li><strong>Tarefas automatizáveis:</strong> processamento de documentos, atendimento ao cliente de primeiro nível, análise de dados repetitiva, redação padronizada, diagnósticos médicos de imagem, triagem jurídica</li>
+<li><strong>Trabalhos em risco:</strong> operadores de call center, analistas de dados júnior, revisores de texto, tradutores de conteúdo simples, motoristas (no médio prazo)</li>
+<li><strong>Trabalhos amplificados pela IA:</strong> médicos e advogados que usam IA como ferramenta (fazem mais em menos tempo), engenheiros que usam IA para código, criadores de conteúdo com IA como co-criador, empreendedores que substituem equipes inteiras por IA + uma pessoa estratégica</li>
+<li><strong>Trabalhos criados pela IA:</strong> engenheiros de prompt, especialistas em ética de IA, treinadores de modelos, auditores de IA, integradores de sistemas de agentes autônomos</li>
+</ul>
+<blockquote>💡 <strong>A regra prática:</strong> A IA não vai tirar seu emprego — mas uma pessoa que sabe usar IA pode tirar. A habilidade mais valiosa dos próximos 10 anos não é saber programar ou ter diploma universitário: é saber orquestrar ferramentas de IA para multiplicar sua produtividade individual. Isso é uma habilidade que pode ser aprendida — e que está acessível para qualquer pessoa com internet.</blockquote>
+<h3>🌍 A corrida geopolítica pela IA</h3>
+<p>Vladimir Putin disse em 2017: "Quem se tornar líder em inteligência artificial se tornará o governante do mundo." Isso explica por que EUA e China investem centenas de bilhões em IA anualmente, por que o acesso a chips de IA é controlado como exportação estratégica, e por que laboratórios de IA como OpenAI, Google DeepMind e Anthropic recebem mais atenção geopolítica do que a maioria das embaixadas. A IA é simultaneamente vantagem econômica, arma militar e instrumento de vigilância e controle. Quem lidera em IA lidera no poder do século XXI.</p>`,
+      quiz:{q:"Qual é a 'regra prática' sobre IA e mercado de trabalho apresentada neste tópico?",opts:["A IA vai eliminar 50% de todos os empregos nos próximos 5 anos, especialmente os manuais","A IA não vai tirar seu emprego, mas uma pessoa que sabe usar IA pode tirar — tornando a habilidade de orquestrar IA a mais valiosa da próxima década","A IA só afeta trabalhadores de nível superior com ensino universitário","A IA cria mais empregos do que elimina em todos os setores da economia"],ans:1},
+      flashcard:{front:"Qual é a diferença entre 'tarefas automatizáveis' e 'trabalhos amplificados pela IA'?",back:"Tarefas automatizáveis são funções repetitivas que a IA substitui. Trabalhos amplificados são aqueles em que profissionais usam IA como ferramenta para fazer mais em menos tempo — esses crescem, não desaparecem."}
+    },
+    {
+      id:"3-3",
+      title:"A guerra das narrativas e como se proteger no mundo da desinformação",
+      content:`<h3>📱 A mente humana é o novo território contestado</h3>
+<p>Nas guerras do passado, o objetivo era conquistar território físico — colinas, cidades, rotas. Nas guerras de hoje, o objetivo principal é conquistar mentes: a narrativa que as pessoas acreditam sobre a realidade, a confiança nas instituições, a coesão social que permite a uma nação agir coletivamente. E a tecnologia digital transformou esse campo em algo que nenhum manual militar antigo poderia descrever — ou conter.</p>
+<p>Isso não é teoria conspiratória — é doutrina militar declarada. A Rússia chama de "guerra híbrida". A China chama de "guerra irrestrita" (Unrestricted Warfare). Os EUA têm suas próprias divisões de operações de informação (PSYOPS). Israel tem sofisticadas operações de influência. Todos os grandes atores geopolíticos investem massivamente em influenciar a percepção de populações estrangeiras — e das suas próprias populações. A diferença entre propaganda e guerra de informação é apenas de escala e sofisticação.</p>
+<h3>🎯 As ferramentas da guerra de narrativas em 2026</h3>
+<ul>
+<li><strong>Deepfakes de vídeo e áudio:</strong> vídeos e áudios falsos de qualidade quase indistinguível — líderes políticos "dizendo" coisas que nunca disseram</li>
+<li><strong>Bots e fazendas de conteúdo:</strong> redes automatizadas de contas falsas que amplificam narrativas específicas em escala industrial</li>
+<li><strong>Amplificação algorítmica:</strong> os algoritmos de redes sociais favorecem conteúdo raivoso e polarizador — sem intenção conspirativa, mas com efeito devastador de fragmentar sociedades</li>
+<li><strong>Espionagem digital:</strong> grupos de hackers estatais (APT28 russo, APT41 chinês) que roubam segredos, vazam seletivamente e sabotam infraestruturas</li>
+<li><strong>Interferência eleitoral:</strong> documentada em eleições dos EUA (2016), França (2017), Brasil e dezenas de outros países — via micro-targeting de anúncios e amplificação de divisões existentes</li>
+</ul>
+<blockquote>⚠️ <strong>O paradoxo da informação:</strong> Vivemos na era com mais acesso à informação da história humana — e também com mais desinformação. Quando tudo pode ser falso, nada é confiável. Esse estado de confusão epistêmica é, em si mesmo, um objetivo estratégico: um povo que não sabe em que acreditar não consegue se organizar para resistir, para votar conscientemente ou para exigir mudanças.</blockquote>
+<h3>🛡️ Como se proteger: o kit básico de defesa epistêmica</h3>
+<p>Você não precisa parar de usar redes sociais ou se isolar em bolhas de confirmação. Precisa desenvolver um conjunto de hábitos mentais que funcionam como sistema imunológico contra manipulação:</p>
+<ul>
+<li><strong>Verifique a fonte primária:</strong> não reaja à manchete — leia o texto original, procure o documento, ouça a declaração completa</li>
+<li><strong>Busque fontes contrárias:</strong> se você só lê fontes que confirmam o que já acredita, você está sendo manipulado por confirmação seletiva</li>
+<li><strong>Pergunte: quem se beneficia?</strong> toda narrativa tem um beneficiário — identificar quem ganha com ela ajuda a entender seus vieses</li>
+<li><strong>Desconfie de conteúdo que gera raiva intensa imediata:</strong> a raiva é o estado mental em que menos pensamos criticamente — é exatamente por isso que é a emoção mais usada pela desinformação</li>
+<li><strong>Diversifique suas fontes:</strong> leia mídia de perspectivas diferentes, incluindo estrangeiras — o Brasil visto da China, dos EUA e da Europa são três países diferentes</li>
+</ul>
+<h3>📊 Como gerar valor com esse conhecimento</h3>
+<p>Entender tecnologia como força geopolítica abre oportunidades: posicionar-se nos setores que serão valorizados pela IA e transição digital, identificar quais habilidades serão escassas e valiosas nos próximos 10 anos, criar negócios que usam IA para multiplicar produtividade individual, e — fundamentalmente — desenvolver a capacidade analítica de ler o mundo com precisão enquanto outros são manipulados por narrativas simplistas.</p>
+<h3>🔮 Preparação para o futuro</h3>
+<p>O mundo que está sendo construído agora é exponencialmente mais complexo, mais rápido e mais imprevisível do que o que existia há 20 anos. As habilidades que garantiam estabilidade no século XX — seguir uma carreira linear, obedecer a um único empregador por décadas, confiar numa única fonte de informação — não garantem mais nada. O que garante é capacidade de adaptação, leitura estratégica do ambiente, múltiplas fontes de renda e informação, e a consciência de que o jogo mudou e vai continuar mudando.</p>
+<h3>⚖️ Moral do módulo — e do curso</h3>
+<p>Geopolítica, economia e tecnologia não são três assuntos separados — são três ângulos do mesmo fenômeno: a grande reconfiguração do poder global que está acontecendo agora, em tempo real, e que vai definir quem prospera e quem fica para trás nas próximas décadas. Você terminou este curso com um mapa. Cabe a você usá-lo.</p>`,
+      quiz:{q:"Por que conteúdo que gera raiva intensa e imediata nas redes sociais deve ser tratado com desconfiança especial?",opts:["Porque conteúdo raivoso é automaticamente removido pelos algoritmos das redes sociais","Porque a raiva é o estado mental em que pensamos menos criticamente — e é exatamente por isso que é a emoção mais explorada pela desinformação","Porque raiva é sinal de que o conteúdo é exagerado e provavelmente falso em todos os casos","Porque usuários raivosos compartilham menos, reduzindo o alcance da desinformação"],ans:1},
+      flashcard:{front:"Quais são as 3 primeiras práticas do 'kit básico de defesa epistêmica' contra desinformação?",back:"1. Verificar a fonte primária (não reagir à manchete). 2. Buscar fontes contrárias ativamente. 3. Perguntar 'quem se beneficia?' — identificar o beneficiário de uma narrativa revela seus vieses."}
+    }
+  ],
+  quizFinal:[
+    {q:"Por que os EUA proibiram a exportação de chips avançados e equipamentos ASML para a China em 2022?",opts:["Para proteger patentes americanas de semicondutores do roubo intelectual chinês","Porque os chips avançados são recursos estratégicos e privar a China deles é uma forma de conter seu desenvolvimento militar e de IA","Para forçar a China a comprar chips de Taiwan diretamente, reduzindo a tensão sobre a ilha","Porque os EUA queriam reservar a produção de chips para o mercado doméstico americano"],ans:1},
+    {q:"O que diferencia um 'trabalho amplificado pela IA' de um 'trabalho em risco' pela automação?",opts:["Trabalhos amplificados são os que ganham mais de R$ 10 mil por mês; em risco são os de menor renda","Trabalhos amplificados são aqueles em que profissionais usam IA como ferramenta para multiplicar produtividade; em risco são os que executam tarefas repetitivas que a IA substitui completamente","Trabalhos amplificados são exclusivamente os de tecnologia; em risco são apenas os trabalhos físicos manuais","Trabalhos amplificados exigem diploma universitário; em risco não exigem formação formal"],ans:1},
+    {q:"Qual é o objetivo estratégico da 'confusão epistêmica' criada pela guerra de narrativas — o estado em que as pessoas não sabem em que acreditar?",opts:["Aumentar o consumo de entretenimento como fuga da realidade confusa","Impedir que a população se organize, vote conscientemente e exija mudanças — tornando-a passiva e manipulável","Fazer com que as pessoas confiem mais nos governos por falta de alternativas confiáveis","Criar demanda por jornalismo de qualidade como reação à desinformação generalizada"],ans:1}
+  ]
+}
+
+]; // fim de MODS
+</script>
+
+<script src="shared/course-engine.js"></script>
+</head>
+<body>
+<!-- O course-engine.js injeta toda a estrutura HTML automaticamente -->
+</body>
+</html>
