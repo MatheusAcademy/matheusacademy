@@ -58,8 +58,13 @@
       height: var(--topbar-h);
       background: rgba(4,4,10,.99);
       border-bottom: 1px solid rgba(91,127,255,.15);
-      display: flex; align-items: center; padding: 0 14px; gap: 6px;
+      display: flex; align-items: center;
+      /* Safe-area: respeita notch/ilha lateral do iPhone */
+      padding: 0 max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left));
+      gap: 5px;
       z-index: 9999; font-family: var(--font);
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .ma-topbar::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1.5px;
@@ -67,58 +72,65 @@
       opacity: .75;
     }
     .ma-tb-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-    .ma-tb-logo svg { display: block; flex-shrink: 0; }
+    /* Logo menor no mobile */
+    .ma-tb-logo svg { display: block; flex-shrink: 0; width: 90px; height: 26px; }
+    @media(min-width:480px){ .ma-tb-logo svg { width: 130px; height: 38px; } }
     .ma-tb-sep { width: 1px; height: 20px; background: rgba(255,255,255,.1); flex-shrink: 0; }
-    .ma-tb-page-name { font-size: .66rem; font-weight: 700; color: var(--txt2); white-space: nowrap; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+    .ma-tb-page-name { font-size: .62rem; font-weight: 700; color: var(--txt2); white-space: nowrap; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; max-width: 90px; }
+    @media(min-width:400px){ .ma-tb-page-name { max-width: 120px; } }
+    @media(min-width:480px){ .ma-tb-page-name { max-width: 180px; } }
     .ma-tb-spacer { flex: 1; min-width: 0; }
 
     /* Bloco troféu + pontos */
     .ma-tb-pts-block {
-      display: flex; align-items: center; gap: 7px;
+      display: flex; align-items: center; gap: 5px;
       text-decoration: none; flex-shrink: 0;
-      padding: 5px 12px 5px 10px; border-radius: 22px;
+      padding: 4px 9px 4px 8px; border-radius: 20px;
       border: 1px solid rgba(255,255,255,.1);
       background: rgba(255,255,255,.04); transition: all .2s; cursor: pointer;
+      white-space: nowrap;
     }
     .ma-tb-pts-block:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.08); }
     .ma-tb-pts-block.bump { animation: ptsBump .45s cubic-bezier(.2,0,.3,1); }
     @keyframes ptsBump { 0%{transform:scale(1)} 35%{transform:scale(1.2)} 65%{transform:scale(.95)} 100%{transform:scale(1)} }
     .ma-tb-trophy { display: flex; align-items: center; justify-content: center; color: #f59e0b; flex-shrink: 0; }
-    .ma-tb-trophy svg { width: 16px; height: 16px; stroke: #f59e0b; }
+    .ma-tb-trophy svg { width: 14px; height: 14px; stroke: #f59e0b; }
     .ma-tb-pts-num {
-      font-size: .82rem; font-weight: 900; color: #fff;
+      font-size: .78rem; font-weight: 900; color: #fff;
       font-variant-numeric: tabular-nums; letter-spacing: .02em;
-      min-width: 28px; text-align: right; line-height: 1; transition: color .3s;
+      min-width: 22px; text-align: right; line-height: 1; transition: color .3s;
     }
     .ma-tb-pts-block.bump .ma-tb-pts-num { color: #f59e0b; }
 
     /* Botão tema */
     .ma-tb-theme-btn {
-      width: 34px; height: 34px; border-radius: 9px;
+      width: 32px; height: 32px; border-radius: 9px;
       border: 1px solid var(--brd); background: var(--bg2); color: #f59e0b;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; transition: all .2s; padding: 0;
     }
-    .ma-tb-theme-btn svg { width: 16px; height: 16px; stroke: currentColor; pointer-events: none; }
+    .ma-tb-theme-btn svg { width: 15px; height: 15px; stroke: currentColor; pointer-events: none; }
     .ma-tb-theme-btn:hover { border-color: rgba(245,158,11,.5); background: rgba(245,158,11,.08); }
 
     /* Botão menu 3 pontos */
     .ma-tb-menu-btn {
-      width: 34px; height: 34px; border-radius: 9px;
+      width: 32px; height: 32px; border-radius: 9px;
       border: 1px solid var(--brd); background: var(--bg2); color: #8888a8;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; transition: all .2s; padding: 0;
     }
-    .ma-tb-menu-btn svg { width: 16px; height: 16px; stroke: currentColor; pointer-events: none; }
+    .ma-tb-menu-btn svg { width: 15px; height: 15px; stroke: currentColor; pointer-events: none; }
     .ma-tb-menu-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
 
-    /* Menu dropdown */
+    /* Menu dropdown — alinhado dentro da safe-area */
     .ma-menu-overlay { position: fixed; inset: 0; z-index: 10000; display: none; }
     .ma-menu-overlay.open { display: block; }
     .ma-menu-dd {
-      position: fixed; top: 62px; right: 10px;
+      position: fixed; top: calc(var(--topbar-h) + 6px);
+      right: max(10px, env(safe-area-inset-right));
       background: #0f0f1e; border: 1px solid #252540; border-radius: 16px;
-      min-width: 240px; z-index: 10001; box-shadow: 0 16px 56px rgba(0,0,0,.75);
+      min-width: 240px; max-width: calc(100vw - 20px);
+      z-index: 10001; box-shadow: 0 16px 56px rgba(0,0,0,.75);
       overflow: hidden; opacity: 0;
       transform: scale(.88) translateY(-12px); pointer-events: none;
       transition: all .22s cubic-bezier(.2,0,.3,1); transform-origin: top right;
@@ -157,18 +169,20 @@
     body.light .ma-mi:hover { background: #f0f2f8; color: #1a1a2e; }
     body.light .ma-menu-sec + .ma-menu-sec { border-top-color: #e8eaf2; }
 
-    /* ══ BOTÃO PLANOS NA TOPBAR ══ */
+    /* ══ BOTÃO PLANOS — oculto em telas pequenas ══ */
     .ma-tb-plans-btn {
       display: flex; align-items: center; gap: 5px;
-      padding: 5px 12px; border-radius: 20px; flex-shrink: 0;
-      font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+      padding: 4px 10px; border-radius: 20px; flex-shrink: 0;
+      font-size: .65rem; font-weight: 700; letter-spacing: .04em;
       text-decoration: none; color: #f59e0b;
       border: 1px solid rgba(245,158,11,.35);
       background: rgba(245,158,11,.08);
       transition: all .2s; white-space: nowrap;
     }
     .ma-tb-plans-btn:hover { background: rgba(245,158,11,.18); border-color: rgba(245,158,11,.6); }
-    @media (max-width: 400px) { .ma-tb-plans-btn span.ma-tb-plans-label { display: none; } }
+    /* Oculta totalmente em telas muito pequenas */
+    @media (max-width: 380px) { .ma-tb-plans-btn { display: none !important; } }
+    @media (max-width: 480px) { .ma-tb-plans-btn span.ma-tb-plans-label { display: none; } }
   `;
   document.head.appendChild(style);
 
@@ -178,7 +192,7 @@
 
   <!-- LOGO SVG horizontal — M branco + linha dupla azul + ACADEMY -->
   <a class="ma-tb-logo" href="index.html">
-    <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
       <text x="36" y="52" text-anchor="middle" fill="#FFFFFF"
             font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
       <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
