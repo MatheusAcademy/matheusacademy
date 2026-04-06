@@ -1410,17 +1410,17 @@ function checkStreak(){
 }
 
 /* ══════════════════════════════════════════════════════
-   SISTEMA DE ÁUDIO IA — v3
-   • Pré-carrega o 1º parágrafo ao abrir tópico (play instantâneo)
-   • Clique em qualquer parágrafo/título → narra a partir dali
-   • Fila automática: termina um bloco → carrega o próximo
-   • Anti-duplo-clique com AbortController
+   SISTEMA DE ÁUDIO IA — v4
+   • 1 único fetch por tópico → sem pausa entre parágrafos
+   • Pré-carrega ao abrir tópico → play instantâneo
+   • Clique em parágrafo → pula para posição proporcional no áudio
+   • Anti-duplo-clique com flag + AbortController
    • Velocidade até 3x
    ══════════════════════════════════════════════════════ */
 
-var _mlModMi=-1,_mlAudioEl=null,_mlLoading=false,_mlAbort=null;
-var _mlQueue=[],_mlQueueIdx=0,_mlQueueMi=-1;   // fila de blocos de texto
-var _mlPreCache={};                              // {mi_ti_0: blobUrl} pré-carregado
+var _mlModMi=-1,_mlTopIdx=-1,_mlAudioEl=null,_mlLoading=false,_mlAbort=null;
+var _mlPreCache={};   // { 'mi_ti': blobUrl }
+var _mlBlocos={};     // { 'mi_ti': [blocos] } para mapear clique → posição
 
 /* ── helpers ── */
 function _mlGetSpd(mi){
@@ -1428,7 +1428,6 @@ function _mlGetSpd(mi){
   return parseFloat(el?el.value:1)||1;
 }
 function _mlSetBtn(mi,state){
-  // state: 'loading' | 'playing' | 'paused' | 'idle'
   var btn=document.getElementById('ml_abtn_'+mi);
   var st=document.getElementById('ml_ast_'+mi);
   if(!btn)return;
@@ -1444,25 +1443,35 @@ function _mlStopTudo(clearBtn){
   if(_mlAbort){try{_mlAbort.abort();}catch(e){}}_mlAbort=null;
   if(_mlAudioEl){try{_mlAudioEl.pause();_mlAudioEl.src='';}catch(e){}}_mlAudioEl=null;
   try{window.speechSynthesis.cancel();}catch(e){}
-  _mlLoading=false;_mlQueue=[];_mlQueueIdx=0;
+  _mlLoading=false;
   if(clearBtn!==false)_mlSetBtn(_mlModMi,'idle');
 }
 
-/* ── Extrai blocos de texto de um elemento HTML ──
-   Divide por <h1-h6> e <p> para permitir clique em ponto específico ── */
+/* ── Extrai texto COMPLETO do tópico (1 string única) ── */
+function _mlExtrairTexto(htmlStr,prefixo){
+  var tmp=document.createElement('div');tmp.innerHTML=htmlStr||'';
+  var partes=[];
+  if(prefixo)partes.push(prefixo+'.');
+  tmp.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li').forEach(function(el){
+    var t=(el.textContent||'').replace(/\s+/g,' ').trim();
+    if(t.length>5)partes.push(t);
+  });
+  return partes.join(' ');
+}
+
+/* ── Extrai blocos individuais para mapear posição do clique ── */
 function _mlExtrairBlocos(htmlStr,prefixo){
   var tmp=document.createElement('div');tmp.innerHTML=htmlStr||'';
   var blocos=[];
-  // Primeiro bloco: nome do tópico (prefixo)
-  if(prefixo)blocos.push(prefixo+'. ');
+  if(prefixo)blocos.push(prefixo+'.');
   tmp.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li').forEach(function(el){
     var t=(el.textContent||'').replace(/\s+/g,' ').trim();
-    if(t.length>10)blocos.push(t);
+    if(t.length>5)blocos.push(t);
   });
   return blocos;
 }
 
-/* ── Faz fetch TTS e retorna blobUrl (Promise) ── */
+/* ── Fetch TTS — 1 chamada única ── */
 function _mlFetchTTS(texto,abortSignal){
   var ttsUrl=window.MA_TTS_URL||'';
   if(!ttsUrl)return Promise.reject(new Error('no-url'));
@@ -1470,157 +1479,136 @@ function _mlFetchTTS(texto,abortSignal){
     method:'POST',
     signal:abortSignal,
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({text:texto.slice(0,1000),voice:window.MA_TTS_VOICE||'onyx'})
+    body:JSON.stringify({text:texto.slice(0,4500),voice:window.MA_TTS_VOICE||'onyx'})
   }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.blob();})
     .then(function(b){return URL.createObjectURL(b);});
 }
 
-/* ── PRÉ-CARREGA o 1º bloco quando o tópico é aberto ── */
+/* ── PRÉ-CARREGA ao abrir tópico ── */
 function _mlPreload(mi,ti){
   var ttsUrl=window.MA_TTS_URL||'';if(!ttsUrl)return;
-  var cacheKey=mi+'_'+ti;
-  if(_mlPreCache[cacheKey])return; // já carregado
+  var key=mi+'_'+ti;
+  if(_mlPreCache[key])return;
   var mod=MODS[mi];if(!mod||!mod.topics[ti])return;
   var t=mod.topics[ti];
-  var blocos=_mlExtrairBlocos(t.content,t.name);
-  if(!blocos.length)return;
-  var texto=blocos.slice(0,2).join(' ').slice(0,1000); // título + 1º parágrafo
-  _mlPreCache[cacheKey]='loading';
+  var texto=_mlExtrairTexto(t.content,t.name);
+  if(!texto.trim())return;
+  _mlBlocos[key]=_mlExtrairBlocos(t.content,t.name);
+  _mlPreCache[key]='loading';
   var ac=new AbortController();
   _mlFetchTTS(texto,ac.signal)
-    .then(function(url){_mlPreCache[cacheKey]=url;})
-    .catch(function(){_mlPreCache[cacheKey]=null;});
+    .then(function(url){_mlPreCache[key]=url;})
+    .catch(function(){_mlPreCache[key]=null;});
 }
 
-/* ── Toca um blobUrl e ao terminar chama onEnd ── */
-function _mlPlayUrl(blobUrl,spd,onEnd,onErr){
+/* ── Toca blobUrl com velocidade ── */
+function _mlPlayUrl(blobUrl,spd,mi,onEnd){
   if(_mlAudioEl){try{_mlAudioEl.pause();_mlAudioEl.src='';}catch(e){}}_mlAudioEl=null;
   var audio=new Audio(blobUrl);
   audio.playbackRate=spd;
   _mlAudioEl=audio;
-  audio.play().catch(function(e){if(onErr)onErr(e);});
-  audio.onended=onEnd||null;
-  audio.onerror=onErr||null;
-}
-
-/* ── Toca a fila a partir de _mlQueueIdx ── */
-function _mlPlayQueue(mi){
-  if(_mlQueueIdx>=_mlQueue.length){
-    // Fila terminou
+  audio.play().catch(function(){});
+  _mlSetBtn(mi,'playing');
+  audio.onended=function(){
+    URL.revokeObjectURL(blobUrl);
+    _mlAudioEl=null;
     _mlSetBtn(mi,'idle');
-    _mlQueue=[];_mlQueueIdx=0;_mlAudioEl=null;
-    return;
-  }
-  var texto=_mlQueue[_mlQueueIdx];
-  var spd=_mlGetSpd(mi);
-  _mlSetBtn(mi,'loading');
-  _mlAbort=new AbortController();
-  var reqIdx=_mlQueueIdx,reqMi=mi;
-  _mlFetchTTS(texto,_mlAbort.signal)
-    .then(function(url){
-      if(_mlModMi!==reqMi||_mlQueueIdx!==reqIdx){URL.revokeObjectURL(url);return;}
-      _mlAbort=null;_mlLoading=false;
-      _mlSetBtn(mi,'playing');
-      _mlPlayUrl(url,spd,function(){
-        URL.revokeObjectURL(url);
-        _mlQueueIdx++;
-        _mlPlayQueue(mi); // próximo bloco
-      },function(){
-        URL.revokeObjectURL(url);
-        _mlSetBtn(mi,'idle');
-      });
-    })
-    .catch(function(e){
-      if(e.name==='AbortError')return;
-      _mlLoading=false;_mlAbort=null;
-      _mlSetBtn(mi,'idle');
-    });
+    if(onEnd)onEnd();
+  };
+  audio.onerror=function(){
+    URL.revokeObjectURL(blobUrl);
+    _mlAudioEl=null;
+    _mlSetBtn(mi,'idle');
+  };
 }
 
 /* ── TOGGLE PRINCIPAL (botão ▶️) ── */
 function mlToggleModAudio(mi){
   var spd=_mlGetSpd(mi);
 
-  // Se carregando → cancela
+  // Carregando → cancela
   if(_mlLoading){_mlStopTudo();_mlModMi=mi;return;}
 
-  // Se tocando este módulo → pausa/retoma
+  // Tocando este módulo/tópico → pausa/retoma
   if(_mlAudioEl&&_mlModMi===mi){
     if(!_mlAudioEl.paused){
-      _mlAudioEl.pause();
-      _mlSetBtn(mi,'paused');
+      _mlAudioEl.pause();_mlSetBtn(mi,'paused');
     } else {
-      _mlAudioEl.playbackRate=spd;
-      _mlAudioEl.play();
-      _mlSetBtn(mi,'playing');
+      _mlAudioEl.playbackRate=spd;_mlAudioEl.play();_mlSetBtn(mi,'playing');
     }
     return;
   }
 
-  // Para áudio anterior
+  // Para anterior
   _mlStopTudo(false);
   _mlSetBtn(_mlModMi,'idle');
   _mlModMi=mi;
 
-  // Monta fila com o tópico aberto
-  var mod=MODS[mi];
-  var topicoAberto=null,topicoAbertoIdx=-1;
+  // Acha tópico aberto
+  var mod=MODS[mi],topicoAberto=null,topicoIdx=-1;
   mod.topics.forEach(function(t,ti){
     var body=document.getElementById('ml_tbody_'+mi+'_'+ti);
-    if(body&&body.offsetHeight>0&&body.style.display!=='none'){topicoAberto=t;topicoAbertoIdx=ti;}
+    if(body&&body.offsetHeight>0&&body.style.display!=='none'){topicoAberto=t;topicoIdx=ti;}
   });
 
   if(!topicoAberto){
-    // Nenhum tópico aberto → lista os módulos
-    _mlQueue=[('Módulo '+mod.name+'. Tópicos: '+mod.topics.map(function(t){return t.name;}).join(', ')+'.').slice(0,600)];
-    _mlQueueIdx=0;_mlQueueMi=mi;
-    _mlLoading=true;
-    _mlPlayQueue(mi);
+    // Nenhum tópico aberto — narra o nome do módulo
+    var txtMod=('Módulo '+mod.name+'. Tópicos: '+mod.topics.map(function(t){return t.name;}).join(', ')+'.').slice(0,600);
+    _mlLoading=true;_mlSetBtn(mi,'loading');
+    _mlAbort=new AbortController();
+    _mlFetchTTS(txtMod,_mlAbort.signal).then(function(url){
+      _mlLoading=false;_mlAbort=null;_mlPlayUrl(url,spd,mi,null);
+    }).catch(function(e){if(e.name!=='AbortError'){_mlLoading=false;_mlSetBtn(mi,'idle');}});
     return;
   }
 
-  var blocos=_mlExtrairBlocos(topicoAberto.content,topicoAberto.name);
-  if(!blocos.length){showToast('Sem conteúdo para narrar','warn');return;}
-  _mlQueue=blocos;_mlQueueIdx=0;_mlQueueMi=mi;
+  _mlTopIdx=topicoIdx;
+  var key=mi+'_'+topicoIdx;
+  var cached=_mlPreCache[key];
 
-  // Verifica se já tem pré-cache do 1º bloco
-  var cacheKey=mi+'_'+topicoAbertoIdx;
-  var cached=_mlPreCache[cacheKey];
   if(cached&&cached!=='loading'){
-    // ✅ INSTANTÂNEO — usa o cache
-    _mlPreCache[cacheKey]=null; // consome o cache
-    _mlLoading=false;
-    _mlSetBtn(mi,'playing');
-    _mlPlayUrl(cached,spd,function(){
-      URL.revokeObjectURL(cached);
-      _mlQueueIdx=1; // pula o 1º bloco (já tocou)
-      _mlPlayQueue(mi);
-    },function(){_mlSetBtn(mi,'idle');});
-  } else {
-    // Sem cache → carrega normalmente
-    _mlLoading=true;
-    _mlPlayQueue(mi);
+    // ✅ INSTANTÂNEO — usa cache pré-carregado
+    _mlPreCache[key]=null;
+    _mlPlayUrl(cached,spd,mi,null);
+    return;
   }
+
+  // Sem cache → fetch agora (tópico inteiro, 1 chamada)
+  var texto=_mlExtrairTexto(topicoAberto.content,topicoAberto.name);
+  if(!texto.trim()){showToast('Sem conteúdo para narrar','warn');return;}
+  if(!_mlBlocos[key])_mlBlocos[key]=_mlExtrairBlocos(topicoAberto.content,topicoAberto.name);
+  _mlLoading=true;_mlSetBtn(mi,'loading');
+  _mlAbort=new AbortController();
+  var reqKey=key,reqMi=mi;
+  _mlFetchTTS(texto,_mlAbort.signal)
+    .then(function(url){
+      if(_mlModMi!==reqMi){URL.revokeObjectURL(url);return;}
+      _mlLoading=false;_mlAbort=null;
+      _mlPlayUrl(url,spd,mi,null);
+    })
+    .catch(function(e){
+      if(e.name==='AbortError')return;
+      _mlLoading=false;_mlAbort=null;_mlSetBtn(mi,'idle');
+      // Fallback: voz do navegador
+      try{window.speechSynthesis.cancel();}catch(ex){}
+      var utt=new SpeechSynthesisUtterance(texto.slice(0,2000));
+      utt.lang='pt-BR';utt.rate=Math.min(spd,2);
+      utt.onend=function(){_mlSetBtn(mi,'idle');};
+      window.speechSynthesis.speak(utt);
+    });
 }
 
-/* ── CLIQUE EM PARÁGRAFO/TÍTULO — ouve a partir dali ── */
-function mlClickParagraph(mi,ti,elIndex){
-  var mod=MODS[mi];if(!mod||!mod.topics[ti])return;
-  var t=mod.topics[ti];
-  var blocos=_mlExtrairBlocos(t.content,t.name);
-  if(!blocos.length)return;
-  // Para o que está tocando
-  _mlStopTudo(false);
-  _mlSetBtn(_mlModMi,'idle');
-  _mlModMi=mi;
-  // Começa da posição clicada
-  _mlQueue=blocos;
-  _mlQueueIdx=Math.max(0,Math.min(elIndex,blocos.length-1));
-  _mlQueueMi=mi;
-  _mlLoading=true;
-  _mlPlayQueue(mi);
-  // Visual: botão ativo
-  _mlSetBtn(mi,'loading');
+/* ── CLIQUE EM PARÁGRAFO — pula para posição proporcional no áudio ── */
+function mlClickParagraph(mi,ti,blocoIdx){
+  if(!_mlAudioEl||_mlModMi!==mi)return; // só funciona se áudio ativo
+  var key=mi+'_'+ti;
+  var blocos=_mlBlocos[key]||[];
+  if(!blocos.length||!_mlAudioEl.duration)return;
+  // Estimativa de posição: proporção de caracteres até este bloco
+  var totalChars=blocos.reduce(function(s,b){return s+b.length;},0);
+  var charsAte=blocos.slice(0,blocoIdx).reduce(function(s,b){return s+b.length;},0);
+  var proporcao=totalChars>0?charsAte/totalChars:0;
+  _mlAudioEl.currentTime=_mlAudioEl.duration*proporcao;
 }
 
 /* ── Registra cliques em parágrafos/títulos do tópico ── */
@@ -1631,18 +1619,38 @@ function _mlBindTopicClicks(mi,ti){
   var mod=MODS[mi];if(!mod||!mod.topics[ti])return;
   var t=mod.topics[ti];
   var blocos=_mlExtrairBlocos(t.content,t.name);
-  // Mapeia cada elemento clicável ao índice do bloco correspondente
   var els=content.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li');
   els.forEach(function(el,idx){
-    // Encontra o índice do bloco correspondente (pula o prefixo)
-    var blocoIdx=idx+1; // +1 porque o prefixo ocupa o índice 0
+    var blocoIdx=idx+1;
     if(blocoIdx>=blocos.length)return;
-    el.style.cursor='pointer';
-    el.title='Ouvir a partir daqui';
     el.addEventListener('click',function(e){
-      // Só ativa se o áudio estiver tocando este módulo ou inativo
-      e.stopPropagation();
-      mlClickParagraph(mi,ti,blocoIdx);
+      // Só narra se o áudio já estiver ativo neste módulo (tocando ou pausado)
+      // Se o áudio não estiver ativo, o clique é ignorado (deixa o tópico expandir/recolher normalmente)
+      if(_mlModMi===mi&&(_mlAudioEl||_mlLoading)){
+        mlClickParagraph(mi,ti,blocoIdx);
+      }
+      // Se áudio não ativo: não faz nada com o áudio, evento sobe normalmente
+    });
+    // Tooltip e cursor só aparecem quando áudio está ativo
+    el.addEventListener('mouseenter',function(){
+      if(_mlModMi===mi&&(_mlAudioEl||_mlLoading)){
+        el.style.cursor='pointer';
+        el.title='▶ Ouvir a partir daqui';
+        el.style.background='rgba(91,127,255,0.08)';
+        el.style.borderRadius='4px';
+        el.style.outline='1px solid rgba(91,127,255,0.2)';
+      } else {
+        el.style.cursor='';
+        el.title='';
+        el.style.background='';
+        el.style.borderRadius='';
+        el.style.outline='';
+      }
+    });
+    el.addEventListener('mouseleave',function(){
+      el.style.background='';
+      el.style.borderRadius='';
+      el.style.outline='';
     });
   });
 }
