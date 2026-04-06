@@ -177,25 +177,6 @@ var MA_COURSES = [
     color: '#ff6b6b',
     addedTs: 1775250233247,
     active: true
-  },
-  {
-    coverImg: 'assets/capas/ia2.png',
-    id: 'ia2',
-    name: 'Inteligência Artificial na Prática',
-    desc: 'Do zero ao avançado: domine a Inteligência Artificial com aplicações reais, ferramentas modernas e estratégias práticas para transformar sua vida e carreira.',
-    file: 'curso-ia-pratica.html',
-    cat: 'Tecnologia',
-    modules: 27,
-    topics: 189,
-    hours: 12,
-    quizzes: 81,
-    salt: 'IA_HENRY_2026_MASTER',
-    ak: 'ia_auth',
-    storagePrefix: 'ia_',
-    icon: '💻',
-    color: '#5b7fff',
-    addedTs: 1775496980788,
-    active: true
   }
 ];
 var MA_CATS = [
