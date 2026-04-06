@@ -7,6 +7,11 @@
 /* ── HTML ESTRUTURAL (injetado automaticamente no body) ── */
 (function injectShell(){
   var shell = `
+<style>
+.mlc-play-btn.loading{background:rgba(91,127,255,0.15)!important;cursor:wait!important;pointer-events:none;}
+.mlc-play-btn.loading svg{animation:mlc-spin 1s linear infinite;}
+@keyframes mlc-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+</style>
 <div class="toast" id="toast"></div>
 
 <div class="lock-screen" id="lockScreen">
@@ -1385,75 +1390,131 @@ function checkStreak(){
   }
 }
 
-/* ── ÁUDIO ÚNICO DO MÓDULO (lê todo o conteúdo dos tópicos em sequência) ── */
-var _mlModSynth=null,_mlModMi=-1,_mlAudioEl=null;
+/* ── ÁUDIO DO MÓDULO — voz IA instantânea, anti-duplo-clique ── */
+var _mlModMi=-1,_mlAudioEl=null,_mlLoading=false,_mlAbort=null;
+
+function _mlStopTudo(){
+  // Para fetch em andamento
+  if(_mlAbort){try{_mlAbort.abort();}catch(e){}}_mlAbort=null;
+  // Para áudio em reprodução
+  if(_mlAudioEl){try{_mlAudioEl.pause();_mlAudioEl.src='';}catch(e){}}_mlAudioEl=null;
+  // Mata qualquer voz do navegador (Web Speech API)
+  try{window.speechSynthesis.cancel();}catch(e){}
+  // Limpa estado do botão anterior
+  var ob=document.getElementById('ml_abtn_'+_mlModMi);
+  var os=document.getElementById('ml_ast_'+_mlModMi);
+  if(ob)ob.classList.remove('playing','loading');
+  if(os)os.textContent='Clique para ouvir';
+  _mlLoading=false;
+}
+
 function mlToggleModAudio(mi){
   var btn=document.getElementById('ml_abtn_'+mi);
   var st=document.getElementById('ml_ast_'+mi);
   var spdEl=document.getElementById('ml_aspd_'+mi);
   var spd=parseFloat(spdEl?spdEl.value:1)||1;
-  if(_mlAudioEl&&_mlModMi===mi&&!_mlAudioEl.paused){
-    _mlAudioEl.pause();
-    if(btn)btn.classList.remove('playing');
-    if(st)st.textContent='Pausado';
+
+  // ── Se está carregando (loading) → cancela tudo e para ──
+  if(_mlLoading){
+    _mlStopTudo();
+    _mlModMi=mi;
     return;
   }
-  if(_mlAudioEl&&_mlModMi===mi&&_mlAudioEl.paused){
-    _mlAudioEl.playbackRate=spd;_mlAudioEl.play();
-    if(btn)btn.classList.add('playing');
-    if(st)st.textContent='Narrando...';
+
+  // ── Se já está tocando este módulo → pausa/retoma ──
+  if(_mlAudioEl&&_mlModMi===mi){
+    if(!_mlAudioEl.paused){
+      _mlAudioEl.pause();
+      if(btn)btn.classList.remove('playing');
+      if(st)st.textContent='⏸ Pausado';
+    } else {
+      _mlAudioEl.playbackRate=spd;_mlAudioEl.play();
+      if(btn)btn.classList.add('playing');
+      if(st)st.textContent='🎙️ Narrando...';
+    }
     return;
   }
-  if(_mlAudioEl){
-    _mlAudioEl.pause();_mlAudioEl.src='';_mlAudioEl=null;
-    var ob=document.getElementById('ml_abtn_'+_mlModMi);
-    var os=document.getElementById('ml_ast_'+_mlModMi);
-    if(ob)ob.classList.remove('playing');
-    if(os)os.textContent='Clique para ouvir';
-  }
-  var mod=MODS[mi];var txt='';
-  mod.topics.forEach(function(t){
-    var tmp=document.createElement('div');tmp.innerHTML=t.content||'';
-    var t2=(tmp.textContent||'').replace(/\s+/g,' ').trim();
-    if(t2)txt+=t.name+'. '+t2+' ';
-  });
-  if(!txt.trim()){showToast('Sem conteudo para narrar','warn');return;}
-  if(btn)btn.classList.add('playing');
-  if(st)st.textContent='Gerando audio IA...';
+
+  // ── Para qualquer áudio anterior e começa novo ──
+  _mlStopTudo();
   _mlModMi=mi;
+
+  // ── Pega APENAS o tópico aberto na tela ──
+  var mod=MODS[mi];var txt='';
+  var topicoAberto=null;
+  mod.topics.forEach(function(t,ti){
+    var body=document.getElementById('ml_tbody_'+mi+'_'+ti);
+    if(body&&body.offsetHeight>0&&body.style.display!=='none'){topicoAberto=t;}
+  });
+  if(topicoAberto){
+    var tmp=document.createElement('div');tmp.innerHTML=topicoAberto.content||'';
+    txt=(topicoAberto.name+'. '+(tmp.textContent||'').replace(/\s+/g,' ').trim()).slice(0,1200);
+  } else {
+    txt=('Módulo '+mod.name+'. Tópicos: '+mod.topics.map(function(t){return t.name;}).join(', ')+'.').slice(0,600);
+  }
+  if(!txt.trim()){showToast('Abra um tópico para narrar','warn');return;}
+
+  // ── Bloqueia novos cliques durante o loading ──
+  _mlLoading=true;
+  if(btn){btn.classList.add('loading');btn.classList.remove('playing');}
+  if(st)st.textContent='⏳ Gerando áudio...';
+
   var ttsUrl=window.MA_TTS_URL||'';
   if(!ttsUrl){
-    // Fallback navegador se nao configurado
-    var utt=new SpeechSynthesisUtterance(txt.slice(0,2000));
+    // Fallback: voz do navegador
+    _mlLoading=false;
+    if(btn)btn.classList.remove('loading');
+    var utt=new SpeechSynthesisUtterance(txt);
     utt.lang='pt-BR';utt.rate=spd;
-    utt.onstart=function(){if(st)st.textContent='Narrando...';};
-    utt.onend=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluido';};
+    utt.onstart=function(){if(btn)btn.classList.add('playing');if(st)st.textContent='Narrando...';};
+    utt.onend=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluído';};
     window.speechSynthesis.speak(utt);
     return;
   }
+
+  // ── Fetch com AbortController para cancelar se o aluno clicar de novo ──
+  _mlAbort=new AbortController();
+  var reqMi=mi; // captura o mi desta requisição
   fetch(ttsUrl,{
     method:'POST',
+    signal:_mlAbort.signal,
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({text:txt.slice(0,4000),voice:window.MA_TTS_VOICE||'onyx'})
+    body:JSON.stringify({text:txt,voice:window.MA_TTS_VOICE||'onyx'})
   })
   .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.blob();})
   .then(function(blob){
+    // Se o módulo mudou enquanto carregava → descarta
+    if(_mlModMi!==reqMi){URL.revokeObjectURL(URL.createObjectURL(blob));return;}
+    _mlLoading=false;
+    _mlAbort=null;
     var url=URL.createObjectURL(blob);
     _mlAudioEl=new Audio(url);
     _mlAudioEl.playbackRate=spd;
     _mlAudioEl.play();
-    if(btn)btn.classList.add('playing');
-    if(st)st.textContent='Narrando com voz IA...';
-    _mlAudioEl.onended=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluido';URL.revokeObjectURL(url);_mlAudioEl=null;};
-    _mlAudioEl.onerror=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Erro';_mlAudioEl=null;};
+    if(btn){btn.classList.remove('loading');btn.classList.add('playing');}
+    if(st)st.textContent='🎙️ Narrando com IA...';
+    _mlAudioEl.onended=function(){
+      if(btn)btn.classList.remove('playing');
+      if(st)st.textContent='Concluído';
+      URL.revokeObjectURL(url);_mlAudioEl=null;
+    };
+    _mlAudioEl.onerror=function(){
+      if(btn)btn.classList.remove('playing','loading');
+      if(st)st.textContent='Erro no áudio';
+      _mlAudioEl=null;
+    };
   })
   .catch(function(e){
-    console.error('TTS:',e);
-    if(btn)btn.classList.remove('playing');
-    if(st)st.textContent='Usando voz do navegador...';
-    var utt2=new SpeechSynthesisUtterance(txt.slice(0,2000));
+    if(e.name==='AbortError')return; // cancelado intencionalmente — ignora
+    console.error('TTS erro:',e);
+    _mlLoading=false;_mlAbort=null;
+    if(btn)btn.classList.remove('loading','playing');
+    // Fallback voz navegador
+    if(st)st.textContent='Voz do navegador...';
+    try{window.speechSynthesis.cancel();}catch(ex){}
+    var utt2=new SpeechSynthesisUtterance(txt);
     utt2.lang='pt-BR';utt2.rate=spd;
-    utt2.onend=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluido';};
+    utt2.onend=function(){if(btn)btn.classList.remove('playing');if(st)st.textContent='Concluído';};
     window.speechSynthesis.speak(utt2);
   });
 }
