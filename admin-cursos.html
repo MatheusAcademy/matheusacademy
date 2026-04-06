@@ -1054,20 +1054,6 @@ textarea{resize:vertical;min-height:54px}
       <div id="audit-list" style="max-height:300px;overflow-y:auto"></div>
     </div>
 
-    <!-- 9b. Histórico de Cursos Publicados -->
-    <div class="card" id="historico-pub-card">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--txt)">🗂️ Histórico de Cursos Publicados</div>
-          <div style="font-size:11px;color:var(--t2);margin-top:2px">Todos os cursos adicionados via admin, com data e hora</div>
-        </div>
-        <button class="btns" onclick="limparHistoricoPub()">🗑 Limpar</button>
-      </div>
-      <div id="historico-pub-list">
-        <div style="color:var(--t3);font-size:11px;padding:8px;text-align:center">Nenhum curso publicado via admin ainda.</div>
-      </div>
-    </div>
-
     <!-- 10. Backup local do courses.js -->
     <div class="card">
       <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">💾 Backup do courses.js</div>
@@ -1423,7 +1409,12 @@ textarea{resize:vertical;min-height:54px}
 // ================================================================
 
 // ── CONFIGURAÇÃO DA SENHA ──
-var ADMIN_SENHA = 'matheus2026admin';
+// Para trocar a senha: gere o hash SHA-256 da nova senha em:
+// https://emn178.github.io/online-tools/sha256.html
+// e substitua o valor abaixo.
+
+// Senha padrão: matheus2026admin
+var ADMIN_HASH = 'd5a8a6feebd3d5c7e64d21ceb4bc6b1852ccb043176fb8b9a6f3c7c02d217039';
 
 // Sessão dura 8 horas (em ms)
 var SESSION_DURATION = 8 * 60 * 60 * 1000;
@@ -1439,92 +1430,16 @@ var KEY_SESSION = 'ma_admin_session';
 var KEY_TENTATIVAS = 'ma_admin_tentativas';
 var KEY_BLOQUEIO = 'ma_admin_bloqueio';
 
-// ── SHA-256 via Web Crypto (funciona em HTTPS e localhost) ──
-// Fallback puro JS para file:// onde crypto.subtle não está disponível
+// ── SHA-256 via Web Crypto ──
 async function sha256Hex(msg) {
-  try {
-    if (window.crypto && window.crypto.subtle) {
-      var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
-      return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
-    }
-  } catch(e) {}
-  // Fallback: implementação pura JS de SHA-256
-  return sha256JS(msg);
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
 }
 
-function sha256JS(ascii) {
-  function rightRotate(value, amount) { return (value >>> amount) | (value << (32 - amount)); }
-  var mathPow = Math.pow;
-  var maxWord = mathPow(2, 32);
-  var lengthProperty = 'length';
-  var i, j, result = '';
-  var words = [];
-  var asciiBitLength = ascii[lengthProperty] * 8;
-  var hash = [];
-  var k = [];
-  var primeCounter = 0;
-  var isComposite = {};
-  for (var candidate = 2; primeCounter < 64; candidate++) {
-    if (!isComposite[candidate]) {
-      for (i = 0; i < 313; i += candidate) isComposite[i] = candidate;
-      hash[primeCounter] = (mathPow(candidate, .5) * maxWord) | 0;
-      k[primeCounter++] = (mathPow(candidate, 1/3) * maxWord) | 0;
-    }
-  }
-  ascii += '\x80';
-  while (ascii[lengthProperty] % 64 - 56) ascii += '\x00';
-  for (i = 0; i < ascii[lengthProperty]; i++) {
-    j = ascii.charCodeAt(i);
-    if (j >> 8) return '';
-    words[i >> 2] |= j << ((3 - i) % 4) * 8;
-  }
-  words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
-  words[words[lengthProperty]] = (asciiBitLength);
-  for (j = 0; j < words[lengthProperty];) {
-    var W = words.slice(j, j += 16);
-    var oldHash = hash.slice(0);
-    for (i = 0; i < 64; i++) {
-      var w = W[i - 15], r1 = rightRotate(w, 7) ^ rightRotate(w, 18) ^ (w >>> 3);
-      var w2 = W[i - 2], r2 = rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10);
-      W[i] = (W[i - 16] + r1 + W[i - 7] + r2) | 0;
-      var a = hash[0], e = hash[4];
-      var S1 = rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25);
-      var ch = (e & hash[5]) ^ (~e & hash[6]);
-      var temp1 = (hash[7] + S1 + ch + k[i] + W[i]) | 0;
-      var S0 = rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22);
-      var maj = (a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]);
-      var temp2 = (S0 + maj) | 0;
-      hash = [(temp1 + temp2) | 0].concat(hash);
-      hash[4] = (hash[4] + temp1) | 0;
-      hash.length = 8;
-    }
-    hash = hash.map(function(a, i) { return (a + oldHash[i]) | 0; });
-  }
-  for (i = 0; i < 8; i++) {
-    for (j = 3; j + 1; j--) {
-      var b = (hash[i] >> (j * 8)) & 255;
-      result += ((b < 16) ? 0 : '') + b.toString(16);
-    }
-  }
-  return result;
-}
-
-// ── VERIFICAR SESSÃO ATIVA ──
+// ── VERIFICAR SESSÃO — sem senha, acesso direto ──
 function verificarSessao() {
-  // Limpar bloqueio expirado automaticamente
-  var bloqueioTs = parseInt(localStorage.getItem(KEY_BLOQUEIO)||'0');
-  if (bloqueioTs && (Date.now() - bloqueioTs) >= BLOCK_TIME) {
-    localStorage.removeItem(KEY_BLOQUEIO);
-    localStorage.removeItem(KEY_TENTATIVAS);
-  }
-  try {
-    var s = JSON.parse(localStorage.getItem(KEY_SESSION)||'{}');
-    if (s.ts && (Date.now() - s.ts) < SESSION_DURATION) {
-      liberar();
-      return true;
-    }
-  } catch(e) {}
-  return false;
+  liberar();
+  return true;
 }
 
 // ── LIBERAR ADMIN ──
@@ -1539,7 +1454,8 @@ function liberar() {
 }
 
 // ── TENTAR LOGIN ──
-function tentarLogin() {
+async function tentarLogin() {
+  // Verificar bloqueio
   var bloqueioTs = parseInt(localStorage.getItem(KEY_BLOQUEIO)||'0');
   if (bloqueioTs && (Date.now() - bloqueioTs) < BLOCK_TIME) {
     mostrarBloqueio(bloqueioTs);
@@ -1550,24 +1466,41 @@ function tentarLogin() {
   var senhaInput = el('lock-senha');
   var senha = senhaInput.value;
 
-  if (!senha) { senhaInput.style.borderColor = '#ef4444'; senhaInput.focus(); return; }
+  if (!senha) {
+    senhaInput.style.borderColor = '#ef4444';
+    senhaInput.focus();
+    return;
+  }
 
-  if (senha === ADMIN_SENHA) {
+  // Loading
+  btn.disabled = true;
+  btn.innerHTML = '<div class="sp" style="border-top-color:#fff;width:16px;height:16px;border-width:2px"></div> Verificando...';
+
+  var hash = await sha256Hex(senha);
+
+  if (hash === ADMIN_HASH) {
+    // ✅ Senha correta
     btn.innerHTML = '✅ Acesso liberado!';
     btn.style.background = '#22c55e';
     setTimeout(liberar, 600);
   } else {
+    // ❌ Senha errada
+    btn.disabled = false;
     btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Entrar no Admin';
+
     senhaInput.value = '';
     senhaInput.style.borderColor = '#ef4444';
     senhaInput.style.boxShadow = '0 0 0 3px rgba(239,68,68,.13)';
     el('lock-erro').style.display = 'block';
     senhaInput.focus();
 
+    // Contabilizar tentativas
     var tent = parseInt(localStorage.getItem(KEY_TENTATIVAS)||'0') + 1;
     localStorage.setItem(KEY_TENTATIVAS, tent);
+
     var restantes = MAX_TENTATIVAS - tent;
     if (restantes <= 0) {
+      // Bloquear
       localStorage.setItem(KEY_BLOQUEIO, Date.now());
       localStorage.removeItem(KEY_TENTATIVAS);
       mostrarBloqueio(Date.now());
@@ -1576,6 +1509,13 @@ function tentarLogin() {
       av.style.display = 'block';
       av.textContent = '⚠️ Atenção: ' + restantes + ' tentativa(s) restante(s) antes do bloqueio.';
     }
+
+    // Pequena animação de shake
+    var card = el('lock-senha').parentElement.parentElement;
+    card.style.transform = 'translateX(-6px)';
+    setTimeout(function(){ card.style.transform = 'translateX(6px)'; }, 80);
+    setTimeout(function(){ card.style.transform = 'translateX(-4px)'; }, 160);
+    setTimeout(function(){ card.style.transform = 'translateX(0)'; }, 240);
   }
 }
 
@@ -2062,12 +2002,7 @@ async function publish(){
   var ok=await registerInCourses(meta,'rUp','');
   setProg(false,'',0,'');
   btn.disabled=false;
-  if(ok){
-    addAudit('✅ Publicou curso: "'+meta.name+'" (id: '+meta.id+', arquivo: '+meta.file+')');
-    addHistoricoPub(meta);
-    resetForm();
-    loadList();
-  }
+  if(ok){addAudit('✅ Publicou: "'+meta.name+'" (id:'+meta.id+')');resetForm();loadList();}
 }
 
 // PUBLICAR MANUAL
@@ -2088,11 +2023,7 @@ async function pubManual(){
   setProg(true,'Registrando...',30,'2');
   var ok=await registerInCourses(meta,'rMn','2');
   setProg(false,'',0,'2');
-  if(ok){
-    addAudit('✅ Registrou curso manual: "'+meta.name+'" (id: '+meta.id+')');
-    addHistoricoPub(meta);
-    loadList();
-  }
+  if(ok){addAudit('✅ Registrou manual: "'+meta.name+'" (id:'+meta.id+')');loadList();}
 }
 
 // ATUALIZAR CAMPO (active/free)
@@ -2148,9 +2079,9 @@ async function loadList(){
   var fd=await res.json();
   var content=b64d(fd.content);
   var courses=[];
-  // Regex mais permissiva: divide em qualquer bloco que tenha id:
-  var blocks = content.split(/(?=\s*\{[\s\S]*?id:\s*['"])/);
-  blocks.forEach(function(b){
+  var re2=new RegExp('{([^{}]*)}','g'),m2;
+  while((m2=re2.exec(content))!==null){
+    var b=m2[1];
     var im=b.match(/id:\s*['"]([^'"]+)['"]/);
     var nm=b.match(/name:\s*['"]([^'"]+)['"]/);
     var ic=b.match(/icon:\s*['"]([^'"]*)['"]/);
@@ -2158,40 +2089,28 @@ async function loadList(){
     var fm=b.match(/free:\s*(true|false)/);
     var cm=b.match(/cat:\s*['"]([^'"]+)['"]/);
     var ts=b.match(/addedTs:\s*(\d+)/);
-    if(!im||!nm)return;
-    if(b.indexOf('TEMPLATE')!==-1)return;
-    // Ignora blocos que não são objetos de curso (ex: MA_CATS, variáveis soltas)
-    if(!b.match(/salt:\s*['"]/))return;
-    courses.push({
-      id:im[1],name:nm[1],icon:ic?ic[1]:'📚',
-      active:am?am[1]==='true':true,
-      free:fm?fm[1]==='true':false,
-      cat:cm?cm[1]:'—',
-      addedTs:ts?parseInt(ts[1]):0
-    });
-  });
-  // Ordenar do mais recente para o mais antigo
-  courses.sort(function(a,b){return b.addedTs - a.addedTs;});
+    if(!im||!nm)continue;
+    if(b.indexOf('TEMPLATE')!==-1)continue;
+    if(!b.match(/salt:\s*['"]/))continue;
+    courses.push({id:im[1],name:nm[1],icon:ic?ic[1]:'\ud83d\udcda',active:am?am[1]==='true':true,free:fm?fm[1]==='true':false,cat:cm?cm[1]:'\u2014',addedTs:ts?parseInt(ts[1]):0});
+  }
+  courses.sort(function(a,b){return b.addedTs-a.addedTs;});
   el('cc').textContent='('+courses.length+' cursos)';
   var l=el('list');
-  if(!courses.length){l.innerHTML='<div style="color:var(--t3);font-size:12px;padding:8px">Nenhum curso encontrado. Verifique a conexão com o GitHub.</div>';return;}
+  if(!courses.length){l.innerHTML='<div style="color:var(--t3);font-size:12px;padding:8px">Nenhum curso encontrado. Conecte o GitHub e clique Atualizar.</div>';return;}
   l.innerHTML=courses.map(function(c2){
-    var vb=c2.active?'<span class="cb ba">Visível</span>':'<span class="cb bo">Oculto</span>';
-    var tb=c2.free?'<span class="cb bf">Grátis</span>':'<span class="cb bp">Pago</span>';
-    var vCls=c2.active?'ab ao':'ab av', vTxt=c2.active?'🙈 Ocultar':'👁️ Visível', vVal=c2.active?'false':'true';
-    var fCls=c2.free?'ab apd':'ab afr', fTxt=c2.free?'🔒 Tornar pago':'🎁 Gratuito', fVal=c2.free?'false':'true';
-    var cid=c2.id, cn=escH(c2.name);
-    // Formatar data de publicação
-    var dataPub = '';
-    if(c2.addedTs > 0){
-      var d = new Date(c2.addedTs);
-      dataPub = ' · 📅 '+d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-    }
+    var vb=c2.active?'<span class="cb ba">Vis\u00edvel</span>':'<span class="cb bo">Oculto</span>';
+    var tb=c2.free?'<span class="cb bf">Gr\u00e1tis</span>':'<span class="cb bp">Pago</span>';
+    var vCls=c2.active?'ab ao':'ab av',vTxt=c2.active?'\ud83d\ude48 Ocultar':'\ud83d\udc41\ufe0f Vis\u00edvel',vVal=c2.active?'false':'true';
+    var fCls=c2.free?'ab apd':'ab afr',fTxt=c2.free?'\ud83d\udd12 Tornar pago':'\ud83c\udf81 Gratuito',fVal=c2.free?'false':'true';
+    var cid=c2.id,cn=escH(c2.name);
+    var dataPub='';
+    if(c2.addedTs>0){var dp=new Date(c2.addedTs);dataPub=' \u00b7 \ud83d\udcc5 '+dp.toLocaleDateString('pt-BR')+' '+dp.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
     return '<div class="cr"><div class="cm">'
       +'<div class="ci2">'+c2.icon+'</div>'
-      +'<div class="cn"><b>'+cn+'</b><small>id: '+cid+' · '+c2.cat+dataPub+'</small></div>'
+      +'<div class="cn"><b>'+cn+'</b><small>id: '+cid+' \u00b7 '+c2.cat+dataPub+'</small></div>'
       +'<div class="cbs">'+vb+tb+'</div>'
-      +'<button class="xb" onclick="togP(\''+cid+'\')">⋯</button>'
+      +'<button class="xb" onclick="togP(\''+cid+'\')">\u22ef</button>'
       +'</div><div class="ap" id="ap_'+cid+'">'
       +'<div class="ar">'
       +'<button class="'+vCls+'" onclick="updCourse(\''+cid+'\',\'active\',\''+vVal+'\',this)">'+vTxt+'</button>'
@@ -2202,7 +2121,6 @@ async function loadList(){
       +'</div></div></div>';
   }).join('');
 }
-
 // HELPERS
 function togP(id){el('ap_'+id).classList.toggle('on');}
 function setProg(show,label,pct,sfx){
@@ -4149,84 +4067,7 @@ async function salvarOrdemCursos() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   11. HISTÓRICO DE CURSOS PUBLICADOS
-   ══════════════════════════════════════════════════════════════ */
-var _HP_KEY = 'ma_admin_historico_pub';
-
-function getHistoricoPub() {
-  try { return JSON.parse(localStorage.getItem(_HP_KEY) || '[]'); } catch(e) { return []; }
-}
-function saveHistoricoPub(list) { localStorage.setItem(_HP_KEY, JSON.stringify(list)); }
-
-function addHistoricoPub(meta) {
-  var list = getHistoricoPub();
-  list.unshift({
-    id: meta.id,
-    name: meta.name,
-    cat: meta.cat,
-    icon: meta.icon || '🎓',
-    file: meta.file,
-    modules: meta.modules,
-    topics: meta.topics,
-    salt: meta.salt,
-    active: meta.active,
-    free: meta.free,
-    ts: Date.now()
-  });
-  // Manter apenas os últimos 100 registros
-  if (list.length > 100) list = list.slice(0, 100);
-  saveHistoricoPub(list);
-  renderHistoricoPub();
-}
-
-function renderHistoricoPub() {
-  var el2 = el('historico-pub-list'); if (!el2) return;
-  var items = getHistoricoPub();
-  if (!items.length) {
-    el2.innerHTML = '<div style="color:var(--t3);font-size:11px;padding:8px;text-align:center">Nenhum curso publicado via admin ainda.</div>';
-    return;
-  }
-  el2.innerHTML = items.map(function(p, i) {
-    var d = new Date(p.ts);
-    var dataStr = d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
-    var statusV = p.active
-      ? '<span style="background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.2);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:700">VISÍVEL</span>'
-      : '<span style="background:rgba(245,158,11,.09);color:#fcd34d;border:1px solid rgba(245,158,11,.2);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:700">OCULTO</span>';
-    var statusA = p.free
-      ? '<span style="background:rgba(96,165,250,.1);color:var(--acc2);border:1px solid rgba(59,130,246,.2);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:700">GRÁTIS</span>'
-      : '<span style="background:rgba(167,139,250,.09);color:#c4b5fd;border:1px solid rgba(167,139,250,.2);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:700">PAGO</span>';
-    return '<div style="background:var(--card);border:1px solid var(--brd);border-radius:9px;padding:11px 14px;margin-bottom:7px;display:flex;align-items:flex-start;gap:10px">'
-      + '<div style="font-size:22px;flex-shrink:0;line-height:1">' + (p.icon || '🎓') + '</div>'
-      + '<div style="flex:1;min-width:0">'
-      + '<div style="font-size:13px;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + escH(p.name) + '</div>'
-      + '<div style="font-size:10px;color:var(--t3);font-family:var(--mono);margin-top:1px">id: ' + p.id + ' · ' + p.cat + ' · ' + (p.modules||'?') + ' módulos · ' + (p.topics||'?') + ' tópicos</div>'
-      + '<div style="font-size:10px;color:var(--t3);margin-top:2px">📄 ' + p.file + '</div>'
-      + '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px">' + statusV + statusA + '</div>'
-      + '</div>'
-      + '<div style="flex-shrink:0;text-align:right">'
-      + '<div style="font-size:10px;color:var(--t2);font-family:var(--mono);white-space:nowrap">📅 ' + dataStr + '</div>'
-      + '<button onclick="removerHistoricoPub(' + i + ')" style="margin-top:6px;background:none;border:none;color:var(--t3);cursor:pointer;font-size:13px;padding:2px 4px;border-radius:4px" title="Remover deste histórico">✕</button>'
-      + '</div>'
-      + '</div>';
-  }).join('');
-}
-
-function removerHistoricoPub(i) {
-  var list = getHistoricoPub(); list.splice(i, 1);
-  saveHistoricoPub(list); renderHistoricoPub();
-}
-
-function limparHistoricoPub() {
-  if (!confirm('Limpar todo o histórico de publicações?')) return;
-  saveHistoricoPub([]); renderHistoricoPub();
-}
-
-// Inicializar histórico ao carregar a página
-document.addEventListener('DOMContentLoaded', function() {
-  renderHistoricoPub();
-});
-
-
+   7. CARREGAR ORDEM DOS CURSOS
    ══════════════════════════════════════════════════════════════ */
 async function carregarOrdemCursos() {
   var container = el('ordem-container');
