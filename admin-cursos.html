@@ -86,7 +86,7 @@ textarea{resize:vertical;min-height:54px}
 .lt{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em}
 .cr{background:var(--sf);border:1px solid var(--brd);border-radius:10px;margin-bottom:8px;transition:.15s}
 .cr:hover{border-color:var(--t3)}
-.cm{display:flex;align-items:center;gap:10px;padding:11px 14px}
+.cm{display:flex;align-items:center;gap:8px;padding:11px 14px;flex-wrap:wrap}
 .ci2{font-size:20px;flex-shrink:0}.cn{flex:1;min-width:0}
 .cn b{font-size:13px;font-weight:700;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cn small{font-size:10px;color:var(--t3);font-family:var(--mono)}
@@ -109,6 +109,8 @@ textarea{resize:vertical;min-height:54px}
 .afr{border-color:rgba(96,165,250,.4)!important;color:var(--acc2)!important;background:rgba(59,130,246,.07)!important}
 .apd{border-color:rgba(167,139,250,.4)!important;color:#c4b5fd!important;background:rgba(167,139,250,.07)!important}
 .adl{border-color:rgba(239,68,68,.3)!important;color:#fca5a5!important;background:rgba(239,68,68,.07)!important}
+/* Botões Editar/Duplicar na lista principal */
+.cr .ab{white-space:nowrap}
 /* IDs chips */
 .ecw{margin-top:10px;display:none}
 .ect{font-size:9px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
@@ -2110,6 +2112,8 @@ async function loadList(){
       +'<div class="ci2">'+c2.icon+'</div>'
       +'<div class="cn"><b>'+cn+'</b><small>id: '+cid+' \u00b7 '+c2.cat+dataPub+'</small></div>'
       +'<div class="cbs">'+vb+tb+'</div>'
+      +'<button class="ab afr" onclick="abrirEditorDaLista(\''+cid+'\')" style="font-size:10px;padding:5px 10px;margin-right:4px">\u270f\ufe0f Editar</button>'
+      +'<button class="ab apd" onclick="duplicarCursoDaLista(\''+cid+'\')" style="font-size:10px;padding:5px 10px;margin-right:4px">\ud83d\udccb Duplicar</button>'
       +'<button class="xb" onclick="togP(\''+cid+'\')">\u22ef</button>'
       +'</div><div class="ap" id="ap_'+cid+'">'
       +'<div class="ar">'
@@ -2123,6 +2127,23 @@ async function loadList(){
 }
 // HELPERS
 function togP(id){el('ap_'+id).classList.toggle('on');}
+
+// ── Editar / Duplicar direto da lista principal ──
+async function abrirEditorDaLista(id){
+  if(!_cursosCarregados.length) await carregarCursosEditor();
+  var c2 = _cursosCarregados.find(function(x){ return x.id===id; });
+  if(!c2){ await carregarCursosEditor(); c2 = _cursosCarregados.find(function(x){ return x.id===id; }); }
+  if(!c2){ alert('❌ Curso "'+id+'" não encontrado. Clique em Atualizar e tente novamente.'); return; }
+  swTab('ed');
+  setTimeout(function(){ abrirEditor(id); }, 300);
+}
+async function duplicarCursoDaLista(id){
+  if(!_cursosCarregados.length) await carregarCursosEditor();
+  var c2 = _cursosCarregados.find(function(x){ return x.id===id; });
+  if(!c2){ await carregarCursosEditor(); c2 = _cursosCarregados.find(function(x){ return x.id===id; }); }
+  if(!c2){ alert('❌ Curso "'+id+'" não encontrado. Clique em Atualizar e tente novamente.'); return; }
+  duplicarCurso(id);
+}
 function setProg(show,label,pct,sfx){
   sfx=sfx||'';
   var w=el('pw'+sfx); if(!w)return;
