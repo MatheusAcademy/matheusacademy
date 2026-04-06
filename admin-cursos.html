@@ -2599,6 +2599,17 @@ function abrirEditor(id){
   var it=el('editem_'+id); if(it){ it.classList.add('selecionado'); }
   el('ed-form').style.display='block';
   el('ed-form').scrollIntoView({behavior:'smooth',block:'start'});
+  // Mostrar capa atual no campo de edição
+  if (c2.coverImg) {
+    var prevE = el('capaPreviewE');
+    var areaE = el('capaAreaE');
+    var nomeE = el('capaNomeE');
+    var txtE = el('capaUploadTxtE');
+    if (prevE) { prevE.src = c2.coverImg; }
+    if (areaE) { areaE.classList.add('tem-img'); }
+    if (nomeE) { nomeE.textContent = 'Capa atual: ' + c2.coverImg; }
+    if (txtE) { txtE.innerHTML = '✅ Capa atual carregada — arraste outra para substituir'; }
+  }
   el('rEd').className='res';
 }
 
@@ -2609,6 +2620,15 @@ async function salvarEdicaoCurso(){
   var id = _cursoEditando.id;
   var c=g(); if(!c.t){ showRes('rEd','er','❌ Configure o token GitHub.'); return; }
   showRes('rEd','ld','<div class="sp"></div> Salvando alterações...');
+  // Upload da nova capa se selecionada
+  var novaCapaFile = _capaFiles['capaAreaE'];
+  var novaCapaImg = _cursoEditando.coverImg || ('assets/capas/'+id+'.png');
+  if (novaCapaFile) {
+    try {
+      showRes('rEd','ld','<div class="sp"></div> Subindo nova capa...');
+      novaCapaImg = await uploadCapa(novaCapaFile, id);
+    } catch(e) { console.warn('Erro ao subir capa:', e); }
+  }
   // Recarregar courses.js
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   if(!res.ok){ showRes('rEd','er','❌ Erro ao carregar courses.js'); return; }
@@ -2651,6 +2671,7 @@ async function salvarEdicaoCurso(){
   var idioma=el('ed-idioma').value; if(idioma&&idioma!=='pt-BR') extras+="    idioma: '"+esc(idioma)+"',\n";
   var fr=m2.free?"\n    free: true,":'';
   var newBlock="  {\n"
+    +"    coverImg: '"+esc(novaCapaImg)+"',\n"
     +"    id: '"+esc(m2.id)+"',\n"
     +"    name: '"+esc(m2.name)+"',\n"
     +"    desc: '"+esc(m2.desc)+"',\n"
