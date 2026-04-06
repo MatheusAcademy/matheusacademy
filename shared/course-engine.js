@@ -287,17 +287,6 @@
         </div>
       </div>
 
-      <!-- BARRA DE FONTE — acima do acordeão -->
-      <div class="reading-toolbar" style="margin:0;border-radius:0;border-left:none;border-right:none;">
-        <div class="rt-section">
-          <span class="rt-label">Aa Fonte</span>
-        </div>
-        <div class="rt-section">
-          <button class="font-size-btn" onclick="changeFontSize(-1)" title="Diminuir fonte">−</button>
-          <span class="font-size-display" id="fontSizeDisplay">14px</span>
-          <button class="font-size-btn" onclick="changeFontSize(1)" title="Aumentar fonte">+</button>
-        </div>
-      </div>
 
       <!-- ACORDEÃO DE TÓPICOS + QUIZ + FLASHCARDS DO MÓDULO -->
       <div class="mod-lesson-wrap" id="modLessonWrap">
@@ -1004,19 +993,31 @@ function renderModLesson(mi){
   var html='';
 
   /* ── Cabeçalho + áudio ── */
-  html+='<div class="ml-audio-ctrl" id="ml_audio_'+mi+'">'
-    +'<button class="ml-audio-btn" id="ml_abtn_'+mi+'" onclick="mlToggleModAudio('+mi+')" title="Ouvir narração">▶️</button>'
-    +'<div class="ml-audio-info">'
-    +'<span class="ml-audio-label">🎙️ Narração por IA</span>'
-    +'<span class="ml-audio-status" id="ml_ast_'+mi+'">Clique ▶️ para ouvir</span>'
+  html+='<div class="ml-controls-bar" id="ml_audio_'+mi+'">'
+    +'<div class="mlc-left">'
+    +'<button class="mlc-play-btn" id="ml_abtn_'+mi+'" onclick="mlToggleModAudio('+mi+')" title="Ouvir">'
+    +'<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
+    +'</button>'
+    +'<div class="mlc-audio-info">'
+    +'<span class="mlc-audio-title">Narrar por IA</span>'
+    +'<span class="mlc-audio-status" id="ml_ast_'+mi+'">Clique para ouvir</span>'
     +'</div>'
-    +'<select class="ml-audio-speed" id="ml_aspd_'+mi+'" onchange="mlChangeModSpeed('+mi+',this.value)">'
-    +'<option value="0.5">0.5×</option><option value="0.75">0.75×</option>'
-    +'<option value="1" selected>1×</option><option value="1.25">1.25×</option>'
-    +'<option value="1.5">1.5×</option><option value="1.75">1.75×</option>'
-    +'<option value="2">2×</option><option value="2.5">2.5×</option>'
-    +'<option value="3">3×</option>'
-    +'</select></div>';
+    +'<select class="mlc-speed" id="ml_aspd_'+mi+'" onchange="mlChangeModSpeed('+mi+',this.value)">'
+    +'<option value="0.75">0.75x</option>'
+    +'<option value="1" selected>1x</option>'
+    +'<option value="1.25">1.25x</option>'
+    +'<option value="1.5">1.5x</option>'
+    +'<option value="2">2x</option>'
+    +'</select>'
+    +'</div>'
+    +'<div class="mlc-sep"></div>'
+    +'<div class="mlc-right">'
+    +'<span class="mlc-font-label">Aa</span>'
+    +'<button class="mlc-font-btn" onclick="changeFontSize(-1)">A-</button>'
+    +'<span class="mlc-font-val" id="fontSizeDisplay">14px</span>'
+    +'<button class="mlc-font-btn mlc-font-plus" onclick="changeFontSize(1)">A+</button>'
+    +'</div>'
+    +'</div>';
 
   html+='<div class="ml-mod-header">'
     +'<span class="ml-mod-label">Módulo '+(mi+1)+'</span>'
@@ -1987,27 +1988,165 @@ async function sendChat(){
 function updateCertPct(pct){var el=document.getElementById('certPct');if(el)el.textContent=pct+'%';var btn=document.getElementById('certBtn');if(btn)btn.disabled=pct<100;}
 function generateCert(){
   var u=gU();if(!u){openM('login');return;}
-  var cv=document.getElementById('certCanvas');cv.className='cert-canvas show';
-  var ctx=cv.getContext('2d'),W=1000,H=700;
-  var bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#08080f');bg.addColorStop(.5,'#0e1225');bg.addColorStop(1,'#08080f');
+  var cv=document.getElementById('certCanvas');
+  cv.className='cert-canvas show';
+  var ctx=cv.getContext('2d'),W=1000,H=720;
+  cv.width=W;cv.height=H;
+
+  // Fundo escuro premium
+  var bg=ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,'#05050f');
+  bg.addColorStop(.4,'#0a0a20');
+  bg.addColorStop(1,'#05050f');
   ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='#5b7fff';ctx.lineWidth=3;ctx.strokeRect(30,30,W-60,H-60);
-  ctx.strokeStyle='rgba(91,127,255,.3)';ctx.lineWidth=1;ctx.strokeRect(40,40,W-80,H-80);
-  ctx.fillStyle='#fff';ctx.font='bold 22px Arial';ctx.textAlign='center';ctx.fillText('MATHEUS ACADEMY',W/2,100);
-  ctx.fillStyle='rgba(91,127,255,.8)';ctx.font='15px Arial';ctx.fillText('Certificado de Conclusão',W/2,130);
-  ctx.font='60px Arial';ctx.fillText('🏆',W/2,240);
-  ctx.fillStyle='#fff';ctx.font='bold 36px Georgia';ctx.fillText(u.name,W/2,310);
-  ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='16px Arial';ctx.fillText('concluiu com êxito o curso',W/2,360);
-  ctx.fillStyle='#5b7fff';ctx.font='bold 24px Georgia';ctx.fillText(COURSE.name,W/2,400);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='13px Arial';ctx.fillText('Conclusão: '+new Date().toLocaleDateString('pt-BR'),W/2,460);
-  ctx.fillStyle='rgba(255,255,255,.3)';ctx.font='11px Arial';ctx.fillText('Matheus Academy · ID: MA-'+Date.now().toString(36).toUpperCase(),W/2,520);
-  // Pontos apenas se ainda não foram concedidos pelo checkCourseCompletion
+
+  // Grade sutil
+  ctx.strokeStyle='rgba(91,127,255,.06)';ctx.lineWidth=1;
+  for(var gx=0;gx<W;gx+=40){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,H);ctx.stroke();}
+  for(var gy=0;gy<H;gy+=40){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();}
+
+  // Borda dupla elegante
+  ctx.strokeStyle='rgba(91,127,255,.7)';ctx.lineWidth=2.5;
+  roundRect(ctx,24,24,W-48,H-48,12);ctx.stroke();
+  ctx.strokeStyle='rgba(91,127,255,.2)';ctx.lineWidth=1;
+  roundRect(ctx,34,34,W-68,H-68,8);ctx.stroke();
+
+  // Orbe decorativo topo
+  var orb=ctx.createRadialGradient(W/2,0,0,W/2,0,350);
+  orb.addColorStop(0,'rgba(91,127,255,.25)');
+  orb.addColorStop(1,'transparent');
+  ctx.fillStyle=orb;ctx.fillRect(0,0,W,H);
+
+  // Linha azul topo
+  var lineG=ctx.createLinearGradient(100,0,W-100,0);
+  lineG.addColorStop(0,'transparent');
+  lineG.addColorStop(.3,'#4A7EFF');
+  lineG.addColorStop(.7,'#00d4ff');
+  lineG.addColorStop(1,'transparent');
+  ctx.strokeStyle=lineG;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(100,78);ctx.lineTo(W-100,78);ctx.stroke();
+
+  // Logo M
+  ctx.fillStyle='#FFFFFF';
+  ctx.font='900 80px Arial Black,sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('M',W/2,70);
+  ctx.strokeStyle='#4A7EFF';ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.moveTo(W/2-50,78);ctx.lineTo(W/2+50,78);ctx.stroke();
+  ctx.lineWidth=1;ctx.globalAlpha=.45;
+  ctx.beginPath();ctx.moveTo(W/2-50,84);ctx.lineTo(W/2+50,84);ctx.stroke();
+  ctx.globalAlpha=1;
+  ctx.fillStyle='#4A7EFF';
+  ctx.font='400 13px Arial';ctx.letterSpacing='6px';
+  ctx.fillText('ACADEMY',W/2,100);
+
+  // Linha divisora
+  ctx.strokeStyle='rgba(91,127,255,.3)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(150,120);ctx.lineTo(W-150,120);ctx.stroke();
+
+  // Titulo certificado
+  ctx.fillStyle='rgba(255,255,255,.55)';
+  ctx.font='500 15px Arial';ctx.letterSpacing='3px';
+  ctx.fillText('CERTIFICADO DE CONCLUSAO',W/2,155);
+
+  // Nome do aluno
+  ctx.fillStyle='#ffffff';
+  ctx.font='900 42px Georgia,serif';ctx.letterSpacing='0px';
+  ctx.fillText(u.name.toUpperCase(),W/2,230);
+
+  // Linha sob nome
+  var nameG=ctx.createLinearGradient(250,0,W-250,0);
+  nameG.addColorStop(0,'transparent');
+  nameG.addColorStop(.5,'rgba(91,127,255,.6)');
+  nameG.addColorStop(1,'transparent');
+  ctx.strokeStyle=nameG;ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(250,245);ctx.lineTo(W-250,245);ctx.stroke();
+
+  // Texto conclusao
+  ctx.fillStyle='rgba(255,255,255,.65)';
+  ctx.font='400 16px Arial';ctx.letterSpacing='0';
+  ctx.fillText('concluiu com exito o curso',W/2,285);
+
+  // Nome do curso
+  ctx.fillStyle='#5b7fff';
+  ctx.font='700 28px Georgia,serif';
+  wrapText(ctx,COURSE.name,W/2,330,W-200,38);
+
+  // Stats: horas e modulos
+  var statsY=430;
+  var stats=[
+    {icon:'clock',val:COURSE.hours+'h',lbl:'Carga Horaria'},
+    {icon:'book',val:COURSE.modules,lbl:'Modulos'},
+    {icon:'check',val:COURSE.topics,lbl:'Topicos'},
+    {icon:'quiz',val:COURSE.quizzes,lbl:'Quizzes'}
+  ];
+  var statW=180;var startX=(W-(statW*4))/2;
+  stats.forEach(function(s,i){
+    var sx=startX+i*statW+statW/2;
+    ctx.fillStyle='rgba(91,127,255,.12)';
+    roundRect(ctx,sx-70,statsY-30,140,80,10);ctx.fill();
+    ctx.strokeStyle='rgba(91,127,255,.3)';ctx.lineWidth=1;
+    roundRect(ctx,sx-70,statsY-30,140,80,10);ctx.stroke();
+    ctx.fillStyle='#5b7fff';ctx.font='900 24px Arial';
+    ctx.fillText(s.val,sx,statsY+8);
+    ctx.fillStyle='rgba(255,255,255,.45)';ctx.font='400 11px Arial';
+    ctx.fillText(s.lbl.toUpperCase(),sx,statsY+28);
+  });
+
+  // Data e ID
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='400 12px Arial';
+  ctx.fillText('Emitido em: '+new Date().toLocaleDateString('pt-BR'),W/2,560);
+  ctx.fillStyle='rgba(255,255,255,.2)';ctx.font='400 10px Arial';
+  ctx.fillText('Matheus Academy · matheusacademy.com.br · ID: MA-'+Date.now().toString(36).toUpperCase(),W/2,585);
+
+  // Linha final
+  ctx.strokeStyle=lineG;ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(150,H-50);ctx.lineTo(W-150,H-50);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.25)';ctx.font='700 11px Arial';ctx.letterSpacing='1px';
+  ctx.fillText('MATHEUS ACADEMY · CONHECIMENTO QUE TRANSFORMA',W/2,H-30);
+
+  // Adicionar botao download
+  var dlBtn=document.getElementById('certDownloadBtn');
+  if(!dlBtn){
+    dlBtn=document.createElement('button');
+    dlBtn.id='certDownloadBtn';
+    dlBtn.className='cert-download-btn';
+    dlBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Baixar Certificado (PNG)';
+    dlBtn.onclick=function(){
+      var link=document.createElement('a');
+      link.download='Certificado_'+COURSE.name.replace(/[^a-z0-9]/gi,'_')+'.png';
+      link.href=cv.toDataURL('image/png');
+      link.click();
+    };
+    cv.parentNode.appendChild(dlBtn);
+  }
+
+  // Pontos
   var prog=gProg();
   if(!prog['cert_pts_granted']){
     prog['cert_pts_granted']=true;sProg(prog);
-    addPoints('Curso concluído — Certificado: '+COURSE.name,1000);
+    addPoints('Certificado: '+COURSE.name,1000);
   }
-  showMotiv('🏆','Parabéns!','Você concluiu o curso e gerou seu certificado!','+1.000 pontos');
+  showMotiv('🏆','Parabens!','Voce concluiu o curso e gerou seu certificado!','+1.000 pontos');
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+function wrapText(ctx,text,x,y,maxW,lineH){
+  var words=text.split(' ');var line='';
+  for(var i=0;i<words.length;i++){
+    var test=line+words[i]+' ';
+    if(ctx.measureText(test).width>maxW&&i>0){ctx.fillText(line,x,y);line=words[i]+' ';y+=lineH;}
+    else{line=test;}
+  }
+  ctx.fillText(line,x,y);
 }
 
 /* ═══ AUTH ═══ */
