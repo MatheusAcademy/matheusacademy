@@ -1299,3 +1299,163 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);overflow-x:hi
   80% {transform:translateX(-50%) translateY(2px)   scale(1.3,.5); opacity:.8;}
   100%{transform:translateX(-50%) translateY(2px)   scale(0);  opacity:0;}
 }
+
+/* ══════════════════════════════════════════════════════════════
+   ACORDEÃO DE MÓDULOS / TÓPICOS — classes ml-*
+   Geradas pelo course-engine.js — NÃO remover
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Wrapper do módulo renderizado ── */
+.mod-lesson-wrap{padding:0 0 40px 0;}
+
+/* ── Áudio do módulo ── */
+.ml-audio-ctrl{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--brd);position:sticky;top:calc(var(--topbar-h) + 48px);z-index:10;}
+.ml-audio-btn{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:0;line-height:1;flex-shrink:0;}
+.ml-audio-info{flex:1;min-width:0;}
+.ml-audio-label{display:block;font-size:.6rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;}
+.ml-audio-status{display:block;font-size:.65rem;color:var(--txt2);}
+.ml-audio-speed{background:var(--bg3);border:1px solid var(--brd);color:var(--txt);font-size:.65rem;padding:3px 6px;border-radius:6px;cursor:pointer;}
+
+/* ── Cabeçalho do módulo ── */
+.ml-mod-header{padding:20px 20px 8px;}
+.ml-mod-label{display:block;font-size:.58rem;font-weight:800;color:var(--pri);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;}
+.ml-mod-name{font-size:1.25rem;font-weight:800;color:var(--txt);line-height:1.2;margin-bottom:4px;}
+.ml-mod-meta{font-size:.7rem;color:var(--txt3);}
+
+/* ── Barra de progresso do módulo ── */
+.ml-mod-prog-row{display:flex;align-items:center;gap:10px;padding:6px 20px 16px;}
+.ml-mod-prog-bar{flex:1;height:4px;background:var(--brd2);border-radius:2px;overflow:hidden;}
+.ml-mod-prog-fill{height:100%;background:linear-gradient(90deg,var(--pri),var(--neon));border-radius:2px;transition:width .4s ease;}
+.ml-mod-prog-pct{font-size:.62rem;font-weight:700;color:var(--txt3);flex-shrink:0;min-width:28px;text-align:right;}
+
+/* ── Lista de tópicos ── */
+.ml-topics-list{padding:0 12px 8px;}
+
+/* ── Item de tópico (fechado por padrão) ── */
+.ml-topic-item{border-radius:10px;margin-bottom:6px;border:1px solid var(--brd);background:var(--bg2);overflow:hidden;transition:border-color .2s;}
+.ml-topic-item:hover{border-color:rgba(91,127,255,.3);}
+.ml-topic-item.t-open{border-color:rgba(91,127,255,.5);background:var(--bg3);}
+.ml-topic-item.t-done{border-color:rgba(34,197,94,.25);}
+.ml-topic-item.t-done .ml-topic-dot{background:var(--grn);border-color:var(--grn);color:#fff;}
+
+/* ── Cabeçalho clicável do tópico ── */
+.ml-topic-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;}
+.ml-topic-hdr:hover .ml-topic-name{color:#fff;}
+
+/* ── Bolinha numerada ── */
+.ml-topic-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--brd2);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:var(--txt3);flex-shrink:0;transition:all .2s;}
+.ml-topic-item.t-open .ml-topic-dot{background:var(--pri);border-color:var(--pri);color:#fff;box-shadow:0 0 8px rgba(91,127,255,.5);}
+
+/* ── Info do tópico ── */
+.ml-topic-info{flex:1;min-width:0;}
+.ml-topic-name{font-size:.82rem;font-weight:600;color:var(--txt2);line-height:1.3;transition:color .15s;display:block;}
+.ml-topic-item.t-open .ml-topic-name{color:#fff;font-weight:700;}
+.ml-topic-meta{display:flex;align-items:center;gap:6px;margin-top:2px;}
+.ml-topic-dur{font-size:.6rem;color:var(--txt3);}
+
+/* ── Seta do acordeão ── */
+.ml-topic-arrow{flex-shrink:0;display:flex;align-items:center;color:var(--txt3);transition:transform .25s;}
+.ml-topic-arrow svg{width:14px;height:14px;stroke:currentColor;stroke-width:2.5;fill:none;}
+.ml-topic-item.t-open .ml-topic-arrow{transform:rotate(180deg);color:var(--pri);}
+
+/* ── Badge de concluído ── */
+.ml-topic-done-badge{font-size:.58rem;font-weight:800;color:var(--grn);background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);border-radius:20px;padding:2px 8px;flex-shrink:0;}
+
+/* ── Corpo do tópico (conteúdo expandível) ── */
+.ml-topic-body{display:none;border-top:1px solid var(--brd);}
+.ml-topic-item.t-open .ml-topic-body{display:block;}
+.ml-topic-inner{padding:16px 16px 8px;}
+
+/* ── Conteúdo da aula ── */
+.ml-topic-content{font-size:var(--font-size,14px);color:var(--txt);line-height:1.75;}
+.ml-topic-content h3{font-size:1.05rem;font-weight:800;color:#fff;margin:18px 0 8px;line-height:1.3;}
+.ml-topic-content h4{font-size:.88rem;font-weight:700;color:var(--txt);margin:14px 0 6px;}
+.ml-topic-content p{margin-bottom:12px;color:var(--txt2);}
+.ml-topic-content ul,.ml-topic-content ol{margin:8px 0 12px 20px;color:var(--txt2);}
+.ml-topic-content li{margin-bottom:5px;line-height:1.65;}
+.ml-topic-content strong{color:var(--txt);font-weight:700;}
+.ml-topic-content em{color:var(--txt2);}
+.ml-topic-content blockquote{background:rgba(91,127,255,.07);border-left:3px solid var(--pri);border-radius:0 8px 8px 0;padding:10px 14px;margin:12px 0;color:var(--txt2);font-size:.88rem;}
+.ml-topic-content code{background:rgba(91,127,255,.12);color:var(--neon);border-radius:4px;padding:1px 6px;font-size:.82em;}
+
+/* ── Botão Marcar como concluído ── */
+.ml-mark-btn{display:flex;align-items:center;gap:8px;margin:16px 0 8px;padding:9px 16px;border-radius:8px;border:1.5px solid var(--brd2);background:var(--bg2);color:var(--txt2);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;width:100%;}
+.ml-mark-btn:hover{border-color:var(--pri);color:#fff;background:rgba(91,127,255,.1);}
+.ml-mark-btn.ml-mark-done{border-color:var(--grn);color:var(--grn);background:rgba(34,197,94,.08);}
+.ml-mark-checkbox{width:16px;height:16px;border-radius:4px;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ml-mark-label{flex:1;text-align:left;}
+
+/* ── Quiz do módulo ── */
+.ml-quiz-section{margin:16px 12px 8px;border-radius:12px;border:1px solid rgba(91,127,255,.25);background:rgba(91,127,255,.05);overflow:hidden;}
+.ml-quiz-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;border-bottom:1px solid rgba(91,127,255,.15);}
+.ml-quiz-header-icon{font-size:1.2rem;flex-shrink:0;}
+.ml-quiz-header-title{font-size:.85rem;font-weight:800;color:var(--txt);}
+.ml-quiz-header-sub{font-size:.65rem;color:var(--txt3);margin-top:2px;}
+.ml-quiz-inner{display:none;padding:16px;}
+.ml-quiz-section.qz-open .ml-quiz-inner{display:block;}
+.ml-quiz-body{display:flex;flex-direction:column;gap:12px;}
+.ml-quiz-score{font-size:.8rem;font-weight:700;color:var(--grn);text-align:center;padding:10px;background:rgba(34,197,94,.08);border-radius:8px;margin-top:8px;}
+.ml-quiz-finish-btn{width:100%;padding:10px;border-radius:8px;background:var(--pri);color:#fff;font-weight:700;font-size:.8rem;border:none;cursor:pointer;margin-top:10px;transition:opacity .2s;}
+.ml-quiz-finish-btn:hover{opacity:.85;}
+
+/* ── Flashcards do módulo ── */
+.ml-fc-section{margin:8px 12px 16px;border-radius:12px;border:1px solid rgba(245,158,11,.2);background:rgba(245,158,11,.04);overflow:hidden;}
+.ml-fc-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;border-bottom:1px solid rgba(245,158,11,.12);}
+.ml-fc-body{padding:12px;display:none;}
+.ml-fc-section.fc-open .ml-fc-body{display:block;}
+.ml-fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
+.ml-flashcard{border-radius:10px;border:1px solid var(--brd2);background:var(--bg2);cursor:pointer;perspective:600px;min-height:120px;position:relative;transition:border-color .2s;}
+.ml-flashcard:hover{border-color:rgba(245,158,11,.4);}
+.ml-fc-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .45s;}
+.ml-flashcard.flipped .ml-fc-inner{transform:rotateY(180deg);}
+.ml-fc-face{position:absolute;inset:0;padding:14px;border-radius:10px;backface-visibility:hidden;display:flex;flex-direction:column;gap:6px;}
+.ml-fc-front{background:var(--bg2);}
+.ml-fc-back{background:rgba(245,158,11,.06);transform:rotateY(180deg);}
+.ml-fc-suit{font-size:.55rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--txt3);}
+.ml-fc-suit-br{display:block;width:20px;height:1.5px;background:var(--brd2);margin:3px 0;}
+.ml-fc-qmark{font-size:1.4rem;color:rgba(245,158,11,.4);position:absolute;top:10px;right:12px;}
+.ml-fc-answer{font-size:.8rem;color:var(--txt);line-height:1.55;font-weight:500;}
+.ml-fc-front-hint{font-size:.6rem;color:var(--txt3);margin-top:auto;}
+.ml-fc-back-q{font-size:.62rem;color:var(--txt3);margin-bottom:4px;}
+.ml-fc-back-tag{display:inline-block;font-size:.55rem;font-weight:800;background:rgba(245,158,11,.15);color:var(--orn);border-radius:10px;padding:1px 7px;margin-bottom:6px;}
+.ml-fc-back-glow{position:absolute;inset:0;border-radius:10px;box-shadow:inset 0 0 20px rgba(245,158,11,.08);pointer-events:none;}
+
+/* ── Botão próximo módulo ── */
+.ml-next-mod-btn{display:flex;align-items:center;justify-content:center;gap:8px;margin:16px 12px 24px;padding:12px 20px;border-radius:10px;background:linear-gradient(135deg,rgba(91,127,255,.15),rgba(91,127,255,.08));border:1px solid rgba(91,127,255,.3);color:var(--pri);font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;width:calc(100% - 24px);}
+.ml-next-mod-btn:hover{background:rgba(91,127,255,.2);border-color:rgba(91,127,255,.5);}
+
+/* ── Rodapé social ── */
+.ml-social-footer{padding:12px 16px 20px;border-top:1px solid var(--brd);}
+.ml-social-label{font-size:.65rem;color:var(--txt3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:8px;}
+.ml-social-links{display:flex;gap:8px;flex-wrap:wrap;}
+.ml-social-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;background:var(--bg2);border:1px solid var(--brd2);color:var(--txt2);font-size:.68rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;}
+.ml-social-btn:hover{border-color:var(--pri);color:#fff;}
+
+/* ── Ícones de mídia ── */
+.ml-tg{color:#2AABEE;}
+.ml-ig{color:#E1306C;}
+
+/* ── Tema claro — overrides ml- ── */
+body.light .ml-topic-item{background:#fff;border-color:#e0e4f0;}
+body.light .ml-topic-item.t-open{background:#f5f6fc;border-color:rgba(91,127,255,.4);}
+body.light .ml-topic-item.t-done{border-color:rgba(34,197,94,.3);}
+body.light .ml-topic-dot{background:#f0f2f8;border-color:#d0d4e8;color:#5a5a7a;}
+body.light .ml-topic-name{color:#3a3a5a;}
+body.light .ml-topic-item.t-open .ml-topic-name{color:#0a0a1e;}
+body.light .ml-topic-content{color:#2a2a4a;}
+body.light .ml-topic-content h3{color:#0a0a1e;}
+body.light .ml-topic-content h4{color:#1a1a2e;}
+body.light .ml-topic-content p,.light .ml-topic-content li{color:#3a3a5a;}
+body.light .ml-topic-content blockquote{background:rgba(91,127,255,.05);color:#3a3a5a;}
+body.light .ml-mod-name{color:#0a0a1e;}
+body.light .ml-mod-label{color:var(--pri);}
+body.light .ml-mod-meta{color:#7a7a9a;}
+body.light .ml-audio-ctrl{background:#fff;border-color:#e0e4f0;}
+body.light .ml-mark-btn{background:#f5f6fc;border-color:#d0d4e8;color:#5a5a7a;}
+body.light .ml-mark-btn:hover{border-color:var(--pri);color:#1a1a2e;}
+body.light .ml-mark-btn.ml-mark-done{border-color:var(--grn);color:var(--grn);}
+body.light .ml-quiz-section{background:rgba(91,127,255,.04);border-color:rgba(91,127,255,.2);}
+body.light .ml-flashcard{background:#fff;border-color:#d0d4e8;}
+body.light .ml-fc-front{background:#fff;}
+body.light .ml-fc-back{background:rgba(245,158,11,.04);}
+body.light .ml-next-mod-btn{background:rgba(91,127,255,.08);color:var(--pri);}
