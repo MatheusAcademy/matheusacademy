@@ -264,6 +264,25 @@ var MA_COURSES = [
     color: '#7c3aed',
     addedTs: 1775506695365,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/hb.jpg',
+    id: 'hb',
+    name: 'A História do Brasil: Das Origens à Atualidade —',
+    desc: 'Do Brasil pré-colonial à república contemporânea: compreenda como o nosso país foi formado, quem somos e para onde vamos, com base histórica sólida e senso crítico.',
+    file: 'curso-historia-brasil-v3.html',
+    cat: 'História',
+    modules: 27,
+    topics: 81,
+    hours: 18,
+    quizzes: 81,
+    salt: 'HB_HENRY_2026_MASTER',
+    ak: 'hb_auth',
+    storagePrefix: 'hb_',
+    icon: '📜',
+    color: '#16a34a',
+    addedTs: 1775515477517,
+    active: true
   }
 ];
 var MA_CATS = [
