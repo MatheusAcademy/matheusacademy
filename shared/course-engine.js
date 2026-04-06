@@ -1386,7 +1386,7 @@ function checkStreak(){
 }
 
 /* ── ÁUDIO ÚNICO DO MÓDULO (lê todo o conteúdo dos tópicos em sequência) ── */
-var _mlModSynth=null,_mlModMi=-1;
+var _mlModSynth=null,_mlModMi=-1,_mlAudioEl=null;
 function mlToggleModAudio(mi){
   var btn=document.getElementById('ml_abtn_'+mi);
   var st=document.getElementById('ml_ast_'+mi);
