@@ -184,9 +184,9 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/lua.png',
     id: 'lua',
     courseKey: 'lua',
+    coverImg: 'assets/capas/lua.png',
     name: 'Missão à Lua reacende corrida global',
     desc: 'Artemis II coloca grandes potências em nova disputa pelo domínio espacial — e o que está em jogo vai muito além da exploração científica. Entenda tudo sobre a missão histórica lançada em 1º de abril de 2026.',
     file: 'noticia-artemis-ii-v2.html',
@@ -205,9 +205,9 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/ia.png',
     id: 'ia',
     courseKey: 'ia',
+    coverImg: 'assets/capas/ia.png',
     name: 'Inteligência Artificial na Prática',
     desc: 'Do zero ao avançado: domine a Inteligência Artificial com aplicações reais, ferramentas modernas e estratégias práticas para transformar sua carreira e seus negócios.',
     file: 'curso-ia-pratica.html',
@@ -225,9 +225,9 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/mmt.jpg',
     id: 'mmt',
     courseKey: 'mmt',
+    coverImg: 'assets/capas/mmt.jpg',
     name: 'O Mundo Está Mudando: Entenda as 3 Forças que Estão Redefinindo o Futuro Global',
     desc: 'Geopolítica, Economia e Tecnologia: o novo jogo de poder mundial explicado de forma clara e prática para quem quer entender o futuro antes que ele chegue.',
     file: 'curso-mundo-mudando.html',
@@ -246,9 +246,9 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/tb.jpg',
     id: 'tb',
     courseKey: 'tb',
+    coverImg: 'assets/capas/tb.jpg',
     name: 'Teologia Bíblica do Básico ao Avançado',
     desc: 'Do Gênesis ao Apocalipse: compreenda o plano redentor de Deus, os grandes temas bíblicos e a teologia sistemática com profundidade, clareza e base nas Escrituras.',
     file: 'curso-teologia-biblica.html',
@@ -266,8 +266,9 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/hb.jpg',
     id: 'hb',
+    courseKey: 'hb',
+    coverImg: 'assets/capas/hb.jpg',
     name: 'A História do Brasil: Das Origens à Atualidade —',
     desc: 'Do Brasil pré-colonial à república contemporânea: compreenda como o nosso país foi formado, quem somos e para onde vamos, com base histórica sólida e senso crítico.',
     file: 'curso-historia-brasil-v3.html',
