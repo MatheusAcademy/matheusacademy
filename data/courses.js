@@ -266,10 +266,9 @@ var MA_COURSES = [
     active: true
   },
   {
-    id: 'hb',
-    courseKey: 'hb',
     coverImg: 'assets/capas/hb.jpg',
-    name: 'A História do Brasil: Das Origens à Atualidade —',
+    id: 'hb',
+    name: 'A História do Brasil: Das Origens à Atualidade',
     desc: 'Do Brasil pré-colonial à república contemporânea: compreenda como o nosso país foi formado, quem somos e para onde vamos, com base histórica sólida e senso crítico.',
     file: 'curso-historia-brasil-v3.html',
     cat: 'História',
