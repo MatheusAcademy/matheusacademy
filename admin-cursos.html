@@ -1894,7 +1894,7 @@ function getMeta(pf){
     quizzes:parseInt(el(pf+'Quizzes').value)||0,
     salt:el(pf+'Salt').value.trim(),
     ak:el(pf+'Ak').value.trim(),
-    coverImg:'assets/capas/'+el(pf+'Id').value.trim()+'.png',
+    coverImg:'assets/capas/'+el(pf+'Id').value.trim()+'.jpg',
     storagePrefix:el(pf+'Prefix').value.trim(),
     icon:el(pf+'Icon').value.trim()||'🎓',
     color:el(pf+'Color').value.trim()||'#3b82f6',
@@ -2942,7 +2942,7 @@ async function salvarEdicaoCurso(){
   showRes('rEd','ld','<div class="sp"></div> Salvando alterações...');
   // Upload da nova capa se selecionada
   var novaCapaFile = _capaFiles['capaAreaE'];
-  var novaCapaImg = _cursoEditando.coverImg || ('assets/capas/'+id+'.png');
+  var novaCapaImg = _cursoEditando.coverImg || ('assets/capas/'+id+'.jpg');
   if (novaCapaFile) {
     try {
       showRes('rEd','ld','<div class="sp"></div> Subindo nova capa...');
@@ -3527,27 +3527,58 @@ function capaDrop(e, areaId, fileId, previewId, nomeId, txtId) {
 // Sobe a capa para assets/capas/{id}.png no GitHub
 async function uploadCapa(file, courseId) {
   if (!file) return null;
-  var cfg = g(); // CORRIGIDO: usar g() em vez de getConfig()
+  var cfg = g();
   if (!cfg.t || !cfg.o || !cfg.r) {
-    console.error('uploadCapa: token/owner/repo não configurados');
-    throw new Error('Token GitHub não configurado. Configure nas configurações do admin.');
+    throw new Error('Token GitHub não configurado. Configure o token nas configurações do admin.');
   }
-  var ext = file.name.split('.').pop().toLowerCase();
-  if (!['png','jpg','jpeg','webp'].includes(ext)) ext = 'png';
-  var path = 'assets/capas/' + courseId + '.' + ext;
-  var reader = new FileReader();
+
+  // ── Comprimir imagem antes do upload (max 800px, qualidade 85%) ──
   var b64 = await new Promise(function(res, rej) {
-    reader.onload = function(e) { res(e.target.result.split(',')[1]); };
-    reader.onerror = rej;
-    reader.readAsDataURL(file);
+    var img = new Image();
+    var url = URL.createObjectURL(file);
+    img.onload = function() {
+      var maxW = 800, maxH = 1100;
+      var w = img.width, h = img.height;
+      if (w > maxW || h > maxH) {
+        var ratio = Math.min(maxW/w, maxH/h);
+        w = Math.round(w*ratio); h = Math.round(h*ratio);
+      }
+      var canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      var dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      URL.revokeObjectURL(url);
+      res(dataUrl.split(',')[1]);
+    };
+    img.onerror = function() {
+      // Fallback: usar arquivo original sem compressão
+      var reader = new FileReader();
+      reader.onload = function(e) { res(e.target.result.split(',')[1]); };
+      reader.onerror = rej;
+      reader.readAsDataURL(file);
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
   });
-  // Verificar se já existe (para pegar SHA e evitar conflito)
+
+  // Sempre salvar como .jpg após compressão
+  var path = 'assets/capas/' + courseId + '.jpg';
+
+  // Verificar se já existe (para pegar SHA)
   var sha = null;
   try {
     var chk = await fetch('https://api.github.com/repos/'+cfg.o+'/'+cfg.r+'/contents/'+path,
       {headers:{'Authorization':'token '+cfg.t,'Accept':'application/vnd.github.v3+json'}});
     if (chk.ok) { var d = await chk.json(); sha = d.sha; }
+    // Tentar também .png se .jpg não existir
+    if (!chk.ok) {
+      var chk2 = await fetch('https://api.github.com/repos/'+cfg.o+'/'+cfg.r+'/contents/assets/capas/'+courseId+'.png',
+        {headers:{'Authorization':'token '+cfg.t,'Accept':'application/vnd.github.v3+json'}});
+      if (chk2.ok) { var d2 = await chk2.json(); sha = d2.sha; }
+    }
   } catch(e) {}
+
   // Upload para o GitHub
   var body = {message: 'capa: ' + courseId, content: b64};
   if (sha) body.sha = sha;
@@ -3558,11 +3589,13 @@ async function uploadCapa(file, courseId) {
   });
   if (!r.ok) {
     var errData = {};
-    try { errData = await r.json(); } catch(e) {}
-    throw new Error('Erro ao subir capa (HTTP '+r.status+'): ' + (errData.message || 'verifique o token GitHub'));
+    try { errData = await r.json(); } catch(e2) {}
+    var msg = errData.message || ('HTTP ' + r.status);
+    console.error('uploadCapa ERRO:', msg, errData);
+    throw new Error('Capa não subiu: ' + msg + '. Verifique se o token tem permissão de escrita (scope: repo).');
   }
-  console.log('✅ Capa subida com sucesso:', path);
-  return 'assets/capas/' + courseId + '.' + ext;
+  console.log('✅ Capa subida:', path, '(' + Math.round(b64.length*0.75/1024) + 'KB)');
+  return path;
 }
 
 
@@ -4188,7 +4221,7 @@ async function duplicarCurso(id) {
   var novo = JSON.parse(JSON.stringify(src));
   novo.id = novoId;
   novo.name = src.name + ' (Cópia)';
-  novo.coverImg = 'assets/capas/' + novoId + '.png';
+  novo.coverImg = 'assets/capas/' + novoId + '.jpg';
   novo.storagePrefix = novoId + '_';
   novo.ak = novoId + '_auth';
   novo.addedTs = Date.now();
