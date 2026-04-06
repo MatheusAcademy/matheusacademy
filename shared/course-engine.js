@@ -72,7 +72,7 @@
 
   <!-- LOGO HORIZONTAL EXATA — M branco + linha dupla azul + ACADEMY -->
   <a class="ma-tb-logo" href="index.html">
-    <svg viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg" class="tb-logo-svg">
+    <svg width="110" height="32" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg" class="tb-logo-svg">
       <text class="tb-logo-m" x="36" y="52" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
       <line class="tb-logo-line1" x1="4" y1="60" x2="70" y2="60" stroke-width="2.2"/>
       <line class="tb-logo-line2" x1="4" y1="65" x2="70" y2="65" stroke-width="1" opacity=".4"/>
@@ -2964,6 +2964,24 @@ function _setupPenClickHighlight(){
       return;
     }
 
+  /* Marca APENAS a linha/frase visível sob o ponto tocado — não o parágrafo inteiro */
+  function _markLineAt(x, y){
+    var el = _elUnder(x, y);
+    if(!el) return;
+
+    /* Apaga se tocou em mark E borracha ativa */
+    if(_eraserActive){
+      var m = el.closest('mark') || (el.tagName==='MARK'?el:null);
+      if(m){
+        var hlId=m.dataset.hlId, parent=m.parentNode;
+        while(m.firstChild) parent.insertBefore(m.firstChild, m);
+        parent.removeChild(m);
+        if(hlId) deleteHighlight(hlId);
+        showToast('🗑️ Removido','ok');
+      }
+      return;
+    }
+
     if(!_penActive) return;
 
     /* Sobe na DOM até achar nó de texto dentro do conteúdo */
@@ -2971,32 +2989,71 @@ function _setupPenClickHighlight(){
     while(node && !_inContent(node)) node = node.parentElement;
     if(!node) return;
 
-    /* Pega o menor elemento de bloco (p, li, h3, h4, span, etc.) */
-    var inline = el;
-    /* Se caretRangeFromPoint disponível — usa ele para pegar a linha exata */
     var range = null;
+
+    /* ── Estratégia 1: caretRangeFromPoint → detecta exatamente onde o dedo tocou ── */
     if(document.caretRangeFromPoint){
-      var cr = document.caretRangeFromPoint(x,y);
-      if(cr && cr.startContainer && cr.startContainer.nodeType===3){
-        /* Expande para a linha inteira do nó de texto */
-        range = document.createRange();
-        range.selectNodeContents(cr.startContainer.parentElement);
+      var cr = document.caretRangeFromPoint(x, y);
+      if(cr && cr.startContainer && cr.startContainer.nodeType === 3){
+        var textNode = cr.startContainer;
+        var fullText = textNode.textContent;
+        var offset   = cr.startOffset;
+
+        /* Encontra os limites da FRASE tocada dentro do nó de texto
+           Frases terminam em . ! ? ou quebra de linha
+           Se não achar, usa uma janela de ~80 chars ao redor do offset */
+        var start = offset;
+        var end   = offset;
+
+        /* Volta até achar início de frase */
+        while(start > 0 && !/[.!?\n]/.test(fullText[start-1])) start--;
+        /* Avança até achar fim de frase */
+        while(end < fullText.length && !/[.!?\n]/.test(fullText[end])) end++;
+        if(end < fullText.length) end++; /* inclui o ponto final */
+
+        /* Limita janela máxima de 120 chars para não marcar demais */
+        if(end - start > 120){
+          start = Math.max(0, offset - 40);
+          end   = Math.min(fullText.length, offset + 80);
+        }
+
+        /* Trima espaços nas bordas */
+        while(start < end && fullText[start] === ' ') start++;
+        while(end > start && fullText[end-1] === ' ') end--;
+
+        if(end > start){
+          range = document.createRange();
+          range.setStart(textNode, start);
+          range.setEnd(textNode, end);
+        }
       }
     }
 
-    /* Fallback: seleciona o conteúdo do elemento clicado */
+    /* ── Estratégia 2 (fallback): seleciona só o inline element tocado (span/strong/em) ── */
     if(!range){
       var target = el;
-      /* Sobe até encontrar um elemento de bloco pequeno */
-      while(target && !['P','LI','H3','H4','H2','SPAN','STRONG','EM','DIV'].includes(target.tagName)){
-        target = target.parentElement;
+      /* Sobe apenas até o menor elemento inline — NÃO sobe até P ou DIV inteiro */
+      var inlineTags = ['SPAN','STRONG','EM','B','I','A','MARK','CODE'];
+      var blockTags  = ['P','LI','H1','H2','H3','H4','DIV','SECTION'];
+      /* Se já estamos num inline, usa ele; se num bloco, usa o bloco mas só o 1º nó de texto */
+      if(inlineTags.includes(target.tagName)){
+        range = document.createRange();
+        range.selectNodeContents(target);
+      } else {
+        /* Acha o primeiro nó de texto filho do elemento */
+        var walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT, null, false);
+        var tn = walker.nextNode();
+        if(tn && _inContent(target)){
+          var txt = tn.textContent;
+          var limitEnd = Math.min(txt.length, 100);
+          range = document.createRange();
+          range.setStart(tn, 0);
+          range.setEnd(tn, limitEnd);
+        }
       }
-      if(!target || !_inContent(target)) return;
-      range = document.createRange();
-      range.selectNodeContents(target);
     }
 
-    if(!range || range.toString().trim().length===0) return;
+    if(!range || range.toString().trim().length === 0) return;
 
     _curRange = range;
     try{ applyHighlight(_activeHlColor); }catch(e){}
@@ -3007,8 +3064,9 @@ function _setupPenClickHighlight(){
   var _startX      = 0, _startY = 0;
   var _lastLineY   = -999; /* última coordenada Y onde marcamos */
   var _isScrolling = false;
+  var _didMark     = false; /* se já marcamos algo neste toque */
 
-  /* ── TOUCH START ── */
+  /* ── TOUCH START — passive:true para NÃO bloquear scroll ── */
   main.addEventListener('touchstart', function(e){
     if(!_penActive && !_eraserActive) return;
     var t = e.touches[0];
@@ -3017,40 +3075,56 @@ function _setupPenClickHighlight(){
     _startY      = t.clientY;
     _lastLineY   = -999;
     _isScrolling = false;
-    /* Marca imediatamente ao tocar */
-    _markLineAt(t.clientX, t.clientY);
-    e.preventDefault();
-  }, {passive:false});
+    _didMark     = false;
+    /* NÃO marca nem previne aqui — espera confirmar direção no move */
+  }, {passive:true}); /* passive:true = scroll NUNCA bloqueado no start */
 
-  /* ── TOUCH MOVE ── */
+  /* ── TOUCH MOVE — decide se é scroll ou highlight ── */
   main.addEventListener('touchmove', function(e){
     if((!_penActive && !_eraserActive) || !_touching) return;
     var t  = e.touches[0];
     var dx = t.clientX - _startX;
     var dy = t.clientY - _startY;
+    var dist = Math.sqrt(dx*dx + dy*dy);
 
-    /* Se predominantemente vertical E ainda não estamos marcando → scroll */
-    if(!_isScrolling && Math.abs(dy) > Math.abs(dx) * 1.8 && Math.abs(dy) > 12){
+    /* Aguarda mínimo de 8px para decidir direção */
+    if(dist < 8) return;
+
+    /* Gesto principalmente vertical → SCROLL, abandona */
+    if(!_isScrolling && !_didMark && Math.abs(dy) > Math.abs(dx) * 1.5 && Math.abs(dy) > 10){
       _isScrolling = true;
+      _touching    = false;
+      return; /* não chama preventDefault → browser faz scroll normal */
     }
-    if(_isScrolling){ _touching=false; return; }
 
-    e.preventDefault();
-
-    /* Marca a cada vez que o dedo muda de linha (~24px vertical) */
-    var lineChanged = Math.abs(t.clientY - _lastLineY) > 12;
-    if(lineChanged){
-      _markLineAt(t.clientX, t.clientY);
-      _lastLineY = t.clientY;
+    /* Gesto horizontal/diagonal → highlight */
+    if(!_isScrolling){
+      e.preventDefault(); /* bloqueia scroll só quando confirmado highlight */
+      /* Marca na posição inicial (1ª vez) */
+      if(!_didMark){
+        _markLineAt(_startX, _startY);
+        _lastLineY = _startY;
+        _didMark   = true;
+      }
+      /* Continua marcando ao arrastar, a cada linha (~18px) */
+      if(Math.abs(t.clientY - _lastLineY) > 18){
+        _markLineAt(t.clientX, t.clientY);
+        _lastLineY = t.clientY;
+      }
     }
-  }, {passive:false});
+  }, {passive:false}); /* passive:false aqui pois pode chamar preventDefault */
 
   /* ── TOUCH END ── */
   main.addEventListener('touchend', function(e){
     if(!_penActive && !_eraserActive) return;
+    /* Toque rápido sem arrastar → marca o ponto */
+    if(_touching && !_didMark && !_isScrolling){
+      _markLineAt(_startX, _startY);
+    }
     _touching    = false;
     _isScrolling = false;
-  }, {passive:false});
+    _didMark     = false;
+  }, {passive:true});
 
   /* ── MOUSE (desktop) ── */
   var _mdown = false, _mLastY = -999;
