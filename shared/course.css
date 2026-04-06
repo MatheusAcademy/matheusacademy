@@ -490,64 +490,105 @@ body.light .highlight-toolbar::after{border-top-color:rgba(99,102,241,.2);}
 
 /* ══════════════════ TOPBAR ══════════════════ */
 .ma-topbar{
-  position:fixed;top:0;left:0;right:0;height:var(--topbar-h);
+  position:fixed;top:0;left:0;right:0;
+  height:var(--topbar-h);
   background:rgba(4,4,10,.99);
   border-bottom:1px solid rgba(91,127,255,.15);
-  display:flex;align-items:center;padding:0 14px;gap:6px;
+  display:flex;align-items:center;
+  /* Safe-area: respeita notch/ilha lateral do iPhone */
+  padding:0 max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left));
+  gap:5px;
   z-index:9999;font-family:var(--font);
+  box-sizing:border-box;
+  /* Garante que NADA transborda para fora da tela */
+  overflow:hidden;
 }
 .ma-topbar::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1.5px;
   background:linear-gradient(90deg,transparent 0%,#4A7EFF 30%,#00d4ff 65%,transparent 100%);
   opacity:.75;
 }
-.ma-tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
-.ma-tb-logo svg{display:block;flex-shrink:0}
+.ma-tb-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+/* Logo SVG responsivo — menor no mobile */
+.ma-tb-logo svg,.tb-logo-svg{display:block;flex-shrink:0;width:90px;height:26px;}
+@media(min-width:480px){.ma-tb-logo svg,.tb-logo-svg{width:110px;height:32px;}}
 .ma-tb-logo-sep{width:1px;height:22px;background:linear-gradient(180deg,transparent,rgba(74,126,255,.45),transparent);flex-shrink:0;margin:0 4px}
 .ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
-.ma-tb-course-name{font-size:.66rem;font-weight:700;color:var(--txt2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
-.sidebar-toggle-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--brd);background:var(--bg2);color:var(--txt2);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.ma-tb-course-name{font-size:.62rem;font-weight:700;color:var(--txt2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  /* Limite adaptativo: ocupa o espaço restante sem empurrar os botões */
+  max-width:100px;min-width:0;}
+@media(min-width:400px){.ma-tb-course-name{max-width:130px;}}
+@media(min-width:480px){.ma-tb-course-name{max-width:180px;}}
+.sidebar-toggle-btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--brd);background:var(--bg2);color:var(--txt2);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
 .sidebar-toggle-btn:hover{border-color:var(--pri);color:var(--pri)}
 .ma-tb-spacer{flex:1;min-width:0}
 
+/* Streak — compacto no mobile */
+.ma-tb-streak{
+  display:flex;align-items:center;gap:4px;
+  text-decoration:none;flex-shrink:0;
+  padding:4px 8px;border-radius:20px;
+  border:1px solid rgba(245,158,11,.3);
+  background:rgba(245,158,11,.06);
+  transition:all .2s;white-space:nowrap;
+}
+.ma-tb-streak:hover{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.5);}
+.ma-tb-streak-fire{font-size:.82rem;line-height:1}
+.ma-tb-streak-num{font-size:.78rem;font-weight:900;color:#f59e0b;line-height:1;font-variant-numeric:tabular-nums;}
+.ma-tb-streak-lbl{font-size:.52rem;font-weight:700;color:#f59e0b;opacity:.75;
+  /* Oculta "dias" em telas muito pequenas */
+  display:none;}
+@media(min-width:400px){.ma-tb-streak-lbl{display:inline;}}
+
 /* Bloco troféu + pontos */
 .ma-tb-pts-block{
-  display:flex;align-items:center;gap:7px;
+  display:flex;align-items:center;gap:5px;
   text-decoration:none;flex-shrink:0;
-  padding:5px 12px 5px 10px;
-  border-radius:22px;
+  padding:4px 9px 4px 8px;
+  border-radius:20px;
   border:1px solid rgba(255,255,255,.1);
   background:rgba(255,255,255,.04);
   transition:all .2s;cursor:pointer;
+  white-space:nowrap;
 }
 .ma-tb-pts-block:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08)}
 .ma-tb-pts-block.bump{animation:ptsBump .45s cubic-bezier(.2,0,.3,1)}
 @keyframes ptsBump{0%{transform:scale(1)}35%{transform:scale(1.2)}65%{transform:scale(.95)}100%{transform:scale(1)}}
 .ma-tb-trophy{display:flex;align-items:center;justify-content:center;color:#f59e0b;flex-shrink:0}
-.ma-tb-trophy svg{width:16px;height:16px;stroke:#f59e0b}
+.ma-tb-trophy svg{width:14px;height:14px;stroke:#f59e0b}
 .ma-tb-pts-num{
-  font-size:.82rem;font-weight:900;color:#fff;
+  font-size:.78rem;font-weight:900;color:#fff;
   font-variant-numeric:tabular-nums;letter-spacing:.02em;
-  min-width:28px;text-align:right;line-height:1;
+  min-width:22px;text-align:right;line-height:1;
   transition:color .3s;
 }
 .ma-tb-pts-block.bump .ma-tb-pts-num{color:#f59e0b}
 
-/* Menu 3 pontos */
-.ma-tb-menu-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--brd);background:var(--bg2);color:#8888a8;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;padding:0}
-.ma-tb-menu-btn svg{width:16px;height:16px;stroke:currentColor;pointer-events:none}
+/* Botões menu e tema — tamanho consistente */
+.ma-tb-menu-btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--brd);background:var(--bg2);color:#8888a8;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;padding:0}
+.ma-tb-menu-btn svg{width:15px;height:15px;stroke:currentColor;pointer-events:none}
 .ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
 .ma-tb-theme-btn{
-  width:34px;height:34px;border-radius:9px;border:1px solid var(--brd);
+  width:32px;height:32px;border-radius:9px;border:1px solid var(--brd);
   background:var(--bg2);color:#f59e0b;cursor:pointer;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
   transition:all .2s;padding:0;
 }
-.ma-tb-theme-btn svg{width:16px;height:16px;stroke:currentColor;pointer-events:none;}
+.ma-tb-theme-btn svg{width:15px;height:15px;stroke:currentColor;pointer-events:none;}
 .ma-tb-theme-btn:hover{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.08);}
 .ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}
 .ma-menu-overlay.open{display:block}
-.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:240px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+/* Dropdown alinhado corretamente dentro da safe-area */
+.ma-menu-dd{
+  position:fixed;top:calc(var(--topbar-h) + 6px);
+  right:max(10px, env(safe-area-inset-right));
+  background:#0f0f1e;border:1px solid #252540;border-radius:16px;
+  min-width:240px;max-width:calc(100vw - 20px);
+  z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);
+  overflow:hidden;opacity:0;
+  transform:scale(.88) translateY(-12px);pointer-events:none;
+  transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right
+}
 .ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
 .ma-menu-user{padding:14px 16px 0;border-bottom:1px solid #1e1e35}
 .ma-mu-name{font-size:.85rem;font-weight:800;color:#fff;display:block;margin-bottom:5px}
@@ -2157,21 +2198,8 @@ body.light .ml-footer-a{border-color:#d0d4e8;}
 body.light .ml-footer-brand{color:#8888aa;}
 body.light .ml-footer-brand b{color:#44446a;}
 
-/* ══════════════════════════════════════════════
-   STREAK NA TOPBAR
-   ══════════════════════════════════════════════ */
-.ma-tb-streak{
-  display:flex;align-items:center;gap:4px;
-  padding:5px 10px;border-radius:9px;
-  border:1px solid rgba(245,158,11,.3);
-  background:rgba(245,158,11,.08);
-  text-decoration:none;
-  transition:all .2s;flex-shrink:0;
-}
-.ma-tb-streak:hover{border-color:rgba(245,158,11,.6);background:rgba(245,158,11,.15);}
-.ma-tb-streak-fire{font-size:.85rem;line-height:1;}
-.ma-tb-streak-num{font-size:.78rem;font-weight:900;color:#f59e0b;font-variant-numeric:tabular-nums;}
-.ma-tb-streak-lbl{font-size:.55rem;color:rgba(245,158,11,.7);font-weight:600;}
+
+/* Streak hot — animação especial para sequências altas */
 .ma-tb-streak.streak-hot{
   border-color:rgba(239,68,68,.5);
   background:rgba(239,68,68,.1);
