@@ -223,6 +223,25 @@ var MA_COURSES = [
     color: '#5b7fff',
     addedTs: 1775501767880,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/chb.jpg',
+    id: 'chb',
+    name: 'História do Brasil — Do Descobrimento à Atualidade',
+    desc: '',
+    file: 'curso-historia-brasil.html',
+    cat: 'Negócios',
+    modules: 1,
+    topics: 6,
+    hours: 1,
+    quizzes: 1,
+    salt: 'CHB_HENRY_2026_MASTER',
+    ak: 'chb_auth',
+    storagePrefix: 'chb_',
+    icon: '🏛️',
+    color: '#5b7fff',
+    addedTs: 1775521346861,
+    active: true
   }
 ];
 var MA_CATS = [
