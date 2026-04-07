@@ -339,25 +339,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/teologia.jpg',
-    id: 'teologia',
-    name: 'Teologia Bíblica do Básico ao Avançado',
-    desc: 'Curso completo de teologia bíblica em português, do básico ao avançado, com visão protestante, linguagem acessível, aplicações práticas, versículos, comentários e integração entre Antigo e Novo Testamento.',
-    file: 'teologia_biblica_basico_avancado.html',
-    cat: 'Bíblia / Teologia',
-    modules: 27,
-    topics: 189,
-    hours: 38,
-    quizzes: 1961,
-    salt: 'TEOBIB_HENRY_2026_MASTER',
-    ak: 'teobib_auth',
-    storagePrefix: 'TBA',
-    icon: '✝️',
-    color: '#4b2e83',
-    addedTs: 1775529668984,
-    active: true
-  },
-  {
     coverImg: 'assets/capas/matheush.jpg',
     id: 'matheush',
     name: 'Gestão da Mente e Saúde Emocional',
