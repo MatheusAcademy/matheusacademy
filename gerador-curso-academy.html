@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gerador de Cursos — Matheus Academy</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+:root{--bg:#08080f;--card:#111122;--blue:#5b7fff;--cyan:#00d4ff;--green:#00c853;--red:#ff4455;--text:#e0e0e8;--muted:#888;--dim:#555;--grad:linear-gradient(135deg,var(--blue),var(--cyan))}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Outfit',system-ui,sans-serif;line-height:1.5}
+.header{background:#0a0a14;border-bottom:1px solid rgba(91,127,255,.12);padding:22px 16px;text-align:center;position:relative}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--blue))}
+.brand{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:6px}
+.header h1{font-size:21px;font-weight:700;color:#fff;margin-bottom:3px}
+.header p{font-size:12px;color:var(--dim)}
+.wrap{max-width:740px;margin:0 auto;padding:16px}
+.card{background:var(--card);border-radius:14px;border:1px solid rgba(91,127,255,.1);padding:22px;margin-bottom:14px}
+.card-ok{border-color:rgba(0,200,83,.2)}
+.ct{font-size:14px;font-weight:600;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.pill{display:inline-block;padding:2px 9px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1px;background:rgba(91,127,255,.12);color:var(--blue);flex-shrink:0}
+.opt{font-size:11px;color:var(--dim);margin-left:6px;font-weight:400}
+.drop{border:2px dashed rgba(91,127,255,.25);border-radius:12px;padding:36px 16px;text-align:center;cursor:pointer;background:rgba(91,127,255,.02);transition:.2s}
+.drop:hover,.drop.on{border-color:var(--blue);background:rgba(91,127,255,.06)}
+.ftag{display:inline-flex;align-items:center;gap:8px;background:rgba(91,127,255,.1);color:var(--blue);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;margin-top:12px}
+.ftag .x{background:none;border:none;color:var(--red);cursor:pointer;font-size:15px;padding:0}
+.info{background:rgba(91,127,255,.04);border-radius:8px;padding:12px;font-size:12px;color:#999;margin-top:12px;line-height:1.7}
+.info strong{color:#fff}
+.ok{color:var(--green)}.warn{color:#ffaa00}
+.lbl{display:block;font-size:10px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.inp{width:100%;padding:9px 12px;background:#0c0c18;border:1px solid rgba(91,127,255,.12);border-radius:8px;color:var(--text);font-size:13px;font-family:inherit;outline:none}
+.inp:focus{border-color:var(--blue)}.inp::placeholder{color:#444}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sum{background:rgba(91,127,255,.04);border-radius:8px;padding:10px;font-size:11px;color:#999;margin-top:10px}
+.sum strong{color:#fff}.sum .hl{color:var(--blue)}
+.kr{display:flex;gap:10px;align-items:end}
+.kr>div:first-child{flex:1}
+.ks{font-size:11px;padding:4px 10px;border-radius:6px;white-space:nowrap}
+.ks-ok{background:rgba(0,200,83,.1);color:var(--green)}
+.ks-no{background:rgba(255,68,85,.1);color:var(--red)}
+.btn{width:100%;padding:14px;border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn-p{background:var(--grad)}.btn-g{background:linear-gradient(135deg,var(--green),var(--cyan))}
+.btn-o{background:rgba(91,127,255,.1);border:1px solid rgba(91,127,255,.15);color:var(--blue);font-size:13px;font-weight:600;padding:12px;margin-top:8px}
+.bar{height:6px;background:#1a1a2e;border-radius:3px;overflow:hidden;margin-bottom:8px}
+.bf{height:100%;background:var(--grad);border-radius:3px;transition:width .5s;width:0}
+.bm{font-size:12px;color:var(--muted);text-align:center}
+.log{max-height:220px;overflow:auto;margin-top:12px;font-size:11px;font-family:'Courier New',monospace;background:#0a0a16;border:1px solid rgba(91,127,255,.05);border-radius:8px;padding:10px}
+.l-ok{color:var(--green)}.l-err{color:var(--red)}.l-info{color:var(--blue)}.l-def{color:#6a6a99}
+.err{background:rgba(255,50,50,.07);border:1px solid rgba(255,50,50,.15);border-radius:8px;padding:10px 14px;color:var(--red);font-size:12px;margin-top:12px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.st{text-align:center;padding:10px 4px;background:rgba(91,127,255,.04);border-radius:8px}
+.sn{font-size:20px;font-weight:700;color:var(--blue);display:block}
+.sl{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:1px}
+.ml{max-height:280px;overflow:auto;border-radius:8px;border:1px solid rgba(91,127,255,.06);margin-bottom:16px}
+.mr{padding:10px 12px;font-size:12px;color:#bbb;display:flex;justify-content:space-between;align-items:center}
+.mr:nth-child(even){background:rgba(91,127,255,.03)}
+.mr strong{color:var(--blue);margin-right:6px}
+.mm{display:flex;gap:10px;font-size:10px;color:#666}
+.cl{font-size:11px;color:var(--dim);margin-bottom:14px;padding:8px 10px;background:rgba(91,127,255,.03);border-radius:6px}
+.cl strong{color:var(--blue)}
+.cd{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin-right:3px}
+.pre{background:#0a0a16;border-radius:8px;padding:14px;max-height:300px;overflow:auto;font-size:11px;font-family:'Courier New',monospace;color:#6a6a99;white-space:pre-wrap;word-break:break-all;border:1px solid rgba(91,127,255,.05);margin-top:12px}
+.tb{background:none;border:none;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;padding:0;display:flex;align-items:center;gap:8px}
+.tb span{font-size:11px;color:#666}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(91,127,255,.05);color:#888;border:1px solid rgba(91,127,255,.06)}
+.hidden{display:none}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(91,127,255,.2);border-radius:3px}
+@media(max-width:600px){.g5{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">MATHEUS ACADEMY</div>
+  <h1>⚙️ Gerador de Cursos Pro</h1>
+  <p>Upload qualquer arquivo → Configure → Curso completo pronto para o repositório</p>
+</div>
+
+<div class="wrap">
+
+  <!-- KEY -->
+  <div class="card" id="sKey">
+    <div class="ct"><span class="pill">🔑</span>API Key OpenAI</div>
+    <div class="kr">
+      <div><label class="lbl">Sua chave</label><input class="inp" type="password" id="iKey" placeholder="sk-proj-..."></div>
+      <span class="ks ks-no" id="kSt">—</span>
+    </div>
+    <button class="btn btn-o" onclick="saveK()" style="width:auto;padding:8px 20px;margin-top:10px">Salvar</button>
+    <div style="font-size:10px;color:#333;margin-top:6px">Salva no navegador. Só é enviada para api.openai.com.</div>
+  </div>
+
+  <!-- UPLOAD -->
+  <div class="card">
+    <div class="ct"><span class="pill">1</span>Upload do Conteúdo</div>
+    <div class="drop" id="dz" onclick="document.getElementById('fi').click()">
+      <div style="font-size:42px;margin-bottom:10px" id="dIco">📄</div>
+      <p style="font-size:14px;color:#aaa;margin-bottom:4px" id="dTxt">Clique ou arraste o arquivo aqui</p>
+      <p style="font-size:11px;color:#555">.pdf, .docx ou .txt — livro, apostila, qualquer tamanho</p>
+    </div>
+    <input type="file" id="fi" class="hidden" accept=".pdf,.docx,.doc,.txt">
+    <div id="fInfo"></div>
+    <div id="eInfo"></div>
+  </div>
+
+  <!-- VOLUME -->
+  <div class="card hidden" id="sVol">
+    <div class="ct"><span class="pill">2</span>Volume do Curso<span class="opt">(vazio = automático)</span></div>
+    <div class="g5">
+      <div><label class="lbl">Módulos</label><input class="inp vol" type="number" id="cMod" placeholder="Auto" min="1"></div>
+      <div><label class="lbl">Tópicos/Mód</label><input class="inp vol" type="number" id="cTop" placeholder="Auto" min="3"></div>
+      <div><label class="lbl">Quiz Final/Mód</label><input class="inp vol" type="number" id="cQz" placeholder="3" min="1"></div>
+      <div><label class="lbl">Cards/Mód</label><input class="inp vol" type="number" id="cCd" placeholder="Auto" min="1"></div>
+      <div><label class="lbl">Min chars/tóp</label><input class="inp vol" type="number" id="cCh" placeholder="3000" min="500"></div>
+    </div>
+    <div class="sum hidden" id="vSum"></div>
+  </div>
+
+  <!-- IDENTITY -->
+  <div class="card hidden" id="sId">
+    <div class="ct"><span class="pill">3</span>Identidade<span class="opt">(auto se vazio)</span></div>
+    <div class="g3">
+      <div><label class="lbl">ID</label><input class="inp" id="cId" placeholder="ex: geo"></div>
+      <div><label class="lbl">Prefixo</label><input class="inp" id="cPx" placeholder="ex: gp_"></div>
+      <div><label class="lbl">Arquivo</label><input class="inp" id="cFn" placeholder="ex: curso-geo.html"></div>
+    </div>
+  </div>
+
+  <!-- GENERATE -->
+  <div class="card hidden" id="sGen">
+    <div class="ct"><span class="pill">4</span>Gerar Curso</div>
+    <div class="chips">
+      <span class="chip">📚 Divide módulos</span><span class="chip">📝 Gera quizzes</span>
+      <span class="chip">🃏 Cria flashcards</span><span class="chip">✍️ Conteúdo rico</span><span class="chip">✅ HTML pronto</span>
+    </div>
+    <button class="btn btn-p" id="bGen" onclick="run()">🚀 Gerar Curso Completo</button>
+    <div class="hidden" id="pArea" style="margin-top:16px"><div class="bar"><div class="bf" id="bFill"></div></div><p class="bm" id="bMsg"></p></div>
+    <div class="hidden" id="logA" style="margin-top:12px"></div>
+    <div id="errA"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="hidden" id="sRes">
+    <div class="card card-ok">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <span style="font-size:28px">✅</span>
+        <div><div id="rNm" style="font-size:19px;font-weight:700;color:#fff"></div><div id="rDs" style="font-size:12px;color:#888"></div></div>
+      </div>
+      <div class="stats" id="rSt"></div>
+      <div class="cl" id="rCf"></div>
+      <div class="ml" id="rMl"></div>
+      <button class="btn btn-g" onclick="dlHTML()">⬇️ Baixar HTML</button>
+      <button class="btn btn-o" onclick="cpHTML(this)">📋 Copiar HTML completo</button>
+    </div>
+    <div class="card">
+      <button class="tb" onclick="tgPre()">📄 Preview do HTML <span id="pArr">▼</span></button>
+      <div class="pre hidden" id="preA"></div>
+    </div>
+    <button class="btn btn-o" onclick="resetAll()" style="margin-bottom:50px">🔄 Novo curso</button>
+  </div>
+</div>
+
+<script>
+// STATE
+let ET='',CF=null,FH='',FD=null,FI={};
+
+// PDF.js
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+// KEY
+function loadK(){const k=localStorage.getItem('ma_oai_k')||'';document.getElementById('iKey').value=k;ukS(k)}
+function saveK(){const k=document.getElementById('iKey').value.trim();if(k){localStorage.setItem('ma_oai_k',k);ukS(k)}}
+function ukS(k){const e=document.getElementById('kSt');if(k&&k.startsWith('sk-')){e.textContent='✅ Salva';e.className='ks ks-ok'}else{e.textContent='Não salva';e.className='ks ks-no'}}
+function gK(){return(localStorage.getItem('ma_oai_k')||document.getElementById('iKey').value).trim()}
+
+// DROP
+const dz=document.getElementById('dz'),fi=document.getElementById('fi');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('on')});
+dz.addEventListener('dragleave',()=>dz.classList.remove('on'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('on');hFile(e.dataTransfer.files[0])});
+fi.addEventListener('change',e=>hFile(e.target.files[0]));
+
+async function hFile(f){
+  if(!f)return;
+  const ext=f.name.split('.').pop().toLowerCase();
+  if(!['pdf','docx','doc','txt'].includes(ext)){sErr('Use .pdf, .docx ou .txt');return}
+  CF=f;$('dIco').textContent='⏳';$('dTxt').textContent='Extraindo texto...';cErr();
+  try{
+    if(ext==='txt')ET=await f.text();
+    else if(ext==='pdf')ET=await exPDF(f);
+    else ET=await exDOCX(f);
+    if(ET.length<100)throw new Error('Arquivo vazio ou ilegível.');
+    $('dIco').textContent='✅';$('dTxt').textContent=f.name;
+    $('fInfo').innerHTML=`<div class="ftag">📎 ${f.name} (${(f.size/1024).toFixed(0)} KB) <button class="x" onclick="resetAll()">✕</button></div>`;
+    const w=ET.split(/\s+/).length,rm=Math.round(w/200);
+    $('eInfo').innerHTML=`<div class="info">✅ <strong>${Math.round(ET.length/1000)}k</strong> chars &nbsp;•&nbsp; ~<strong>${w.toLocaleString()}</strong> palavras &nbsp;•&nbsp; ~<strong>${rm}</strong> min &nbsp;•&nbsp; ${ET.length<=500000?'<span class="ok">✓ OK</span>':'<span class="warn">⚡ Grande</span>'}</div>`;
+    show('sVol');show('sId');show('sGen');
+  }catch(e){$('dIco').textContent='❌';$('dTxt').textContent='Erro';sErr(e.message)}
+}
+
+async function exPDF(f){
+  const pdf=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;
+  let t='';
+  for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const tc=await pg.getTextContent();t+=tc.items.map(x=>x.str).join(' ')+'\n\n'}
+  return t.trim();
+}
+async function exDOCX(f){return(await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value}
+
+// VOLUME SUMMARY
+document.querySelectorAll('.vol').forEach(el=>el.addEventListener('input',uSum));
+function uSum(){
+  const m=$('cMod').value,t=$('cTop').value,q=$('cQz').value;
+  const el=$('vSum');
+  if(m||t){
+    const tot=(m&&t)?(+m*+t):'?';
+    el.innerHTML=`📊 <strong>${m||'?'}</strong> módulos × <strong>${t||'?'}</strong> tópicos = <span class="hl"><strong>${tot} totais</strong></span>`+(q&&m?` • ${+m*+q} quiz finais`:'');
+    el.classList.remove('hidden');
+  }else el.classList.add('hidden');
+}
+
+// ═══ GENERATION ═══
+async function run(){
+  const key=gK();
+  if(!key||!key.startsWith('sk-')){sErr('Configure a API Key primeiro.');return}
+  if(!ET){sErr('Faça upload primeiro.');return}
+  const btn=$('bGen');btn.disabled=true;btn.textContent='⏳ Processando...';
+  cErr();show('pArea');$('logA').innerHTML='';$('logA').classList.remove('hidden');
+
+  const cfg={
+    modules:+$('cMod').value||null,
+    topicsPerMod:+$('cTop').value||null,
+    quizzesPerMod:+$('cQz').value||3,
+    cardsPerMod:+$('cCd').value||null,
+    minChars:+$('cCh').value||3000
+  };
+
+  try{
+    // PHASE 1: OUTLINE
+    sP(5,'Fase 1: Criando estrutura...');aL('info','═══ FASE 1: Estrutura ═══');
+    const oP=bOP(cfg);
+    const outline=await cGPT(key,oP,ET.substring(0,60000));
+    if(!outline.modules?.length)throw new Error('Sem módulos. Tente novamente.');
+    aL('ok',`✓ ${outline.modules.length} módulos, ${outline.modules.reduce((s,m)=>s+m.topics.length,0)} tópicos`);
+    sP(15,`${outline.modules.length} módulos planejados`);
+
+    // PHASE 2: MODULE BY MODULE
+    aL('info','═══ FASE 2: Conteúdo módulo a módulo ═══');
+    const chunks=splitT(ET,outline.modules.length);
+    const done=[];
+    for(let i=0;i<outline.modules.length;i++){
+      const mod=outline.modules[i];
+      const pct=15+Math.round(((i+.5)/outline.modules.length)*75);
+      sP(pct,`Módulo ${i+1}/${outline.modules.length}: ${mod.name}`);
+      aL('info',`▶ M${i+1}: ${mod.name}`);
+      let res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg,i,outline.modules.length);
+      if(!res?.topics){
+        aL('err',`  ✗ Falhou — retry...`);
+        await slp(3000);
+        res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg,i,outline.modules.length);
+      }
+      if(res?.topics){done.push(res);aL('ok',`  ✓ ${res.topics.length} tóp, ${res.quizFinal?.length||0} qf`)}
+      else aL('err',`  ✗ M${i+1} falhou após retry`);
+    }
+    if(!done.length)throw new Error('Nenhum módulo gerado.');
+
+    // PHASE 3: ASSEMBLE
+    sP(92,'Fase 3: Montando HTML...');aL('info','═══ FASE 3: HTML ═══');
+    FD={courseName:outline.courseName,shortName:outline.shortName,cat:outline.cat,desc:outline.desc,color:outline.color||'#5b7fff',glow:outline.glow||'0 0 30px #5b7fff40',totalHours:outline.totalHours||Math.ceil(done.reduce((s,m)=>s+m.topics.length,0)*.35),modules:done};
+    const fid=$('cId').value.trim()||FD.courseName.replace(/[^a-zA-Z0-9]/g,'').substring(0,6).toLowerCase();
+    const fpx=$('cPx').value.trim()||(fid.substring(0,2)+'_');
+    const ffn=$('cFn').value.trim()||('curso-'+fid+'.html');
+    FI={id:fid,prefix:fpx,fileName:ffn};
+    FH=bHTML(FD,FI);
+    sP(100,'Pronto!');aL('ok',`═══ COMPLETO: ${done.length} módulos ═══`);
+    showRes();
+  }catch(e){sErr(e.message);aL('err','ERRO: '+e.message)}
+  finally{btn.disabled=false;btn.textContent='🚀 Gerar Curso Completo'}
+}
+
+function bOP(cfg){
+  const mr=cfg.modules?`EXATAMENTE ${cfg.modules} módulos`:'quantos forem necessários (mín 4)';
+  const tr=cfg.topicsPerMod?`EXATAMENTE ${cfg.topicsPerMod} tópicos/módulo`:'mín 4 tópicos/módulo';
+  return `Analise o conteúdo e crie a ESTRUTURA de um curso.\n\nREGRAS:\n- ${mr}\n- ${tr}\n- Divida por temas lógicos, básico→avançado\n\nJSON puro (sem markdown):\n{"courseName":"...","shortName":"...","cat":"...","desc":"...","color":"#hex","glow":"0 0 30px #hex40","totalHours":n,"modules":[{"id":1,"name":"...","topics":[{"id":1,"name":"..."}]}]}`;
+}
+
+function splitT(t,n){
+  const sz=Math.ceil(t.length/n),ch=[];
+  for(let i=0;i<n;i++){let s=i*sz,e=Math.min(s+sz+2000,t.length);if(e<t.length){const nl=t.lastIndexOf('\n',e);if(nl>s+sz*.7)e=nl}ch.push(t.substring(s,e))}
+  return ch;
+}
+
+async function cGPT(key,sys,usr){
+  const r=await fRetry(key,[{role:'system',content:sys},{role:'user',content:usr}],8000);
+  return pJ(r);
+}
+
+async function cGPTM(key,mod,chunk,cfg,mi,total){
+  const qr=cfg.quizzesPerMod?`${cfg.quizzesPerMod} perguntas`:'3 perguntas';
+  const cr=cfg.cardsPerMod?`${cfg.cardsPerMod} flashcards distribuídos entre tópicos`:'2 flashcards por tópico';
+  const mc=cfg.minChars||3000;
+  const p=`Gere o Módulo ${mi+1} de ${total}.\n\nMÓDULO: "${mod.name}"\nTÓPICOS: ${mod.topics.map((t,i)=>`${i+1}. ${t.name}`).join(', ')}\n\nREGRAS:\n- Cada tópico mín ${mc} chars no content\n- Tags: <h3>,<h4>,<p>,<blockquote> apenas\n- 1 quiz/tópico (4 opções, 1 correta)\n- ${cr}\n- ${qr} no quizFinal\n- ${mi===0?'Primeiro tópico free:true':'Todos free:false'}\n- Texto natural, humano, profundo, didático\n- Nunca enrolar, nunca repetir título no texto\n\nJSON puro:\n{"id":${mi+1},"name":"${mod.name.replace(/"/g,'\\"')}","topics":[{"id":1,"name":"...","dur":min,"free":bool,"content":"<h3>...</h3><p>${mc}+ chars...</p>","quiz":[{"q":"...","opts":["A","B","C","D"],"correct":0}],"cards":[{"q":"...","a":"..."}]}],"quizFinal":[{"q":"...","opts":["A","B","C","D"],"correct":0}]}`;
+  const r=await fRetry(key,[{role:'system',content:p},{role:'user',content:'REFERÊNCIA:\n\n'+chunk.substring(0,50000)}],16000);
+  return pJ(r);
+}
+
+async function fRetry(key,msgs,mt,retries=3){
+  for(let a=1;a<=retries;a++){
+    try{
+      const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'gpt-4o',messages:msgs,max_tokens:mt,temperature:.7})});
+      if(!r.ok){const d=await r.json().catch(()=>({}));if(r.status===429){aL('err',`  ⏳ Rate limit — 15s...`);await slp(15000);continue}throw new Error(d.error?.message||`HTTP ${r.status}`)}
+      return(await r.json()).choices[0].message.content;
+    }catch(e){if(a===retries)throw e;aL('err',`  ⚠ Tent. ${a}: ${e.message}`);await slp(4000)}
+  }
+}
+
+function pJ(r){const c=r.replace(/```json|```/g,'').trim();try{return JSON.parse(c)}catch{const m=c.match(/\{[\s\S]*\}/);if(m)return JSON.parse(m[0]);throw new Error('JSON inválido')}}
+function slp(ms){return new Promise(r=>setTimeout(r,ms))}
+
+// BUILD HTML
+function bHTML(d,c){
+  const id=c.id,px=c.prefix,salt=id.toUpperCase()+'_HENRY_2026_MASTER',ak=id+'_auth';
+  const tt=d.modules.reduce((s,m)=>s+m.topics.length,0);
+  const tq=d.modules.reduce((s,m)=>s+m.topics.reduce((ss,t)=>ss+(t.quiz?.length||0),0)+(m.quizFinal?.length||0),0);
+  const e=s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n').replace(/\r/g,'');
+  const eb=s=>(s||'').replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\$\{/g,'\\${');
+  const ms=d.modules.map((m,mi)=>{
+    const ts=m.topics.map((t,ti)=>{
+      const fr=mi===0&&ti===0;
+      const qz=(t.quiz?.length)?'quiz:['+t.quiz.map(q=>"{q:'"+e(q.q)+"',opts:["+q.opts.map(o=>"'"+e(o)+"'").join(',')+"],correct:"+q.correct+"}").join(',')+']':'quiz:[]';
+      const cd=(t.cards?.length)?'cards:['+t.cards.map(x=>"{q:'"+e(x.q)+"',a:'"+e(x.a)+"'}").join(',')+']':'cards:[]';
+      return`      {id:'${px}m${mi+1}_t${ti+1}',name:'${e(t.name)}',dur:${t.dur||8},free:${fr},content:\`${eb(t.content)}\`,${qz},${cd}}`;
+    }).join(',\n');
+    const qf=(m.quizFinal?.length)?'['+m.quizFinal.map(q=>"{q:'"+e(q.q)+"',opts:["+q.opts.map(o=>"'"+e(o)+"'").join(',')+"],correct:"+q.correct+"}").join(',')+']':'[]';
+    return`  {id:'${px}m${mi+1}',name:'${e(m.name)}',free:${mi===0},topics:[\n${ts}\n    ],quizFinal:${qf}}`;
+  }).join(',\n');
+  return`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${d.courseName} — Matheus Academy</title>
+<link rel="stylesheet" href="shared/course.css">
+<script src="data/courses.js"><\/script>
+<script src="data/userStore.js"><\/script>
+<script src="firebase-config.js"><\/script>
+</head>
+<body>
+<script>
+var COURSE={id:'${id}',name:'${e(d.courseName)}',shortName:'${e(d.shortName)}',cat:'${e(d.cat)}',desc:'${e(d.desc)}',salt:'${salt}',ak:'${ak}',courseKey:'${id}',prefix:'${px}',color:'${d.color||'#5b7fff'}',glow:'${d.glow||'0 0 30px #5b7fff40'}',free:'${px}m1_t1',freeModules:[0],modules:${d.modules.length},topics:${tt},hours:${d.totalHours||Math.ceil(tt*.35)},quizzes:${tq}};
+
+var MODS=[
+${ms}
+];
+<\/script>
+<script src="shared/course-engine.js"><\/script>
+</body>
+</html>`;
+}
+
+// UI
+function $(id){return document.getElementById(id)}
+function show(id){$(id).classList.remove('hidden')}
+function hide(id){$(id).classList.add('hidden')}
+function sP(p,m){$('bFill').style.width=p+'%';$('bMsg').textContent=m}
+function aL(t,m){const el=$('logA');el.innerHTML+=`<div class="l-${t}">${m}</div>`;el.scrollTop=el.scrollHeight}
+function sErr(m){$('errA').innerHTML=m?`<div class="err">❌ ${m}</div>`:''}
+function cErr(){$('errA').innerHTML=''}
+
+function showRes(){
+  const d=FD,tt=d.modules.reduce((s,m)=>s+m.topics.length,0);
+  const tq=d.modules.reduce((s,m)=>s+m.topics.reduce((ss,t)=>ss+(t.quiz?.length||0),0)+(m.quizFinal?.length||0),0);
+  const tc=d.modules.reduce((s,m)=>s+m.topics.reduce((ss,t)=>ss+(t.cards?.length||0),0),0);
+  $('rNm').textContent=d.courseName;$('rDs').textContent=d.desc;
+  $('rSt').innerHTML=[[d.modules.length,'Módulos'],[tt,'Tópicos'],[tq,'Quizzes'],[tc,'Cards'],[(d.totalHours||'—')+'h','Horas']].map(([n,l])=>`<div class="st"><span class="sn">${n}</span><span class="sl">${l}</span></div>`).join('');
+  $('rCf').innerHTML=`<strong>ID:</strong> ${FI.id} • <strong>Prefix:</strong> ${FI.prefix} • <strong>Salt:</strong> ${FI.id.toUpperCase()}_HENRY_2026_MASTER • <strong>Cor:</strong> <span class="cd" style="background:${d.color}"></span>${d.color}`;
+  $('rMl').innerHTML=d.modules.map((m,i)=>`<div class="mr"><span><strong>M${i+1}</strong>${m.name}</span><div class="mm"><span>${m.topics.length} tóp</span><span>${m.topics.reduce((s,t)=>s+(t.quiz?.length||0),0)} qz</span><span>${m.topics.reduce((s,t)=>s+(t.cards?.length||0),0)} cd</span><span>${m.quizFinal?.length||0} qf</span></div></div>`).join('');
+  hide('sGen');show('sRes');
+}
+
+function dlHTML(){const u=URL.createObjectURL(new Blob([FH],{type:'text/html;charset=utf-8'}));const a=document.createElement('a');a.href=u;a.download=FI.fileName||'curso.html';a.click();URL.revokeObjectURL(u)}
+function cpHTML(btn){navigator.clipboard.writeText(FH).then(()=>{btn.textContent='✅ Copiado!';setTimeout(()=>{btn.textContent='📋 Copiar HTML completo'},2500)})}
+function tgPre(){const e=$('preA'),a=$('pArr');if(e.classList.contains('hidden')){e.classList.remove('hidden');e.textContent=FH.substring(0,10000)+(FH.length>10000?'\n\n... [truncado]':'');a.textContent='▲'}else{e.classList.add('hidden');a.textContent='▼'}}
+
+function resetAll(){
+  ET='';CF=null;FH='';FD=null;
+  $('dIco').textContent='📄';$('dTxt').textContent='Clique ou arraste o arquivo aqui';
+  $('fInfo').innerHTML='';$('eInfo').innerHTML='';
+  hide('sVol');hide('sId');hide('sGen');hide('sRes');
+  $('logA').innerHTML='';hide('logA');hide('pArea');cErr();
+  ['cMod','cTop','cQz','cCd','cCh','cId','cPx','cFn'].forEach(x=>$(x).value='');
+  $('vSum').classList.add('hidden');$('fi').value='';
+}
+
+loadK();
+</script>
+</body>
+</html>
