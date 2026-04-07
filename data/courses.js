@@ -201,6 +201,26 @@ var MA_COURSES = [
     color: '#2E8B57',
     addedTs: 1775585265430,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gsx.jpg',
+    id: 'gsx',
+    name: 'geopolitica seculo xxi',
+    desc: '',
+    file: 'geopolitica-seculo-xxi.html',
+    cat: 'Negócios',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 7,
+    salt: 'GSX_HENRY_2026_MASTER',
+    ak: 'gsx_auth',
+    storagePrefix: 'gsx_',
+    icon: '🏛️',
+    color: '#3b82f6',
+    free: true,
+    addedTs: 1775591379961,
+    active: true
   }
 ];
 var MA_CATS = [
