@@ -204,26 +204,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    id: 'ia',
-    courseKey: 'ia',
-    coverImg: 'assets/capas/ia.png',
-    name: 'Inteligência Artificial na Prática',
-    desc: 'Do zero ao avançado: domine a Inteligência Artificial com aplicações reais, ferramentas modernas e estratégias práticas para transformar sua carreira e seus negócios.',
-    file: 'curso-ia-pratica.html',
-    cat: 'Tecnologia',
-    modules: 27,
-    topics: 189,
-    hours: 12,
-    quizzes: 190,
-    salt: 'IA_HENRY_2026_MASTER',
-    ak: 'ia_auth',
-    storagePrefix: 'ia_',
-    icon: '🤖',
-    color: '#5b7fff',
-    addedTs: 1775501767880,
-    active: true
-  },
-  {
     coverImg: 'assets/capas/filosofi.jpg',
     id: 'filosofi',
     name: 'Filosofia para a Vida Real',
