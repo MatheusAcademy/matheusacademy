@@ -2958,171 +2958,186 @@ body.light .cert-title{color:#0f0f23;}
 body.light .cert-sub{color:#3d3d6b;}
 body.light .cert-prog-info{background:#f7f8fc;border-color:rgba(99,102,241,.15);}
 
-/* ══════════════════════════════════════════════
-   FIXES MOBILE SEGUROS — sem quebrar nada
-   Aplicados sobre o CSS original sem alterar estrutura
-   ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   MATHEUS ACADEMY — MOBILE FIXES v2
+   Adicionado ao FINAL do CSS original — não altera nada acima.
+   Para reverter: apagar daqui até o fim do arquivo.
+   ══════════════════════════════════════════════════════════════ */
 
-/* Reset básico — só o essencial */
+/* ── 1. Reset global — previne elementos ultrapassando a tela ── */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-
-/* Evita scroll horizontal */
-body { overflow-x: hidden; max-width: 100%; }
-
-/* Imagens não ultrapassam container */
+html { -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+body { overflow-x: hidden; }
 img, video, iframe { max-width: 100%; height: auto; }
 
-/* Conteúdo das tabs contido */
-.tab-pane, .course-main { max-width: 100%; overflow-x: hidden; }
+/* ── 2. Corrige padding lateral excessivo nas áreas de conteúdo ── */
+.lesson-area { padding: 28px 20px 60px; }
+.notes-area  { padding: 24px 20px 60px; }
+.chat-area   { padding: 24px 20px 0;    }
 
-/* ══ MOBILE ≤ 768px ══ */
+/* ── 3. Corrige menu dropdown — top dinâmico baseado na topbar ── */
+.ma-menu-dd {
+  top: calc(var(--topbar-h) + 6px);
+  max-width: calc(100vw - 20px);
+}
+
+/* ── 4. Corrige toast — top dinâmico ── */
+.toast { top: calc(var(--topbar-h) + 10px); }
+
+/* ── 5. Corrige botões de navegação — remove min-width fixo ── */
+.ml-nav-btn  { min-width: 0; }
+.ml-nav-btns { flex-wrap: nowrap; }
+
+/* ── 6. Botão continuar — não estica 100% ── */
+.cover-continue-btn { width: auto; max-width: 100%; display: inline-flex; }
+
+/* ── 7. Cover CTA — padding mais controlado ── */
+.cover-cta { padding: 14px 32px; font-size: .88rem; }
+
+/* ── 8. Social footer — não causa overflow ── */
+.ml-social-btn { min-width: 0; }
+
+/* ════════════════════════ MOBILE ≤ 768px ════════════════════════ */
 @media (max-width: 768px) {
+
   :root {
-    --sidebar-w: 290px;
-    --topbar-h: 52px;
+    --topbar-h:    52px;
     --bottombar-h: 68px;
-    --font-size: 0.88rem;
+    --font-size:   0.88rem;
   }
 
-  /* Sidebar */
-  .course-sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
-  .course-sidebar.mobile-open { transform: translateX(0); }
-  .course-main { margin-left: 0 !important; }
-  .sb-puller { display: none; }
-
-  /* Topbar compacta */
-  .ma-topbar { padding: 0 10px; gap: 4px; }
-  .ma-tb-logo svg { width: 86px; height: 25px; }
-  .ma-tb-course-name { max-width: 75px; font-size: .6rem; }
-  .ma-tb-pts-block { padding: 4px 8px 4px 7px; gap: 5px; }
-  .ma-tb-pts-num { font-size: .76rem; min-width: 22px; }
+  /* ── Topbar compacta ── */
+  .ma-topbar {
+    padding: 0 10px;
+    gap: 4px;
+    overflow: hidden;
+  }
+  .ma-tb-logo svg       { width: 86px !important; height: 26px !important; }
+  .ma-tb-course-name    { max-width: 75px; font-size: .6rem; }
+  .ma-tb-pts-block      { padding: 4px 8px 4px 7px; gap: 5px; }
+  .ma-tb-pts-num        { font-size: .76rem; min-width: 22px; }
   .ma-tb-theme-btn,
   .ma-tb-menu-btn,
-  .sidebar-toggle-btn { width: 30px; height: 30px; border-radius: 8px; }
-  .ma-tb-streak { padding: 3px 7px; gap: 3px; }
+  .sidebar-toggle-btn   { width: 30px; height: 30px; }
+  .ma-tb-streak         { padding: 3px 7px; gap: 3px; }
 
-  /* Menu dropdown */
-  .ma-menu-dd {
-    top: calc(var(--topbar-h) + 6px);
-    max-width: calc(100vw - 20px);
+  /* ── Sidebar ── */
+  .course-sidebar        { transform: translateX(calc(-1 * var(--sidebar-w))); }
+  .course-sidebar.mobile-open { transform: translateX(0); }
+  .course-main           { margin-left: 0 !important; }
+  .sb-puller             { display: none; }
+
+  /* ── Tabs — sticky abaixo da topbar, SEM cálculo de altura da mini-capa ── */
+  .tabs-wrap {
+    position: sticky;
+    top: var(--topbar-h);
+    z-index: 100;
+    padding-right: 6px;
   }
+  .ctab               { padding: 10px 12px; font-size: .59rem; }
+  .back-to-cover-btn  { height: 29px; padding: 0 9px; font-size: .53rem; }
 
-  /* Áreas de conteúdo — padding lateral razoável */
+  /* ── Mini-capa — compacta, flui normalmente ── */
+  .lesson-cover-mini   { padding: 12px 14px; gap: 10px; }
+  .lcm-logo .logo-svg  { width: 68px !important; height: auto !important; }
+  .lcm-logo svg        { width: 68px !important; height: auto !important; }
+  .lcm-title           { font-size: .84rem; margin-bottom: 3px; }
+  .lcm-desc            { font-size: .61rem; }
+  .lcm-badge           { font-size: .43rem; padding: 2px 8px; }
+
+  /* ── Áreas de conteúdo ── */
   .lesson-area { padding: 16px 16px 80px; }
   .notes-area  { padding: 16px 16px 80px; }
   .cert-area   { padding: 16px 16px 80px; }
-
-  /* Tabs — ficam sticky abaixo da topbar */
-  .tabs-wrap { top: var(--topbar-h); padding-right: 6px; }
-  .ctab { padding: 10px 12px; font-size: .59rem; }
-  .back-to-cover-btn { height: 29px; padding: 0 9px; font-size: .53rem; }
-
-  /* Mini-capa — flui normalmente, mais compacta */
-  .lesson-cover-mini { padding: 12px 14px; gap: 10px; }
-  .lesson-cover-mini .logo-svg { width: 68px !important; height: auto !important; }
-  .lcm-title { font-size: .84rem; margin-bottom: 3px; }
-  .lcm-desc  { font-size: .61rem; }
-  .lcm-badge { font-size: .43rem; padding: 2px 8px; }
-
-  /* Controles sticky — logo abaixo das tabs (~40px) */
-  .ml-controls-bar {
-    top: calc(var(--topbar-h) + 40px);
-    padding: 6px 12px;
-    flex-wrap: nowrap;
-  }
-  .ml-audio-ctrl { top: calc(var(--topbar-h) + 40px); }
-  .mlc-play-btn { width: 32px; height: 32px; }
-  .mlc-sep { margin: 0 8px; }
-
-  /* Capa do curso */
-  .cover-course-title { font-size: 1.45rem; }
-  .cover-content { padding: 28px 16px; }
-  .cover-desc { font-size: .78rem; }
-  .cover-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .cover-cta { padding: 13px 26px; font-size: .84rem; max-width: 90%; }
-
-  /* Botão Continuar */
-  .cover-continue-btn {
-    padding: 9px 20px;
-    font-size: .75rem;
-    max-width: 90%;
-    width: auto;
-  }
-
-  /* Botões nav módulo */
-  .ml-nav-btns { flex-wrap: nowrap; }
-  .ml-nav-btn { padding: 11px 12px; font-size: .78rem; min-width: 0; }
-  .ml-nav-next, .ml-nav-prev { padding: 11px 12px; font-size: .78rem; }
-
-  /* Accordion */
-  .ml-mod-header { padding: 14px 16px 6px; }
-  .ml-mod-name   { font-size: 1.05rem; }
-  .ml-topic-inner { padding: 16px 16px 12px; }
-  .ml-topics-list { padding: 0 10px 8px; }
-
-  /* Quiz */
-  .quiz-opt { font-size: .76rem; padding: 10px 12px; }
-
-  /* Flashcards */
-  .fc-grid { grid-template-columns: repeat(2, 1fr); }
-  .ml-fc-grid { grid-template-columns: repeat(2, 1fr); }
-
-  /* Cards capa */
-  .mod-card { min-width: 120px; max-width: 150px; }
-  .mod-card-cover { height: 90px; }
-
-  /* Rodapé social */
-  .ml-social-links { flex-direction: column; }
-  .ml-social-btn   { min-width: 0; width: 100%; }
-  .mod-lesson-wrap { padding: 0 0 20px 0; }
-
-  /* Caneta */
-  .floating-pen { bottom: calc(var(--bottombar-h) + 16px); right: 12px; }
-  .fp-btn { width: 40px; height: 40px; }
-
-  /* Cert */
-  .cert-card  { padding: 20px 14px; }
-  .cert-title { font-size: .95rem; }
-
-  /* Chat */
-  .chat-area {
+  .chat-area   {
     padding: 12px 12px 0;
     height: calc(100vh - var(--topbar-h) - var(--bottombar-h) - 120px);
   }
 
-  /* Highlight toolbar */
-  .highlight-toolbar {
-    max-width: calc(100vw - 20px);
-    flex-wrap: wrap;
+  /* ── Barra de controles — sticky abaixo das tabs ── */
+  .ml-controls-bar {
+    top: calc(var(--topbar-h) + 40px);
+    padding: 6px 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
   }
+  .ml-audio-ctrl  { top: calc(var(--topbar-h) + 40px); }
+  .mlc-play-btn   { width: 32px; height: 32px; }
+  .mlc-sep        { margin: 0 8px; }
 
-  /* Logo capa */
-  .cover-logo-big svg { width: min(140px, 48vw) !important; }
-  .cover-logo-big { margin-bottom: 18px; }
-  .lcm-logo svg   { width: min(76px, 22vw) !important; height: auto !important; }
+  /* ── Capa do curso ── */
+  .cover-course-title { font-size: 1.4rem; }
+  .cover-content      { padding: 28px 16px; }
+  .cover-desc         { font-size: .78rem; }
+  .cover-stats-grid   { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .cover-cta          { padding: 13px 24px; font-size: .84rem; max-width: 90%; }
+  .cover-continue-btn { padding: 9px 18px; font-size: .75rem; }
+  .cover-logo-big svg { width: min(140px, 46vw) !important; }
+  .cover-logo-big     { margin-bottom: 18px; }
+  .lcm-logo svg       { width: min(68px, 20vw) !important; height: auto !important; }
+
+  /* ── Módulos carrossel ── */
+  .mod-card        { min-width: 120px; max-width: 150px; }
+  .mod-card-cover  { height: 90px; }
+  .mod-scroll-track { grid-template-columns: repeat(2, 1fr); }
+
+  /* ── Acordeão ── */
+  .ml-mod-header  { padding: 14px 16px 6px; }
+  .ml-mod-name    { font-size: 1.05rem; }
+  .ml-topic-inner { padding: 16px 16px 12px; }
+  .ml-topics-list { padding: 0 10px 8px; }
+
+  /* ── Botões de navegação ── */
+  .ml-nav-btn              { padding: 11px 12px; font-size: .78rem; min-width: 0; }
+  .ml-nav-next, .ml-nav-prev { padding: 11px 12px; font-size: .78rem; }
+
+  /* ── Quiz e flashcards ── */
+  .quiz-opt    { font-size: .76rem; padding: 10px 12px; }
+  .fc-grid     { grid-template-columns: repeat(2, 1fr); }
+  .ml-fc-grid  { grid-template-columns: repeat(2, 1fr); }
+
+  /* ── Rodapé social ── */
+  .ml-social-links { flex-direction: column; }
+  .ml-social-btn   { min-width: 0; width: 100%; }
+  .mod-lesson-wrap { padding: 0 0 20px 0; }
+
+  /* ── Caneta flutuante ── */
+  .floating-pen { bottom: calc(var(--bottombar-h) + 16px); right: 12px; }
+  .fp-btn       { width: 40px; height: 40px; }
+
+  /* ── Certificado ── */
+  .cert-card  { padding: 20px 14px; }
+  .cert-title { font-size: .95rem; }
+
+  /* ── Highlight toolbar ── */
+  .highlight-toolbar { max-width: calc(100vw - 20px); flex-wrap: wrap; }
+
+  /* ── Notas ── */
+  .nb-pdf-btn { padding: 6px 10px; font-size: .66rem; }
 }
 
-/* ══ MOBILE EXTRA ≤ 390px ══ */
+/* ════════════════════════ EXTRA SMALL ≤ 390px ════════════════════════ */
 @media (max-width: 390px) {
   :root { --topbar-h: 50px; }
-  .ma-tb-logo svg { width: 76px; height: 22px; }
-  .ma-tb-course-name { display: none; }
-  .ma-tb-streak-lbl  { display: none; }
+  .ma-tb-logo svg        { width: 76px !important; height: 22px !important; }
+  .ma-tb-course-name     { display: none; }
+  .ma-tb-streak-lbl      { display: none; }
   .ma-tb-theme-btn,
   .ma-tb-menu-btn,
-  .sidebar-toggle-btn { width: 28px; height: 28px; }
-  .lesson-area, .notes-area, .cert-area { padding: 12px 12px 80px; }
-  .cover-course-title { font-size: 1.25rem; }
-  .cover-cta { padding: 12px 18px; font-size: .8rem; }
-  .ctab { padding: 9px 10px; font-size: .57rem; }
-  .ml-fc-grid { grid-template-columns: 1fr; }
+  .sidebar-toggle-btn    { width: 28px; height: 28px; }
+  .lesson-area,
+  .notes-area,
+  .cert-area             { padding: 12px 12px 80px; }
+  .cover-course-title    { font-size: 1.25rem; }
+  .cover-cta             { padding: 12px 16px; font-size: .8rem; }
+  .ctab                  { padding: 9px 10px; font-size: .57rem; }
+  .ml-fc-grid            { grid-template-columns: 1fr; }
 }
 
-/* ══ DESKTOP ══ */
+/* ════════════════════════ DESKTOP ≥ 769px ════════════════════════ */
 @media (min-width: 769px) {
   .bottom-nav { display: none !important; }
-  :root { --bottombar-h: 0px; }
-  body { padding-bottom: 0; }
-  .sb-puller { display: flex; }
+  :root       { --bottombar-h: 0px; }
+  body        { padding-bottom: 0; }
+  .sb-puller  { display: flex; }
 }
