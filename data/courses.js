@@ -182,6 +182,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775501691536,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/geopol.jpg',
+    id: 'geopol',
+    name: 'Geopolítica - Tudo que Voce Precisa Saber',
+    desc: 'Explore a dinâmica complexa das relações internacionais com o curso \'Geopolítica - Tudo que Voce Precisa Saber\', que oferece uma jornada do básico ao avançado, cobrindo conceitos centrais, regiões estratégicas e conflitos globais. Descubra como a geopolítica influencia decisões políticas, econômicas e sociais ao redor do mundo.',
+    file: 'curso-geopol.html',
+    cat: 'Geopolítica',
+    modules: 7,
+    topics: 21,
+    hours: 2,
+    quizzes: 21,
+    salt: 'GEOPOL_HENRY_2026_MASTER',
+    ak: 'geopol_auth',
+    storagePrefix: 'ge_',
+    icon: '📰',
+    color: '#2E8B57',
+    addedTs: 1775585265430,
+    active: true
   }
 ];
 var MA_CATS = [
