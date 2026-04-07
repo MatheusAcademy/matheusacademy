@@ -279,6 +279,25 @@ var MA_COURSES = [
     color: '#5b7fff',
     addedTs: 1775524940197,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/filosofi.jpg',
+    id: 'filosofi',
+    name: 'Filosofia para a Vida Real',
+    desc: 'Curso EAD completo de filosofia prática para aplicar pensamento crítico, ética, autoconhecimento, relacionamentos, trabalho e propósito na vida real.',
+    file: 'filosofia_para_a_vida_real.html',
+    cat: 'Filosofia',
+    modules: 7,
+    topics: 49,
+    hours: 12,
+    quizzes: 50,
+    salt: 'FILOVIDA_HENRY_2026_MASTER',
+    ak: 'filovida_auth',
+    storagePrefix: 'FILO',
+    icon: '🦉',
+    color: '#5b6ee1',
+    addedTs: 1775528553822,
+    active: true
   }
 ];
 var MA_CATS = [
