@@ -135,7 +135,9 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Outfit
     <div class="ct"><span class="pill">4</span>Gerar Curso</div>
     <div class="chips">
       <span class="chip">📚 Divide módulos</span><span class="chip">📝 Gera quizzes</span>
-      <span class="chip">🃏 Cria flashcards</span><span class="chip">✍️ Conteúdo rico</span><span class="chip">✅ HTML pronto</span>
+      <span class="chip">🃏 Flashcards</span><span class="chip">🎨 Destaques visuais</span>
+      <span class="chip">💡 Frases de memorização</span><span class="chip">📊 Dados e fontes</span>
+      <span class="chip">📰 Notícias recentes</span><span class="chip">✅ HTML pronto</span>
     </div>
     <button class="btn btn-p" id="bGen" onclick="run()">🚀 Gerar Curso Completo</button>
     <div class="hidden" id="pArea" style="margin-top:16px"><div class="bar"><div class="bf" id="bFill"></div></div><p class="bm" id="bMsg"></p></div>
@@ -284,7 +286,20 @@ async function run(){
 function bOP(cfg){
   const mr=cfg.modules?`EXATAMENTE ${cfg.modules} módulos`:'quantos forem necessários (mín 4)';
   const tr=cfg.topicsPerMod?`EXATAMENTE ${cfg.topicsPerMod} tópicos/módulo`:'mín 4 tópicos/módulo';
-  return `Analise o conteúdo e crie a ESTRUTURA de um curso.\n\nREGRAS:\n- ${mr}\n- ${tr}\n- Divida por temas lógicos, básico→avançado\n\nJSON puro (sem markdown):\n{"courseName":"...","shortName":"...","cat":"...","desc":"...","color":"#hex","glow":"0 0 30px #hex40","totalHours":n,"modules":[{"id":1,"name":"...","topics":[{"id":1,"name":"..."}]}]}`;
+  return `Analise o conteúdo e crie a ESTRUTURA de um curso profissional completo.
+
+REGRAS:
+- ${mr}
+- ${tr}
+- Divida por temas lógicos, do básico ao avançado
+- Cada módulo deve cobrir um tema/área coerente
+- Os tópicos devem ter nomes específicos e descritivos (não genéricos)
+- Pense em progressão pedagógica real
+
+O curso será gerado com conteúdo DINÂMICO e INTERATIVO: destaques visuais coloridos, frases de memorização, citações de especialistas, dados de pesquisas, notícias recentes, alertas, dicas práticas. Planeje os tópicos pensando nisso.
+
+JSON puro (sem markdown, sem backticks):
+{"courseName":"...","shortName":"...","cat":"...","desc":"Descrição rica em 2 frases","color":"#hexcor","glow":"0 0 30px #hexcor40","totalHours":n,"modules":[{"id":1,"name":"Nome descritivo do módulo","topics":[{"id":1,"name":"Nome específico do tópico"}]}]}`;
 }
 
 function splitT(t,n){
@@ -302,7 +317,64 @@ async function cGPTM(key,mod,chunk,cfg,mi,total){
   const qr=cfg.quizzesPerMod?`${cfg.quizzesPerMod} perguntas`:'3 perguntas';
   const cr=cfg.cardsPerMod?`${cfg.cardsPerMod} flashcards distribuídos entre tópicos`:'2 flashcards por tópico';
   const mc=cfg.minChars||3000;
-  const p=`Gere o Módulo ${mi+1} de ${total}.\n\nMÓDULO: "${mod.name}"\nTÓPICOS: ${mod.topics.map((t,i)=>`${i+1}. ${t.name}`).join(', ')}\n\nREGRAS:\n- Cada tópico mín ${mc} chars no content\n- Tags: <h3>,<h4>,<p>,<blockquote> apenas\n- 1 quiz/tópico (4 opções, 1 correta)\n- ${cr}\n- ${qr} no quizFinal\n- ${mi===0?'Primeiro tópico free:true':'Todos free:false'}\n- Texto natural, humano, profundo, didático\n- Nunca enrolar, nunca repetir título no texto\n\nJSON puro:\n{"id":${mi+1},"name":"${mod.name.replace(/"/g,'\\"')}","topics":[{"id":1,"name":"...","dur":min,"free":bool,"content":"<h3>...</h3><p>${mc}+ chars...</p>","quiz":[{"q":"...","opts":["A","B","C","D"],"correct":0}],"cards":[{"q":"...","a":"..."}]}],"quizFinal":[{"q":"...","opts":["A","B","C","D"],"correct":0}]}`;
+  const p=`Gere o Módulo ${mi+1} de ${total} de um curso profissional.
+
+MÓDULO: "${mod.name}"
+TÓPICOS: ${mod.topics.map((t,i)=>(i+1)+'. '+t.name).join(', ')}
+
+═══ REGRAS DE ESTRUTURA ═══
+- Cada tópico mín ${mc} caracteres no content
+- 1 quiz por tópico (4 opções, 1 correta)
+- ${cr}
+- ${qr} no quizFinal (perguntas mais desafiadoras)
+- ${mi===0?'PRIMEIRO tópico deste módulo: free:true':'TODOS os tópicos: free:false'}
+
+═══ CONTEÚDO DINÂMICO E INTERATIVO (OBRIGATÓRIO) ═══
+
+O conteúdo NÃO pode ser texto corrido monótono. Deve ser VIVO, VISUAL e DINÂMICO.
+Use estas técnicas no content de CADA tópico:
+
+1. DESTAQUES VISUAIS — Use <strong> para termos-chave e <em> para ênfase. Use <span style="color:#5b7fff;font-weight:600"> para destacar conceitos críticos em azul. Use <span style="background:rgba(91,127,255,.12);padding:2px 8px;border-radius:4px;font-weight:600"> para termos que precisam saltar aos olhos.
+
+2. FRASES DE MEMORIZAÇÃO — Insira frases curtas e impactantes para fixação entre os parágrafos usando:
+<blockquote style="border-left:3px solid #5b7fff;padding:12px 16px;margin:16px 0;background:rgba(91,127,255,.06);border-radius:0 8px 8px 0;font-style:italic;color:#ccd">💡 Frase de memorização aqui — curta, direta, inesquecível.</blockquote>
+
+3. CAIXAS DE DESTAQUE — Para informações cruciais, use:
+<div style="background:rgba(0,200,83,.08);border:1px solid rgba(0,200,83,.2);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#00c853">✅ Ponto-chave:</strong> Informação essencial aqui.</div>
+
+4. ALERTAS E AVISOS — Para erros comuns ou cuidados:
+<div style="background:rgba(255,68,85,.08);border:1px solid rgba(255,68,85,.2);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#ff4455">⚠️ Atenção:</strong> Erro comum ou cuidado aqui.</div>
+
+5. DADOS E FONTES — Sempre que possível, cite dados reais, pesquisas, estudos, estatísticas:
+<div style="background:rgba(91,127,255,.06);border:1px solid rgba(91,127,255,.12);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#5b7fff">📊 Dado importante:</strong> Segundo pesquisa da [fonte] (ano), informação concreta aqui.</div>
+
+6. CITAÇÕES DE AUTORIDADES — Nomes de especialistas, pesquisadores, líderes:
+<blockquote style="border-left:3px solid #00d4ff;padding:12px 16px;margin:16px 0;background:rgba(0,212,255,.06);border-radius:0 8px 8px 0"><strong style="color:#00d4ff">"Citação relevante aqui."</strong><br><span style="font-size:0.85em;color:#888">— Nome da Pessoa, cargo/instituição</span></blockquote>
+
+7. NOTÍCIAS RECENTES — Conecte o assunto com eventos atuais:
+<div style="background:rgba(255,170,0,.06);border:1px solid rgba(255,170,0,.15);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#ffaa00">📰 No noticiário:</strong> Contexto atual ou notícia recente relevante.</div>
+
+8. DICAS PRÁTICAS — Conselhos diretos:
+<div style="background:rgba(0,200,83,.06);border-left:3px solid #00c853;padding:12px 16px;margin:16px 0;border-radius:0 8px 8px 0"><strong style="color:#00c853">💡 Dica prática:</strong> Conselho aplicável aqui.</div>
+
+═══ REGRAS DE QUALIDADE ═══
+- Texto 100% natural, humano, fluido — NUNCA parecer IA
+- NUNCA texto corrido monótono — alterne parágrafos com destaques, caixas, citações
+- Cada tópico deve ter NO MÍNIMO 3-4 elementos visuais diferentes (caixas, destaques, citações)
+- Use nomes reais de pessoas, instituições, pesquisas quando relevante
+- Inclua dados percentuais, anos, números concretos
+- Progressão lógica: contexto → conceito → exemplo → aplicação → destaque
+- NUNCA repetir título do módulo/tópico dentro do texto
+- NUNCA enrolar ou inflar com texto sem função
+- Cada parágrafo deve ensinar algo concreto
+
+═══ TAGS HTML PERMITIDAS ═══
+<h3>, <h4>, <p>, <blockquote>, <strong>, <em>, <span style="...">, <div style="...">, <br>
+NÃO use <ul>, <ol>, <li>, <table>, <img>, <a>, <script>
+
+═══ FORMATO JSON ═══
+Responda SOMENTE com JSON puro (sem markdown, sem backticks):
+{"id":${mi+1},"name":"${mod.name.replace(/"/g,'\\"')}","topics":[{"id":1,"name":"...","dur":min,"free":bool,"content":"HTML rico com ${mc}+ chars...","quiz":[{"q":"...","opts":["A","B","C","D"],"correct":0}],"cards":[{"q":"...","a":"..."}]}],"quizFinal":[{"q":"...","opts":["A","B","C","D"],"correct":0}]}`;
   const r=await fRetry(key,[{role:'system',content:p},{role:'user',content:'REFERÊNCIA:\n\n'+chunk.substring(0,50000)}],16000);
   return pJ(r);
 }
