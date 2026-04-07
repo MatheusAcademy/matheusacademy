@@ -202,26 +202,6 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775501691536,
     active: true
-  },
-  {
-    coverImg: 'assets/capas/matheush.jpg',
-    id: 'matheush',
-    name: 'Gestão da Mente e Saúde Emocional',
-    desc: 'Curso focado na compreensão e gestão dos pensamentos e emoções, com base na Teoria da Inteligência Multifocal, para melhorar a saúde mental e emocional.',
-    file: 'ansiedade-como-enfrentar-o-ma-augusto-cury.html',
-    cat: 'Psicologia',
-    modules: 15,
-    topics: 75,
-    hours: 15,
-    quizzes: 19,
-    salt: 'MATHEUS HENRIQUE DOS SANTOS_HENRY_2026_MASTER',
-    ak: 'MATHEUS HENRIQUE DOS SANTOS_auth',
-    storagePrefix: 'MA_',
-    icon: '🧩',
-    color: '#4A90E2',
-    free: true,
-    addedTs: 1775566742829,
-    active: true
   }
 ];
 var MA_CATS = [
