@@ -2971,125 +2971,86 @@ function _setupPenClickHighlight(){
     while(node && !_inContent(node)) node = node.parentElement;
     if(!node) return;
 
+    /* Marca apenas a frase tocada — não o parágrafo inteiro */
     var range = null;
-
-    /* caretRangeFromPoint — marca só a frase tocada, não o parágrafo inteiro */
     if(document.caretRangeFromPoint){
-      var cr = document.caretRangeFromPoint(x, y);
-      if(cr && cr.startContainer && cr.startContainer.nodeType === 3){
-        var textNode = cr.startContainer;
-        var fullText = textNode.textContent;
-        var offset   = cr.startOffset;
-
-        /* Limites de frase: volta até . ! ? e avança até . ! ? */
-        var s = offset, e2 = offset;
-        while(s > 0 && !/[.!?\n]/.test(fullText[s-1])) s--;
-        while(e2 < fullText.length && !/[.!?\n]/.test(fullText[e2])) e2++;
-        if(e2 < fullText.length) e2++;
-
-        /* Janela máxima de 120 chars para não marcar demais */
-        if(e2 - s > 120){
-          s  = Math.max(0, offset - 40);
-          e2 = Math.min(fullText.length, offset + 80);
-        }
-        while(s < e2 && fullText[s] === ' ') s++;
-        while(e2 > s && fullText[e2-1] === ' ') e2--;
-
-        if(e2 > s){
-          range = document.createRange();
-          range.setStart(textNode, s);
-          range.setEnd(textNode, e2);
+      var cr = document.caretRangeFromPoint(x,y);
+      if(cr && cr.startContainer && cr.startContainer.nodeType===3){
+        var tn=cr.startContainer, txt=tn.textContent, off=cr.startOffset;
+        var s=off, e2=off;
+        while(s>0 && !/[.!?\n]/.test(txt[s-1])) s--;
+        while(e2<txt.length && !/[.!?\n]/.test(txt[e2])) e2++;
+        if(e2<txt.length) e2++;
+        if(e2-s>120){s=Math.max(0,off-40);e2=Math.min(txt.length,off+80);}
+        while(s<e2 && txt[s]===' ') s++;
+        while(e2>s && txt[e2-1]===' ') e2--;
+        if(e2>s){
+          range=document.createRange();
+          range.setStart(tn,s); range.setEnd(tn,e2);
         }
       }
     }
-
-    /* Fallback — tenta o menor elemento inline */
     if(!range){
-      var target = el;
-      if(['SPAN','STRONG','EM','B','I','A','CODE','MARK'].includes(target.tagName)){
-        range = document.createRange();
-        range.selectNodeContents(target);
+      var tgt=el;
+      if(['SPAN','STRONG','EM','B','I','CODE','MARK'].includes(tgt.tagName)){
+        range=document.createRange(); range.selectNodeContents(tgt);
       } else {
-        /* Pega só o 1º nó de texto do elemento, limitado a 100 chars */
-        var walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT, null, false);
-        var tn = walker.nextNode();
-        if(tn && _inContent(target)){
-          var lim = Math.min(tn.textContent.length, 100);
-          range = document.createRange();
-          range.setStart(tn, 0);
-          range.setEnd(tn, lim);
+        var wk=document.createTreeWalker(tgt,NodeFilter.SHOW_TEXT,null,false);
+        var tn2=wk.nextNode();
+        if(tn2&&_inContent(tgt)){
+          var lim=Math.min(tn2.textContent.length,100);
+          range=document.createRange();
+          range.setStart(tn2,0); range.setEnd(tn2,lim);
         }
       }
     }
-
-    if(!range || range.toString().trim().length === 0) return;
-
-    _curRange = range;
-    try{ applyHighlight(_activeHlColor); }catch(e){}
+    if(!range||range.toString().trim().length===0) return;
+    _curRange=range;
+    try{applyHighlight(_activeHlColor);}catch(e){}
   }
 
   /* ── Estado do toque ── */
-  var _touching    = false;
-  var _startX      = 0, _startY = 0;
-  var _lastLineY   = -999;
-  var _isScrolling = false;
-  var _didMark     = false;
+  var _touching=false, _startX=0, _startY=0;
+  var _lastLineY=-999, _isScrolling=false, _didMark=false;
 
   /* ── TOUCH START — passive:true, nunca bloqueia scroll ── */
   main.addEventListener('touchstart', function(e){
     if(!_penActive && !_eraserActive) return;
-    var t = e.touches[0];
-    _touching    = true;
-    _startX      = t.clientX;
-    _startY      = t.clientY;
-    _lastLineY   = -999;
-    _isScrolling = false;
-    _didMark     = false;
-    /* Não previne e não marca ainda — espera ver direção do gesto */
+    var t=e.touches[0];
+    _touching=true; _startX=t.clientX; _startY=t.clientY;
+    _lastLineY=-999; _isScrolling=false; _didMark=false;
   }, {passive:true});
 
-  /* ── TOUCH MOVE — decide se é scroll ou highlight ── */
+  /* ── TOUCH MOVE — decide scroll vs highlight ── */
   main.addEventListener('touchmove', function(e){
-    if((!_penActive && !_eraserActive) || !_touching) return;
-    var t  = e.touches[0];
-    var dx = t.clientX - _startX;
-    var dy = t.clientY - _startY;
-    var dist = Math.sqrt(dx*dx + dy*dy);
-
-    if(dist < 8) return; /* aguarda mínimo de movimento */
-
-    /* Vertical → scroll, abandona sem bloquear */
-    if(!_isScrolling && !_didMark && Math.abs(dy) > Math.abs(dx) * 1.5 && Math.abs(dy) > 10){
-      _isScrolling = true;
-      _touching    = false;
-      return;
+    if((!_penActive&&!_eraserActive)||!_touching) return;
+    var t=e.touches[0];
+    var dx=t.clientX-_startX, dy=t.clientY-_startY;
+    var dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<8) return;
+    /* Gesto vertical → scroll, não bloqueia */
+    if(!_isScrolling&&!_didMark&&Math.abs(dy)>Math.abs(dx)*1.5&&Math.abs(dy)>10){
+      _isScrolling=true; _touching=false; return;
     }
-
-    /* Horizontal/diagonal → highlight */
+    /* Gesto horizontal → highlight */
     if(!_isScrolling){
       e.preventDefault();
       if(!_didMark){
-        _markLineAt(_startX, _startY);
-        _lastLineY = _startY;
-        _didMark   = true;
+        _markLineAt(_startX,_startY);
+        _lastLineY=_startY; _didMark=true;
       }
-      if(Math.abs(t.clientY - _lastLineY) > 18){
-        _markLineAt(t.clientX, t.clientY);
-        _lastLineY = t.clientY;
+      if(Math.abs(t.clientY-_lastLineY)>18){
+        _markLineAt(t.clientX,t.clientY);
+        _lastLineY=t.clientY;
       }
     }
   }, {passive:false});
 
   /* ── TOUCH END ── */
   main.addEventListener('touchend', function(e){
-    if(!_penActive && !_eraserActive) return;
-    /* Toque curto sem arrastar → marca o ponto */
-    if(_touching && !_didMark && !_isScrolling){
-      _markLineAt(_startX, _startY);
-    }
-    _touching    = false;
-    _isScrolling = false;
-    _didMark     = false;
+    if(!_penActive&&!_eraserActive) return;
+    if(_touching&&!_didMark&&!_isScrolling) _markLineAt(_startX,_startY);
+    _touching=false; _isScrolling=false; _didMark=false;
   }, {passive:true});
 
   /* ── MOUSE (desktop) ── */
