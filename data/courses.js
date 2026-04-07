@@ -223,26 +223,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/lulaxfla.jpg',
-    id: 'lulaxfla',
-    name: 'Lula x Flavio Bolsonaro',
-    desc: 'Curso EAD intensivo sobre a disputa Lula x Flávio Bolsonaro, leitura crítica de cenário, pesquisas, estratégia, comunicação, rejeição, economia eleitoral e análise de notícias recentes.',
-    file: 'lula-x-flavio-bolsonaro.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 1,
-    topics: 7,
-    hours: 1,
-    quizzes: 3,
-    salt: 'LULAFLAVIO_HENRY_2026_MASTER',
-    ak: 'lulaflavio_auth',
-    storagePrefix: 'LXF',
-    icon: '📰',
-    color: '#1d4ed8',
-    free: true,
-    addedTs: 1775528983308,
-    active: true
-  },
-  {
     coverImg: 'assets/capas/matheush.jpg',
     id: 'matheush',
     name: 'Gestão da Mente e Saúde Emocional',
