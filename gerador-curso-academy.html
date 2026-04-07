@@ -689,10 +689,30 @@ function pvMod(mi,btn){
 }
 
 // ═══ EDIT ═══
-function openEdit(mi){editMi=mi;editTi=0;$('modalTitle').textContent=`M${mi+1}: ${FD.modules[mi].name}`;const mod=FD.modules[mi];$('modalTabs').innerHTML=mod.topics.map((t,i)=>`<button class="bs" style="background:${i===0?'rgba(91,127,255,.15)':'rgba(91,127,255,.05)'};color:${i===0?'var(--blue)':'#666'};border:1px solid rgba(91,127,255,.1);font-size:11px" onclick="swET(${i},this)">${i+1}</button>`).join('');$('modalTA').value=mod.topics[0].content;show('modalBg')}
-function swET(ti,btn){FD.modules[editMi].topics[editTi].content=$('modalTA').value;editTi=ti;$('modalTA').value=FD.modules[editMi].topics[ti].content;$('modalTabs').querySelectorAll('button').forEach(b=>{b.style.background='rgba(91,127,255,.05)';b.style.color='#666'});btn.style.background='rgba(91,127,255,.15)';btn.style.color='var(--blue)'}
-function saveEdit(){FD.modules[editMi].topics[editTi].content=$('modalTA').value;FH=bHTML(FD,FI);closeModal();pvMod(editMi)}
-function closeModal(){hide('modalBg')}
+function openEdit(mi){
+  if(!FD||!FD.modules||!FD.modules[mi]){alert('Curso não gerado ainda.');return}
+  editMi=mi;editTi=0;
+  var mod=FD.modules[mi];
+  $('modalTitle').textContent='M'+(mi+1)+': '+mod.name;
+  $('modalTabs').innerHTML=mod.topics.map(function(t,i){return '<button class="bs" style="background:'+(i===0?'rgba(91,127,255,.15)':'rgba(91,127,255,.05)')+';color:'+(i===0?'var(--blue)':'#666')+';border:1px solid rgba(91,127,255,.1);font-size:11px" onclick="swET('+i+',this)">'+(i+1)+'</button>'}).join('');
+  $('modalTA').value=(mod.topics[0]&&mod.topics[0].content)||'';
+  show('modalBg');
+}
+function swET(ti,btn){
+  if(!FD||editMi<0)return;
+  FD.modules[editMi].topics[editTi].content=$('modalTA').value;
+  editTi=ti;
+  $('modalTA').value=FD.modules[editMi].topics[ti].content;
+  $('modalTabs').querySelectorAll('button').forEach(function(b){b.style.background='rgba(91,127,255,.05)';b.style.color='#666'});
+  btn.style.background='rgba(91,127,255,.15)';btn.style.color='var(--blue)';
+}
+function saveEdit(){
+  if(!FD||editMi<0)return;
+  FD.modules[editMi].topics[editTi].content=$('modalTA').value;
+  FH=bHTML(FD,FI);closeModal();pvMod(editMi);
+}
+function closeModal(){hide('modalBg');editMi=-1}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
 
 async function regenModDirect(mi){
   const key=gK();if(!key)return sErr('API Key.');
