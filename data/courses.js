@@ -204,25 +204,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/psicolog.jpg',
-    id: 'psicolog',
-    name: 'Psicologia Comportamental',
-    desc: 'Curso completo de Psicologia Comportamental com aplicação prática, linguagem didática e progressão do básico ao avançado para desenvolver autoconhecimento, autorregulação, comunicação, hábitos, produtividade e leitura funcional do comportamento em contextos pessoais e profissionais.',
-    file: 'psicologia-comportamental-ead.html',
-    cat: 'Psicologia',
-    modules: 9,
-    topics: 63,
-    hours: 11,
-    quizzes: 64,
-    salt: 'PSI_COMP_HENRY_2026_MASTER',
-    ak: 'psi-comp_auth',
-    storagePrefix: 'PSIC',
-    icon: '🧩',
-    color: '#6d5efc',
-    addedTs: 1775528615041,
-    active: true
-  },
-  {
     coverImg: 'assets/capas/matheush.jpg',
     id: 'matheush',
     name: 'Gestão da Mente e Saúde Emocional',
