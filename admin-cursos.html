@@ -2929,18 +2929,28 @@ async function carregarCursosEditor(){
 
 function parseCursosCompleto(content){
   var cursos = [];
-  var blocos = content.split(/(?=\n  \{\n\s+id:)/);
+  // ── CORREÇÃO: divide pelo início de qualquer objeto { do array MA_COURSES,
+  //    independente de qual campo vem primeiro (coverImg, id, name, etc.)
+  //    A regex detecta "  {" precedido de newline, que é o padrão de indentação
+  //    dos objetos no array — funciona tanto para id: primeiro quanto coverImg: primeiro.
+  var blocos = content.split(/(?=\n  \{)/);
   blocos.forEach(function(b){
+    // Ignora blocos que não contenham um campo id: (não são cursos)
+    if(b.indexOf("id:") === -1) return;
+    // Ignora blocos de template ou que não tenham salt (não são cursos reais)
+    if(b.indexOf('TEMPLATE') !== -1) return;
+    if(b.indexOf("salt:") === -1) return;
     function gStr(keys){ for(var i=0;i<keys.length;i++){ var m=b.match(new RegExp(keys[i]+":\\s*['\"]([^'\"]*)['\"]")); if(m) return m[1]; } return ''; }
     function gNum(k,def){ var m=b.match(new RegExp(k+":\\s*(\\d+)")); return m?parseInt(m[1]):def; }
     function gBool(k,def){ var m=b.match(new RegExp(k+":\\s*(true|false)")); return m?(m[1]==='true'):def; }
     var id=gStr(['id']);
-    if(!id||b.indexOf('TEMPLATE')!==-1) return;
+    if(!id) return;
     cursos.push({
       id:id, name:gStr(['name']), desc:gStr(['desc']), file:gStr(['file']), cat:gStr(['cat']),
       modules:gNum('modules',1), topics:gNum('topics',1), hours:gNum('hours',1), quizzes:gNum('quizzes',0),
       salt:gStr(['salt']), ak:gStr(['ak']), storagePrefix:gStr(['storagePrefix']),
       icon:gStr(['icon']), color:gStr(['color']),
+      coverImg:gStr(['coverImg']),
       active:gBool('active',true), free:gBool('free',false),
       addedTs:gNum('addedTs',0),
       longdesc:gStr(['longdesc','longDesc']), nivel:gStr(['nivel']), instrutor:gStr(['instrutor']),
@@ -3268,6 +3278,7 @@ async function salvarOrdem(){
   var newCursosBlock=reordered.map(function(c2,i){
     var fr=c2.free?"\n    free: true,":'';
     return "  {\n"
+      +"    coverImg: '"+esc(c2.coverImg||('assets/capas/'+c2.id+'.jpg'))+"',\n"
       +"    id: '"+esc(c2.id)+"',\n"
       +"    name: '"+esc(c2.name)+"',\n"
       +"    desc: '"+esc(c2.desc)+"',\n"
