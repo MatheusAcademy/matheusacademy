@@ -261,6 +261,25 @@ var MA_COURSES = [
     color: '#8b5cf6',
     addedTs: 1775524811219,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/geoeua.jpg',
+    id: 'geoeua',
+    name: 'Geopolítica dos EUA',
+    desc: 'Curso intermediário e atual sobre guerras, sanções, disputas estratégicas, dólar, inteligência, rivalidade com China e Rússia e o futuro da hegemonia americana.',
+    file: 'geopolitica_dos_eua_matheus_academy_padrao.html',
+    cat: 'Geopolítica',
+    modules: 10,
+    topics: 70,
+    hours: 1,
+    quizzes: 30,
+    salt: 'GEOEUA_HENRY_2026_MASTER',
+    ak: 'geoeua_auth',
+    storagePrefix: 'GEO',
+    icon: '📰',
+    color: '#5b7fff',
+    addedTs: 1775524940197,
+    active: true
   }
 ];
 var MA_CATS = [
