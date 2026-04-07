@@ -130,15 +130,61 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Outfit
     </div>
     <div id="srcList"></div>
     <div id="extractArea" class="dn" style="margin-top:14px">
-      <button class="btn bp" id="bExtract" onclick="extractAll()">📥 Extrair conteúdo de todas as fontes</button>
+      <button class="btn bp" id="bExtract" onclick="extractAll()">📥 Extrair e salvar na memória</button>
       <div id="exProg" class="dn" style="margin-top:12px"><div class="bar"><div class="bf" id="exFill"></div></div><p class="bm" id="exMsg"></p></div>
     </div>
     <div id="eInfo"></div>
   </div>
 
+  <!-- KNOWLEDGE BASE -->
+  <div class="c">
+    <div class="ct"><span class="pl">📚</span>Biblioteca de Conteúdos <span class="opt" id="kbCount"></span></div>
+    <p style="font-size:11px;color:#555;margin-bottom:10px">Conteúdos extraídos ficam salvos aqui. Use em cursos futuros sem precisar extrair de novo.</p>
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <select class="inp" id="kbFilter" onchange="renderKB()" style="width:auto;min-width:140px"><option value="">Todas categorias</option></select>
+      <input class="inp" id="kbSearch" placeholder="🔍 Buscar..." oninput="renderKB()" style="flex:1;min-width:150px">
+      <button class="bo bs" onclick="useSelected()" style="margin:0">📎 Usar selecionados</button>
+    </div>
+    <div id="kbList" style="max-height:250px;overflow:auto;border-radius:8px;border:1px solid rgba(91,127,255,.06)"></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="bo bs" onclick="clearKB()" style="margin:0;color:var(--red);font-size:10px">🗑️ Limpar tudo</button>
+      <span style="font-size:10px;color:#444;margin-top:4px" id="kbSize"></span>
+    </div>
+  </div>
+
+  <!-- COURSE INFO -->
+  <div class="c dn" id="sCourse">
+    <div class="ct"><span class="pl">2</span>Informações do Curso</div>
+    <div style="margin-bottom:12px">
+      <label class="lb">Nome do Curso</label>
+      <input class="inp" id="cName" placeholder="Ex: Inteligência Emocional na Prática (vazio = IA decide)">
+    </div>
+    <div style="margin-bottom:12px">
+      <label class="lb">Descrição</label>
+      <input class="inp" id="cDesc" placeholder="Ex: Curso completo sobre gestão emocional... (vazio = IA decide)">
+    </div>
+    <div>
+      <label class="lb">Nível de Dificuldade</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(0,200,83,.06);border:1px solid rgba(0,200,83,.15);cursor:pointer;font-size:12px;color:#00c853">
+          <input type="radio" name="diff" value="basico"> 🟢 Básico
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(255,170,0,.06);border:1px solid rgba(255,170,0,.15);cursor:pointer;font-size:12px;color:#ffaa00">
+          <input type="radio" name="diff" value="intermediario"> 🟡 Intermediário
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(255,68,85,.06);border:1px solid rgba(255,68,85,.15);cursor:pointer;font-size:12px;color:#ff4455">
+          <input type="radio" name="diff" value="avancado"> 🔴 Avançado
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(91,127,255,.06);border:1px solid rgba(91,127,255,.15);cursor:pointer;font-size:12px;color:var(--blue)">
+          <input type="radio" name="diff" value="progressivo" checked> 📈 Básico ao Avançado
+        </label>
+      </div>
+    </div>
+  </div>
+
   <!-- VOLUME -->
   <div class="c dn" id="sVol">
-    <div class="ct"><span class="pl">2</span>Volume<span class="opt">(vazio = auto)</span></div>
+    <div class="ct"><span class="pl">3</span>Volume<span class="opt">(vazio = auto)</span></div>
     <div class="g5">
       <div><label class="lb">Módulos</label><input class="inp vol" type="number" id="cMod" placeholder="Auto" min="1"></div>
       <div><label class="lb">Tópicos/Mód</label><input class="inp vol" type="number" id="cTop" placeholder="Auto" min="3"></div>
@@ -151,7 +197,7 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Outfit
 
   <!-- IDENTITY -->
   <div class="c dn" id="sId">
-    <div class="ct"><span class="pl">3</span>Identidade<span class="opt">(auto se vazio)</span></div>
+    <div class="ct"><span class="pl">4</span>Identidade<span class="opt">(auto se vazio)</span></div>
     <div class="g3">
       <div><label class="lb">ID</label><input class="inp" id="cId" placeholder="ex: geo"></div>
       <div><label class="lb">Prefixo</label><input class="inp" id="cPx" placeholder="ex: gp_"></div>
@@ -161,7 +207,7 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Outfit
 
   <!-- GENERATE -->
   <div class="c dn" id="sGen">
-    <div class="ct"><span class="pl">4</span>Gerar Curso</div>
+    <div class="ct"><span class="pl">5</span>Gerar Curso</div>
     <div class="chips">
       <span class="chip">📄 Multi-arquivo</span><span class="chip">🎬 YouTube</span><span class="chip">🌐 Sites</span>
       <span class="chip">📚 Módulos</span><span class="chip">📝 Quizzes</span><span class="chip">🃏 Flashcards</span>
@@ -285,7 +331,10 @@ async function exWeb(url){
 
 function updTotal(){
   ET='';for(var i=0;i<sources.length;i++){if(sources[i].status==='ok')ET+='\n═══ '+sources[i].name+' ═══\n'+sources[i].text+'\n'}
-  if(ET.length>100){var w=ET.split(/\s+/).length;$('eInfo').innerHTML='<div class="nfo">✅ <strong>'+Math.round(ET.length/1000)+'k</strong> chars • <strong>'+w.toLocaleString()+'</strong> palavras</div>';show('sVol');show('sId');show('sGen')}
+  if(ET.length>100){var w=ET.split(/\s+/).length;$('eInfo').innerHTML='<div class="nfo">✅ <strong>'+Math.round(ET.length/1000)+'k</strong> chars • <strong>'+w.toLocaleString()+'</strong> palavras</div>';show('sCourse');show('sVol');show('sId');show('sGen')}
+  // Save to KB
+  for(var i=0;i<sources.length;i++){if(sources[i].status==='ok'&&sources[i].text.length>50)saveToKB(sources[i])}
+  renderKB();
 }
 
 // VOLUME
@@ -309,7 +358,11 @@ async function run(){
     for(var i=0;i<outline.modules.length;i++){
       var mod=outline.modules[i];sP(12+Math.round(((i+.5)/outline.modules.length)*78),'M'+(i+1)+': '+mod.name);
       $('mt'+i).className='mp mp-now';aL('info','▶ M'+(i+1)+': '+mod.name);
-      var diff=i<Math.ceil(outline.modules.length*.33)?'basico':i<Math.ceil(outline.modules.length*.66)?'intermediario':'avancado';
+      var userDiff=document.querySelector('input[name="diff"]:checked');
+      var diffVal=userDiff?userDiff.value:'progressivo';
+      var diff;
+      if(diffVal==='progressivo')diff=i<Math.ceil(outline.modules.length*.33)?'basico':i<Math.ceil(outline.modules.length*.66)?'intermediario':'avancado';
+      else diff=diffVal;
       var prev=i>0?outline.modules[i-1].name:null;var next=i<outline.modules.length-1?outline.modules[i+1].name:null;
       var res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg,i,outline.modules.length,diff,prev,next);
       if(!res||!res.topics){aL('err','  ✗ Retry...');$('mt'+i).className='mp mp-fail';await slp(4000);var cfg2={modules:cfg.modules,topicsPerMod:cfg.topicsPerMod,quizzesPerMod:cfg.quizzesPerMod,cardsPerMod:cfg.cardsPerMod,minChars:Math.max(1500,Math.floor((cfg.minChars||3000)*.6))};res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg2,i,outline.modules.length,diff,prev,next)}
@@ -328,7 +381,18 @@ async function run(){
 }
 
 // PROMPTS
-function bOP(cfg){var mr=cfg.modules?'EXATAMENTE '+cfg.modules+' módulos':'quantos necessários (mín 4)';var tr=cfg.topicsPerMod?'EXATAMENTE '+cfg.topicsPerMod+' tópicos/módulo':'mín 4 tópicos/módulo';return'Analise e crie ESTRUTURA de curso.\nREGRAS: '+mr+' | '+tr+' | Progressão básico→avançado\nJSON puro:\n{"courseName":"...","shortName":"...","cat":"...","desc":"...","color":"#hex","glow":"0 0 30px #hex40","totalHours":n,"modules":[{"id":1,"name":"...","topics":[{"id":1,"name":"..."}]}]}'}
+function bOP(cfg){
+  var mr=cfg.modules?'EXATAMENTE '+cfg.modules+' módulos':'quantos necessários (mín 4)';
+  var tr=cfg.topicsPerMod?'EXATAMENTE '+cfg.topicsPerMod+' tópicos/módulo':'mín 4 tópicos/módulo';
+  var cName=$('cName').value.trim();
+  var cDesc=$('cDesc').value.trim();
+  var diffEl=document.querySelector('input[name="diff"]:checked');
+  var diffVal=diffEl?diffEl.value:'progressivo';
+  var diffMap={basico:'TODO o curso nível BÁSICO (introdutório, acessível)',intermediario:'TODO o curso nível INTERMEDIÁRIO',avancado:'TODO o curso nível AVANÇADO (profundo, técnico)',progressivo:'Progressão do BÁSICO ao AVANÇADO ao longo dos módulos'};
+  var nameRule=cName?'NOME DO CURSO: "'+cName+'" (use exatamente este nome)':'Defina o melhor nome baseado no conteúdo';
+  var descRule=cDesc?'DESCRIÇÃO: "'+cDesc+'"':'Crie uma descrição rica em 2 frases';
+  return'Analise e crie ESTRUTURA de curso.\n'+nameRule+'\n'+descRule+'\nNÍVEL: '+diffMap[diffVal]+'\nREGRAS: '+mr+' | '+tr+'\nJSON puro:\n{"courseName":"...","shortName":"...","cat":"...","desc":"...","color":"#hex","glow":"0 0 30px #hex40","totalHours":n,"modules":[{"id":1,"name":"...","topics":[{"id":1,"name":"..."}]}]}';
+}
 
 function mPr(mod,cfg,mi,total,diff,prev,next){
   var qr=cfg.quizzesPerMod||3,cr=cfg.cardsPerMod?cfg.cardsPerMod+' flashcards':' 2 flashcards/tópico',mc=cfg.minChars||3000;
@@ -341,7 +405,7 @@ function mPr(mod,cfg,mi,total,diff,prev,next){
 // API
 function splitT(t,n){var sz=Math.ceil(t.length/n),ch=[];for(var i=0;i<n;i++){var s=i*sz,e=Math.min(s+sz+2000,t.length);if(e<t.length){var nl=t.lastIndexOf('\n',e);if(nl>s+sz*.7)e=nl}ch.push(t.substring(s,e))}return ch}
 async function cGPT(key,sys,usr){return pJ(await fR(key,[{role:'system',content:sys},{role:'user',content:usr}],8000))}
-async function cGPTM(key,mod,chunk,cfg,mi,total,diff,prev,next){return pJ(await fR(key,[{role:'system',content:mPr(mod,cfg,mi,total,diff,prev,next)},{role:'user',content:'REFERÊNCIA:\n\n'+chunk.substring(0,50000)}],32000))}
+async function cGPTM(key,mod,chunk,cfg,mi,total,diff,prev,next){return pJ(await fR(key,[{role:'system',content:mPr(mod,cfg,mi,total,diff,prev,next)},{role:'user',content:'REFERÊNCIA:\n\n'+chunk.substring(0,50000)}],16000))}
 async function fR(key,msgs,mt,retries){
   retries=retries||3;
   for(var a=1;a<=retries;a++){
@@ -428,8 +492,104 @@ function cErr(){$('errA').innerHTML=''}
 function dlHTML(){var u=URL.createObjectURL(new Blob([FH],{type:'text/html;charset=utf-8'}));var a=document.createElement('a');a.href=u;a.download=FI.fileName||'curso.html';a.click();URL.revokeObjectURL(u)}
 function cpHTML(btn){navigator.clipboard.writeText(FH).then(function(){btn.textContent='✅ Copiado!';setTimeout(function(){btn.textContent='📋 Copiar HTML'},2500)})}
 function tgPre(){var e=$('preA');if(e.classList.contains('dn')){e.classList.remove('dn');e.textContent=FH.substring(0,10000)+(FH.length>10000?'\n...[truncado]':'')}else e.classList.add('dn')}
-function resetAll(){ET='';FH='';FD=null;sources.length=0;renderSrc();$('eInfo').innerHTML='';['sVol','sId','sGen','sRes','exProg'].forEach(hide);$('logA').innerHTML='';hide('logA');hide('pArea');cErr();['cMod','cTop','cQz','cCd','cCh','cId','cPx','cFn'].forEach(function(x){$(x).value=''});$('vSum').classList.add('dn');$('fi').value='';$('modTracker').innerHTML=''}
+function resetAll(){ET='';FH='';FD=null;sources.length=0;renderSrc();$('eInfo').innerHTML='';['sCourse','sVol','sId','sGen','sRes','exProg'].forEach(hide);$('logA').innerHTML='';hide('logA');hide('pArea');cErr();['cMod','cTop','cQz','cCd','cCh','cId','cPx','cFn','cName','cDesc'].forEach(function(x){$(x).value=''});$('vSum').classList.add('dn');$('fi').value='';$('modTracker').innerHTML=''}
+// ═══ KNOWLEDGE BASE ═══
+function getKB(){try{return JSON.parse(localStorage.getItem('ma_kb')||'[]')}catch(e){return[]}}
+function setKB(kb){try{localStorage.setItem('ma_kb',JSON.stringify(kb))}catch(e){}}
+
+function saveToKB(src){
+  var kb=getKB();
+  // Check if already exists by name
+  for(var i=0;i<kb.length;i++){if(kb[i].name===src.name)return}
+  var cat='geral';
+  var txt=(src.text||'').toLowerCase();
+  if(txt.indexOf('marketing')>=0||txt.indexOf('tráfego')>=0||txt.indexOf('vendas')>=0)cat='marketing';
+  else if(txt.indexOf('geopolítica')>=0||txt.indexOf('política')>=0||txt.indexOf('guerra')>=0)cat='geopolitica';
+  else if(txt.indexOf('finanças')>=0||txt.indexOf('investimento')>=0||txt.indexOf('bitcoin')>=0)cat='financas';
+  else if(txt.indexOf('psicolog')>=0||txt.indexOf('emocional')>=0||txt.indexOf('ansiedade')>=0)cat='psicologia';
+  else if(txt.indexOf('negócio')>=0||txt.indexOf('empreend')>=0||txt.indexOf('empresa')>=0)cat='negocios';
+  else if(txt.indexOf('tecnolog')>=0||txt.indexOf('programação')>=0||txt.indexOf('software')>=0)cat='tecnologia';
+  else if(txt.indexOf('saúde')>=0||txt.indexOf('nutrição')>=0||txt.indexOf('exercício')>=0)cat='saude';
+  else if(txt.indexOf('direito')>=0||txt.indexOf('jurídic')>=0||txt.indexOf('lei ')>=0)cat='direito';
+  kb.push({
+    name:src.name,
+    type:src.type,
+    cat:cat,
+    date:new Date().toISOString().split('T')[0],
+    chars:src.text.length,
+    text:src.text
+  });
+  setKB(kb);
+}
+
+function renderKB(){
+  var kb=getKB();
+  var filter=$('kbFilter').value;
+  var search=($('kbSearch').value||'').toLowerCase();
+  // Update categories dropdown
+  var cats={};for(var i=0;i<kb.length;i++)cats[kb[i].cat]=true;
+  var catOpts='<option value="">Todas ('+kb.length+')</option>';
+  var catNames={geral:'📁 Geral',marketing:'📢 Marketing',geopolitica:'🌍 Geopolítica',financas:'💰 Finanças',psicologia:'🧠 Psicologia',negocios:'💼 Negócios',tecnologia:'💻 Tecnologia',saude:'🏥 Saúde',direito:'⚖️ Direito'};
+  for(var c in cats)catOpts+='<option value="'+c+'">'+(catNames[c]||c)+'</option>';
+  $('kbFilter').innerHTML=catOpts;
+  if(filter)$('kbFilter').value=filter;
+  // Filter
+  var filtered=[];
+  for(var i=0;i<kb.length;i++){
+    var item=kb[i];
+    if(filter&&item.cat!==filter)continue;
+    if(search&&item.name.toLowerCase().indexOf(search)<0)continue;
+    filtered.push({idx:i,item:item});
+  }
+  // Render
+  var h='';
+  for(var i=0;i<filtered.length;i++){
+    var f=filtered[i];var item=f.item;
+    var icon=item.type==='file'?'📄':item.type==='yt'?'🎬':'🌐';
+    var catLabel=catNames[item.cat]||item.cat;
+    h+='<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:11px;color:#bbb;'+(i%2===0?'background:rgba(91,127,255,.02)':'')+'">';
+    h+='<input type="checkbox" class="kb-chk" data-idx="'+f.idx+'" style="accent-color:var(--blue)">';
+    h+='<span>'+icon+'</span>';
+    h+='<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+item.name+'</span>';
+    h+='<span style="font-size:9px;color:#555;padding:2px 6px;border-radius:4px;background:rgba(91,127,255,.05)">'+catLabel+'</span>';
+    h+='<span style="font-size:9px;color:#444">'+Math.round(item.chars/1000)+'k</span>';
+    h+='<span style="font-size:9px;color:#444">'+item.date+'</span>';
+    h+='<button style="background:none;border:none;color:var(--red);cursor:pointer;font-size:12px" onclick="rmKB('+f.idx+')">✕</button>';
+    h+='</div>';
+  }
+  if(!filtered.length)h='<div style="padding:20px;text-align:center;font-size:12px;color:#444">Nenhum conteúdo salvo ainda</div>';
+  $('kbList').innerHTML=h;
+  $('kbCount').textContent='('+kb.length+' salvos)';
+  // Size
+  var totalChars=kb.reduce(function(s,x){return s+x.chars},0);
+  $('kbSize').textContent=Math.round(totalChars/1000)+'k chars na memória';
+}
+
+function rmKB(idx){var kb=getKB();kb.splice(idx,1);setKB(kb);renderKB()}
+function clearKB(){if(confirm('Limpar toda a biblioteca?')){localStorage.removeItem('ma_kb');renderKB()}}
+
+function useSelected(){
+  var checks=document.querySelectorAll('.kb-chk:checked');
+  if(!checks.length){alert('Selecione itens da biblioteca');return}
+  var kb=getKB();
+  var added=0;
+  for(var i=0;i<checks.length;i++){
+    var idx=parseInt(checks[i].getAttribute('data-idx'));
+    var item=kb[idx];
+    if(!item)continue;
+    // Check if already in sources
+    var exists=false;
+    for(var j=0;j<sources.length;j++){if(sources[j].name===item.name)exists=true}
+    if(!exists){
+      sources.push({type:item.type,name:item.name+' (memória)',data:'',status:'ok',text:item.text});
+      added++;
+    }
+  }
+  if(added){renderSrc();updTotal();alert(added+' item(ns) adicionado(s) das fontes')}
+}
+
 loadK();
+renderKB();
 </script>
 </body>
 </html>
