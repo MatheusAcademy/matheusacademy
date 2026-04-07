@@ -1,25 +1,5 @@
 var MA_COURSES = [
   {
-    id: 'gp',
-    coverImg: 'assets/capas/gp.png',
-    courseKey: 'geo',
-    name: 'Geopolítica Avançada',
-    desc: 'Entenda o mundo como ele funciona. Teoria, conflitos e economia global.',
-    file: 'geopolitica-curso.html',
-    cat: 'Geopolítica',
-    modules: 27,
-    topics: 271,
-    hours: 90,
-    quizzes: 27,
-    salt: 'GP_HENRY_2026_MASTER',
-    ak: 'gp_auth',
-    storagePrefix: 'geo_',
-    icon: '🌍',
-    color: '#22c55e',
-    addedTs: 1742688000000,
-    active: true
-  },
-  {
     id: 'bm',
     coverImg: 'assets/capas/bm.png',
     courseKey: 'bm',
