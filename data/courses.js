@@ -184,10 +184,9 @@ var MA_COURSES = [
     active: true
   },
   {
-    id: 'lua',
-    courseKey: 'lua',
     coverImg: 'assets/capas/lua.png',
-    name: 'Missão à Lua reacende corrida global',
+    id: 'lua',
+    name: 'Missão à Lua Corrida Global',
     desc: 'Artemis II coloca grandes potências em nova disputa pelo domínio espacial — e o que está em jogo vai muito além da exploração científica. Entenda tudo sobre a missão histórica lançada em 1º de abril de 2026.',
     file: 'noticia-artemis-ii-v2.html',
     cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
