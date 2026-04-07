@@ -3,48 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gerador de Cursos — Matheus Academy</title>
+<title>Gerador de Cursos Pro v5 — Matheus Academy</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-:root{--bg:#08080f;--card:#111122;--blue:#5b7fff;--cyan:#00d4ff;--green:#00c853;--red:#ff4455;--text:#e0e0e8;--muted:#888;--dim:#555;--grad:linear-gradient(135deg,var(--blue),var(--cyan))}
+:root{--bg:#08080f;--card:#111122;--blue:#5b7fff;--cyan:#00d4ff;--green:#00c853;--red:#ff4455;--yellow:#ffaa00;--text:#e0e0e8;--muted:#888;--dim:#555;--grad:linear-gradient(135deg,var(--blue),var(--cyan))}
 body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Outfit',system-ui,sans-serif;line-height:1.5}
-.header{background:#0a0a14;border-bottom:1px solid rgba(91,127,255,.12);padding:22px 16px;text-align:center;position:relative}
-.header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--blue))}
+.hdr{background:#0a0a14;border-bottom:1px solid rgba(91,127,255,.12);padding:22px 16px;text-align:center;position:relative}
+.hdr::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--blue))}
 .brand{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:6px}
-.header h1{font-size:21px;font-weight:700;color:#fff;margin-bottom:3px}
-.header p{font-size:12px;color:var(--dim)}
-.wrap{max-width:740px;margin:0 auto;padding:16px}
-.card{background:var(--card);border-radius:14px;border:1px solid rgba(91,127,255,.1);padding:22px;margin-bottom:14px}
-.card-ok{border-color:rgba(0,200,83,.2)}
+.hdr h1{font-size:21px;font-weight:700;color:#fff;margin-bottom:3px}
+.hdr p{font-size:12px;color:var(--dim)}
+.w{max-width:760px;margin:0 auto;padding:16px}
+.c{background:var(--card);border-radius:14px;border:1px solid rgba(91,127,255,.1);padding:22px;margin-bottom:14px}
+.c-ok{border-color:rgba(0,200,83,.2)}
 .ct{font-size:14px;font-weight:600;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.pill{display:inline-block;padding:2px 9px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1px;background:rgba(91,127,255,.12);color:var(--blue);flex-shrink:0}
+.pl{display:inline-block;padding:2px 9px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1px;background:rgba(91,127,255,.12);color:var(--blue);flex-shrink:0}
 .opt{font-size:11px;color:var(--dim);margin-left:6px;font-weight:400}
-.drop{border:2px dashed rgba(91,127,255,.25);border-radius:12px;padding:36px 16px;text-align:center;cursor:pointer;background:rgba(91,127,255,.02);transition:.2s}
+.drop{border:2px dashed rgba(91,127,255,.25);border-radius:12px;padding:32px 16px;text-align:center;cursor:pointer;background:rgba(91,127,255,.02);transition:.2s}
 .drop:hover,.drop.on{border-color:var(--blue);background:rgba(91,127,255,.06)}
-.ftag{display:inline-flex;align-items:center;gap:8px;background:rgba(91,127,255,.1);color:var(--blue);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;margin-top:12px}
-.ftag .x{background:none;border:none;color:var(--red);cursor:pointer;font-size:15px;padding:0}
-.info{background:rgba(91,127,255,.04);border-radius:8px;padding:12px;font-size:12px;color:#999;margin-top:12px;line-height:1.7}
-.info strong{color:#fff}
-.ok{color:var(--green)}.warn{color:#ffaa00}
-.lbl{display:block;font-size:10px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.ftag{display:inline-flex;align-items:center;gap:8px;background:rgba(91,127,255,.1);color:var(--blue);padding:6px 12px;border-radius:8px;font-size:11px;font-weight:500;margin:4px 4px 0 0}
+.ftag .x{background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;padding:0 0 0 4px}
+.nfo{background:rgba(91,127,255,.04);border-radius:8px;padding:12px;font-size:12px;color:#999;margin-top:12px;line-height:1.7}
+.nfo strong{color:#fff}
+.ok{color:var(--green)}.wrn{color:var(--yellow)}
+.lb{display:block;font-size:10px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
 .inp{width:100%;padding:9px 12px;background:#0c0c18;border:1px solid rgba(91,127,255,.12);border-radius:8px;color:var(--text);font-size:13px;font-family:inherit;outline:none}
 .inp:focus{border-color:var(--blue)}.inp::placeholder{color:#444}
 .g5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.sum{background:rgba(91,127,255,.04);border-radius:8px;padding:10px;font-size:11px;color:#999;margin-top:10px}
-.sum strong{color:#fff}.sum .hl{color:var(--blue)}
-.kr{display:flex;gap:10px;align-items:end}
-.kr>div:first-child{flex:1}
+.sm{background:rgba(91,127,255,.04);border-radius:8px;padding:10px;font-size:11px;color:#999;margin-top:10px}
+.sm strong{color:#fff}.sm .hl{color:var(--blue)}
+.kr{display:flex;gap:10px;align-items:end}.kr>div:first-child{flex:1}
 .ks{font-size:11px;padding:4px 10px;border-radius:6px;white-space:nowrap}
-.ks-ok{background:rgba(0,200,83,.1);color:var(--green)}
-.ks-no{background:rgba(255,68,85,.1);color:var(--red)}
+.ks-ok{background:rgba(0,200,83,.1);color:var(--green)}.ks-no{background:rgba(255,68,85,.1);color:var(--red)}
 .btn{width:100%;padding:14px;border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s}
 .btn:disabled{opacity:.35;cursor:not-allowed}
-.btn-p{background:var(--grad)}.btn-g{background:linear-gradient(135deg,var(--green),var(--cyan))}
-.btn-o{background:rgba(91,127,255,.1);border:1px solid rgba(91,127,255,.15);color:var(--blue);font-size:13px;font-weight:600;padding:12px;margin-top:8px}
+.bp{background:var(--grad)}.bg{background:linear-gradient(135deg,var(--green),var(--cyan))}
+.bo{background:rgba(91,127,255,.1);border:1px solid rgba(91,127,255,.15);color:var(--blue);font-size:13px;font-weight:600;padding:12px;margin-top:8px}
+.bs{padding:8px 14px;font-size:12px;border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600;transition:.2s}
 .bar{height:6px;background:#1a1a2e;border-radius:3px;overflow:hidden;margin-bottom:8px}
 .bf{height:100%;background:var(--grad);border-radius:3px;transition:width .5s;width:0}
 .bm{font-size:12px;color:var(--muted);text-align:center}
@@ -55,11 +55,11 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Outfit
 .st{text-align:center;padding:10px 4px;background:rgba(91,127,255,.04);border-radius:8px}
 .sn{font-size:20px;font-weight:700;color:var(--blue);display:block}
 .sl{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:1px}
-.ml{max-height:280px;overflow:auto;border-radius:8px;border:1px solid rgba(91,127,255,.06);margin-bottom:16px}
-.mr{padding:10px 12px;font-size:12px;color:#bbb;display:flex;justify-content:space-between;align-items:center}
+.ml{max-height:400px;overflow:auto;border-radius:8px;border:1px solid rgba(91,127,255,.06);margin-bottom:16px}
+.mr{padding:10px 12px;font-size:12px;color:#bbb;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .mr:nth-child(even){background:rgba(91,127,255,.03)}
 .mr strong{color:var(--blue);margin-right:6px}
-.mm{display:flex;gap:10px;font-size:10px;color:#666}
+.mm{display:flex;gap:8px;font-size:10px;color:#666;align-items:center;flex-shrink:0}
 .cl{font-size:11px;color:var(--dim);margin-bottom:14px;padding:8px 10px;background:rgba(91,127,255,.03);border-radius:6px}
 .cl strong{color:var(--blue)}
 .cd{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin-right:3px}
@@ -67,87 +67,146 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Outfit
 .tb{background:none;border:none;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;padding:0;display:flex;align-items:center;gap:8px}
 .tb span{font-size:11px;color:#666}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.chip{font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(91,127,255,.05);color:#888;border:1px solid rgba(91,127,255,.06)}
-.hidden{display:none}
+.chip{font-size:10px;padding:4px 9px;border-radius:20px;background:rgba(91,127,255,.05);color:#888;border:1px solid rgba(91,127,255,.06)}
+.hid{display:none}
+.mpt{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.mp{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:1px solid rgba(91,127,255,.15);color:#666;transition:.3s}
+.mp-done{background:rgba(0,200,83,.15);border-color:rgba(0,200,83,.3);color:var(--green)}
+.mp-now{background:rgba(91,127,255,.15);border-color:var(--blue);color:var(--blue);animation:pulse 1.5s infinite}
+.mp-fail{background:rgba(255,68,85,.15);border-color:var(--red);color:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.diff{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700;letter-spacing:.5px;margin-left:6px}
+.d-b{background:rgba(0,200,83,.12);color:#00c853}.d-i{background:rgba(255,170,0,.12);color:#ffaa00}.d-a{background:rgba(255,68,85,.12);color:#ff4455}
+.regen{background:rgba(91,127,255,.08);border:1px solid rgba(91,127,255,.12);color:var(--blue);padding:4px 10px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.regen:hover{background:rgba(91,127,255,.15)}
+.modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{background:var(--card);border:1px solid rgba(91,127,255,.15);border-radius:16px;padding:24px;width:100%;max-width:700px;max-height:85vh;overflow:auto}
+.modal h3{font-size:16px;color:#fff;margin-bottom:14px}
+.modal textarea{width:100%;min-height:300px;padding:12px;background:#0c0c18;border:1px solid rgba(91,127,255,.12);border-radius:8px;color:var(--text);font-size:12px;font-family:'Courier New',monospace;outline:none;resize:vertical}
+/* Sources */
+.src-list{margin-top:12px}
+.src-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;margin-bottom:6px;font-size:12px}
+.src-file{background:rgba(91,127,255,.06);color:var(--blue)}
+.src-yt{background:rgba(255,0,0,.06);color:#f44}
+.src-web{background:rgba(0,200,83,.06);color:var(--green)}
+.src-item .x{background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;padding:0;margin-left:auto}
+.src-item .status{margin-left:auto;font-size:10px;padding:2px 8px;border-radius:4px}
+.s-wait{background:rgba(255,170,0,.1);color:var(--yellow)}
+.s-ok{background:rgba(0,200,83,.1);color:var(--green)}
+.s-err{background:rgba(255,68,85,.1);color:var(--red)}
+.s-load{background:rgba(91,127,255,.1);color:var(--blue)}
+/* URL input */
+.url-row{display:flex;gap:8px;margin-top:10px}
+.url-row .inp{flex:1}
+.url-row button{flex-shrink:0;padding:9px 16px;border-radius:8px;border:1px solid rgba(91,127,255,.2);background:rgba(91,127,255,.1);color:var(--blue);font-weight:600;font-size:12px;cursor:pointer;font-family:inherit}
 ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(91,127,255,.2);border-radius:3px}
-@media(max-width:600px){.g5{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.g5{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(3,1fr)}.mm{display:none}}
 </style>
 </head>
 <body>
 
-<div class="header">
+<div class="hdr">
   <div class="brand">MATHEUS ACADEMY</div>
-  <h1>⚙️ Gerador de Cursos Pro</h1>
-  <p>Upload qualquer arquivo → Configure → Curso completo pronto para o repositório</p>
+  <h1>⚙️ Gerador de Cursos Pro v5</h1>
+  <p>Múltiplos arquivos + YouTube + Sites → Curso completo e dinâmico</p>
 </div>
 
-<div class="wrap">
+<div class="w">
 
   <!-- KEY -->
-  <div class="card" id="sKey">
-    <div class="ct"><span class="pill">🔑</span>API Key OpenAI</div>
-    <div class="kr">
-      <div><label class="lbl">Sua chave</label><input class="inp" type="password" id="iKey" placeholder="sk-proj-..."></div>
-      <span class="ks ks-no" id="kSt">—</span>
-    </div>
-    <button class="btn btn-o" onclick="saveK()" style="width:auto;padding:8px 20px;margin-top:10px">Salvar</button>
-    <div style="font-size:10px;color:#333;margin-top:6px">Salva no navegador. Só é enviada para api.openai.com.</div>
+  <div class="c">
+    <div class="ct"><span class="pl">🔑</span>API Key OpenAI</div>
+    <div class="kr"><div><label class="lb">Sua chave</label><input class="inp" type="password" id="iKey" placeholder="sk-proj-..."></div><span class="ks ks-no" id="kSt">—</span></div>
+    <button class="bo bs" onclick="saveK()" style="width:auto;margin-top:10px">Salvar</button>
   </div>
 
-  <!-- UPLOAD -->
-  <div class="card">
-    <div class="ct"><span class="pill">1</span>Upload do Conteúdo</div>
-    <div class="drop" id="dz" onclick="document.getElementById('fi').click()">
-      <div style="font-size:42px;margin-bottom:10px" id="dIco">📄</div>
-      <p style="font-size:14px;color:#aaa;margin-bottom:4px" id="dTxt">Clique ou arraste o arquivo aqui</p>
-      <p style="font-size:11px;color:#555">.pdf, .docx ou .txt — livro, apostila, qualquer tamanho</p>
+  <!-- SOURCES -->
+  <div class="c">
+    <div class="ct"><span class="pl">1</span>Fontes de Conteúdo</div>
+
+    <!-- Files -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:8px">📄 Arquivos (PDF, DOCX, TXT)</div>
+      <div class="drop" id="dz" onclick="$('fi').click()">
+        <div style="font-size:36px;margin-bottom:8px">📄</div>
+        <p style="font-size:13px;color:#aaa;margin-bottom:4px">Clique ou arraste — pode mandar vários de uma vez</p>
+        <p style="font-size:11px;color:#555">.pdf (texto ou escaneado), .docx, .txt</p>
+      </div>
+      <input type="file" id="fi" class="hid" accept=".pdf,.docx,.doc,.txt" multiple>
     </div>
-    <input type="file" id="fi" class="hidden" accept=".pdf,.docx,.doc,.txt">
-    <div id="fInfo"></div>
+
+    <!-- YouTube -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:8px">🎬 Vídeos do YouTube</div>
+      <div class="url-row">
+        <input class="inp" id="ytUrl" placeholder="https://youtube.com/watch?v=... ou youtu.be/...">
+        <button onclick="addYT()">+ Adicionar</button>
+      </div>
+    </div>
+
+    <!-- Websites -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:8px">🌐 Sites e Artigos</div>
+      <div class="url-row">
+        <input class="inp" id="webUrl" placeholder="https://exemplo.com/artigo">
+        <button onclick="addWeb()">+ Adicionar</button>
+      </div>
+    </div>
+
+    <!-- Source list -->
+    <div id="srcList" class="src-list"></div>
+
+    <!-- Extract button -->
+    <div id="extractArea" class="hid" style="margin-top:14px">
+      <button class="btn bp" id="bExtract" onclick="extractAll()">📥 Extrair conteúdo de todas as fontes</button>
+      <div class="hid" id="exProg" style="margin-top:12px"><div class="bar"><div class="bf" id="exFill"></div></div><p class="bm" id="exMsg"></p></div>
+    </div>
+
+    <!-- Result info -->
     <div id="eInfo"></div>
   </div>
 
   <!-- VOLUME -->
-  <div class="card hidden" id="sVol">
-    <div class="ct"><span class="pill">2</span>Volume do Curso<span class="opt">(vazio = automático)</span></div>
+  <div class="c hid" id="sVol">
+    <div class="ct"><span class="pl">2</span>Volume do Curso<span class="opt">(vazio = automático)</span></div>
     <div class="g5">
-      <div><label class="lbl">Módulos</label><input class="inp vol" type="number" id="cMod" placeholder="Auto" min="1"></div>
-      <div><label class="lbl">Tópicos/Mód</label><input class="inp vol" type="number" id="cTop" placeholder="Auto" min="3"></div>
-      <div><label class="lbl">Quiz Final/Mód</label><input class="inp vol" type="number" id="cQz" placeholder="3" min="1"></div>
-      <div><label class="lbl">Cards/Mód</label><input class="inp vol" type="number" id="cCd" placeholder="Auto" min="1"></div>
-      <div><label class="lbl">Min chars/tóp</label><input class="inp vol" type="number" id="cCh" placeholder="3000" min="500"></div>
+      <div><label class="lb">Módulos</label><input class="inp vol" type="number" id="cMod" placeholder="Auto" min="1"></div>
+      <div><label class="lb">Tópicos/Mód</label><input class="inp vol" type="number" id="cTop" placeholder="Auto" min="3"></div>
+      <div><label class="lb">Quiz Final/Mód</label><input class="inp vol" type="number" id="cQz" placeholder="3" min="1"></div>
+      <div><label class="lb">Cards/Mód</label><input class="inp vol" type="number" id="cCd" placeholder="Auto" min="1"></div>
+      <div><label class="lb">Min chars/tóp</label><input class="inp vol" type="number" id="cCh" placeholder="3000" min="500"></div>
     </div>
-    <div class="sum hidden" id="vSum"></div>
+    <div class="sm hid" id="vSum"></div>
   </div>
 
   <!-- IDENTITY -->
-  <div class="card hidden" id="sId">
-    <div class="ct"><span class="pill">3</span>Identidade<span class="opt">(auto se vazio)</span></div>
+  <div class="c hid" id="sId">
+    <div class="ct"><span class="pl">3</span>Identidade<span class="opt">(auto se vazio)</span></div>
     <div class="g3">
-      <div><label class="lbl">ID</label><input class="inp" id="cId" placeholder="ex: geo"></div>
-      <div><label class="lbl">Prefixo</label><input class="inp" id="cPx" placeholder="ex: gp_"></div>
-      <div><label class="lbl">Arquivo</label><input class="inp" id="cFn" placeholder="ex: curso-geo.html"></div>
+      <div><label class="lb">ID</label><input class="inp" id="cId" placeholder="ex: geo"></div>
+      <div><label class="lb">Prefixo</label><input class="inp" id="cPx" placeholder="ex: gp_"></div>
+      <div><label class="lb">Arquivo</label><input class="inp" id="cFn" placeholder="ex: curso-geo.html"></div>
     </div>
   </div>
 
   <!-- GENERATE -->
-  <div class="card hidden" id="sGen">
-    <div class="ct"><span class="pill">4</span>Gerar Curso</div>
+  <div class="c hid" id="sGen">
+    <div class="ct"><span class="pl">4</span>Gerar Curso</div>
     <div class="chips">
-      <span class="chip">📚 Divide módulos</span><span class="chip">📝 Gera quizzes</span>
-      <span class="chip">🃏 Flashcards</span><span class="chip">🎨 Destaques visuais</span>
-      <span class="chip">💡 Frases de memorização</span><span class="chip">📊 Dados e fontes</span>
-      <span class="chip">📰 Notícias recentes</span><span class="chip">✅ HTML pronto</span>
+      <span class="chip">📄 Multi-arquivo</span><span class="chip">🎬 YouTube</span><span class="chip">🌐 Sites</span>
+      <span class="chip">📚 Módulos auto</span><span class="chip">📝 Quizzes</span><span class="chip">🃏 Flashcards</span>
+      <span class="chip">🎨 Destaques</span><span class="chip">💡 Memorização</span><span class="chip">📊 Dados/fontes</span>
+      <span class="chip">📌 Exemplos</span><span class="chip">❌✅ Comparações</span><span class="chip">📋 Resumos</span>
     </div>
-    <button class="btn btn-p" id="bGen" onclick="run()">🚀 Gerar Curso Completo</button>
-    <div class="hidden" id="pArea" style="margin-top:16px"><div class="bar"><div class="bf" id="bFill"></div></div><p class="bm" id="bMsg"></p></div>
-    <div class="hidden" id="logA" style="margin-top:12px"></div>
+    <button class="btn bp" id="bGen" onclick="run()">🚀 Gerar Curso Completo</button>
+    <div class="hid" id="pArea" style="margin-top:16px"><div class="bar"><div class="bf" id="bFill"></div></div><p class="bm" id="bMsg"></p><div class="mpt" id="modTracker"></div></div>
+    <div class="hid" id="logA" style="margin-top:12px"></div>
     <div id="errA"></div>
   </div>
 
   <!-- RESULT -->
-  <div class="hidden" id="sRes">
-    <div class="card card-ok">
+  <div class="hid" id="sRes">
+    <div class="c c-ok">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <span style="font-size:28px">✅</span>
         <div><div id="rNm" style="font-size:19px;font-weight:700;color:#fff"></div><div id="rDs" style="font-size:12px;color:#888"></div></div>
@@ -155,244 +214,381 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Outfit
       <div class="stats" id="rSt"></div>
       <div class="cl" id="rCf"></div>
       <div class="ml" id="rMl"></div>
-      <button class="btn btn-g" onclick="dlHTML()">⬇️ Baixar HTML</button>
-      <button class="btn btn-o" onclick="cpHTML(this)">📋 Copiar HTML completo</button>
+      <button class="btn bg" onclick="dlHTML()">⬇️ Baixar HTML</button>
+      <button class="btn bo" onclick="cpHTML(this)">📋 Copiar HTML</button>
     </div>
-    <div class="card">
-      <button class="tb" onclick="tgPre()">📄 Preview do HTML <span id="pArr">▼</span></button>
-      <div class="pre hidden" id="preA"></div>
+    <div class="c"><div class="ct">👁️ Preview Renderizado</div><div id="pvTabs" style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap"></div><div id="pvContent" style="background:#0d0d1a;border:1px solid rgba(91,127,255,.08);border-radius:10px;padding:20px;max-height:500px;overflow:auto;font-size:14px;line-height:1.8;color:#ccc"></div></div>
+    <div class="c"><div class="ct">✏️ Editar Módulos</div><div id="editList"></div></div>
+    <div class="c"><button class="tb" onclick="tgPre()">📄 HTML bruto <span id="pArr">▼</span></button><div class="pre hid" id="preA"></div></div>
+    <button class="btn bo" onclick="resetAll()" style="margin-bottom:50px">🔄 Novo curso</button>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-bg hid" id="modalBg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h3 id="modalTitle" style="margin:0">Editar</h3>
+      <button onclick="closeModal()" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer">✕</button>
     </div>
-    <button class="btn btn-o" onclick="resetAll()" style="margin-bottom:50px">🔄 Novo curso</button>
+    <div id="modalTabs" style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap"></div>
+    <textarea id="modalTA"></textarea>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn bp" onclick="saveEdit()" style="flex:1">💾 Salvar</button>
+      <button class="btn bo" onclick="regenMod()" style="flex:1;margin-top:0">🔄 Regenerar</button>
+    </div>
   </div>
 </div>
 
 <script>
-// STATE
-let ET='',CF=null,FH='',FD=null,FI={};
+// ═══ STATE ═══
+let ET='',FH='',FD=null,FI={},editMi=-1,editTi=0;
+const sources=[];// {type:'file'|'yt'|'web', name, data, status, text}
 
-// PDF.js
+// ═══ LIBS ═══
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const PROXY='https://api.allorigins.win/raw?url=';
 
-// KEY
-function loadK(){const k=localStorage.getItem('ma_oai_k')||'';document.getElementById('iKey').value=k;ukS(k)}
-function saveK(){const k=document.getElementById('iKey').value.trim();if(k){localStorage.setItem('ma_oai_k',k);ukS(k)}}
-function ukS(k){const e=document.getElementById('kSt');if(k&&k.startsWith('sk-')){e.textContent='✅ Salva';e.className='ks ks-ok'}else{e.textContent='Não salva';e.className='ks ks-no'}}
-function gK(){return(localStorage.getItem('ma_oai_k')||document.getElementById('iKey').value).trim()}
+// ═══ UTILS ═══
+const $=id=>document.getElementById(id);
+const show=id=>$(id).classList.remove('hid');
+const hide=id=>$(id).classList.add('hid');
+const slp=ms=>new Promise(r=>setTimeout(r,ms));
 
-// DROP
-const dz=document.getElementById('dz'),fi=document.getElementById('fi');
+// ═══ KEY ═══
+function loadK(){const k=localStorage.getItem('ma_oai_k')||'';$('iKey').value=k;ukS(k)}
+function saveK(){const k=$('iKey').value.trim();if(k){localStorage.setItem('ma_oai_k',k);ukS(k)}}
+function ukS(k){const e=$('kSt');if(k&&k.startsWith('sk-')){e.textContent='✅ Salva';e.className='ks ks-ok'}else{e.textContent='—';e.className='ks ks-no'}}
+function gK(){return(localStorage.getItem('ma_oai_k')||$('iKey').value).trim()}
+
+// ═══ SOURCE MANAGEMENT ═══
+function renderSources(){
+  const el=$('srcList');
+  if(!sources.length){el.innerHTML='';hide('extractArea');return}
+  show('extractArea');
+  el.innerHTML=sources.map((s,i)=>{
+    const icon=s.type==='file'?'📄':s.type==='yt'?'🎬':'🌐';
+    const cls=s.type==='file'?'src-file':s.type==='yt'?'src-yt':'src-web';
+    const stCls=s.status==='ok'?'s-ok':s.status==='err'?'s-err':s.status==='loading'?'s-load':'s-wait';
+    const stTxt=s.status==='ok'?'✅ Extraído':s.status==='err'?'❌ Erro':s.status==='loading'?'⏳...':'Aguardando';
+    const chars=s.text?` (${Math.round(s.text.length/1000)}k chars)`:'';
+    return`<div class="src-item ${cls}"><span>${icon}</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.name}${chars}</span><span class="status ${stCls}">${stTxt}</span><button class="x" onclick="removeSrc(${i})">✕</button></div>`;
+  }).join('');
+}
+
+function removeSrc(i){sources.splice(i,1);renderSources();updateTotal()}
+
+// ═══ FILE HANDLING ═══
+const dz=$('dz'),fi=$('fi');
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('on')});
 dz.addEventListener('dragleave',()=>dz.classList.remove('on'));
-dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('on');hFile(e.dataTransfer.files[0])});
-fi.addEventListener('change',e=>hFile(e.target.files[0]));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('on');addFiles(e.dataTransfer.files)});
+fi.addEventListener('change',e=>{addFiles(e.target.files);fi.value=''});
 
-async function hFile(f){
-  if(!f)return;
-  const ext=f.name.split('.').pop().toLowerCase();
-  if(!['pdf','docx','doc','txt'].includes(ext)){sErr('Use .pdf, .docx ou .txt');return}
-  CF=f;$('dIco').textContent='⏳';$('dTxt').textContent='Extraindo texto...';cErr();
-  try{
-    if(ext==='txt')ET=await f.text();
-    else if(ext==='pdf')ET=await exPDF(f);
-    else ET=await exDOCX(f);
-    if(ET.length<100)throw new Error('Arquivo vazio ou ilegível.');
-    $('dIco').textContent='✅';$('dTxt').textContent=f.name;
-    $('fInfo').innerHTML=`<div class="ftag">📎 ${f.name} (${(f.size/1024).toFixed(0)} KB) <button class="x" onclick="resetAll()">✕</button></div>`;
-    const w=ET.split(/\s+/).length,rm=Math.round(w/200);
-    $('eInfo').innerHTML=`<div class="info">✅ <strong>${Math.round(ET.length/1000)}k</strong> chars &nbsp;•&nbsp; ~<strong>${w.toLocaleString()}</strong> palavras &nbsp;•&nbsp; ~<strong>${rm}</strong> min &nbsp;•&nbsp; ${ET.length<=500000?'<span class="ok">✓ OK</span>':'<span class="warn">⚡ Grande</span>'}</div>`;
-    show('sVol');show('sId');show('sGen');
-  }catch(e){$('dIco').textContent='❌';$('dTxt').textContent='Erro';sErr(e.message)}
+function addFiles(files){
+  for(const f of files){
+    const ext=f.name.split('.').pop().toLowerCase();
+    if(['pdf','docx','doc','txt'].includes(ext)){
+      sources.push({type:'file',name:f.name,data:f,status:'wait',text:''});
+    }
+  }
+  renderSources();
 }
 
-async function exPDF(f){
-  const pdf=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;
+// ═══ YOUTUBE ═══
+function addYT(){
+  const url=$('ytUrl').value.trim();
+  if(!url)return;
+  const vid=extractYTId(url);
+  if(!vid){alert('URL do YouTube inválida');return}
+  sources.push({type:'yt',name:`YouTube: ${vid}`,data:url,vid,status:'wait',text:''});
+  $('ytUrl').value='';
+  renderSources();
+}
+
+function extractYTId(url){
+  const m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return m?m[1]:null;
+}
+
+// ═══ WEBSITES ═══
+function addWeb(){
+  const url=$('webUrl').value.trim();
+  if(!url||!url.startsWith('http')){alert('URL inválida');return}
+  sources.push({type:'web',name:url.substring(0,60),data:url,status:'wait',text:''});
+  $('webUrl').value='';
+  renderSources();
+}
+
+// ═══ EXTRACT ALL ═══
+async function extractAll(){
+  $('bExtract').disabled=true;$('bExtract').textContent='⏳ Extraindo...';
+  show('exProg');
+
+  for(let i=0;i<sources.length;i++){
+    const s=sources[i];
+    if(s.status==='ok'&&s.text)continue;// already done
+    s.status='loading';renderSources();
+    $('exFill').style.width=Math.round(((i+.5)/sources.length)*100)+'%';
+    $('exMsg').textContent=`Extraindo ${i+1}/${sources.length}: ${s.name}`;
+
+    try{
+      if(s.type==='file') s.text=await extractFile(s.data);
+      else if(s.type==='yt') s.text=await extractYT(s.vid,s.data);
+      else s.text=await extractWeb(s.data);
+
+      s.status=s.text.length>30?'ok':'err';
+      if(s.status==='err')s.text='[Não foi possível extrair conteúdo]';
+    }catch(e){s.status='err';s.text='[Erro: '+e.message+']'}
+    renderSources();
+  }
+
+  $('exFill').style.width='100%';$('exMsg').textContent='Extração completa!';
+  $('bExtract').disabled=false;$('bExtract').textContent='📥 Extrair conteúdo de todas as fontes';
+  updateTotal();
+}
+
+async function extractFile(f){
+  const ext=f.name.split('.').pop().toLowerCase();
+  if(ext==='txt')return await f.text();
+  if(ext==='docx'||ext==='doc')return(await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value;
+  // PDF
+  const buf=await f.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:buf}).promise;
   let t='';
-  for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const tc=await pg.getTextContent();t+=tc.items.map(x=>x.str).join(' ')+'\n\n'}
+  for(let i=1;i<=pdf.numPages;i++){
+    const pg=await pdf.getPage(i);
+    const tc=await pg.getTextContent();
+    t+=tc.items.map(x=>x.str).join(' ')+'\n\n';
+  }
+  if(t.trim().length<200&&pdf.numPages>0){
+    t='';
+    for(let i=1;i<=Math.min(pdf.numPages,40);i++){
+      const pg=await pdf.getPage(i);
+      const vp=pg.getViewport({scale:2});
+      const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
+      await pg.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
+      const blob=await new Promise(r=>cv.toBlob(r,'image/png'));
+      try{const res=await Tesseract.recognize(blob,'por');t+=res.data.text+'\n\n'}catch{}
+    }
+  }
   return t.trim();
 }
-async function exDOCX(f){return(await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value}
 
-// VOLUME SUMMARY
-document.querySelectorAll('.vol').forEach(el=>el.addEventListener('input',uSum));
-function uSum(){
-  const m=$('cMod').value,t=$('cTop').value,q=$('cQz').value;
-  const el=$('vSum');
-  if(m||t){
-    const tot=(m&&t)?(+m*+t):'?';
-    el.innerHTML=`📊 <strong>${m||'?'}</strong> módulos × <strong>${t||'?'}</strong> tópicos = <span class="hl"><strong>${tot} totais</strong></span>`+(q&&m?` • ${+m*+q} quiz finais`:'');
-    el.classList.remove('hidden');
-  }else el.classList.add('hidden');
+async function extractYT(vid,url){
+  // Method 1: Try to get captions via third-party
+  let text='';
+  try{
+    const r=await fetch(PROXY+encodeURIComponent(`https://www.youtube.com/watch?v=${vid}`));
+    const html=await r.text();
+    // Extract title
+    const titleM=html.match(/<title>([^<]+)<\/title>/);
+    const title=titleM?titleM[1].replace(' - YouTube',''):'';
+    // Extract description from meta
+    const descM=html.match(/content="([^"]{50,})"/);
+    const desc=descM?descM[1]:'';
+    // Try to find captions/transcript in initial data
+    const captionM=html.match(/"captions":\s*(\{[^}]+\})/);
+    // Extract any text content we can find
+    const textChunks=[];
+    if(title)textChunks.push('TÍTULO DO VÍDEO: '+title);
+    if(desc)textChunks.push('DESCRIÇÃO: '+desc);
+    // Look for transcript segments
+    const segM=html.matchAll(/"text":"([^"]+)"/g);
+    for(const m of segM){const t=m[1].replace(/\\n/g,' ').replace(/\\u0026/g,'&');if(t.length>5&&!t.includes('{'))textChunks.push(t)}
+    text=textChunks.join('\n\n');
+  }catch{}
+
+  // Method 2: Try another transcript source
+  if(text.length<200){
+    try{
+      const r2=await fetch(PROXY+encodeURIComponent(`https://youtubetranscript.com/?server_vid2=${vid}`));
+      const html2=await r2.text();
+      const segs=html2.matchAll(/<text[^>]*>([^<]+)<\/text>/g);
+      const parts=[];for(const s of segs)parts.push(s[1]);
+      if(parts.length)text+='\n\nTRANSCRIÇÃO:\n'+parts.join(' ');
+    }catch{}
+  }
+
+  // Method 3: oEmbed for at least title/author
+  if(text.length<100){
+    try{
+      const r3=await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`);
+      const j=await r3.json();
+      text=`VÍDEO YOUTUBE: ${j.title}\nAUTOR: ${j.author_name}\nURL: ${url}\n\n[Transcrição não disponível — a IA usará o título e autor como referência]`;
+    }catch{text=`VÍDEO YOUTUBE: ${url}\n[Conteúdo não extraível automaticamente]`}
+  }
+
+  return text;
 }
+
+async function extractWeb(url){
+  try{
+    const r=await fetch(PROXY+encodeURIComponent(url));
+    const html=await r.text();
+    // Extract text content
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    // Remove scripts, styles, nav, footer, header
+    doc.querySelectorAll('script,style,nav,footer,header,aside,iframe,noscript').forEach(e=>e.remove());
+    // Get title
+    const title=doc.querySelector('title')?.textContent||'';
+    // Get main content
+    const main=doc.querySelector('article,main,.content,.post,[role=main]')||doc.body;
+    let text=main?main.textContent:'';
+    // Clean up
+    text=text.replace(/\s+/g,' ').replace(/\n\s*\n/g,'\n\n').trim();
+    return`FONTE: ${url}\nTÍTULO: ${title}\n\n${text.substring(0,100000)}`;
+  }catch(e){
+    return`FONTE: ${url}\n[Erro ao extrair: ${e.message}]`;
+  }
+}
+
+function updateTotal(){
+  ET=sources.filter(s=>s.status==='ok').map(s=>{
+    const header=s.type==='file'?`\n═══ ARQUIVO: ${s.name} ═══\n`:s.type==='yt'?`\n═══ YOUTUBE: ${s.name} ═══\n`:`\n═══ SITE: ${s.name} ═══\n`;
+    return header+s.text;
+  }).join('\n\n');
+
+  if(ET.length>100){
+    const w=ET.split(/\s+/).length;
+    const srcOk=sources.filter(s=>s.status==='ok').length;
+    $('eInfo').innerHTML=`<div class="nfo">✅ <strong>${srcOk}</strong> fontes extraídas • <strong>${Math.round(ET.length/1000)}k</strong> chars • ~<strong>${w.toLocaleString()}</strong> palavras • ~<strong>${Math.round(w/200)}</strong> min</div>`;
+    show('sVol');show('sId');show('sGen');
+  }
+}
+
+// ═══ VOLUME ═══
+document.querySelectorAll('.vol').forEach(el=>el.addEventListener('input',uSum));
+function uSum(){const m=$('cMod').value,t=$('cTop').value,q=$('cQz').value,el=$('vSum');if(m||t){el.innerHTML=`📊 <strong>${m||'?'}</strong> mód × <strong>${t||'?'}</strong> tóp = <span class="hl"><strong>${(m&&t)?(+m*+t):'?'} totais</strong></span>`+(q&&m?` • ${+m*+q} quiz finais`:'');el.classList.remove('hid')}else el.classList.add('hid')}
 
 // ═══ GENERATION ═══
 async function run(){
   const key=gK();
-  if(!key||!key.startsWith('sk-')){sErr('Configure a API Key primeiro.');return}
-  if(!ET){sErr('Faça upload primeiro.');return}
+  if(!key||!key.startsWith('sk-'))return sErr('Configure a API Key.');
+  if(!ET||ET.length<100)return sErr('Extraia o conteúdo das fontes primeiro.');
   const btn=$('bGen');btn.disabled=true;btn.textContent='⏳ Processando...';
-  cErr();show('pArea');$('logA').innerHTML='';$('logA').classList.remove('hidden');
-
-  const cfg={
-    modules:+$('cMod').value||null,
-    topicsPerMod:+$('cTop').value||null,
-    quizzesPerMod:+$('cQz').value||3,
-    cardsPerMod:+$('cCd').value||null,
-    minChars:+$('cCh').value||3000
-  };
+  cErr();show('pArea');$('logA').innerHTML='';show('logA');
+  const cfg={modules:+$('cMod').value||null,topicsPerMod:+$('cTop').value||null,quizzesPerMod:+$('cQz').value||3,cardsPerMod:+$('cCd').value||null,minChars:+$('cCh').value||3000};
 
   try{
-    // PHASE 1: OUTLINE
-    sP(5,'Fase 1: Criando estrutura...');aL('info','═══ FASE 1: Estrutura ═══');
-    const oP=bOP(cfg);
-    const outline=await cGPT(key,oP,ET.substring(0,60000));
-    if(!outline.modules?.length)throw new Error('Sem módulos. Tente novamente.');
-    aL('ok',`✓ ${outline.modules.length} módulos, ${outline.modules.reduce((s,m)=>s+m.topics.length,0)} tópicos`);
-    sP(15,`${outline.modules.length} módulos planejados`);
+    // PHASE 1
+    sP(5,'Fase 1: Estrutura...');aL('info','═══ FASE 1 ═══');
+    const srcDesc=sources.filter(s=>s.status==='ok').map(s=>`${s.type==='file'?'📄':s.type==='yt'?'🎬':'🌐'} ${s.name}`).join(', ');
+    aL('info',`Fontes: ${srcDesc}`);
+    const outline=await cGPT(key,bOP(cfg),ET.substring(0,60000));
+    if(!outline.modules?.length)throw new Error('Sem módulos.');
+    aL('ok',`✓ ${outline.modules.length} módulos`);
+    sP(12,`${outline.modules.length} módulos`);
+    $('modTracker').innerHTML=outline.modules.map((_,i)=>`<div class="mp" id="mt${i}">${i+1}</div>`).join('');
 
-    // PHASE 2: MODULE BY MODULE
-    aL('info','═══ FASE 2: Conteúdo módulo a módulo ═══');
+    // PHASE 2
+    aL('info','═══ FASE 2: Conteúdo ═══');
     const chunks=splitT(ET,outline.modules.length);
     const done=[];
     for(let i=0;i<outline.modules.length;i++){
       const mod=outline.modules[i];
-      const pct=15+Math.round(((i+.5)/outline.modules.length)*75);
-      sP(pct,`Módulo ${i+1}/${outline.modules.length}: ${mod.name}`);
-      aL('info',`▶ M${i+1}: ${mod.name}`);
-      let res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg,i,outline.modules.length);
-      if(!res?.topics){
-        aL('err',`  ✗ Falhou — retry...`);
-        await slp(3000);
-        res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg,i,outline.modules.length);
-      }
-      if(res?.topics){done.push(res);aL('ok',`  ✓ ${res.topics.length} tóp, ${res.quizFinal?.length||0} qf`)}
-      else aL('err',`  ✗ M${i+1} falhou após retry`);
+      sP(12+Math.round(((i+.5)/outline.modules.length)*78),`M${i+1}/${outline.modules.length}: ${mod.name}`);
+      $('mt'+i).className='mp mp-now';aL('info',`▶ M${i+1}: ${mod.name}`);
+      const diff=i<Math.ceil(outline.modules.length*.33)?'basico':i<Math.ceil(outline.modules.length*.66)?'intermediario':'avancado';
+      const prev=i>0?outline.modules[i-1].name:null;
+      const next=i<outline.modules.length-1?outline.modules[i+1].name:null;
+      let res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg,i,outline.modules.length,diff,prev,next);
+      if(!res?.topics){aL('err','  ✗ Retry...');$('mt'+i).className='mp mp-fail';await slp(3000);res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg,i,outline.modules.length,diff,prev,next)}
+      if(res?.topics){res._diff=diff;done.push(res);$('mt'+i).className='mp mp-done';aL('ok',`  ✓ ${res.topics.length} tóp`)}
+      else{$('mt'+i).className='mp mp-fail';aL('err',`  ✗ M${i+1} falhou`)}
     }
-    if(!done.length)throw new Error('Nenhum módulo gerado.');
+    if(!done.length)throw new Error('Nenhum módulo.');
 
-    // PHASE 3: ASSEMBLE
-    sP(92,'Fase 3: Montando HTML...');aL('info','═══ FASE 3: HTML ═══');
+    // PHASE 3
+    sP(92,'Montando HTML...');aL('info','═══ FASE 3 ═══');
     FD={courseName:outline.courseName,shortName:outline.shortName,cat:outline.cat,desc:outline.desc,color:outline.color||'#5b7fff',glow:outline.glow||'0 0 30px #5b7fff40',totalHours:outline.totalHours||Math.ceil(done.reduce((s,m)=>s+m.topics.length,0)*.35),modules:done};
     const fid=$('cId').value.trim()||FD.courseName.replace(/[^a-zA-Z0-9]/g,'').substring(0,6).toLowerCase();
     const fpx=$('cPx').value.trim()||(fid.substring(0,2)+'_');
-    const ffn=$('cFn').value.trim()||('curso-'+fid+'.html');
-    FI={id:fid,prefix:fpx,fileName:ffn};
+    FI={id:fid,prefix:fpx,fileName:$('cFn').value.trim()||('curso-'+fid+'.html')};
     FH=bHTML(FD,FI);
-    sP(100,'Pronto!');aL('ok',`═══ COMPLETO: ${done.length} módulos ═══`);
-    showRes();
+    sP(100,'Pronto!');aL('ok','═══ COMPLETO ═══');showRes();
   }catch(e){sErr(e.message);aL('err','ERRO: '+e.message)}
   finally{btn.disabled=false;btn.textContent='🚀 Gerar Curso Completo'}
 }
 
+// ═══ PROMPTS ═══
 function bOP(cfg){
   const mr=cfg.modules?`EXATAMENTE ${cfg.modules} módulos`:'quantos forem necessários (mín 4)';
   const tr=cfg.topicsPerMod?`EXATAMENTE ${cfg.topicsPerMod} tópicos/módulo`:'mín 4 tópicos/módulo';
-  return `Analise o conteúdo e crie a ESTRUTURA de um curso profissional completo.
+  return`Analise o conteúdo (pode vir de múltiplas fontes: PDFs, vídeos YouTube, sites) e crie a ESTRUTURA de um curso profissional.
 
-REGRAS:
-- ${mr}
-- ${tr}
-- Divida por temas lógicos, do básico ao avançado
-- Cada módulo deve cobrir um tema/área coerente
-- Os tópicos devem ter nomes específicos e descritivos (não genéricos)
-- Pense em progressão pedagógica real
+REGRAS: ${mr} | ${tr} | Progressão básico→avançado | Nomes específicos e descritivos | Integre TODAS as fontes
 
-O curso será gerado com conteúdo DINÂMICO e INTERATIVO: destaques visuais coloridos, frases de memorização, citações de especialistas, dados de pesquisas, notícias recentes, alertas, dicas práticas. Planeje os tópicos pensando nisso.
-
-JSON puro (sem markdown, sem backticks):
-{"courseName":"...","shortName":"...","cat":"...","desc":"Descrição rica em 2 frases","color":"#hexcor","glow":"0 0 30px #hexcor40","totalHours":n,"modules":[{"id":1,"name":"Nome descritivo do módulo","topics":[{"id":1,"name":"Nome específico do tópico"}]}]}`;
+JSON puro:
+{"courseName":"...","shortName":"...","cat":"...","desc":"2 frases","color":"#hex","glow":"0 0 30px #hex40","totalHours":n,"modules":[{"id":1,"name":"...","topics":[{"id":1,"name":"..."}]}]}`;
 }
 
-function splitT(t,n){
-  const sz=Math.ceil(t.length/n),ch=[];
-  for(let i=0;i<n;i++){let s=i*sz,e=Math.min(s+sz+2000,t.length);if(e<t.length){const nl=t.lastIndexOf('\n',e);if(nl>s+sz*.7)e=nl}ch.push(t.substring(s,e))}
-  return ch;
+function cGPTMPrompt(mod,cfg,mi,total,diff,prev,next){
+  const qr=cfg.quizzesPerMod||3,cr=cfg.cardsPerMod?`${cfg.cardsPerMod} flashcards`:'2 flashcards/tópico',mc=cfg.minChars||3000;
+  const dl=diff==='basico'?'🟢 Básico':diff==='intermediario'?'🟡 Intermediário':'🔴 Avançado';
+  const conn1=prev?`\nPrimeiro parágrafo: conexão natural com módulo anterior ("${prev}").`:'';
+  const conn2=next?`\nÚltimo parágrafo: transição para próximo módulo ("${next}").`:'';
+  return`Módulo ${mi+1}/${total}. Nível: ${dl}
+
+"${mod.name}" — Tópicos: ${mod.topics.map((t,i)=>(i+1)+'. '+t.name).join(', ')}
+
+ESTRUTURA: mín ${mc} chars/tópico | 1 quiz/tópico | ${cr} | ${qr} quizFinal | ${mi===0?'1º tópico free:true':'todos free:false'}${conn1}${conn2}
+
+═══ CONTEÚDO DINÂMICO OBRIGATÓRIO (use TODOS em cada tópico) ═══
+
+1. DESTAQUES: <strong> termos-chave. <span style="color:#5b7fff;font-weight:600"> conceitos críticos. <span style="background:rgba(91,127,255,.12);padding:2px 8px;border-radius:4px;font-weight:600"> termos que saltam.
+
+2. MEMORIZAÇÃO (mín 2/tópico):
+<blockquote style="border-left:3px solid #5b7fff;padding:12px 16px;margin:16px 0;background:rgba(91,127,255,.06);border-radius:0 8px 8px 0;font-style:italic;color:#ccd">💡 Frase curta inesquecível.</blockquote>
+
+3. PONTO-CHAVE (mín 1/tópico):
+<div style="background:rgba(0,200,83,.08);border:1px solid rgba(0,200,83,.2);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#00c853">✅ Ponto-chave:</strong> Info.</div>
+
+4. ALERTA:
+<div style="background:rgba(255,68,85,.08);border:1px solid rgba(255,68,85,.2);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#ff4455">⚠️ Atenção:</strong> Erro comum.</div>
+
+5. DADOS/PESQUISAS (mín 1/tópico):
+<div style="background:rgba(91,127,255,.06);border:1px solid rgba(91,127,255,.12);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#5b7fff">📊 Dado:</strong> Segundo [fonte] (ano), dado.</div>
+
+6. CITAÇÃO:
+<blockquote style="border-left:3px solid #00d4ff;padding:12px 16px;margin:16px 0;background:rgba(0,212,255,.06);border-radius:0 8px 8px 0"><strong style="color:#00d4ff">"Citação."</strong><br><span style="font-size:0.85em;color:#888">— Nome, cargo</span></blockquote>
+
+7. NOTÍCIA:
+<div style="background:rgba(255,170,0,.06);border:1px solid rgba(255,170,0,.15);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#ffaa00">📰 Atualidade:</strong> Evento.</div>
+
+8. EXEMPLO REAL (mín 1/tópico):
+<div style="background:rgba(91,127,255,.04);border:1px solid rgba(91,127,255,.1);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#5b7fff">📌 Exemplo:</strong> Cenário concreto.</div>
+
+9. COMPARAÇÃO ❌ vs ✅:
+<div style="display:flex;gap:10px;margin:16px 0"><div style="flex:1;background:rgba(255,68,85,.06);border:1px solid rgba(255,68,85,.15);border-radius:10px;padding:12px"><strong style="color:#ff4455">❌ Errado</strong><p style="margin:6px 0 0;font-size:0.9em">...</p></div><div style="flex:1;background:rgba(0,200,83,.06);border:1px solid rgba(0,200,83,.15);border-radius:10px;padding:12px"><strong style="color:#00c853">✅ Certo</strong><p style="margin:6px 0 0;font-size:0.9em">...</p></div></div>
+
+10. DICA:
+<div style="background:rgba(0,200,83,.06);border-left:3px solid #00c853;padding:12px 16px;margin:16px 0;border-radius:0 8px 8px 0"><strong style="color:#00c853">💡 Dica:</strong> Conselho.</div>
+
+11. MINI-RESUMO (OBRIGATÓRIO final de CADA tópico):
+<div style="background:rgba(91,127,255,.08);border:1px solid rgba(91,127,255,.15);border-radius:12px;padding:16px;margin:20px 0 0"><strong style="color:#5b7fff;font-size:1.05em">📋 Resumo rápido</strong><p style="margin:8px 0 0">• Ponto 1<br>• Ponto 2<br>• Ponto 3</p></div>
+
+QUALIDADE: 100% humano | mín 5 elementos visuais/tópico | dados reais | nunca enrolar
+TAGS: <h3>,<h4>,<p>,<blockquote>,<strong>,<em>,<span style>,<div style>,<br>
+
+JSON puro:
+{"id":${mi+1},"name":"${mod.name.replace(/"/g,'\\"')}","topics":[{"id":1,"name":"...","dur":min,"free":bool,"content":"HTML ${mc}+ chars","quiz":[{"q":"...","opts":["A","B","C","D"],"correct":0}],"cards":[{"q":"...","a":"..."}]}],"quizFinal":[{"q":"...","opts":["A","B","C","D"],"correct":0}]}`;
 }
 
-async function cGPT(key,sys,usr){
-  const r=await fRetry(key,[{role:'system',content:sys},{role:'user',content:usr}],8000);
-  return pJ(r);
-}
-
-async function cGPTM(key,mod,chunk,cfg,mi,total){
-  const qr=cfg.quizzesPerMod?`${cfg.quizzesPerMod} perguntas`:'3 perguntas';
-  const cr=cfg.cardsPerMod?`${cfg.cardsPerMod} flashcards distribuídos entre tópicos`:'2 flashcards por tópico';
-  const mc=cfg.minChars||3000;
-  const p=`Gere o Módulo ${mi+1} de ${total} de um curso profissional.
-
-MÓDULO: "${mod.name}"
-TÓPICOS: ${mod.topics.map((t,i)=>(i+1)+'. '+t.name).join(', ')}
-
-═══ REGRAS DE ESTRUTURA ═══
-- Cada tópico mín ${mc} caracteres no content
-- 1 quiz por tópico (4 opções, 1 correta)
-- ${cr}
-- ${qr} no quizFinal (perguntas mais desafiadoras)
-- ${mi===0?'PRIMEIRO tópico deste módulo: free:true':'TODOS os tópicos: free:false'}
-
-═══ CONTEÚDO DINÂMICO E INTERATIVO (OBRIGATÓRIO) ═══
-
-O conteúdo NÃO pode ser texto corrido monótono. Deve ser VIVO, VISUAL e DINÂMICO.
-Use estas técnicas no content de CADA tópico:
-
-1. DESTAQUES VISUAIS — Use <strong> para termos-chave e <em> para ênfase. Use <span style="color:#5b7fff;font-weight:600"> para destacar conceitos críticos em azul. Use <span style="background:rgba(91,127,255,.12);padding:2px 8px;border-radius:4px;font-weight:600"> para termos que precisam saltar aos olhos.
-
-2. FRASES DE MEMORIZAÇÃO — Insira frases curtas e impactantes para fixação entre os parágrafos usando:
-<blockquote style="border-left:3px solid #5b7fff;padding:12px 16px;margin:16px 0;background:rgba(91,127,255,.06);border-radius:0 8px 8px 0;font-style:italic;color:#ccd">💡 Frase de memorização aqui — curta, direta, inesquecível.</blockquote>
-
-3. CAIXAS DE DESTAQUE — Para informações cruciais, use:
-<div style="background:rgba(0,200,83,.08);border:1px solid rgba(0,200,83,.2);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#00c853">✅ Ponto-chave:</strong> Informação essencial aqui.</div>
-
-4. ALERTAS E AVISOS — Para erros comuns ou cuidados:
-<div style="background:rgba(255,68,85,.08);border:1px solid rgba(255,68,85,.2);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#ff4455">⚠️ Atenção:</strong> Erro comum ou cuidado aqui.</div>
-
-5. DADOS E FONTES — Sempre que possível, cite dados reais, pesquisas, estudos, estatísticas:
-<div style="background:rgba(91,127,255,.06);border:1px solid rgba(91,127,255,.12);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#5b7fff">📊 Dado importante:</strong> Segundo pesquisa da [fonte] (ano), informação concreta aqui.</div>
-
-6. CITAÇÕES DE AUTORIDADES — Nomes de especialistas, pesquisadores, líderes:
-<blockquote style="border-left:3px solid #00d4ff;padding:12px 16px;margin:16px 0;background:rgba(0,212,255,.06);border-radius:0 8px 8px 0"><strong style="color:#00d4ff">"Citação relevante aqui."</strong><br><span style="font-size:0.85em;color:#888">— Nome da Pessoa, cargo/instituição</span></blockquote>
-
-7. NOTÍCIAS RECENTES — Conecte o assunto com eventos atuais:
-<div style="background:rgba(255,170,0,.06);border:1px solid rgba(255,170,0,.15);border-radius:10px;padding:14px 16px;margin:16px 0"><strong style="color:#ffaa00">📰 No noticiário:</strong> Contexto atual ou notícia recente relevante.</div>
-
-8. DICAS PRÁTICAS — Conselhos diretos:
-<div style="background:rgba(0,200,83,.06);border-left:3px solid #00c853;padding:12px 16px;margin:16px 0;border-radius:0 8px 8px 0"><strong style="color:#00c853">💡 Dica prática:</strong> Conselho aplicável aqui.</div>
-
-═══ REGRAS DE QUALIDADE ═══
-- Texto 100% natural, humano, fluido — NUNCA parecer IA
-- NUNCA texto corrido monótono — alterne parágrafos com destaques, caixas, citações
-- Cada tópico deve ter NO MÍNIMO 3-4 elementos visuais diferentes (caixas, destaques, citações)
-- Use nomes reais de pessoas, instituições, pesquisas quando relevante
-- Inclua dados percentuais, anos, números concretos
-- Progressão lógica: contexto → conceito → exemplo → aplicação → destaque
-- NUNCA repetir título do módulo/tópico dentro do texto
-- NUNCA enrolar ou inflar com texto sem função
-- Cada parágrafo deve ensinar algo concreto
-
-═══ TAGS HTML PERMITIDAS ═══
-<h3>, <h4>, <p>, <blockquote>, <strong>, <em>, <span style="...">, <div style="...">, <br>
-NÃO use <ul>, <ol>, <li>, <table>, <img>, <a>, <script>
-
-═══ FORMATO JSON ═══
-Responda SOMENTE com JSON puro (sem markdown, sem backticks):
-{"id":${mi+1},"name":"${mod.name.replace(/"/g,'\\"')}","topics":[{"id":1,"name":"...","dur":min,"free":bool,"content":"HTML rico com ${mc}+ chars...","quiz":[{"q":"...","opts":["A","B","C","D"],"correct":0}],"cards":[{"q":"...","a":"..."}]}],"quizFinal":[{"q":"...","opts":["A","B","C","D"],"correct":0}]}`;
-  const r=await fRetry(key,[{role:'system',content:p},{role:'user',content:'REFERÊNCIA:\n\n'+chunk.substring(0,50000)}],16000);
-  return pJ(r);
-}
-
-async function fRetry(key,msgs,mt,retries=3){
+// ═══ API ═══
+function splitT(t,n){const sz=Math.ceil(t.length/n),ch=[];for(let i=0;i<n;i++){let s=i*sz,e=Math.min(s+sz+2000,t.length);if(e<t.length){const nl=t.lastIndexOf('\n',e);if(nl>s+sz*.7)e=nl}ch.push(t.substring(s,e))}return ch}
+async function cGPT(key,sys,usr){return pJ(await fR(key,[{role:'system',content:sys},{role:'user',content:usr}],8000))}
+async function cGPTM(key,mod,chunk,cfg,mi,total,diff,prev,next){return pJ(await fR(key,[{role:'system',content:cGPTMPrompt(mod,cfg,mi,total,diff,prev,next)},{role:'user',content:'REFERÊNCIA:\n\n'+chunk.substring(0,50000)}],16000))}
+async function fR(key,msgs,mt,retries=3){
   for(let a=1;a<=retries;a++){
-    try{
-      const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'gpt-4o',messages:msgs,max_tokens:mt,temperature:.7})});
-      if(!r.ok){const d=await r.json().catch(()=>({}));if(r.status===429){aL('err',`  ⏳ Rate limit — 15s...`);await slp(15000);continue}throw new Error(d.error?.message||`HTTP ${r.status}`)}
-      return(await r.json()).choices[0].message.content;
-    }catch(e){if(a===retries)throw e;aL('err',`  ⚠ Tent. ${a}: ${e.message}`);await slp(4000)}
+    try{const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'gpt-4o',messages:msgs,max_tokens:mt,temperature:.7})});
+    if(!r.ok){const d=await r.json().catch(()=>({}));if(r.status===429){aL('err','  ⏳ Rate limit 15s');await slp(15000);continue}throw new Error(d.error?.message||`HTTP ${r.status}`)}
+    return(await r.json()).choices[0].message.content}catch(e){if(a===retries)throw e;aL('err',`  ⚠ Tent ${a}`);await slp(4000)}
   }
 }
-
 function pJ(r){const c=r.replace(/```json|```/g,'').trim();try{return JSON.parse(c)}catch{const m=c.match(/\{[\s\S]*\}/);if(m)return JSON.parse(m[0]);throw new Error('JSON inválido')}}
-function slp(ms){return new Promise(r=>setTimeout(r,ms))}
 
-// BUILD HTML
+// ═══ BUILD HTML ═══
 function bHTML(d,c){
   const id=c.id,px=c.prefix,salt=id.toUpperCase()+'_HENRY_2026_MASTER',ak=id+'_auth';
   const tt=d.modules.reduce((s,m)=>s+m.topics.length,0);
@@ -433,15 +629,7 @@ ${ms}
 </html>`;
 }
 
-// UI
-function $(id){return document.getElementById(id)}
-function show(id){$(id).classList.remove('hidden')}
-function hide(id){$(id).classList.add('hidden')}
-function sP(p,m){$('bFill').style.width=p+'%';$('bMsg').textContent=m}
-function aL(t,m){const el=$('logA');el.innerHTML+=`<div class="l-${t}">${m}</div>`;el.scrollTop=el.scrollHeight}
-function sErr(m){$('errA').innerHTML=m?`<div class="err">❌ ${m}</div>`:''}
-function cErr(){$('errA').innerHTML=''}
-
+// ═══ RESULT ═══
 function showRes(){
   const d=FD,tt=d.modules.reduce((s,m)=>s+m.topics.length,0);
   const tq=d.modules.reduce((s,m)=>s+m.topics.reduce((ss,t)=>ss+(t.quiz?.length||0),0)+(m.quizFinal?.length||0),0);
@@ -449,24 +637,49 @@ function showRes(){
   $('rNm').textContent=d.courseName;$('rDs').textContent=d.desc;
   $('rSt').innerHTML=[[d.modules.length,'Módulos'],[tt,'Tópicos'],[tq,'Quizzes'],[tc,'Cards'],[(d.totalHours||'—')+'h','Horas']].map(([n,l])=>`<div class="st"><span class="sn">${n}</span><span class="sl">${l}</span></div>`).join('');
   $('rCf').innerHTML=`<strong>ID:</strong> ${FI.id} • <strong>Prefix:</strong> ${FI.prefix} • <strong>Salt:</strong> ${FI.id.toUpperCase()}_HENRY_2026_MASTER • <strong>Cor:</strong> <span class="cd" style="background:${d.color}"></span>${d.color}`;
-  $('rMl').innerHTML=d.modules.map((m,i)=>`<div class="mr"><span><strong>M${i+1}</strong>${m.name}</span><div class="mm"><span>${m.topics.length} tóp</span><span>${m.topics.reduce((s,t)=>s+(t.quiz?.length||0),0)} qz</span><span>${m.topics.reduce((s,t)=>s+(t.cards?.length||0),0)} cd</span><span>${m.quizFinal?.length||0} qf</span></div></div>`).join('');
+  $('rMl').innerHTML=d.modules.map((m,i)=>{const dl=m._diff||'basico';const dc=dl==='basico'?'d-b':dl==='intermediario'?'d-i':'d-a';const dn=dl==='basico'?'Básico':dl==='intermediario'?'Intermed.':'Avançado';return`<div class="mr"><span><strong>M${i+1}</strong>${m.name}<span class="diff ${dc}">${dn}</span></span><div class="mm"><span>${m.topics.length}t</span><span>${m.topics.reduce((s,t)=>s+(t.quiz?.length||0),0)}q</span><span>${m.topics.reduce((s,t)=>s+(t.cards?.length||0),0)}c</span></div></div>`}).join('');
+  $('pvTabs').innerHTML=d.modules.map((_,i)=>`<button class="bs" style="background:${i===0?'rgba(91,127,255,.15)':'rgba(91,127,255,.05)'};color:${i===0?'var(--blue)':'#666'};border:1px solid rgba(91,127,255,.1)" onclick="pvMod(${i},this)" data-pv="${i}">M${i+1}</button>`).join('');
+  pvMod(0);
+  $('editList').innerHTML=d.modules.map((m,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:6px;margin-bottom:4px;background:${i%2===0?'rgba(91,127,255,.03)':'transparent'}"><span style="font-size:12px;color:#bbb"><strong style="color:var(--blue)">M${i+1}</strong> ${m.name}</span><div style="display:flex;gap:6px"><button class="regen" onclick="openEdit(${i})">✏️</button><button class="regen" onclick="regenModDirect(${i})">🔄</button></div></div>`).join('');
   hide('sGen');show('sRes');
 }
 
-function dlHTML(){const u=URL.createObjectURL(new Blob([FH],{type:'text/html;charset=utf-8'}));const a=document.createElement('a');a.href=u;a.download=FI.fileName||'curso.html';a.click();URL.revokeObjectURL(u)}
-function cpHTML(btn){navigator.clipboard.writeText(FH).then(()=>{btn.textContent='✅ Copiado!';setTimeout(()=>{btn.textContent='📋 Copiar HTML completo'},2500)})}
-function tgPre(){const e=$('preA'),a=$('pArr');if(e.classList.contains('hidden')){e.classList.remove('hidden');e.textContent=FH.substring(0,10000)+(FH.length>10000?'\n\n... [truncado]':'');a.textContent='▲'}else{e.classList.add('hidden');a.textContent='▼'}}
-
-function resetAll(){
-  ET='';CF=null;FH='';FD=null;
-  $('dIco').textContent='📄';$('dTxt').textContent='Clique ou arraste o arquivo aqui';
-  $('fInfo').innerHTML='';$('eInfo').innerHTML='';
-  hide('sVol');hide('sId');hide('sGen');hide('sRes');
-  $('logA').innerHTML='';hide('logA');hide('pArea');cErr();
-  ['cMod','cTop','cQz','cCd','cCh','cId','cPx','cFn'].forEach(x=>$(x).value='');
-  $('vSum').classList.add('hidden');$('fi').value='';
+function pvMod(mi,btn){
+  document.querySelectorAll('[data-pv]').forEach(b=>{b.style.background='rgba(91,127,255,.05)';b.style.color='#666'});
+  const active=btn||document.querySelector(`[data-pv="${mi}"]`);
+  if(active){active.style.background='rgba(91,127,255,.15)';active.style.color='var(--blue)'}
+  const mod=FD.modules[mi];if(!mod)return;
+  const dl=mod._diff||'basico';const dc=dl==='basico'?'#00c853':dl==='intermediario'?'#ffaa00':'#ff4455';const dn=dl==='basico'?'🟢 Básico':dl==='intermediario'?'🟡 Intermediário':'🔴 Avançado';
+  let h=`<div style="margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(91,127,255,.1)"><h2 style="color:#fff;font-size:18px;margin-bottom:4px">M${mi+1}: ${mod.name}</h2><span style="font-size:11px;color:${dc};font-weight:600">${dn}</span></div>`;
+  mod.topics.forEach((t,ti)=>{h+=`<div style="margin-bottom:30px;padding-bottom:20px;${ti<mod.topics.length-1?'border-bottom:1px solid rgba(91,127,255,.06)':''}"><h3 style="color:var(--blue);font-size:15px;margin-bottom:2px">${ti+1}. ${t.name}</h3><div style="font-size:11px;color:#555;margin-bottom:12px">⏱️ ${t.dur||8} min${t.free?' • <span style=color:#00c853>🆓 Free</span>':''}</div><div style="font-size:14px;line-height:1.8">${t.content}</div></div>`});
+  $('pvContent').innerHTML=h;
 }
 
+// ═══ EDIT ═══
+function openEdit(mi){editMi=mi;editTi=0;$('modalTitle').textContent=`M${mi+1}: ${FD.modules[mi].name}`;const mod=FD.modules[mi];$('modalTabs').innerHTML=mod.topics.map((t,i)=>`<button class="bs" style="background:${i===0?'rgba(91,127,255,.15)':'rgba(91,127,255,.05)'};color:${i===0?'var(--blue)':'#666'};border:1px solid rgba(91,127,255,.1);font-size:11px" onclick="swET(${i},this)">${i+1}</button>`).join('');$('modalTA').value=mod.topics[0].content;show('modalBg')}
+function swET(ti,btn){FD.modules[editMi].topics[editTi].content=$('modalTA').value;editTi=ti;$('modalTA').value=FD.modules[editMi].topics[ti].content;$('modalTabs').querySelectorAll('button').forEach(b=>{b.style.background='rgba(91,127,255,.05)';b.style.color='#666'});btn.style.background='rgba(91,127,255,.15)';btn.style.color='var(--blue)'}
+function saveEdit(){FD.modules[editMi].topics[editTi].content=$('modalTA').value;FH=bHTML(FD,FI);closeModal();pvMod(editMi)}
+function closeModal(){hide('modalBg')}
+
+async function regenModDirect(mi){
+  const key=gK();if(!key)return sErr('API Key.');
+  const mod=FD.modules[mi];const cfg={modules:FD.modules.length,topicsPerMod:mod.topics.length,quizzesPerMod:+$('cQz').value||3,cardsPerMod:+$('cCd').value||null,minChars:+$('cCh').value||3000};
+  const diff=mod._diff||'basico';const prev=mi>0?FD.modules[mi-1].name:null;const next=mi<FD.modules.length-1?FD.modules[mi+1].name:null;
+  const chunks=splitT(ET,FD.modules.length);aL('info',`🔄 Regen M${mi+1}...`);
+  try{const res=await cGPTM(key,{name:mod.name,topics:mod.topics.map(t=>({id:1,name:t.name}))},chunks[mi]||chunks[chunks.length-1],cfg,mi,FD.modules.length,diff,prev,next);
+  if(res?.topics){res._diff=diff;FD.modules[mi]=res;FH=bHTML(FD,FI);showRes();aL('ok',`✓ M${mi+1} ok`)}else aL('err','✗ Falha')}catch(e){aL('err',e.message)}
+}
+function regenMod(){closeModal();regenModDirect(editMi)}
+
+// ═══ UI ═══
+function sP(p,m){$('bFill').style.width=p+'%';$('bMsg').textContent=m}
+function aL(t,m){const el=$('logA');el.innerHTML+=`<div class="l-${t}">${m}</div>`;el.scrollTop=el.scrollHeight}
+function sErr(m){$('errA').innerHTML=m?`<div class="err">❌ ${m}</div>`:''}
+function cErr(){$('errA').innerHTML=''}
+function dlHTML(){const u=URL.createObjectURL(new Blob([FH],{type:'text/html;charset=utf-8'}));const a=document.createElement('a');a.href=u;a.download=FI.fileName||'curso.html';a.click();URL.revokeObjectURL(u)}
+function cpHTML(btn){navigator.clipboard.writeText(FH).then(()=>{btn.textContent='✅ Copiado!';setTimeout(()=>{btn.textContent='📋 Copiar HTML'},2500)})}
+function tgPre(){const e=$('preA'),a=$('pArr');if(e.classList.contains('hid')){e.classList.remove('hid');e.textContent=FH.substring(0,10000)+(FH.length>10000?'\n...[truncado]':'');a.textContent='▲'}else{e.classList.add('hid');a.textContent='▼'}}
+function resetAll(){ET='';FH='';FD=null;sources.length=0;renderSources();$('dz').querySelector('div').textContent='📄';$('dz').querySelectorAll('p')[0].textContent='Clique ou arraste — pode mandar vários';$('fInfo')&&($('fInfo').innerHTML='');$('eInfo').innerHTML='';['sVol','sId','sGen','sRes','exProg'].forEach(hide);$('logA').innerHTML='';hide('logA');hide('pArea');cErr();['cMod','cTop','cQz','cCd','cCh','cId','cPx','cFn'].forEach(x=>$(x).value='');$('vSum').classList.add('hid');$('fi').value='';$('modTracker').innerHTML=''}
 loadK();
 </script>
 </body>
