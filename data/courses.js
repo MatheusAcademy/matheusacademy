@@ -224,25 +224,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/storytel.jpg',
-    id: 'storytel',
-    name: 'Storytelling',
-    desc: 'Curso completo de storytelling, do básico ao avançado, para aprender a criar histórias claras, memoráveis e persuasivas em contextos pessoais, profissionais, educacionais e comerciais.',
-    file: 'storytelling-curso-completo.html',
-    cat: 'Negócios',
-    modules: 17,
-    topics: 119,
-    hours: 18,
-    quizzes: 51,
-    salt: 'STORY_HENRY_2026_MASTER',
-    ak: 'story_auth',
-    storagePrefix: 'STY',
-    icon: '🎓',
-    color: '#8b5cf6',
-    addedTs: 1775524811219,
-    active: true
-  },
-  {
     coverImg: 'assets/capas/filosofi.jpg',
     id: 'filosofi',
     name: 'Filosofia para a Vida Real',
