@@ -493,7 +493,7 @@ async function run(){
       const prev=i>0?outline.modules[i-1].name:null;
       const next=i<outline.modules.length-1?outline.modules[i+1].name:null;
       let res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg,i,outline.modules.length,diff,prev,next);
-      if(!res?.topics){aL('err','  ✗ Retry...');$('mt'+i).className='mp mp-fail';await slp(3000);res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg,i,outline.modules.length,diff,prev,next)}
+      if(!res?.topics){aL('err','  ✗ Retry com conteúdo reduzido...');$('mt'+i).className='mp mp-fail';await slp(4000);const cfg2={...cfg,minChars:Math.max(1500,Math.floor((cfg.minChars||3000)*0.6))};res=await cGPTM(key,mod,chunks[i]||chunks[chunks.length-1],cfg2,i,outline.modules.length,diff,prev,next)}
       if(res?.topics){res._diff=diff;done.push(res);$('mt'+i).className='mp mp-done';aL('ok',`  ✓ ${res.topics.length} tóp`)}
       else{$('mt'+i).className='mp mp-fail';aL('err',`  ✗ M${i+1} falhou`)}
     }
@@ -578,7 +578,7 @@ JSON puro:
 // ═══ API ═══
 function splitT(t,n){const sz=Math.ceil(t.length/n),ch=[];for(let i=0;i<n;i++){let s=i*sz,e=Math.min(s+sz+2000,t.length);if(e<t.length){const nl=t.lastIndexOf('\n',e);if(nl>s+sz*.7)e=nl}ch.push(t.substring(s,e))}return ch}
 async function cGPT(key,sys,usr){return pJ(await fR(key,[{role:'system',content:sys},{role:'user',content:usr}],8000))}
-async function cGPTM(key,mod,chunk,cfg,mi,total,diff,prev,next){return pJ(await fR(key,[{role:'system',content:cGPTMPrompt(mod,cfg,mi,total,diff,prev,next)},{role:'user',content:'REFERÊNCIA:\n\n'+chunk.substring(0,50000)}],16000))}
+async function cGPTM(key,mod,chunk,cfg,mi,total,diff,prev,next){return pJ(await fR(key,[{role:'system',content:cGPTMPrompt(mod,cfg,mi,total,diff,prev,next)},{role:'user',content:'REFERÊNCIA:\n\n'+chunk.substring(0,50000)}],32000))}
 async function fR(key,msgs,mt,retries=3){
   for(let a=1;a<=retries;a++){
     try{const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'gpt-4o',messages:msgs,max_tokens:mt,temperature:.7})});
@@ -586,7 +586,40 @@ async function fR(key,msgs,mt,retries=3){
     return(await r.json()).choices[0].message.content}catch(e){if(a===retries)throw e;aL('err',`  ⚠ Tent ${a}`);await slp(4000)}
   }
 }
-function pJ(r){const c=r.replace(/```json|```/g,'').trim();try{return JSON.parse(c)}catch{const m=c.match(/\{[\s\S]*\}/);if(m)return JSON.parse(m[0]);throw new Error('JSON inválido')}}
+function pJ(r){
+  const c=r.replace(/```json|```/g,'').trim();
+  // Try direct parse
+  try{return JSON.parse(c)}catch{}
+  // Try extracting JSON object
+  const m=c.match(/\{[\s\S]*\}/);
+  if(m){try{return JSON.parse(m[0])}catch{}}
+  // Try fixing truncated JSON by closing brackets
+  let fix=c;
+  if(!fix.startsWith('{')){const i=fix.indexOf('{');if(i>=0)fix=fix.substring(i)}
+  // Count open brackets and close them
+  let ob=0,os=0;
+  for(const ch of fix){if(ch==='{')ob++;if(ch==='}')ob--;if(ch==='[')os++;if(ch===']')os--}
+  while(os>0){fix+=']';os--}
+  while(ob>0){fix+='}';ob--}
+  // Remove trailing comma before closing
+  fix=fix.replace(/,\s*([}\]])/g,'$1');
+  try{return JSON.parse(fix)}catch{}
+  // Last resort: try to extract at least partial data
+  try{
+    // Find last complete topic
+    const lastBrace=fix.lastIndexOf('}');
+    if(lastBrace>0){
+      let attempt=fix.substring(0,lastBrace+1);
+      let o2=0,s2=0;
+      for(const ch of attempt){if(ch==='{')o2++;if(ch==='}')o2--;if(ch==='[')s2++;if(ch===']')s2--}
+      while(s2>0){attempt+=']';s2--}
+      while(o2>0){attempt+='}';o2--}
+      attempt=attempt.replace(/,\s*([}\]])/g,'$1');
+      return JSON.parse(attempt);
+    }
+  }catch{}
+  throw new Error('JSON inválido — módulo será retentado');
+}
 
 // ═══ BUILD HTML ═══
 function bHTML(d,c){
