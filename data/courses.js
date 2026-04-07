@@ -223,6 +223,25 @@ var MA_COURSES = [
     color: '#5b7fff',
     addedTs: 1775501767880,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ahistori.jpg',
+    id: 'ahistori',
+    name: 'A Historia do Brasil',
+    desc: 'Curso EAD completo, profundo e didático sobre a formação histórica do Brasil, do período pré-colonial aos desafios contemporâneos, com leitura crítica, aplicações práticas e visão de longo prazo.',
+    file: 'a_historia_do_brasil_matheus_academy.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 17,
+    topics: 119,
+    hours: 42,
+    quizzes: 51,
+    salt: 'HB_HENRY_2026_MASTER',
+    ak: 'hb_auth',
+    storagePrefix: 'HBR',
+    icon: '📰',
+    color: '#1e6b52',
+    addedTs: 1775524713534,
+    active: true
   }
 ];
 var MA_CATS = [
