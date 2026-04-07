@@ -262,25 +262,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/geoeua.jpg',
-    id: 'geoeua',
-    name: 'Geopolítica dos EUA',
-    desc: 'Curso intermediário e atual sobre guerras, sanções, disputas estratégicas, dólar, inteligência, rivalidade com China e Rússia e o futuro da hegemonia americana.',
-    file: 'curso-geopol.html',
-    cat: 'Geopolítica',
-    modules: 7,
-    topics: 21,
-    hours: 40,
-    quizzes: 42,
-    salt: 'GEOEUA_HENRY_2026_MASTER',
-    ak: 'geoeua_auth',
-    storagePrefix: 'GEO',
-    icon: '📰',
-    color: '#5b7fff',
-    addedTs: 1775524940197,
-    active: true
-  },
-  {
     coverImg: 'assets/capas/filosofi.jpg',
     id: 'filosofi',
     name: 'Filosofia para a Vida Real',
