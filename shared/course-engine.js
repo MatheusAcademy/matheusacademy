@@ -2123,122 +2123,97 @@ function downloadNotesPDF(){
   showToast('📥 Abrindo para impressão/PDF...','ok');
 }
 
-/* ═══ MAPA MENTAL — PDF AUTO-GERADO ═══ */
+/* ═══ MAPA MENTAL — PNG RESPONSIVO (v6) ═══ */
 function downloadMindMapPDF(){
-  /* v5: mapa mental somente para assinantes */
   if(COURSE.mindMapFree===false&&!isUnlocked()){
     openLockScreen();
     showToast('🔒 Mapa Mental exclusivo para assinantes','warn');
     return;
   }
-  var cc=COURSE.color||'#4A7EFF';
-  var now=new Date();
-  var exportDate=now.toLocaleDateString('pt-BR');
-  // Cores por módulo
-  var modColors=['#4A7EFF','#e63946','#22c55e','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#f97316'];
-  var L=[];
-  L.push('<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">');
-  L.push('<style>');
-  L.push('*{margin:0;padding:0;box-sizing:border-box}');
-  L.push('@page{size:A4 landscape;margin:12mm}');
-  L.push('body{font-family:"Segoe UI",Arial,sans-serif;background:#0a0a14;color:#e0e0e0;padding:30px 24px;min-height:100vh;}');
-  // Header
-  L.push('.header{text-align:center;margin-bottom:28px;padding-bottom:18px;border-bottom:2px solid '+cc+'33;}');
-  L.push('.header-logo{font-size:10px;font-weight:900;color:#4A7EFF;letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;}');
-  L.push('.header-title{font-size:26px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px;}');
-  L.push('.header-sub{font-size:11px;color:#888;letter-spacing:1px;}');
-  L.push('.header-stats{display:flex;justify-content:center;gap:24px;margin-top:12px;}');
-  L.push('.header-stat{font-size:11px;color:#aaa;}.header-stat b{color:'+cc+';font-size:14px;}');
-  // Central node
-  L.push('.mind-map{position:relative;display:flex;flex-direction:column;align-items:center;gap:0;}');
-  L.push('.central-node{background:linear-gradient(135deg,'+cc+','+cc+'cc);color:#fff;font-size:15px;font-weight:900;padding:14px 32px;border-radius:50px;text-align:center;box-shadow:0 0 30px '+cc+'44;margin-bottom:8px;letter-spacing:.5px;}');
-  L.push('.central-line{width:2px;height:20px;background:'+cc+'66;margin-bottom:0;}');
-  // Modules grid
-  L.push('.modules-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 28px;width:100%;max-width:1100px;margin-top:8px;}');
-  // Module card
-  L.push('.mod-card{background:#12121e;border-radius:14px;padding:16px 18px;border-left:4px solid '+cc+';page-break-inside:avoid;}');
-  L.push('.mod-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}');
-  L.push('.mod-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;}');
-  L.push('.mod-name{font-size:13px;font-weight:800;color:#fff;line-height:1.3;}');
-  // Topics
-  L.push('.topics-list{display:flex;flex-direction:column;gap:6px;margin-left:38px;}');
-  L.push('.topic-item{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;color:#ccc;line-height:1.45;}');
-  L.push('.topic-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;}');
-  L.push('.topic-name{font-weight:600;color:#e8e8e8;}');
-  // Flashcards summary
-  L.push('.fc-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;margin-left:38px;}');
-  L.push('.fc-tag{font-size:9px;background:#ffffff0a;border:1px solid #ffffff15;padding:2px 8px;border-radius:6px;color:#999;}');
-  // Footer
-  L.push('.footer{text-align:center;margin-top:28px;padding-top:14px;border-top:1px solid #ffffff12;font-size:10px;color:#555;}');
-  // Print
-  L.push('@media print{body{background:#0a0a14!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:10px 8px;} .mod-card{break-inside:avoid;}}');
-  L.push('</style></head><body>');
-
-  // Header
-  L.push('<div class="header">');
-  L.push('<div class="header-logo">MATHEUS ACADEMY</div>');
-  L.push('<div class="header-title">🧠 Mapa Mental — '+escHtml(COURSE.name)+'</div>');
-  L.push('<div class="header-sub">Visão completa da estrutura do curso</div>');
-  L.push('<div class="header-stats">');
-  L.push('<div class="header-stat"><b>'+COURSE.modules+'</b> módulos</div>');
-  L.push('<div class="header-stat"><b>'+COURSE.topics+'</b> tópicos</div>');
-  L.push('<div class="header-stat"><b>'+COURSE.hours+'</b> horas</div>');
-  L.push('</div></div>');
-
-  // Mind Map
-  L.push('<div class="mind-map">');
-  L.push('<div class="central-node">'+escHtml(COURSE.shortName||COURSE.name)+'</div>');
-  L.push('<div class="central-line"></div>');
-  L.push('<div class="modules-grid">');
-
-  MODS.forEach(function(mod,mi){
-    var mColor=modColors[mi%modColors.length];
-    L.push('<div class="mod-card" style="border-left-color:'+mColor+'">');
-    L.push('<div class="mod-header">');
-    L.push('<div class="mod-num" style="background:'+mColor+'">'+String(mi+1).padStart(2,'0')+'</div>');
-    var modTitle=mod.name.replace(/^Módulo\s*\d+\s*[—–-]\s*/i,'');
-    L.push('<div class="mod-name">'+escHtml(modTitle)+'</div>');
-    L.push('</div>');
-
-    // Topics
-    L.push('<div class="topics-list">');
-    mod.topics.forEach(function(t){
-      L.push('<div class="topic-item">');
-      L.push('<div class="topic-dot" style="background:'+mColor+'"></div>');
-      L.push('<span class="topic-name">'+escHtml(t.name)+'</span>');
-      L.push('</div>');
-    });
-    L.push('</div>');
-
-    // Flashcard keywords as tags
-    if(mod.topics.some(function(t){return t.cards&&t.cards.length;})){
-      L.push('<div class="fc-row">');
+  var script=document.createElement('script');
+  script.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+  script.onload=function(){
+    showToast('⏳ Gerando imagem do mapa mental...','info');
+    var cc=COURSE.color||'#4A7EFF';
+    var now=new Date();
+    var exportDate=now.toLocaleDateString('pt-BR');
+    var isMobile=window.innerWidth<768;
+    var modColors=['#4A7EFF','#e63946','#22c55e','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#f97316'];
+    var container=document.createElement('div');
+    container.id='mindmapExportContainer';
+    container.style.cssText='position:fixed;top:-9999px;left:-9999px;width:'+(isMobile?'360px':'1200px')+';background:#0a0a14;font-family:"Segoe UI",Arial,sans-serif;padding:24px;color:#e0e0e0;box-sizing:border-box;';
+    var html='';
+    html+='<div style="text-align:center;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid '+cc+'33;">';
+    html+='<div style="font-size:10px;font-weight:900;color:#4A7EFF;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;">🎓 Matheus Academy</div>';
+    html+='<div style="font-size:20px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px;">🧠 Mapa Mental</div>';
+    html+='<div style="font-size:14px;font-weight:700;color:#ccc;margin-bottom:8px;">'+escHtml(COURSE.name)+'</div>';
+    html+='<div style="font-size:10px;color:#888;letter-spacing:1px;margin-bottom:12px;">Visão completa da estrutura do curso</div>';
+    html+='<div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:11px;color:#aaa;">';
+    html+='<span><b style="color:'+cc+';font-size:13px;">'+COURSE.modules+'</b> módulos</span>';
+    html+='<span><b style="color:'+cc+';font-size:13px;">'+COURSE.topics+'</b> tópicos</span>';
+    html+='<span><b style="color:'+cc+';font-size:13px;">'+COURSE.hours+'</b> horas</span>';
+    html+='</div></div>';
+    html+='<div style="text-align:center;margin-bottom:24px;">';
+    html+='<div style="display:inline-block;background:linear-gradient(135deg,'+cc+','+cc+'cc);color:#fff;font-size:16px;font-weight:900;padding:14px 32px;border-radius:50px;box-shadow:0 0 30px '+cc+'44;letter-spacing:.5px;white-space:nowrap;">'+escHtml(COURSE.shortName||COURSE.name)+'</div>';
+    html+='</div>';
+    html+='<div style="display:grid;grid-template-columns:'+(isMobile?'1fr':'1fr 1fr')+';gap:'+(isMobile?'12px':'16px 28px')+';width:100%;margin-bottom:20px;">';
+    MODS.forEach(function(mod,mi){
+      var mColor=modColors[mi%modColors.length];
+      var modTitle=mod.name.replace(/^Módulo\s*\d+\s*[—–-]\s*/i,'');
+      html+='<div style="background:#12121e;border-radius:12px;padding:14px 16px;border-left:4px solid '+mColor+';break-inside:avoid;">';
+      html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">';
+      html+='<div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;background:'+mColor+';flex-shrink:0;">'+String(mi+1).padStart(2,'0')+'</div>';
+      html+='<div style="font-size:12px;font-weight:800;color:#fff;line-height:1.3;">'+escHtml(modTitle)+'</div>';
+      html+='</div>';
+      html+='<div style="display:flex;flex-direction:column;gap:6px;margin-left:38px;">';
       mod.topics.forEach(function(t){
-        if(t.cards){
-          t.cards.forEach(function(c){
-            var short=c.q.length>40?c.q.substring(0,38)+'…':c.q;
-            L.push('<span class="fc-tag">'+escHtml(short)+'</span>');
-          });
-        }
+        html+='<div style="display:flex;align-items:flex-start;gap:8px;font-size:11px;color:#ccc;line-height:1.4;">';
+        html+='<div style="width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:4px;background:'+mColor+'"></div>';
+        html+='<span style="font-weight:600;color:#e8e8e8;">'+escHtml(t.name)+'</span>';
+        html+='</div>';
       });
-      L.push('</div>');
-    }
-
-    L.push('</div>');
-  });
-
-  L.push('</div>'); // modules-grid
-  L.push('</div>'); // mind-map
-
-  L.push('<div class="footer">Mapa Mental gerado automaticamente por Matheus Academy · '+escHtml(COURSE.name)+' · '+exportDate+'</div>');
-  L.push('</body></html>');
-
-  var win=window.open('','_blank','width=1100,height=800');
-  if(!win){showToast('Permita pop-ups para baixar o mapa mental','warn');return;}
-  win.document.write(L.join(''));
-  win.document.close();
-  setTimeout(function(){win.print();},700);
-  showToast('🧠 Abrindo Mapa Mental para impressão/PDF...','ok');
+      html+='</div>';
+      if(mod.topics.some(function(t){return t.cards&&t.cards.length;})){
+        html+='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;margin-left:38px;">';
+        mod.topics.forEach(function(t){
+          if(t.cards){
+            t.cards.slice(0,5).forEach(function(c){
+              var short=c.q.length>35?c.q.substring(0,33)+'…':c.q;
+              html+='<span style="font-size:8px;background:#ffffff0a;border:1px solid #ffffff15;padding:2px 6px;border-radius:4px;color:#888;">'+escHtml(short)+'</span>';
+            });
+          }
+        });
+        html+='</div>';
+      }
+      html+='</div>';
+    });
+    html+='</div>';
+    html+='<div style="text-align:center;margin-top:20px;padding-top:12px;border-top:1px solid #ffffff12;font-size:9px;color:#555;">Mapa Mental gerado automaticamente por Matheus Academy · '+escHtml(COURSE.name)+' · '+exportDate+'</div>';
+    container.innerHTML=html;
+    document.body.appendChild(container);
+    html2canvas(container,{backgroundColor:'#0a0a14',scale:isMobile?2:3,logging:false,useCORS:true,allowTaint:true,width:isMobile?360:1200}).then(function(canvas){
+      canvas.toBlob(function(blob){
+        var link=document.createElement('a');
+        var fileName='Mapa_Mental_'+COURSE.name.replace(/[^a-z0-9]/gi,'_')+'.png';
+        link.href=URL.createObjectURL(blob);
+        link.download=fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+        document.body.removeChild(container);
+        showToast('📥 Mapa Mental baixado como PNG!','ok');
+      },'image/png',0.95);
+    }).catch(function(err){
+      document.body.removeChild(container);
+      console.error('Erro ao gerar imagem:',err);
+      showToast('❌ Erro ao gerar mapa mental. Tente novamente.','error');
+    });
+  };
+  script.onerror=function(){
+    showToast('❌ Erro ao carregar biblioteca de renderização','error');
+  };
+  document.head.appendChild(script);
 }
 
 /* ═══ ÁUDIO (legado — compatibilidade) ═══ */
