@@ -332,6 +332,26 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775685659412,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/libanoco.jpg',
+    id: 'libanoco',
+    name: 'Líbano — Conflito com Risco de Explosão Regional',
+    desc: 'Cobertura completa e aprofundada do conflito no Líbano: das raízes históricas da Guerra Civil de 1975 à criação do Hezbollah, das invasões israelenses à guerra de 2026, incluindo líderes, financiamento, vítimas, dados econômicos, o impasse do cessar-fogo e cenários futuros. Tudo o que você precisa saber para entender cada detalhe dessa crise que ameaça explodir toda a região.',
+    file: 'libano-conflito-explosao-regional.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 1,
+    topics: 4,
+    hours: 1,
+    quizzes: 3,
+    salt: 'LIBANO_HENRY_2026_MASTER',
+    ak: 'libano-conflito-explosao-2026',
+    storagePrefix: 'LB',
+    icon: '📰',
+    color: '#16a085',
+    free: true,
+    addedTs: 1775686460164,
+    active: true
   }
 ];
 var MA_CATS = [
