@@ -156,8 +156,8 @@ body {
    EBOOK CARD - SEM EFEITO ELÉTRICO, SÓ BALÃO INFLANDO
    ══════════════════════════════════════════════════════════════════════════════ */
 .ebook-card{
-  flex:0 0 calc(28% - 12px);
-  max-width:calc(28% - 12px);
+  flex:0 0 calc(32% - 12px);
+  max-width:calc(32% - 12px);
   cursor:pointer;
   transition:transform .25s ease-out;
 }
@@ -348,7 +348,7 @@ body {
 .pbn-cta.sec:hover{background:rgba(91,127,255,.12)}
 .section-wrap{padding:6px 0 4px}.section-hdr{padding:16px 24px 8px}.section-hdr h3{font-family:var(--serif);font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:3px}.section-hdr p{font-size:.7rem;color:var(--txt2)}
 .cat-sec{padding:4px 0 12px}.cat-sec-inner{padding:16px 24px 6px}.cat-sec-title{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff}.cat-sec-title.special{color:#ef4444}.cat-sec-title.ebook{color:#a855f7}.cat-sec-sub{font-size:.7rem;color:var(--txt2);margin-top:3px}
-.row-wrap{position:relative;padding:0 50px}
+.row-wrap{position:relative;padding:0 30px}
 .row-outer{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:smooth;user-select:none}.row-outer::-webkit-scrollbar{display:none}
 .row-inner{display:flex;gap:14px;padding:16px 4px 20px;width:max-content}
 
@@ -453,6 +453,9 @@ body {
 /* ── Mobile 480px: Cards proporcionais ── */
 @media(max-width:480px){
   .cc{min-width:calc((100vw - 40px)/2);max-width:calc((100vw - 40px)/2)}
+  /* NOTÍCIAS: 1 item por vez no mobile (1:1) */
+  .cat-sec:has(.cat-sec-title.special) .cc{min-width:calc(100vw - 40px);max-width:calc(100vw - 40px);aspect-ratio:1/1}
+  .cat-sec:has(.cat-sec-title.special) .cc-img{aspect-ratio:1/1}
   .cc-img{aspect-ratio:3/4}
   .cc-body{padding:10px;min-height:70px}
   .cc-body h4{font-size:.72rem;line-height:1.25}
@@ -2580,8 +2583,8 @@ function addEbookTouchSwipe() {
     }
     
     if (tDir === 'h') {
-      // MOVIMENTO DIRETO E INSTANTÂNEO - multiplicador 2.5x para sensibilidade
-      _scrollUserSpeed = dx * 2.5;
+      // MOVIMENTO DIRETO E INSTANTÂNEO - multiplicador 3.2x para sensibilidade melhorada
+      _scrollUserSpeed = dx * 3.2;
       
       // Guardar histórico de velocidade para momentum
       tVelocityHistory.push(dx);
@@ -2598,11 +2601,11 @@ function addEbookTouchSwipe() {
     if (tDir === 'h' && tVelocityHistory.length > 0) {
       // Calcular velocidade média do swipe
       var avgVel = tVelocityHistory.reduce(function(a,b){return a+b;}, 0) / tVelocityHistory.length;
-      // Lançar com momentum - multiplicador para mais força
-      _scrollSpeed = avgVel * 3;
-      // Limitar velocidade máxima
-      if (_scrollSpeed > 40) _scrollSpeed = 40;
-      if (_scrollSpeed < -40) _scrollSpeed = -40;
+      // Lançar com momentum - multiplicador aumentado para mais força
+      _scrollSpeed = avgVel * 3.5;
+      // Limitar velocidade máxima (aumentado)
+      if (_scrollSpeed > 50) _scrollSpeed = 50;
+      if (_scrollSpeed < -50) _scrollSpeed = -50;
     }
     
     tDir = null;
@@ -2624,7 +2627,7 @@ function addEbookTouchSwipe() {
     var onMove = function(ev) {
       if (!_scrollIsDragging) return;
       var dx = mLastX - ev.clientX;
-      _scrollUserSpeed = dx * 2;
+      _scrollUserSpeed = dx * 2.8;
       mVelHistory.push(dx);
       if (mVelHistory.length > 5) mVelHistory.shift();
       mLastX = ev.clientX;
@@ -2634,9 +2637,9 @@ function addEbookTouchSwipe() {
       _scrollIsDragging = false;
       if (mVelHistory.length > 0) {
         var avgVel = mVelHistory.reduce(function(a,b){return a+b;}, 0) / mVelHistory.length;
-        _scrollSpeed = avgVel * 2.5;
-        if (_scrollSpeed > 30) _scrollSpeed = 30;
-        if (_scrollSpeed < -30) _scrollSpeed = -30;
+        _scrollSpeed = avgVel * 3.2;
+        if (_scrollSpeed > 45) _scrollSpeed = 45;
+        if (_scrollSpeed < -45) _scrollSpeed = -45;
       }
       mVelHistory = [];
       document.removeEventListener('mousemove', onMove);
