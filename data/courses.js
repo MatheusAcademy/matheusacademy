@@ -160,6 +160,25 @@ var MA_COURSES = [
     color: '#c0392b',
     addedTs: 1775673934997,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/isst.jpg',
+    id: 'isst',
+    name: 'Illuminati e Sociedades Secretas',
+    desc: 'Do básico ao avançado: história real, nomes, financiadores, símbolos, empresas e países — o que se sabe, o que não se sabe e até onde podemos ir.',
+    file: 'illuminati-sociedades-secretas.html',
+    cat: 'Conspirações & Mistérios',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 21,
+    salt: 'IS_HENRY_2026_MASTER',
+    ak: 'is_auth',
+    storagePrefix: 'is_',
+    icon: '🎓',
+    color: '#8e44ad',
+    addedTs: 1775675747852,
+    active: true
   }
 ];
 var MA_CATS = [
