@@ -198,6 +198,25 @@ var MA_COURSES = [
     color: '#009c3b',
     addedTs: 1775677085330,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/educa.jpg',
+    id: 'educa',
+    name: 'Educação Financeira do Zero',
+    desc: 'Domine suas finanças pessoais do básico ao avançado: orçamento, investimentos, impostos e independência financeira.',
+    file: 'educacao-financeira-do-zero.html',
+    cat: 'Finanças & Economia',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 1,
+    salt: 'EF_HENRY_2026_MASTER',
+    ak: 'ef_auth',
+    storagePrefix: 'ef_',
+    icon: '💰',
+    color: '#2d9f4e',
+    addedTs: 1775678307178,
+    active: true
   }
 ];
 var MA_CATS = [
