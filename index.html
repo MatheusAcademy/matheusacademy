@@ -741,60 +741,107 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   NOTÍCIAS DA SEMANA — 3 NOTÍCIAS NO DESKTOP, 1 NO MOBILE
-   Quadrado 1:1 para manter qualidade da foto
+   NOTÍCIAS DA SEMANA — CARROSSEL INFINITO TIPO NETFLIX
+   Gigante, 1:1, scroll automático + manual, bem coladinho
    ══════════════════════════════════════════════════════════════════════════════ */
 
-/* ── SEÇÃO DE NOTÍCIAS: Detectar por .special ── */
+/* ── SEÇÃO NOTÍCIAS: Detectar por .special ── */
 .cat-sec:has(.cat-sec-title.special) {
-  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 20px;
 }
 
+/* ── CARROSSEL: Scroll horizontal infinito ── */
 .cat-sec:has(.cat-sec-title.special) .row-wrap {
-  display: block;
+  position: relative;
+  overflow: hidden;
   width: 100%;
+  margin: 0 auto;
 }
 
 .cat-sec:has(.cat-sec-title.special) .row-outer {
-  display: block;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-behavior: smooth !important;
   width: 100%;
-  overflow: visible !important;
+  scroll-snap-type: x mandatory;
+  
+  /* Esconder scroll bar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.1) transparent;
+  
+  /* Permitir drag/swipe */
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-/* ── TRANSFORMAR CARROSSEL EM GRID 3 COLUNAS ── */
+.cat-sec:has(.cat-sec-title.special) .row-outer:active {
+  cursor: grabbing;
+}
+
+.cat-sec:has(.cat-sec-title.special) .row-outer::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cat-sec:has(.cat-sec-title.special) .row-outer::-webkit-scrollbar-track {
+  background: rgba(255,255,255,.05);
+}
+
+.cat-sec:has(.cat-sec-title.special) .row-outer::-webkit-scrollbar-thumb {
+  background: rgba(75,139,255,.3);
+  border-radius: 3px;
+}
+
+.cat-sec:has(.cat-sec-title.special) .row-outer::-webkit-scrollbar-thumb:hover {
+  background: rgba(75,139,255,.5);
+}
+
+/* ── ROW-INNER: Cards em linha, bem coladinhos ── */
 .cat-sec:has(.cat-sec-title.special) .row-inner {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 24px !important;
-  padding: 24px 24px !important;
-  max-width: 100% !important;
-  width: 100% !important;
+  display: flex !important;
+  gap: 8px !important;
+  padding: 0 8px !important;
+  width: fit-content;
+  flex-wrap: nowrap !important;
   overflow: visible !important;
-  scroll-behavior: auto !important;
-  flex-wrap: wrap !important;
 }
 
-/* ── REMOVER SETAS DE SCROLL ── */
-.cat-sec:has(.cat-sec-title.special) .arr-btn {
-  display: none !important;
+/* ── CARDS: GIGANTES 1:1 ── */
+.cat-sec:has(.cat-sec-title.special) .cc {
+  flex: 0 0 auto !important;
+  width: 340px !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  background: var(--card) !important;
+  border: 0.5px solid var(--brd) !important;
+  scroll-snap-align: start;
 }
 
-/* ── CARDS DE NOTÍCIA: QUADRADO 1:1 ── */
+/* Desktop: cards maiores */
+@media (min-width: 1200px) {
+  .cat-sec:has(.cat-sec-title.special) .cc {
+    width: 380px !important;
+  }
+}
+
+/* Mobile: cards proporcionais */
+@media (max-width: 767px) {
+  .cat-sec:has(.cat-sec-title.special) .cc {
+    width: 280px !important;
+  }
+}
+
+/* ── IMAGEM: Quadrado 1:1 GIGANTE ── */
 .cat-sec:has(.cat-sec-title.special) .cc-img {
   aspect-ratio: 1/1 !important;
   width: 100% !important;
   height: auto !important;
-}
-
-.cat-sec:has(.cat-sec-title.special) .cc {
-  border-radius: 16px !important;
   overflow: hidden !important;
-  transition: all 0.3s ease !important;
-}
-
-.cat-sec:has(.cat-sec-title.special) .cc:hover {
-  transform: translateY(-6px) !important;
-  box-shadow: 0 12px 32px rgba(75, 139, 255, 0.2) !important;
 }
 
 .cat-sec:has(.cat-sec-title.special) .cc-img img {
@@ -805,43 +852,67 @@
   transition: transform 0.3s ease !important;
 }
 
+/* ── HOVER: Zoom suave ── */
+.cat-sec:has(.cat-sec-title.special) .cc:hover {
+  transform: scale(1.05) translateY(-4px) !important;
+  box-shadow: 0 8px 24px rgba(75,139,255,.25) !important;
+  border-color: var(--pri) !important;
+}
+
 .cat-sec:has(.cat-sec-title.special) .cc:hover .cc-img img {
-  transform: scale(1.05) !important;
+  transform: scale(1.08) !important;
 }
 
-/* ══ TABLET: 2 COLUNAS ══ */
-@media (min-width: 768px) and (max-width: 1099px) {
-  .cat-sec:has(.cat-sec-title.special) .row-inner {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 20px !important;
-    padding: 20px 20px !important;
-  }
+/* ── BODY: Legenda ── */
+.cat-sec:has(.cat-sec-title.special) .cc-body {
+  display: block !important;
+  padding: 10px !important;
+  min-height: auto !important;
+  background: rgba(0,0,0,.5) !important;
 }
 
-/* ══ MOBILE: 1 COLUNA GIGANTE ══ */
-@media (max-width: 767px) {
-  .cat-sec:has(.cat-sec-title.special) .row-inner {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-    padding: 16px 14px !important;
-  }
-  
-  .cat-sec:has(.cat-sec-title.special) .cc {
-    min-height: auto !important;
-  }
-  
-  .cat-sec:has(.cat-sec-title.special) .cc-img {
-    aspect-ratio: 1/1 !important;
-  }
+.cat-sec:has(.cat-sec-title.special) .cc-body h4 {
+  display: block !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  margin: 0 0 4px 0 !important;
+  line-height: 1.2 !important;
 }
 
-/* ══ DESKTOP GRANDE: 3 COLUNAS GARANTIDAS ══ */
-@media (min-width: 1400px) {
-  .cat-sec:has(.cat-sec-title.special) .row-inner {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 28px !important;
-    padding: 28px 28px !important;
-  }
+.cat-sec:has(.cat-sec-title.special) .cc-body p {
+  display: none !important;
+}
+
+/* ── REMOVER SETAS ── */
+.cat-sec:has(.cat-sec-title.special) .arr-btn {
+  display: none !important;
+}
+
+/* ── STATS: Bem pequeninhos ── */
+.cat-sec:has(.cat-sec-title.special) .cc-stats {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1px !important;
+  padding: 4px !important;
+  border-top: none !important;
+  background: rgba(0,0,0,.3) !important;
+}
+
+.cat-sec:has(.cat-sec-title.special) .ccs {
+  padding: 2px 1px !important;
+  border: none !important;
+  text-align: center !important;
+}
+
+.cat-sec:has(.cat-sec-title.special) .ccs b {
+  font-size: 0.48rem !important;
+  line-height: 1 !important;
+}
+
+.cat-sec:has(.cat-sec-title.special) .ccs span {
+  font-size: 0.32rem !important;
+  line-height: 1 !important;
 }
 
 /* ── HERO: mais compacto estilo BP ── */
@@ -5691,9 +5762,3 @@ window.MA_Fixes = {
 
 </body>
 </html>
-
-
-
-
-
-  
