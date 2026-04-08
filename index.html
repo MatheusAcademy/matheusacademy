@@ -486,39 +486,75 @@
 .cc-img img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   display: block !important;
+  opacity: 0.97 !important;
+  transition: opacity 0.2s !important;
+}
+.cc:hover .cc-img img {
+  opacity: 1 !important;
 }
 .cc:hover .cc-img {
-  transform: scale(1.04) !important;
+  transform: scale(1.08) !important;
 }
 .cc.touch-active .cc-img {
-  transform: scale(1.04) !important;
+  transform: scale(1.08) !important;
 }
 
-/* ── OCULTAR: stats (módulos/tópicos/horas/quizzes) ── */
-.cc-stats, .ccs {
+/* ── STATS: muito pequenos e discretos ── */
+.cc-stats {
+  display: grid !important;
+  grid-template-columns: repeat(4,1fr) !important;
+  border-top: 1px solid var(--brd) !important;
+  border-bottom: none !important;
+  flex-shrink: 0 !important;
+  background: transparent !important;
+}
+.ccs {
+  text-align: center !important;
+  padding: 3px 1px !important;
+  border-right: 1px solid var(--brd) !important;
+}
+.ccs:last-child {
+  border-right: none !important;
+}
+.ccs b {
+  display: block !important;
+  font-size: 0.52rem !important;
+  font-weight: 700 !important;
+  color: var(--pri) !important;
+  line-height: 1.1 !important;
+}
+.ccs span {
+  font-size: 0.35rem !important;
+  color: var(--txt3) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+}
+
+/* ── CARROSSEL INICIAL: esconder stats ── */
+#continuarSection .cc-stats,
+.row-inner .cc-stats {
   display: none !important;
 }
 
-/* ── OCULTAR: botão Acessar Curso ── */
+/* ── OCULTAR: botão Acessar Curso em seções ── */
 .cc-btn {
   display: none !important;
 }
 
-/* ── BODY DO CARD: apenas título + categoria ── */
+/* ── BODY DO CARD: REMOVIDO COMPLETAMENTE (nome já está na capa) ── */
 .cc-body {
-  padding: 6px 4px 4px 4px !important;
-  min-height: unset !important;
+  padding: 0 !important;
+  min-height: 0 !important;
   background: transparent !important;
+  display: none !important;
 }
 .cc-body h4 {
-  font-size: 0.72rem !important;
-  font-weight: 700 !important;
-  color: #fff !important;
-  line-height: 1.3 !important;
-  margin-bottom: 2px !important;
+  display: none !important;
 }
 .cc-body p {
   display: none !important;
@@ -697,9 +733,173 @@
   margin-bottom: 18px !important;
 }
 
-/* ══ EXTRA: seção "Continuar Assistindo" ══ */
-#continuarSection .section-hdr h3::before {
-  content: '' !important;
+/* ══════════════════════════════════════════════════════════════════════════════
+   NOTÍCIAS DA SEMANA — CARDS MUITO MAIORES (2 POR TELA)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Container de notícias ── */
+.news-container {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 20px !important;
+  padding: 20px 24px !important;
+}
+
+/* ── Cards de notícias GRANDES ── */
+.news-card {
+  background: var(--card) !important;
+  border: 1.5px solid var(--brd) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+.news-card:hover {
+  transform: translateY(-4px) !important;
+  border-color: var(--pri) !important;
+  box-shadow: 0 8px 24px rgba(75, 139, 255, 0.15) !important;
+}
+
+/* ── Imagem da notícia (maior) ── */
+.news-img {
+  width: 100% !important;
+  aspect-ratio: 16/10 !important;
+  background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 3.5rem !important;
+  color: var(--pri) !important;
+  overflow: hidden !important;
+}
+
+.news-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* ── Corpo da notícia (mais espaço) ── */
+.news-body {
+  padding: 20px !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.news-date {
+  font-size: 0.65rem !important;
+  color: var(--pri) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  margin-bottom: 8px !important;
+}
+
+.news-title {
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  line-height: 1.35 !important;
+  margin-bottom: 10px !important;
+  font-family: var(--serif) !important;
+}
+
+.news-desc {
+  font-size: 0.8rem !important;
+  color: var(--txt2) !important;
+  line-height: 1.5 !important;
+  margin-bottom: 14px !important;
+  flex: 1 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+.news-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-top: 12px !important;
+  border-top: 1px solid var(--brd) !important;
+}
+
+.news-author {
+  font-size: 0.7rem !important;
+  color: var(--txt3) !important;
+  font-weight: 600 !important;
+}
+
+.news-read {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 6px 12px !important;
+  border-radius: 6px !important;
+  background: var(--pri3) !important;
+  color: #fff !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+.news-read:hover {
+  background: var(--pri) !important;
+  transform: translateX(2px) !important;
+}
+
+/* ── Tablet: 2 colunas garantidas ── */
+@media (min-width: 768px) {
+  .news-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── Mobile: 1 coluna (ocupa 100%) ── */
+@media (max-width: 767px) {
+  .news-container {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    padding: 16px 14px !important;
+  }
+  
+  .news-card {
+    border-radius: 12px !important;
+  }
+  
+  .news-img {
+    aspect-ratio: 16/9 !important;
+    font-size: 3rem !important;
+  }
+  
+  .news-body {
+    padding: 16px !important;
+  }
+  
+  .news-title {
+    font-size: 1rem !important;
+  }
+  
+  .news-desc {
+    font-size: 0.75rem !important;
+    -webkit-line-clamp: 2 !important;
+  }
+}
+
+/* ── Desktop grande: 2 colunas mantidas ── */
+@media (min-width: 1400px) {
+  .news-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
 }
 
 /* ── HERO: mais compacto estilo BP ── */
