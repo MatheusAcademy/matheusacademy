@@ -201,6 +201,25 @@ var MA_COURSES = [
     color: '#1a5276',
     addedTs: 1775666828425,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/nm.jpg',
+    id: 'nm',
+    name: 'A Nova Ordem Mundial',
+    desc: 'Entenda como o poder global está sendo redistribuído: da bipolaridade à multipolaridade, das guerras comerciais à inteligência artificial.',
+    file: 'a-nova-ordem-mundial.html',
+    cat: 'Geopolítica',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 21,
+    salt: 'NM_HENRY_2026_MASTER',
+    ak: 'nm_auth',
+    storagePrefix: 'nm_',
+    icon: '🎓',
+    color: '#c0392b',
+    addedTs: 1775670017903,
+    active: true
   }
 ];
 var MA_CATS = [
