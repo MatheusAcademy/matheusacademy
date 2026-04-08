@@ -144,26 +144,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    id: 'ie',
-    coverImg: 'assets/capas/ie.png',
-    courseKey: 'ie',
-    name: 'Inteligência Emocional',
-    desc: 'A formação completa em inteligência emocional — do autoconhecimento à maestria.',
-    file: 'curso-inteligencia-emocional.html',
-    cat: 'Desenvolvimento',
-    modules: 20,
-    topics: 140,
-    hours: 35,
-    quizzes: 141,
-    salt: 'IE_HENRY_2026_MASTER',
-    ak: 'ie_auth',
-    storagePrefix: 'ie_',
-    icon: '🚀',
-    color: '#ff6b6b',
-    addedTs: 1775250233247,
-    active: true
-  },
-  {
     coverImg: 'assets/capas/lua.png',
     id: 'lua',
     name: 'Missão à Lua Corrida Global',
