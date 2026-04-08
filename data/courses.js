@@ -372,6 +372,26 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775689223266,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/petroleo.jpg',
+    id: 'petroleo',
+    name: 'Petróleo + Bolsas — Impacto Global',
+    desc: 'Cobertura completa sobre como o petróleo e as bolsas de valores afetam sua vida: das crises históricas de 1973 ao choque de 2026 com a guerra no Irã, passando por como a OPEC controla preços, como as bolsas reagem a guerras, o impacto direto no Brasil (gasolina, inflação, Selic, Ibovespa), ativos de proteção e o que fazer para se proteger em tempos de crise. Do leigo ao expert.',
+    file: 'petroleo-bolsas-impacto-global.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 1,
+    topics: 7,
+    hours: 2,
+    quizzes: 1,
+    salt: 'PETROLEO_BOLSAS_HENRY_2026_MASTER',
+    ak: 'petroleo-bolsas-impacto-global-2026',
+    storagePrefix: 'PB',
+    icon: '📰',
+    color: '#d35400',
+    free: true,
+    addedTs: 1775689346243,
+    active: true
   }
 ];
 var MA_CATS = [
