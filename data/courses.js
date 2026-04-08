@@ -352,6 +352,26 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775686460164,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/guerraru.jpg',
+    id: 'guerraru',
+    name: 'Guerra Rússia–Ucrânia — O Maior Conflito na Europa desde 1945',
+    desc: 'Cobertura completa da guerra entre Rússia e Ucrânia: das origens históricas na Revolução Maidan e anexação da Crimeia em 2014, à invasão total de 2022, passando por quatro anos de combates, quase 2 milhões de baixas combinadas, tropas norte-coreanas, drones iranianos, negociações fracassadas, e o impasse atual em abril de 2026. Dados, fontes, números reais e análises para entender cada detalhe.',
+    file: 'guerra-russia-ucrania.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 1,
+    topics: 4,
+    hours: 1,
+    quizzes: 3,
+    salt: 'RUSSIA_UCRANIA_HENRY_2026_MASTER',
+    ak: 'guerra-russia-ucrania-2026',
+    storagePrefix: 'RU',
+    icon: '📰',
+    color: '#2c3e50',
+    free: true,
+    addedTs: 1775689223266,
+    active: true
   }
 ];
 var MA_CATS = [
