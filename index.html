@@ -808,11 +808,11 @@
   overflow: visible !important;
 }
 
-/* ── CARDS: GRANDES MAS BALANCEADOS ── */
+/* ── CARDS: 30% MENORES + SEM ZOOM NO HOVER ── */
 .cat-sec:has(.cat-sec-title.special) .cc {
   flex: 0 0 auto !important;
-  width: calc(100vw - 120px) !important;
-  max-width: 85vw !important;
+  width: calc((100vw - 120px) * 0.7) !important;
+  max-width: 60vw !important;
   height: auto !important;
   border-radius: 12px !important;
   overflow: hidden !important;
@@ -823,35 +823,35 @@
   scroll-snap-align: start;
 }
 
-/* Desktop GRANDE: 80% da tela */
+/* Desktop GRANDE: 30% menor */
 @media (min-width: 1600px) {
   .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc(100vw - 140px) !important;
-    max-width: 80vw !important;
+    width: calc((100vw - 140px) * 0.7) !important;
+    max-width: 56vw !important;
   }
 }
 
-/* Desktop: 80% da tela */
+/* Desktop: 30% menor */
 @media (min-width: 1200px) and (max-width: 1599px) {
   .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc(100vw - 120px) !important;
-    max-width: 80vw !important;
+    width: calc((100vw - 120px) * 0.7) !important;
+    max-width: 56vw !important;
   }
 }
 
-/* Tablet: 85% da tela */
+/* Tablet: 30% menor */
 @media (min-width: 768px) and (max-width: 1199px) {
   .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc(100vw - 60px) !important;
-    max-width: 85vw !important;
+    width: calc((100vw - 60px) * 0.7) !important;
+    max-width: 60vw !important;
   }
 }
 
-/* Mobile: 92% da tela (mantém ok!) */
+/* Mobile: 30% menor (mantém ok!) */
 @media (max-width: 767px) {
   .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc(100vw - 28px) !important;
-    max-width: 92vw !important;
+    width: calc((100vw - 28px) * 0.7) !important;
+    max-width: 65vw !important;
   }
 }
 
@@ -871,15 +871,15 @@
   transition: transform 0.3s ease !important;
 }
 
-/* ── HOVER: Zoom suave ── */
+/* ── HOVER: SEM EXPANSÃO (apenas sombra) ── */
 .cat-sec:has(.cat-sec-title.special) .cc:hover {
-  transform: scale(1.05) translateY(-4px) !important;
-  box-shadow: 0 8px 24px rgba(75,139,255,.25) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(75,139,255,.2) !important;
   border-color: var(--pri) !important;
 }
 
 .cat-sec:has(.cat-sec-title.special) .cc:hover .cc-img img {
-  transform: scale(1.08) !important;
+  transform: none !important;
 }
 
 /* ── BODY: Legenda ── */
@@ -1969,6 +1969,45 @@ function scrollRow(id, dir) {
   el.scrollBy({left: dir * step, behavior: 'smooth'});
 }
 
+// ═══════════════════════════════ AUTO SCROLL NOTÍCIAS ═════════════════════════
+function setupAutoScrollNews() {
+  var newsSection = document.querySelector('.cat-sec:has(.cat-sec-title.special)');
+  if (!newsSection) return;
+  
+  var newsOuter = newsSection.querySelector('.row-outer');
+  if (!newsOuter) return;
+  
+  var card = newsSection.querySelector('.cc');
+  if (!card) return;
+  
+  // Scroll automático a cada 5 segundos
+  setInterval(function() {
+    var cardWidth = card.offsetWidth;
+    var gap = 20; // gap entre cards
+    var scrollAmount = cardWidth + gap;
+    
+    newsOuter.scrollBy({
+      left: scrollAmount,
+      behavior: 'smooth'
+    });
+    
+    // Volta ao início quando chegar ao final (carrossel infinito)
+    if (newsOuter.scrollLeft + newsOuter.clientWidth >= newsOuter.scrollWidth - 100) {
+      setTimeout(function() {
+        newsOuter.scrollLeft = 0;
+      }, 5000);
+    }
+  }, 5000);
+  
+  // Pausar auto-scroll ao passar mouse (opcional)
+  newsOuter.addEventListener('mouseenter', function() {
+    this.style.animationPlayState = 'paused';
+  });
+  newsOuter.addEventListener('mouseleave', function() {
+    this.style.animationPlayState = 'running';
+  });
+}
+
 // ═══════════════════════════════ SETUP EVENT LISTENERS ═══════════════════════════════
 function setupEvents() {
   // Logo click
@@ -2481,6 +2520,9 @@ document.addEventListener('DOMContentLoaded', function() {
   upUI();
   setTimeout(addEbookTouchSwipe, 300);
   updatePointsBadge();
+  
+  // ── Auto-scroll das notícias ──
+  setTimeout(setupAutoScrollNews, 500);
 
   // ── Firebase: verificar sessão ativa ao carregar a página ──
   document.addEventListener('maFirebaseReady', function() {
