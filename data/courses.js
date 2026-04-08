@@ -201,25 +201,6 @@ var MA_COURSES = [
     color: '#b45309',
     addedTs: 1775662812723,
     active: true
-  },
-  {
-    coverImg: 'assets/capas/gads.jpg',
-    id: 'gads',
-    name: 'A Geopolítica da América do Sul',
-    desc: '',
-    file: 'geopolitica-america-do-sul-completo.html',
-    cat: 'Negócios',
-    modules: 1,
-    topics: 6,
-    hours: 1,
-    quizzes: 1,
-    salt: 'GADS_HENRY_2026_MASTER',
-    ak: 'gads_auth',
-    storagePrefix: 'gads_',
-    icon: '🏛️',
-    color: '#3b82f6',
-    addedTs: 1775662868955,
-    active: true
   }
 ];
 var MA_CATS = [
