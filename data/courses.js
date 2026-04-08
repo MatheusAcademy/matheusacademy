@@ -69,7 +69,7 @@ var MA_COURSES = [
     name: 'Bitcoin — A Moeda que Mudou a História do Mundo',
     desc: '',
     file: 'bitcoin-curso.html',
-    cat: 'Negócios',
+    cat: 'Negócios / Empresas',
     modules: 35,
     topics: 210,
     hours: 30,
@@ -89,7 +89,7 @@ var MA_COURSES = [
     name: 'Dominando o Tráfego Pago - Completo',
     desc: 'O Dominando o Tráfego Pago é a especialização mais completa do mercado brasileiro',
     file: 'curso-trafego-pago.html',
-    cat: 'Negócios',
+    cat: 'Negócios / Empresas',
     modules: 217,
     topics: 1519,
     hours: 380,
@@ -148,7 +148,7 @@ var MA_COURSES = [
     coverImg: 'assets/capas/ie.png',
     courseKey: 'ie',
     name: 'Inteligência Emocional',
-    desc: 'A formação completa em inteligência emocional — do autoconhecimento à maestria. Aprenda a dominar suas emoções, melhorar relacionamentos, liderar com impacto e viver com mais equilíbrio e propósito.',
+    desc: 'A formação completa em inteligência emocional — do autoconhecimento à maestria.',
     file: 'curso-inteligencia-emocional.html',
     cat: 'Desenvolvimento',
     modules: 20,
@@ -167,7 +167,7 @@ var MA_COURSES = [
     coverImg: 'assets/capas/lua.png',
     id: 'lua',
     name: 'Missão à Lua Corrida Global',
-    desc: 'Artemis II coloca grandes potências em nova disputa pelo domínio espacial — e o que está em jogo vai muito além da exploração científica. Entenda tudo sobre a missão histórica lançada em 1º de abril de 2026.',
+    desc: 'Artemis II coloca grandes potências em nova disputa pelo domínio espacial.',
     file: 'noticia-artemis-ii-v2.html',
     cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
     modules: 1,
@@ -187,7 +187,7 @@ var MA_COURSES = [
     coverImg: 'assets/capas/gm.jpg',
     id: 'gm',
     name: 'Geopolítica Mundial',
-    desc: 'Domine a análise geopolítica global: das teorias clássicas aos conflitos contemporâneos e cenários futuros.',
+    desc: 'Domine a análise geopolítica global: das teorias clássicas aos conflitos contemporâneos.',
     file: 'geopolitica-mundial.html',
     cat: 'Geopolítica',
     modules: 7,
@@ -201,43 +201,90 @@ var MA_COURSES = [
     color: '#1a5276',
     addedTs: 1775666828425,
     active: true
-  },
-  {
-    coverImg: 'assets/capas/anova.jpg',
-    id: 'anova',
-    name: 'A Nova Ordem Mundial',
-    desc: 'Entenda como o poder global está sendo redistribuído: da bipolaridade à multipolaridade, das guerras comerciais à inteligência artificial.',
-    file: 'a-nova-ordem-mundial.html',
-    cat: 'Negócios',
-    modules: 7,
-    topics: 28,
-    hours: 4,
-    quizzes: 21,
-    salt: 'NM_HENRY_2026_MASTER',
-    ak: 'nm_auth',
-    storagePrefix: 'nm_',
-    icon: '🎓',
-    color: '#c0392b',
-    addedTs: 1775672263990,
-    active: true
   }
 ];
+
+/* ══════════════════════════════════════════════════════════════
+   CATEGORIAS — 25 categorias ordenadas por relevância
+   Mais importantes primeiro · Ebooks SEMPRE no final
+   Cada categoria tem 5 cursos "Em Breve" em scroll
+   ══════════════════════════════════════════════════════════════ */
 var MA_CATS = [
-  {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?'], isSpecial:true},
-  {name:'Negócios', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:[]},
-  {name:'Geopolítica', sub:'Entenda o mundo como ele realmente funciona, além das notícias', courses:[], soon:['Relações Internacionais']},
-  {name:'PNL', sub:'Domine a arte de comunicar, persuadir e influenciar pessoas', courses:[], soon:['Técnicas de Persuasão','Oratória e Comunicação Assertiva','PNL — Programação Neurolinguística']},
-  {name:'Desenvolvimento', sub:'Transforme sua mentalidade e atinja o próximo nível', courses:[], soon:['Inteligência Emocional na Prática','Produtividade e Gestão do Tempo','Liderança']},
-  {name:'Tecnologia', sub:'A tecnologia chegou para ficar — aprenda a lucrar com ela', courses:[], soon:['Inteligência Artificial na Prática','Programação para Iniciantes','Automação Digital']},
-  {name:'Psicologia', sub:'Compreenda o comportamento humano e use isso a seu favor', courses:[], soon:['Psicologia Comportamental','Neurociência e Comportamento','Psicologia das Relações']},
-  {name:'História', sub:'Quem não conhece a história está condenado a repeti-la', courses:[], soon:['História do Brasil Completa','Grandes Civilizações Antigas','História Contemporânea']},
-  {name:'Filosofia', sub:'Pense melhor, decida melhor, viva melhor', courses:[], soon:['Filosofia para a Vida Real','Grandes Filósofos da História','Ética e Pensamento Crítico']},
-  {name:'Inglês', sub:'O idioma que abre portas no mundo inteiro', courses:[], soon:['Inglês do Zero ao Fluente','Business English','Inglês para Viagens']},
-  {name:'Bíblia / Teologia', sub:'Aprofunde sua fé com estudo sério e contextualizado', courses:[], soon:['Estudo Bíblico Completo','Teologia Sistemática','Panorama do Antigo Testamento']},
-  {name:'Biografias', sub:'Aprenda com quem construiu história e mudou o mundo', courses:[], soon:['Líderes que Mudaram o Mundo','Empreendedores Visionários','Gênios da Ciência']},
-  {name:'Engenharia', sub:'Conhecimento técnico de alta precisão e aplicação real', courses:[], soon:['Instalações Hidráulicas e Gás','Fundamentos de Engenharia Civil','Projetos Estruturais']},
-  {name:'Mecânica', sub:'Do básico ao avançado em manutenção e diagnóstico automotivo', courses:[], soon:['Mecânica Básica Automotiva','Diagnóstico e Manutenção','Elétrica Automotiva']},
-  {name:'📚 Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x Irã','Devocional 2026','Estamos Próximos do Fim?'], isEbook:true}
+
+  /* ═══ 1. NOTÍCIAS (sempre primeiro) ═══ */
+  {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?','Crise Hídrica no Brasil 2026','Guerra Rússia x Ucrânia: O Desfecho','Novo Acordo Comercial BRICS','Colapso do Dólar: Mito ou Realidade?'], isSpecial:true},
+
+  /* ═══ 2. NEGÓCIOS / EMPRESAS ═══ */
+  {name:'Negócios / Empresas', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:['Empreendedorismo do Zero','Modelo de Negócio Digital','Gestão Financeira Empresarial','Franquias: Como Escolher a Sua','Negociação de Alto Impacto']},
+
+  /* ═══ 3. GEOPOLÍTICA ═══ */
+  {name:'Geopolítica', sub:'Entenda o mundo como ele realmente funciona, além das notícias', courses:[], soon:['Relações Internacionais','Geopolítica da América do Sul','Geopolítica do Oriente Médio','Nova Ordem Mundial','Guerra Econômica: EUA x China']},
+
+  /* ═══ 4. CONSPIRAÇÕES & MISTÉRIOS ═══ */
+  {name:'Conspirações & Mistérios', sub:'O que não querem que você saiba — investigue, questione, descubra', courses:[], soon:['Illuminati e Sociedades Secretas','Teorias da Conspiração: Verdade ou Mentira?','MKUltra e Controle Mental','Área 51 e Encobrimentos Governamentais','O Clube Bilderberg e a Elite Global']},
+
+  /* ═══ 5. FINANÇAS & ECONOMIA ═══ */
+  {name:'Finanças & Economia', sub:'Domine seu dinheiro antes que ele domine você', courses:[], soon:['Educação Financeira do Zero','Investimentos para Iniciantes','Criptomoedas Além do Bitcoin','Economia Brasileira Descomplicada','Bolsa de Valores na Prática']},
+
+  /* ═══ 6. POLÍTICA BRASILEIRA ═══ */
+  {name:'Política Brasileira', sub:'Entenda o jogo político que decide o futuro do país', courses:[], soon:['Como Funciona a Política no Brasil','Eleições 2026: Guia Completo','Corrupção no Brasil: História e Mecanismos','Reformas que Mudaram o Brasil','O Poder das Fake News na Política']},
+
+  /* ═══ 7. PNL ═══ */
+  {name:'PNL', sub:'Domine a arte de comunicar, persuadir e influenciar pessoas', courses:[], soon:['Oratória e Comunicação Assertiva','PNL — Programação Neurolinguística','Hipnose Conversacional','Linguagem Corporal Avançada','Influência e Poder Pessoal']},
+
+  /* ═══ 8. MARKETING & VENDAS ═══ */
+  {name:'Marketing & Vendas', sub:'Aprenda a vender qualquer coisa para qualquer pessoa', courses:[], soon:['Marketing Digital do Zero','Copywriting que Converte','Funil de Vendas na Prática','Instagram para Negócios','TikTok para Negócios']},
+
+  /* ═══ 9. DESENVOLVIMENTO ═══ */
+  {name:'Desenvolvimento', sub:'Transforme sua mentalidade e atinja o próximo nível', courses:[], soon:['Produtividade e Gestão do Tempo','Liderança na Prática','Mentalidade de Sucesso','Disciplina e Hábitos de Alto Desempenho','Autoconhecimento Profundo']},
+
+  /* ═══ 10. PSICOLOGIA ═══ */
+  {name:'Psicologia', sub:'Compreenda o comportamento humano e use isso a seu favor', courses:[], soon:['Psicologia Comportamental','Neurociência e Comportamento','Psicologia das Relações','Psicologia da Persuasão','Perfis Comportamentais: DISC e MBTI']},
+
+  /* ═══ 11. DIREITO & CIDADANIA ═══ */
+  {name:'Direito & Cidadania', sub:'Conheça seus direitos e nunca mais seja enganado', courses:[], soon:['Direitos do Consumidor','Direito Trabalhista na Prática','Como Funciona o Judiciário Brasileiro','Constituição Federal Descomplicada','Direito Penal para Leigos']},
+
+  /* ═══ 12. FILOSOFIA ═══ */
+  {name:'Filosofia', sub:'Pense melhor, decida melhor, viva melhor', courses:[], soon:['Filosofia para a Vida Real','Grandes Filósofos da História','Ética e Pensamento Crítico','Estoicismo na Prática','Filosofia Política: De Platão a Marx']},
+
+  /* ═══ 13. HISTÓRIA ═══ */
+  {name:'História', sub:'Quem não conhece a história está condenado a repeti-la', courses:[], soon:['História do Brasil Completa','Grandes Civilizações Antigas','História Contemporânea','Guerras que Mudaram o Mundo','A Era dos Impérios']},
+
+  /* ═══ 14. BÍBLIA / TEOLOGIA ═══ */
+  {name:'Bíblia / Teologia', sub:'Aprofunde sua fé com estudo sério e contextualizado', courses:[], soon:['Estudo Bíblico Completo','Teologia Sistemática','Panorama do Antigo Testamento','Apocalipse Descomplicado','Arqueologia Bíblica']},
+
+  /* ═══ 15. BIOGRAFIAS ═══ */
+  {name:'Biografias', sub:'Aprenda com quem construiu história e mudou o mundo', courses:[], soon:['Líderes que Mudaram o Mundo','Empreendedores Visionários','Gênios da Ciência','Ditadores: Como Chegaram ao Poder','Mulheres que Fizeram História']},
+
+  /* ═══ 16. FAMÍLIA & RELACIONAMENTOS ═══ */
+  {name:'Família & Relacionamentos', sub:'Construa relações sólidas que duram a vida toda', courses:[], soon:['Casamento Blindado','Educação de Filhos com Inteligência','Linguagens do Amor na Prática','Relacionamentos Tóxicos: Como Sair','Comunicação em Casal']},
+
+  /* ═══ 17. SEGURANÇA & SOBREVIVÊNCIA ═══ */
+  {name:'Segurança & Sobrevivência', sub:'Esteja preparado para qualquer cenário — do digital ao real', courses:[], soon:['Sobrevivencialismo Urbano','Segurança Digital e Privacidade','Defesa Pessoal Estratégica','Preparação para Crises','Primeiros Socorros Essenciais']},
+
+  /* ═══ 18. ESPORTES & ALTA PERFORMANCE ═══ */
+  {name:'Esportes & Alta Performance', sub:'Mentalidade de campeão dentro e fora do campo', courses:[], soon:['Psicologia Esportiva','Mentalidade de Alta Performance','Grandes Lendas do Esporte','Treinamento Físico Inteligente','Nutrição Esportiva']},
+
+  /* ═══ 19. TECNOLOGIA ═══ */
+  {name:'Tecnologia', sub:'A tecnologia chegou para ficar — aprenda a lucrar com ela', courses:[], soon:['Inteligência Artificial na Prática','Programação para Iniciantes','Automação Digital','Excel do Zero ao Avançado','Robótica e o Futuro do Trabalho']},
+
+  /* ═══ 20. SAÚDE & CIÊNCIA ═══ */
+  {name:'Saúde & Ciência', sub:'Seu corpo é seu maior patrimônio — cuide dele com conhecimento', courses:[], soon:['Nutrição e Alimentação Inteligente','Saúde Mental na Prática','Medicina Preventiva','Neurociência do Dia a Dia','Longevidade: Viver Mais e Melhor']},
+
+  /* ═══ 21. INGLÊS ═══ */
+  {name:'Inglês', sub:'O idioma que abre portas no mundo inteiro', courses:[], soon:['Inglês do Zero ao Fluente','Business English','Inglês para Viagens','Pronúncia Perfeita','Inglês com Filmes e Séries']},
+
+  /* ═══ 22. ENGENHARIA ═══ */
+  {name:'Engenharia', sub:'Conhecimento técnico de alta precisão e aplicação real', courses:[], soon:['Instalações Hidráulicas e Gás','Fundamentos de Engenharia Civil','Projetos Estruturais','Elétrica Predial na Prática','Laudo Técnico e Normas']},
+
+  /* ═══ 23. MECÂNICA ═══ */
+  {name:'Mecânica', sub:'Do básico ao avançado em manutenção e diagnóstico automotivo', courses:[], soon:['Mecânica Básica Automotiva','Diagnóstico e Manutenção','Elétrica Automotiva','Injeção Eletrônica','Mecânica de Motos']},
+
+  /* ═══ 24. MEIO AMBIENTE & SUSTENTABILIDADE ═══ */
+  {name:'Meio Ambiente & Sustentabilidade', sub:'O planeta precisa de você — entenda os desafios e as soluções', courses:[], soon:['Mudanças Climáticas Descomplicadas','Energias Renováveis','Sustentabilidade nos Negócios','Amazônia: O Pulmão do Mundo','Água: O Recurso Mais Valioso']},
+
+  /* ═══ 25. EBOOKS (sempre por último) ═══ */
+  {name:'Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x Irã','Devocional 2026','Estamos Próximos do Fim?','Manual do Investidor Iniciante'], isEbook:true}
 ];
 
 var MA_TRAILS = [
