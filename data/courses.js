@@ -182,25 +182,6 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775501691536,
     active: true
-  },
-  {
-    coverImg: 'assets/capas/gm.jpg',
-    id: 'gm',
-    name: 'A Geopolítica do Oriente Médio',
-    desc: 'Um curso denso e aplicado sobre as forças históricas, energéticas, militares e diplomáticas que moldam o Oriente Médio contemporâneo.',
-    file: 'geopolitica_oriente_medio_padrao_matheus_academy.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 7,
-    topics: 28,
-    hours: 12,
-    quizzes: 1,
-    salt: 'GM_HENRY_2026_MASTER',
-    ak: 'gm_auth',
-    storagePrefix: 'gm_',
-    icon: '📰',
-    color: '#b45309',
-    addedTs: 1775662812723,
-    active: true
   }
 ];
 var MA_CATS = [
