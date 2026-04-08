@@ -147,7 +147,7 @@ body {
 .hero-logo{width:72px;height:72px;border-radius:16px;margin:0 auto 16px}.hero h2{font-family:var(--serif);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:6px}.hero h2 span{color:var(--pri)}.hero .sub{font-size:.88rem;color:var(--txt2);max-width:480px;margin:0 auto 16px;line-height:1.6}
 .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}.tag{padding:5px 14px;border-radius:20px;font-size:.62rem;font-weight:600;border:1px solid var(--brd2);color:var(--txt2);background:var(--bg2)}
 /* EBOOK CAROUSEL */
-.ebook-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);position:relative;padding:22px 58px;touch-action:pan-y}
+.ebook-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);position:relative;padding:22px 40px;touch-action:pan-y}
 .ebook-overflow{overflow:hidden}
 .ebook-track{display:flex;gap:16px;padding:4px 2px;will-change:transform;align-items:flex-start}
 .ebook-page{display:contents}
@@ -156,8 +156,8 @@ body {
    EBOOK CARD - SEM EFEITO ELÉTRICO, SÓ BALÃO INFLANDO
    ══════════════════════════════════════════════════════════════════════════════ */
 .ebook-card{
-  flex:0 0 calc(25% - 12px);
-  max-width:calc(25% - 12px);
+  flex:0 0 calc(28% - 12px);
+  max-width:calc(28% - 12px);
   cursor:pointer;
   transition:transform .25s ease-out;
 }
@@ -314,13 +314,13 @@ body {
 .ma-logo-glowing{animation:ma-logo-glow .8s ease-in-out!important}
 .ma-logo-ripple{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(91,127,255,.4) 0%,transparent 70%);transform:scale(0);animation:ma-ripple-fx .6s ease-out forwards;pointer-events:none}
 @keyframes ma-ripple-fx{to{transform:scale(4);opacity:0}}
-@media(max-width:767px){.ebook-card{flex:0 0 calc(50% - 8px);max-width:calc(50% - 8px)}.ebook-section{padding:16px 46px}}
+@media(max-width:767px){.ebook-card{flex:0 0 calc(45% - 8px);max-width:calc(45% - 8px)}.ebook-section{padding:16px 28px}}
 @media(max-width:480px){
-  .ebook-card{flex:0 0 calc(50% - 5px);max-width:calc(50% - 5px)}
-  .ebook-section{padding:12px 38px}
+  .ebook-card{flex:0 0 calc(48% - 8px);max-width:calc(48% - 8px)}
+  .ebook-section{padding:14px 18px}
   .nc-title{font-size:.62rem!important;letter-spacing:0}
-  .p-name-bar span{font-size:.52rem!important}
-  .ebook-btn{font-size:.6rem;padding:7px}
+  .p-name-bar span{font-size:.54rem!important}
+  .ebook-btn{font-size:.62rem;padding:8px}
   .p-badge{font-size:.42rem;padding:2px 6px}
 }
 /* ARROW BUTTONS — usadas em todas as roletas */
@@ -1693,7 +1693,46 @@ function startContinuousScroll() {
 }
 
 function buildEbooks() {
-  var items = COURSES.slice();
+  // NOVA LÓGICA: Prioridade de cursos - Notícias > Geopolítica > Empresas > Conspiração/Finanças > Todos os outros
+  var priorityOrder = ['gp_', 'ni_', 'nl_', 'tp_', 'tb_', 'ahistori', 'storytel'];
+  var items = [];
+  var categorizedCourses = {};
+  
+  // Inicializar categorias
+  priorityOrder.forEach(function(cat) { categorizedCourses[cat] = []; });
+  categorizedCourses['outros'] = [];
+  
+  // Separar cursos por categoria
+  COURSES.forEach(function(course) {
+    var courseId = (course.file || course.id || '').toLowerCase();
+    var found = false;
+    
+    for (var j = 0; j < priorityOrder.length; j++) {
+      if (courseId.indexOf(priorityOrder[j]) === 0 || courseId === priorityOrder[j]) {
+        categorizedCourses[priorityOrder[j]].push(course);
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      categorizedCourses['outros'].push(course);
+    }
+  });
+  
+  // Montar array na ordem de prioridade (mais novos primeiro em cada categoria)
+  priorityOrder.forEach(function(cat) {
+    if (categorizedCourses[cat].length > 0) {
+      categorizedCourses[cat].sort(function(a, b) { return (b.addedTs || 0) - (a.addedTs || 0); });
+      items = items.concat(categorizedCourses[cat]);
+    }
+  });
+  
+  // Adicionar "outros" no final (também ordenados por data)
+  if (categorizedCourses['outros'].length > 0) {
+    categorizedCourses['outros'].sort(function(a, b) { return (b.addedTs || 0) - (a.addedTs || 0); });
+    items = items.concat(categorizedCourses['outros']);
+  }
+  
   var GBG = [
     'linear-gradient(160deg,#1a0533,#3b0764,#1e1b4b)',
     'linear-gradient(160deg,#0c2340,#1e3a5f,#0a192f)',
