@@ -808,11 +808,11 @@
   overflow: visible !important;
 }
 
-/* ── CARDS: 30% MENORES + SEM ZOOM NO HOVER ── */
+/* ── CARDS: 40% MENORES (total 70% * 0.6 = 42% do original) ── */
 .cat-sec:has(.cat-sec-title.special) .cc {
   flex: 0 0 auto !important;
-  width: calc((100vw - 120px) * 0.7) !important;
-  max-width: 60vw !important;
+  width: calc((100vw - 120px) * 0.42) !important;
+  max-width: 40vw !important;
   height: auto !important;
   border-radius: 12px !important;
   overflow: hidden !important;
@@ -823,35 +823,35 @@
   scroll-snap-align: start;
 }
 
-/* Desktop GRANDE: 30% menor */
+/* Desktop GRANDE: 40% menor */
 @media (min-width: 1600px) {
   .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc((100vw - 140px) * 0.7) !important;
-    max-width: 56vw !important;
+    width: calc((100vw - 140px) * 0.42) !important;
+    max-width: 38vw !important;
   }
 }
 
-/* Desktop: 30% menor */
+/* Desktop: 40% menor */
 @media (min-width: 1200px) and (max-width: 1599px) {
   .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc((100vw - 120px) * 0.7) !important;
-    max-width: 56vw !important;
+    width: calc((100vw - 120px) * 0.42) !important;
+    max-width: 38vw !important;
   }
 }
 
-/* Tablet: 30% menor */
+/* Tablet: 40% menor */
 @media (min-width: 768px) and (max-width: 1199px) {
   .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc((100vw - 60px) * 0.7) !important;
-    max-width: 60vw !important;
+    width: calc((100vw - 60px) * 0.42) !important;
+    max-width: 40vw !important;
   }
 }
 
-/* Mobile: 30% menor (mantém ok!) */
+/* Mobile: 40% menor (mantém ok!) */
 @media (max-width: 767px) {
   .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc((100vw - 28px) * 0.7) !important;
-    max-width: 65vw !important;
+    width: calc((100vw - 28px) * 0.42) !important;
+    max-width: 45vw !important;
   }
 }
 
@@ -903,9 +903,41 @@
   display: none !important;
 }
 
-/* ── REMOVER SETAS ── */
+/* ── SETAS: MOSTRAR E ESTILIZAR PARA NOTÍCIAS ── */
 .cat-sec:has(.cat-sec-title.special) .arr-btn {
-  display: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  background: rgba(75, 139, 255, 0.15) !important;
+  border: 1px solid rgba(75, 139, 255, 0.3) !important;
+  border-radius: 50% !important;
+  color: var(--pri) !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  opacity: 0.7 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  z-index: 10 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.cat-sec:has(.cat-sec-title.special) .arr-btn:hover {
+  background: rgba(75, 139, 255, 0.3) !important;
+  opacity: 1 !important;
+  transform: translateY(-50%) scale(1.1) !important;
+}
+
+.cat-sec:has(.cat-sec-title.special) .arr-btn.ap {
+  left: 10px !important;
+}
+
+.cat-sec:has(.cat-sec-title.special) .arr-btn.an {
+  right: 10px !important;
 }
 
 /* ── STATS: Bem pequeninhos ── */
@@ -1980,31 +2012,50 @@ function setupAutoScrollNews() {
   var card = newsSection.querySelector('.cc');
   if (!card) return;
   
-  // Scroll automático a cada 5 segundos
-  setInterval(function() {
-    var cardWidth = card.offsetWidth;
-    var gap = 20; // gap entre cards
-    var scrollAmount = cardWidth + gap;
-    
-    newsOuter.scrollBy({
-      left: scrollAmount,
-      behavior: 'smooth'
-    });
-    
-    // Volta ao início quando chegar ao final (carrossel infinito)
-    if (newsOuter.scrollLeft + newsOuter.clientWidth >= newsOuter.scrollWidth - 100) {
-      setTimeout(function() {
-        newsOuter.scrollLeft = 0;
-      }, 5000);
-    }
-  }, 5000);
+  var autoScrollInterval;
+  var isPaused = false;
   
-  // Pausar auto-scroll ao passar mouse (opcional)
+  function startAutoScroll() {
+    autoScrollInterval = setInterval(function() {
+      if (isPaused) return;
+      
+      var cardWidth = card.offsetWidth;
+      var gap = 20;
+      var scrollAmount = cardWidth + gap;
+      
+      newsOuter.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+      
+      // Volta ao início quando chegar ao final
+      if (newsOuter.scrollLeft + newsOuter.clientWidth >= newsOuter.scrollWidth - 50) {
+        setTimeout(function() {
+          newsOuter.scrollLeft = 0;
+        }, 1000);
+      }
+    }, 5000);
+  }
+  
+  // Pausar ao passar mouse
   newsOuter.addEventListener('mouseenter', function() {
-    this.style.animationPlayState = 'paused';
+    isPaused = true;
   });
+  
+  // Continuar ao sair o mouse
   newsOuter.addEventListener('mouseleave', function() {
-    this.style.animationPlayState = 'running';
+    isPaused = false;
+  });
+  
+  // Iniciar scroll automático
+  startAutoScroll();
+}
+
+// ── Normalizar velocidade de todos os carrosséis ──
+function normalizeCarouselSpeed() {
+  document.querySelectorAll('.row-outer').forEach(function(outer) {
+    outer.style.scrollBehavior = 'smooth';
+    outer.style.scrollSnapType = 'x mandatory';
   });
 }
 
@@ -2523,6 +2574,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // ── Auto-scroll das notícias ──
   setTimeout(setupAutoScrollNews, 500);
+  
+  // ── Normalizar velocidade de todos carrosséis ──
+  setTimeout(normalizeCarouselSpeed, 300);
 
   // ── Firebase: verificar sessão ativa ao carregar a página ──
   document.addEventListener('maFirebaseReady', function() {
