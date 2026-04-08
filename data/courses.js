@@ -217,6 +217,25 @@ var MA_COURSES = [
     color: '#2d9f4e',
     addedTs: 1775678307178,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mdd.jpg',
+    id: 'mdd',
+    name: 'Marketing Digital do Zero',
+    desc: 'Domine marketing digital do básico ao avançado: tráfego, SEO, copywriting, funis, monetização e escala de negócios digitais.',
+    file: 'marketing-digital-do-zero.html',
+    cat: 'Marketing & Vendas',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 21,
+    salt: 'MD_HENRY_2026_MASTER',
+    ak: 'md_auth',
+    storagePrefix: 'md_',
+    icon: '🎓',
+    color: '#ff6b00',
+    addedTs: 1775683059446,
+    active: true
   }
 ];
 var MA_CATS = [
