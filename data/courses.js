@@ -274,6 +274,25 @@ var MA_COURSES = [
     color: '#e63946',
     addedTs: 1775683229901,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gf.jpg',
+    id: 'gf',
+    name: 'Grandes Filósofos da História',
+    desc: 'Conheça a fundo os maiores filósofos da história: suas vidas, ideias, legados e como transformaram o mundo — dos pré-socráticos aos pensadores contemporâneos.',
+    file: 'grandes-filosofos-da-historia.html',
+    cat: 'Filosofia',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 1,
+    salt: 'GF_HENRY_2026_MASTER',
+    ak: 'gf_auth',
+    storagePrefix: 'gf_',
+    icon: '📜',
+    color: '#1a5276',
+    addedTs: 1775683486453,
+    active: true
   }
 ];
 var MA_CATS = [
