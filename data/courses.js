@@ -293,6 +293,25 @@ var MA_COURSES = [
     color: '#1a5276',
     addedTs: 1775683486453,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/em.jpg',
+    id: 'em',
+    name: 'Empreendedorismo do Zero',
+    desc: 'Saia do zero e construa seu negócio: mentalidade, validação, vendas, finanças, marketing e escala — tudo na prática, como conversa de amigo.',
+    file: 'empreendedorismo-do-zero.html',
+    cat: 'Negócios / Empresas',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 21,
+    salt: 'EM_HENRY_2026_MASTER',
+    ak: 'em_auth',
+    storagePrefix: 'em_',
+    icon: '🎓',
+    color: '#d4a017',
+    addedTs: 1775685559718,
+    active: true
   }
 ];
 var MA_CATS = [
