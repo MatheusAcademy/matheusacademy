@@ -312,6 +312,26 @@ var MA_COURSES = [
     color: '#d4a017',
     addedTs: 1775685559718,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/orientem.jpg',
+    id: 'orientem',
+    name: 'Oriente Médio — Eixo Irã–EUA–Israel',
+    desc: 'Cobertura completa do conflito no Oriente Médio em 2026: origens históricas do eixo Irã–EUA–Israel, a escalada que levou à guerra, a Operação Roaring Lion, retaliações iranianas, cessar-fogo, negociações e o impacto global. Tudo o que você precisa saber para entender cada detalhe dessa crise geopolítica.',
+    file: 'oriente-medio-ira-eua-israel.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 1,
+    topics: 4,
+    hours: 3,
+    quizzes: 1,
+    salt: 'ORIENTE_MEDIO_HENRY_2026_MASTER',
+    ak: 'om-eixo-ira-eua-israel-2026',
+    storagePrefix: 'OM',
+    icon: '📰',
+    color: '#c0392b',
+    free: true,
+    addedTs: 1775685659412,
+    active: true
   }
 ];
 var MA_CATS = [
