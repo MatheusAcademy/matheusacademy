@@ -255,6 +255,25 @@ var MA_COURSES = [
     color: '#7b2d8e',
     addedTs: 1775683131311,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/oco.jpg',
+    id: 'oco',
+    name: 'Oratória e Comunicação Assertiva',
+    desc: 'Domine técnicas de oratória, persuasão e comunicação assertiva para relacionamentos, negócios, palestras e liderança.',
+    file: 'oratoria-e-comunicacao-assertiva.html',
+    cat: 'PNL',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 21,
+    salt: 'OC_HENRY_2026_MASTER',
+    ak: 'oc_auth',
+    storagePrefix: 'oc_',
+    icon: '🚀',
+    color: '#e63946',
+    addedTs: 1775683229901,
+    active: true
   }
 ];
 var MA_CATS = [
