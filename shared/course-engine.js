@@ -856,7 +856,29 @@ function isUnlocked(){
   if(raw){try{var d=JSON.parse(raw);if(d.ts&&now-d.ts<(d.expiry||EXP_I))return true;}catch(e){}}
   return false;
 }
-function modFree(mi){return mi<COURSE.freeModules;}
+/* v5: acesso granular por tópico */
+function topicFree(mi,ti){
+  var mod=MODS[mi];if(!mod)return false;
+  var t=mod.topics[ti];
+  return t&&t.free===true;
+}
+function modHasFreeContent(mi){
+  var mod=MODS[mi];if(!mod)return false;
+  return mod.free===true||mod.topics.some(function(t){return t.free===true;});
+}
+function topicCanAccess(mi,ti){return isUnlocked()||topicFree(mi,ti);}
+function modFree(mi){return modHasFreeContent(mi);}
+
+/* v5: remover pontos (inverso de addPoints) */
+function removePoints(src,pts){
+  var u=gU();if(!u)return;
+  if(window.MAStore&&MAStore.removePoints){
+    MAStore.removePoints(src,pts).then(function(){updateTopbar();});
+  } else if(window.MAStore&&MAStore.addPoints){
+    MAStore.addPoints(src,-pts).then(function(){updateTopbar();});
+  }
+  showToast('⭐ -'+pts+' pontos — '+src,'warn');
+}
 
 /* ═══ SIDEBAR BUILD ═══ */
 var _allTopics=[],_curModIdx=0,_curTopIdx=0,_filterStr='';
@@ -870,7 +892,7 @@ function buildSidebar(){
     var pct=mod.topics.length?Math.round(doneT/mod.topics.length*100):0;
     var completed=pct===100;
     total+=mod.topics.length;done+=doneT;
-    mod.topics.forEach(function(t,ti){_allTopics.push({mod:mod,mi:mi,t:t,ti:ti,canAcc:canAcc});});
+    mod.topics.forEach(function(t,ti){var tAcc=unlocked||(t.free===true);_allTopics.push({mod:mod,mi:mi,t:t,ti:ti,canAcc:tAcc});});
     var visible=!_filterStr||mod.name.toLowerCase().includes(_filterStr)||mod.topics.some(function(t){return t.name.toLowerCase().includes(_filterStr);});
     if(!visible)return;
     var isOpenMod=mi===_curModIdx;
@@ -885,11 +907,13 @@ function buildSidebar(){
     mod.topics.forEach(function(topic,ti){
       var topDone=!!prog[mod.id+'_'+topic.id];
       var isActive=mi===_curModIdx&&ti===_curTopIdx;
+      var tAcc=unlocked||(topic.free===true); /* v5: acesso por tópico */
       var vis2=!_filterStr||topic.name.toLowerCase().includes(_filterStr);
       if(!vis2)return;
-      html+='<div class="sb-topic-item'+(isActive?' active':'')+(topDone?' done':'')+'" onclick="selectTopic('+mi+','+ti+','+canAcc+')" id="sbTopic'+mi+'_'+ti+'">';
+      html+='<div class="sb-topic-item'+(isActive?' active':'')+(topDone?' done':'')+'" onclick="selectTopic('+mi+','+ti+','+tAcc+')" id="sbTopic'+mi+'_'+ti+'">';
       html+='<div class="sb-topic-dot">'+(topDone?'✓':(ti+1))+'</div><span class="sb-topic-name">'+topic.name+'</span><span class="sb-topic-dur">'+topic.dur+'</span>';
-      if(!canAcc)html+='<span class="sb-topic-lock">🔒</span>';
+      if(!tAcc)html+='<span class="sb-topic-lock">🔒</span>';
+      if(topic.free&&!unlocked)html+='<span style="font-size:.45rem;color:var(--grn);font-weight:700;margin-left:4px">FREE</span>';
       html+='</div>';
     });
     html+='</div></div>';
@@ -1171,8 +1195,8 @@ function renderModLesson(mi){
   if(mi>0){
     prevModBtn='<button class="ml-nav-btn ml-nav-prev" onclick="selectTopic('+(mi-1)+',0,true);window.scrollTo({top:0,behavior:\'smooth\'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="15 18 9 12 15 6"/></svg>Módulo anterior</button>';
   }
-  if(mi+1<MODS.length&&(isUnlocked()||mi+1<COURSE.freeModules)){
-    nextModBtnNav='<button class="ml-nav-btn ml-nav-next" onclick="selectTopic('+(mi+1)+',0,true);window.scrollTo({top:0,behavior:\'smooth\'})">Próximo módulo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="9 18 15 12 9 6"/></svg></button>';
+  if(mi+1<MODS.length&&(isUnlocked()||modHasFreeContent(mi+1))){
+    nextModBtnNav='<button class="ml-nav-btn ml-nav-next" onclick="selectTopic('+(mi+1)+',0,topicCanAccess('+(mi+1)+',0));window.scrollTo({top:0,behavior:\'smooth\'})">Próximo módulo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="9 18 15 12 9 6"/></svg></button>';
   }
   if(prevModBtn||nextModBtnNav){
     html+='<div class="ml-nav-btns">'+prevModBtn+nextModBtnNav+'</div>';
@@ -1302,31 +1326,64 @@ function playCheckSound(){
   }catch(e){}
 }
 
-/* ── MARCAR TÓPICO COMO CONCLUÍDO (botão manual) ── */
+/* ── MARCAR/DESMARCAR TÓPICO COMO CONCLUÍDO (botão manual — toggle) ── */
 function mlMarkDone(mi,ti){
   var mod=MODS[mi],t=mod.topics[ti];
   var prog=gProg(),key=mod.id+'_'+t.id;
-  var isNew=!prog[key];
-  if(isNew){prog[key]=true;sProg(prog);buildSidebar();}
-  var btn=document.getElementById('ml_mark_'+mi+'_'+ti);
-  if(btn){
-    btn.classList.add('ml-mark-done');
-    var cb=btn.querySelector('.ml-mark-checkbox');
-    if(cb)cb.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-    var lbl=btn.querySelector('.ml-mark-label');
-    if(lbl)lbl.textContent='Concluído';
-    playCheckSound();
+  var wasDone=!!prog[key];
+  var ptsPerTopic=COURSE.pointsPerTopic||20;
+  var needLogin=COURSE.pointsRequireLogin!==false;
+  var u=gU();
+
+  if(wasDone){
+    /* ── DESMARCAR (toggle off) ── */
+    delete prog[key];
+    /* Desfaz conclusão do módulo se estava concluído */
+    var modKey='mod_done_'+mi;
+    if(prog[modKey]){delete prog[modKey];}
+    sProg(prog);buildSidebar();
+    /* Remove pontos do tópico */
+    if(!needLogin||u){removePoints('Tópico desmarcado: '+t.name,ptsPerTopic);}
+    var btn=document.getElementById('ml_mark_'+mi+'_'+ti);
+    if(btn){
+      btn.classList.remove('ml-mark-done');
+      var cb=btn.querySelector('.ml-mark-checkbox');
+      if(cb)cb.innerHTML='';
+      var lbl=btn.querySelector('.ml-mark-label');
+      if(lbl)lbl.textContent='Marcar como concluído';
+    }
+    var item=document.getElementById('ml_topic_'+mi+'_'+ti);
+    if(item){
+      item.classList.remove('t-done');
+      var badge=item.querySelector('.ml-topic-done-badge');
+      if(badge)badge.style.display='none';
+    }
+    renderModProgress(mi);
+    showToast('↩️ Tópico desmarcado','warn');
+  }else{
+    /* ── MARCAR (toggle on) ── */
+    prog[key]=true;sProg(prog);buildSidebar();
+    /* Adiciona pontos do tópico */
+    if(!needLogin||u){addPoints('Tópico concluído: '+t.name,ptsPerTopic);}
+    var btn=document.getElementById('ml_mark_'+mi+'_'+ti);
+    if(btn){
+      btn.classList.add('ml-mark-done');
+      var cb=btn.querySelector('.ml-mark-checkbox');
+      if(cb)cb.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      var lbl=btn.querySelector('.ml-mark-label');
+      if(lbl)lbl.textContent='Concluído';
+      playCheckSound();
+    }
+    var item=document.getElementById('ml_topic_'+mi+'_'+ti);
+    if(item){
+      item.classList.add('t-done');
+      var badge=item.querySelector('.ml-topic-done-badge');
+      if(badge)badge.style.display='inline';
+    }
+    renderModProgress(mi);
+    checkModuleCompletion(mi);
+    showToast('✅ Tópico concluído! +'+ptsPerTopic+' pts','ok');
   }
-  var item=document.getElementById('ml_topic_'+mi+'_'+ti);
-  if(item){
-    item.classList.add('t-done');
-    var badge=item.querySelector('.ml-topic-done-badge');
-    if(badge)badge.style.display='inline';
-  }
-  renderModProgress(mi);
-  // Verifica se todos os tópicos do módulo foram marcados → concluir módulo (+100 pts)
-  checkModuleCompletion(mi);
-  if(isNew)showToast('✅ Tópico marcado como concluído!','ok');
 }
 
 /* Atualiza só a barra de progresso sem re-renderizar tudo */
@@ -1751,7 +1808,7 @@ function mlFinishQuiz(mi,corrects){
     // Botão próximo módulo só aparece se acertou 100% E existe próximo módulo
     if(pct2===100&&mi+1<MODS.length){
       var nextMod=MODS[mi+1];
-      var canNext=isUnlocked()||mi+1<COURSE.freeModules;
+      var canNext=isUnlocked()||modHasFreeContent(mi+1);
       if(canNext){
         nextModBtn='<button class="ml-next-mod-btn" onclick="selectTopic('+(mi+1)+',0,true);window.scrollTo({top:0,behavior:\'smooth\'})">'
           +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><polyline points="9 18 15 12 9 6"/></svg>'
@@ -2068,6 +2125,12 @@ function downloadNotesPDF(){
 
 /* ═══ MAPA MENTAL — PDF AUTO-GERADO ═══ */
 function downloadMindMapPDF(){
+  /* v5: mapa mental somente para assinantes */
+  if(COURSE.mindMapFree===false&&!isUnlocked()){
+    openLockScreen();
+    showToast('🔒 Mapa Mental exclusivo para assinantes','warn');
+    return;
+  }
   var cc=COURSE.color||'#4A7EFF';
   var now=new Date();
   var exportDate=now.toLocaleDateString('pt-BR');
@@ -2709,23 +2772,42 @@ function moaToggle(mi,ti){
 function moaMarkDone(mi,ti){
   var mod=MODS[mi],t=mod.topics[ti];
   var prog=gProg(),key=mod.id+'_'+t.id;
-  if(!prog[key]){prog[key]=true;sProg(prog);buildSidebar();}
-  // Atualiza botão
-  var btn=document.getElementById('moa_done_'+mi+'_'+ti);
-  if(btn){btn.textContent='✅ Tópico Concluído';btn.classList.add('completed');}
-  // item
-  var item=document.getElementById('moa_item_'+mi+'_'+ti);
-  if(item){item.classList.add('done');var num=item.querySelector('.moa-item-num');if(num)num.textContent='✓';}
-  // Abre próximo tópico automaticamente
-  var next=ti+1;
-  if(next<mod.topics.length){
-    setTimeout(function(){moaToggle(mi,next);
-      var el=document.getElementById('moa_item_'+mi+'_'+next);
-      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
-    },350);
+  var wasDone=!!prog[key];
+  var ptsPerTopic=COURSE.pointsPerTopic||20;
+  var needLogin=COURSE.pointsRequireLogin!==false;
+  var u=gU();
+
+  if(wasDone){
+    /* ── DESMARCAR (toggle off) ── */
+    delete prog[key];
+    var modKey='mod_done_'+mi;
+    if(prog[modKey]){delete prog[modKey];}
+    sProg(prog);buildSidebar();
+    if(!needLogin||u){removePoints('Tópico desmarcado: '+t.name,ptsPerTopic);}
+    var btn=document.getElementById('moa_done_'+mi+'_'+ti);
+    if(btn){btn.textContent='✔ Marcar como Concluído e Ver Próximo';btn.classList.remove('completed');}
+    var item=document.getElementById('moa_item_'+mi+'_'+ti);
+    if(item){item.classList.remove('done');var num=item.querySelector('.moa-item-num');if(num)num.textContent=''+(ti+1);}
+    showToast('↩️ Tópico desmarcado','warn');
   }else{
-    // Último tópico — verifica conclusão do módulo → +100 pts
-    checkModuleCompletion(mi);
+    /* ── MARCAR (toggle on) ── */
+    prog[key]=true;sProg(prog);buildSidebar();
+    if(!needLogin||u){addPoints('Tópico concluído: '+t.name,ptsPerTopic);}
+    var btn=document.getElementById('moa_done_'+mi+'_'+ti);
+    if(btn){btn.textContent='✅ Tópico Concluído';btn.classList.add('completed');}
+    var item=document.getElementById('moa_item_'+mi+'_'+ti);
+    if(item){item.classList.add('done');var num=item.querySelector('.moa-item-num');if(num)num.textContent='✓';}
+    // Abre próximo tópico automaticamente
+    var next=ti+1;
+    if(next<mod.topics.length){
+      setTimeout(function(){moaToggle(mi,next);
+        var el=document.getElementById('moa_item_'+mi+'_'+next);
+        if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+      },350);
+    }else{
+      checkModuleCompletion(mi);
+    }
+    showToast('✅ Tópico concluído! +'+ptsPerTopic+' pts','ok');
   }
   // Atualiza progresso no header
   var doneCount=mod.topics.filter(function(t2){return !!gProg()[mod.id+'_'+t2.id];}).length;
@@ -2812,13 +2894,14 @@ function buildModuleCarousel(){
   var unlocked=isUnlocked();
   var html='<div class="mod-scroll-track">';
   MODS.forEach(function(mod,mi){
-    var canAcc=unlocked||mi<COURSE.freeModules;
+    var canAcc=unlocked||modHasFreeContent(mi);
+    var firstTopicAcc=unlocked||(mod.topics[0]&&mod.topics[0].free===true);
     var doneT=mod.topics.filter(function(t){return prog[mod.id+'_'+t.id];}).length;
     var pct=mod.topics.length?Math.round(doneT/mod.topics.length*100):0;
     var isDone=pct===100;
     var isActive=!isDone&&doneT>0;
     var cls='mod-scroll-card'+(isDone?' msc-done':isActive?' msc-active':canAcc?'':' msc-locked');
-    html+='<div class="'+cls+'" onclick="'+(canAcc?'selectTopic('+mi+',0,true)':'openLockScreen()')+'" title="'+mod.name+'">';
+    html+='<div class="'+cls+'" onclick="'+(firstTopicAcc?'selectTopic('+mi+',0,true)':canAcc?'openModModal('+mi+')':'openLockScreen()')+'" title="'+mod.name+'">';
     // Capa visual do card com logo M
     html+='<div class="msc-cover">';
     html+='<div class="msc-cover-grid"></div>';
@@ -2854,7 +2937,7 @@ function buildModuleCarousel(){
 var _modalMi=-1,_modalTi=0;
 function openModModal(mi){
   var unlocked=isUnlocked();
-  var canAcc=unlocked||mi<COURSE.freeModules;
+  var canAcc=unlocked||modHasFreeContent(mi);
   if(!canAcc){openLockScreen();return;}
   // Abre o módulo com todos os tópicos fechados
   _curModIdx=mi; _curTopIdx=0;
@@ -2873,7 +2956,7 @@ function renderModModalTopics(){
   var mod=MODS[_modalMi];
   var prog=gProg();
   var unlocked=isUnlocked();
-  var canAcc=unlocked||_modalMi<COURSE.freeModules;
+  var canAcc=unlocked||modHasFreeContent(_modalMi);
   // Corpo — lista de tópicos
   var html='';
   mod.topics.forEach(function(t,ti){
