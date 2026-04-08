@@ -148,7 +148,7 @@ var MA_COURSES = [
     name: 'A Nova Ordem Mundial',
     desc: 'Entenda como o poder global está sendo redistribuído: da bipolaridade à multipolaridade, das guerras comerciais à inteligência artificial.',
     file: 'nova-ordem-mundial.html',
-    cat: 'Geopolítica',
+    cat: 'Conspirações & Mistérios',
     modules: 7,
     topics: 28,
     hours: 4,
