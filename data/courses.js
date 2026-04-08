@@ -179,6 +179,25 @@ var MA_COURSES = [
     color: '#8e44ad',
     addedTs: 1775675747852,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pbba.jpg',
+    id: 'pbba',
+    name: 'Como Funciona a Política no Brasil',
+    desc: 'Um curso completo sobre o funcionamento do sistema político brasileiro, desde a Constituição de 1988 até os desafios contemporâneos da democracia.',
+    file: 'como-funciona-a-politica-no-brasil.html',
+    cat: 'Política Brasileira',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 21,
+    salt: 'PB_HENRY_2026_MASTER',
+    ak: 'pb_auth',
+    storagePrefix: 'pb_',
+    icon: '📰',
+    color: '#009c3b',
+    addedTs: 1775677085330,
+    active: true
   }
 ];
 var MA_CATS = [
