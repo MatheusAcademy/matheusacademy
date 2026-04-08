@@ -236,6 +236,25 @@ var MA_COURSES = [
     color: '#ff6b00',
     addedTs: 1775683059446,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pco.jpg',
+    id: 'pco',
+    name: 'Psicologia Comportamental',
+    desc: 'Entenda o comportamento humano do básico ao avançado: hábitos, emoções, relações, persuasão e aplicações práticas da psicologia comportamental.',
+    file: 'psicologia-comportamental.html',
+    cat: 'Psicologia',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 1,
+    salt: 'PC_HENRY_2026_MASTER',
+    ak: 'pc_auth',
+    storagePrefix: 'pc_',
+    icon: '🚀',
+    color: '#7b2d8e',
+    addedTs: 1775683131311,
+    active: true
   }
 ];
 var MA_CATS = [
