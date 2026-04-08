@@ -201,6 +201,25 @@ var MA_COURSES = [
     color: '#5b7fff',
     addedTs: 1775654788353,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/geopo.jpg',
+    id: 'geopo',
+    name: 'A Geopolítica do Oriente Médio — Curso Completo',
+    desc: '',
+    file: 'geopolitica_oriente_medio_curso.html',
+    cat: 'Negócios',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 1,
+    salt: 'G_HENRY_2026_MASTER',
+    ak: 'g_auth',
+    storagePrefix: 'g_',
+    icon: '🏛️',
+    color: '#3b82f6',
+    addedTs: 1775658363039,
+    active: true
   }
 ];
 var MA_CATS = [
