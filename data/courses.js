@@ -182,6 +182,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775501691536,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gp21auth.jpg',
+    id: 'gp21auth',
+    name: 'Geopolítica do Século XXI',
+    desc: '',
+    file: 'geopolitica-seculo-xxi (1).html',
+    cat: 'Negócios',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 7,
+    salt: 'GP21_HENRY_2026_MASTER',
+    ak: 'gp21auth_auth',
+    storagePrefix: 'gp21_',
+    icon: '🏛️',
+    color: '#5b7fff',
+    addedTs: 1775654788353,
+    active: true
   }
 ];
 var MA_CATS = [
