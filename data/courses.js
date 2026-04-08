@@ -220,6 +220,25 @@ var MA_COURSES = [
     color: '#3b82f6',
     addedTs: 1775662868955,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gm1.jpg',
+    id: 'gm1',
+    name: 'Geopolítica Mundial',
+    desc: 'Domine a análise geopolítica global: das teorias clássicas aos conflitos contemporâneos e cenários futuros.',
+    file: 'geopolitica-mundial.html',
+    cat: 'Negócios',
+    modules: 7,
+    topics: 28,
+    hours: 18,
+    quizzes: 1,
+    salt: 'GM_HENRY_2026_MASTER',
+    ak: 'gm_auth',
+    storagePrefix: 'gm_',
+    icon: '🎓',
+    color: '#1a5276',
+    addedTs: 1775663509332,
+    active: true
   }
 ];
 var MA_CATS = [
