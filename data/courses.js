@@ -411,6 +411,25 @@ var MA_COURSES = [
     color: '#2ECC71',
     addedTs: 1775746804118,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ec.jpg',
+    id: 'ec',
+    name: 'Curso: Empresa em Crescimento – Gestão e Escala',
+    desc: 'Estruture sua empresa para crescer sem perder controle: organize equipe, defina KPIs, padronize processos, e escale com segurança.',
+    file: 'empresa-crescimento-curso.html',
+    cat: 'Negócios / Empresas',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'EC_HENRY_2026_MASTER',
+    ak: 'ec_auth',
+    storagePrefix: 'ec_',
+    icon: '🎓',
+    color: '#1a56db',
+    addedTs: 1775749148597,
+    active: true
   }
 ];
 var MA_CATS = [
