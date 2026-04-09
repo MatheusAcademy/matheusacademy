@@ -209,13 +209,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 .pl-footer a:hover{text-decoration:underline}
 
 /* TEMA CLARO */
-body.light{background:#f0f2f8;color:#1a1a2e}
-body.light .plan-card,body.light .cg-card,body.light .benefit-card,body.light .social-card,body.light .notify-inner{background:#fff;border-color:#d0d4e8}
-body.light .plan-card.master-card{background:linear-gradient(160deg,rgba(75,139,255,.08),#fff);border-color:rgba(75,139,255,.4)}
+body.light{--bg:#faf6ef;--bg2:#f3ede4;--bg3:#ebe5db;--card:#fffbf5;--brd:rgba(60,50,30,.08);--brd2:rgba(60,50,30,.14);--txt:#2a2a2a;--txt2:rgba(42,42,42,.65);--txt3:rgba(42,42,42,.38)}
+body.light .plan-card,body.light .cg-card,body.light .benefit-card,body.light .social-card,body.light .notify-inner{background:#fffbf5;border-color:#e0dbd3}
+body.light .plan-card.master-card{background:linear-gradient(160deg,rgba(75,139,255,.08),#fffbf5);border-color:rgba(75,139,255,.4)}
 body.light .plan-name,body.light .cg-name,body.light .bc-title,body.light .sc-name,body.light .hero h1,body.light .faq-q{color:#1a1a2e}
-body.light .plan-feats li,body.light .cg-desc,body.light .bc-sub,body.light .sc-text,body.light .notify-inner p,body.light .faq-a-inner,body.light .hero-sub{color:#5a5a7a}
-body.light .faq-arrow{background:#f0f2f8;border-color:#d0d4e8}
-body.light .plan-divider,body.light .faq-item,body.light .pl-footer{border-color:#d0d4e8}
+body.light .plan-feats li,body.light .cg-desc,body.light .bc-sub,body.light .sc-text,body.light .notify-inner p,body.light .faq-a-inner,body.light .hero-sub{color:#5a5a6a}
+body.light .faq-arrow{background:#f3ede4;border-color:#e0dbd3}
+body.light .plan-divider,body.light .faq-item,body.light .pl-footer{border-color:#e0dbd3}
 
 /* RESPONSIVE */
 @media(max-width:600px){
@@ -237,13 +237,106 @@ body.light .plan-divider,body.light .faq-item,body.light .pl-footer{border-color
 .bn-icon{display:flex;align-items:center;justify-content:center}
 .bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1}
-body.light .bottom-nav{background:rgba(240,242,248,.98);border-top-color:#d0d4e8}
-body.light .bn-item{color:rgba(0,0,0,.28)}
-body.light .bn-item.active,body.light .bn-item:hover{color:#0a0a1e}
+body.light .bottom-nav{background:rgba(250,246,239,.98);border-top-color:rgba(60,50,30,.1)}
+body.light .bn-item{color:rgba(42,42,42,.3)}
+body.light .bn-item.active,body.light .bn-item:hover{color:#1a1a2e}
+body.light .bn-center-logo{background:#1a1a2e;border-color:rgba(60,50,30,.15)}
 @media(min-width:769px){.bottom-nav{display:none}}
+
+/* ══ MA-TOPBAR ══ */
+.ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd,#1e1e32);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999;font-family:var(--font,'Outfit',sans-serif)}
+.ma-tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
+.ma-tb-page-name{font-size:.75rem;font-weight:700;color:#8888a8;white-space:nowrap;flex-shrink:0}
+.ma-tb-spacer{flex:1;min-width:0}
+.ma-tb-pts-block{display:flex;align-items:center;gap:6px;background:#111122;border:1px solid #252540;border-radius:10px;padding:5px 10px;text-decoration:none;cursor:pointer;flex-shrink:0;transition:all .2s}
+.ma-tb-pts-block:hover{border-color:#5b7fff}
+.ma-tb-trophy{display:flex;align-items:center;justify-content:center;color:#f59e0b;width:18px;height:18px;flex-shrink:0}
+.ma-tb-trophy svg{width:100%;height:100%;stroke:currentColor}
+.ma-tb-pts-num{font-size:.72rem;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;min-width:28px;text-align:right}
+.ma-tb-theme-btn{width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:#8888a8;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.ma-tb-theme-btn:hover{background:#161628;color:#e8e8f0}
+.ma-tb-theme-btn svg{width:20px;height:20px}
+.ma-tb-menu-btn{width:34px;height:34px;border-radius:9px;border:1px solid #1e1e35;background:#111122;color:#8888a8;font-size:.88rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.ma-tb-menu-btn:hover{border-color:#5b7fff;color:#5b7fff}
+/* DROPDOWN MENU */
+.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}
+.ma-menu-overlay.open{display:block}
+.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:232px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.03);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+.ma-menu-user{padding:14px 16px 0;border-bottom:1px solid #1e1e35}
+.ma-mu-name{font-size:.85rem;font-weight:800;color:#fff;display:block;margin-bottom:5px}
+.ma-mu-pts{font-size:.63rem;color:#8888a8;margin-top:6px;margin-bottom:10px}
+.ma-menu-sec{padding:5px 0}
+.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font,'Outfit',sans-serif);width:100%;text-align:left;transition:background .15s}
+.ma-mi:hover{background:#161628;color:#e8e8f0}
+.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.ma-mi.green{color:#22c55e}.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
+body.light .ma-topbar{background:rgba(250,246,239,.98);border-bottom-color:rgba(60,50,30,.1)}
+body.light .ma-topbar::before{opacity:.4}
+body.light .ma-tb-logo svg text:first-of-type{fill:#1a1a2e}
+body.light .ma-tb-sep{background:rgba(0,0,0,.1)}
+body.light .ma-tb-page-name{color:rgba(42,42,42,.5)}
+body.light .ma-tb-pts-block{border-color:rgba(60,50,30,.12);background:rgba(60,50,30,.05)}
+body.light .ma-tb-pts-num{color:#2a2a2a}
+body.light .ma-tb-theme-btn{border-color:rgba(60,50,30,.12);background:rgba(60,50,30,.05)}
+body.light .ma-tb-menu-btn{border-color:rgba(60,50,30,.12);background:rgba(60,50,30,.05);color:rgba(42,42,42,.5)}
+body.light .ma-menu-dd{background:#fffbf5;border-color:#e0dbd3;box-shadow:0 16px 48px rgba(0,0,0,.12)}
+body.light .ma-menu-user{border-color:#e8e3da}
+body.light .ma-mu-name{color:#2a2a2a}
+body.light .ma-mi{color:#5a5a6a}
+body.light .ma-mi:hover{background:rgba(60,50,30,.05);color:#1a1a2e}
+body.light .ma-menu-sec+.ma-menu-sec{border-color:#e8e3da}
 </style>
 </head>
 <body>
+
+<div class="ma-menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="ma-menu-dd" id="menuDd">
+  <div class="ma-menu-user" id="menuUserSec"></div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">🎓</span>Meus Cursos</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Meu Painel</a>
+    <a class="ma-mi" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🤝</span>Indicações</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🗺️</span>Trilhas</a>
+    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
+  </div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
+  </div>
+  <div class="ma-menu-sec" id="menuAuthSec"></div>
+</div>
+
+<nav class="ma-topbar">
+  <a class="ma-tb-logo" href="index.html">
+    <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
+      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
+      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
+      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
+      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
+      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
+    </svg>
+  </a>
+  <div class="ma-tb-sep"></div>
+  <span class="ma-tb-page-name">Planos</span>
+  <div class="ma-tb-spacer"></div>
+  <a class="ma-tb-pts-block" href="painel.html">
+    <span class="ma-tb-trophy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg></span>
+    <span class="ma-tb-pts-num" id="maPtsNum">000</span>
+  </a>
+  <button class="ma-tb-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema">
+    <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+  <button class="ma-tb-menu-btn" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+  </button>
+</nav>
 
 <script src="shared/portal-topbar.js"></script>
 <canvas id="bg-canvas"></canvas>
@@ -530,6 +623,27 @@ body.light .bn-item.active,body.light .bn-item:hover{color:#0a0a1e}
 </div><!-- /pl-wrap -->
 
 <script>
+// ═══════════════════════════════ MA-TOPBAR FUNCTIONS ═══════════════════════════════
+function toggleMenu(){document.getElementById('menuDd').classList.toggle('open');document.getElementById('menuOverlay').classList.toggle('open');}
+function closeMenu(){document.getElementById('menuDd').classList.remove('open');document.getElementById('menuOverlay').classList.remove('open');}
+function updateMenuUser(){
+  var u;try{u=JSON.parse(localStorage.getItem('ma_user')||'null');}catch(e){u=null;}
+  var p;try{p=JSON.parse(localStorage.getItem('ma_points')||'{}');}catch(e){p={};}
+  var us=document.getElementById('menuUserSec'),as=document.getElementById('menuAuthSec');
+  if(u){
+    if(us)us.innerHTML='<span class="ma-mu-name">'+((u.name||u.email||'').split(' ')[0])+'</span><div class="ma-mu-pts">'+(p.total||0).toLocaleString('pt-BR')+' pontos</div>';
+    if(as)as.innerHTML='<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
+  }else{
+    if(us)us.innerHTML='<span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span>';
+    if(as)as.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
+  }
+}
+function doLogout(){if(typeof MAStore!=='undefined'){MAStore.logout();return;}if(window.MA_AUTH){MA_AUTH.logout().catch(function(){});}localStorage.removeItem('ma_user');closeMenu();location.href='index.html';}
+var _light=localStorage.getItem('ma_theme')==='light';
+function applyTheme(){document.body.classList.toggle('light',_light);var s=document.getElementById('iconSun'),m=document.getElementById('iconMoon');if(s)s.style.display=_light?'block':'none';if(m)m.style.display=_light?'none':'block';}
+function toggleTheme(){_light=!_light;localStorage.setItem('ma_theme',_light?'light':'dark');applyTheme();}
+function updatePts(){var el=document.getElementById('maPtsNum');if(!el)return;var p;try{p=JSON.parse(localStorage.getItem('ma_points')||'{}');}catch(e){p={};}var total=p.total||0;el.textContent=total<1000?String(total).padStart(3,'0'):total.toLocaleString('pt-BR');}
+
 // PARTICULAS
 (function(){
   var c=document.getElementById('bg-canvas');if(!c)return;
@@ -662,6 +776,9 @@ function notifyPaymentPlans(){
 // INIT
 (function(){
   _plUpdBanner();
+  applyTheme();
+  updatePts();
+  updateMenuUser();
   function _onReady(){
     if(window.maAuth){window.maAuth.onAuthStateChanged(function(au){if(au)setTimeout(_plUpdBanner,400);});}
     _plUpdBanner();
