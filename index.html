@@ -146,18 +146,18 @@ body {
 .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 50% 0%,rgba(75,139,255,.08),transparent 60%);pointer-events:none}
 .hero-logo{width:72px;height:72px;border-radius:16px;margin:0 auto 16px}.hero h2{font-family:var(--serif);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:6px}.hero h2 span{color:var(--pri)}.hero .sub{font-size:.88rem;color:var(--txt2);max-width:480px;margin:0 auto 16px;line-height:1.6}
 .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}.tag{padding:5px 14px;border-radius:20px;font-size:.62rem;font-weight:600;border:1px solid var(--brd2);color:var(--txt2);background:var(--bg2)}
-/* EBOOK CAROUSEL - MAIOR E MAIS PRÓXIMO DAS BORDAS */
-.ebook-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);position:relative;padding:22px 12px;touch-action:pan-y}
+/* EBOOK CAROUSEL - CARDS GIGANTES COLADOS NAS BORDAS */
+.ebook-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);position:relative;padding:22px 4px;touch-action:pan-y}
 .ebook-overflow{overflow:hidden}
-.ebook-track{display:flex;gap:16px;padding:4px 2px;will-change:transform;align-items:flex-start}
+.ebook-track{display:flex;gap:6px;padding:4px 0;will-change:transform;align-items:flex-start}
 .ebook-page{display:contents}
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   EBOOK CARD - SEM EFEITO ELÉTRICO, SÓ BALÃO INFLANDO - CARDS MAIORES
+   EBOOK CARD - CARDS GIGANTES - SEM EFEITO ELÉTRICO, SÓ BALÃO INFLANDO
    ══════════════════════════════════════════════════════════════════════════════ */
 .ebook-card{
-  flex:0 0 calc(38% - 10px);
-  max-width:calc(38% - 10px);
+  flex:0 0 calc(48% - 4px);
+  max-width:calc(48% - 4px);
   cursor:pointer;
   transition:transform .25s ease-out;
 }
@@ -314,10 +314,10 @@ body {
 .ma-logo-glowing{animation:ma-logo-glow .8s ease-in-out!important}
 .ma-logo-ripple{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(91,127,255,.4) 0%,transparent 70%);transform:scale(0);animation:ma-ripple-fx .6s ease-out forwards;pointer-events:none}
 @keyframes ma-ripple-fx{to{transform:scale(4);opacity:0}}
-@media(max-width:767px){.ebook-card{flex:0 0 calc(48% - 6px);max-width:calc(48% - 6px)}.ebook-section{padding:16px 10px}}
+@media(max-width:767px){.ebook-card{flex:0 0 calc(50% - 3px);max-width:calc(50% - 3px)}.ebook-section{padding:16px 2px}}
 @media(max-width:480px){
-  .ebook-card{flex:0 0 calc(50% - 6px);max-width:calc(50% - 6px)}
-  .ebook-section{padding:14px 8px}
+  .ebook-card{flex:0 0 calc(48% - 8px);max-width:calc(48% - 8px)}
+  .ebook-section{padding:14px 18px}
   .nc-title{font-size:.62rem!important;letter-spacing:0}
   .p-name-bar span{font-size:.54rem!important}
   .ebook-btn{font-size:.62rem;padding:8px}
@@ -648,12 +648,13 @@ body {
 /* ── Mobile 480px: Cards proporcionais ── */
 @media(max-width:480px){
   .cc{min-width:calc((100vw - 40px)/2);max-width:calc((100vw - 40px)/2)}
-  /* NOTÍCIAS: 1 item por vez no mobile (2:3 vertical - GIGANTE) */
+  /* NOTÍCIAS: 1 item por vez no mobile (2:3 vertical - GIGANTE) - CENTRALIZADO */
   .cat-sec:has(.cat-sec-title.special) .cc{
-    min-width:calc(100vw - 24px) !important;
-    max-width:calc(100vw - 24px) !important;
+    min-width:calc(100vw - 32px) !important;
+    max-width:calc(100vw - 32px) !important;
     aspect-ratio:2/3 !important;
-    margin:0 12px !important;
+    margin:0 auto !important;
+    scroll-snap-align: center !important;
   }
   .cat-sec:has(.cat-sec-title.special) .cc-img{
     aspect-ratio:2/3 !important;
@@ -668,8 +669,12 @@ body {
     display:none !important;
   }
   .cat-sec:has(.cat-sec-title.special) .row-inner{
-    padding:12px 0 !important;
+    padding:12px 16px !important;
     gap:0 !important;
+    justify-content: center !important;
+  }
+  .cat-sec:has(.cat-sec-title.special) .row-outer{
+    scroll-padding: 16px !important;
   }
   .cc-img{aspect-ratio:3/4}
   .cc-body{padding:10px;min-height:70px}
@@ -682,11 +687,11 @@ body {
   .hero h2{font-size:1.2rem}
   .hero .sub{font-size:.74rem}
   .hdr-left h1{font-size:.72rem}
-  .ebook-section{padding:14px 40px}
-  .ebook-card{flex:0 0 calc(50% - 8px)}
+  .ebook-section{padding:14px 2px}
+  .ebook-card{flex:0 0 calc(50% - 3px);max-width:calc(50% - 3px)}
   .arr-btn{width:32px;height:32px;font-size:1rem}
 }
-@media(min-width:481px) and (max-width:767px){.ebook-card{flex:0 0 calc(50% - 8px)}.ebook-section{padding:16px 48px}}
+@media(min-width:481px) and (max-width:767px){.ebook-card{flex:0 0 calc(50% - 3px);max-width:calc(50% - 3px)}.ebook-section{padding:16px 2px}}
 
 /* ══ MA TOPBAR GLOBAL ══ */
 .ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd,#1e1e32);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999;font-family:var(--font,'Outfit',sans-serif)}
@@ -1154,15 +1159,14 @@ body {
   background: rgba(75,139,255,.5);
 }
 
-/* ── ROW-INNER: Cards em linha, CENTRALIZADOS ── */
+/* ── ROW-INNER: Cards em linha, BEM COLADINHOS ── */
 .cat-sec:has(.cat-sec-title.special) .row-inner {
   display: flex !important;
   gap: 20px !important;
-  padding: 0 calc((100vw - (100vw - 28px) * 0.42 * 2 - 20px) / 2) !important;
+  padding: 0 20px !important;
   width: fit-content;
   flex-wrap: nowrap !important;
   overflow: visible !important;
-  justify-content: center !important;
 }
 
 /* ── CARDS: 40% MENORES (total 70% * 0.6 = 42% do original) ── */
@@ -2801,8 +2805,8 @@ function addEbookTouchSwipe() {
     }
     
     if (tDir === 'h') {
-      // MOVIMENTO DIRETO E INSTANTÂNEO - multiplicador 5x para sensibilidade MUITO melhorada
-      _scrollUserSpeed = dx * 5;
+      // MOVIMENTO DIRETO E INSTANTÂNEO - multiplicador 6x para sensibilidade MÁXIMA
+      _scrollUserSpeed = dx * 6;
       
       // Guardar histórico de velocidade para momentum
       tVelocityHistory.push(dx);
@@ -2819,11 +2823,11 @@ function addEbookTouchSwipe() {
     if (tDir === 'h' && tVelocityHistory.length > 0) {
       // Calcular velocidade média do swipe
       var avgVel = tVelocityHistory.reduce(function(a,b){return a+b;}, 0) / tVelocityHistory.length;
-      // Lançar com momentum - multiplicador ALTO para mais força e resposta
-      _scrollSpeed = avgVel * 5;
-      // Limitar velocidade máxima (aumentado para mais fluidez)
-      if (_scrollSpeed > 80) _scrollSpeed = 80;
-      if (_scrollSpeed < -80) _scrollSpeed = -80;
+      // Lançar com momentum - multiplicador 6x para MÁXIMA resposta
+      _scrollSpeed = avgVel * 6;
+      // Limitar velocidade máxima (bem alto para fluidez total)
+      if (_scrollSpeed > 100) _scrollSpeed = 100;
+      if (_scrollSpeed < -100) _scrollSpeed = -100;
     }
     
     tDir = null;
@@ -2845,7 +2849,7 @@ function addEbookTouchSwipe() {
     var onMove = function(ev) {
       if (!_scrollIsDragging) return;
       var dx = mLastX - ev.clientX;
-      _scrollUserSpeed = dx * 4.5;
+      _scrollUserSpeed = dx * 5;
       mVelHistory.push(dx);
       if (mVelHistory.length > 5) mVelHistory.shift();
       mLastX = ev.clientX;
@@ -2855,9 +2859,9 @@ function addEbookTouchSwipe() {
       _scrollIsDragging = false;
       if (mVelHistory.length > 0) {
         var avgVel = mVelHistory.reduce(function(a,b){return a+b;}, 0) / mVelHistory.length;
-        _scrollSpeed = avgVel * 4.5;
-        if (_scrollSpeed > 70) _scrollSpeed = 70;
-        if (_scrollSpeed < -70) _scrollSpeed = -70;
+        _scrollSpeed = avgVel * 5;
+        if (_scrollSpeed > 80) _scrollSpeed = 80;
+        if (_scrollSpeed < -80) _scrollSpeed = -80;
       }
       mVelHistory = [];
       document.removeEventListener('mousemove', onMove);
@@ -4572,5 +4576,4 @@ document.addEventListener('DOMContentLoaded',function(){
 .mae-rev-item-type.fav{background:rgba(245,158,11,.12);color:#f59e0b}
 .mae-rev-item-type.fail{background:rgba(239,68,68,.1);color:#ef4444}
 .mae-rev-checklist{display:flex;flex-direction:column;gap:5px}
-.mae-rev-check-item{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:7px;cursor:pointer;transition:background .15s}
-.mae-rev-check-item:hover{background:r
+.mae-rev-check-item{display:flex;align
