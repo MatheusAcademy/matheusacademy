@@ -696,6 +696,25 @@ var MA_COURSES = [
     color: '#06D6A0',
     addedTs: 1775775944169,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/hpp.jpg',
+    id: 'hpp',
+    name: 'História Política do Brasil e Formação do Poder Nacional',
+    desc: 'Como o Brasil moldou sua estrutura política desde o período colonial, Império, República, ditadura militar, redemocratização e cenário contemporâneo.',
+    file: 'curso-historia-politica-brasil.html',
+    cat: 'Política Brasileira',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'HP_HENRY_2026_MASTER',
+    ak: 'hp_auth',
+    storagePrefix: 'hp_',
+    icon: '📰',
+    color: '#2B2D42',
+    addedTs: 1775777114228,
+    active: true
   }
 ];
 var MA_CATS = [
