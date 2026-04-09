@@ -103,184 +103,378 @@ body.light .ma-menu-sec+.ma-menu-sec{border-color:#e8eaf2;}
 
 /* ══ HERO ══ */
 .page-hero{
-  padding:calc(var(--topbar) + 48px) 24px 40px;
+  padding:calc(var(--topbar) + 32px) 16px 24px;
   text-align:center;position:relative;overflow:hidden;
 }
 .page-hero::before{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(74,126,255,.12) 0%,transparent 60%),var(--bg);
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(74,126,255,.08) 0%,transparent 60%),var(--bg);
   pointer-events:none;
 }
 .hero-label{
   display:inline-block;
-  font-size:.5rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--pri);margin-bottom:14px;position:relative;
+  font-size:.46rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--pri);margin-bottom:10px;position:relative;
 }
 .hero-label::before,.hero-label::after{
-  content:'';display:inline-block;width:20px;height:1px;background:var(--pri);
+  content:'';display:inline-block;width:16px;height:1px;background:var(--pri);
   vertical-align:middle;opacity:.5;
 }
-.hero-label::before{margin-right:10px;}
-.hero-label::after{margin-left:10px;}
+.hero-label::before{margin-right:8px;}
+.hero-label::after{margin-left:8px;}
 .hero-title{
-  font-family:var(--serif);font-size:clamp(1.8rem,5vw,2.6rem);
-  font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.02em;
-  margin-bottom:12px;position:relative;
+  font-family:var(--serif);font-size:clamp(1.4rem,4vw,1.8rem);
+  font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.01em;
+  margin-bottom:8px;position:relative;
 }
 body.light .hero-title{color:#0a0a1e;}
-.hero-sub{font-size:.82rem;color:var(--txt2);max-width:420px;margin:0 auto;line-height:1.7;position:relative;}
+.hero-sub{font-size:.75rem;color:var(--txt2);max-width:380px;margin:0 auto;line-height:1.6;position:relative;}
 
 /* ══ SUMMARY ══ */
 .summary-bar{
-  max-width:680px;margin:32px auto 0;padding:0 24px;
-  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  max-width:100%;margin:20px 0 0;padding:16px;
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;
 }
-.summary-stat{text-align:center;}
-.summary-val{font-size:1.4rem;font-weight:900;color:#fff;display:block;line-height:1;}
+.summary-stat{
+  background:rgba(74,126,255,.08);
+  border:1px solid rgba(74,126,255,.15);
+  border-radius:12px;padding:12px 8px;text-align:center;
+}
+.summary-val{font-size:1.2rem;font-weight:900;color:#fff;display:block;line-height:1;}
 body.light .summary-val{color:#0a0a1e;}
-.summary-lbl{font-size:.46rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.14em;margin-top:4px;display:block;}
-.summary-div{width:1px;height:32px;background:var(--brd);}
-.summary-prog{flex:1;max-width:180px;}
-.summary-prog-label{font-size:.46rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.12em;display:block;margin-bottom:6px;}
-.summary-prog-bar{height:3px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
+.summary-lbl{font-size:.42rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;display:block;}
+.summary-prog{grid-column:1/-1;padding:0;}
+.summary-prog-label{font-size:.42rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:6px;padding:0 16px;}
+.summary-prog-bar{height:3px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin:0 16px;}
 .summary-prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--pri),var(--neon));transition:width 1s ease;}
 
-/* ══ GRID ══ */
+/* ══ MAIN GRID ══ */
 .courses-grid{
-  max-width:680px;margin:0 auto;
-  padding:32px 24px calc(var(--bottombar) + 32px);
-  display:flex;flex-direction:column;gap:1px;
+  max-width:100%;margin:0;
+  padding:0 12px calc(var(--bottombar) + 16px);
+  display:flex;flex-direction:column;gap:0;
 }
 
-/* Separador de categoria */
+/* ══ SECTION HEADER ══ */
 .section-divider{
-  display:flex;align-items:center;gap:14px;padding:28px 0 16px;
+  display:flex;align-items:center;gap:12px;
+  padding:20px 4px 12px;
+  margin-top:8px;
+  border-bottom:2px solid var(--brd);
 }
 .section-divider span{
-  font-size:.46rem;font-weight:700;color:var(--txt3);
-  text-transform:uppercase;letter-spacing:.12em;
+  font-size:.48rem;font-weight:800;color:var(--txt);
+  text-transform:uppercase;letter-spacing:.1em;
+  flex-shrink:0;
 }
 .section-divider::after{
-  content:'';flex:1;height:1px;background:var(--brd);
+  content:'';flex:1;height:1px;background:var(--brd);display:none;
 }
 
-/* ══ CARD ══ */
-.course-card{
+/* ════════════════════════════════════════════════════════ */
+/* ══  CARD LAYOUT — NOTÍCIAS (Tipo Feed/Jornal)  ═══ */
+/* ════════════════════════════════════════════════════════ */
+
+.news-card{
+  display:grid;
+  grid-template-columns:80px 1fr;
+  gap:12px;
+  padding:12px;
+  margin-bottom:8px;
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:12px;
+  cursor:pointer;
+  transition:all .2s cubic-bezier(.2,0,.3,1);
+  overflow:hidden;
   position:relative;
-  background:var(--card);border:1px solid var(--brd);border-radius:16px;
-  padding:24px;cursor:pointer;transition:all .25s cubic-bezier(.2,0,.3,1);
+  border-left:4px solid;
+}
+
+.news-card:hover:not(.locked){
+  border-color:var(--card-color);
+  background:rgba(74,126,255,.04);
+  transform:translateX(2px);
+}
+
+.news-card.locked{
+  opacity:.5;
+}
+
+.news-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(var(--rgb-color),0) 0%,rgba(var(--rgb-color),.04) 100%);
+  pointer-events:none;
+}
+
+.news-thumb{
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2.2rem;
+  flex-shrink:0;
+  background:rgba(74,126,255,.12);
+  border:1px solid rgba(74,126,255,.2);
+  position:relative;
+  z-index:1;
+}
+
+.news-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-width:0;
+  position:relative;
+  z-index:1;
+}
+
+.news-category{
+  font-size:.42rem;
+  font-weight:700;
+  color:var(--txt3);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:2px;
+}
+
+.news-title{
+  font-size:.85rem;
+  font-weight:800;
+  color:#fff;
+  line-height:1.2;
+  margin-bottom:4px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  word-break:break-word;
+}
+
+body.light .news-title{
+  color:#0a0a1e;
+}
+
+.news-excerpt{
+  font-size:.65rem;
+  color:var(--txt2);
+  line-height:1.3;
+  display:-webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  word-break:break-word;
+  margin-bottom:6px;
+}
+
+.news-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  font-size:.58rem;
+  color:var(--txt3);
+}
+
+.news-stat{
+  display:flex;
+  align-items:center;
+  gap:3px;
+  white-space:nowrap;
+}
+
+.news-stat svg{
+  width:12px;
+  height:12px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.5;
+  flex-shrink:0;
+}
+
+.news-badge{
+  position:absolute;
+  top:8px;
+  right:8px;
+  font-size:.48rem;
+  font-weight:700;
+  padding:3px 8px;
+  border-radius:6px;
+  background:rgba(34,197,94,.2);
+  color:#22c55e;
+  text-transform:uppercase;
+  z-index:2;
+}
+
+.news-badge.locked{
+  background:rgba(239,68,68,.2);
+  color:#ef4444;
+}
+
+/* ════════════════════════════════════════════════════════ */
+/* ══  CARD LAYOUT — CURSOS (Compacto)  ═══ */
+/* ════════════════════════════════════════════════════════ */
+
+.course-card{
+  display:grid;
+  grid-template-columns:70px 1fr;
+  gap:12px;
+  padding:12px;
+  margin-bottom:8px;
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:12px;
+  cursor:pointer;
+  transition:all .2s cubic-bezier(.2,0,.3,1);
+  position:relative;
+  border-left:4px solid;
   overflow:hidden;
 }
+
 .course-card:hover:not(.locked){
   border-color:var(--card-color);
   background:rgba(74,126,255,.04);
-  transform:translateY(-2px);
+  transform:translateX(2px);
 }
+
 .course-card.locked{
   opacity:.55;
 }
+
 .course-card::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(var(--rgb-color),0) 0%,rgba(var(--rgb-color),.06) 100%);
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(var(--rgb-color),0) 0%,rgba(var(--rgb-color),.04) 100%);
   pointer-events:none;
 }
-.card-accent{
-  position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--card-color);
-}
-.card-body{
-  display:flex;gap:14px;margin-bottom:16px;position:relative;z-index:1;
-}
-.card-icon{
-  font-size:2.4rem;width:auto;flex-shrink:0;line-height:1;filter:drop-shadow(0 0 8px rgba(74,126,255,.15));}
-.card-info{
-  flex:1;min-width:0;
-}
-.card-cat{
-  display:block;font-size:.46rem;font-weight:700;color:var(--txt3);
-  text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px;
-}
-.card-name{
-  display:block;font-size:.95rem;font-weight:700;color:#fff;line-height:1.2;margin-bottom:4px;word-break:break-word;
-}
-body.light .card-name{color:#0a0a1e;}
-.card-desc{
-  display:block;font-size:.7rem;color:var(--txt2);line-height:1.3;word-break:break-word;
-}
-.card-badge{
-  position:absolute;top:24px;right:24px;
-  display:inline-block;font-size:.5rem;font-weight:700;padding:5px 10px;
-  border-radius:8px;letter-spacing:.08em;text-transform:uppercase;z-index:2;
-}
-.badge-free{background:rgba(34,197,94,.15);color:#22c55e;}
-.badge-owned{background:rgba(74,126,255,.15);color:#4A7EFF;}
-.badge-locked{background:rgba(239,68,68,.15);color:#ef4444;}
-.card-footer{
-  position:relative;z-index:1;
-}
-.card-stats{
-  display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;
-}
-.card-stat{
-  display:flex;align-items:center;gap:5px;font-size:.65rem;color:var(--txt2);
-}
-.card-stat svg{
-  width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0;
-}
-.card-prog-row{
-  display:flex;align-items:center;gap:10px;
-}
-.card-prog-bar{
-  flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;
-}
-.card-prog-fill{
-  height:100%;border-radius:3px;transition:width .6s ease;
-}
-.card-prog-val{
-  font-size:.6rem;font-weight:600;white-space:nowrap;
-}
-.card-arrow{
-  position:absolute;bottom:24px;right:24px;
-  color:var(--txt3);width:20px;height:20px;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .2s;z-index:2;
-}
-.course-card:hover:not(.locked) .card-arrow{
-  color:var(--card-color);
-  transform:translateX(2px);
-}
-.card-arrow svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;}
-.card-lock-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,.4);
-  display:flex;align-items:center;justify-content:center;border-radius:16px;
-}
-.lock-msg{
-  font-size:.75rem;font-weight:600;color:#fff;text-align:center;padding:12px;
+
+.course-icon{
+  width:70px;
+  height:70px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  flex-shrink:0;
+  background:rgba(74,126,255,.12);
+  border:1px solid rgba(74,126,255,.2);
+  position:relative;
+  z-index:1;
 }
 
-/* ══ STATUS INDICATOR ══ */
-.refresh-indicator {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  padding: 8px 14px;
-  background: rgba(74, 126, 255, 0.15);
-  border: 1px solid rgba(74, 126, 255, 0.3);
-  border-radius: 20px;
-  font-size: 0.65rem;
-  color: #4A7EFF;
-  z-index: 100;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
+.course-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-width:0;
+  position:relative;
+  z-index:1;
 }
-.refresh-indicator.show {
-  opacity: 1;
+
+.course-category{
+  font-size:.42rem;
+  font-weight:700;
+  color:var(--txt3);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:2px;
 }
-.refresh-indicator.updated {
-  background: rgba(34, 197, 94, 0.15);
-  border-color: rgba(34, 197, 94, 0.3);
-  color: #22c55e;
+
+.course-name{
+  font-size:.82rem;
+  font-weight:800;
+  color:#fff;
+  line-height:1.2;
+  margin-bottom:3px;
+  display:-webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  word-break:break-word;
+}
+
+body.light .course-name{
+  color:#0a0a1e;
+}
+
+.course-desc{
+  font-size:.63rem;
+  color:var(--txt2);
+  line-height:1.2;
+  display:-webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  margin-bottom:6px;
+}
+
+.course-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  font-size:.56rem;
+  color:var(--txt3);
+}
+
+.course-stat{
+  display:flex;
+  align-items:center;
+  gap:3px;
+  white-space:nowrap;
+}
+
+.course-stat svg{
+  width:12px;
+  height:12px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.5;
+  flex-shrink:0;
+}
+
+.course-badge{
+  position:absolute;
+  top:8px;
+  right:8px;
+  font-size:.46rem;
+  font-weight:700;
+  padding:3px 8px;
+  border-radius:6px;
+  background:rgba(34,197,94,.2);
+  color:#22c55e;
+  text-transform:uppercase;
+  z-index:2;
+}
+
+.course-badge.owned{
+  background:rgba(74,126,255,.2);
+  color:#4A7EFF;
+}
+
+.course-badge.locked{
+  background:rgba(239,68,68,.2);
+  color:#ef4444;
+}
+
+.course-progress{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:rgba(255,255,255,.06);
+  overflow:hidden;
+}
+
+.course-progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--pri),var(--neon));
+  transition:width .6s ease;
 }
 
 /* ══ TOAST ══ */
@@ -292,9 +486,9 @@ body.light .card-name{color:#0a0a1e;}
   background: rgba(15, 15, 30, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #e8e8ef;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-size: 0.75rem;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.72rem;
   z-index: 10001;
   backdrop-filter: blur(10px);
   animation: slideUp 0.3s ease;
@@ -304,7 +498,6 @@ body.light .card-name{color:#0a0a1e;}
   to { transform: translateX(-50%) translateY(0); opacity: 1; }
 }
 
-/* ──────────────────────────────── */
 </style>
 
 </head>
@@ -366,21 +559,22 @@ body.light .card-name{color:#0a0a1e;}
 <div class="page-hero">
   <span class="hero-label">Biblioteca Digital</span>
   <h1 class="hero-title">Seus Cursos</h1>
-  <p class="hero-sub">Expanda seus conhecimentos com os melhores cursos da plataforma</p>
+  <p class="hero-sub">Expanda seus conhecimentos com a melhor plataforma</p>
   
   <div class="summary-bar">
     <div class="summary-stat">
       <span class="summary-val" id="sumCursos">0</span>
-      <span class="summary-lbl">Cursos Disponíveis</span>
+      <span class="summary-lbl">Disponíveis</span>
     </div>
-    <div class="summary-div"></div>
     <div class="summary-stat">
       <span class="summary-val" id="sumConcluidos">0</span>
       <span class="summary-lbl">Concluídos</span>
     </div>
-    <div class="summary-div"></div>
+    <div class="summary-stat">
+      <span class="summary-val" id="sumProgPct">0%</span>
+      <span class="summary-lbl">Progresso</span>
+    </div>
     <div class="summary-prog">
-      <span class="summary-prog-label">Progresso Geral</span>
       <div class="summary-prog-bar"><div class="summary-prog-fill" id="sumProgFill" style="width:0%"></div></div>
     </div>
   </div>
@@ -388,38 +582,22 @@ body.light .card-name{color:#0a0a1e;}
 
 <!-- ══ GRID ══ -->
 <div class="courses-grid" id="coursesGrid">
-  <div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">⏳ Carregando cursos...</div>
+  <div style="text-align:center;padding:40px 0;color:rgba(255,255,255,.25);font-size:.75rem;">⏳ Carregando cursos...</div>
 </div>
-
-<!-- ══ REFRESH INDICATOR ══ -->
-<div class="refresh-indicator" id="refreshIndicator"></div>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════════════ */
 /* ═══  SISTEMA DE ATUALIZAÇÃO AUTOMÁTICA EM TEMPO REAL  ═══ */
 /* ═══════════════════════════════════════════════════════════════════════ */
 
-// Armazena a última lista de cursos para comparação
 let LAST_COURSES = null;
-let REFRESH_TIMEOUT = null;
 let AUTO_REFRESH_INTERVAL = null;
 
-// Função para mostrar indicador de atualização
-function showRefreshIndicator(text, isSuccess = false) {
-  const indicator = document.getElementById('refreshIndicator');
-  if (!indicator) return;
-  
-  indicator.textContent = text;
-  indicator.classList.add('show');
-  indicator.classList.toggle('updated', isSuccess);
-  
-  clearTimeout(REFRESH_TIMEOUT);
-  REFRESH_TIMEOUT = setTimeout(() => {
-    indicator.classList.remove('show');
-  }, 3000);
-}
+// Cores temáticas para as categorias de notícias
+const CATEGORY_COLORS = {
+  'Atualize-se! Notícias Mais Relevantes da Semana': '#ef4444',
+};
 
-// Função para mostrar toast
 function showToast(text) {
   const toast = document.createElement('div');
   toast.className = 'toast';
@@ -432,14 +610,10 @@ function showToast(text) {
   }, 2500);
 }
 
-// Função que verifica se cursos foram atualizados
 function hasCoursesChanged(newCourses) {
   if (!LAST_COURSES || !newCourses) return true;
-  
-  // Compara quantidade
   if (LAST_COURSES.length !== newCourses.length) return true;
   
-  // Compara IDs e timestamps dos cursos
   for (let i = 0; i < newCourses.length; i++) {
     const newC = newCourses[i];
     const oldC = LAST_COURSES.find(c => c.id === newC.id);
@@ -452,26 +626,21 @@ function hasCoursesChanged(newCourses) {
   return false;
 }
 
-// Função PRINCIPAL que carrega cursos (estático + Firebase)
 function loadCoursesFromSources() {
-  // 1. Começa com cursos estáticos
   let courses = [];
   
   if (typeof MA_COURSES !== 'undefined' && MA_COURSES && MA_COURSES.length) {
     courses = [...MA_COURSES];
   }
   
-  // 2. Se Firebase estiver disponível, sincroniza com Firestore
   if (typeof firebase !== 'undefined' && firebase.firestore) {
     try {
       const db = firebase.firestore();
       
-      // Listener em tempo real para a coleção de cursos
       db.collection('courses')
         .where('active', '==', true)
         .onSnapshot(
           (snapshot) => {
-            // Cursos do Firebase
             const firebaseCourses = [];
             snapshot.forEach((doc) => {
               const data = doc.data();
@@ -493,7 +662,6 @@ function loadCoursesFromSources() {
               });
             });
             
-            // Merge: Firebase sobrescreve estáticos pelo ID
             const finalCourses = [...courses];
             firebaseCourses.forEach((fbCourse) => {
               const idx = finalCourses.findIndex(c => c.id === fbCourse.id);
@@ -504,29 +672,25 @@ function loadCoursesFromSources() {
               }
             });
             
-            // Verifica se realmente mudou
             if (hasCoursesChanged(finalCourses)) {
               LAST_COURSES = finalCourses;
               renderCursos(finalCourses);
-              showRefreshIndicator('✅ Cursos atualizados', true);
             }
           },
           (error) => {
-            console.log('Firebase listener erro (não crítico):', error);
-            // Continua com dados estáticos
+            console.log('Firebase listener error:', error);
             if (courses.length > 0) {
               renderCursos(courses);
             }
           }
         );
     } catch (e) {
-      console.log('Firebase não configurado, usando dados estáticos');
+      console.log('Firebase not configured, using static data');
       if (courses.length > 0) {
         renderCursos(courses);
       }
     }
   } else {
-    // Sem Firebase, apenas estáticos
     if (courses.length > 0) {
       renderCursos(courses);
     }
@@ -535,7 +699,6 @@ function loadCoursesFromSources() {
 
 // ══════════════════════════════════════════════════════════════════════════
 
-// Funções auxiliares (mesmas do original)
 function gU() { return (MAStore && MAStore.getCurrentUser && MAStore.getCurrentUser()) || null; }
 function gP() { return (MAStore && MAStore.getPoints && MAStore.getPoints()) || {total: 0}; }
 
@@ -562,97 +725,105 @@ function getCourseProgress(c) {
   }
 }
 
-function renderCard(c) {
+// Renderiza card de NOTÍCIA (estilo jornal)
+function renderNewsCard(c) {
   var unlocked = isCourseUnlocked(c);
-  var prog = getCourseProgress(c);
-  var statusBadge = c.free || c.ak === 'free'
-    ? '<span class="card-badge badge-free">Gratuito</span>'
-    : unlocked
-      ? '<span class="card-badge badge-owned">Com Acesso</span>'
-      : '<span class="card-badge badge-locked">🔒 Bloqueado</span>';
-  var progColor   = prog.pct === 100 ? '#22c55e' : (c.color || '#4A7EFF');
-  var progLabel   = prog.pct === 0 ? 'Não iniciado' : prog.pct === 100 ? 'Concluído' : prog.pct + '% concluído';
-  var progValColor= prog.pct === 100 ? '#22c55e' : prog.pct > 0 ? (c.color||'#4A7EFF') : 'rgba(255,255,255,.25)';
+  var color = CATEGORY_COLORS[c.cat] || '#ef4444';
+  var badge = c.free ? 'GRATUITO' : (unlocked ? 'COM ACESSO' : '🔒 BLOQUEADO');
+  var badgeClass = c.free ? '' : (unlocked ? '' : 'locked');
   var onclick = unlocked
     ? 'onclick="window.location.href=\'' + c.file + '\'"'
     : 'onclick="showToast(\'🔒 Acesse os planos para desbloquear\')"';
-  return '<div class="course-card' + (unlocked?'':' locked') + '" style="--card-color:' + (c.color||'#4A7EFF') + '" ' + onclick + '>'
-    + '<div class="card-accent"></div>'
-    + '<div class="card-body">'
-    + '<div class="card-icon">' + (c.icon||'📚') + '</div>'
-    + '<div class="card-info">'
-    + '<span class="card-cat">' + (c.cat||'Curso') + '</span>'
-    + '<span class="card-name">' + he(c.name) + '</span>'
-    + '<span class="card-desc">' + he(c.desc||'') + '</span>'
+  
+  return '<div class="news-card' + (unlocked?'':' locked') + '" style="--card-color:' + color + ';border-left-color:' + color + ';" ' + onclick + '>'
+    + '<div class="news-thumb">' + (c.icon||'📰') + '</div>'
+    + '<div class="news-content">'
+    + '<div>'
+    + '<div class="news-category">📰 ' + (c.cat||'Notícia') + '</div>'
+    + '<div class="news-title">' + he(c.name) + '</div>'
+    + '<div class="news-excerpt">' + he((c.desc||'').substring(0, 100)) + '...</div>'
     + '</div>'
-    + statusBadge
+    + '<div class="news-meta">'
+    + '<span class="news-stat"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>' + (c.modules||1) + ' mód</span>'
+    + '<span class="news-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + (c.hours||1) + 'h</span>'
+    + '<span class="news-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + (c.quizzes||0) + 'q</span>'
     + '</div>'
-    + '<div class="card-footer">'
-    + '<div class="card-stats">'
-    + '<span class="card-stat"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>' + (c.modules||1) + ' módulos</span>'
-    + '<span class="card-stat"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>' + (c.topics||0) + ' tópicos</span>'
-    + '<span class="card-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + (c.hours||1) + 'h</span>'
-    + (c.quizzes ? '<span class="card-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + c.quizzes + ' quizzes</span>' : '')
     + '</div>'
-    + '<div class="card-prog-row">'
-    + '<div class="card-prog-bar"><div class="card-prog-fill" style="width:' + prog.pct + '%;background:' + progColor + '"></div></div>'
-    + '<span class="card-prog-val" style="color:' + progValColor + '">' + progLabel + '</span>'
-    + '</div></div>'
-    + (unlocked ? '<div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></div>' : '')
-    + (unlocked ? '' : '<div class="card-lock-overlay"><div class="lock-msg">🔒 Clique para ver planos</div></div>')
+    + '<div class="news-badge' + (badgeClass ? ' ' + badgeClass : '') + '">' + badge + '</div>'
+    + '</div>';
+}
+
+// Renderiza card de CURSO (compacto)
+function renderCourseCard(c) {
+  var unlocked = isCourseUnlocked(c);
+  var prog = getCourseProgress(c);
+  var badge = c.free ? 'GRATUITO' : (unlocked ? 'COM ACESSO' : '🔒 BLOQUEADO');
+  var badgeClass = c.free ? '' : (unlocked ? 'owned' : 'locked');
+  var onclick = unlocked
+    ? 'onclick="window.location.href=\'' + c.file + '\'"'
+    : 'onclick="showToast(\'🔒 Acesse os planos para desbloquear\')"';
+  
+  return '<div class="course-card' + (unlocked?'':' locked') + '" style="--card-color:' + (c.color||'#4A7EFF') + ';border-left-color:' + (c.color||'#4A7EFF') + ';" ' + onclick + '>'
+    + '<div class="course-icon">' + (c.icon||'📚') + '</div>'
+    + '<div class="course-content">'
+    + '<div>'
+    + '<div class="course-category">' + (c.cat||'Curso') + '</div>'
+    + '<div class="course-name">' + he(c.name) + '</div>'
+    + '<div class="course-desc">' + he((c.desc||'').substring(0, 80)) + '</div>'
+    + '</div>'
+    + '<div class="course-stats">'
+    + '<span class="course-stat"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>' + (c.modules||1) + '</span>'
+    + '<span class="course-stat"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>' + (c.topics||0) + '</span>'
+    + '<span class="course-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + (c.hours||1) + 'h</span>'
+    + '</div>'
+    + '</div>'
+    + '<div class="course-badge' + (badgeClass ? ' ' + badgeClass : '') + '">' + badge + '</div>'
+    + '<div class="course-progress"><div class="course-progress-fill" style="width:' + prog.pct + '%"></div></div>'
     + '</div>';
 }
 
 function he(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function renderCursos(cursos) {
-  if (!cursos || !cursos.length) {
-    cursos = [];
-  }
+  if (!cursos || !cursos.length) cursos = [];
   
   var grid = document.getElementById('coursesGrid');
-
-  // Garante cursos ativos
   cursos = cursos.filter(function(c) { return c.active !== false; });
-
-  // ═══ ORDENA POR DATA — mais recentes primeiro ═══
   cursos.sort(function(a, b) { return (b.addedTs || 0) - (a.addedTs || 0); });
 
-  // ═══ SEPARA: Notícias vs Cursos completos ═══
   var NEWS_CAT = 'Atualize-se! Notícias Mais Relevantes da Semana';
   var noticias = cursos.filter(function(c) { return c.cat === NEWS_CAT; });
   var cursosCompletos = cursos.filter(function(c) { return c.cat !== NEWS_CAT; });
 
   var html = '';
-  var totalPct = 0, concluidos = 0, temBloqueado = false;
+  var totalPct = 0, concluidos = 0;
 
-  function renderLista(lista) {
-    var out = '';
-    lista.forEach(function(c) {
+  // Renderiza notícias com renderNewsCard
+  if (noticias.length) {
+    html += '<div class="section-divider"><span>📰 Notícias em Destaque</span></div>';
+    noticias.forEach(function(c) {
+      html += renderNewsCard(c);
+    });
+  }
+
+  // Renderiza cursos com renderCourseCard
+  if (cursosCompletos.length) {
+    html += '<div class="section-divider"><span>📚 Cursos Disponíveis</span></div>';
+    cursosCompletos.forEach(function(c) {
       var prog = getCourseProgress(c);
       totalPct += prog.pct;
       if (prog.pct === 100) concluidos++;
-      if (!isCourseUnlocked(c)) temBloqueado = true;
-      out += renderCard(c);
+      html += renderCourseCard(c);
     });
-    return out;
   }
 
-  if (noticias.length) {
-    html += '<div class="section-divider"><span>Notícias & Atualidades</span></div>';
-    html += renderLista(noticias);
-  }
+  grid.innerHTML = html || '<div style="text-align:center;padding:40px 0;color:rgba(255,255,255,.25);font-size:.75rem;">Nenhum curso disponível no momento.</div>';
 
-  if (cursosCompletos.length) {
-    html += '<div class="section-divider"><span>Cursos Completos</span></div>';
-    html += renderLista(cursosCompletos);
-  }
-
-  grid.innerHTML = html || '<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Nenhum curso disponível no momento.</div>';
-
-  var avgPct = cursos.length ? Math.round(totalPct / cursos.length) : 0;
-  document.getElementById('sumCursos').textContent = cursos.length;
+  var totalCursos = cursosCompletos.length;
+  var avgPct = totalCursos ? Math.round(totalPct / totalCursos) : 0;
+  document.getElementById('sumCursos').textContent = totalCursos;
   document.getElementById('sumConcluidos').textContent = concluidos;
+  document.getElementById('sumProgPct').textContent = avgPct + '%';
   document.getElementById('sumProgFill').style.width = avgPct + '%';
 }
 
@@ -709,17 +880,13 @@ document.addEventListener('DOMContentLoaded', function() {
   updatePts();
   updateMenuUser();
   
-  // CARREGA CURSOS COM ATUALIZAÇÃO AUTOMÁTICA
   loadCoursesFromSources();
   
-  // Recarrega a cada 30 segundos (você pode ajustar)
   AUTO_REFRESH_INTERVAL = setInterval(() => {
     loadCoursesFromSources();
   }, 30000);
   
-  // Cleanup ao desmontar
   window.addEventListener('beforeunload', () => {
-    if (REFRESH_TIMEOUT) clearTimeout(REFRESH_TIMEOUT);
     if (AUTO_REFRESH_INTERVAL) clearInterval(AUTO_REFRESH_INTERVAL);
   });
 });
