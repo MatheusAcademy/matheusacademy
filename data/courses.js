@@ -620,6 +620,25 @@ var MA_COURSES = [
     color: '#FF6B35',
     addedTs: 1775775389314,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/nz.jpg',
+    id: 'nz',
+    name: 'PNL do Zero ao Avançado',
+    desc: 'Fundamentos da Programação Neurolinguística, comunicação, mudança de padrões mentais, linguagem e reprogramação comportamental.',
+    file: 'curso-pnl-zero-avancado.html',
+    cat: 'PNL',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'NZ_HENRY_2026_MASTER',
+    ak: 'nz_auth',
+    storagePrefix: 'nz_',
+    icon: '🚀',
+    color: '#7209B7',
+    addedTs: 1775775448497,
+    active: true
   }
 ];
 var MA_CATS = [
