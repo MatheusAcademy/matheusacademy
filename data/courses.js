@@ -525,6 +525,25 @@ var MA_COURSES = [
     color: '#dc5f3f',
     addedTs: 1775757635083,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/a51.jpg',
+    id: 'a51',
+    name: 'Curso: Área 51 e Encobrimentos Governamentais',
+    desc: 'Do básico ao avançado: a história secreta da Área 51, programas aeronáuticos classificados, OVNIs, Roswell, MKUltra, Operation Paperclip, orçamento negro, denunciantes do Pentágono e o futuro da divulgação UAP no século XXI.',
+    file: 'curso-area-51-encobrimentos-governamentais.html',
+    cat: 'Conspirações & Mistérios',
+    modules: 5,
+    topics: 20,
+    hours: 3,
+    quizzes: 1,
+    salt: 'A51_HENRY_2026_MASTER',
+    ak: 'a51_auth',
+    storagePrefix: 'a51_',
+    icon: '🕵️',
+    color: '#1b1b3a',
+    addedTs: 1775757694403,
+    active: true
   }
 ];
 var MA_CATS = [
