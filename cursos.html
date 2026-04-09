@@ -158,328 +158,410 @@ body.light .summary-val{color:#0a0a1e;}
 }
 .section-divider span{
   font-size:.46rem;font-weight:700;color:var(--txt3);
-  text-transform:uppercase;letter-spacing:.18em;white-space:nowrap;
+  text-transform:uppercase;letter-spacing:.12em;
 }
-.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--brd);}
+.section-divider::after{
+  content:'';flex:1;height:1px;background:var(--brd);
+}
 
-/* Card */
+/* ══ CARD ══ */
 .course-card{
+  position:relative;
   background:var(--card);border:1px solid var(--brd);border-radius:16px;
-  overflow:hidden;margin-bottom:12px;
-  transition:border-color .25s,transform .25s,box-shadow .25s;
-  text-decoration:none;display:block;position:relative;cursor:pointer;
+  padding:24px;cursor:pointer;transition:all .25s cubic-bezier(.2,0,.3,1);
+  overflow:hidden;
 }
-.course-card:hover{
-  border-color:rgba(74,126,255,.35);transform:translateY(-2px);
-  box-shadow:0 12px 40px rgba(0,0,0,.4),0 0 0 1px rgba(74,126,255,.1);
+.course-card:hover:not(.locked){
+  border-color:var(--card-color);
+  background:rgba(74,126,255,.04);
+  transform:translateY(-2px);
 }
-.course-card.locked{opacity:.75;}
-.course-card.locked:hover{border-color:rgba(255,255,255,.15);transform:none;box-shadow:none;}
-.card-accent{height:2px;background:linear-gradient(90deg,var(--card-color,#4A7EFF),transparent 70%);}
-.card-body{padding:20px 20px 16px;display:flex;align-items:flex-start;gap:16px;}
+.course-card.locked{
+  opacity:.55;
+}
+.course-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(var(--rgb-color),0) 0%,rgba(var(--rgb-color),.06) 100%);
+  pointer-events:none;
+}
+.card-accent{
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--card-color);
+}
+.card-body{
+  display:flex;gap:14px;margin-bottom:16px;position:relative;z-index:1;
+}
 .card-icon{
-  width:44px;height:44px;border-radius:12px;flex-shrink:0;
-  background:rgba(74,126,255,.1);border:1px solid rgba(74,126,255,.2);
-  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
-  position:relative;overflow:hidden;
+  font-size:2.4rem;width:auto;flex-shrink:0;line-height:1;filter:drop-shadow(0 0 8px rgba(74,126,255,.15));}
+.card-info{
+  flex:1;min-width:0;
 }
-.card-icon::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.1),transparent 60%);}
-.card-info{flex:1;min-width:0;}
-.card-cat{font-size:.46rem;font-weight:700;color:var(--card-color,#4A7EFF);text-transform:uppercase;letter-spacing:.16em;display:block;margin-bottom:5px;}
-.card-name{font-family:var(--serif);font-size:1.05rem;font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px;display:block;}
+.card-cat{
+  display:block;font-size:.46rem;font-weight:700;color:var(--txt3);
+  text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px;
+}
+.card-name{
+  display:block;font-size:.95rem;font-weight:700;color:#fff;line-height:1.2;margin-bottom:4px;word-break:break-word;
+}
 body.light .card-name{color:#0a0a1e;}
-.card-desc{font-size:.68rem;color:var(--txt2);line-height:1.55;display:block;}
+.card-desc{
+  display:block;font-size:.7rem;color:var(--txt2);line-height:1.3;word-break:break-word;
+}
 .card-badge{
-  flex-shrink:0;padding:4px 10px;border-radius:6px;
-  font-size:.48rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  margin-top:2px;align-self:flex-start;
+  position:absolute;top:24px;right:24px;
+  display:inline-block;font-size:.5rem;font-weight:700;padding:5px 10px;
+  border-radius:8px;letter-spacing:.08em;text-transform:uppercase;z-index:2;
 }
-.badge-free{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25);}
-.badge-locked{background:rgba(255,255,255,.05);color:rgba(255,255,255,.3);border:1px solid var(--brd);}
-.badge-owned{background:rgba(74,126,255,.1);color:var(--pri);border:1px solid rgba(74,126,255,.25);}
-.card-footer{padding:12px 20px 16px;border-top:1px solid var(--brd);}
-.card-stats{display:flex;gap:16px;margin-bottom:10px;}
-.card-stat{display:flex;align-items:center;gap:5px;font-size:.52rem;color:var(--txt3);}
-.card-stat svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
-.card-prog-row{display:flex;align-items:center;gap:10px;}
-.card-prog-bar{flex:1;height:2px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
-.card-prog-fill{height:100%;border-radius:2px;transition:width 1s ease;}
-.card-prog-val{font-size:.5rem;font-weight:700;white-space:nowrap;}
+.badge-free{background:rgba(34,197,94,.15);color:#22c55e;}
+.badge-owned{background:rgba(74,126,255,.15);color:#4A7EFF;}
+.badge-locked{background:rgba(239,68,68,.15);color:#ef4444;}
+.card-footer{
+  position:relative;z-index:1;
+}
+.card-stats{
+  display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;
+}
+.card-stat{
+  display:flex;align-items:center;gap:5px;font-size:.65rem;color:var(--txt2);
+}
+.card-stat svg{
+  width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0;
+}
+.card-prog-row{
+  display:flex;align-items:center;gap:10px;
+}
+.card-prog-bar{
+  flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;
+}
+.card-prog-fill{
+  height:100%;border-radius:3px;transition:width .6s ease;
+}
+.card-prog-val{
+  font-size:.6rem;font-weight:600;white-space:nowrap;
+}
 .card-arrow{
-  position:absolute;right:20px;top:50%;transform:translateY(-50%);
-  width:28px;height:28px;border-radius:8px;border:1px solid var(--brd);
-  display:flex;align-items:center;justify-content:center;color:var(--txt3);transition:all .2s;
+  position:absolute;bottom:24px;right:24px;
+  color:var(--txt3);width:20px;height:20px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;z-index:2;
 }
-.card-arrow svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.course-card:hover .card-arrow{border-color:rgba(74,126,255,.4);color:var(--pri);}
+.course-card:hover:not(.locked) .card-arrow{
+  color:var(--card-color);
+  transform:translateX(2px);
+}
+.card-arrow svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;}
 .card-lock-overlay{
-  position:absolute;inset:0;background:rgba(8,8,15,.4);
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;transition:opacity .2s;border-radius:16px;
+  position:absolute;inset:0;background:rgba(0,0,0,.4);
+  display:flex;align-items:center;justify-content:center;border-radius:16px;
 }
-.course-card.locked:hover .card-lock-overlay{opacity:1;}
 .lock-msg{
-  background:rgba(8,8,15,.9);border:1px solid var(--brd2);
-  padding:10px 20px;border-radius:10px;
-  font-size:.7rem;color:rgba(255,255,255,.7);font-weight:600;
-  display:flex;align-items:center;gap:8px;
+  font-size:.75rem;font-weight:600;color:#fff;text-align:center;padding:12px;
 }
 
-/* ══ CTA BANNER ══ */
-.cta-banner{max-width:680px;margin:0 auto 24px;padding:0 24px;}
-.cta-inner{
-  background:linear-gradient(135deg,rgba(74,126,255,.12),rgba(0,212,255,.06));
-  border:1px solid rgba(74,126,255,.2);border-radius:16px;padding:24px;
-  display:flex;align-items:center;gap:18px;position:relative;overflow:hidden;
+/* ══ STATUS INDICATOR ══ */
+.refresh-indicator {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  padding: 8px 14px;
+  background: rgba(74, 126, 255, 0.15);
+  border: 1px solid rgba(74, 126, 255, 0.3);
+  border-radius: 20px;
+  font-size: 0.65rem;
+  color: #4A7EFF;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
 }
-.cta-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(74,126,255,.5),transparent);}
-.cta-text{flex:1;min-width:0;}
-.cta-title{font-family:var(--serif);font-size:1rem;font-weight:900;color:#fff;margin-bottom:4px;}
-body.light .cta-title{color:#0a0a1e;}
-.cta-sub{font-size:.65rem;color:var(--txt2);line-height:1.5;}
-.cta-btn{
-  flex-shrink:0;padding:10px 20px;border-radius:10px;border:none;
-  background:linear-gradient(135deg,var(--pri),#2563eb);
-  color:#fff;font-family:var(--font);font-size:.72rem;font-weight:700;
-  cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;display:flex;align-items:center;
+.refresh-indicator.show {
+  opacity: 1;
 }
-.cta-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
-
-/* ══ BOTTOM NAV ══ */
-.bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;height:var(--bottombar);
-  background:rgba(4,4,10,.98);border-top:1px solid var(--brd);
-  display:flex;align-items:center;justify-content:space-around;
-  z-index:999;padding:0 8px;padding-bottom:env(safe-area-inset-bottom);
+.refresh-indicator.updated {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #22c55e;
 }
-.bottom-nav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);}
-.bn-item{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:5px;flex:1;height:100%;cursor:pointer;border:none;background:transparent;
-  color:rgba(255,255,255,.28);font-family:var(--font);text-decoration:none;
-  position:relative;transition:color .2s;-webkit-tap-highlight-color:transparent;
-}
-.bn-item.active,.bn-item:hover{color:#fff;}
-.bn-item.active::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:2px;border-radius:0 0 2px 2px;background:#fff;}
-.bn-item.bn-center{flex:1.4;position:relative;top:-10px;}
-.bn-center-logo{
-  width:50px;height:50px;border-radius:14px;background:#000;
-  border:1.5px solid rgba(255,255,255,.2);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(0,0,0,.6);transition:all .25s;
-}
-.bn-item.bn-center:hover .bn-center-logo{transform:scale(1.1);border-color:rgba(255,255,255,.4);}
-.bn-icon{display:flex;align-items:center;justify-content:center;}
-.bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1;}
-body.light .bottom-nav{background:rgba(240,242,248,.98);border-top-color:#d0d4e8;}
-body.light .bn-item{color:rgba(0,0,0,.28);}
-body.light .bn-item.active,body.light .bn-item:hover{color:#0a0a1e;}
-@media(min-width:769px){.bottom-nav{display:none;}}
 
 /* ══ TOAST ══ */
-.toast{
-  position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-8px);
-  background:#0f0f1e;border:1px solid var(--brd2);color:var(--txt);
-  padding:10px 20px;border-radius:10px;font-size:.76rem;font-weight:600;
-  z-index:9999;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;
-  box-shadow:0 8px 32px rgba(0,0,0,.6);font-family:var(--font);
+.toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 15, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e8e8ef;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  z-index: 10001;
+  backdrop-filter: blur(10px);
+  animation: slideUp 0.3s ease;
 }
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-.course-card{animation:fadeUp .4s ease both;}
-.course-card:nth-child(1){animation-delay:.05s;}
-.course-card:nth-child(2){animation-delay:.1s;}
-.course-card:nth-child(3){animation-delay:.15s;}
-.course-card:nth-child(4){animation-delay:.2s;}
-.course-card:nth-child(5){animation-delay:.25s;}
-.course-card:nth-child(6){animation-delay:.3s;}
-
-@media(max-width:768px){
-  .summary-bar{flex-wrap:wrap;gap:16px;}
-  .summary-div{display:none;}
-  .summary-prog{max-width:100%;width:100%;}
-  .card-arrow{display:none;}
-  .card-body{padding-right:16px;}
+@keyframes slideUp {
+  from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
 }
+
+/* ──────────────────────────────── */
 </style>
+
 </head>
 <body>
 
-<div class="toast" id="toast"></div>
-
 <!-- ══ TOPBAR ══ -->
-<nav class="ma-topbar">
-  <a class="ma-tb-logo" href="index.html">
-    <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
-      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
-      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
-      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
-      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
-      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
+<div class="ma-topbar">
+  <a class="ma-tb-logo" href="painel.html">
+    <svg width="24" height="24" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="12" fill="#000000"/>
+      <text x="32" y="44" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black" font-weight="900" font-size="40">M</text>
+      <line x1="8" y1="50" x2="56" y2="50" stroke="#4A7EFF" stroke-width="2.5"/>
+      <line x1="8" y1="54" x2="56" y2="54" stroke="#4A7EFF" stroke-width="1.2" opacity=".5"/>
     </svg>
   </a>
   <div class="ma-tb-sep"></div>
-  <span class="ma-tb-page-name">Cursos</span>
+  <div class="ma-tb-page-name">Cursos</div>
   <div class="ma-tb-spacer"></div>
-  <a class="ma-tb-pts-block" href="painel.html">
+  <a class="ma-tb-pts-block" href="ranking.html">
     <span class="ma-tb-trophy">
-      <svg viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M6 9V5c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v4M6 9h12M6 9h1.5M17.5 9H19M8 9v6c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </span>
     <span class="ma-tb-pts-num" id="maPtsNum">000</span>
   </a>
-  <button class="ma-tb-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema">
-    <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-  </button>
-  <button class="ma-tb-menu-btn" onclick="toggleMenu()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <circle cx="12" cy="5" r="1" fill="currentColor"/>
-      <circle cx="12" cy="12" r="1" fill="currentColor"/>
-      <circle cx="12" cy="19" r="1" fill="currentColor"/>
+  <button class="ma-tb-theme-btn" onclick="toggleTheme()" title="Alternar tema">
+    <svg id="iconSun" viewBox="0 0 24 24" fill="none" style="display:none;">
+      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <svg id="iconMoon" viewBox="0 0 24 24" fill="none">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
-</nav>
+  <button class="ma-tb-menu-btn" onclick="toggleMenu()" title="Menu">
+    <svg viewBox="0 0 24 24" fill="none"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</div>
 
-<!-- DROPDOWN MENU -->
+<!-- ══ MENU DROPDOWN ══ -->
 <div class="ma-menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
 <div class="ma-menu-dd" id="menuDd">
-  <div class="ma-menu-user" id="menuUserSec"></div>
+  <div id="menuUserSec" class="ma-menu-user"></div>
   <div class="ma-menu-sec">
-    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
-    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">🎓</span>Meus Cursos</a>
-    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Meu Painel</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Painel</a>
+    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">📚</span>Cursos</a>
     <a class="ma-mi" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
-    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
-    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🤝</span>Indicações</a>
-    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🗺️</span>Trilhas</a>
-    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
-    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Perfil</a>
   </div>
   <div class="ma-menu-sec">
-    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🎯</span>Trilhas</a>
+    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛍️</span>Loja</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📋</span>Mural</a>
   </div>
-  <div class="ma-menu-sec" id="menuAuthSec"></div>
+  <div id="menuAuthSec" class="ma-menu-sec"></div>
 </div>
 
-<!-- HERO -->
+<!-- ══ HERO ══ -->
 <div class="page-hero">
-  <div class="hero-label">Matheus Academy</div>
+  <span class="hero-label">Biblioteca Digital</span>
   <h1 class="hero-title">Seus Cursos</h1>
-  <p class="hero-sub">Tudo em um só lugar. Aprenda no seu ritmo, acompanhe seu progresso e avance de forma consistente.</p>
+  <p class="hero-sub">Expanda seus conhecimentos com os melhores cursos da plataforma</p>
+  
+  <div class="summary-bar">
+    <div class="summary-stat">
+      <span class="summary-val" id="sumCursos">0</span>
+      <span class="summary-lbl">Cursos Disponíveis</span>
+    </div>
+    <div class="summary-div"></div>
+    <div class="summary-stat">
+      <span class="summary-val" id="sumConcluidos">0</span>
+      <span class="summary-lbl">Concluídos</span>
+    </div>
+    <div class="summary-div"></div>
+    <div class="summary-prog">
+      <span class="summary-prog-label">Progresso Geral</span>
+      <div class="summary-prog-bar"><div class="summary-prog-fill" id="sumProgFill" style="width:0%"></div></div>
+    </div>
+  </div>
 </div>
 
-<!-- SUMMARY BAR -->
-<div class="summary-bar" id="summaryBar">
-  <div class="summary-stat">
-    <span class="summary-val" id="sumCursos">—</span>
-    <span class="summary-lbl">Cursos</span>
-  </div>
-  <div class="summary-div"></div>
-  <div class="summary-stat">
-    <span class="summary-val" id="sumConcluidos">—</span>
-    <span class="summary-lbl">Concluídos</span>
-  </div>
-  <div class="summary-div"></div>
-  <div class="summary-prog">
-    <span class="summary-prog-label">Progresso geral</span>
-    <div class="summary-prog-bar"><div class="summary-prog-fill" id="sumProgFill" style="width:0%"></div></div>
-  </div>
-</div>
-
-<!-- GRID DE CURSOS -->
+<!-- ══ GRID ══ -->
 <div class="courses-grid" id="coursesGrid">
-  <div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Carregando cursos...</div>
+  <div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">⏳ Carregando cursos...</div>
 </div>
 
-<!-- CTA BANNER -->
-<div class="cta-banner" id="ctaBanner" style="display:none">
-  <div class="cta-inner">
-    <div class="cta-text">
-      <div class="cta-title">Desbloqueie todos os cursos</div>
-      <div class="cta-sub">Acesso completo por 3 anos. Todos os lançamentos incluídos.</div>
-    </div>
-    <a class="cta-btn" href="https://pay.kiwify.com.br/uzERliL" target="_blank">Ver Planos</a>
-  </div>
-</div>
-
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <a class="bn-item" href="index.html">
-    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 13 15 13 15 21"/></svg></span>
-    <span class="bn-label">Início</span>
-  </a>
-  <a class="bn-item active" href="cursos.html">
-    <span class="bn-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
-    <span class="bn-label">Cursos</span>
-  </a>
-  <a class="bn-item bn-center" href="index.html">
-    <div class="bn-center-logo">
-      <svg width="28" height="28" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-        <text x="28" y="40" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="38" letter-spacing="-1">M</text>
-      </svg>
-    </div>
-  </a>
-  <a class="bn-item" href="ranking.html">
-    <span class="bn-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
-    <span class="bn-label">Ranking</span>
-  </a>
-  <a class="bn-item" href="perfil.html">
-    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-    <span class="bn-label">Perfil</span>
-  </a>
-</nav>
+<!-- ══ REFRESH INDICATOR ══ -->
+<div class="refresh-indicator" id="refreshIndicator"></div>
 
 <script>
-/* ════════════════════════════════════════════════
-   CURSOS.HTML — usa MA_COURSES de data/courses.js
-   ════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* ═══  SISTEMA DE ATUALIZAÇÃO AUTOMÁTICA EM TEMPO REAL  ═══ */
+/* ═══════════════════════════════════════════════════════════════════════ */
 
-var EXP_M = 3*365*24*3600e3;
-var EXP_I = 365*24*3600e3;
+// Armazena a última lista de cursos para comparação
+let LAST_COURSES = null;
+let REFRESH_TIMEOUT = null;
+let AUTO_REFRESH_INTERVAL = null;
 
-function gU()  { try { return JSON.parse(localStorage.getItem('ma_user')||'null'); } catch(e) { return null; } }
-function gA()  { try { return JSON.parse(localStorage.getItem('ma_access')||'{}'); } catch(e) { return {}; } }
-function gP()  { try { return JSON.parse(localStorage.getItem('ma_points')||'{}'); } catch(e) { return {total:0}; } }
-function showToast(msg) { var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2800); }
+// Função para mostrar indicador de atualização
+function showRefreshIndicator(text, isSuccess = false) {
+  const indicator = document.getElementById('refreshIndicator');
+  if (!indicator) return;
+  
+  indicator.textContent = text;
+  indicator.classList.add('show');
+  indicator.classList.toggle('updated', isSuccess);
+  
+  clearTimeout(REFRESH_TIMEOUT);
+  REFRESH_TIMEOUT = setTimeout(() => {
+    indicator.classList.remove('show');
+  }, 3000);
+}
 
-/* ── Verifica acesso ao curso ── */
-function isCourseUnlocked(c) {
-  if (c.free || c.ak === 'free') return true;
-  /* Firebase — via ma_user cacheado */
-  if (typeof MAStore !== 'undefined') return MAStore.hasCourseAccess(c.ak);
-  /* Fallback legado */
-  var u = gU();
-  if (u) {
-    if (u.plano === 'master' || u.plano === 'anual' || u.plano === 'mensal') return true;
-    if (u.cursos && (u.cursos.indexOf(c.courseKey) >= 0 || u.cursos.indexOf(c.ak) >= 0)) return true;
+// Função para mostrar toast
+function showToast(text) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = text;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.animation = 'slideUp 0.3s ease reverse';
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+// Função que verifica se cursos foram atualizados
+function hasCoursesChanged(newCourses) {
+  if (!LAST_COURSES || !newCourses) return true;
+  
+  // Compara quantidade
+  if (LAST_COURSES.length !== newCourses.length) return true;
+  
+  // Compara IDs e timestamps dos cursos
+  for (let i = 0; i < newCourses.length; i++) {
+    const newC = newCourses[i];
+    const oldC = LAST_COURSES.find(c => c.id === newC.id);
+    
+    if (!oldC || oldC.addedTs !== newC.addedTs || oldC.name !== newC.name) {
+      return true;
+    }
   }
-  var ac = gA(), now = Date.now();
-  if (ac.master && ac.masterTs && now - ac.masterTs < (ac.expiry || EXP_M)) return true;
-  var raw = localStorage.getItem(c.ak);
-  if (raw) { try { var d=JSON.parse(raw); if (d.ts && now-d.ts < (d.expiry||EXP_I)) return true; } catch(e){} }
+  
   return false;
 }
 
-/* ── Progresso do curso ── */
-function getCourseProgress(c) {
-  if (typeof MAStore !== 'undefined') return MAStore.getCourseProgress(c.storagePrefix);
-  /* Fallback */
-  var done=0, total=0;
-  try {
-    for (var k in localStorage) {
-      if (k.indexOf(c.storagePrefix+'mod_') === 0) {
-        total++;
-        var v = localStorage.getItem(k);
-        if (v === 'done' || v === 'true' || v === '1') done++;
+// Função PRINCIPAL que carrega cursos (estático + Firebase)
+function loadCoursesFromSources() {
+  // 1. Começa com cursos estáticos
+  let courses = [];
+  
+  if (typeof MA_COURSES !== 'undefined' && MA_COURSES && MA_COURSES.length) {
+    courses = [...MA_COURSES];
+  }
+  
+  // 2. Se Firebase estiver disponível, sincroniza com Firestore
+  if (typeof firebase !== 'undefined' && firebase.firestore) {
+    try {
+      const db = firebase.firestore();
+      
+      // Listener em tempo real para a coleção de cursos
+      db.collection('courses')
+        .where('active', '==', true)
+        .onSnapshot(
+          (snapshot) => {
+            // Cursos do Firebase
+            const firebaseCourses = [];
+            snapshot.forEach((doc) => {
+              const data = doc.data();
+              firebaseCourses.push({
+                id: data.id || doc.id,
+                name: data.name,
+                desc: data.desc,
+                cat: data.cat,
+                icon: data.icon,
+                color: data.color,
+                file: data.file,
+                modules: data.modules,
+                topics: data.topics,
+                hours: data.hours,
+                quizzes: data.quizzes,
+                free: data.free,
+                active: data.active,
+                addedTs: data.addedTs || 0,
+              });
+            });
+            
+            // Merge: Firebase sobrescreve estáticos pelo ID
+            const finalCourses = [...courses];
+            firebaseCourses.forEach((fbCourse) => {
+              const idx = finalCourses.findIndex(c => c.id === fbCourse.id);
+              if (idx >= 0) {
+                finalCourses[idx] = fbCourse;
+              } else {
+                finalCourses.push(fbCourse);
+              }
+            });
+            
+            // Verifica se realmente mudou
+            if (hasCoursesChanged(finalCourses)) {
+              LAST_COURSES = finalCourses;
+              renderCursos(finalCourses);
+              showRefreshIndicator('✅ Cursos atualizados', true);
+            }
+          },
+          (error) => {
+            console.log('Firebase listener erro (não crítico):', error);
+            // Continua com dados estáticos
+            if (courses.length > 0) {
+              renderCursos(courses);
+            }
+          }
+        );
+    } catch (e) {
+      console.log('Firebase não configurado, usando dados estáticos');
+      if (courses.length > 0) {
+        renderCursos(courses);
       }
     }
-  } catch(e) {}
-  return { done: done, total: total, pct: total > 0 ? Math.round(done/total*100) : 0 };
+  } else {
+    // Sem Firebase, apenas estáticos
+    if (courses.length > 0) {
+      renderCursos(courses);
+    }
+  }
 }
 
-/* ── Renderiza um card de curso ── */
+// ══════════════════════════════════════════════════════════════════════════
+
+// Funções auxiliares (mesmas do original)
+function gU() { return (MAStore && MAStore.getCurrentUser && MAStore.getCurrentUser()) || null; }
+function gP() { return (MAStore && MAStore.getPoints && MAStore.getPoints()) || {total: 0}; }
+
+function isCourseUnlocked(c) {
+  if (c.free === true || c.ak === 'free') return true;
+  var u = gU();
+  if (!u) return false;
+  if (MAStore && MAStore.hasCourseAccess) return MAStore.hasCourseAccess(c.ak || (c.id + '_access'));
+  return (u.courses||[]).indexOf(c.id||c.ak) >= 0;
+}
+
+function getCourseProgress(c) {
+  if (!c.id) return {pct: 0, count: 0};
+  var stored = localStorage.getItem('ma_prog_' + c.id);
+  if (!stored) return {pct: 0, count: 0};
+  try {
+    var p = JSON.parse(stored);
+    var mods = (c.modules || 1);
+    var done = p.done || 0;
+    var pct = mods ? Math.round((done / mods) * 100) : 0;
+    return {pct: Math.min(pct, 100), count: done};
+  } catch (e) {
+    return {pct: 0, count: 0};
+  }
+}
+
 function renderCard(c) {
   var unlocked = isCourseUnlocked(c);
   var prog = getCourseProgress(c);
@@ -521,25 +603,22 @@ function renderCard(c) {
     + '</div>';
 }
 
-/* ── Escapa HTML ── */
 function he(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-/* ── Renderiza todos os cursos de MA_COURSES ── */
-function renderCursos() {
+function renderCursos(cursos) {
+  if (!cursos || !cursos.length) {
+    cursos = [];
+  }
+  
   var grid = document.getElementById('coursesGrid');
 
-  /* Garante que MA_COURSES está disponível */
-  if (typeof MA_COURSES === 'undefined' || !MA_COURSES.length) {
-    grid.innerHTML = '<div style="text-align:center;padding:60px 0;color:rgba(239,68,68,.5);font-size:.78rem;">⚠️ Lista de cursos não encontrada. Verifique se data/courses.js está carregado.</div>';
-    return;
-  }
+  // Garante cursos ativos
+  cursos = cursos.filter(function(c) { return c.active !== false; });
 
-  var cursos = MA_COURSES.filter(function(c) { return c.active !== false; });
-
-  /* ═══ ORDENA POR DATA — mais recentes primeiro ═══ */
+  // ═══ ORDENA POR DATA — mais recentes primeiro ═══
   cursos.sort(function(a, b) { return (b.addedTs || 0) - (a.addedTs || 0); });
 
-  /* ═══ SEPARA: Notícias vs Cursos completos ═══ */
+  // ═══ SEPARA: Notícias vs Cursos completos ═══
   var NEWS_CAT = 'Atualize-se! Notícias Mais Relevantes da Semana';
   var noticias = cursos.filter(function(c) { return c.cat === NEWS_CAT; });
   var cursosCompletos = cursos.filter(function(c) { return c.cat !== NEWS_CAT; });
@@ -547,7 +626,6 @@ function renderCursos() {
   var html = '';
   var totalPct = 0, concluidos = 0, temBloqueado = false;
 
-  /* Helper: renderiza um array de cursos e acumula stats */
   function renderLista(lista) {
     var out = '';
     lista.forEach(function(c) {
@@ -560,13 +638,11 @@ function renderCursos() {
     return out;
   }
 
-  /* ═══ SEÇÃO 1: NOTÍCIAS (mais recentes primeiro) ═══ */
   if (noticias.length) {
     html += '<div class="section-divider"><span>Notícias & Atualidades</span></div>';
     html += renderLista(noticias);
   }
 
-  /* ═══ SEÇÃO 2: CURSOS (mais recentes primeiro) ═══ */
   if (cursosCompletos.length) {
     html += '<div class="section-divider"><span>Cursos Completos</span></div>';
     html += renderLista(cursosCompletos);
@@ -574,15 +650,13 @@ function renderCursos() {
 
   grid.innerHTML = html || '<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Nenhum curso disponível no momento.</div>';
 
-  /* Atualiza summary */
   var avgPct = cursos.length ? Math.round(totalPct / cursos.length) : 0;
   document.getElementById('sumCursos').textContent = cursos.length;
   document.getElementById('sumConcluidos').textContent = concluidos;
   document.getElementById('sumProgFill').style.width = avgPct + '%';
-  if (temBloqueado) document.getElementById('ctaBanner').style.display = 'block';
 }
 
-/* ══ MENU ══ */
+// ══ MENU ══
 function toggleMenu() {
   document.getElementById('menuDd').classList.toggle('open');
   document.getElementById('menuOverlay').classList.toggle('open');
@@ -611,7 +685,7 @@ function doLogout() {
   location.href = 'index.html';
 }
 
-/* ══ TEMA ══ */
+// ══ TEMA ══
 var _light = localStorage.getItem('ma_theme') === 'light';
 function applyTheme() {
   document.body.classList.toggle('light', _light);
@@ -620,7 +694,7 @@ function applyTheme() {
 }
 function toggleTheme() { _light = !_light; localStorage.setItem('ma_theme', _light?'light':'dark'); applyTheme(); }
 
-/* ══ PONTOS ══ */
+// ══ PONTOS ══
 function updatePts() {
   var el = document.getElementById('maPtsNum');
   if (!el) return;
@@ -629,13 +703,27 @@ function updatePts() {
   el.textContent = total < 1000 ? String(total).padStart(3,'0') : total.toLocaleString('pt-BR');
 }
 
-/* ══ INIT ══ */
+// ══ INIT ══
 document.addEventListener('DOMContentLoaded', function() {
   applyTheme();
   updatePts();
   updateMenuUser();
-  renderCursos();
+  
+  // CARREGA CURSOS COM ATUALIZAÇÃO AUTOMÁTICA
+  loadCoursesFromSources();
+  
+  // Recarrega a cada 30 segundos (você pode ajustar)
+  AUTO_REFRESH_INTERVAL = setInterval(() => {
+    loadCoursesFromSources();
+  }, 30000);
+  
+  // Cleanup ao desmontar
+  window.addEventListener('beforeunload', () => {
+    if (REFRESH_TIMEOUT) clearTimeout(REFRESH_TIMEOUT);
+    if (AUTO_REFRESH_INTERVAL) clearInterval(AUTO_REFRESH_INTERVAL);
+  });
 });
 </script>
+
 </body>
 </html>
