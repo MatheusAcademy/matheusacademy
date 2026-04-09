@@ -455,7 +455,7 @@ var MA_COURSES = [
     id: 'gmo1',
     name: 'Geopolítica do Oriente Médio',
     desc: 'Análise profunda dos conflitos, alianças estratégicas e mudanças geopolíticas no Oriente Médio.',
-    file: 'geopolitica-oriente-medio.html',
+    file: 'geopolitica-oriente-medio-clean.html',
     cat: 'Geopolítica',
     modules: 3,
     topics: 9,
