@@ -468,6 +468,25 @@ var MA_COURSES = [
     color: '#dc5f3f',
     addedTs: 1775753915550,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gsqw.jpg',
+    id: 'gsqw',
+    name: 'Curso: Geopolítica da América do Sul',
+    desc: 'Análise aprofundada das dinâmicas de poder, integração regional, recursos estratégicos e conflitos que moldam a América do Sul no cenário global contemporâneo.',
+    file: 'curso-geopolitica-america-do-sul.html',
+    cat: 'Geopolítica',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 21,
+    salt: 'GS_HENRY_2026_MASTER',
+    ak: 'gs_auth',
+    storagePrefix: 'gs_',
+    icon: '📰',
+    color: '#2d6a4f',
+    addedTs: 1775754472797,
+    active: true
   }
 ];
 var MA_CATS = [
