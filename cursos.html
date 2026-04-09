@@ -536,37 +536,41 @@ function renderCursos() {
 
   var cursos = MA_COURSES.filter(function(c) { return c.active !== false; });
 
-  /* Agrupa por categoria na ordem definida em MA_CATS */
-  var catOrder = [];
-  if (typeof MA_CATS !== 'undefined') {
-    MA_CATS.forEach(function(cat) { if (catOrder.indexOf(cat.name) === -1) catOrder.push(cat.name); });
-  }
-  /* Categorias dos cursos que não estão em MA_CATS */
-  cursos.forEach(function(c) { if (catOrder.indexOf(c.cat||'Outros') === -1) catOrder.push(c.cat||'Outros'); });
+  /* ═══ ORDENA POR DATA — mais recentes primeiro ═══ */
+  cursos.sort(function(a, b) { return (b.addedTs || 0) - (a.addedTs || 0); });
 
-  var grouped = {};
-  cursos.forEach(function(c) {
-    var cat = c.cat || 'Outros';
-    if (!grouped[cat]) grouped[cat] = [];
-    grouped[cat].push(c);
-  });
+  /* ═══ SEPARA: Notícias vs Cursos completos ═══ */
+  var NEWS_CAT = 'Atualize-se! Notícias Mais Relevantes da Semana';
+  var noticias = cursos.filter(function(c) { return c.cat === NEWS_CAT; });
+  var cursosCompletos = cursos.filter(function(c) { return c.cat !== NEWS_CAT; });
 
   var html = '';
   var totalPct = 0, concluidos = 0, temBloqueado = false;
 
-  catOrder.forEach(function(catName) {
-    var lista = grouped[catName];
-    if (!lista || !lista.length) return;
-    /* Separador de categoria */
-    html += '<div class="section-divider"><span>' + he(catName) + '</span></div>';
+  /* Helper: renderiza um array de cursos e acumula stats */
+  function renderLista(lista) {
+    var out = '';
     lista.forEach(function(c) {
       var prog = getCourseProgress(c);
       totalPct += prog.pct;
       if (prog.pct === 100) concluidos++;
       if (!isCourseUnlocked(c)) temBloqueado = true;
-      html += renderCard(c);
+      out += renderCard(c);
     });
-  });
+    return out;
+  }
+
+  /* ═══ SEÇÃO 1: NOTÍCIAS (mais recentes primeiro) ═══ */
+  if (noticias.length) {
+    html += '<div class="section-divider"><span>Notícias & Atualidades</span></div>';
+    html += renderLista(noticias);
+  }
+
+  /* ═══ SEÇÃO 2: CURSOS (mais recentes primeiro) ═══ */
+  if (cursosCompletos.length) {
+    html += '<div class="section-divider"><span>Cursos Completos</span></div>';
+    html += renderLista(cursosCompletos);
+  }
 
   grid.innerHTML = html || '<div style="text-align:center;padding:60px 0;color:rgba(255,255,255,.25);font-size:.8rem;">Nenhum curso disponível no momento.</div>';
 
