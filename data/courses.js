@@ -601,6 +601,25 @@ var MA_COURSES = [
     color: '#6D213C',
     addedTs: 1775775157603,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/vn.jpg',
+    id: 'vn',
+    name: 'PNL para Vendas e Negociação de Alto Impacto',
+    desc: 'Aplique PNL em vendas, fechamento, objeções, gatilhos mentais, leitura de perfil do cliente e construção de confiança.',
+    file: 'curso-pnl-vendas-negociacao.html',
+    cat: 'PNL',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'VN_HENRY_2026_MASTER',
+    ak: 'vn_auth',
+    storagePrefix: 'vn_',
+    icon: '🚀',
+    color: '#FF6B35',
+    addedTs: 1775775389314,
+    active: true
   }
 ];
 var MA_CATS = [
