@@ -487,6 +487,25 @@ var MA_COURSES = [
     color: '#dc5f3f',
     addedTs: 1775754788926,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/nom.jpg',
+    id: 'nom',
+    name: 'A Nova Ordem Mundial 2: Multipolaridade, Desdolarização e Reconfigurações Geopolíticas',
+    desc: 'Análise técnica da transição de unipolaridade para multipolaridade, desdolarização sistemática, BRICS Plus, alianças regionais, conflitos geopolíticos e reconfiguração do poder global em 2024-2025.',
+    file: 'nova-ordem-mundial-2.html',
+    cat: 'Conspirações & Mistérios',
+    modules: 4,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'NOM_HENRY_2026_MASTER',
+    ak: 'nom_auth',
+    storagePrefix: 'nom_',
+    icon: '📰',
+    color: '#8B00FF',
+    addedTs: 1775755185484,
+    active: true
   }
 ];
 var MA_CATS = [
