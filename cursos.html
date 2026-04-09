@@ -360,6 +360,13 @@ body.light .ma-menu-sec+.ma-menu-sec{border-color:#e8eaf2;}
   flex-shrink:0;
 }
 
+.section-count{
+  font-size:.42rem;
+  color:var(--txt3);
+  margin-left:auto;
+  font-weight:600;
+}
+
 /* ════════════════════════════════════════════════════════ */
 /* ══  CARD LAYOUT — NOTÍCIAS  ═══ */
 /* ════════════════════════════════════════════════════════ */
@@ -763,7 +770,7 @@ body.light .course-name{
   <div class="hero-bg"></div>
   
   <div class="hero-content">
-    <div class="hero-greeting">🎓 Bem-vindo de volta</div>
+    <div class="hero-greeting" id="heroGreeting">🎓 Bem-vindo de volta</div>
     
     <div class="hero-main">
       <div class="hero-title-box">
@@ -779,22 +786,22 @@ body.light .course-name{
         <span class="trending-label">Em Destaque Agora</span>
       </div>
       <div class="trending-grid">
-        <div class="trending-item" onclick="scrollToCourse('noticia1')">
+        <div class="trending-item">
           <span class="trending-icon">⚡</span>
           <div class="trending-title">Geopolítica Global</div>
           <div class="trending-desc">Conflitos e poder</div>
         </div>
-        <div class="trending-item" onclick="scrollToCourse('noticia2')">
+        <div class="trending-item">
           <span class="trending-icon">🚀</span>
           <div class="trending-title">Tecnologia e IA</div>
           <div class="trending-desc">Revolução digital</div>
         </div>
-        <div class="trending-item" onclick="scrollToCourse('noticia3')">
+        <div class="trending-item">
           <span class="trending-icon">📊</span>
           <div class="trending-title">Mercados Financeiros</div>
           <div class="trending-desc">Tendências 2026</div>
         </div>
-        <div class="trending-item" onclick="scrollToCourse('noticia4')">
+        <div class="trending-item">
           <span class="trending-icon">🌍</span>
           <div class="trending-title">Sustentabilidade</div>
           <div class="trending-desc">Futuro do planeta</div>
@@ -831,17 +838,22 @@ body.light .course-name{
 
 <script>
 /* ═══════════════════════════════════════════════════════════════════════ */
-/* ═══  SISTEMA SINCRONIZADO COM FIREBASE E MASTORE  ═══ */
+/* ═══  SISTEMA COM SINCRONIZAÇÃO DE PROGRESSO EM TEMPO REAL  ═══ */
 /* ═══════════════════════════════════════════════════════════════════════ */
 
 let LAST_COURSES = null;
 let AUTO_REFRESH_INTERVAL = null;
+let PROGRESS_WATCH_INTERVAL = null;
 let FIREBASE_UNSUBSCRIBE = null;
+let CURRENT_USER = null;
+let LAST_PROGRESS_STATE = {};
 
-// Cores temáticas
 const CATEGORY_COLORS = {
   'Atualize-se! Notícias Mais Relevantes da Semana': '#ef4444',
 };
+
+// ✅ LISTA DE TRILHAS (NÃO SÃO CURSOS REAIS)
+const TRILHAS_IDS = ['empreendedor', 'estrategista', 'cidadao', 'completa'];
 
 function showToast(text) {
   const toast = document.createElement('div');
@@ -855,44 +867,96 @@ function showToast(text) {
   }, 2500);
 }
 
-function scrollToCourse(id) {
-  // Função para scroll para um curso específico se implementar
-  showToast('🔥 ' + id + ' - Em breve!');
-}
-
-function hasCoursesChanged(newCourses) {
-  if (!LAST_COURSES || !newCourses) return true;
-  if (LAST_COURSES.length !== newCourses.length) return true;
+// ═══════════════════════════════════════════════════════════════════════
+// ✅ DETECTA USUÁRIO LOGADO
+// ═══════════════════════════════════════════════════════════════════════
+async function detectUserLogin() {
+  console.log('[Auth] Detectando login...');
   
-  for (let i = 0; i < newCourses.length; i++) {
-    const newC = newCourses[i];
-    const oldC = LAST_COURSES.find(c => c.id === newC.id);
-    if (!oldC || oldC.addedTs !== newC.addedTs || oldC.name !== newC.name) {
-      return true;
+  if (typeof MAStore !== 'undefined' && MAStore.getUser) {
+    try {
+      const user = await MAStore.getUser();
+      if (user) {
+        console.log('[Auth] ✅ Usuário via MAStore:', user.email);
+        CURRENT_USER = user;
+        return user;
+      }
+    } catch (e) {
+      console.log('[Auth] MAStore erro:', e);
     }
   }
-  return false;
-}
-
-function loadCoursesFromSources() {
-  let courses = [];
   
-  // 1. Carrega dados estáticos
-  if (typeof MA_COURSES !== 'undefined' && MA_COURSES && MA_COURSES.length) {
-    courses = [...MA_COURSES];
+  try {
+    const localUser = localStorage.getItem('ma_user');
+    if (localUser) {
+      const user = JSON.parse(localUser);
+      console.log('[Auth] ✅ Usuário via localStorage:', user.email);
+      CURRENT_USER = user;
+      return user;
+    }
+  } catch (e) {
+    console.log('[Auth] localStorage falhou');
   }
   
-  // 2. Se Firebase estiver disponível, sincroniza
+  if (window.maAuth && window.maAuth.currentUser) {
+    console.log('[Auth] ✅ Usuário Firebase:', window.maAuth.currentUser.email);
+    CURRENT_USER = { email: window.maAuth.currentUser.email, uid: window.maAuth.currentUser.uid };
+    return CURRENT_USER;
+  }
+  
+  console.log('[Auth] ❌ Nenhum usuário');
+  CURRENT_USER = null;
+  return null;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// ✅ SINCRONIZA PROGRESSO EM TEMPO REAL
+// ═══════════════════════════════════════════════════════════════════════
+function checkProgressChanges() {
+  if (!LAST_COURSES) return;
+  
+  let changed = false;
+  
+  LAST_COURSES.forEach(course => {
+    const progKey = 'ma_prog_' + course.id;
+    const currentProgress = localStorage.getItem(progKey);
+    const lastProgress = LAST_PROGRESS_STATE[course.id];
+    
+    if (currentProgress !== lastProgress) {
+      console.log('[Progress] Mudança detectada em:', course.name);
+      LAST_PROGRESS_STATE[course.id] = currentProgress;
+      changed = true;
+    }
+  });
+  
+  if (changed) {
+    console.log('[Progress] Re-renderizando por mudança de progresso');
+    renderCursos(LAST_COURSES);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// ✅ CARREGA APENAS OS 20 CURSOS (exclui trilhas)
+// ═══════════════════════════════════════════════════════════════════════
+function loadCoursesFromSources() {
+  console.log('[Courses] Carregando cursos...');
+  let courses = [];
+  
+  // Carrega estáticos e FILTRA TRILHAS
+  if (typeof MA_COURSES !== 'undefined' && MA_COURSES && MA_COURSES.length) {
+    courses = MA_COURSES.filter(c => !TRILHAS_IDS.includes(c.id));
+    console.log('[Courses] ✅ Carregados', courses.length, 'cursos (excluindo trilhas)');
+  }
+  
+  // Se Firebase disponível, sincroniza
   if (typeof firebase !== 'undefined' && firebase.firestore) {
     try {
       const db = firebase.firestore();
       
-      // Limpa listener anterior se existir
       if (FIREBASE_UNSUBSCRIBE) {
         FIREBASE_UNSUBSCRIBE();
       }
       
-      // Escuta em tempo real
       FIREBASE_UNSUBSCRIBE = db.collection('courses')
         .where('active', '==', true)
         .onSnapshot(
@@ -900,26 +964,30 @@ function loadCoursesFromSources() {
             const firebaseCourses = [];
             snapshot.forEach((doc) => {
               const data = doc.data();
-              firebaseCourses.push({
-                id: data.id || doc.id,
-                name: data.name,
-                desc: data.desc,
-                cat: data.cat,
-                icon: data.icon,
-                color: data.color,
-                file: data.file,
-                modules: data.modules,
-                topics: data.topics,
-                hours: data.hours,
-                quizzes: data.quizzes,
-                free: data.free,
-                active: data.active,
-                addedTs: data.addedTs || 0,
-                ak: data.ak,
-              });
+              if (!TRILHAS_IDS.includes(data.id || doc.id)) {
+                firebaseCourses.push({
+                  id: data.id || doc.id,
+                  name: data.name,
+                  desc: data.desc,
+                  cat: data.cat,
+                  icon: data.icon,
+                  color: data.color,
+                  file: data.file,
+                  modules: data.modules,
+                  topics: data.topics,
+                  hours: data.hours,
+                  quizzes: data.quizzes,
+                  free: data.free,
+                  active: data.active,
+                  addedTs: data.addedTs || 0,
+                  ak: data.ak,
+                });
+              }
             });
             
-            // Merge: Firebase sobrescreve estáticos
+            console.log('[Firebase] Sincronizados', firebaseCourses.length, 'cursos');
+            
+            // Merge
             const finalCourses = [...courses];
             firebaseCourses.forEach((fbCourse) => {
               const idx = finalCourses.findIndex(c => c.id === fbCourse.id);
@@ -930,67 +998,42 @@ function loadCoursesFromSources() {
               }
             });
             
-            if (hasCoursesChanged(finalCourses)) {
-              LAST_COURSES = finalCourses;
-              renderCursos(finalCourses);
-            }
+            LAST_COURSES = finalCourses;
+            renderCursos(finalCourses);
           },
           (error) => {
-            console.log('Firebase error (continuando com dados estáticos):', error);
-            if (courses.length > 0) {
-              renderCursos(courses);
-            }
+            console.log('[Firebase] Erro (continuando):', error);
+            LAST_COURSES = courses;
+            renderCursos(courses);
           }
         );
     } catch (e) {
-      console.log('Firebase não configurado, usando dados estáticos');
-      if (courses.length > 0) {
-        renderCursos(courses);
-      }
-    }
-  } else {
-    // Sem Firebase
-    if (courses.length > 0) {
+      console.log('[Firebase] Não configurado');
+      LAST_COURSES = courses;
       renderCursos(courses);
     }
+  } else {
+    LAST_COURSES = courses;
+    renderCursos(courses);
   }
 }
 
-/* ══ FUNÇÕES DE ACESSO E PROGRESSO ══ */
-
-function gU() {
-  if (typeof MAStore !== 'undefined' && MAStore.getCurrentUser) {
-    return MAStore.getCurrentUser();
-  }
-  return null;
-}
-
-function gP() {
-  if (typeof MAStore !== 'undefined' && MAStore.getPoints) {
-    return MAStore.getPoints();
-  }
-  return {total: 0};
-}
-
+// ═══════════════════════════════════════════════════════════════════════
+// ✅ VERIFICA ACESSO E PROGRESSO
+// ═══════════════════════════════════════════════════════════════════════
 function isCourseUnlocked(c) {
-  // 1. Se é gratuito, libera
   if (c.free === true || c.ak === 'free') return true;
+  if (!CURRENT_USER) return false;
   
-  // 2. Tenta MAStore (sincronizado com Firebase)
+  if (CURRENT_USER.cursos && Array.isArray(CURRENT_USER.cursos)) {
+    return CURRENT_USER.cursos.indexOf(c.id || c.ak) >= 0;
+  }
+  
   if (typeof MAStore !== 'undefined' && MAStore.hasCourseAccess) {
     const accessKey = c.ak || (c.id + '_access');
     if (MAStore.hasCourseAccess(accessKey)) {
       return true;
     }
-  }
-  
-  // 3. Verifica usuário local
-  var u = gU();
-  if (!u) return false;
-  
-  // 4. Se tem array de cursos no usuário
-  if (u.courses && Array.isArray(u.courses)) {
-    return u.courses.indexOf(c.id || c.ak) >= 0;
   }
   
   return false;
@@ -1011,7 +1054,6 @@ function getCourseProgress(c) {
   }
 }
 
-// Renderiza card de NOTÍCIA
 function renderNewsCard(c) {
   var unlocked = isCourseUnlocked(c);
   var color = CATEGORY_COLORS[c.cat] || '#ef4444';
@@ -1039,7 +1081,6 @@ function renderNewsCard(c) {
     + '</div>';
 }
 
-// Renderiza card de CURSO
 function renderCourseCard(c) {
   var unlocked = isCourseUnlocked(c);
   var prog = getCourseProgress(c);
@@ -1073,7 +1114,12 @@ function he(s) {
 }
 
 function renderCursos(cursos) {
-  if (!cursos || !cursos.length) cursos = [];
+  if (!cursos || !cursos.length) {
+    console.log('[Render] Nenhum curso');
+    return;
+  }
+  
+  console.log('[Render] Renderizando', cursos.length, 'cursos');
   
   var grid = document.getElementById('coursesGrid');
   cursos = cursos.filter(function(c) { return c.active !== false; });
@@ -1083,18 +1129,20 @@ function renderCursos(cursos) {
   var noticias = cursos.filter(function(c) { return c.cat === NEWS_CAT; });
   var cursosCompletos = cursos.filter(function(c) { return c.cat !== NEWS_CAT; });
 
+  console.log('[Render]', noticias.length, 'notícias +', cursosCompletos.length, 'cursos');
+
   var html = '';
   var totalPct = 0, concluidos = 0;
 
   if (noticias.length) {
-    html += '<div class="section-divider"><span>📰 Notícias em Destaque</span></div>';
+    html += '<div class="section-divider"><span>📰 Notícias em Destaque</span><span class="section-count">' + noticias.length + ' notícias</span></div>';
     noticias.forEach(function(c) {
       html += renderNewsCard(c);
     });
   }
 
   if (cursosCompletos.length) {
-    html += '<div class="section-divider"><span>📚 Cursos Disponíveis</span></div>';
+    html += '<div class="section-divider"><span>📚 Cursos Disponíveis</span><span class="section-count">' + cursosCompletos.length + ' cursos</span></div>';
     cursosCompletos.forEach(function(c) {
       var prog = getCourseProgress(c);
       totalPct += prog.pct;
@@ -1111,6 +1159,8 @@ function renderCursos(cursos) {
   document.getElementById('sumConcluidos').textContent = concluidos;
   document.getElementById('sumProgPct').textContent = avgPct + '%';
   document.getElementById('sumProgFill').style.width = avgPct + '%';
+  
+  console.log('[Render] Stats: ' + totalCursos + ' disponíveis, ' + concluidos + ' concluídos, ' + avgPct + '% progresso');
 }
 
 // ══ MENU ══
@@ -1123,21 +1173,32 @@ function closeMenu() {
   document.getElementById('menuOverlay').classList.remove('open');
 }
 function updateMenuUser() {
-  var u = gU(), p = gP();
-  var us = document.getElementById('menuUserSec');
-  var as = document.getElementById('menuAuthSec');
-  if (u) {
-    if (us) us.innerHTML = '<div style="padding:0"><span class="ma-mu-name">' + he((u.name||u.email||'').split(' ')[0]) + '</span><div class="ma-mu-pts">' + (p.total||0).toLocaleString('pt-BR') + ' pontos</div></div>';
-    if (as) as.innerHTML = '<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
+  if (!CURRENT_USER) {
+    document.getElementById('menuUserSec').innerHTML = '<div><span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span></div>';
+    document.getElementById('menuAuthSec').innerHTML = '<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
+    document.getElementById('heroGreeting').textContent = '👋 Bem-vindo';
   } else {
-    if (us) us.innerHTML = '<div><span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span></div>';
-    if (as) as.innerHTML = '<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
+    var name = (CURRENT_USER.name || CURRENT_USER.email || 'Usuário').split(' ')[0];
+    var pts = 0;
+    if (typeof MAStore !== 'undefined' && MAStore.getTotalPointsSync) {
+      pts = MAStore.getTotalPointsSync() || 0;
+    }
+    document.getElementById('menuUserSec').innerHTML = '<div style="padding:0"><span class="ma-mu-name">' + he(name) + '</span><div class="ma-mu-pts">' + pts.toLocaleString('pt-BR') + ' pontos</div></div>';
+    document.getElementById('menuAuthSec').innerHTML = '<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
+    document.getElementById('heroGreeting').textContent = '🎓 Bem-vindo de volta, ' + name;
   }
 }
 function doLogout() {
-  if (typeof MAStore !== 'undefined') { MAStore.logout(); return; }
-  if (window.MA_AUTH) { MA_AUTH.logout().catch(function(){}); }
+  if (typeof MAStore !== 'undefined') { 
+    MAStore.logout().then(() => {
+      CURRENT_USER = null;
+      updateMenuUser();
+      renderCursos(LAST_COURSES || []);
+    });
+    return;
+  }
   localStorage.removeItem('ma_user');
+  CURRENT_USER = null;
   closeMenu();
   location.href = 'index.html';
 }
@@ -1155,48 +1216,47 @@ function toggleTheme() { _light = !_light; localStorage.setItem('ma_theme', _lig
 function updatePts() {
   var el = document.getElementById('maPtsNum');
   if (!el) return;
-  var p = gP();
-  var total = p.total || 0;
-  el.textContent = total < 1000 ? String(total).padStart(3,'0') : total.toLocaleString('pt-BR');
+  var pts = 0;
+  if (typeof MAStore !== 'undefined' && MAStore.getTotalPointsSync) {
+    pts = MAStore.getTotalPointsSync() || 0;
+  }
+  el.textContent = pts < 1000 ? String(pts).padStart(3,'0') : pts.toLocaleString('pt-BR');
 }
 
-// ══ INIT E LISTENERS ══
-document.addEventListener('DOMContentLoaded', function() {
+// ══ INIT ══
+document.addEventListener('DOMContentLoaded', async function() {
+  console.log('[Init] Iniciando página de cursos...');
+  console.log('[Init] ✅ APENAS 20 CURSOS SERÃO EXIBIDOS (trilhas excluídas)');
   applyTheme();
-  updatePts();
-  updateMenuUser();
   
-  // Carrega cursos com sincronização automática
+  await detectUserLogin();
+  updateMenuUser();
+  updatePts();
+  
   loadCoursesFromSources();
   
-  // Sincronização periódica (fallback)
-  AUTO_REFRESH_INTERVAL = setInterval(() => {
-    loadCoursesFromSources();
-  }, 30000);
+  // Sincronização de progresso a cada 1 segundo
+  PROGRESS_WATCH_INTERVAL = setInterval(() => {
+    checkProgressChanges();
+  }, 1000);
   
-  // Listener para mudanças de autenticação (IMPORTANTE!)
-  if (typeof MAStore !== 'undefined' && MAStore.onAuthStateChanged) {
-    MAStore.onAuthStateChanged(() => {
-      updateMenuUser();
+  // Fallback: re-renderiza a cada 5 segundos
+  AUTO_REFRESH_INTERVAL = setInterval(() => {
+    if (LAST_COURSES && LAST_COURSES.length > 0) {
+      renderCursos(LAST_COURSES);
       updatePts();
-      // Re-renderiza cursos quando o usuário faz login/logout
-      renderCursos(LAST_COURSES || []);
-    });
-  }
+    }
+  }, 5000);
   
   // Cleanup
   window.addEventListener('beforeunload', () => {
     if (AUTO_REFRESH_INTERVAL) clearInterval(AUTO_REFRESH_INTERVAL);
+    if (PROGRESS_WATCH_INTERVAL) clearInterval(PROGRESS_WATCH_INTERVAL);
     if (FIREBASE_UNSUBSCRIBE) FIREBASE_UNSUBSCRIBE();
   });
+  
+  console.log('[Init] ✅ Página pronta');
 });
-
-// Monitorar mudanças de acesso de cursos em tempo real
-setInterval(() => {
-  if (LAST_COURSES && LAST_COURSES.length > 0) {
-    renderCursos(LAST_COURSES);
-  }
-}, 5000);
 </script>
 
 </body>
