@@ -582,6 +582,25 @@ var MA_COURSES = [
     color: '#F77F00',
     addedTs: 1775775094437,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/bb.jpg',
+    id: 'bb',
+    name: 'Bastidores de Brasília: Como o Poder Real Funciona',
+    desc: 'Como funcionam negociações, articulações, interesses partidários, lobby, mídia, crises institucionais e decisões estratégicas nos bastidores do poder.',
+    file: 'curso-bastidores-brasilia.html',
+    cat: 'Política Brasileira',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'BB_HENRY_2026_MASTER',
+    ak: 'bb_auth',
+    storagePrefix: 'bb_',
+    icon: '📰',
+    color: '#6D213C',
+    addedTs: 1775775157603,
+    active: true
   }
 ];
 var MA_CATS = [
