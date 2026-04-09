@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cursos — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+<!-- ═══ DADOS CENTRALIZADOS ═══ -->
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
+<script src="firebase-config.js"></script>
+<script src="shared/time-tracker.js"></script>
+
+<style>
+:root{
+  --bg:#08080f;--bg2:#0d0d1a;--bg3:#111122;--card:#0f0f1e;
+  --brd:rgba(255,255,255,.07);--brd2:rgba(255,255,255,.12);
+  --pri:#4A7EFF;--neon:#00d4ff;
+  --txt:#e8e8ef;--txt2:rgba(255,255,255,.55);--txt3:rgba(255,255,255,.28);
+  --grn:#22c55e;--orn:#f59e0b;--red:#ef4444;
+  --font:'Outfit',sans-serif;--serif:'Playfair Display',serif;
+  --topbar:56px;--bottombar:72px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--font);overflow-x:hidden;}
+::selection{background:var(--pri);color:#fff;}
+
+/* ══ TOPBAR ══ */
+.ma-topbar{
+  position:fixed;top:0;left:0;right:0;height:var(--topbar);
+  background:rgba(4,4,10,.99);
+  border-bottom:1px solid rgba(91,127,255,.15);
+  display:flex;align-items:center;padding:0 14px;gap:6px;
+  z-index:9999;font-family:var(--font);
+}
+.ma-topbar::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,transparent 0%,#4A7EFF 30%,#00d4ff 65%,transparent 100%);
+  opacity:.75;
+}
+.ma-tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.ma-tb-logo svg{display:block;flex-shrink:0;}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;}
+.ma-tb-page-name{font-size:.64rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;}
+.ma-tb-spacer{flex:1;min-width:0;}
+.ma-tb-pts-block{
+  display:flex;align-items:center;gap:7px;
+  text-decoration:none;flex-shrink:0;
+  padding:5px 12px 5px 10px;border-radius:22px;
+  border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+  transition:all .2s;cursor:pointer;
+}
+.ma-tb-pts-block:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08);}
+.ma-tb-trophy{color:#f59e0b;display:flex;align-items:center;}
+.ma-tb-trophy svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.ma-tb-pts-num{font-size:.78rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;}
+.ma-tb-menu-btn{
+  width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;padding:0;
+}
+.ma-tb-menu-btn svg{width:16px;height:16px;stroke:currentColor;pointer-events:none;}
+.ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;}
+.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none;}
+.ma-menu-overlay.open{display:block;}
+.ma-menu-dd{
+  position:fixed;top:62px;right:10px;
+  background:#0f0f1e;border:1px solid #252540;border-radius:16px;
+  min-width:240px;z-index:10001;
+  box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;
+  opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;
+  transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right;
+}
+.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all;}
+.ma-menu-user{padding:14px 16px 12px;border-bottom:1px solid #1e1e35;}
+.ma-mu-name{font-size:.85rem;font-weight:700;color:#fff;display:block;margin-bottom:3px;}
+.ma-mu-pts{font-size:.6rem;color:rgba(255,255,255,.35);}
+.ma-menu-sec{padding:5px 0;}
+.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35;}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s;}
+.ma-mi:hover{background:#161628;color:#e8e8f0;}
+.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0;}
+.ma-mi.gold{color:#f59e0b;}.ma-mi.red{color:#ef4444;}
+
+/* ══ MODO CLARO KINDLE ══ */
+
+/* ════════════════════════════════════════════════════════ */
+/* ══  HERO PREMIUM COM EFEITOS  ═══ */
+/* ════════════════════════════════════════════════════════ */
+
+.page-hero{
+  padding:calc(var(--topbar) + 24px) 16px 0;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:
+    radial-gradient(circle at 30% 0%, rgba(74,126,255,.15) 0%, transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(0,212,255,.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(239,68,68,.06) 0%, transparent 60%);
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;
+  z-index:1;
+  animation:fadeInUp .8s cubic-bezier(.2,0,.3,1);
+}
+
+.hero-greeting{
+  font-size:.8rem;
+  font-weight:700;
+  color:var(--neon);
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  margin-bottom:8px;
+  opacity:0;
+  animation:slideDown .6s ease-out .2s forwards;
+}
+
+.hero-main{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  margin-bottom:24px;
+}
+
+.hero-title-box{
+  opacity:0;
+  animation:slideDown .6s ease-out .3s forwards;
+}
+
+.hero-title{
+  font-family:var(--serif);
+  font-size:clamp(1.6rem,5vw,2.4rem);
+  font-weight:900;
+  background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.7) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1.1;
+  letter-spacing:-.01em;
+  margin-bottom:8px;
+}
+
+.hero-sub{
+  font-size:.85rem;
+  color:var(--txt2);
+  line-height:1.6;
+  opacity:0;
+  animation:slideDown .6s ease-out .4s forwards;
+}
+
+/* ══ TRENDING BOX ══ */
+.hero-trending{
+  opacity:0;
+  animation:slideDown .6s ease-out .5s forwards;
+}
+
+.trending-header{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.trending-flame{
+  font-size:1.2rem;
+  animation:pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform:scale(1); }
+  50% { transform:scale(1.1); }
+}
+
+.trending-label{
+  font-size:.7rem;
+  font-weight:800;
+  color:var(--neon);
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+.trending-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.trending-item{
+  padding:10px 12px;
+  background:rgba(74,126,255,.08);
+  border:1px solid rgba(74,126,255,.15);
+  border-radius:10px;
+  cursor:pointer;
+  transition:all .3s cubic-bezier(.2,0,.3,1);
+  position:relative;
+  overflow:hidden;
+}
+
+.trending-item::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(74,126,255,.1) 0%,transparent 100%);
+  opacity:0;
+  transition:opacity .3s;
+}
+
+.trending-item:hover{
+  border-color:rgba(74,126,255,.4);
+  background:rgba(74,126,255,.12);
+  transform:translateY(-2px);
+}
+
+.trending-item:hover::before{
+  opacity:1;
+}
+
+.trending-icon{
+  font-size:1.4rem;
+  margin-bottom:4px;
+  display:block;
+}
+
+.trending-title{
+  font-size:.7rem;
+  font-weight:700;
+  color:#fff;
+  line-height:1.2;
+  margin-bottom:2px;
+}
+
+.trending-desc{
+  font-size:.58rem;
+  color:var(--txt3);
+  line-height:1.2;
+}
+
+/* ══ SUMMARY STATS ══ */
+.summary-bar{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin:20px 0 24px;
+  animation:slideDown .6s ease-out .6s forwards;
+  opacity:0;
+}
+
+.summary-stat{
+  padding:12px;
+  background:linear-gradient(135deg,rgba(74,126,255,.1) 0%,rgba(0,212,255,.05) 100%);
+  border:1px solid rgba(74,126,255,.2);
+  border-radius:12px;
+  text-align:center;
+  transition:all .3s cubic-bezier(.2,0,.3,1);
+}
+
+.summary-stat:hover{
+  background:linear-gradient(135deg,rgba(74,126,255,.15) 0%,rgba(0,212,255,.08) 100%);
+  border-color:rgba(74,126,255,.4);
+  transform:translateY(-2px);
+}
+
+.summary-val{
+  font-size:1.4rem;
+  font-weight:900;
+  color:#fff;
+  display:block;
+  line-height:1;
+  margin-bottom:4px;
+}
+
+.summary-lbl{
+  font-size:.48rem;
+  color:var(--txt3);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  display:block;
+}
+
+.summary-prog{
+  grid-column:1/-1;
+  padding:12px;
+  background:rgba(74,126,255,.08);
+  border:1px solid rgba(74,126,255,.15);
+  border-radius:12px;
+}
+
+.summary-prog-label{
+  font-size:.48rem;
+  color:var(--txt3);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  display:block;
+  margin-bottom:8px;
+}
+
+.summary-prog-bar{
+  height:4px;
+  background:rgba(255,255,255,.06);
+  border-radius:3px;
+  overflow:hidden;
+}
+
+.summary-prog-fill{
+  height:100%;
+  border-radius:3px;
+  background:linear-gradient(90deg,var(--pri),var(--neon));
+  transition:width 1s cubic-bezier(.2,0,.3,1);
+}
+
+/* ══ MAIN GRID ══ */
+.courses-grid{
+  max-width:100%;
+  margin:0;
+  padding:0 12px calc(var(--bottombar) + 16px);
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+
+/* ══ SECTION HEADER ══ */
+.section-divider{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:20px 4px 12px;
+  margin-top:8px;
+  border-bottom:2px solid var(--brd);
+}
+
+.section-divider span{
+  font-size:.48rem;
+  font-weight:800;
+  color:var(--txt);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  flex-shrink:0;
+}
+
+.section-count{
+  font-size:.42rem;
+  color:var(--txt3);
+  margin-left:auto;
+  font-weight:600;
+}
+
+/* ════════════════════════════════════════════════════════ */
+/* ══  CARD LAYOUT — NOTÍCIAS  ═══ */
+/* ════════════════════════════════════════════════════════ */
+
+.news-card{
+  display:grid;
+  grid-template-columns:80px 1fr;
+  gap:12px;
+  padding:12px;
+  margin-bottom:8px;
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:12px;
+  cursor:pointer;
+  transition:all .2s cubic-bezier(.2,0,.3,1);
+  overflow:hidden;
+  position:relative;
+  border-left:4px solid;
+}
+
+.news-card:hover:not(.locked){
+  border-color:var(--card-color);
+  background:rgba(74,126,255,.04);
+  transform:translateX(2px);
+}
+
+.news-card.locked{
+  opacity:.6;
+}
+
+.news-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(var(--rgb-color),0) 0%,rgba(var(--rgb-color),.04) 100%);
+  pointer-events:none;
+}
+
+.news-thumb{
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2.2rem;
+  flex-shrink:0;
+  background:rgba(74,126,255,.12);
+  border:1px solid rgba(74,126,255,.2);
+  position:relative;
+  z-index:1;
+}
+
+.news-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-width:0;
+  position:relative;
+  z-index:1;
+}
+
+.news-category{
+  font-size:.42rem;
+  font-weight:700;
+  color:var(--txt3);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:2px;
+}
+
+.news-title{
+  font-size:.85rem;
+  font-weight:800;
+  color:#fff;
+  line-height:1.2;
+  margin-bottom:4px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  word-break:break-word;
+}
+
+
+.news-excerpt{
+  font-size:.65rem;
+  color:var(--txt2);
+  line-height:1.3;
+  display:-webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  word-break:break-word;
+  margin-bottom:6px;
+}
+
+.news-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  font-size:.58rem;
+  color:var(--txt3);
+}
+
+.news-stat{
+  display:flex;
+  align-items:center;
+  gap:3px;
+  white-space:nowrap;
+}
+
+.news-stat svg{
+  width:12px;
+  height:12px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.5;
+  flex-shrink:0;
+}
+
+.news-badge{
+  position:absolute;
+  top:8px;
+  right:8px;
+  font-size:.48rem;
+  font-weight:700;
+  padding:3px 8px;
+  border-radius:6px;
+  background:rgba(34,197,94,.2);
+  color:#22c55e;
+  text-transform:uppercase;
+  z-index:2;
+}
+
+.news-badge.locked{
+  background:rgba(239,68,68,.2);
+  color:#ef4444;
+}
+
+/* ════════════════════════════════════════════════════════ */
+/* ══  CARD LAYOUT — CURSOS  ═══ */
+/* ════════════════════════════════════════════════════════ */
+
+.course-card{
+  display:grid;
+  grid-template-columns:70px 1fr;
+  gap:12px;
+  padding:12px;
+  margin-bottom:8px;
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:12px;
+  cursor:pointer;
+  transition:all .2s cubic-bezier(.2,0,.3,1);
+  position:relative;
+  border-left:4px solid;
+  overflow:hidden;
+}
+
+.course-card:hover:not(.locked){
+  border-color:var(--card-color);
+  background:rgba(74,126,255,.04);
+  transform:translateX(2px);
+}
+
+.course-card.locked{
+  opacity:.6;
+}
+
+.course-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(var(--rgb-color),0) 0%,rgba(var(--rgb-color),.04) 100%);
+  pointer-events:none;
+}
+
+.course-icon{
+  width:70px;
+  height:70px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  flex-shrink:0;
+  background:rgba(74,126,255,.12);
+  border:1px solid rgba(74,126,255,.2);
+  position:relative;
+  z-index:1;
+}
+
+.course-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-width:0;
+  position:relative;
+  z-index:1;
+}
+
+.course-category{
+  font-size:.42rem;
+  font-weight:700;
+  color:var(--txt3);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:2px;
+}
+
+.course-name{
+  font-size:.82rem;
+  font-weight:800;
+  color:#fff;
+  line-height:1.2;
+  margin-bottom:3px;
+  display:-webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  word-break:break-word;
+}
+
+
+.course-desc{
+  font-size:.63rem;
+  color:var(--txt2);
+  line-height:1.2;
+  display:-webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  margin-bottom:6px;
+}
+
+.course-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  font-size:.56rem;
+  color:var(--txt3);
+}
+
+.course-stat{
+  display:flex;
+  align-items:center;
+  gap:3px;
+  white-space:nowrap;
+}
+
+.course-stat svg{
+  width:12px;
+  height:12px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.5;
+  flex-shrink:0;
+}
+
+.course-badge{
+  position:absolute;
+  top:8px;
+  right:8px;
+  font-size:.46rem;
+  font-weight:700;
+  padding:3px 8px;
+  border-radius:6px;
+  background:rgba(34,197,94,.2);
+  color:#22c55e;
+  text-transform:uppercase;
+  z-index:2;
+}
+
+.course-badge.owned{
+  background:rgba(74,126,255,.2);
+  color:#4A7EFF;
+}
+
+.course-badge.locked{
+  background:rgba(239,68,68,.2);
+  color:#ef4444;
+}
+
+.course-progress{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:rgba(255,255,255,.06);
+  overflow:hidden;
+}
+
+.course-progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--pri),var(--neon));
+  transition:width .6s ease;
+}
+
+/* ══ ANIMATIONS ══ */
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity:0; transform:translateY(-10px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ══ TOAST ══ */
+.toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 15, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e8e8ef;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  z-index: 10001;
+  backdrop-filter: blur(10px);
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+/* ══ BOTTOM NAV ══ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--bottombar);
+  background:rgba(4,4,10,.98);border-top:1px solid var(--brd);
+  display:flex;align-items:center;justify-content:space-around;
+  z-index:999;padding:0 8px;padding-bottom:env(safe-area-inset-bottom);
+}
+.bottom-nav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;flex:1;height:100%;cursor:pointer;border:none;background:transparent;
+  color:rgba(255,255,255,.28);font-family:var(--font);text-decoration:none;
+  position:relative;transition:color .2s;-webkit-tap-highlight-color:transparent;
+}
+.bn-item.active,.bn-item:hover{color:#fff;}
+.bn-item.active::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:2px;border-radius:0 0 2px 2px;background:#fff;}
+.bn-item.bn-center{flex:1.4;position:relative;top:-10px;}
+.bn-center-logo{
+  width:50px;height:50px;border-radius:14px;background:#000;
+  border:1.5px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.6);transition:all .25s;
+}
+.bn-item.bn-center:hover .bn-center-logo{transform:scale(1.1);border-color:rgba(255,255,255,.4);}
+.bn-icon{display:flex;align-items:center;justify-content:center;}
+.bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1;}
+@media(min-width:769px){.bottom-nav{display:none;}}
+
+</style>
+
+</head>
+<body>
+
+<!-- ══ TOPBAR ══ -->
+<nav class="ma-topbar">
+  <a class="ma-tb-logo" href="index.html">
+    <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
+      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
+      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
+      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
+      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
+      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
+    </svg>
+  </a>
+  <div class="ma-tb-sep"></div>
+  <span class="ma-tb-page-name">Cursos</span>
+  <div class="ma-tb-spacer"></div>
+  <a class="ma-tb-pts-block" href="painel.html">
+    <span class="ma-tb-trophy">
+      <svg viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg>
+    </span>
+    <span class="ma-tb-pts-num" id="maPtsNum">000</span>
+  </a>
+  <button class="ma-tb-menu-btn" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="5" r="1" fill="currentColor"/>
+      <circle cx="12" cy="12" r="1" fill="currentColor"/>
+      <circle cx="12" cy="19" r="1" fill="currentColor"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- ══ MENU DROPDOWN ══ -->
+<div class="ma-menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="ma-menu-dd" id="menuDd">
+  <div class="ma-menu-user" id="menuUserSec"></div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">🎓</span>Meus Cursos</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Meu Painel</a>
+    <a class="ma-mi" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🤝</span>Indicações</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🗺️</span>Trilhas</a>
+    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
+  </div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
+  </div>
+  <div class="ma-menu-sec" id="menuAuthSec"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- ══  HERO PREMIUM  ═══ -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  
+  <div class="hero-content">
+    <div class="hero-greeting" id="heroGreeting">🎓 Bem-vindo de volta</div>
+    
+    <div class="hero-main">
+      <div class="hero-title-box">
+        <h1 class="hero-title">Explore Novos Conhecimentos</h1>
+        <p class="hero-sub">Mergulhe em cursos curados e fique atualizado com os principais assuntos do momento. Expanda sua visão sobre o mundo.</p>
+      </div>
+    </div>
+
+    <!-- ══ TRENDING ══ -->
+    <div class="hero-trending">
+      <div class="trending-header">
+        <span class="trending-flame">🔥</span>
+        <span class="trending-label">Em Destaque Agora</span>
+      </div>
+      <div class="trending-grid">
+        <div class="trending-item">
+          <span class="trending-icon">⚡</span>
+          <div class="trending-title">Geopolítica Global</div>
+          <div class="trending-desc">Conflitos e poder</div>
+        </div>
+        <div class="trending-item">
+          <span class="trending-icon">🚀</span>
+          <div class="trending-title">Tecnologia e IA</div>
+          <div class="trending-desc">Revolução digital</div>
+        </div>
+        <div class="trending-item">
+          <span class="trending-icon">📊</span>
+          <div class="trending-title">Mercados Financeiros</div>
+          <div class="trending-desc">Tendências 2026</div>
+        </div>
+        <div class="trending-item">
+          <span class="trending-icon">🌍</span>
+          <div class="trending-title">Sustentabilidade</div>
+          <div class="trending-desc">Futuro do planeta</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SUMMARY ══ -->
+    <div class="summary-bar">
+      <div class="summary-stat">
+        <span class="summary-val" id="sumCursos">0</span>
+        <span class="summary-lbl">Disponíveis</span>
+      </div>
+      <div class="summary-stat">
+        <span class="summary-val" id="sumConcluidos">0</span>
+        <span class="summary-lbl">Concluídos</span>
+      </div>
+      <div class="summary-stat">
+        <span class="summary-val" id="sumProgPct">0%</span>
+        <span class="summary-lbl">Progresso</span>
+      </div>
+      <div class="summary-prog">
+        <div class="summary-prog-label">Seu Desempenho Geral</div>
+        <div class="summary-prog-bar"><div class="summary-prog-fill" id="sumProgFill" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GRID ══ -->
+<div class="courses-grid" id="coursesGrid">
+  <div style="text-align:center;padding:40px 0;color:rgba(255,255,255,.25);font-size:.75rem;">⏳ Carregando cursos...</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* ═══  SISTEMA COM SINCRONIZAÇÃO DE PROGRESSO EM TEMPO REAL  ═══ */
+/* ═══════════════════════════════════════════════════════════════════════ */
+
+let LAST_COURSES = null;
+let AUTO_REFRESH_INTERVAL = null;
+let PROGRESS_WATCH_INTERVAL = null;
+let FIREBASE_UNSUBSCRIBE = null;
+let CURRENT_USER = null;
+let LAST_PROGRESS_STATE = {};
+
+const CATEGORY_COLORS = {
+  'Atualize-se! Notícias Mais Relevantes da Semana': '#ef4444',
+};
+
+// ✅ LISTA DE TRILHAS (NÃO SÃO CURSOS REAIS)
+const TRILHAS_IDS = ['empreendedor', 'estrategista', 'cidadao', 'completa'];
+
+function showToast(text) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = text;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.animation = 'slideUp 0.3s ease reverse';
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// ✅ DETECTA USUÁRIO LOGADO
+// ═══════════════════════════════════════════════════════════════════════
+async function detectUserLogin() {
+  console.log('[Auth] Detectando login...');
+  
+  if (typeof MAStore !== 'undefined' && MAStore.getUser) {
+    try {
+      const user = await MAStore.getUser();
+      if (user) {
+        console.log('[Auth] ✅ Usuário via MAStore:', user.email);
+        CURRENT_USER = user;
+        return user;
+      }
+    } catch (e) {
+      console.log('[Auth] MAStore erro:', e);
+    }
+  }
+  
+  try {
+    const localUser = localStorage.getItem('ma_user');
+    if (localUser) {
+      const user = JSON.parse(localUser);
+      console.log('[Auth] ✅ Usuário via localStorage:', user.email);
+      CURRENT_USER = user;
+      return user;
+    }
+  } catch (e) {
+    console.log('[Auth] localStorage falhou');
+  }
+  
+  if (window.maAuth && window.maAuth.currentUser) {
+    console.log('[Auth] ✅ Usuário Firebase:', window.maAuth.currentUser.email);
+    CURRENT_USER = { email: window.maAuth.currentUser.email, uid: window.maAuth.currentUser.uid };
+    return CURRENT_USER;
+  }
+  
+  console.log('[Auth] ❌ Nenhum usuário');
+  CURRENT_USER = null;
+  return null;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// ✅ SINCRONIZA PROGRESSO EM TEMPO REAL
+// ═══════════════════════════════════════════════════════════════════════
+function checkProgressChanges() {
+  if (!LAST_COURSES) return;
+  
+  let changed = false;
+  
+  LAST_COURSES.forEach(course => {
+    const progKey = 'ma_prog_' + course.id;
+    const currentProgress = localStorage.getItem(progKey);
+    const lastProgress = LAST_PROGRESS_STATE[course.id];
+    
+    if (currentProgress !== lastProgress) {
+      console.log('[Progress] Mudança detectada em:', course.name);
+      LAST_PROGRESS_STATE[course.id] = currentProgress;
+      changed = true;
+    }
+  });
+  
+  if (changed) {
+    console.log('[Progress] Re-renderizando por mudança de progresso');
+    renderCursos(LAST_COURSES);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// ✅ CARREGA APENAS OS 20 CURSOS (exclui trilhas)
+// ═══════════════════════════════════════════════════════════════════════
+function loadCoursesFromSources() {
+  console.log('[Courses] Carregando cursos...');
+  let courses = [];
+  
+  // Carrega estáticos e FILTRA TRILHAS
+  if (typeof MA_COURSES !== 'undefined' && MA_COURSES && MA_COURSES.length) {
+    courses = MA_COURSES.filter(c => !TRILHAS_IDS.includes(c.id));
+    console.log('[Courses] ✅ Carregados', courses.length, 'cursos (excluindo trilhas)');
+  }
+  
+  // Se Firebase disponível, sincroniza
+  if (typeof firebase !== 'undefined' && firebase.firestore) {
+    try {
+      const db = firebase.firestore();
+      
+      if (FIREBASE_UNSUBSCRIBE) {
+        FIREBASE_UNSUBSCRIBE();
+      }
+      
+      FIREBASE_UNSUBSCRIBE = db.collection('courses')
+        .where('active', '==', true)
+        .onSnapshot(
+          (snapshot) => {
+            const firebaseCourses = [];
+            snapshot.forEach((doc) => {
+              const data = doc.data();
+              if (!TRILHAS_IDS.includes(data.id || doc.id)) {
+                firebaseCourses.push({
+                  id: data.id || doc.id,
+                  name: data.name,
+                  desc: data.desc,
+                  cat: data.cat,
+                  icon: data.icon,
+                  color: data.color,
+                  file: data.file,
+                  modules: data.modules,
+                  topics: data.topics,
+                  hours: data.hours,
+                  quizzes: data.quizzes,
+                  free: data.free,
+                  active: data.active,
+                  addedTs: data.addedTs || 0,
+                  ak: data.ak,
+                });
+              }
+            });
+            
+            console.log('[Firebase] Sincronizados', firebaseCourses.length, 'cursos');
+            
+            // Merge
+            const finalCourses = [...courses];
+            firebaseCourses.forEach((fbCourse) => {
+              const idx = finalCourses.findIndex(c => c.id === fbCourse.id);
+              if (idx >= 0) {
+                finalCourses[idx] = fbCourse;
+              } else {
+                finalCourses.push(fbCourse);
+              }
+            });
+            
+            LAST_COURSES = finalCourses;
+            renderCursos(finalCourses);
+          },
+          (error) => {
+            console.log('[Firebase] Erro (continuando):', error);
+            LAST_COURSES = courses;
+            renderCursos(courses);
+          }
+        );
+    } catch (e) {
+      console.log('[Firebase] Não configurado');
+      LAST_COURSES = courses;
+      renderCursos(courses);
+    }
+  } else {
+    LAST_COURSES = courses;
+    renderCursos(courses);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// ✅ VERIFICA ACESSO E PROGRESSO
+// ═══════════════════════════════════════════════════════════════════════
+function isCourseUnlocked(c) {
+  if (c.free === true || c.ak === 'free') return true;
+  if (!CURRENT_USER) return false;
+  
+  if (CURRENT_USER.cursos && Array.isArray(CURRENT_USER.cursos)) {
+    return CURRENT_USER.cursos.indexOf(c.id || c.ak) >= 0;
+  }
+  
+  if (typeof MAStore !== 'undefined' && MAStore.hasCourseAccess) {
+    const accessKey = c.ak || (c.id + '_access');
+    if (MAStore.hasCourseAccess(accessKey)) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+function getCourseProgress(c) {
+  if (!c.id) return {pct: 0, count: 0};
+  var stored = localStorage.getItem('ma_prog_' + c.id);
+  if (!stored) return {pct: 0, count: 0};
+  try {
+    var p = JSON.parse(stored);
+    var mods = (c.modules || 1);
+    var done = p.done || 0;
+    var pct = mods ? Math.round((done / mods) * 100) : 0;
+    return {pct: Math.min(pct, 100), count: done};
+  } catch (e) {
+    return {pct: 0, count: 0};
+  }
+}
+
+function renderNewsCard(c) {
+  var unlocked = isCourseUnlocked(c);
+  var color = CATEGORY_COLORS[c.cat] || '#ef4444';
+  var badge = c.free ? 'GRATUITO' : (unlocked ? 'COM ACESSO' : '🔒 BLOQUEADO');
+  var badgeClass = c.free ? '' : (unlocked ? '' : 'locked');
+  var onclick = unlocked
+    ? 'onclick="window.location.href=\'' + c.file + '\'"'
+    : 'onclick="showToast(\'🔒 Acesse os planos para desbloquear\')"';
+  
+  return '<div class="news-card' + (unlocked?'':' locked') + '" style="--card-color:' + color + ';border-left-color:' + color + ';" ' + onclick + '>'
+    + '<div class="news-thumb">' + (c.icon||'📰') + '</div>'
+    + '<div class="news-content">'
+    + '<div>'
+    + '<div class="news-category">📰 ' + (c.cat||'Notícia') + '</div>'
+    + '<div class="news-title">' + he(c.name) + '</div>'
+    + '<div class="news-excerpt">' + he((c.desc||'').substring(0, 100)) + '...</div>'
+    + '</div>'
+    + '<div class="news-meta">'
+    + '<span class="news-stat"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>' + (c.modules||1) + ' mód</span>'
+    + '<span class="news-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + (c.hours||1) + 'h</span>'
+    + '<span class="news-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + (c.quizzes||0) + 'q</span>'
+    + '</div>'
+    + '</div>'
+    + '<div class="news-badge' + (badgeClass ? ' ' + badgeClass : '') + '">' + badge + '</div>'
+    + '</div>';
+}
+
+function renderCourseCard(c) {
+  var unlocked = isCourseUnlocked(c);
+  var prog = getCourseProgress(c);
+  var badge = c.free ? 'GRATUITO' : (unlocked ? 'COM ACESSO' : '🔒 BLOQUEADO');
+  var badgeClass = c.free ? '' : (unlocked ? 'owned' : 'locked');
+  var onclick = unlocked
+    ? 'onclick="window.location.href=\'' + c.file + '\'"'
+    : 'onclick="showToast(\'🔒 Acesse os planos para desbloquear\')"';
+  
+  return '<div class="course-card' + (unlocked?'':' locked') + '" style="--card-color:' + (c.color||'#4A7EFF') + ';border-left-color:' + (c.color||'#4A7EFF') + ';" ' + onclick + '>'
+    + '<div class="course-icon">' + (c.icon||'📚') + '</div>'
+    + '<div class="course-content">'
+    + '<div>'
+    + '<div class="course-category">' + (c.cat||'Curso') + '</div>'
+    + '<div class="course-name">' + he(c.name) + '</div>'
+    + '<div class="course-desc">' + he((c.desc||'').substring(0, 80)) + '</div>'
+    + '</div>'
+    + '<div class="course-stats">'
+    + '<span class="course-stat"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>' + (c.modules||1) + '</span>'
+    + '<span class="course-stat"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>' + (c.topics||0) + '</span>'
+    + '<span class="course-stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + (c.hours||1) + 'h</span>'
+    + '</div>'
+    + '</div>'
+    + '<div class="course-badge' + (badgeClass ? ' ' + badgeClass : '') + '">' + badge + '</div>'
+    + '<div class="course-progress"><div class="course-progress-fill" style="width:' + prog.pct + '%"></div></div>'
+    + '</div>';
+}
+
+function he(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderCursos(cursos) {
+  if (!cursos || !cursos.length) {
+    console.log('[Render] Nenhum curso');
+    return;
+  }
+  
+  console.log('[Render] Renderizando', cursos.length, 'cursos');
+  
+  var grid = document.getElementById('coursesGrid');
+  cursos = cursos.filter(function(c) { return c.active !== false; });
+  cursos.sort(function(a, b) { return (b.addedTs || 0) - (a.addedTs || 0); });
+
+  var NEWS_CAT = 'Atualize-se! Notícias Mais Relevantes da Semana';
+  var noticias = cursos.filter(function(c) { return c.cat === NEWS_CAT; });
+  var cursosCompletos = cursos.filter(function(c) { return c.cat !== NEWS_CAT; });
+
+  console.log('[Render]', noticias.length, 'notícias +', cursosCompletos.length, 'cursos');
+
+  var html = '';
+  var totalPct = 0, concluidos = 0;
+
+  if (noticias.length) {
+    html += '<div class="section-divider"><span>📰 Notícias em Destaque</span><span class="section-count">' + noticias.length + ' notícias</span></div>';
+    noticias.forEach(function(c) {
+      html += renderNewsCard(c);
+    });
+  }
+
+  if (cursosCompletos.length) {
+    html += '<div class="section-divider"><span>📚 Cursos Disponíveis</span><span class="section-count">' + cursosCompletos.length + ' cursos</span></div>';
+    cursosCompletos.forEach(function(c) {
+      var prog = getCourseProgress(c);
+      totalPct += prog.pct;
+      if (prog.pct === 100) concluidos++;
+      html += renderCourseCard(c);
+    });
+  }
+
+  grid.innerHTML = html || '<div style="text-align:center;padding:40px 0;color:rgba(255,255,255,.25);font-size:.75rem;">Nenhum curso disponível no momento.</div>';
+
+  var totalCursos = cursosCompletos.length;
+  var avgPct = totalCursos ? Math.round(totalPct / totalCursos) : 0;
+  document.getElementById('sumCursos').textContent = totalCursos;
+  document.getElementById('sumConcluidos').textContent = concluidos;
+  document.getElementById('sumProgPct').textContent = avgPct + '%';
+  document.getElementById('sumProgFill').style.width = avgPct + '%';
+  
+  console.log('[Render] Stats: ' + totalCursos + ' disponíveis, ' + concluidos + ' concluídos, ' + avgPct + '% progresso');
+}
+
+// ══ MENU ══
+function toggleMenu() {
+  document.getElementById('menuDd').classList.toggle('open');
+  document.getElementById('menuOverlay').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('menuDd').classList.remove('open');
+  document.getElementById('menuOverlay').classList.remove('open');
+}
+function updateMenuUser() {
+  if (!CURRENT_USER) {
+    document.getElementById('menuUserSec').innerHTML = '<div><span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span></div>';
+    document.getElementById('menuAuthSec').innerHTML = '<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
+    document.getElementById('heroGreeting').textContent = '👋 Bem-vindo';
+  } else {
+    var name = (CURRENT_USER.name || CURRENT_USER.email || 'Usuário').split(' ')[0];
+    var pts = 0;
+    if (typeof MAStore !== 'undefined' && MAStore.getTotalPointsSync) {
+      pts = MAStore.getTotalPointsSync() || 0;
+    }
+    document.getElementById('menuUserSec').innerHTML = '<div style="padding:0"><span class="ma-mu-name">' + he(name) + '</span><div class="ma-mu-pts">' + pts.toLocaleString('pt-BR') + ' pontos</div></div>';
+    document.getElementById('menuAuthSec').innerHTML = '<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
+    document.getElementById('heroGreeting').textContent = '🎓 Bem-vindo de volta, ' + name;
+  }
+}
+function doLogout() {
+  if (typeof MAStore !== 'undefined') { 
+    MAStore.logout().then(() => {
+      CURRENT_USER = null;
+      updateMenuUser();
+      renderCursos(LAST_COURSES || []);
+    });
+    return;
+  }
+  localStorage.removeItem('ma_user');
+  CURRENT_USER = null;
+  closeMenu();
+  location.href = 'index.html';
+}
+
+// ══ PONTOS ══
+function updatePts() {
+  var el = document.getElementById('maPtsNum');
+  if (!el) return;
+  var pts = 0;
+  if (typeof MAStore !== 'undefined' && MAStore.getTotalPointsSync) {
+    pts = MAStore.getTotalPointsSync() || 0;
+  } else {
+    try { var _u = JSON.parse(localStorage.getItem('ma_user')||'null'); if(_u && typeof _u.xp_total === 'number') pts = _u.xp_total; } catch(e){}
+  }
+  el.textContent = pts < 1000 ? String(pts).padStart(3,'0') : pts.toLocaleString('pt-BR');
+}
+
+// ══ INIT ══
+document.addEventListener('DOMContentLoaded', async function() {
+  console.log('[Init] Iniciando página de cursos...');
+  console.log('[Init] ✅ APENAS 20 CURSOS SERÃO EXIBIDOS (trilhas excluídas)');
+
+  await detectUserLogin();
+  updateMenuUser();
+  updatePts();
+  
+  loadCoursesFromSources();
+  
+  // Sincronização de progresso a cada 1 segundo
+  PROGRESS_WATCH_INTERVAL = setInterval(() => {
+    checkProgressChanges();
+  }, 1000);
+  
+  // Fallback: re-renderiza a cada 5 segundos
+  AUTO_REFRESH_INTERVAL = setInterval(() => {
+    if (LAST_COURSES && LAST_COURSES.length > 0) {
+      renderCursos(LAST_COURSES);
+      updatePts();
+    }
+  }, 5000);
+  
+  // Cleanup
+  window.addEventListener('beforeunload', () => {
+    if (AUTO_REFRESH_INTERVAL) clearInterval(AUTO_REFRESH_INTERVAL);
+    if (PROGRESS_WATCH_INTERVAL) clearInterval(PROGRESS_WATCH_INTERVAL);
+    if (FIREBASE_UNSUBSCRIBE) FIREBASE_UNSUBSCRIBE();
+  });
+  
+  console.log('[Init] ✅ Página pronta');
+});
+</script>
+
+<!-- ══ BOTTOM NAV ══ -->
+<nav class="bottom-nav">
+  <a class="bn-item" href="index.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 13 15 13 15 21"/></svg></span>
+    <span class="bn-label">Início</span>
+  </a>
+  <a class="bn-item active" href="cursos.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+    <span class="bn-label">Cursos</span>
+  </a>
+  <a class="bn-item bn-center" href="index.html" title="Matheus Academy">
+    <div class="bn-center-logo">
+      <svg width="28" height="28" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <text x="28" y="40" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="38" letter-spacing="-1">M</text>
+      </svg>
+    </div>
+  </a>
+  <a class="bn-item" href="ranking.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+    <span class="bn-label">Ranking</span>
+  </a>
+  <a class="bn-item" href="perfil.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+    <span class="bn-label">Perfil</span>
+  </a>
+</nav>
+
+</body>
+</html>

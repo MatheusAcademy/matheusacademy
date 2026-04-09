@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Planos &amp; Assinaturas - Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a1f'/%3E%3Ctext x='32' y='46' text-anchor='middle' fill='%234b8bff' font-family='Arial Black,Arial' font-weight='900' font-size='42'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<script src="data/courses.js"></script>
+<script src="data/userStore.js"></script>
+<script src="firebase-config.js"></script>
+<style>
+:root{
+  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;--card:#14141f;
+  --brd:#1e1e32;--brd2:#2a2a44;
+  --pri:#4b8bff;--pri2:rgba(75,139,255,.15);--pri3:#2563eb;
+  --neon:#00d4ff;--purp:#a855f7;--gold:#f59e0b;
+  --grn:#22c55e;--red:#ef4444;
+  --txt:#e8e8ef;--txt2:#9898b0;--txt3:#5a5a76;
+  --font:'Outfit',sans-serif;--serif:'Playfair Display',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;padding-top:56px;padding-bottom:80px}
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.3}
+.pl-wrap{position:relative;z-index:1}
+
+/* BANNER PLANO ATUAL */
+#currentPlanBanner{max-width:760px;margin:20px auto 0;padding:0 16px;display:none}
+.cpb-inner{border-radius:16px;padding:20px 24px;text-align:center;position:relative;overflow:hidden}
+.cpb-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pri),var(--neon),transparent)}
+.cpb-inner.master{background:linear-gradient(135deg,rgba(75,139,255,.12),rgba(0,212,255,.07));border:1px solid rgba(75,139,255,.35)}
+.cpb-inner.mensal{background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(75,139,255,.07));border:1px solid rgba(168,85,247,.35)}
+.cpb-inner.individual{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(75,139,255,.06));border:1px solid rgba(245,158,11,.3)}
+.cpb-icon{font-size:2rem;margin-bottom:6px}
+.cpb-title{font-size:1rem;font-weight:800;color:#fff;margin-bottom:6px}
+.cpb-title span{color:var(--pri)}
+.cpb-days{display:inline-flex;align-items:center;gap:6px;background:rgba(75,139,255,.15);border:1px solid rgba(75,139,255,.3);border-radius:20px;padding:5px 16px;font-size:.73rem;font-weight:700;color:var(--pri);margin:6px 0 10px}
+.cpb-sub{font-size:.73rem;color:var(--txt2);line-height:1.6}
+.cpb-sub b{color:#fff}
+
+/* ALERTA BLOQUEADO */
+#blockedAlert{max-width:760px;margin:16px auto 0;padding:0 16px;display:none}
+.ba-inner{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.25);border-radius:14px;padding:16px 20px;text-align:center}
+.ba-icon{font-size:1.6rem;margin-bottom:6px}
+.ba-title{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:4px}
+.ba-sub{font-size:.73rem;color:var(--txt2);line-height:1.5}
+.ba-sub b{color:var(--gold)}
+
+/* HERO */
+.hero{padding:60px 20px 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(ellipse,rgba(75,139,255,.1) 0%,transparent 65%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(75,139,255,.1);border:1px solid rgba(75,139,255,.3);border-radius:20px;padding:6px 18px;font-size:.7rem;font-weight:700;color:var(--pri);letter-spacing:.08em;margin-bottom:24px}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--pri);animation:pd 2s ease infinite}
+@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.hero h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.4rem);font-weight:900;line-height:1.1;color:#fff;margin-bottom:16px}
+.hl2{background:linear-gradient(135deg,var(--pri),var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(.85rem,2vw,1rem);color:var(--txt2);max-width:620px;margin:0 auto 30px;line-height:1.75}
+.hero-sub b{color:var(--txt)}
+.hero-stats{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:44px}
+.hs-item{text-align:center}
+.hs-num{font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,var(--pri),var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;line-height:1}
+.hs-lbl{font-size:.6rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:3px}
+
+/* MANIFESTO */
+.manifesto{max-width:800px;margin:0 auto 64px;padding:0 20px}
+.manifesto-label{display:inline-block;font-size:.62rem;font-weight:700;color:var(--pri);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;padding:4px 14px;border:1px solid rgba(75,139,255,.3);border-radius:20px}
+.manifesto h2{font-family:var(--serif);font-size:clamp(1.4rem,3vw,2rem);font-weight:900;color:#fff;margin-bottom:20px;line-height:1.3}
+.manifesto h2 em{font-style:italic;color:var(--neon)}
+.manifesto p{font-size:.9rem;color:var(--txt2);line-height:1.85;margin-bottom:18px}
+.manifesto p b{color:var(--txt)}
+.manifesto p .accent{color:var(--pri)}
+.manifesto-quote{border-left:3px solid var(--pri);padding:14px 20px;margin:24px 0;background:rgba(75,139,255,.06);border-radius:0 12px 12px 0}
+.manifesto-quote p{font-family:var(--serif);font-style:italic;font-size:1rem;color:#fff;margin:0;line-height:1.6}
+.manifesto-quote cite{font-size:.68rem;color:var(--txt3);font-style:normal;display:block;margin-top:8px}
+
+/* SEÇÕES */
+.content-section,.benefits-section,.social-section,.faq-section{max-width:900px;margin:0 auto 64px;padding:0 20px}
+.sec-header{text-align:center;margin-bottom:36px}
+.sec-header h2{font-family:var(--serif);font-size:clamp(1.3rem,3vw,2rem);font-weight:900;color:#fff;margin-bottom:8px}
+.sec-header h2 span{color:var(--pri)}
+.sec-header p{font-size:.82rem;color:var(--txt2);max-width:480px;margin:0 auto;line-height:1.65}
+
+/* CURSOS GRID */
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.cg-card{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:18px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;opacity:0;transform:translateY(20px)}
+.cg-card.visible{opacity:1;transform:translateY(0)}
+.cg-card:hover{transform:translateY(-3px);border-color:rgba(75,139,255,.4);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.cg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pri),transparent);opacity:0;transition:opacity .2s}
+.cg-card:hover::before{opacity:1}
+.cg-icon{font-size:1.5rem;margin-bottom:10px}
+.cg-name{font-size:.82rem;font-weight:800;color:#fff;margin-bottom:5px;line-height:1.3}
+.cg-desc{font-size:.68rem;color:var(--txt2);line-height:1.55}
+.cg-tag{display:inline-block;margin-top:10px;padding:3px 10px;border-radius:10px;font-size:.58rem;font-weight:700;background:rgba(75,139,255,.12);color:var(--pri);border:1px solid rgba(75,139,255,.2)}
+
+/* BENEFICIOS */
+.benefits-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.benefit-card{background:var(--card);border:1px solid var(--brd);border-radius:16px;padding:24px 18px;text-align:center;transition:transform .2s,box-shadow .2s;opacity:0;transform:translateY(20px)}
+.benefit-card.visible{opacity:1;transform:translateY(0)}
+.benefit-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.bc-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 14px}
+.bc-icon.blue{background:rgba(75,139,255,.12);border:1px solid rgba(75,139,255,.2)}
+.bc-icon.cyan{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2)}
+.bc-icon.purp{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2)}
+.bc-icon.gold{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2)}
+.bc-icon.grn{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)}
+.bc-icon.red{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2)}
+.bc-title{font-size:.82rem;font-weight:800;color:#fff;margin-bottom:6px}
+.bc-sub{font-size:.68rem;color:var(--txt2);line-height:1.55}
+
+/* DEPOIMENTOS */
+.social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.social-card{background:var(--card);border:1px solid var(--brd);border-radius:16px;padding:20px;transition:transform .2s;opacity:0;transform:translateY(20px)}
+.social-card.visible{opacity:1;transform:translateY(0)}
+.social-card:hover{transform:translateY(-2px)}
+.sc-stars{color:var(--gold);font-size:.75rem;margin-bottom:10px;letter-spacing:2px}
+.sc-text{font-size:.78rem;color:var(--txt2);line-height:1.65;margin-bottom:14px;font-style:italic}
+.sc-author{display:flex;align-items:center;gap:10px}
+.sc-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800;color:#fff;flex-shrink:0}
+.sc-name{font-size:.75rem;font-weight:700;color:#fff}
+.sc-meta{font-size:.63rem;color:var(--txt3)}
+
+/* PLANOS */
+.plans-section{max-width:960px;margin:0 auto 48px;padding:0 20px}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;align-items:start}
+.plan-card{background:var(--card);border:1px solid var(--brd);border-radius:22px;padding:28px 24px 24px;position:relative;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s,border-color .22s;opacity:0;transform:translateY(24px)}
+.plan-card.visible{opacity:1;transform:translateY(0)}
+.plan-card:hover{transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.plan-card.master-card{background:linear-gradient(160deg,rgba(75,139,255,.12),rgba(0,212,255,.05),var(--card));border-color:rgba(75,139,255,.45);box-shadow:0 0 0 1px rgba(75,139,255,.15),0 16px 50px rgba(75,139,255,.12)}
+.plan-card.master-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pri),var(--neon),transparent)}
+.plan-card.master-card:hover{box-shadow:0 0 0 1px rgba(75,139,255,.3),0 24px 70px rgba(75,139,255,.2)}
+.plan-card.mensal-card{background:linear-gradient(160deg,rgba(168,85,247,.08),var(--card));border-color:rgba(168,85,247,.3)}
+.plan-card.avulso-card{background:linear-gradient(160deg,rgba(245,158,11,.06),var(--card));border-color:rgba(245,158,11,.2)}
+.plan-pop-tag{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--pri),var(--neon));color:#fff;font-size:.58rem;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:.06em}
+.plan-icon-wrap{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin-bottom:16px}
+.master-card .plan-icon-wrap{background:linear-gradient(135deg,rgba(75,139,255,.2),rgba(0,212,255,.1));border:1px solid rgba(75,139,255,.3)}
+.mensal-card .plan-icon-wrap{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25)}
+.avulso-card .plan-icon-wrap{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2)}
+.plan-label{font-size:.62rem;font-weight:700;color:var(--txt3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.plan-name{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:2px}
+.master-card .plan-name{background:linear-gradient(135deg,#fff,var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.plan-tagline{font-size:.72rem;color:var(--txt2);margin-bottom:18px;line-height:1.5}
+.plan-price-wrap{margin-bottom:6px}
+.plan-price-old{font-size:.7rem;color:var(--txt3);text-decoration:line-through;display:block;margin-bottom:2px}
+.plan-price-main{font-size:2.2rem;font-weight:900;color:#fff;line-height:1}
+.master-card .plan-price-main{background:linear-gradient(135deg,var(--pri),var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.plan-price-period{font-size:.72rem;color:var(--txt2);margin-left:4px}
+.plan-economy{display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:var(--grn);font-size:.64rem;font-weight:700;padding:4px 12px;border-radius:12px;margin:10px 0 18px}
+.plan-divider{height:1px;background:var(--brd);margin:0 0 18px}
+.plan-feats{list-style:none;margin-bottom:22px;flex:1}
+.plan-feats li{display:flex;align-items:flex-start;gap:9px;font-size:.77rem;color:var(--txt2);padding:5px 0;line-height:1.45}
+.plan-feats li .fi{flex-shrink:0;font-size:.85rem;margin-top:1px}
+.plan-feats li .fi.ok{color:var(--grn)}
+.plan-feats li .fi.no{color:var(--txt3)}
+.plan-feats li b{color:var(--txt)}
+.plan-cta{display:block;width:100%;padding:14px;border-radius:12px;font-size:.82rem;font-weight:800;text-align:center;text-decoration:none;border:none;cursor:pointer;font-family:var(--font);transition:all .2s;letter-spacing:.02em}
+.plan-cta.master-cta{background:linear-gradient(135deg,var(--pri3),var(--pri));color:#fff;box-shadow:0 4px 20px rgba(75,139,255,.35)}
+.plan-cta.master-cta:hover{filter:brightness(1.1);box-shadow:0 8px 30px rgba(75,139,255,.5)}
+.plan-cta.mensal-cta{background:linear-gradient(135deg,#7c3aed,var(--purp));color:#fff;box-shadow:0 4px 16px rgba(168,85,247,.3)}
+.plan-cta.mensal-cta:hover{filter:brightness(1.1)}
+.plan-cta.avulso-cta{background:transparent;border:1px solid rgba(245,158,11,.4);color:var(--gold)}
+.plan-cta.avulso-cta:hover{background:rgba(245,158,11,.1)}
+.plan-cta.current-cta{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--grn);cursor:default;pointer-events:none}
+
+/* JA PAGUEI */
+.notify-section{max-width:640px;margin:0 auto 56px;padding:0 20px}
+.notify-inner{background:var(--card);border:1px solid var(--brd);border-radius:18px;padding:28px;text-align:center}
+.notify-inner h3{font-size:.95rem;font-weight:800;color:#fff;margin-bottom:8px}
+.notify-inner p{font-size:.77rem;color:var(--txt2);line-height:1.65;margin-bottom:18px}
+.notify-btn{display:inline-flex;align-items:center;gap:9px;padding:13px 28px;border-radius:12px;font-size:.82rem;font-weight:700;background:#25d366;color:#fff;border:none;cursor:pointer;font-family:var(--font);transition:all .2s}
+.notify-btn:hover{filter:brightness(1.08)}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--brd)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 4px;background:transparent;border:none;color:#fff;font-family:var(--font);font-size:.83rem;font-weight:700;cursor:pointer;text-align:left;gap:12px}
+.faq-arrow{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--bg2);border:1px solid var(--brd);display:flex;align-items:center;justify-content:center;font-size:.7rem;transition:transform .25s,background .2s}
+.faq-item.open .faq-arrow{transform:rotate(180deg);background:var(--pri3)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 4px 16px;font-size:.78rem;color:var(--txt2);line-height:1.7}
+.faq-a-inner b{color:var(--txt)}
+.faq-item.open .faq-a{max-height:300px}
+
+/* CTA FINAL */
+.final-cta{max-width:700px;margin:0 auto 64px;padding:0 20px;text-align:center}
+.final-cta h2{font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.4rem);font-weight:900;color:#fff;margin-bottom:14px;line-height:1.2}
+.final-cta h2 span{background:linear-gradient(135deg,var(--pri),var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-cta p{font-size:.85rem;color:var(--txt2);margin-bottom:28px;line-height:1.7}
+.final-cta p b{color:var(--txt)}
+.fcta-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.fcta-main{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:14px;font-size:.88rem;font-weight:800;background:linear-gradient(135deg,var(--pri3),var(--pri));color:#fff;text-decoration:none;border:none;cursor:pointer;font-family:var(--font);transition:all .2s;box-shadow:0 4px 24px rgba(75,139,255,.4)}
+.fcta-main:hover{filter:brightness(1.1);box-shadow:0 8px 36px rgba(75,139,255,.55);transform:translateY(-2px)}
+.fcta-sec{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:14px;font-size:.82rem;font-weight:700;background:transparent;border:1px solid rgba(75,139,255,.35);color:var(--pri);text-decoration:none;font-family:var(--font);transition:all .2s}
+.fcta-sec:hover{background:rgba(75,139,255,.1);border-color:rgba(75,139,255,.6)}
+
+/* GARANTIA */
+.guarantee{max-width:640px;margin:0 auto 48px;padding:0 20px;text-align:center}
+.guarantee-inner{background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(75,139,255,.05));border:1px solid rgba(34,197,94,.2);border-radius:16px;padding:24px}
+.guarantee-icon{font-size:2.5rem;margin-bottom:10px}
+.guarantee-title{font-size:.9rem;font-weight:800;color:#fff;margin-bottom:6px}
+.guarantee-sub{font-size:.75rem;color:var(--txt2);line-height:1.6}
+
+/* GLOW LINE */
+.glow-line{height:1px;max-width:640px;margin:0 auto 60px;background:linear-gradient(90deg,transparent,var(--pri),transparent);opacity:.3}
+
+/* FOOTER */
+.pl-footer{border-top:1px solid var(--brd);text-align:center;padding:28px 20px;font-size:.68rem;color:var(--txt3)}
+.pl-footer a{color:var(--pri);text-decoration:none}
+.pl-footer a:hover{text-decoration:underline}
+
+/* TEMA CLARO */
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .plans-grid{grid-template-columns:1fr}
+  .hero-stats{gap:20px}
+  .benefits-grid,.courses-grid,.social-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:400px){.benefits-grid,.social-grid{grid-template-columns:1fr}}
+
+/* ══ BOTTOM NAV ══ */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:rgba(4,4,10,.98);border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-around;z-index:999;padding:0 8px;padding-bottom:env(safe-area-inset-bottom)}
+.bottom-nav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
+.bn-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex:1;height:100%;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,.28);font-family:var(--font);text-decoration:none;position:relative;transition:color .2s;-webkit-tap-highlight-color:transparent}
+.bn-item.active,.bn-item:hover{color:#fff}
+.bn-item.active::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:2px;border-radius:0 0 2px 2px;background:#fff}
+.bn-item.bn-center{flex:1.4;position:relative;top:-10px}
+.bn-center-logo{width:50px;height:50px;border-radius:14px;background:#000;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.6);transition:all .25s}
+.bn-item.bn-center:hover .bn-center-logo{transform:scale(1.1);border-color:rgba(255,255,255,.4)}
+.bn-icon{display:flex;align-items:center;justify-content:center}
+.bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1}
+@media(min-width:769px){.bottom-nav{display:none}}
+
+/* ══ MA-TOPBAR ══ */
+.ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(4,4,10,.99);border-bottom:1px solid rgba(91,127,255,.15);display:flex;align-items:center;padding:0 14px;gap:6px;z-index:9999;font-family:var(--font)}
+.ma-topbar::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent 0%,#4A7EFF 30%,#00d4ff 65%,transparent 100%);opacity:.75}
+.ma-tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.ma-tb-logo svg{display:block;flex-shrink:0}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
+.ma-tb-page-name{font-size:.64rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase}
+.ma-tb-spacer{flex:1;min-width:0}
+.ma-tb-pts-block{display:flex;align-items:center;gap:7px;text-decoration:none;flex-shrink:0;padding:5px 12px 5px 10px;border-radius:22px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);transition:all .2s;cursor:pointer}
+.ma-tb-pts-block:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08)}
+.ma-tb-trophy{color:#f59e0b;display:flex;align-items:center}
+.ma-tb-trophy svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ma-tb-pts-num{font-size:.78rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.ma-tb-menu-btn{width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;padding:0}
+.ma-tb-menu-btn svg{width:16px;height:16px;stroke:currentColor;pointer-events:none}
+.ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
+/* DROPDOWN MENU */
+.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}
+.ma-menu-overlay.open{display:block}
+.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:232px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.03);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+.ma-menu-user{padding:14px 16px 0;border-bottom:1px solid #1e1e35}
+.ma-mu-name{font-size:.85rem;font-weight:800;color:#fff;display:block;margin-bottom:5px}
+.ma-mu-pts{font-size:.63rem;color:#8888a8;margin-top:6px;margin-bottom:10px}
+.ma-menu-sec{padding:5px 0}
+.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font,'Outfit',sans-serif);width:100%;text-align:left;transition:background .15s}
+.ma-mi:hover{background:#161628;color:#e8e8f0}
+.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.ma-mi.green{color:#22c55e}.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
+</style>
+</head>
+<body>
+
+<div class="ma-menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="ma-menu-dd" id="menuDd">
+  <div class="ma-menu-user" id="menuUserSec"></div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">🎓</span>Meus Cursos</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Meu Painel</a>
+    <a class="ma-mi" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🤝</span>Indicações</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🗺️</span>Trilhas</a>
+    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
+  </div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
+  </div>
+  <div class="ma-menu-sec" id="menuAuthSec"></div>
+</div>
+
+<nav class="ma-topbar">
+  <a class="ma-tb-logo" href="index.html">
+    <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
+      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
+      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
+      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
+      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
+      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
+    </svg>
+  </a>
+  <div class="ma-tb-sep"></div>
+  <span class="ma-tb-page-name">Planos</span>
+  <div class="ma-tb-spacer"></div>
+  <a class="ma-tb-pts-block" href="painel.html">
+    <span class="ma-tb-trophy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg></span>
+    <span class="ma-tb-pts-num" id="maPtsNum">000</span>
+  </a>
+  <button class="ma-tb-menu-btn" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+  </button>
+</nav>
+
+<script src="shared/portal-topbar.js"></script>
+<canvas id="bg-canvas"></canvas>
+
+<div class="pl-wrap">
+
+<!-- BANNER PLANO ATUAL -->
+<div id="currentPlanBanner">
+  <div class="cpb-inner" id="cpbInner">
+    <div class="cpb-icon" id="cpbIcon"></div>
+    <div class="cpb-title" id="cpbTitle"></div>
+    <div class="cpb-days" id="cpbDays" style="display:none"></div>
+    <div class="cpb-sub" id="cpbSub"></div>
+  </div>
+</div>
+
+<!-- ALERTA BLOQUEADO -->
+<div id="blockedAlert">
+  <div class="ba-inner">
+    <div class="ba-icon">&#128274;</div>
+    <div class="ba-title" id="baTitle">Conte&#250;do exclusivo para assinantes</div>
+    <div class="ba-sub" id="baSub">Escolha um plano abaixo para desbloquear este conte&#250;do e <b>todos os cursos</b> da Matheus Academy.</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    &#128142; Planos &amp; Assinaturas &#8212; Matheus Academy
+  </div>
+  <h1>O conhecimento certo<br>muda <span class="hl2">tudo na sua vida</span></h1>
+  <p class="hero-sub">
+    A Matheus Academy nasceu de uma cren&#231;a simples: <b>qualquer pessoa pode transformar sua realidade</b> com o conhecimento e a orienta&#231;&#227;o certos. Aqui voc&#234; n&#227;o aprende teoria vazia &#8212; aprende <b>o que funciona de verdade</b>, com quem j&#225; aplicou.
+  </p>
+  <div class="hero-stats">
+    <div class="hs-item"><span class="hs-num">9+</span><span class="hs-lbl">Cursos</span></div>
+    <div class="hs-item"><span class="hs-num">2.355+</span><span class="hs-lbl">T&#243;picos</span></div>
+    <div class="hs-item"><span class="hs-num">350+</span><span class="hs-lbl">M&#243;dulos</span></div>
+    <div class="hs-item"><span class="hs-num">590h+</span><span class="hs-lbl">Conte&#250;do</span></div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-label">&#128214; Por que a Matheus Academy existe</div>
+  <h2>Voc&#234; est&#225; a um conhecimento de dist&#226;ncia da vers&#227;o que sempre sonhou ser. <em>Literalmente.</em></h2>
+
+  <p>Pense nisso: <b>o que separa quem realiza dos que ficam s&#243; sonhando n&#227;o &#233; talento, sorte ou fam&#237;lia rica.</b> &#201; informa&#231;&#227;o. &#201; estrat&#233;gia. &#201; o mapa certo em m&#227;os certas. A Matheus Academy foi criada para ser esse mapa &#8212; completo, pr&#225;tico, direto ao ponto &#8212; para qualquer pessoa que esteja disposta a dar o pr&#243;ximo passo.</p>
+
+  <p>O Matheus construiu esta plataforma depois de anos estudando, errando, e descobrindo os atalhos que os livros n&#227;o ensinam. Tr&#225;fego pago que realmente converte. Neg&#243;cios que se sustentam sozinhos. Geopol&#237;tica que explica o mundo que ningu&#233;m mais consegue explicar. Persuas&#227;o que abre portas. Intelig&#234;ncia emocional que mant&#233;m voc&#234; firme quando tudo parece dif&#237;cil. Tudo aqui. <b>Tudo testado. Tudo real.</b></p>
+
+  <div class="manifesto-quote">
+    <p>&#8220;Voc&#234; n&#227;o precisa passar anos descobrindo o que eu levei anos para aprender. Eu coloquei tudo aqui, organizado, com quizzes, certificados e IA para te ajudar em cada etapa. Meu &#250;nico objetivo &#233; que voc&#234; saia de cada aula com algo que possa aplicar amanh&#227;.&#8221;</p>
+    <cite>&#8212; Matheus, fundador da Matheus Academy</cite>
+  </div>
+
+  <p>A plataforma foi projetada para o <b>mundo real</b>. N&#227;o h&#225; enrola&#231;&#227;o. Cada m&#243;dulo tem um objetivo claro. Cada t&#243;pico foi escrito para ser aplicado, n&#227;o apenas lido. O sistema de XP e ranking foi criado porque aprender deve ser <span class="accent">envolvente e recompensador</span>, n&#227;o chato. Os certificados digitais s&#227;o reais e reconhec&#237;veis. O grupo VIP no Telegram &#233; ativo, com o Matheus participando pessoalmente.</p>
+
+  <p>E mais: a plataforma evolui. Novos cursos s&#227;o adicionados constantemente. Quem &#233; <b>assinante Master</b> recebe automaticamente, sem pagar nada a mais. Isso significa que ao investir hoje, voc&#234; est&#225; comprando acesso a tudo que existe e a tudo que ainda vir&#225;. &#201; o tipo de investimento que se multiplica com o tempo.</p>
+
+  <p>Cada real investido aqui n&#227;o &#233; um custo. &#201; um ativo. <b>Conhecimento n&#227;o deprecia. N&#227;o some. N&#227;o &#233; tributado.</b> Ele s&#243; se valoriza conforme voc&#234; aplica. E o melhor: come&#231;a a dar retorno no mesmo dia que voc&#234; assiste &#224; primeira aula e coloca em pr&#225;tica. N&#227;o existe investimento com ROI maior do que investir em si mesmo.</p>
+
+  <p>Vivemos na <b>era da informa&#231;&#227;o</b>, mas a maioria das pessoas afoga em conte&#250;do de baixa qualidade, sem dire&#231;&#227;o, sem profundidade. Na Matheus Academy, cada palavra de cada t&#243;pico foi escrita com inten&#231;&#227;o. O conte&#250;do &#233; denso, rico, e progressivo &#8212; voc&#234; come&#231;a do essencial e vai at&#233; os conceitos mais avan&#231;ados sem perder o fio da meada. &#201; como ter um mentor particular que j&#225; trilhou o caminho e te mostra onde pisar.</p>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- CONTEUDO -->
+<section class="content-section">
+  <div class="sec-header">
+    <h2>Tudo que voc&#234; vai <span>dominar</span> aqui</h2>
+    <p>Cursos completos, profundos e pr&#225;ticos &#8212; de marketing digital a geopol&#237;tica mundial</p>
+  </div>
+  <div class="courses-grid">
+    <div class="cg-card"><div class="cg-icon">&#128200;</div><div class="cg-name">Dominando o Tr&#225;fego Pago</div><div class="cg-desc">Do zero ao avan&#231;ado: Meta Ads, Google Ads, funis de convers&#227;o, remarketing e escala. O curso mais completo de tr&#225;fego do mercado.</div><span class="cg-tag">Marketing Digital</span></div>
+    <div class="cg-card"><div class="cg-icon">&#127757;</div><div class="cg-name">Geopol&#237;tica &#8212; O Mundo Real</div><div class="cg-desc">Entenda disputas de poder, guerras comerciais, BRICS, NATO, Oriente M&#233;dio e como tudo isso afeta seus investimentos e seu dia a dia.</div><span class="cg-tag">Geopol&#237;tica</span></div>
+    <div class="cg-card"><div class="cg-icon">&#129504;</div><div class="cg-name">Intelig&#234;ncia Emocional</div><div class="cg-desc">Controle mental, resili&#234;ncia, gest&#227;o de ansiedade, relacionamentos saud&#225;veis. Seja o melhor de si em qualquer situa&#231;&#227;o da vida.</div><span class="cg-tag">Desenvolvimento Pessoal</span></div>
+    <div class="cg-card"><div class="cg-icon">&#128161;</div><div class="cg-name">Neg&#243;cios Inteligentes</div><div class="cg-desc">Monte um neg&#243;cio lucrativo do zero. Valida&#231;&#227;o, modelo de receita, opera&#231;&#227;o, equipe e escala. Empreendedorismo real e pr&#225;tico.</div><span class="cg-tag">Empreendedorismo</span></div>
+    <div class="cg-card"><div class="cg-icon">&#127919;</div><div class="cg-name">T&#233;cnicas de Persuas&#227;o</div><div class="cg-desc">Copywriting, gatilhos mentais, storytelling, negocia&#231;&#227;o e influ&#234;ncia. Aprenda a comunicar de forma irresist&#237;vel em qualquer contexto.</div><span class="cg-tag">Comunica&#231;&#227;o</span></div>
+    <div class="cg-card"><div class="cg-icon">&#128176;</div><div class="cg-name">Nichos Lucrativos</div><div class="cg-desc">Descubra os nichos mais rent&#225;veis, como entrar, como se posicionar e como monetizar de forma acelerada no mercado digital.</div><span class="cg-tag">Estrat&#233;gia</span></div>
+    <div class="cg-card"><div class="cg-icon">&#8383;</div><div class="cg-name">Bitcoin &amp; o Futuro do Dinheiro</div><div class="cg-desc">A moeda que mudou a hist&#243;ria: origem, tecnologia, investimento consciente e como se proteger da desvaloriza&#231;&#227;o.</div><span class="cg-tag">Finan&#231;as</span></div>
+    <div class="cg-card"><div class="cg-icon">&#127963;&#65039;</div><div class="cg-name">Lei FELCA e Censura Digital</div><div class="cg-desc">O modelo chin&#234;s de controle da informa&#231;&#227;o chegando ao Brasil. Entenda o cen&#225;rio e posicione-se com consci&#234;ncia.</div><span class="cg-tag">Atualidades</span></div>
+    <div class="cg-card" style="border-style:dashed;border-color:rgba(75,139,255,.25)"><div class="cg-icon">&#128640;</div><div class="cg-name">+ Novos cursos sempre chegando</div><div class="cg-desc">Assinantes Master recebem automaticamente cada novo lan&#231;amento. Voc&#234; paga uma vez e cresce para sempre junto com a plataforma.</div><span class="cg-tag" style="background:rgba(0,212,255,.1);color:var(--neon);border-color:rgba(0,212,255,.2)">Em breve</span></div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- BENEFICIOS -->
+<section class="benefits-section">
+  <div class="sec-header" style="margin-bottom:32px">
+    <h2>Por que a Matheus Academy &#233; <span>diferente</span></h2>
+    <p>N&#227;o &#233; s&#243; mais um curso. &#201; um ecossistema completo de crescimento</p>
+  </div>
+  <div class="benefits-grid">
+    <div class="benefit-card"><div class="bc-icon blue">&#129302;</div><div class="bc-title">IA Integrada nos Cursos</div><div class="bc-sub">Assistente de intelig&#234;ncia artificial treinado no conte&#250;do de cada curso. Tire d&#250;vidas em tempo real, como ter um tutor particular 24 horas.</div></div>
+    <div class="benefit-card"><div class="bc-icon gold">&#127942;</div><div class="bc-title">Sistema de XP e Ranking</div><div class="bc-sub">Ganhe pontos ao completar aulas, quizzes e miss&#245;es di&#225;rias. Suba no ranking, conquiste badges e torne o aprendizado viciante.</div></div>
+    <div class="benefit-card"><div class="bc-icon grn">&#127891;</div><div class="bc-title">Certificados Digitais</div><div class="bc-sub">Certificado profissional ao concluir cada curso, gerado automaticamente com design elegante. V&#225;lido para portf&#243;lio e LinkedIn.</div></div>
+    <div class="benefit-card"><div class="bc-icon cyan">&#9992;&#65039;</div><div class="bc-title">Grupo VIP Telegram</div><div class="bc-sub">Acesso exclusivo ao grupo com o Matheus ativo diariamente. Networking, conte&#250;dos extras e suporte da comunidade.</div></div>
+    <div class="benefit-card"><div class="bc-icon purp">&#127919;</div><div class="bc-title">Quizzes Adaptativos</div><div class="bc-sub">Cada m&#243;dulo tem quizzes que medem sua absor&#231;&#227;o. Aprovando com 67%+ voc&#234; recebe pontos b&#244;nus e progride com confian&#231;a.</div></div>
+    <div class="benefit-card"><div class="bc-icon red">&#128293;</div><div class="bc-title">Streak de Estudo</div><div class="bc-sub">Mantenha sua sequ&#234;ncia de estudo di&#225;ria. O sistema registra seus dias consecutivos e te motiva com recompensas e conquistas.</div></div>
+    <div class="benefit-card"><div class="bc-icon blue">&#128241;</div><div class="bc-title">100% Mobile</div><div class="bc-sub">Plataforma completamente responsiva. Estude no celular, tablet ou computador. Sem aplicativo para baixar, funciona no navegador.</div></div>
+    <div class="benefit-card"><div class="bc-icon gold">&#128172;</div><div class="bc-title">Suporte Direto</div><div class="bc-sub">Fale direto com o Matheus via WhatsApp. Voc&#234; n&#227;o fica sozinho. Cada aluno recebe aten&#231;&#227;o real, n&#227;o chatbot gen&#233;rico.</div></div>
+    <div class="benefit-card"><div class="bc-icon grn">&#8734;&#65039;</div><div class="bc-title">Conte&#250;do Sempre Atualizado</div><div class="bc-sub">Os cursos s&#227;o atualizados regularmente. Assinantes Master sempre t&#234;m acesso ao conhecimento mais atual, sem custo extra.</div></div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- DEPOIMENTOS -->
+<section class="social-section">
+  <div class="sec-header" style="margin-bottom:28px">
+    <h2>O que os alunos <span>falam</span></h2>
+    <p>Resultados reais de pessoas que decidiram investir no pr&#243;prio crescimento</p>
+  </div>
+  <div class="social-grid">
+    <div class="social-card"><div class="sc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="sc-text">&#8220;Apliquei as estrat&#233;gias de tr&#225;fego pago em 15 dias e j&#225; tinha recuperado o valor do plano. A did&#225;tica do Matheus &#233; absurdamente boa &#8212; vai direto ao ponto sem enrola&#231;&#227;o.&#8221;</div><div class="sc-author"><div class="sc-avatar" style="background:linear-gradient(135deg,#4b8bff,#00d4ff)">R</div><div><div class="sc-name">Rafael M.</div><div class="sc-meta">Gestor de tr&#225;fego &#183; SP</div></div></div></div>
+    <div class="social-card"><div class="sc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="sc-text">&#8220;O curso de Geopol&#237;tica me abriu os olhos. Finalmente entendo por que as coisas acontecem no mundo. Conte&#250;do que n&#227;o se encontra em lugar nenhum.&#8221;</div><div class="sc-author"><div class="sc-avatar" style="background:linear-gradient(135deg,#a855f7,#7c3aed)">A</div><div><div class="sc-name">Ana C.</div><div class="sc-meta">Servidora p&#250;blica &#183; MG</div></div></div></div>
+    <div class="social-card"><div class="sc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="sc-text">&#8220;Fiz o plano Master 3 anos e foi a melhor decis&#227;o. V&#225;rios cursos pelo pre&#231;o de um. A IA integrada nos cursos &#233; surreal &#8212; como ter um tutor particular.&#8221;</div><div class="sc-author"><div class="sc-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">G</div><div><div class="sc-name">Gabriel S.</div><div class="sc-meta">Empreendedor &#183; RJ</div></div></div></div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- PLANOS -->
+<section class="plans-section">
+  <div class="sec-header" style="margin-bottom:36px">
+    <h2>Escolha o plano <span>ideal</span> para voc&#234;</h2>
+    <p>Todos os planos incluem acesso &#224; plataforma, quizzes, XP e certificados</p>
+  </div>
+  <div class="plans-grid">
+
+    <!-- MASTER -->
+    <div class="plan-card master-card" id="cardMaster">
+      <div class="plan-pop-tag">&#11088; Melhor Custo-Benef&#237;cio</div>
+      <div class="plan-icon-wrap">&#128142;</div>
+      <div class="plan-label">Acesso Total</div>
+      <div class="plan-name">Master 3 Anos</div>
+      <div class="plan-tagline">Tudo de uma vez. Para sempre transformar.</div>
+      <div class="plan-price-wrap">
+        <span class="plan-price-old">De R$ 890,00</span>
+        <span class="plan-price-main">R$ 297,55</span><span class="plan-price-period">/ 3 anos</span>
+      </div>
+      <div class="plan-economy">&#128176; Voc&#234; economiza R$ 592,45 &#8212; 66% de desconto</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-feats">
+        <li><span class="fi ok">&#10003;</span><span>Acesso a <b>todos os cursos existentes</b></span></li>
+        <li><span class="fi ok">&#10003;</span><span><b>Todos os lan&#231;amentos futuros</b> inclu&#237;dos automaticamente</span></li>
+        <li><span class="fi ok">&#10003;</span><span>Assistente <b>IA ilimitado</b> em todos os cursos</span></li>
+        <li><span class="fi ok">&#10003;</span><span><b>Certificados</b> em todos os cursos</span></li>
+        <li><span class="fi ok">&#10003;</span><span>Grupo VIP exclusivo no <b>Telegram</b></span></li>
+        <li><span class="fi ok">&#10003;</span><span>Suporte direto com o <b>Matheus</b></span></li>
+        <li><span class="fi ok">&#10003;</span><span>Sistema de <b>XP, Ranking e Badges</b></span></li>
+        <li><span class="fi ok">&#10003;</span><span>Acesso por <b>3 anos completos</b></span></li>
+        <li><span class="fi ok">&#10003;</span><span>Prioridade em <b>novas funcionalidades</b></span></li>
+      </ul>
+      <a class="plan-cta master-cta" id="btnMaster" href="https://pay.kiwify.com.br/uzERliL" target="_blank">&#128640; Quero o Plano Master Agora</a>
+    </div>
+
+    <!-- MENSAL -->
+    <div class="plan-card mensal-card" id="cardMensal">
+      <div class="plan-icon-wrap">&#9889;</div>
+      <div class="plan-label">Flex&#237;vel</div>
+      <div class="plan-name" style="color:var(--purp)">Plano Mensal</div>
+      <div class="plan-tagline">Todo o conte&#250;do, m&#234;s a m&#234;s, sem compromisso.</div>
+      <div class="plan-price-wrap">
+        <span class="plan-price-main" style="background:linear-gradient(135deg,var(--purp),#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">R$ 19,50</span><span class="plan-price-period">/ m&#234;s</span>
+      </div>
+      <div class="plan-economy" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.25);color:var(--purp)">&#128260; Cancele a qualquer momento</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-feats">
+        <li><span class="fi ok">&#10003;</span><span>Acesso a <b>todos os cursos</b> enquanto ativo</span></li>
+        <li><span class="fi ok">&#10003;</span><span><b>Novos lan&#231;amentos</b> inclu&#237;dos</span></li>
+        <li><span class="fi ok">&#10003;</span><span>Assistente <b>IA</b> nos cursos</span></li>
+        <li><span class="fi ok">&#10003;</span><span><b>Certificados</b> inclusos</span></li>
+        <li><span class="fi ok">&#10003;</span><span>Grupo VIP no <b>Telegram</b></span></li>
+        <li><span class="fi ok">&#10003;</span><span>Sistema de <b>XP e Ranking</b></span></li>
+        <li><span class="fi no">&#9675;</span><span style="color:var(--txt3)">Acesso vinculado &#224; assinatura ativa</span></li>
+        <li><span class="fi no">&#9675;</span><span style="color:var(--txt3)">Sem garantia de pre&#231;o futuro</span></li>
+      </ul>
+      <a class="plan-cta mensal-cta" id="btnMensal" href="https://pay.kiwify.com.br/JGGuFr4" target="_blank">&#9889; Assinar Plano Mensal</a>
+    </div>
+
+    <!-- AVULSO -->
+    <div class="plan-card avulso-card" id="cardAvulso">
+      <div class="plan-icon-wrap">&#128218;</div>
+      <div class="plan-label">Individual</div>
+      <div class="plan-name" style="color:var(--gold)">Curso Avulso</div>
+      <div class="plan-tagline">Comece com um curso e cres&#231;a no seu ritmo.</div>
+      <div class="plan-price-wrap">
+        <span class="plan-price-main" style="background:linear-gradient(135deg,var(--gold),#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">R$ 9,99</span><span class="plan-price-period">/ curso &#183; 1 ano</span>
+      </div>
+      <div class="plan-economy" style="background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.2);color:var(--gold)">&#127919; Pague apenas o que quiser estudar</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-feats">
+        <li><span class="fi ok">&#10003;</span><span>Acesso ao <b>curso escolhido</b></span></li>
+        <li><span class="fi ok">&#10003;</span><span>Acesso por <b>1 ano completo</b></span></li>
+        <li><span class="fi ok">&#10003;</span><span><b>Certificado</b> do curso incluso</span></li>
+        <li><span class="fi ok">&#10003;</span><span>Assistente <b>IA</b> incluso</span></li>
+        <li><span class="fi ok">&#10003;</span><span>Sistema de <b>XP</b> ativo</span></li>
+        <li><span class="fi no">&#9675;</span><span style="color:var(--txt3)">Outros cursos n&#227;o inclu&#237;dos</span></li>
+        <li><span class="fi no">&#9675;</span><span style="color:var(--txt3)">Grupo VIP n&#227;o incluso</span></li>
+        <li><span class="fi no">&#9675;</span><span style="color:var(--txt3)">Lan&#231;amentos futuros n&#227;o inclu&#237;dos</span></li>
+      </ul>
+      <a class="plan-cta avulso-cta" id="btnAvulso" href="https://pay.kiwify.com.br/h2b7ZRH" target="_blank">&#128218; Comprar Curso Individual</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- JA PAGUEI -->
+<div class="notify-section">
+  <div class="notify-inner">
+    <h3>&#10003; J&#225; realizei o pagamento</h3>
+    <p>Se voc&#234; j&#225; efetuou o pagamento e ainda n&#227;o recebeu seu c&#243;digo de acesso, <b>notifique o Matheus via WhatsApp</b>. O c&#243;digo &#233; enviado manualmente e voc&#234; recebe em minutos no hor&#225;rio comercial.</p>
+    <button class="notify-btn" onclick="notifyPaymentPlans()">&#128172; J&#225; Paguei &#8212; Notificar via WhatsApp</button>
+  </div>
+</div>
+
+<div class="glow-line"></div>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="sec-header" style="margin-bottom:28px">
+    <h2>Perguntas <span>frequentes</span></h2>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Como funciona o acesso ap&#243;s a compra?<span class="faq-arrow">&#9660;</span></button>
+    <div class="faq-a"><div class="faq-a-inner">Ap&#243;s a confirma&#231;&#227;o do pagamento, o Matheus envia seu <b>c&#243;digo de acesso pessoal</b> via WhatsApp ou e-mail. Voc&#234; insere o c&#243;digo na plataforma e o acesso &#233; liberado imediatamente. Todo o processo leva menos de 24 horas, geralmente minutos durante o hor&#225;rio comercial.</div></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">O Plano Master inclui os cursos do futuro?<span class="faq-arrow">&#9660;</span></button>
+    <div class="faq-a"><div class="faq-a-inner"><b>Sim, totalmente.</b> Assinantes Master recebem acesso autom&#225;tico a todos os novos cursos lan&#231;ados durante os 3 anos, sem nenhum custo adicional. &#201; literalmente o melhor investimento em conhecimento que voc&#234; pode fazer hoje.</div></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Posso acessar do celular?<span class="faq-arrow">&#9660;</span></button>
+    <div class="faq-a"><div class="faq-a-inner">Sim. A plataforma &#233; <b>100% responsiva</b> e funciona perfeitamente em celular, tablet e computador. N&#227;o precisa baixar nenhum aplicativo &#8212; basta acessar pelo navegador.</div></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Como funciona a IA integrada nos cursos?<span class="faq-arrow">&#9660;</span></button>
+    <div class="faq-a"><div class="faq-a-inner">Cada curso tem um <b>assistente de intelig&#234;ncia artificial</b> treinado especificamente naquele conte&#250;do. Voc&#234; pode fazer perguntas e pedir explica&#231;&#245;es diretamente dentro do curso, 24 horas por dia, como ter um tutor particular sempre dispon&#237;vel.</div></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Os certificados s&#227;o reconhecidos?<span class="faq-arrow">&#9660;</span></button>
+    <div class="faq-a"><div class="faq-a-inner">Os certificados s&#227;o digitais, com <b>design profissional</b> e dados &#250;nicos por aluno. S&#227;o gerados automaticamente ao concluir cada curso com o aproveitamento m&#237;nimo nos quizzes. V&#225;lidos para portf&#243;lio, LinkedIn e uso profissional.</div></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">E se eu tiver d&#250;vidas sobre o conte&#250;do?<span class="faq-arrow">&#9660;</span></button>
+    <div class="faq-a"><div class="faq-a-inner">Al&#233;m da IA integrada, voc&#234; tem acesso ao <b>grupo VIP no Telegram</b> onde o Matheus responde pessoalmente. O suporte &#233; real, voc&#234; n&#227;o est&#225; comprando um curso e sendo abandonado.</div></div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="final-cta">
+  <h2>Seu pr&#243;ximo n&#237;vel come&#231;a<br><span>com uma decis&#227;o.</span></h2>
+  <p>Voc&#234; chegou at&#233; aqui porque algo dentro de voc&#234; sabe que &#233; hora de evoluir. N&#227;o espere o momento perfeito &#8212; ele n&#227;o chega. O momento perfeito <b>&#233; agora</b>. Comece hoje, aplique amanh&#227;, e em 30 dias voc&#234; n&#227;o vai reconhecer onde estava.</p>
+  <div class="fcta-btns">
+    <a class="fcta-main" href="https://pay.kiwify.com.br/uzERliL" target="_blank">&#128142; Quero o Plano Master &#8212; R$ 297,55</a>
+    <a class="fcta-sec" href="index.html">Ver os cursos primeiro</a>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<div class="guarantee">
+  <div class="guarantee-inner">
+    <div class="guarantee-icon">&#128737;&#65039;</div>
+    <div class="guarantee-title">Satisfa&#231;&#227;o garantida</div>
+    <div class="guarantee-sub">Se por qualquer motivo voc&#234; n&#227;o estiver satisfeito nos primeiros 7 dias, entre em contato diretamente com o Matheus e resolvemos. O objetivo &#233; que voc&#234; aprenda de verdade.</div>
+  </div>
+</div>
+
+<div class="pl-footer">
+  <p>&#169; 2025 Matheus Academy &#183; Conhecimento que transforma</p>
+  <p style="margin-top:6px">
+    <a href="index.html">Voltar ao in&#237;cio</a> &#183;
+    <a href="https://t.me/+u07BKIwOsxEwNmIx" target="_blank">Grupo VIP Telegram</a> &#183;
+    <a href="https://www.instagram.com/_matheusacademy" target="_blank">@_matheusacademy</a>
+  </p>
+</div>
+
+</div><!-- /pl-wrap -->
+
+<script>
+// ═══════════════════════════════ MA-TOPBAR FUNCTIONS ═══════════════════════════════
+function toggleMenu(){document.getElementById('menuDd').classList.toggle('open');document.getElementById('menuOverlay').classList.toggle('open');}
+function closeMenu(){document.getElementById('menuDd').classList.remove('open');document.getElementById('menuOverlay').classList.remove('open');}
+function updateMenuUser(){
+  var u;try{u=JSON.parse(localStorage.getItem('ma_user')||'null');}catch(e){u=null;}
+  var pts=0;if(window.MAStore&&MAStore.getTotalPointsSync){pts=MAStore.getTotalPointsSync()||0;}else{try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');if(_u&&typeof _u.xp_total==='number')pts=_u.xp_total;}catch(e){}}
+  var us=document.getElementById('menuUserSec'),as=document.getElementById('menuAuthSec');
+  if(u){
+    if(us)us.innerHTML='<span class="ma-mu-name">'+((u.name||u.email||'').split(' ')[0])+'</span><div class="ma-mu-pts">'+pts.toLocaleString('pt-BR')+' pontos</div>';
+    if(as)as.innerHTML='<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
+  }else{
+    if(us)us.innerHTML='<span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span>';
+    if(as)as.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
+  }
+}
+function doLogout(){if(typeof MAStore!=='undefined'){MAStore.logout();return;}if(window.MA_AUTH){MA_AUTH.logout().catch(function(){});}localStorage.removeItem('ma_user');closeMenu();location.href='index.html';}
+function updatePts(){var el=document.getElementById('maPtsNum');if(!el)return;var pts=0;if(window.MAStore&&MAStore.getTotalPointsSync){pts=MAStore.getTotalPointsSync()||0;}else{try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');if(_u&&typeof _u.xp_total==='number')pts=_u.xp_total;}catch(e){}}el.textContent=pts<1000?String(pts).padStart(3,'0'):pts.toLocaleString('pt-BR');}
+
+// PARTICULAS
+(function(){
+  var c=document.getElementById('bg-canvas');if(!c)return;
+  var ctx=c.getContext('2d'),W,H,pts=[];
+  function r(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  r();window.addEventListener('resize',r);
+  for(var i=0;i<60;i++)pts.push({x:Math.random()*1920,y:Math.random()*1080,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.5+.4,a:Math.random()*.6+.1});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(75,139,255,'+p.a+')';ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// FAQ
+function toggleFaq(btn){
+  var item=btn.closest('.faq-item');
+  var wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});
+  if(!wasOpen)item.classList.add('open');
+}
+
+// SCROLL REVEAL
+(function(){
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:.1});
+  document.querySelectorAll('.cg-card,.benefit-card,.social-card,.plan-card').forEach(function(el){obs.observe(el);});
+})();
+
+// ALERTA BLOQUEADO
+(function(){
+  var p=new URLSearchParams(window.location.search);
+  var from=p.get('from'),reason=p.get('reason');
+  if(from||reason){
+    var el=document.getElementById('blockedAlert');if(el)el.style.display='block';
+    var t=document.getElementById('baTitle'),s=document.getElementById('baSub');
+    if(from&&t)t.textContent='\uD83D\uDD12 Conte\u00FAdo bloqueado: '+decodeURIComponent(from);
+    if(s&&from)s.innerHTML='Escolha um plano para desbloquear <b>'+decodeURIComponent(from)+'</b> e todos os cursos da Matheus Academy.';
+    setTimeout(function(){var sec=document.querySelector('.plans-section');if(sec)sec.scrollIntoView({behavior:'smooth',block:'start'});},700);
+  }
+})();
+
+// HELPERS
+function _plGU(){
+  if(window.MAStore&&MAStore.getUserSync)return MAStore.getUserSync();
+  try{return JSON.parse(localStorage.getItem('ma_user')||'null');}catch(e){return null;}
+}
+function _plDias(ts){
+  if(!ts)return null;var ms=ts-Date.now();
+  if(ms<=0)return 0;return Math.ceil(ms/(86400000));
+}
+
+// BANNER PLANO ATUAL
+async function _plUpdBanner(){
+  var user=_plGU();
+  if(window.MAStore&&MAStore.getUser){try{var f=await MAStore.getUser();if(f)user=f;}catch(e){}}
+  if(!user)return;
+  var plano=(user.plano||'gratuito').toLowerCase();
+  var cursosComp=user.cursos_comprados||user.cursos||[];
+  var expiresAt=user.expires_at||user.expiresAt||user.plano_expira||null;
+  var nome=(user.nome||user.name||'Aluno').split(' ')[0];
+  var dias=_plDias(expiresAt);
+  var banner=document.getElementById('currentPlanBanner');
+  var inner=document.getElementById('cpbInner');
+  var icon=document.getElementById('cpbIcon');
+  var title=document.getElementById('cpbTitle');
+  var daysEl=document.getElementById('cpbDays');
+  var sub=document.getElementById('cpbSub');
+  if(!banner||!inner)return;
+
+  if(plano==='master'){
+    banner.style.display='block';inner.className='cpb-inner master';
+    icon.textContent='\uD83D\uDCCE';
+    title.innerHTML='Ol\u00E1, <span>'+nome+'<\/span>! Acesso Master ativo.';
+    daysEl.style.display='inline-flex';
+    daysEl.textContent=dias!==null?'\uD83D\uDCC5 '+dias.toLocaleString('pt-BR')+' dias restantes \u2014 Master 3 Anos':'\u2705 Plano Master 3 Anos \u2014 acesso completo';
+    sub.innerHTML='Voc\u00EA tem acesso <b>total e ilimitado<\/b> a todo o conte\u00FAdo. Continue estudando!';
+    var b=document.getElementById('btnMaster');
+    if(b){b.className='plan-cta current-cta';b.textContent='\u2705 Seu plano atual';b.removeAttribute('href');}
+    return;
+  }
+  if(plano==='mensal'||plano==='anual'){
+    var np=plano==='anual'?'Anual':'Mensal';
+    banner.style.display='block';inner.className='cpb-inner mensal';
+    icon.textContent='\u26A1';
+    title.innerHTML='Ol\u00E1, <span>'+nome+'<\/span>! Plano '+np+' ativo.';
+    daysEl.style.display='inline-flex';
+    daysEl.textContent=dias!==null?'\uD83D\uDCC5 '+dias.toLocaleString('pt-BR')+' dias restantes \u2014 Plano '+np:'\u2705 Plano '+np+' ativo';
+    sub.innerHTML='Voc\u00EA tem acesso a <b>todos os cursos<\/b>. Considere o <b>Master 3 Anos<\/b> para economizar!';
+    var bm=document.getElementById('btnMensal');
+    if(bm){bm.className='plan-cta current-cta';bm.textContent='\u2705 Seu plano atual';bm.removeAttribute('href');}
+    return;
+  }
+  if(cursosComp.length>0){
+    var nomesComp=[];
+    if(typeof MA_COURSES!=='undefined'){
+      cursosComp.forEach(function(ck){
+        var c=MA_COURSES.find(function(x){return(x.courseKey||x.file)===ck||x.file===ck;});
+        if(c)nomesComp.push(c.name);
+      });
+    }
+    var lista=nomesComp.length>0?'<b>'+nomesComp.join(', ')+'<\/b>':'<b>'+cursosComp.length+' curso(s)<\/b>';
+    banner.style.display='block';inner.className='cpb-inner individual';
+    icon.textContent='\uD83D\uDCDA';
+    title.innerHTML='Ol\u00E1, <span>'+nome+'<\/span>! Acesso individual ativo.';
+    daysEl.style.display='none';
+    sub.innerHTML='Seus cursos: '+lista+'.<br>Assine o <b>Master 3 Anos<\/b> e tenha acesso a tudo por R$&nbsp;297,55!';
+  }
+}
+
+// NOTIFICACAO WHATSAPP
+function notifyPaymentPlans(){
+  var user=_plGU();
+  var now=new Date();
+  var msg='Ol\u00E1 Matheus! Efetuei o pagamento na Matheus Academy.\n\n'
+    +'\uD83D\uDC64 *Nome:* '+(user?(user.nome||user.name||'N\u00E3o informado'):'N\u00E3o cadastrado')+'\n'
+    +'\uD83D\uDCE7 *Email:* '+(user?(user.email||'N\u00E3o informado'):'N\u00E3o informado')+'\n'
+    +'\uD83D\uDCC5 *Data:* '+now.toLocaleDateString('pt-BR')+' \u00E0s '+now.toLocaleTimeString('pt-BR')+'\n\n'
+    +'Por favor, envie meu c\u00F3digo de acesso!';
+  window.open('https://wa.me/5511951006917?text='+encodeURIComponent(msg),'_blank');
+}
+
+// INIT
+(function(){
+  _plUpdBanner();
+  updatePts();
+  updateMenuUser();
+  function _onReady(){
+    if(window.maAuth){window.maAuth.onAuthStateChanged(function(au){if(au)setTimeout(_plUpdBanner,400);});}
+    _plUpdBanner();
+  }
+  if(window.__maFirebaseReady){_onReady();}
+  else{document.addEventListener('maFirebaseReady',_onReady,{once:true});}
+})();
+</script>
+
+<nav class="bottom-nav" id="bottomNav">
+  <a class="bn-item" href="index.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 13 15 13 15 21"/></svg></span>
+    <span class="bn-label">Início</span>
+  </a>
+  <a class="bn-item" href="cursos.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+    <span class="bn-label">Cursos</span>
+  </a>
+  <a class="bn-item bn-center" href="index.html" title="Matheus Academy">
+    <div class="bn-center-logo">
+      <svg width="28" height="28" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <text x="28" y="40" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="38" letter-spacing="-1">M</text>
+      </svg>
+    </div>
+  </a>
+  <a class="bn-item" href="ranking.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+    <span class="bn-label">Ranking</span>
+  </a>
+  <a class="bn-item" href="perfil.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+    <span class="bn-label">Perfil</span>
+  </a>
+</nav>
+
+</body>
+</html>
