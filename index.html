@@ -40,7 +40,8 @@ body {
    📱 PWA - TELA CHEIA COMO APP
    ════════════════════════════════════════════════════════════════════════════════ */
 html, body {
-  overscroll-behavior-y: none; /* Previne pull-to-refresh */
+  /* Pull-to-refresh LIBERADO no navegador normal */
+  overscroll-behavior-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -52,8 +53,11 @@ body {
   padding-right: env(safe-area-inset-right);
 }
 
-/* Quando em modo standalone (PWA) */
+/* Quando em modo standalone (PWA) — aí sim bloqueia pull-to-refresh */
 @media all and (display-mode: standalone) {
+  html, body {
+    overscroll-behavior-y: none;
+  }
   body {
     padding-top: env(safe-area-inset-top);
   }
