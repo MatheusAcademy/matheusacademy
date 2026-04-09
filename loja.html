@@ -9,15 +9,6 @@
 <style>
 :root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;--card:#14141f;--brd:#1e1e32;--brd2:#2a2a44;--pri:#4b8bff;--pri3:#2563eb;--txt:#e8e8ef;--txt2:#9898b0;--txt3:#5a5a76;--grn:#22c55e;--red:#ef4444;--orn:#f59e0b;--neon:#00d4ff;--font:'Outfit',sans-serif;--serif:'Playfair Display',serif}
 *{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh;overflow-x:hidden}
-.ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999}
-.ma-tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
-.ma-tb-logo img{width:28px;height:28px;border-radius:7px}
-.ma-tb-brand{font-size:.76rem;font-weight:800;color:#fff;white-space:nowrap}.ma-tb-brand b{color:#5b7fff}
-.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
-.ma-tb-course{font-size:.7rem;font-weight:800;color:#9898b0;white-space:nowrap;flex-shrink:0}
-.ma-tb-spacer{flex:1}
-.ma-pts-live{display:none;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(37,99,235,.2),rgba(124,58,237,.18));border:1px solid rgba(91,127,255,.3);border-radius:20px;padding:5px 12px;cursor:pointer;text-decoration:none;flex-shrink:0;transition:all .2s}
-.ma-pts-live.show{display:flex}
 .ma-pts-icon{font-size:.9rem;line-height:1}.ma-pts-num{font-size:.84rem;font-weight:900;color:#fff;line-height:1}.ma-pts-sublv{font-size:.44rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.05em}
 .ma-tb-icon-btn{width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:#8888a8;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;transition:all .2s}
 .ma-tb-icon-btn:hover{background:#161628;color:#e8e8f0}
@@ -83,37 +74,54 @@ h1 span{color:#f59e0b}
 
 
 /* ══ TOPBAR PADRAO MA ══ */
-.ma-topbar{position:fixed;top:0;left:0;right:0;height:54px;background:rgba(4,4,10,.99);border-bottom:1px solid rgba(91,127,255,.18);display:flex;align-items:center;padding:0 12px;gap:6px;z-index:9999;font-family:"Outfit",sans-serif}
-.ma-topbar::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#4A7EFF 30%,#00d4ff 65%,transparent);pointer-events:none}
-.ma-tb-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
-.ma-tb-logo svg{display:block}
-.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.12);flex-shrink:0;margin:0 4px}
-.ma-tb-page{font-size:.68rem;font-weight:700;color:#8888a8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(4,4,10,.99);border-bottom:1px solid rgba(91,127,255,.15);display:flex;align-items:center;padding:0 14px;gap:6px;z-index:9999;font-family:var(--font)}
+.ma-topbar::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent 0%,#4A7EFF 30%,#00d4ff 65%,transparent 100%);opacity:.75}
+.ma-tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.ma-tb-logo svg{display:block;flex-shrink:0}
+.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
+.ma-tb-page-name{font-size:.64rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase}
 .ma-tb-spacer{flex:1;min-width:0}
-.ma-tb-pts{display:flex;align-items:center;gap:5px;text-decoration:none;padding:4px 10px 4px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);flex-shrink:0;transition:.2s}
-.ma-tb-pts:hover{border-color:rgba(255,255,255,.2)}
+.ma-tb-pts-block{display:flex;align-items:center;gap:7px;text-decoration:none;flex-shrink:0;padding:5px 12px 5px 10px;border-radius:22px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);transition:all .2s;cursor:pointer}
+.ma-tb-pts-block:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08)}
 .ma-tb-trophy{color:#f59e0b;display:flex;align-items:center}
-.ma-tb-trophy svg{width:15px;height:15px;stroke:#f59e0b;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.ma-tb-ptsn{font-size:.8rem;font-weight:900;color:#fff;min-width:24px;text-align:right;font-variant-numeric:tabular-nums}
-.ma-tb-menubtn{width:34px;height:34px;border-radius:9px;border:1px solid #1e1e35;background:#111122;color:#8888a8;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;padding:0}
-.ma-tb-menubtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;pointer-events:none}
-.ma-tb-menubtn:hover{border-color:rgba(255,255,255,.3);color:#fff}
-.ma-menu-ov{position:fixed;inset:0;z-index:10000;display:none;background:rgba(0,0,0,.4)}
-.ma-menu-ov.on{display:block}
-.ma-menu-dd{position:fixed;top:60px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:230px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-10px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
-.ma-menu-dd.on{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
-.ma-menu-user{padding:12px 14px;border-bottom:1px solid #1e1e35}
-.ma-mu-name{font-size:.82rem;font-weight:800;color:#fff;display:block;margin-bottom:3px}
-.ma-mu-pts{font-size:.6rem;color:#8888a8}
-.ma-mu-pts b{color:#5b7fff}
-.ma-menu-sec{padding:4px 0}
+.ma-tb-trophy svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ma-tb-pts-num{font-size:.78rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.ma-tb-theme-btn{width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#f59e0b;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;padding:0}
+.ma-tb-theme-btn svg{width:15px;height:15px;stroke:currentColor}
+.ma-tb-theme-btn:hover{border-color:rgba(245,158,11,.4)}
+.ma-tb-menu-btn{width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;padding:0}
+.ma-tb-menu-btn svg{width:16px;height:16px;stroke:currentColor;pointer-events:none}
+.ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
+.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}
+.ma-menu-overlay.open{display:block}
+.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:240px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+.ma-menu-user{padding:14px 16px 12px;border-bottom:1px solid #1e1e35}
+.ma-mu-name{font-size:.85rem;font-weight:700;color:#fff;display:block;margin-bottom:3px}
+.ma-mu-pts{font-size:.6rem;color:rgba(255,255,255,.35)}
+.ma-menu-sec{padding:5px 0}
 .ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
-.ma-mi{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:.76rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:"Outfit",sans-serif;width:100%;text-align:left;transition:background .15s}
+.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
 .ma-mi:hover{background:#161628;color:#e8e8f0}
-.ma-mi-i{font-size:.95rem;width:20px;text-align:center;flex-shrink:0}
+.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
 .ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
-body{padding-top:54px!important;padding-bottom:58px!important}
-@media(max-width:400px){.ma-tb-page{max-width:80px}.ma-tb-ptsn{min-width:20px;font-size:.75rem}}
+body{padding-top:56px!important;padding-bottom:58px!important}
+body.light{--bg:#faf6ef;--bg2:#f3ede4;--bg3:#ebe5db;--card:#fffbf5;--brd:rgba(60,50,30,.08);--brd2:rgba(60,50,30,.14);--txt:#2a2a2a;--txt2:rgba(42,42,42,.65);--txt3:rgba(42,42,42,.38)}
+body.light .ma-topbar{background:rgba(250,246,239,.98);border-bottom-color:rgba(60,50,30,.1)}
+body.light .ma-topbar::before{opacity:.4}
+body.light .ma-tb-logo svg text:first-of-type{fill:#1a1a2e}
+body.light .ma-tb-sep{background:rgba(0,0,0,.1)}
+body.light .ma-tb-page-name{color:rgba(42,42,42,.5)}
+body.light .ma-tb-pts-block{border-color:rgba(60,50,30,.12);background:rgba(60,50,30,.05)}
+body.light .ma-tb-pts-num{color:#2a2a2a}
+body.light .ma-tb-theme-btn{border-color:rgba(60,50,30,.12);background:rgba(60,50,30,.05)}
+body.light .ma-tb-menu-btn{border-color:rgba(60,50,30,.12);background:rgba(60,50,30,.05);color:rgba(42,42,42,.5)}
+body.light .ma-menu-dd{background:#fffbf5;border-color:#e0dbd3;box-shadow:0 16px 48px rgba(0,0,0,.12)}
+body.light .ma-menu-user{border-color:#e8e3da}
+body.light .ma-mu-name{color:#2a2a2a}
+body.light .ma-mi{color:#5a5a6a}
+body.light .ma-mi:hover{background:rgba(60,50,30,.05);color:#1a1a2e}
+body.light .ma-menu-sec+.ma-menu-sec{border-color:#e8e3da}
 
 
 /* ══ BOTTOM NAV ══ */
@@ -128,9 +136,10 @@ body{padding-top:54px!important;padding-bottom:58px!important}
 .bn-icon{display:flex;align-items:center;justify-content:center}
 .bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1}
-body.light .bottom-nav{background:rgba(240,242,248,.98);border-top-color:#d0d4e8}
-body.light .bn-item{color:rgba(0,0,0,.28)}
-body.light .bn-item.active,body.light .bn-item:hover{color:#0a0a1e}
+body.light .bottom-nav{background:rgba(250,246,239,.98);border-top-color:rgba(60,50,30,.1)}
+body.light .bn-item{color:rgba(42,42,42,.3)}
+body.light .bn-item.active,body.light .bn-item:hover{color:#1a1a2e}
+body.light .bn-center-logo{background:#1a1a2e;border-color:rgba(60,50,30,.15)}
 @media(min-width:769px){.bottom-nav{display:none}}
 
 </style>
@@ -138,78 +147,50 @@ body.light .bn-item.active,body.light .bn-item:hover{color:#0a0a1e}
 </head>
 <body>
 
-<div class="ma-menu-ov" id="maMenuOv" onclick="maTbClose()"></div>
-<div class="ma-menu-dd" id="maMenuDd">
-  <div class="ma-menu-user" id="maMenuUser">
-    <span class="ma-mu-name">Visitante</span>
-    <div class="ma-mu-pts">Faça login para salvar seu progresso</div>
-  </div>
-  <div class="ma-menu-sec">
-    <a class="ma-mi" href="index.html"><span class="ma-mi-i">🏠</span>Início</a>
-    <a class="ma-mi" href="painel.html"><span class="ma-mi-i">📊</span>Meu Painel</a>
-    <a class="ma-mi" href="ranking.html"><span class="ma-mi-i">🏆</span>Ranking</a>
-    <a class="ma-mi" href="perfil.html"><span class="ma-mi-i">👤</span>Meu Perfil</a>
-    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-i">🤝</span>Indicações</a>
-    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-i">🗺️</span>Trilhas</a>
-    <a class="ma-mi" href="loja.html"><span class="ma-mi-i">🛒</span>Loja de XP</a>
-    <a class="ma-mi" href="mural.html"><span class="ma-mi-i">📌</span>Mural</a>
-  </div>
-  <div class="ma-menu-sec">
-    <a class="ma-mi gold" href="index.html" onclick="localStorage.setItem('ma_open_modal','plans');return true"><span class="ma-mi-i">💎</span>Ver Planos</a>
-  </div>
-  <div class="ma-menu-sec" id="maMenuAuth">
-    <a class="ma-mi" href="index.html"><span class="ma-mi-i">🔑</span>Entrar / Cadastrar</a>
-  </div>
-</div>
-<nav class="ma-topbar" id="maTopbarNew">
+<nav class="ma-topbar">
   <a class="ma-tb-logo" href="index.html">
-    <svg width="120" height="34" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
+    <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
       <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
       <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
       <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
-      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.3)" stroke-width="1"/>
+      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
       <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
     </svg>
   </a>
   <div class="ma-tb-sep"></div>
-  <span class="ma-tb-page">🛒 Loja de XP</span>
+  <span class="ma-tb-page-name">Loja de XP</span>
   <div class="ma-tb-spacer"></div>
-  <a class="ma-tb-pts" id="maTbPts" href="painel.html">
-    <span class="ma-tb-trophy">
-      <svg viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg>
-    </span>
-    <span class="ma-tb-ptsn" id="maTbPtsN">0</span>
+  <a class="ma-tb-pts-block" href="painel.html">
+    <span class="ma-tb-trophy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg></span>
+    <span class="ma-tb-pts-num" id="maPtsNum">000</span>
   </a>
-  <button class="ma-tb-menubtn" onclick="maTbToggle()">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+  <button class="ma-tb-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema">
+    <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+  <button class="ma-tb-menu-btn" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
   </button>
 </nav>
-<script>
-(function(){
-  function maTbUpdatePts(){try{
-    var u=JSON.parse(localStorage.getItem('ma_user')||'null');
-    var pts=(u&&u.xp_total)||0;
-    if(!pts){var p=JSON.parse(localStorage.getItem('ma_points')||'{}');pts=p.total||0;}
-    var el=document.getElementById('maTbPtsN');if(el)el.textContent=pts.toLocaleString('pt-BR');
-  }catch(e){}}
-  function maTbUpdateUser(){
-    try{
-      var u=JSON.parse(localStorage.getItem('ma_user')||'null');
-      var sec=document.getElementById('maMenuUser'),auth=document.getElementById('maMenuAuth');
-      var pts=JSON.parse(localStorage.getItem('ma_points')||'{}');
-      if(u&&u.email){
-        if(sec)sec.innerHTML='<span class="ma-mu-name">'+(u.name||u.email)+'</span><div class="ma-mu-pts"><b>'+(pts.total||0).toLocaleString('pt-BR')+'</b> XP</div>';
-        if(auth)auth.innerHTML='<button class="ma-mi red" onclick="maTbLogout()"><span class="ma-mi-i">🚪</span>Sair da conta</button>';
-      }
-    }catch(e){}
-  }
-  window.maTbToggle=function(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOv');if(!d||!o)return;var on=d.classList.toggle('on');o.classList.toggle('on',on);if(on)maTbUpdateUser();};
-  window.maTbClose=function(){var d=document.getElementById('maMenuDd'),o=document.getElementById('maMenuOv');if(d)d.classList.remove('on');if(o)o.classList.remove('on');};
-  window.maTbLogout=function(){maTbClose();if(window.MAStore&&MAStore.logout){MAStore.logout();return;}if(window.MA_AUTH&&MA_AUTH.logout){MA_AUTH.logout().catch(function(){});}localStorage.removeItem('ma_user');location.href='index.html';};
-  document.addEventListener('DOMContentLoaded',function(){maTbUpdatePts();});
-  setInterval(maTbUpdatePts,8000);
-})();
-</script>
+<div class="ma-menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="ma-menu-dd" id="menuDd">
+  <div class="ma-menu-user" id="menuUserSec"></div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">🎓</span>Meus Cursos</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Meu Painel</a>
+    <a class="ma-mi" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🤝</span>Indicações</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🗺️</span>Trilhas</a>
+    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
+  </div>
+  <div class="ma-menu-sec">
+    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
+  </div>
+  <div class="ma-menu-sec" id="menuAuthSec"></div>
+</div>
 
 
 
@@ -373,6 +354,43 @@ function renderMyItems(){
 
 
 document.addEventListener('DOMContentLoaded',renderShop);
+</script>
+
+<!-- ═══ NEW TOPBAR FUNCTIONS ═══ -->
+<script>
+/* ══ MENU ══ */
+function toggleMenu(){document.getElementById('menuDd').classList.toggle('open');document.getElementById('menuOverlay').classList.toggle('open');}
+function closeMenu(){document.getElementById('menuDd').classList.remove('open');document.getElementById('menuOverlay').classList.remove('open');}
+function updateMenuUser(){
+  var u;try{u=JSON.parse(localStorage.getItem('ma_user')||'null');}catch(e){u=null;}
+  var p;try{p=JSON.parse(localStorage.getItem('ma_points')||'{}');}catch(e){p={};}
+  var us=document.getElementById('menuUserSec'),as=document.getElementById('menuAuthSec');
+  if(u){
+    if(us)us.innerHTML='<span class="ma-mu-name">'+((u.name||u.email||'').split(' ')[0])+'</span><div class="ma-mu-pts">'+(p.total||0).toLocaleString('pt-BR')+' pontos</div>';
+    if(as)as.innerHTML='<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
+  }else{
+    if(us)us.innerHTML='<span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span>';
+    if(as)as.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
+  }
+}
+function doLogout(){if(typeof MAStore!=='undefined'){MAStore.logout();return;}if(window.MA_AUTH){MA_AUTH.logout().catch(function(){});}localStorage.removeItem('ma_user');closeMenu();location.href='index.html';}
+
+/* ══ TEMA ══ */
+var _light=localStorage.getItem('ma_theme')==='light';
+function applyTheme(){document.body.classList.toggle('light',_light);var s=document.getElementById('iconSun'),m=document.getElementById('iconMoon');if(s)s.style.display=_light?'block':'none';if(m)m.style.display=_light?'none':'block';}
+function toggleTheme(){_light=!_light;localStorage.setItem('ma_theme',_light?'light':'dark');applyTheme();}
+
+/* ══ PONTOS ══ */
+function updatePts(){
+  var el=document.getElementById('maPtsNum');if(!el)return;
+  var p;try{p=JSON.parse(localStorage.getItem('ma_points')||'{}');}catch(e){p={};}
+  var total=p.total||0;
+  el.textContent=total<1000?String(total).padStart(3,'0'):total.toLocaleString('pt-BR');
+}
+
+document.addEventListener('DOMContentLoaded',function(){applyTheme();updatePts();updateMenuUser();});
+setInterval(updatePts,8000);
+setInterval(updateMenuUser,8000);
 </script>
 
 <nav class="bottom-nav" id="bottomNav">
