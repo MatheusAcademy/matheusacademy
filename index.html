@@ -147,7 +147,7 @@ body {
 .hero-logo{width:72px;height:72px;border-radius:16px;margin:0 auto 16px}.hero h2{font-family:var(--serif);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:6px}.hero h2 span{color:var(--pri)}.hero .sub{font-size:.88rem;color:var(--txt2);max-width:480px;margin:0 auto 16px;line-height:1.6}
 .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}.tag{padding:5px 14px;border-radius:20px;font-size:.62rem;font-weight:600;border:1px solid var(--brd2);color:var(--txt2);background:var(--bg2)}
 /* EBOOK CAROUSEL - SCROLL NATIVO NETFLIX */
-.ebook-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);position:relative;padding:16px 0}
+.ebook-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);position:relative;padding:12px 0}
 .ebook-overflow{
   overflow-x:auto;
   overflow-y:hidden;
@@ -158,15 +158,16 @@ body {
   padding:4px 0;
 }
 .ebook-overflow::-webkit-scrollbar{display:none}
-.ebook-track{display:flex;gap:10px;padding:0 12px;width:max-content;align-items:flex-start}
+.ebook-track{display:flex;gap:10px;padding:0 10px;width:max-content;align-items:flex-start}
 .ebook-page{display:contents}
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   EBOOK CARD - SCROLL NATIVO
+   EBOOK CARD - SEMPRE 2 CARDS VISÍVEIS + PEDACINHO DO TERCEIRO
    ══════════════════════════════════════════════════════════════════════════════ */
 .ebook-card{
-  flex:0 0 calc(46% - 5px);
-  max-width:calc(46% - 5px);
+  flex:0 0 calc((100vw - 30px) / 2.15);
+  width:calc((100vw - 30px) / 2.15);
+  max-width:calc((100vw - 30px) / 2.15);
   cursor:pointer;
   transition:transform .2s ease-out;
 }
@@ -323,16 +324,38 @@ body {
 .ma-logo-glowing{animation:ma-logo-glow .8s ease-in-out!important}
 .ma-logo-ripple{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(91,127,255,.4) 0%,transparent 70%);transform:scale(0);animation:ma-ripple-fx .6s ease-out forwards;pointer-events:none}
 @keyframes ma-ripple-fx{to{transform:scale(4);opacity:0}}
-@media(max-width:767px){.ebook-card{flex:0 0 calc(47% - 5px);max-width:calc(47% - 5px)}.ebook-section{padding:12px 0}}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   EBOOK CARD - MEDIA QUERIES RESPONSIVOS
+   ══════════════════════════════════════════════════════════════════════════════ */
+/* Desktop grande: 4 cards */
+@media(min-width:1200px){
+  .ebook-card{flex:0 0 280px;width:280px;max-width:280px}
+  .ebook-track{gap:16px;padding:0 24px}
+}
+/* Tablet: 3 cards */
+@media(min-width:768px) and (max-width:1199px){
+  .ebook-card{flex:0 0 220px;width:220px;max-width:220px}
+  .ebook-track{gap:12px;padding:0 16px}
+}
+/* Mobile grande: 2 cards */
+@media(min-width:481px) and (max-width:767px){
+  .ebook-card{flex:0 0 calc((100vw - 36px) / 2.15);width:calc((100vw - 36px) / 2.15);max-width:calc((100vw - 36px) / 2.15)}
+  .ebook-track{gap:10px;padding:0 12px}
+  .ebook-section{padding:10px 0}
+}
+/* Mobile: 2 cards */
 @media(max-width:480px){
-  .ebook-card{flex:0 0 calc(48% - 8px);max-width:calc(48% - 8px)}
-  .ebook-section{padding:14px 18px}
+  .ebook-card{flex:0 0 calc((100vw - 28px) / 2.1);width:calc((100vw - 28px) / 2.1);max-width:calc((100vw - 28px) / 2.1)}
+  .ebook-track{gap:8px;padding:0 10px}
+  .ebook-section{padding:8px 0}
   .nc-title{font-size:.62rem!important;letter-spacing:0}
   .p-name-bar span{font-size:.54rem!important}
   .ebook-btn{font-size:.62rem;padding:8px}
   .p-badge{font-size:.42rem;padding:2px 6px}
 }
-/* ARROW BUTTONS — usadas em todas as roletas */
+
+/* ARROW BUTTONS — ESCONDIDAS */
 .arr-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(14,14,22,.95);border:1.5px solid var(--brd2);color:var(--txt);font-size:1.4rem;cursor:pointer;z-index:50;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:0;line-height:1;pointer-events:all}
 .arr-btn:hover{background:var(--pri3);border-color:var(--neon);box-shadow:0 0 16px rgba(0,212,255,.4)}.arr-btn.ap{left:6px}.arr-btn.an{right:6px}
 .stats{display:flex;justify-content:center;gap:28px;padding:20px;margin:0 24px;border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}.stat{text-align:center}.stat b{font-size:1.4rem;font-weight:800;color:var(--pri);display:block}.stat span{font-size:.55rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
@@ -479,6 +502,10 @@ body {
    MEDIA QUERIES - RESPONSIVO PARA TODOS OS DISPOSITIVOS
    ══════════════════════════════════════════════════════════════════════════════ */
 
+/* ══════════════════════════════════════════════════════════════════════════════
+   MEDIA QUERIES - CARDS DAS SEÇÕES (cat-sec)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 /* DESKTOP GRANDE (1600px+) */
 @media(min-width:1600px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
@@ -486,8 +513,6 @@ body {
     max-width:280px !important;
   }
   .row-inner{gap:16px !important;padding:0 24px !important}
-  .ebook-card{flex:0 0 280px;max-width:280px}
-  .ebook-track{gap:16px;padding:0 24px}
 }
 
 /* DESKTOP (1200px - 1599px) */
@@ -497,8 +522,6 @@ body {
     max-width:240px !important;
   }
   .row-inner{gap:14px !important;padding:0 20px !important}
-  .ebook-card{flex:0 0 240px;max-width:240px}
-  .ebook-track{gap:14px;padding:0 20px}
 }
 
 /* TABLET (768px - 1199px) */
@@ -508,30 +531,24 @@ body {
     max-width:200px !important;
   }
   .row-inner{gap:12px !important;padding:0 16px !important}
-  .ebook-card{flex:0 0 200px;max-width:200px}
-  .ebook-track{gap:12px;padding:0 16px}
 }
 
 /* MOBILE GRANDE (481px - 767px) */
 @media(min-width:481px) and (max-width:767px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
-    width:calc(46% - 5px) !important;
-    max-width:46vw !important;
+    width:calc((100vw - 36px) / 2.15) !important;
+    max-width:calc((100vw - 36px) / 2.15) !important;
   }
   .row-inner{gap:10px !important;padding:0 12px !important}
-  .ebook-card{flex:0 0 calc(46% - 5px);max-width:calc(46% - 5px)}
-  .ebook-track{gap:10px;padding:0 12px}
 }
 
 /* MOBILE (até 480px) */
 @media(max-width:480px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
-    width:calc(46% - 4px) !important;
-    max-width:47vw !important;
+    width:calc((100vw - 28px) / 2.1) !important;
+    max-width:calc((100vw - 28px) / 2.1) !important;
   }
   .row-inner{gap:8px !important;padding:0 10px !important}
-  .ebook-card{flex:0 0 calc(47% - 4px);max-width:calc(47% - 4px)}
-  .ebook-track{gap:8px;padding:0 10px}
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -4495,14 +4512,4 @@ function _extendTabs(){
     // Pane 5: Revisão
     '<div class="mae-pane" id="maePane5">'
     +'<div class="mae-rev-hero">'
-    +'<div class="mae-rev-hero-title">📋 Modo Revisão</div>'
-    +'<div class="mae-rev-hero-sub">Revise módulos favoritos e erros de quiz. Ganhe pontos bônus ao concluir 100%.</div>'
-    +'<div class="mae-rev-progress-wrap"><div class="mae-rev-progress-fill" id="maeRevFill" style="width:0%"></div></div>'
-    +'<div class="mae-rev-pct" id="maeRevPct">0% concluído</div>'
-    +'</div>'
-    +'<div id="maeRevModules"></div>'
-    +'<button class="mae-rev-complete-btn" id="maeRevCompleteBtn" onclick="maeV3CompleteReview()">🏆 Concluir Revisão e Ganhar Pontos!</button>'
-    +'<div class="mae-rev-history"><div class="mae-rev-hist-title">Histórico de Revisões</div><div id="maeRevHistory"></div></div>'
-    +'</div>'
-  ];
-  paneHtml.fo
+    +'<div class="mae-rev-hero-title
