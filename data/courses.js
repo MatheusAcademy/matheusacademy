@@ -563,6 +563,25 @@ var MA_COURSES = [
     color: '#c41e3a',
     addedTs: 1775773233160,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pisw.jpg',
+    id: 'pisw',
+    name: 'PNL para Comunicação, Persuasão e Influência',
+    desc: 'Melhore fala, rapport, leitura de linguagem, conexão com pessoas, argumentação e técnicas de influência ética em vendas, liderança e relacionamentos.',
+    file: 'curso-pnl-comunicacao-persuasao.html',
+    cat: 'PNL',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'PI_HENRY_2026_MASTER',
+    ak: 'pi_auth',
+    storagePrefix: 'pi_',
+    icon: '🚀',
+    color: '#F77F00',
+    addedTs: 1775775094437,
+    active: true
   }
 ];
 var MA_CATS = [
