@@ -470,25 +470,6 @@ var MA_COURSES = [
     active: true
   },
   {
-    coverImg: 'assets/capas/gmsddg.jpg',
-    id: 'gmsddg',
-    name: 'Geopolítica do Oriente Médio',
-    desc: 'Análise profunda dos conflitos, alianças estratégicas e mudanças geopolíticas no Oriente Médio.',
-    file: 'geopolitica-oriente-medio-v2.html',
-    cat: 'Geopolítica',
-    modules: 3,
-    topics: 9,
-    hours: 2,
-    quizzes: 1,
-    salt: 'GM_HENRY_2026_MASTER',
-    ak: 'gm_auth',
-    storagePrefix: 'gm_',
-    icon: '📰',
-    color: '#dc5f3f',
-    addedTs: 1775754788926,
-    active: true
-  },
-  {
     coverImg: 'assets/capas/ri.jpg',
     id: 'ri',
     name: 'Curso: Relações Internacionais',
