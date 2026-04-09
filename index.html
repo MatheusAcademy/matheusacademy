@@ -186,17 +186,18 @@ body {
 .hdr-right{display:flex;align-items:center;gap:6px}
 .hdr-btn{padding:6px 12px;border-radius:8px;font-size:.65rem;font-weight:600;cursor:pointer;border:1px solid var(--brd);background:transparent;color:var(--txt2);font-family:var(--font);transition:all .2s}.hdr-btn:hover{border-color:var(--pri);color:var(--pri)}.hdr-btn.pri{background:var(--pri3);color:#fff;border-color:var(--pri3)}.hdr-btn.plan{background:linear-gradient(135deg,var(--orn),#ef4444);color:#fff;border:none}
 .user-info{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;background:var(--bg2);border:1px solid var(--brd);font-size:.65rem;color:var(--txt2)}.user-info .dot{width:6px;height:6px;border-radius:50%;background:var(--grn);flex-shrink:0}
-.hero{margin-top:56px;padding:44px 24px 0;text-align:center;position:relative;overflow:visible}
-.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 50% 0%,rgba(75,139,255,.08),transparent 60%);pointer-events:none}
+.hero{margin-top:56px;padding:44px 24px 0;text-align:center;position:relative;overflow:visible;background:linear-gradient(180deg,#050510 0%,#08081a 40%,#0a0a1f 100%)}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 50% 20%,rgba(75,139,255,.06),transparent 55%);pointer-events:none;z-index:0}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(75,139,255,.2) 20%,rgba(75,139,255,.4) 50%,rgba(75,139,255,.2) 80%,transparent);z-index:1;box-shadow:0 0 15px rgba(75,139,255,.15),0 0 30px rgba(75,139,255,.08)}
 .hero-logo{width:72px;height:72px;border-radius:16px;margin:0 auto 16px;position:relative;z-index:1}.hero h2{font-family:var(--serif);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:6px;position:relative;z-index:1}.hero h2 span{color:var(--pri)}.hero .sub{font-size:.88rem;color:var(--txt2);max-width:480px;margin:0 auto 16px;line-height:1.6;position:relative;z-index:1}
 .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px;position:relative;z-index:1}.tag{padding:5px 14px;border-radius:20px;font-size:.62rem;font-weight:600;border:1px solid var(--brd2);color:var(--txt2);background:var(--bg2)}
 /* EBOOK CAROUSEL - PREMIUM DARK NETFLIX - FULL WIDTH */
 .ebook-section{
   background:linear-gradient(180deg, rgba(8,8,15,0) 0%, rgba(8,8,15,.6) 50%, rgba(8,8,15,0) 100%);
   position:relative;padding:14px 0;border:none;z-index:1;
-  /* Furar o padding da .hero e ocupar 100% da tela */
+  /* Furar o padding da .hero — forçar 100% da viewport */
   width:100vw;
-  margin-left:calc(-50vw + 50%);
+  margin-left:-24px;
 }
 .ebook-overflow{
   overflow-x:auto;
@@ -349,7 +350,7 @@ body {
   box-shadow:0 6px 25px rgba(75,139,255,.4), inset 0 1px 0 rgba(255,255,255,.2);
   transform:translateY(-2px);
 }
-.ebook-dots{display:flex;justify-content:center;gap:6px;padding:14px 0 6px;background:transparent}.ebook-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:all .3s}.ebook-dot.active{width:22px;border-radius:3px;background:var(--pri);box-shadow:0 0 10px rgba(75,139,255,.4)}
+.ebook-dots{display:flex;justify-content:center;gap:6px;padding:14px 0 6px;background:transparent;position:relative;z-index:1;width:100vw;margin-left:-24px}.ebook-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:all .3s}.ebook-dot.active{width:22px;border-radius:3px;background:var(--pri);box-shadow:0 0 10px rgba(75,139,255,.4)}
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    MATHEUS ACADEMY FIXES v3.1 - CSS
@@ -431,13 +432,14 @@ body {
 @media(min-width:481px) and (max-width:767px){
   .ebook-card{flex:0 0 calc((100vw - 8px) / 2);width:calc((100vw - 8px) / 2);max-width:calc((100vw - 8px) / 2)}
   .ebook-track{gap:4px;padding:0 2px}
-  .ebook-section{padding:10px 0}
+  .ebook-section{padding:10px 0;margin-left:-24px}
 }
 /* Mobile: 2 cards — EDGE-TO-EDGE REAL */
 @media(max-width:480px){
   .ebook-card{flex:0 0 calc((100vw - 6px) / 2);width:calc((100vw - 6px) / 2);max-width:calc((100vw - 6px) / 2)}
   .ebook-track{gap:4px;padding:0 1px}
-  .ebook-section{padding:8px 0}
+  .ebook-section{padding:8px 0;margin-left:-16px}
+  .ebook-dots{margin-left:-16px}
   .nc-title{font-size:.62rem!important;letter-spacing:0}
   .p-name-bar span{font-size:.56rem!important}
   .ebook-btn{font-size:.6rem;padding:9px 6px}
@@ -3027,15 +3029,17 @@ window.MA_getPoints = getPoints;
   }catch(e){}
 })();
 // ══════════════════════════════════════════════════════════════
-// FUNDO GEOMÉTRICO ANIMADO — Linhas e nós conectados futurista
+// FUNDO MAPA MUNDI ELÉTRICO — Globe network + pulsos elétricos
 // ══════════════════════════════════════════════════════════════
 (function(){
   var cv = document.getElementById('geoCanvas');
   if(!cv) return;
   var ctx = cv.getContext('2d');
   var pts = [];
-  var N = 45; // número de pontos
-  var DIST = 120; // distância máxima para conectar linhas
+  var pulses = [];
+  var N = 55;
+  var DIST = 130;
+  var frame = 0;
 
   function resize(){
     var hero = cv.parentElement;
@@ -3045,48 +3049,119 @@ window.MA_getPoints = getPoints;
 
   function init(){
     resize();
-    pts = [];
+    pts = []; pulses = [];
+    // Distribuir pontos em padrão esférico (projeção de globo)
+    var cx = cv.width * 0.5, cy = cv.height * 0.45, rx = cv.width * 0.38, ry = cv.height * 0.35;
     for(var i=0;i<N;i++){
+      var angle = Math.random() * Math.PI * 2;
+      var rad = Math.random() * 0.95;
+      var spread = Math.random() > 0.3 ? 1 : 1.6; // alguns pontos fora do globo
       pts.push({
-        x: Math.random()*cv.width,
-        y: Math.random()*cv.height,
-        vx: (Math.random()-.5)*.4,
-        vy: (Math.random()-.5)*.4,
-        r: Math.random()*1.5+.5
+        x: cx + Math.cos(angle) * rx * rad * spread,
+        y: cy + Math.sin(angle) * ry * rad * spread,
+        vx: (Math.random()-.5)*.3,
+        vy: (Math.random()-.5)*.25,
+        r: Math.random()*1.8+.5,
+        bright: Math.random()
       });
     }
   }
 
   function draw(){
+    frame++;
     ctx.clearRect(0,0,cv.width,cv.height);
-    // linhas de conexão
+
+    // Globo sutil no fundo
+    var cx = cv.width*0.5, cy = cv.height*0.45;
+    var gr = ctx.createRadialGradient(cx,cy,0,cx,cy,cv.width*0.35);
+    gr.addColorStop(0,'rgba(75,139,255,.04)');
+    gr.addColorStop(0.7,'rgba(75,139,255,.02)');
+    gr.addColorStop(1,'transparent');
+    ctx.fillStyle = gr;
+    ctx.beginPath();
+    ctx.arc(cx,cy,cv.width*0.35,0,Math.PI*2);
+    ctx.fill();
+
+    // Elipse do globo
+    ctx.beginPath();
+    ctx.ellipse(cx,cy,cv.width*0.35,cv.height*0.32,0,0,Math.PI*2);
+    ctx.strokeStyle='rgba(75,139,255,.06)';
+    ctx.lineWidth=.8;
+    ctx.stroke();
+
+    // Meridianos sutis
+    for(var m=0;m<3;m++){
+      ctx.beginPath();
+      var off = (m-1)*cv.width*0.12;
+      ctx.ellipse(cx+off,cy,cv.width*0.12,cv.height*0.32,0,0,Math.PI*2);
+      ctx.strokeStyle='rgba(75,139,255,.03)';
+      ctx.lineWidth=.5;
+      ctx.stroke();
+    }
+
+    // Linhas de conexão com efeito elétrico
     for(var i=0;i<pts.length;i++){
       for(var j=i+1;j<pts.length;j++){
         var dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
         var d=Math.sqrt(dx*dx+dy*dy);
         if(d<DIST){
           var a = 1 - d/DIST;
+          // Pulso elétrico — brilho oscila
+          var pulse = Math.sin(frame*0.02 + i*0.5) * 0.5 + 0.5;
           ctx.beginPath();
           ctx.moveTo(pts[i].x,pts[i].y);
           ctx.lineTo(pts[j].x,pts[j].y);
-          ctx.strokeStyle='rgba(75,139,255,'+(.15*a)+')';
-          ctx.lineWidth=.6;
+          ctx.strokeStyle='rgba(75,139,255,'+(.12*a + .06*a*pulse)+')';
+          ctx.lineWidth= .4 + .3*pulse;
           ctx.stroke();
         }
       }
     }
-    // nós (pontos)
+
+    // Nós (pontos) com glow elétrico
     for(var k=0;k<pts.length;k++){
       var p=pts[k];
+      var glow = Math.sin(frame*0.03 + k*0.7) * 0.4 + 0.6;
+      // Glow externo
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r*3,0,Math.PI*2);
+      ctx.fillStyle='rgba(75,139,255,'+(.03*glow)+')';
+      ctx.fill();
+      // Ponto principal
       ctx.beginPath();
       ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(75,139,255,.3)';
+      ctx.fillStyle='rgba(75,139,255,'+(.3+.2*glow)+')';
       ctx.fill();
-      // mover
+      // Mover
       p.x+=p.vx; p.y+=p.vy;
       if(p.x<0||p.x>cv.width) p.vx*=-1;
       if(p.y<0||p.y>cv.height) p.vy*=-1;
     }
+
+    // Pulsos viajantes nas linhas (efeito elétrico)
+    if(frame%60===0 && pts.length>1){
+      var a2=Math.floor(Math.random()*pts.length);
+      var b2=Math.floor(Math.random()*pts.length);
+      if(a2!==b2) pulses.push({from:a2,to:b2,t:0});
+    }
+    for(var pi=pulses.length-1;pi>=0;pi--){
+      var pu=pulses[pi];
+      pu.t+=0.025;
+      if(pu.t>1){pulses.splice(pi,1);continue;}
+      var fa=pts[pu.from],ta=pts[pu.to];
+      var px2=fa.x+(ta.x-fa.x)*pu.t;
+      var py2=fa.y+(ta.y-fa.y)*pu.t;
+      ctx.beginPath();
+      ctx.arc(px2,py2,2.5,0,Math.PI*2);
+      ctx.fillStyle='rgba(75,139,255,'+(.6*(1-pu.t))+')';
+      ctx.fill();
+      // Trail
+      ctx.beginPath();
+      ctx.arc(px2,py2,5,0,Math.PI*2);
+      ctx.fillStyle='rgba(75,139,255,'+(.15*(1-pu.t))+')';
+      ctx.fill();
+    }
+
     requestAnimationFrame(draw);
   }
 
