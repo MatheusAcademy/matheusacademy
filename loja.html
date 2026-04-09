@@ -116,20 +116,22 @@ body{padding-top:54px!important;padding-bottom:58px!important}
 @media(max-width:400px){.ma-tb-page{max-width:80px}.ma-tb-ptsn{min-width:20px;font-size:.75rem}}
 
 
-/* ══ RODAPÉ PADRAO MA ══ */
-.ma-bnav{position:fixed;bottom:0;left:0;right:0;height:58px;background:#000000;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:stretch;z-index:8000;padding-bottom:env(safe-area-inset-bottom,0px)}
-.ma-bn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;color:rgba(255,255,255,.38);font-size:.52rem;font-weight:600;font-family:"Outfit",sans-serif;letter-spacing:.05em;text-transform:uppercase;border:none;background:transparent;cursor:pointer;transition:color .18s;padding:0}
-.ma-bn:hover,.ma-bn.ativo{color:#fff}
-.ma-bn-svg{display:flex;align-items:center;justify-content:center;width:22px;height:22px}
-.ma-bn-svg svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-/* Botão logo central */
-.ma-bn-mid{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;cursor:pointer;padding-bottom:4px}
-.ma-bn-mid-wrap{width:44px;height:44px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.5);margin-top:-10px;flex-shrink:0;transition:transform .18s,box-shadow .18s}
-.ma-bn-mid:hover .ma-bn-mid-wrap{transform:scale(1.07);box-shadow:0 4px 20px rgba(255,255,255,.15)}
-.ma-bn-mid svg{display:block}
-.ma-bn-mid-lbl{font-size:.48rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;font-family:"Outfit",sans-serif;margin-top:1px}
-body{padding-bottom:58px!important}
-@media(max-width:360px){.ma-bn{font-size:.48rem}.ma-bn-svg{width:20px;height:20px}.ma-bn-svg svg{width:20px;height:20px}.ma-bn-mid-wrap{width:40px;height:40px;border-radius:10px}}
+/* ══ BOTTOM NAV ══ */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:rgba(4,4,10,.98);border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-around;z-index:999;padding:0 8px;padding-bottom:env(safe-area-inset-bottom)}
+.bottom-nav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
+.bn-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex:1;height:100%;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,.28);font-family:var(--font);text-decoration:none;position:relative;transition:color .2s;-webkit-tap-highlight-color:transparent}
+.bn-item.active,.bn-item:hover{color:#fff}
+.bn-item.active::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:2px;border-radius:0 0 2px 2px;background:#fff}
+.bn-item.bn-center{flex:1.4;position:relative;top:-10px}
+.bn-center-logo{width:50px;height:50px;border-radius:14px;background:#000;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.6);transition:all .25s}
+.bn-item.bn-center:hover .bn-center-logo{transform:scale(1.1);border-color:rgba(255,255,255,.4)}
+.bn-icon{display:flex;align-items:center;justify-content:center}
+.bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1}
+body.light .bottom-nav{background:rgba(240,242,248,.98);border-top-color:#d0d4e8}
+body.light .bn-item{color:rgba(0,0,0,.28)}
+body.light .bn-item.active,body.light .bn-item:hover{color:#0a0a1e}
+@media(min-width:769px){.bottom-nav{display:none}}
 
 </style>
 <script src="shared/time-tracker.js"></script>
@@ -373,30 +375,29 @@ function renderMyItems(){
 document.addEventListener('DOMContentLoaded',renderShop);
 </script>
 
-<nav class="ma-bnav">
-  <a class="ma-bn" href="index.html">
-    <span class="ma-bn-svg"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>
-    <span>Início</span>
+<nav class="bottom-nav" id="bottomNav">
+  <a class="bn-item" href="index.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 13 15 13 15 21"/></svg></span>
+    <span class="bn-label">Início</span>
   </a>
-  <a class="ma-bn ativo" href="cursos.html">
-    <span class="ma-bn-svg"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
-    <span>Cursos</span>
+  <a class="bn-item" href="cursos.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+    <span class="bn-label">Cursos</span>
   </a>
-  <a class="ma-bn-mid" href="index.html">
-    <div class="ma-bn-mid-wrap"><svg width="32" height="26" viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg">
-  <text x="130" y="160" text-anchor="middle" fill="#000" font-family="Arial Black,sans-serif" font-weight="900" font-size="175" letter-spacing="-4">M</text>
-  <line x1="15" y1="178" x2="245" y2="178" stroke="#4A7EFF" stroke-width="6"/>
-  <line x1="15" y1="188" x2="245" y2="188" stroke="#4A7EFF" stroke-width="2.5" opacity=".4"/>
-</svg></div>
-    <span class="ma-bn-mid-lbl">MA</span>
+  <a class="bn-item bn-center" href="index.html" title="Matheus Academy">
+    <div class="bn-center-logo">
+      <svg width="28" height="28" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <text x="28" y="40" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="38" letter-spacing="-1">M</text>
+      </svg>
+    </div>
   </a>
-  <a class="ma-bn" href="ranking.html">
-    <span class="ma-bn-svg"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>
-    <span>Ranking</span>
+  <a class="bn-item" href="ranking.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+    <span class="bn-label">Ranking</span>
   </a>
-  <a class="ma-bn" href="perfil.html">
-    <span class="ma-bn-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
-    <span>Perfil</span>
+  <a class="bn-item" href="perfil.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+    <span class="bn-label">Perfil</span>
   </a>
 </nav>
 
