@@ -1880,14 +1880,71 @@ function buildEbooks() {
     for (var i = 0; i < items.length; i++) dh += '<div class="ebook-dot' + (i===0?' active':'') + '"></div>';
     dotsEl.innerHTML = dh;
   }
-  // Usando scroll nativo - não precisa de startContinuousScroll
+  
+  // Iniciar scroll automático suave
+  startEbookAutoScroll();
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// AUTO SCROLL SUAVE - ESTILO NETFLIX (bem devagar)
+// ══════════════════════════════════════════════════════════════════════════════
+var _ebookAutoInterval = null;
+var _ebookAutoEnabled = true;
+
+function startEbookAutoScroll() {
+  var overflow = document.querySelector('.ebook-overflow');
+  if (!overflow) return;
+  
+  var speed = 0.5; // pixels por frame - BEM DEVAGAR
+  
+  function autoScroll() {
+    if (!_ebookAutoEnabled) return;
+    
+    // Scroll suave
+    overflow.scrollLeft += speed;
+    
+    // Quando chegar no fim, volta pro início suavemente
+    var maxScroll = overflow.scrollWidth - overflow.clientWidth;
+    if (overflow.scrollLeft >= maxScroll - 1) {
+      overflow.scrollLeft = 0;
+    }
+  }
+  
+  // Rodar a cada 16ms (~60fps)
+  if (_ebookAutoInterval) clearInterval(_ebookAutoInterval);
+  _ebookAutoInterval = setInterval(autoScroll, 16);
+  
+  // Parar quando usuário tocar
+  overflow.addEventListener('touchstart', function() {
+    _ebookAutoEnabled = false;
+  }, {passive: true});
+  
+  overflow.addEventListener('mousedown', function() {
+    _ebookAutoEnabled = false;
+  });
+  
+  // Opcional: retomar após 5 segundos sem interação
+  var resumeTimeout = null;
+  overflow.addEventListener('touchend', function() {
+    clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(function() {
+      _ebookAutoEnabled = true;
+    }, 5000);
+  }, {passive: true});
+  
+  overflow.addEventListener('mouseup', function() {
+    clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(function() {
+      _ebookAutoEnabled = true;
+    }, 5000);
+  });
 }
 
 
-function ebookGo(idx) { /* no-op: usando scroll contínuo */ }
-function ebookNext() { _scrollSpeed = 6; }  // dispara momentum para frente
-function ebookPrev() { _scrollSpeed = -6; } // dispara momentum para trás
-function ebookStart() { /* scroll inicia via startContinuousScroll */ }
+function ebookGo(idx) { /* no-op */ }
+function ebookNext() { /* no-op */ }
+function ebookPrev() { /* no-op */ }
+function ebookStart() { /* no-op */ }
 function ebookReset() { /* no-op */ }
 
 // ═══════════════════════════════ AUTH (Firebase) ═══════════════════════════════
@@ -4479,37 +4536,3 @@ function _extendTabs(){
   var tabs=document.querySelector('.mae-tabs');
   if(!tabs||tabs.dataset.v3)return;
   tabs.dataset.v3='1';
-  var newTabs=[
-    {i:3,icon:'⭐',label:'Favoritos'},
-    {i:4,icon:'📓',label:'Caderno'},
-    {i:5,icon:'📋',label:'Revisão'}
-  ];
-  newTabs.forEach(function(t){
-    var btn=document.createElement('button');
-    btn.className='mae-tab';btn.id='maeT'+t.i;
-    btn.onclick=function(){window.maeTab&&maeTab(t.i);};
-    btn.innerHTML=t.icon+' '+t.label;
-    tabs.appendChild(btn);
-  });
-  // Add new panes
-  var body=document.querySelector('.mae-body');
-  if(!body)return;
-  var paneHtml=[
-    // Pane 3: Favoritos
-    '<div class="mae-pane" id="maePane3">'
-    +'<div id="maeFavContent"><div class="mae-fav-empty"><span class="mae-fav-empty-icon">⭐</span><div class="mae-fav-empty-txt">Nenhum favorito ainda.<br>Marque módulos como favorito nos cursos!</div></div></div>'
-    +'</div>',
-    // Pane 4: Caderno
-    '<div class="mae-pane" id="maePane4">'
-    +'<div class="mae-notes-toolbar">'
-    +'<input class="mae-notes-search" id="maeNoteSearch" placeholder="🔍 Buscar anotações..." oninput="maeV3RenderNotes()">'
-    +'<select class="mae-notes-filter" id="maeNoteFilter" onchange="maeV3RenderNotes()"><option value="">Todos os cursos</option></select>'
-    +'<button class="mae-notes-export" onclick="maeV3ExportNotes()">📄 PDF</button>'
-    +'</div>'
-    +'<div class="mae-notes-count" id="maeNotesCount">0 anotações</div>'
-    +'<div id="maeNotesList"></div>'
-    +'</div>',
-    // Pane 5: Revisão
-    '<div class="mae-pane" id="maePane5">'
-    +'<div class="mae-rev-hero">'
-    +'<div class="mae-rev-hero-title
