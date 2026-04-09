@@ -421,17 +421,20 @@ body {
 .section-wrap{padding:2px 0 2px}.section-hdr{padding:8px 16px 4px}.section-hdr h3{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.03em}.section-hdr p{font-size:.7rem;color:var(--txt2)}
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   CONTINUAR LEITURA & ÚLTIMOS LANÇAMENTOS - IGUAL À PRIMEIRA ROLETA
+   CONTINUAR LEITURA & ÚLTIMOS LANÇAMENTOS - ROLETA SUAVE IGUAL GEOPOLÍTICA
    ══════════════════════════════════════════════════════════════════════════════ */
 #continuarSection .row-outer,
 .section-wrap .row-outer {
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch !important;
-  scroll-behavior: smooth !important;
+  scroll-behavior: auto !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
   padding: 4px 0 !important;
+  scroll-snap-type: none !important;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 #continuarSection .row-outer::-webkit-scrollbar,
 .section-wrap .row-outer::-webkit-scrollbar {
@@ -454,6 +457,9 @@ body {
   height: auto !important;
   border-radius: 10px !important;
   overflow: hidden !important;
+  will-change: transform !important;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 /* Mobile */
 @media(max-width:480px){
@@ -934,8 +940,8 @@ body {
   border-radius: 12px !important;
   box-shadow: 0 0 20px rgba(75, 139, 255, 0.1) !important;
   padding: 0 !important;
-  overflow: visible !important;
-  animation: fadeInUp 0.5s ease-out forwards;
+  overflow: hidden !important;
+  will-change: transform;
 }
 
 .cc:hover {
@@ -2442,8 +2448,21 @@ function setupAutoScrollNews() {
 // ── Normalizar velocidade de todos os carrosséis ──
 function normalizeCarouselSpeed() {
   document.querySelectorAll('.row-outer').forEach(function(outer) {
-    outer.style.scrollBehavior = 'smooth';
-    outer.style.scrollSnapType = 'x mandatory';
+    // Só aplica snap e smooth nas seções de notícias (special)
+    // Continuar Leitura e Últimos Lançamentos usam scroll nativo (auto) para não travar
+    var isSpecial = outer.closest('.cat-sec') && outer.closest('.cat-sec').querySelector('.cat-sec-title.special');
+    var isContinuar = outer.id === 'continuarOuter';
+    var isLanc = outer.id === 'lancOuter';
+    if (isSpecial) {
+      outer.style.scrollBehavior = 'smooth';
+      outer.style.scrollSnapType = 'x mandatory';
+    } else if (isContinuar || isLanc) {
+      // Não aplica snap nem smooth — scroll livre e fluido
+      outer.style.scrollBehavior = 'auto';
+      outer.style.scrollSnapType = 'none';
+    } else {
+      outer.style.scrollBehavior = 'smooth';
+    }
   });
 }
 
@@ -2544,7 +2563,7 @@ function setupEvents() {
       var dx = startX - e.touches[0].clientX;
       var dy = startY - e.touches[0].clientY;
       if (!dir) dir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
-      if (dir === 'h') el.scrollLeft = startScroll + dx * 2.5; // 2.5× mais rápido no toque
+      if (dir === 'h') el.scrollLeft = startScroll + dx * 1.5; // 1.5× para scroll suave no toque
       // se dir === 'v': não faz nada, browser cuida do scroll da página
     }, {passive: true});
 
