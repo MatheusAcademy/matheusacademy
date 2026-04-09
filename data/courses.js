@@ -449,6 +449,25 @@ var MA_COURSES = [
     color: '#D4AF37',
     addedTs: 1775749269276,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gpaa.jpg',
+    id: 'gpaa',
+    name: 'Curso: Gestão Profissional – Empresa Média Forte',
+    desc: 'Transforme sua empresa média em máquina organizada: estratégia clara, gestão por indicadores, cultura forte, liderança que não depende do dono.',
+    file: 'gestao-profissional-curso.html',
+    cat: 'Negócios / Empresas',
+    modules: 6,
+    topics: 24,
+    hours: 7,
+    quizzes: 1,
+    salt: 'GP_HENRY_2026_MASTER',
+    ak: 'gp_auth',
+    storagePrefix: 'gp_',
+    icon: '🎓',
+    color: '#8B6914',
+    addedTs: 1775749317061,
+    active: true
   }
 ];
 var MA_CATS = [
