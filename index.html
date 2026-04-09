@@ -4184,6 +4184,22 @@ document.addEventListener('DOMContentLoaded',function(){
 .mae-timer-label{font-size:.5rem;color:#44445a;font-family:'Outfit',sans-serif;font-weight:600}
 /* Timer inside mae-btn floating button */
 #mae-btn .mae-btn-timer{font-size:.42rem;color:rgba(255,255,255,.6);line-height:1;margin-top:1px;font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums}
+/* ══ BOTTOM NAV ══ */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:rgba(4,4,10,.98);border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-around;z-index:999;padding:0 8px;padding-bottom:env(safe-area-inset-bottom)}
+.bottom-nav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
+.bn-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex:1;height:100%;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,.28);font-family:var(--font);text-decoration:none;position:relative;transition:color .2s;-webkit-tap-highlight-color:transparent}
+.bn-item.active,.bn-item:hover{color:#fff}
+.bn-item.active::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:2px;border-radius:0 0 2px 2px;background:#fff}
+.bn-item.bn-center{flex:1.4;position:relative;top:-10px}
+.bn-center-logo{width:50px;height:50px;border-radius:14px;background:#000;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.6);transition:all .25s}
+.bn-item.bn-center:hover .bn-center-logo{transform:scale(1.1);border-color:rgba(255,255,255,.4)}
+.bn-icon{display:flex;align-items:center;justify-content:center}
+.bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1}
+body.light .bottom-nav{background:rgba(240,242,248,.98);border-top-color:#d0d4e8}
+body.light .bn-item{color:rgba(0,0,0,.28)}
+body.light .bn-item.active,body.light .bn-item:hover{color:#0a0a1e}
+@media(min-width:769px){.bottom-nav{display:none}}
 </style>
 
 <!-- ═══ SINO DE NOTIFICAÇÕES ═══ -->
@@ -4784,3 +4800,38 @@ document.addEventListener('DOMContentLoaded',function(){
 .mae-rev-check-item:hover{background:rgba(255,255,255,.03)}
 .mae-rev-check-item input[type=checkbox]{width:14px;height:14px;accent-color:#22c55e;cursor:pointer;flex-shrink:0}
 .mae-rev-check-label{font-size:.7rem;color:#8888aa;font-family:'Outfit',sans-serif;transiti
+on:.2s}
+.mae-rev-check-label-icon{width:12px;height:12px;border-radius:3px;background:#22c55e;margin-right:4px;display:flex;align-items:center;justify-content:center}
+.mae-rev-check-label-icon svg{width:7px;height:7px;stroke:#fff;stroke-width:2}
+.mae-rev-check-label-text{font-size:.7rem;color:#e8e8f0}
+}
+</style>
+
+<nav class="bottom-nav" id="bottomNav">
+  <a class="bn-item active" href="index.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 13 15 13 15 21"/></svg></span>
+    <span class="bn-label">Início</span>
+  </a>
+  <a class="bn-item" href="cursos.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+    <span class="bn-label">Cursos</span>
+  </a>
+  <a class="bn-item bn-center" href="index.html" title="Matheus Academy">
+    <div class="bn-center-logo">
+      <svg width="28" height="28" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <text x="28" y="40" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="38" letter-spacing="-1">M</text>
+      </svg>
+    </div>
+  </a>
+  <a class="bn-item" href="ranking.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+    <span class="bn-label">Ranking</span>
+  </a>
+  <a class="bn-item" href="perfil.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+    <span class="bn-label">Perfil</span>
+  </a>
+</nav>
+
+</body>
+</html>
