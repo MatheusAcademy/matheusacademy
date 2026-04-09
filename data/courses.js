@@ -185,326 +185,227 @@ var MA_COURSES = [
     id: 'pbba',
     name: 'Como Funciona a Política no Brasil',
     desc: 'Um curso completo sobre o funcionamento do sistema político brasileiro, desde a Constituição de 1988 até os desafios contemporâneos da democracia.',
-    file: 'como-funciona-a-politica-no-brasil.html',
+    file: 'como-funciona-politica-brasil.html',
     cat: 'Política Brasileira',
-    modules: 7,
-    topics: 28,
-    hours: 4,
-    quizzes: 21,
-    salt: 'PB_HENRY_2026_MASTER',
-    ak: 'pb_auth',
-    storagePrefix: 'pb_',
-    icon: '📰',
-    color: '#009c3b',
-    addedTs: 1775677085330,
+    modules: 10,
+    topics: 30,
+    hours: 5,
+    quizzes: 10,
+    salt: 'PBBA_HENRY_2026_MASTER',
+    ak: 'pbba_auth',
+    storagePrefix: 'pbba_',
+    icon: '🏛️',
+    color: '#d97706',
+    addedTs: 1775680000000,
     active: true
   },
   {
-    coverImg: 'assets/capas/educa.jpg',
-    id: 'educa',
-    name: 'Educação Financeira do Zero',
-    desc: 'Domine suas finanças pessoais do básico ao avançado: orçamento, investimentos, impostos e independência financeira.',
-    file: 'educacao-financeira-do-zero.html',
-    cat: 'Finanças & Economia',
-    modules: 7,
-    topics: 28,
-    hours: 4,
-    quizzes: 1,
-    salt: 'EF_HENRY_2026_MASTER',
-    ak: 'ef_auth',
-    storagePrefix: 'ef_',
-    icon: '💰',
-    color: '#2d9f4e',
-    addedTs: 1775678307178,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/mdd.jpg',
-    id: 'mdd',
-    name: 'Marketing Digital do Zero',
-    desc: 'Domine marketing digital do básico ao avançado: tráfego, SEO, copywriting, funis, monetização e escala de negócios digitais.',
-    file: 'marketing-digital-do-zero.html',
+    coverImg: 'assets/capas/mp.jpg',
+    id: 'mp',
+    name: 'Mentalidade de Negócios para Influencer e Content Creator',
+    desc: 'Transforme sua presença nas redes sociais em receita escalável usando estratégias comprovadas de mentalidade, marketing e vendas.',
+    file: 'mentalidade-negocio-influencer.html',
     cat: 'Marketing & Vendas',
-    modules: 7,
-    topics: 28,
-    hours: 4,
-    quizzes: 21,
-    salt: 'MD_HENRY_2026_MASTER',
-    ak: 'md_auth',
-    storagePrefix: 'md_',
-    icon: '🎓',
-    color: '#ff6b00',
-    addedTs: 1775683059446,
+    modules: 5,
+    topics: 20,
+    hours: 3,
+    quizzes: 1,
+    salt: 'MP_HENRY_2026_MASTER',
+    ak: 'mp_auth',
+    storagePrefix: 'mp_',
+    icon: '📱',
+    color: '#f97316',
+    addedTs: 1775700000000,
     active: true
   },
   {
-    coverImg: 'assets/capas/pco.jpg',
-    id: 'pco',
-    name: 'Psicologia Comportamental',
-    desc: 'Entenda o comportamento humano do básico ao avançado: hábitos, emoções, relações, persuasão e aplicações práticas da psicologia comportamental.',
+    coverImg: 'assets/capas/ni.png',
+    id: 'ni',
+    name: 'Negócios Inteligentes 3.0',
+    desc: 'Modelos de negócio digitais rentáveis para gerar renda escalável na internet — do zero ao lucro em 90 dias.',
+    file: 'negocio-inteligente.html',
+    cat: 'Negócios / Empresas',
+    modules: 7,
+    topics: 35,
+    hours: 6,
+    quizzes: 15,
+    salt: 'NI_HENRY_2026_MASTER',
+    ak: 'ni_auth',
+    storagePrefix: 'ni_',
+    icon: '💡',
+    color: '#06b6d4',
+    addedTs: 1775720000000,
+    active: true
+  },
+  {
+    coverImg: 'assets/capas/tp.png',
+    id: 'tp',
+    name: 'Tráfego Pago 2.0',
+    desc: 'Domine as principais plataformas de publicidade digital: Google Ads, Facebook Ads, TikTok Ads, Instagram Ads e LinkedIn Ads com estratégias escaláveis.',
+    file: 'trafego-pago.html',
+    cat: 'Marketing & Vendas',
+    modules: 8,
+    topics: 40,
+    hours: 8,
+    quizzes: 20,
+    salt: 'TP_HENRY_2026_MASTER',
+    ak: 'tp_auth',
+    storagePrefix: 'tp_',
+    icon: '📊',
+    color: '#8b5cf6',
+    addedTs: 1775740000000,
+    active: true
+  },
+  {
+    coverImg: 'assets/capas/nl.png',
+    id: 'nl',
+    name: 'Nichos Lucrativos',
+    desc: 'Descubra e domine os nichos de mercado mais rentáveis com análise profunda de demanda, concorrência e potencial de lucro.',
+    file: 'nichos-lucrativos.html',
+    cat: 'Negócios / Empresas',
+    modules: 6,
+    topics: 25,
+    hours: 5,
+    quizzes: 12,
+    salt: 'NL_HENRY_2026_MASTER',
+    ak: 'nl_auth',
+    storagePrefix: 'nl_',
+    icon: '🎯',
+    color: '#ec4899',
+    addedTs: 1775760000000,
+    active: true
+  },
+  {
+    coverImg: 'assets/capas/dt.jpg',
+    id: 'dt',
+    name: 'Dinâmica dos Tráfegos',
+    desc: 'Estratégias avançadas de tráfego orgânico e pago: do TikTok ao Google, passando por Pinterest, YouTube e estratégias autorais.',
+    file: 'dinamica-trafegos.html',
+    cat: 'Marketing & Vendas',
+    modules: 6,
+    topics: 24,
+    hours: 5,
+    quizzes: 12,
+    salt: 'DT_HENRY_2026_MASTER',
+    ak: 'dt_auth',
+    storagePrefix: 'dt_',
+    icon: '🔥',
+    color: '#f59e0b',
+    addedTs: 1775780000000,
+    active: true
+  },
+  {
+    id: 'pnl',
+    coverImg: 'assets/capas/pnl.jpg',
+    name: 'PNL — Programação Neurolinguística Aplicada',
+    desc: 'Domine técnicas de comunicação, persuasão e influência para dominar relacionamentos pessoais e profissionais.',
+    file: 'pnl-aplicada.html',
+    cat: 'PNL',
+    modules: 7,
+    topics: 28,
+    hours: 4,
+    quizzes: 14,
+    salt: 'PNL_HENRY_2026_MASTER',
+    ak: 'pnl_auth',
+    storagePrefix: 'pnl_',
+    icon: '🧠',
+    color: '#6366f1',
+    addedTs: 1775800000000,
+    active: true
+  },
+  {
+    coverImg: 'assets/capas/finan.jpg',
+    id: 'finan',
+    name: 'Educação Financeira Descomplicada',
+    desc: 'Do orçamento pessoal à estratégia de investimento: tudo o que você precisa saber para tomar decisões financeiras inteligentes.',
+    file: 'educacao-financeira.html',
+    cat: 'Finanças & Economia',
+    modules: 8,
+    topics: 35,
+    hours: 6,
+    quizzes: 18,
+    salt: 'FINAN_HENRY_2026_MASTER',
+    ak: 'finan_auth',
+    storagePrefix: 'finan_',
+    icon: '💰',
+    color: '#10b981',
+    addedTs: 1775820000000,
+    active: true
+  },
+  {
+    coverImg: 'assets/capas/psico.jpg',
+    id: 'psico',
+    name: 'Psicologia Comportamental Aplicada',
+    desc: 'Entenda os padrões de comportamento humano e use esse conhecimento para persuadir, influenciar e construir relacionamentos mais fortes.',
     file: 'psicologia-comportamental.html',
     cat: 'Psicologia',
     modules: 7,
     topics: 28,
     hours: 4,
-    quizzes: 1,
-    salt: 'PC_HENRY_2026_MASTER',
-    ak: 'pc_auth',
-    storagePrefix: 'pc_',
-    icon: '🚀',
-    color: '#7b2d8e',
-    addedTs: 1775683131311,
+    quizzes: 15,
+    salt: 'PSICO_HENRY_2026_MASTER',
+    ak: 'psico_auth',
+    storagePrefix: 'psico_',
+    icon: '🧩',
+    color: '#a855f7',
+    addedTs: 1775840000000,
     active: true
   },
   {
-    coverImg: 'assets/capas/oco.jpg',
-    id: 'oco',
-    name: 'Oratória e Comunicação Assertiva',
-    desc: 'Domine técnicas de oratória, persuasão e comunicação assertiva para relacionamentos, negócios, palestras e liderança.',
-    file: 'oratoria-e-comunicacao-assertiva.html',
-    cat: 'PNL',
-    modules: 7,
-    topics: 28,
-    hours: 4,
-    quizzes: 21,
-    salt: 'OC_HENRY_2026_MASTER',
-    ak: 'oc_auth',
-    storagePrefix: 'oc_',
-    icon: '🚀',
-    color: '#e63946',
-    addedTs: 1775683229901,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/gf.jpg',
-    id: 'gf',
-    name: 'Grandes Filósofos da História',
-    desc: 'Conheça a fundo os maiores filósofos da história: suas vidas, ideias, legados e como transformaram o mundo — dos pré-socráticos aos pensadores contemporâneos.',
-    file: 'grandes-filosofos-da-historia.html',
-    cat: 'Filosofia',
-    modules: 7,
-    topics: 28,
-    hours: 4,
-    quizzes: 1,
-    salt: 'GF_HENRY_2026_MASTER',
-    ak: 'gf_auth',
-    storagePrefix: 'gf_',
-    icon: '📜',
-    color: '#1a5276',
-    addedTs: 1775683486453,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/em.jpg',
-    id: 'em',
-    name: 'Empreendedorismo do Zero',
-    desc: 'Saia do zero e construa seu negócio: mentalidade, validação, vendas, finanças, marketing e escala — tudo na prática, como conversa de amigo.',
-    file: 'empreendedorismo-do-zero.html',
-    cat: 'Negócios / Empresas',
-    modules: 7,
-    topics: 28,
-    hours: 4,
-    quizzes: 21,
-    salt: 'EM_HENRY_2026_MASTER',
-    ak: 'em_auth',
-    storagePrefix: 'em_',
-    icon: '🎓',
-    color: '#d4a017',
-    addedTs: 1775685559718,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/orientem.jpg',
-    id: 'orientem',
-    name: 'Oriente Médio — Eixo Irã–EUA–Israel',
-    desc: 'Cobertura completa do conflito no Oriente Médio em 2026: origens históricas do eixo Irã–EUA–Israel, a escalada que levou à guerra, a Operação Roaring Lion, retaliações iranianas, cessar-fogo, negociações e o impacto global. Tudo o que você precisa saber para entender cada detalhe dessa crise geopolítica.',
-    file: 'oriente-medio-ira-eua-israel.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 1,
-    topics: 4,
-    hours: 3,
-    quizzes: 1,
-    salt: 'ORIENTE_MEDIO_HENRY_2026_MASTER',
-    ak: 'om-eixo-ira-eua-israel-2026',
-    storagePrefix: 'OM',
-    icon: '📰',
-    color: '#c0392b',
-    free: true,
-    addedTs: 1775685659412,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/libanoco.jpg',
-    id: 'libanoco',
-    name: 'Líbano — Conflito com Risco de Explosão Regional',
-    desc: 'Cobertura completa e aprofundada do conflito no Líbano: das raízes históricas da Guerra Civil de 1975 à criação do Hezbollah, das invasões israelenses à guerra de 2026, incluindo líderes, financiamento, vítimas, dados econômicos, o impasse do cessar-fogo e cenários futuros. Tudo o que você precisa saber para entender cada detalhe dessa crise que ameaça explodir toda a região.',
-    file: 'libano-conflito-explosao-regional.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 1,
-    topics: 4,
-    hours: 1,
-    quizzes: 3,
-    salt: 'LIBANO_HENRY_2026_MASTER',
-    ak: 'libano-conflito-explosao-2026',
-    storagePrefix: 'LB',
-    icon: '📰',
-    color: '#16a085',
-    free: true,
-    addedTs: 1775686460164,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/guerraru.jpg',
-    id: 'guerraru',
-    name: 'Guerra Rússia–Ucrânia — O Maior Conflito na Europa desde 1945',
-    desc: 'Cobertura completa da guerra entre Rússia e Ucrânia: das origens históricas na Revolução Maidan e anexação da Crimeia em 2014, à invasão total de 2022, passando por quatro anos de combates, quase 2 milhões de baixas combinadas, tropas norte-coreanas, drones iranianos, negociações fracassadas, e o impasse atual em abril de 2026. Dados, fontes, números reais e análises para entender cada detalhe.',
-    file: 'guerra-russia-ucrania.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 1,
-    topics: 4,
-    hours: 1,
-    quizzes: 3,
-    salt: 'RUSSIA_UCRANIA_HENRY_2026_MASTER',
-    ak: 'guerra-russia-ucrania-2026',
-    storagePrefix: 'RU',
-    icon: '📰',
-    color: '#2c3e50',
-    free: true,
-    addedTs: 1775689223266,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/petroleo.jpg',
-    id: 'petroleo',
-    name: 'Petróleo + Bolsas — Impacto Global',
-    desc: 'Cobertura completa sobre como o petróleo e as bolsas de valores afetam sua vida: das crises históricas de 1973 ao choque de 2026 com a guerra no Irã, passando por como a OPEC controla preços, como as bolsas reagem a guerras, o impacto direto no Brasil (gasolina, inflação, Selic, Ibovespa), ativos de proteção e o que fazer para se proteger em tempos de crise. Do leigo ao expert.',
-    file: 'petroleo-bolsas-impacto-global.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
-    modules: 1,
-    topics: 7,
-    hours: 2,
-    quizzes: 1,
-    salt: 'PETROLEO_BOLSAS_HENRY_2026_MASTER',
-    ak: 'petroleo-bolsas-impacto-global-2026',
-    storagePrefix: 'PB',
-    icon: '📰',
-    color: '#d35400',
-    free: true,
-    addedTs: 1775689346243,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/ml.jpg',
-    id: 'ml',
-    name: 'Curso: MEI Lucrativo – Do Zero ao Primeiro Lucro',
-    desc: 'Aprenda a estruturar um MEI rentável, desde a formalização até gerar seus primeiros lucros consistentes.',
-    file: 'mei-lucrativo-curso.html',
-    cat: 'Negócios / Empresas',
-    modules: 3,
-    topics: 12,
-    hours: 2,
-    quizzes: 9,
-    salt: 'ML_HENRY_2026_MASTER',
-    ak: 'ml_auth',
-    storagePrefix: 'ml_',
-    icon: '🎓',
-    color: '#2ECC71',
-    addedTs: 1775746804118,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/ec.jpg',
-    id: 'ec',
-    name: 'Curso: Empresa em Crescimento – Gestão e Escala',
-    desc: 'Estruture sua empresa para crescer sem perder controle: organize equipe, defina KPIs, padronize processos, e escale com segurança.',
-    file: 'empresa-crescimento-curso.html',
-    cat: 'Negócios / Empresas',
-    modules: 3,
-    topics: 12,
-    hours: 2,
-    quizzes: 9,
-    salt: 'EC_HENRY_2026_MASTER',
-    ak: 'ec_auth',
-    storagePrefix: 'ec_',
-    icon: '🎓',
-    color: '#1a56db',
-    addedTs: 1775749148597,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/gpaa.jpg',
-    id: 'gpaa',
-    name: 'Curso: Gestão Profissional – Empresa Média Forte',
-    desc: 'Transforme sua empresa média em máquina organizada: estratégia clara, gestão por indicadores, cultura forte, liderança que não depende do dono.',
-    file: 'gestao-profissional-curso.html',
-    cat: 'Negócios / Empresas',
-    modules: 6,
-    topics: 24,
+    coverImg: 'assets/capas/historia.jpg',
+    id: 'historia',
+    name: 'História do Brasil: Do Descobrimento à Atualidade',
+    desc: 'Compreenda a formação do Brasil através de sua história política, econômica e social — fundamentais para entender a política atual.',
+    file: 'historia-brasil.html',
+    cat: 'História',
+    modules: 10,
+    topics: 40,
     hours: 7,
-    quizzes: 1,
-    salt: 'GP_HENRY_2026_MASTER',
-    ak: 'gp_auth',
-    storagePrefix: 'gp_',
-    icon: '🎓',
+    quizzes: 20,
+    salt: 'HISTORIA_HENRY_2026_MASTER',
+    ak: 'historia_auth',
+    storagePrefix: 'historia_',
+    icon: '📚',
+    color: '#b91c1c',
+    addedTs: 1775860000000,
+    active: true
+  },
+  {
+    coverImg: 'assets/capas/biblia.jpg',
+    id: 'biblia',
+    name: 'Teologia Bíblica do Básico ao Avançado',
+    desc: 'Um estudo aprofundado da Bíblia: da história bíblica à teologia, contexto histórico, arqueologia e aplicação prática.',
+    file: 'teologia-biblica.html',
+    cat: 'Bíblia / Teologia',
+    modules: 17,
+    topics: 85,
+    hours: 12,
+    quizzes: 35,
+    salt: 'TB_HENRY_2026_MASTER',
+    ak: 'tb_auth',
+    storagePrefix: 'tb_',
+    icon: '✝️',
     color: '#8B6914',
-    addedTs: 1775749317061,
+    addedTs: 1775880000000,
     active: true
   },
   {
-    coverImg: 'assets/capas/gsqw.jpg',
-    id: 'gsqw',
-    name: 'Curso: Geopolítica da América do Sul',
-    desc: 'Análise aprofundada das dinâmicas de poder, integração regional, recursos estratégicos e conflitos que moldam a América do Sul no cenário global contemporâneo.',
-    file: 'curso-geopolitica-america-do-sul.html',
-    cat: 'Geopolítica',
-    modules: 7,
-    topics: 28,
-    hours: 4,
-    quizzes: 21,
-    salt: 'GS_HENRY_2026_MASTER',
-    ak: 'gs_auth',
-    storagePrefix: 'gs_',
-    icon: '📰',
-    color: '#2d6a4f',
-    addedTs: 1775754472797,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/ri.jpg',
-    id: 'ri',
-    name: 'Curso: Relações Internacionais',
-    desc: 'Do básico ao avançado: teorias, conflitos, diplomacia, economia política e o futuro da ordem mundial no século XXI.',
-    file: 'curso-relacoes-internacionais.html',
-    cat: 'Geopolítica',
-    modules: 3,
-    topics: 12,
-    hours: 2,
-    quizzes: 12,
-    salt: 'RI_HENRY_2026_MASTER',
-    ak: 'ri_auth',
-    storagePrefix: 'ri_',
-    icon: '📰',
-    color: '#1d3557',
-    addedTs: 1775755728477,
-    active: true
-  },
-  {
-    coverImg: 'assets/capas/nomm.jpg',
-    id: 'nomm',
-    name: 'A Nova Ordem Mundial 2: Multipolaridade, Desdolarização e Reconfigurações Geopolíticas',
-    desc: 'Análise técnica da transição de unipolaridade para multipolaridade, desdolarização sistemática, BRICS Plus, alianças regionais, conflitos geopolíticos e reconfiguração do poder global em 2024-2025.',
-    file: 'nova-ordem-mundial-2-v2.html',
-    cat: 'Conspirações & Mistérios',
-    modules: 4,
-    topics: 12,
-    hours: 2,
-    quizzes: 12,
-    salt: 'NOM_HENRY_2026_MASTER',
-    ak: 'nom_auth',
-    storagePrefix: 'nom_',
-    icon: '📰',
-    color: '#8B00FF',
-    addedTs: 1775756300452,
+    coverImg: 'assets/capas/tech.jpg',
+    id: 'tech',
+    name: 'Tecnologia & Inovação: Do AI ao Blockchain',
+    desc: 'As tecnologias que estão transformando o mundo: inteligência artificial, blockchain, automação e seu impacto nos negócios.',
+    file: 'tecnologia-inovacao.html',
+    cat: 'Tecnologia',
+    modules: 8,
+    topics: 32,
+    hours: 6,
+    quizzes: 16,
+    salt: 'TECH_HENRY_2026_MASTER',
+    ak: 'tech_auth',
+    storagePrefix: 'tech_',
+    icon: '🚀',
+    color: '#0891b2',
+    addedTs: 1775900000000,
     active: true
   },
   {
@@ -546,64 +447,72 @@ var MA_COURSES = [
     active: true
   }
 ];
+
 var MA_CATS = [
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     ORDEM REORGANIZADA CONFORME SOLICITADO - 12/04/2026
+     ═══════════════════════════════════════════════════════════════════════════════ */
 
   /* ═══ 1. NOTÍCIAS (sempre primeiro) ═══ */
   {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?','Crise Hídrica no Brasil 2026','Guerra Rússia x Ucrânia: O Desfecho','Novo Acordo Comercial BRICS','Colapso do Dólar: Mito ou Realidade?'], isSpecial:true},
 
-  /* ═══ 2. NEGÓCIOS / EMPRESAS ═══ */
-  {name:'Negócios / Empresas', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:['Empreendedorismo do Zero','Modelo de Negócio Digital','Gestão Financeira Empresarial','Franquias: Como Escolher a Sua','Negociação de Alto Impacto']},
-
-  /* ═══ 3. GEOPOLÍTICA ═══ */
+  /* ═══ 2. GEOPOLÍTICA ═══ */
   {name:'Geopolítica', sub:'Entenda o mundo como ele realmente funciona, além das notícias', courses:[], soon:['Relações Internacionais','Geopolítica da América do Sul','Geopolítica do Oriente Médio','Nova Ordem Mundial','Guerra Econômica: EUA x China']},
 
-  /* ═══ 4. CONSPIRAÇÕES & MISTÉRIOS ═══ */
+  /* ═══ 3. CONSPIRAÇÕES & MISTÉRIOS (antes era 4º) ═══ */
   {name:'Conspirações & Mistérios', sub:'O que não querem que você saiba — investigue, questione, descubra', courses:[], soon:['Illuminati e Sociedades Secretas','Teorias da Conspiração: Verdade ou Mentira?','MKUltra e Controle Mental','Área 51 e Encobrimentos Governamentais','O Clube Bilderberg e a Elite Global']},
 
-  /* ═══ 5. FINANÇAS & ECONOMIA ═══ */
-  {name:'Finanças & Economia', sub:'Domine seu dinheiro antes que ele domine você', courses:[], soon:['Educação Financeira do Zero','Investimentos para Iniciantes','Criptomoedas Além do Bitcoin','Economia Brasileira Descomplicada','Bolsa de Valores na Prática']},
-
-  /* ═══ 6. POLÍTICA BRASILEIRA ═══ */
+  /* ═══ 4. POLÍTICA BRASILEIRA (antes era 6º) ═══ */
   {name:'Política Brasileira', sub:'Entenda o jogo político que decide o futuro do país', courses:[], soon:['Como Funciona a Política no Brasil','Eleições 2026: Guia Completo','Corrupção no Brasil: História e Mecanismos','Reformas que Mudaram o Brasil','O Poder das Fake News na Política']},
 
-  /* ═══ 7. PNL ═══ */
+  /* ═══ 5. PNL (antes era 7º) ═══ */
   {name:'PNL', sub:'Domine a arte de comunicar, persuadir e influenciar pessoas', courses:[], soon:['Oratória e Comunicação Assertiva','PNL — Programação Neurolinguística','Hipnose Conversacional','Linguagem Corporal Avançada','Influência e Poder Pessoal']},
 
-  /* ═══ 8. MARKETING & VENDAS ═══ */
+  /* ═══ 6. FINANÇAS & ECONOMIA (antes era 5º) ═══ */
+  {name:'Finanças & Economia', sub:'Domine seu dinheiro antes que ele domine você', courses:[], soon:['Educação Financeira do Zero','Investimentos para Iniciantes','Criptomoedas Além do Bitcoin','Economia Brasileira Descomplicada','Bolsa de Valores na Prática']},
+
+  /* ═══ 7. MARKETING & VENDAS (antes era 8º) ═══ */
   {name:'Marketing & Vendas', sub:'Aprenda a vender qualquer coisa para qualquer pessoa', courses:[], soon:['Marketing Digital do Zero','Copywriting que Converte','Funil de Vendas na Prática','Instagram para Negócios','TikTok para Negócios']},
 
-  /* ═══ 9. DESENVOLVIMENTO ═══ */
-  {name:'Desenvolvimento', sub:'Transforme sua mentalidade e atinja o próximo nível', courses:[], soon:['Produtividade e Gestão do Tempo','Liderança na Prática','Mentalidade de Sucesso','Disciplina e Hábitos de Alto Desempenho','Autoconhecimento Profundo']},
-
-  /* ═══ 10. PSICOLOGIA ═══ */
+  /* ═══ 8. PSICOLOGIA (antes era 10º) ═══ */
   {name:'Psicologia', sub:'Compreenda o comportamento humano e use isso a seu favor', courses:[], soon:['Psicologia Comportamental','Neurociência e Comportamento','Psicologia das Relações','Psicologia da Persuasão','Perfis Comportamentais: DISC e MBTI']},
 
-  /* ═══ 11. DIREITO & CIDADANIA ═══ */
-  {name:'Direito & Cidadania', sub:'Conheça seus direitos e nunca mais seja enganado', courses:[], soon:['Direitos do Consumidor','Direito Trabalhista na Prática','Como Funciona o Judiciário Brasileiro','Constituição Federal Descomplicada','Direito Penal para Leigos']},
-
-  /* ═══ 12. FILOSOFIA ═══ */
-  {name:'Filosofia', sub:'Pense melhor, decida melhor, viva melhor', courses:[], soon:['Filosofia para a Vida Real','Grandes Filósofos da História','Ética e Pensamento Crítico','Estoicismo na Prática','Filosofia Política: De Platão a Marx']},
-
-  /* ═══ 13. HISTÓRIA ═══ */
+  /* ═══ 9. HISTÓRIA (antes era 13º) ═══ */
   {name:'História', sub:'Quem não conhece a história está condenado a repeti-la', courses:[], soon:['História do Brasil Completa','Grandes Civilizações Antigas','História Contemporânea','Guerras que Mudaram o Mundo','A Era dos Impérios']},
 
-  /* ═══ 14. BÍBLIA / TEOLOGIA ═══ */
+  /* ═══ 10. BÍBLIA / TEOLOGIA (antes era 14º) ═══ */
   {name:'Bíblia / Teologia', sub:'Aprofunde sua fé com estudo sério e contextualizado', courses:[], soon:['Estudo Bíblico Completo','Teologia Sistemática','Panorama do Antigo Testamento','Apocalipse Descomplicado','Arqueologia Bíblica']},
 
-  /* ═══ 15. BIOGRAFIAS ═══ */
+  /* ═══ 11. TECNOLOGIA (antes era 19º) ═══ */
+  {name:'Tecnologia', sub:'A tecnologia chegou para ficar — aprenda a lucrar com ela', courses:[], soon:['Inteligência Artificial na Prática','Programação para Iniciantes','Automação Digital','Excel do Zero ao Avançado','Robótica e o Futuro do Trabalho']},
+
+  /* ═══ 12. NEGÓCIOS / EMPRESAS (antes era 2º) — AJUSTE NECESSÁRIO ═══ */
+  {name:'Negócios / Empresas', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:['Empreendedorismo do Zero','Modelo de Negócio Digital','Gestão Financeira Empresarial','Franquias: Como Escolher a Sua','Negociação de Alto Impacto']},
+
+  /* ═════════════════════════════════════════════════════════════════════════════
+     CATEGORIAS EXTRAS (SEM REORDENAÇÃO SOLICITADA - MANTIDAS NO FINAL)
+     ═════════════════════════════════════════════════════════════════════════════ */
+
+  /* ═══ 13. DESENVOLVIMENTO ═══ */
+  {name:'Desenvolvimento', sub:'Transforme sua mentalidade e atinja o próximo nível', courses:[], soon:['Produtividade e Gestão do Tempo','Liderança na Prática','Mentalidade de Sucesso','Disciplina e Hábitos de Alto Desempenho','Autoconhecimento Profundo']},
+
+  /* ═══ 14. DIREITO & CIDADANIA ═══ */
+  {name:'Direito & Cidadania', sub:'Conheça seus direitos e nunca mais seja enganado', courses:[], soon:['Direitos do Consumidor','Direito Trabalhista na Prática','Como Funciona o Judiciário Brasileiro','Constituição Federal Descomplicada','Direito Penal para Leigos']},
+
+  /* ═══ 15. FILOSOFIA ═══ */
+  {name:'Filosofia', sub:'Pense melhor, decida melhor, viva melhor', courses:[], soon:['Filosofia para a Vida Real','Grandes Filósofos da História','Ética e Pensamento Crítico','Estoicismo na Prática','Filosofia Política: De Platão a Marx']},
+
+  /* ═══ 16. BIOGRAFIAS ═══ */
   {name:'Biografias', sub:'Aprenda com quem construiu história e mudou o mundo', courses:[], soon:['Líderes que Mudaram o Mundo','Empreendedores Visionários','Gênios da Ciência','Ditadores: Como Chegaram ao Poder','Mulheres que Fizeram História']},
 
-  /* ═══ 16. FAMÍLIA & RELACIONAMENTOS ═══ */
+  /* ═══ 17. FAMÍLIA & RELACIONAMENTOS ═══ */
   {name:'Família & Relacionamentos', sub:'Construa relações sólidas que duram a vida toda', courses:[], soon:['Casamento Blindado','Educação de Filhos com Inteligência','Linguagens do Amor na Prática','Relacionamentos Tóxicos: Como Sair','Comunicação em Casal']},
 
-  /* ═══ 17. SEGURANÇA & SOBREVIVÊNCIA ═══ */
+  /* ═══ 18. SEGURANÇA & SOBREVIVÊNCIA ═══ */
   {name:'Segurança & Sobrevivência', sub:'Esteja preparado para qualquer cenário — do digital ao real', courses:[], soon:['Sobrevivencialismo Urbano','Segurança Digital e Privacidade','Defesa Pessoal Estratégica','Preparação para Crises','Primeiros Socorros Essenciais']},
 
-  /* ═══ 18. ESPORTES & ALTA PERFORMANCE ═══ */
+  /* ═══ 19. ESPORTES & ALTA PERFORMANCE ═══ */
   {name:'Esportes & Alta Performance', sub:'Mentalidade de campeão dentro e fora do campo', courses:[], soon:['Psicologia Esportiva','Mentalidade de Alta Performance','Grandes Lendas do Esporte','Treinamento Físico Inteligente','Nutrição Esportiva']},
-
-  /* ═══ 19. TECNOLOGIA ═══ */
-  {name:'Tecnologia', sub:'A tecnologia chegou para ficar — aprenda a lucrar com ela', courses:[], soon:['Inteligência Artificial na Prática','Programação para Iniciantes','Automação Digital','Excel do Zero ao Avançado','Robótica e o Futuro do Trabalho']},
 
   /* ═══ 20. SAÚDE & CIÊNCIA ═══ */
   {name:'Saúde & Ciência', sub:'Seu corpo é seu maior patrimônio — cuide dele com conhecimento', courses:[], soon:['Nutrição e Alimentação Inteligente','Saúde Mental na Prática','Medicina Preventiva','Neurociência do Dia a Dia','Longevidade: Viver Mais e Melhor']},
