@@ -506,6 +506,25 @@ var MA_COURSES = [
     color: '#8B00FF',
     addedTs: 1775756300452,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gmed.jpg',
+    id: 'gmed',
+    name: 'Geopolítica do Oriente Médio',
+    desc: 'Análise profunda dos conflitos, alianças estratégicas e dinâmicas geopolíticas do Oriente Médio em 2024-2025.',
+    file: 'geopolitica-oriente-medio-correto.html',
+    cat: 'Geopolítica',
+    modules: 3,
+    topics: 9,
+    hours: 6,
+    quizzes: 1,
+    salt: 'GM_HENRY_2026_MASTER',
+    ak: 'gm_auth',
+    storagePrefix: 'gm_',
+    icon: '📰',
+    color: '#dc5f3f',
+    addedTs: 1775757635083,
+    active: true
   }
 ];
 var MA_CATS = [
