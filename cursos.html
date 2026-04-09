@@ -92,13 +92,23 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 .ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0;}
 .ma-mi.gold{color:#f59e0b;}.ma-mi.red{color:#ef4444;}
 
-body.light{--bg:#f5f5fb;--bg2:#eeeef8;--bg3:#e3e4f0;--card:#fff;--brd:rgba(0,0,0,.07);--brd2:rgba(0,0,0,.12);--txt:#1a1a2e;--txt2:rgba(0,0,0,.55);--txt3:rgba(0,0,0,.28);}
-body.light .ma-topbar{background:rgba(240,242,248,.99);}
-body.light .ma-menu-dd{background:#fff;border-color:#d0d4e8;}
-body.light .ma-menu-user{border-color:#e8eaf2;}
-body.light .ma-mi{color:#5a5a7a;}
-body.light .ma-mi:hover{background:#f0f2f8;color:#1a1a2e;}
-body.light .ma-menu-sec+.ma-menu-sec{border-color:#e8eaf2;}
+/* ══ MODO CLARO KINDLE ══ */
+body.light{--bg:#faf6ef;--bg2:#f3ede4;--bg3:#ebe5db;--card:#fffbf5;--brd:rgba(60,50,30,.08);--brd2:rgba(60,50,30,.14);--txt:#2a2a2a;--txt2:rgba(42,42,42,.65);--txt3:rgba(42,42,42,.38);}
+body.light .ma-topbar{background:rgba(250,246,239,.98);border-bottom-color:rgba(60,50,30,.1);}
+body.light .ma-topbar::before{opacity:.4;}
+body.light .ma-tb-logo svg text:first-of-type{fill:#1a1a2e;}
+body.light .ma-tb-sep{background:rgba(0,0,0,.1);}
+body.light .ma-tb-page-name{color:rgba(42,42,42,.5);}
+body.light .ma-tb-pts-block{border-color:rgba(60,50,30,.12);background:rgba(60,50,30,.05);}
+body.light .ma-tb-pts-num{color:#2a2a2a;}
+body.light .ma-tb-theme-btn{border-color:rgba(60,50,30,.12);background:rgba(60,50,30,.05);}
+body.light .ma-tb-menu-btn{border-color:rgba(60,50,30,.12);background:rgba(60,50,30,.05);color:rgba(42,42,42,.5);}
+body.light .ma-menu-dd{background:#fffbf5;border-color:#e0dbd3;box-shadow:0 16px 48px rgba(0,0,0,.12);}
+body.light .ma-menu-user{border-color:#e8e3da;}
+body.light .ma-mu-name{color:#2a2a2a;}
+body.light .ma-mi{color:#5a5a6a;}
+body.light .ma-mi:hover{background:rgba(60,50,30,.05);color:#1a1a2e;}
+body.light .ma-menu-sec+.ma-menu-sec{border-color:#e8e3da;}
 
 /* ════════════════════════════════════════════════════════ */
 /* ══  HERO PREMIUM COM EFEITOS  ═══ */
@@ -452,7 +462,7 @@ body.light .ma-menu-sec+.ma-menu-sec{border-color:#e8eaf2;}
 }
 
 body.light .news-title{
-  color:#0a0a1e;
+  color:#2a2a2a;
 }
 
 .news-excerpt{
@@ -705,61 +715,104 @@ body.light .course-name{
   to { transform: translateX(-50%) translateY(0); opacity: 1; }
 }
 
+/* ══ BOTTOM NAV ══ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--bottombar);
+  background:rgba(4,4,10,.98);border-top:1px solid var(--brd);
+  display:flex;align-items:center;justify-content:space-around;
+  z-index:999;padding:0 8px;padding-bottom:env(safe-area-inset-bottom);
+}
+.bottom-nav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;flex:1;height:100%;cursor:pointer;border:none;background:transparent;
+  color:rgba(255,255,255,.28);font-family:var(--font);text-decoration:none;
+  position:relative;transition:color .2s;-webkit-tap-highlight-color:transparent;
+}
+.bn-item.active,.bn-item:hover{color:#fff;}
+.bn-item.active::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:2px;border-radius:0 0 2px 2px;background:#fff;}
+.bn-item.bn-center{flex:1.4;position:relative;top:-10px;}
+.bn-center-logo{
+  width:50px;height:50px;border-radius:14px;background:#000;
+  border:1.5px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.6);transition:all .25s;
+}
+.bn-item.bn-center:hover .bn-center-logo{transform:scale(1.1);border-color:rgba(255,255,255,.4);}
+.bn-icon{display:flex;align-items:center;justify-content:center;}
+.bn-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.bn-label{font-size:.48rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;line-height:1;}
+body.light .bottom-nav{background:rgba(250,246,239,.98);border-top-color:rgba(60,50,30,.1);}
+body.light .bn-item{color:rgba(42,42,42,.3);}
+body.light .bn-item.active,body.light .bn-item:hover{color:#1a1a2e;}
+body.light .bn-center-logo{background:#1a1a2e;border-color:rgba(60,50,30,.15);}
+@media(min-width:769px){.bottom-nav{display:none;}}
+
+/* Light mode extras */
+body.light .hero-title{color:#2a2a2a;}
+body.light .course-name{color:#2a2a2a;}
+body.light .trending-title{color:#2a2a2a;}
+body.light .summary-val{color:#2a2a2a;}
+body.light .news-card{background:var(--card);border-color:var(--brd);}
+body.light .course-card{background:var(--card);border-color:var(--brd);}
+
 </style>
 
 </head>
 <body>
 
 <!-- ══ TOPBAR ══ -->
-<div class="ma-topbar">
-  <a class="ma-tb-logo" href="painel.html">
-    <svg width="24" height="24" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <rect width="64" height="64" rx="12" fill="#000000"/>
-      <text x="32" y="44" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black" font-weight="900" font-size="40">M</text>
-      <line x1="8" y1="50" x2="56" y2="50" stroke="#4A7EFF" stroke-width="2.5"/>
-      <line x1="8" y1="54" x2="56" y2="54" stroke="#4A7EFF" stroke-width="1.2" opacity=".5"/>
+<nav class="ma-topbar">
+  <a class="ma-tb-logo" href="index.html">
+    <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
+      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
+      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
+      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
+      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
+      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
     </svg>
   </a>
   <div class="ma-tb-sep"></div>
-  <div class="ma-tb-page-name">Cursos</div>
+  <span class="ma-tb-page-name">Cursos</span>
   <div class="ma-tb-spacer"></div>
-  <a class="ma-tb-pts-block" href="ranking.html">
+  <a class="ma-tb-pts-block" href="painel.html">
     <span class="ma-tb-trophy">
-      <svg viewBox="0 0 24 24" fill="none">
-        <path d="M6 9V5c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v4M6 9h12M6 9h1.5M17.5 9H19M8 9v6c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg>
     </span>
     <span class="ma-tb-pts-num" id="maPtsNum">000</span>
   </a>
-  <button class="ma-tb-theme-btn" onclick="toggleTheme()" title="Alternar tema">
-    <svg id="iconSun" viewBox="0 0 24 24" fill="none" style="display:none;">
-      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-    </svg>
-    <svg id="iconMoon" viewBox="0 0 24 24" fill="none">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <button class="ma-tb-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema">
+    <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+  <button class="ma-tb-menu-btn" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="5" r="1" fill="currentColor"/>
+      <circle cx="12" cy="12" r="1" fill="currentColor"/>
+      <circle cx="12" cy="19" r="1" fill="currentColor"/>
     </svg>
   </button>
-  <button class="ma-tb-menu-btn" onclick="toggleMenu()" title="Menu">
-    <svg viewBox="0 0 24 24" fill="none"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-  </button>
-</div>
+</nav>
 
 <!-- ══ MENU DROPDOWN ══ -->
 <div class="ma-menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
 <div class="ma-menu-dd" id="menuDd">
-  <div id="menuUserSec" class="ma-menu-user"></div>
+  <div class="ma-menu-user" id="menuUserSec"></div>
   <div class="ma-menu-sec">
-    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Painel</a>
-    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">📚</span>Cursos</a>
+    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">🎓</span>Meus Cursos</a>
+    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Meu Painel</a>
     <a class="ma-mi" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
-    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Perfil</a>
+    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
+    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🤝</span>Indicações</a>
+    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🗺️</span>Trilhas</a>
+    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
+    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
   </div>
   <div class="ma-menu-sec">
-    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🎯</span>Trilhas</a>
-    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛍️</span>Loja</a>
-    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📋</span>Mural</a>
+    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
   </div>
-  <div id="menuAuthSec" class="ma-menu-sec"></div>
+  <div class="ma-menu-sec" id="menuAuthSec"></div>
 </div>
 
 <!-- ════════════════════════════════════════════════════════ -->
@@ -1258,6 +1311,33 @@ document.addEventListener('DOMContentLoaded', async function() {
   console.log('[Init] ✅ Página pronta');
 });
 </script>
+
+<!-- ══ BOTTOM NAV ══ -->
+<nav class="bottom-nav">
+  <a class="bn-item" href="index.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 13 15 13 15 21"/></svg></span>
+    <span class="bn-label">Início</span>
+  </a>
+  <a class="bn-item active" href="cursos.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+    <span class="bn-label">Cursos</span>
+  </a>
+  <a class="bn-item bn-center" href="index.html" title="Matheus Academy">
+    <div class="bn-center-logo">
+      <svg width="28" height="28" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <text x="28" y="40" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="38" letter-spacing="-1">M</text>
+      </svg>
+    </div>
+  </a>
+  <a class="bn-item" href="ranking.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+    <span class="bn-label">Ranking</span>
+  </a>
+  <a class="bn-item" href="perfil.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+    <span class="bn-label">Perfil</span>
+  </a>
+</nav>
 
 </body>
 </html>
