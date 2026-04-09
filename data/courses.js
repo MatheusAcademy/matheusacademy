@@ -658,6 +658,25 @@ var MA_COURSES = [
     color: '#1B4332',
     addedTs: 1775775513003,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/dp.jpg',
+    id: 'dp',
+    name: 'PNL para Desenvolvimento Pessoal e Mudança de Vida',
+    desc: 'Metas, identidade, hábitos, disciplina, clareza mental, quebra de padrões negativos e construção de uma mentalidade forte e estratégica.',
+    file: 'curso-pnl-desenvolvimento-pessoal.html',
+    cat: 'PNL',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'DP_HENRY_2026_MASTER',
+    ak: 'dp_auth',
+    storagePrefix: 'dp_',
+    icon: '🚀',
+    color: '#3A86FF',
+    addedTs: 1775775795060,
+    active: true
   }
 ];
 var MA_CATS = [
