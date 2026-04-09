@@ -347,6 +347,89 @@ body {
 .pbn-cta.sec{background:transparent;border:1px solid rgba(91,127,255,.4);color:var(--pri)}
 .pbn-cta.sec:hover{background:rgba(91,127,255,.12)}
 .section-wrap{padding:2px 0 2px}.section-hdr{padding:10px 24px 6px}.section-hdr h3{font-family:var(--serif);font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.05em}.section-hdr p{font-size:.7rem;color:var(--txt2)}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   SEÇÃO ÚLTIMOS LANÇAMENTOS - MESMO ESTILO DAS OUTRAS SEÇÕES
+   ══════════════════════════════════════════════════════════════════════════════ */
+.section-wrap .row-wrap {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+}
+.section-wrap .row-outer {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  user-select: none;
+  cursor: grab;
+  -webkit-user-select: none;
+}
+.section-wrap .row-outer::-webkit-scrollbar {
+  display: none;
+}
+.section-wrap .row-inner {
+  display: flex !important;
+  gap: 12px !important;
+  padding: 12px 20px !important;
+  width: fit-content;
+  flex-wrap: nowrap;
+}
+.section-wrap .cc {
+  flex: 0 0 auto !important;
+  width: calc((100vw - 60px) * 0.46) !important;
+  max-width: 46vw !important;
+  height: auto !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  background: var(--card) !important;
+  border: 0.5px solid var(--brd) !important;
+}
+.section-wrap .cc:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(75,139,255,.2) !important;
+  border-color: var(--pri) !important;
+}
+.section-wrap .cc-img {
+  aspect-ratio: 3/4 !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+.section-wrap .cc-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+.section-wrap .cc-body {
+  display: none !important;
+}
+.section-wrap .cc-stats {
+  display: none !important;
+}
+.section-wrap .cc-btn {
+  display: none !important;
+}
+/* Esconder setas da seção lançamentos */
+.section-wrap .arr-btn {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .section-wrap .cc {
+    width: calc((100vw - 40px) * 0.48) !important;
+    max-width: 48vw !important;
+  }
+  .section-wrap .row-inner {
+    gap: 8px !important;
+    padding: 12px 12px !important;
+  }
+}
+
 .cat-sec{padding:0 0 6px}
 .cat-sec-inner{padding:8px 24px 4px}
 .cat-sec-title{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:0.05em}
@@ -1388,11 +1471,9 @@ body {
     <span class="tag">1º Tópico Grátis</span>
   </div>
   <div class="ebook-section" id="ebookSection">
-    <button class="arr-btn ap" id="ebookPrevBtn">&#8249;</button>
     <div class="ebook-overflow">
       <div class="ebook-track" id="ebookTrack"></div>
     </div>
-    <button class="arr-btn an" id="ebookNextBtn">&#8250;</button>
   </div>
   <div class="ebook-dots" id="ebookDots"></div>
 </section>
@@ -1425,18 +1506,14 @@ body {
 <div id="continuarSection" style="display:none">
   <div class="section-hdr"><h3>Continuar Leitura</h3></div>
   <div class="row-wrap">
-    <button class="arr-btn ap" data-scroll="continuarOuter" data-dir="-1">&#8249;</button>
     <div class="row-outer" id="continuarOuter"><div class="row-inner" id="continuarRow"></div></div>
-    <button class="arr-btn an" data-scroll="continuarOuter" data-dir="1">&#8250;</button>
   </div>
 </div>
 
 <div class="section-wrap">
   <div class="section-hdr"><h3>Últimos Lançamentos</h3></div>
   <div class="row-wrap">
-    <button class="arr-btn ap" data-scroll="lancOuter" data-dir="-1">&#8249;</button>
     <div class="row-outer" id="lancOuter"><div class="row-inner" id="lancRow"></div></div>
-    <button class="arr-btn an" data-scroll="lancOuter" data-dir="1">&#8250;</button>
   </div>
 </div>
 
@@ -1852,12 +1929,13 @@ function makeAutoCover(course, gi, isSoon) {
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
 
-// Scroll contínuo - VERSÃO v3.1 - VELOCIDADE REDUZIDA
+// Scroll contínuo - VERSÃO v4.0 - PARA AO TOCAR, CONTROLE MANUAL
 var _scrollX = 0, _scrollHalf = 0, _scrollRAF = null;
 var _scrollSpeed = 0.3; // velocidade base - BEM LENTA
 var _scrollUserSpeed = 0; // velocidade do usuário (touch/mouse)
 var _scrollIsDragging = false;
 var _scrollBaseSpeed = 0.3; // velocidade quando não está arrastando - BEM LENTA
+var _scrollAutoEnabled = true; // scroll automático ligado por padrão
 
 function startContinuousScroll() {
   var track = document.getElementById('ebookTrack');
@@ -1865,19 +1943,24 @@ function startContinuousScroll() {
   
   function step() {
     // Se usuário está arrastando, usar velocidade do usuário
-    // Senão, usar velocidade base com decaimento suave do momentum
     if (_scrollIsDragging) {
       // Durante arrasto: movimento direto, sem delay
       _scrollX += _scrollUserSpeed;
       _scrollUserSpeed = 0; // consumir velocidade instantaneamente
-    } else {
-      // Não arrastando: decaimento suave para velocidade base
+    } else if (_scrollAutoEnabled) {
+      // Scroll automático APENAS se não foi desativado pelo usuário
       if (Math.abs(_scrollSpeed - _scrollBaseSpeed) > 0.05) {
         _scrollSpeed = _scrollSpeed * 0.92 + _scrollBaseSpeed * 0.08;
       } else {
         _scrollSpeed = _scrollBaseSpeed;
       }
       _scrollX += _scrollSpeed;
+    } else {
+      // Scroll automático desativado - apenas aplicar momentum residual
+      if (Math.abs(_scrollSpeed) > 0.1) {
+        _scrollSpeed *= 0.95; // decaimento do momentum
+        _scrollX += _scrollSpeed;
+      }
     }
     
     // Loop infinito
@@ -2753,18 +2836,19 @@ function addEbookTouchSwipe() {
   if (!track) return;
 
   // ══════════════════════════════════════════════════════════════════
-  // TOUCH ULTRA-RESPONSIVO v3.0 - Sem delay, aceleração contínua
+  // TOUCH ULTRA-RESPONSIVO v4.0 - Para auto ao tocar, controle manual
   // ══════════════════════════════════════════════════════════════════
   var tLastX = 0, tLastY = 0, tDir = null;
   var tVelocityHistory = []; // histórico para calcular velocidade média
   
   track.addEventListener('touchstart', function(e) {
     _scrollIsDragging = true;
+    _scrollAutoEnabled = false; // DESATIVA scroll automático ao tocar
     tLastX = e.touches[0].clientX;
     tLastY = e.touches[0].clientY;
     tDir = null;
     tVelocityHistory = [];
-    _scrollSpeed = 0; // parar scroll automático imediatamente
+    _scrollSpeed = 0; // parar movimento imediatamente
   }, {passive: true});
 
   track.addEventListener('touchmove', function(e) {
@@ -2812,13 +2896,14 @@ function addEbookTouchSwipe() {
   }, {passive: true});
 
   // ══════════════════════════════════════════════════════════════════
-  // MOUSE DRAG ULTRA-RESPONSIVO
+  // MOUSE DRAG ULTRA-RESPONSIVO - Desativa auto ao clicar
   // ══════════════════════════════════════════════════════════════════
   var mLastX = 0, mVelHistory = [];
   
   track.addEventListener('mousedown', function(e) {
     if (e.button !== 0) return;
     _scrollIsDragging = true;
+    _scrollAutoEnabled = false; // DESATIVA scroll automático ao clicar
     mLastX = e.clientX;
     mVelHistory = [];
     _scrollSpeed = 0;
@@ -4537,23 +4622,4 @@ document.addEventListener('DOMContentLoaded',function(){
 .mae-notes-empty-txt{font-size:.75rem;color:#44445a;font-family:'Outfit',sans-serif}
 
 /* ── REVIEW PANE ── */
-.mae-rev-hero{background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(91,127,255,.08));border:1px solid rgba(34,197,94,.2);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center}
-.mae-rev-hero-title{font-size:.88rem;font-weight:800;color:#fff;font-family:'Playfair Display',serif;margin-bottom:4px}
-.mae-rev-hero-sub{font-size:.65rem;color:#8888aa;font-family:'Outfit',sans-serif}
-.mae-rev-progress-wrap{height:8px;background:#1a1a2e;border-radius:10px;overflow:hidden;margin:10px 0 6px}
-.mae-rev-progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#22c55e,#5b7fff);transition:width .6s ease}
-.mae-rev-pct{font-size:.64rem;color:#22c55e;font-weight:800;font-family:'Outfit',sans-serif}
-.mae-rev-item{background:#111122;border:1px solid #1e1e35;border-radius:12px;padding:13px;margin-bottom:8px;transition:border-color .2s}
-.mae-rev-item.done{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04)}
-.mae-rev-item-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.mae-rev-item-icon{width:32px;height:32px;border-radius:8px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
-.mae-rev-item.done .mae-rev-item-icon{background:rgba(34,197,94,.12)}
-.mae-rev-item-name{flex:1;font-size:.76rem;font-weight:700;color:#e8e8f0;font-family:'Outfit',sans-serif}
-.mae-rev-item-type{font-size:.52rem;padding:2px 7px;border-radius:5px;font-weight:700;font-family:'Outfit',sans-serif}
-.mae-rev-item-type.fav{background:rgba(245,158,11,.12);color:#f59e0b}
-.mae-rev-item-type.fail{background:rgba(239,68,68,.1);color:#ef4444}
-.mae-rev-checklist{display:flex;flex-direction:column;gap:5px}
-.mae-rev-check-item{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:7px;cursor:pointer;transition:background .15s}
-.mae-rev-check-item:hover{background:rgba(255,255,255,.03)}
-.mae-rev-check-item input[type=checkbox]{width:14px;height:14px;accent-color:#22c55e;cursor:pointer;flex-shrink:0}
-.mae-rev-check-label{font-size:.7rem;color:#8888aa;font-family:'Outfit',sans-serif;transition:color .2s;line-height:1
+.mae-rev-hero{background:linear-gradient(135deg,rgba(34,197,94,.1),rg
