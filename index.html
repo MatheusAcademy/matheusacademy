@@ -379,9 +379,173 @@ body {
 
 /* ══════════════════════════════════════════════════════════════════════════════ */
 
-.row-wrap{position:relative;padding:0 30px}
-.row-outer{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:smooth;user-select:none}.row-outer::-webkit-scrollbar{display:none}
-.row-inner{display:flex;gap:14px;padding:16px 4px 20px;width:max-content}
+.row-wrap{position:relative;padding:0 0;overflow:hidden;width:100%;margin:0 auto}
+.row-outer{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scroll-behavior:smooth;user-select:none;scroll-snap-type:x mandatory;scrollbar-color:rgba(255,255,255,.1) transparent;cursor:grab;-webkit-user-select:none}
+.row-outer:active{cursor:grabbing}
+.row-outer::-webkit-scrollbar{height:6px}
+.row-outer::-webkit-scrollbar-track{background:rgba(255,255,255,.05)}
+.row-outer::-webkit-scrollbar-thumb{background:rgba(75,139,255,.3);border-radius:3px}
+.row-outer::-webkit-scrollbar-thumb:hover{background:rgba(75,139,255,.5)}
+.row-inner{display:flex !important;gap:20px !important;padding:0 20px !important;width:fit-content;flex-wrap:nowrap;overflow:visible}
+
+/* Cards nas seções normais (não-special) */
+.cat-sec:not(:has(.cat-sec-title.special)) .cc{
+  flex:0 0 auto !important;
+  width:calc((100vw - 120px) * 0.42) !important;
+  max-width:40vw !important;
+  height:auto !important;
+  border-radius:12px !important;
+  overflow:hidden !important;
+  transition:all 0.3s ease !important;
+  cursor:pointer !important;
+  background:var(--card) !important;
+  border:0.5px solid var(--brd) !important;
+  scroll-snap-align:start;
+}
+
+/* Hover das seções normais */
+.cat-sec:not(:has(.cat-sec-title.special)) .cc:hover{
+  transform:translateY(-2px) !important;
+  box-shadow:0 8px 24px rgba(75,139,255,.2) !important;
+  border-color:var(--pri) !important;
+}
+
+/* Imagem das seções normais */
+.cat-sec:not(:has(.cat-sec-title.special)) .cc-img{
+  aspect-ratio:3/4 !important;
+  width:100% !important;
+  height:auto !important;
+  overflow:hidden !important;
+}
+
+.cat-sec:not(:has(.cat-sec-title.special)) .cc-img img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  transition:transform 0.3s ease !important;
+}
+
+/* Body das seções normais */
+.cat-sec:not(:has(.cat-sec-title.special)) .cc-body{
+  display:block !important;
+  padding:10px !important;
+  min-height:auto !important;
+  background:rgba(0,0,0,.5) !important;
+}
+
+.cat-sec:not(:has(.cat-sec-title.special)) .cc-body h4{
+  display:block !important;
+  font-size:0.85rem !important;
+  font-weight:700 !important;
+  color:#fff !important;
+  margin:0 0 4px 0 !important;
+  line-height:1.2 !important;
+}
+
+.cat-sec:not(:has(.cat-sec-title.special)) .cc-body p{
+  display:none !important;
+}
+
+/* Stats das seções normais */
+.cat-sec:not(:has(.cat-sec-title.special)) .cc-stats{
+  display:grid !important;
+  grid-template-columns:repeat(4,1fr) !important;
+  gap:1px !important;
+  padding:4px !important;
+  border-top:none !important;
+  background:rgba(0,0,0,.3) !important;
+}
+
+.cat-sec:not(:has(.cat-sec-title.special)) .ccs{
+  padding:2px 1px !important;
+  border:none !important;
+  text-align:center !important;
+}
+
+.cat-sec:not(:has(.cat-sec-title.special)) .ccs b{
+  font-size:0.65rem !important;
+  font-weight:700 !important;
+  color:var(--pri) !important;
+  display:block !important;
+}
+
+.cat-sec:not(:has(.cat-sec-title.special)) .ccs span{
+  font-size:0.35rem !important;
+  color:var(--txt3) !important;
+  display:block !important;
+}
+
+/* Botão das seções normais */
+.cat-sec:not(:has(.cat-sec-title.special)) .cc-btn{
+  display:none !important;
+}
+
+/* Setas das seções normais */
+.cat-sec:not(:has(.cat-sec-title.special)) .arr-btn{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:40px !important;
+  height:40px !important;
+  background:rgba(75,139,255,0.15) !important;
+  border:1px solid rgba(75,139,255,0.3) !important;
+  border-radius:50% !important;
+  color:var(--pri) !important;
+  font-size:18px !important;
+  font-weight:bold !important;
+  cursor:pointer !important;
+  transition:all 0.3s ease !important;
+  opacity:0.7 !important;
+  padding:0 !important;
+  position:absolute !important;
+  z-index:10 !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+}
+
+.cat-sec:not(:has(.cat-sec-title.special)) .arr-btn:hover{
+  background:rgba(75,139,255,0.3) !important;
+  opacity:1 !important;
+  transform:translateY(-50%) scale(1.1) !important;
+}
+
+.cat-sec:not(:has(.cat-sec-title.special)) .arr-btn.ap{
+  left:10px !important;
+}
+
+.cat-sec:not(:has(.cat-sec-title.special)) .arr-btn.an{
+  right:10px !important;
+}
+
+/* Media queries para seções normais */
+@media(min-width:1600px){
+  .cat-sec:not(:has(.cat-sec-title.special)) .cc{
+    width:calc((100vw - 140px) * 0.42) !important;
+    max-width:38vw !important;
+  }
+}
+
+@media(min-width:1200px) and (max-width:1599px){
+  .cat-sec:not(:has(.cat-sec-title.special)) .cc{
+    width:calc((100vw - 120px) * 0.42) !important;
+    max-width:38vw !important;
+  }
+}
+
+@media(min-width:768px) and (max-width:1199px){
+  .cat-sec:not(:has(.cat-sec-title.special)) .cc{
+    width:calc((100vw - 60px) * 0.42) !important;
+    max-width:40vw !important;
+  }
+}
+
+@media(max-width:767px){
+  .cat-sec:not(:has(.cat-sec-title.special)) .cc{
+    width:calc((100vw - 28px) * 0.42) !important;
+    max-width:45vw !important;
+  }
+}
 
 /* ══════════════════════════════════════════════════════════════════════════════
    CARDS DE CURSO - TAMANHOS PROPORCIONAIS E UNIFORMES
@@ -469,7 +633,7 @@ body {
 @keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
 @media(max-width:480px){.points-badge{bottom:16px;right:12px;padding:7px 12px}.points-value{font-size:.88rem}.points-label{font-size:.52rem}}
 .footer{border-top:1px solid var(--brd);padding:28px 24px;text-align:center;margin-top:24px}.footer-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.footer-links a{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:8px;font-size:.7rem;font-weight:600;text-decoration:none;border:1px solid var(--brd);color:inherit}.footer-links a:hover{border-color:var(--pri)}.footer-links .tg{color:#0088cc}.footer-links .ig{color:#e1306c}.footer-brand{font-size:.6rem;color:var(--txt3)}.footer-brand b{color:var(--txt2)}
-@media(max-width:1023px){.row-wrap{padding:0}.row-wrap .arr-btn{display:none!important}.row-inner{padding:12px 16px 18px}}
+@media(max-width:1023px){.row-wrap{padding:0 15px}.row-inner{padding:12px 16px 18px}}
 @media(max-width:640px){.hero h2{font-size:1.5rem}.hero{padding:36px 16px 0}.stats{gap:16px;margin:0 12px}.stat b{font-size:1.1rem}.hdr{padding:0 12px}.hdr-btn{padding:5px 8px;font-size:.6rem}.cr{flex-direction:column}.section-hdr{padding:14px 16px 6px}.cat-sec-inner{padding:14px 16px 6px}}
 /* ── Mobile: esconder lupa, sininho e emoji dinheiro no cabeçalho ── */
 @media(max-width:640px){
@@ -1049,10 +1213,11 @@ body {
 
 /* ── IMAGEM: Quadrado 1:1 GIGANTE ── */
 .cat-sec:has(.cat-sec-title.special) .cc-img {
-  aspect-ratio: 1/1 !important;
+  aspect-ratio: 2/3 !important;
   width: 100% !important;
   height: auto !important;
   overflow: hidden !important;
+  display:block !important;
 }
 
 .cat-sec:has(.cat-sec-title.special) .cc-img img {
@@ -1061,6 +1226,7 @@ body {
   object-fit: cover !important;
   object-position: center !important;
   transition: transform 0.3s ease !important;
+  display:block !important;
 }
 
 /* ── HOVER: SEM EXPANSÃO (apenas sombra) ── */
@@ -1074,16 +1240,16 @@ body {
   transform: none !important;
 }
 
-/* ── BODY: Legenda ── */
+/* ── BODY: Oculto (apenas imagem) ── */
 .cat-sec:has(.cat-sec-title.special) .cc-body {
-  display: block !important;
+  display: none !important;
   padding: 10px !important;
   min-height: auto !important;
   background: rgba(0,0,0,.5) !important;
 }
 
 .cat-sec:has(.cat-sec-title.special) .cc-body h4 {
-  display: block !important;
+  display: none !important;
   font-size: 0.85rem !important;
   font-weight: 700 !important;
   color: #fff !important;
@@ -1134,7 +1300,7 @@ body {
 
 /* ── STATS: Bem pequeninhos ── */
 .cat-sec:has(.cat-sec-title.special) .cc-stats {
-  display: grid !important;
+  display: none !important;
   grid-template-columns: repeat(4, 1fr) !important;
   gap: 1px !important;
   padding: 4px !important;
