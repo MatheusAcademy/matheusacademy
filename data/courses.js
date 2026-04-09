@@ -506,6 +506,25 @@ var MA_COURSES = [
     color: '#8B00FF',
     addedTs: 1775755185484,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ri.jpg',
+    id: 'ri',
+    name: 'Curso: Relações Internacionais',
+    desc: 'Do básico ao avançado: teorias, conflitos, diplomacia, economia política e o futuro da ordem mundial no século XXI.',
+    file: 'curso-relacoes-internacionais.html',
+    cat: 'Geopolítica',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 12,
+    salt: 'RI_HENRY_2026_MASTER',
+    ak: 'ri_auth',
+    storagePrefix: 'ri_',
+    icon: '📰',
+    color: '#1d3557',
+    addedTs: 1775755728477,
+    active: true
   }
 ];
 var MA_CATS = [
