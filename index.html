@@ -146,17 +146,8 @@ body {
 .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 50% 0%,rgba(75,139,255,.08),transparent 60%);pointer-events:none}
 .hero-logo{width:72px;height:72px;border-radius:16px;margin:0 auto 16px}.hero h2{font-family:var(--serif);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:6px}.hero h2 span{color:var(--pri)}.hero .sub{font-size:.88rem;color:var(--txt2);max-width:480px;margin:0 auto 16px;line-height:1.6}
 .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}.tag{padding:5px 14px;border-radius:20px;font-size:.62rem;font-weight:600;border:1px solid var(--brd2);color:var(--txt2);background:var(--bg2)}
-
-/* ══════════════════════════════════════════════════════════════════════════════
-   EBOOK CAROUSEL - ESTILO NETFLIX - SCROLL NATIVO FLUIDO
-   ══════════════════════════════════════════════════════════════════════════════ */
-.ebook-section{
-  background:var(--bg2);
-  border-top:1px solid var(--brd);
-  border-bottom:1px solid var(--brd);
-  position:relative;
-  padding:16px 0;
-}
+/* EBOOK CAROUSEL - SCROLL NATIVO NETFLIX */
+.ebook-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);position:relative;padding:16px 0}
 .ebook-overflow{
   overflow-x:auto;
   overflow-y:hidden;
@@ -164,47 +155,28 @@ body {
   scroll-behavior:smooth;
   scrollbar-width:none;
   -ms-overflow-style:none;
-  scroll-snap-type:x mandatory;
-  padding:8px 0;
+  padding:4px 0;
 }
-.ebook-overflow::-webkit-scrollbar{
-  display:none;
-}
-.ebook-track{
-  display:flex;
-  gap:10px;
-  padding:0 12px;
-  width:fit-content;
-}
+.ebook-overflow::-webkit-scrollbar{display:none}
+.ebook-track{display:flex;gap:10px;padding:0 12px;width:max-content;align-items:flex-start}
 .ebook-page{display:contents}
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   EBOOK CARD - CARDS GRANDES - SCROLL SNAP CENTER
+   EBOOK CARD - SCROLL NATIVO
    ══════════════════════════════════════════════════════════════════════════════ */
 .ebook-card{
   flex:0 0 calc(46% - 5px);
   max-width:calc(46% - 5px);
   cursor:pointer;
   transition:transform .2s ease-out;
-  scroll-snap-align:start;
 }
-@media(max-width:480px){
-  .ebook-card{
-    flex:0 0 calc(47% - 5px);
-    max-width:calc(47% - 5px);
-  }
-  .ebook-track{
-    gap:8px;
-    padding:0 8px;
-  }
-}
-/* Hover/Touch: apenas elevação sutil */
+/* Hover/Touch: apenas elevação sutil - SEM brilho elétrico */
 .ebook-card:hover{
-  transform:translateY(-4px) scale(1.02);
+  transform:translateY(-6px) scale(1.02);
   z-index:5;
 }
 .ebook-card.touch-active{
-  transform:translateY(-4px) scale(1.02);
+  transform:translateY(-6px) scale(1.02);
   z-index:5;
 }
 .ebook-cover{
@@ -351,7 +323,7 @@ body {
 .ma-logo-glowing{animation:ma-logo-glow .8s ease-in-out!important}
 .ma-logo-ripple{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(91,127,255,.4) 0%,transparent 70%);transform:scale(0);animation:ma-ripple-fx .6s ease-out forwards;pointer-events:none}
 @keyframes ma-ripple-fx{to{transform:scale(4);opacity:0}}
-/* Media query removido - usando CSS inline no .ebook-card */
+@media(max-width:767px){.ebook-card{flex:0 0 calc(47% - 5px);max-width:calc(47% - 5px)}.ebook-section{padding:12px 0}}
 @media(max-width:480px){
   .ebook-card{flex:0 0 calc(48% - 8px);max-width:calc(48% - 8px)}
   .ebook-section{padding:14px 18px}
@@ -383,92 +355,10 @@ body {
 .pbn-cta.pri:hover{filter:brightness(1.15)}
 .pbn-cta.sec{background:transparent;border:1px solid rgba(91,127,255,.4);color:var(--pri)}
 .pbn-cta.sec:hover{background:rgba(91,127,255,.12)}
-.section-wrap{padding:2px 0 2px}.section-hdr{padding:10px 24px 6px}.section-hdr h3{font-family:var(--serif);font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.05em}.section-hdr p{font-size:.7rem;color:var(--txt2)}
-
-/* ══════════════════════════════════════════════════════════════════════════════
-   SEÇÃO ÚLTIMOS LANÇAMENTOS - ESTILO NETFLIX
-   ══════════════════════════════════════════════════════════════════════════════ */
-.section-wrap .row-wrap {
-  position: relative;
-  padding: 0;
-  overflow: hidden;
-  width: 100%;
-}
-.section-wrap .row-outer {
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  scroll-snap-type: x proximity;
-  padding: 8px 0;
-}
-.section-wrap .row-outer::-webkit-scrollbar {
-  display: none;
-}
-.section-wrap .row-inner {
-  display: flex !important;
-  gap: 10px !important;
-  padding: 0 16px !important;
-  width: fit-content;
-  flex-wrap: nowrap;
-}
-.section-wrap .cc {
-  flex: 0 0 auto !important;
-  width: calc(46% - 5px) !important;
-  max-width: 46vw !important;
-  height: auto !important;
-  border-radius: 10px !important;
-  overflow: hidden !important;
-  transition: transform .2s ease-out !important;
-  cursor: pointer !important;
-  background: var(--card) !important;
-  border: 0.5px solid var(--brd) !important;
-  scroll-snap-align: start;
-}
-.section-wrap .cc:hover {
-  transform: translateY(-4px) !important;
-}
-.section-wrap .cc-img {
-  aspect-ratio: 3/4 !important;
-  width: 100% !important;
-  height: auto !important;
-  overflow: hidden !important;
-}
-.section-wrap .cc-img img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: center !important;
-}
-.section-wrap .cc-body {
-  display: none !important;
-}
-.section-wrap .cc-stats {
-  display: none !important;
-}
-.section-wrap .cc-btn {
-  display: none !important;
-}
-.section-wrap .arr-btn {
-  display: none !important;
-}
-
-@media (max-width: 480px) {
-  .section-wrap .cc {
-    width: calc(47% - 4px) !important;
-    max-width: 47vw !important;
-  }
-  .section-wrap .row-inner {
-    gap: 8px !important;
-    padding: 0 10px !important;
-  }
-}
-
-.cat-sec{padding:0 0 6px}
-.cat-sec-inner{padding:8px 24px 4px}
-.cat-sec-title{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:0.05em}
+.section-wrap{padding:2px 0 2px}.section-hdr{padding:8px 16px 4px}.section-hdr h3{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.03em}.section-hdr p{font-size:.7rem;color:var(--txt2)}
+.cat-sec{padding:0 0 4px}
+.cat-sec-inner{padding:8px 16px 4px}
+.cat-sec-title{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:0.03em}
 .cat-sec-title.special{color:#ef4444}
 .cat-sec-title.ebook{color:#a855f7}
 .cat-sec-sub{font-size:.7rem;color:var(--txt2);margin-top:3px}
@@ -496,9 +386,7 @@ body {
   scroll-snap-stop: always;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   TODAS AS ROLETAS - ESTILO NETFLIX - SCROLL NATIVO FLUIDO
-   ══════════════════════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════════════════ */
 
 .row-wrap{position:relative;padding:0;overflow:hidden;width:100%;margin:0 auto}
 .row-outer{
@@ -508,19 +396,12 @@ body {
   scroll-behavior:smooth;
   scrollbar-width:none;
   -ms-overflow-style:none;
-  scroll-snap-type:x proximity;
-  padding:8px 0;
+  padding:4px 0;
 }
 .row-outer::-webkit-scrollbar{display:none}
-.row-inner{
-  display:flex !important;
-  gap:10px !important;
-  padding:0 16px !important;
-  width:fit-content;
-  flex-wrap:nowrap;
-}
+.row-inner{display:flex !important;gap:10px !important;padding:0 12px !important;width:max-content;flex-wrap:nowrap}
 
-/* Cards nas seções normais (não-special) - ESTILO NETFLIX */
+/* Cards nas seções normais (não-special) */
 .cat-sec:not(:has(.cat-sec-title.special)) .cc{
   flex:0 0 auto !important;
   width:calc(46% - 5px) !important;
@@ -532,14 +413,11 @@ body {
   cursor:pointer !important;
   background:var(--card) !important;
   border:0.5px solid var(--brd) !important;
-  scroll-snap-align:start;
 }
 
 /* Hover das seções normais */
 .cat-sec:not(:has(.cat-sec-title.special)) .cc:hover{
-  transform:translateY(-2px) !important;
-  box-shadow:0 8px 24px rgba(75,139,255,.2) !important;
-  border-color:var(--pri) !important;
+  transform:translateY(-3px) !important;
 }
 
 /* Imagem das seções normais */
@@ -555,7 +433,6 @@ body {
   height:100% !important;
   object-fit:cover !important;
   object-position:center !important;
-  transition:transform 0.3s ease !important;
 }
 
 /* Body das seções normais - ESCONDIDO */
@@ -564,12 +441,7 @@ body {
 }
 
 .cat-sec:not(:has(.cat-sec-title.special)) .cc-body h4{
-  display:block !important;
-  font-size:0.85rem !important;
-  font-weight:700 !important;
-  color:#fff !important;
-  margin:0 0 4px 0 !important;
-  line-height:1.2 !important;
+  display:none !important;
 }
 
 .cat-sec:not(:has(.cat-sec-title.special)) .cc-body p{
@@ -582,64 +454,25 @@ body {
 }
 
 .cat-sec:not(:has(.cat-sec-title.special)) .ccs{
-  padding:2px 1px !important;
-  border:none !important;
-  text-align:center !important;
+  display:none !important;
 }
 
 .cat-sec:not(:has(.cat-sec-title.special)) .ccs b{
-  font-size:0.65rem !important;
-  font-weight:700 !important;
-  color:var(--pri) !important;
-  display:block !important;
+  display:none !important;
 }
 
 .cat-sec:not(:has(.cat-sec-title.special)) .ccs span{
-  font-size:0.35rem !important;
-  color:var(--txt3) !important;
-  display:block !important;
+  display:none !important;
 }
 
-/* Botão das seções normais */
+/* Botão das seções normais - ESCONDIDO */
 .cat-sec:not(:has(.cat-sec-title.special)) .cc-btn{
   display:none !important;
 }
 
-/* Setas das seções normais */
+/* Setas das seções normais - ESCONDIDO */
 .cat-sec:not(:has(.cat-sec-title.special)) .arr-btn{
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  width:40px !important;
-  height:40px !important;
-  background:rgba(75,139,255,0.15) !important;
-  border:1px solid rgba(75,139,255,0.3) !important;
-  border-radius:50% !important;
-  color:var(--pri) !important;
-  font-size:18px !important;
-  font-weight:bold !important;
-  cursor:pointer !important;
-  transition:all 0.3s ease !important;
-  opacity:0.7 !important;
-  padding:0 !important;
-  position:absolute !important;
-  z-index:10 !important;
-  top:50% !important;
-  transform:translateY(-50%) !important;
-}
-
-.cat-sec:not(:has(.cat-sec-title.special)) .arr-btn:hover{
-  background:rgba(75,139,255,0.3) !important;
-  opacity:1 !important;
-  transform:translateY(-50%) scale(1.1) !important;
-}
-
-.cat-sec:not(:has(.cat-sec-title.special)) .arr-btn.ap{
-  left:10px !important;
-}
-
-.cat-sec:not(:has(.cat-sec-title.special)) .arr-btn.an{
-  right:10px !important;
+  display:none !important;
 }
 
 /* Media queries para seções normais */
@@ -701,18 +534,33 @@ body {
 .cc-img{aspect-ratio:3/4;width:100%;background:#03030a;position:relative;overflow:hidden;flex-shrink:0}.cc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:.97;transition:opacity .2s}.cc:hover .cc-img img{opacity:1}
 .cc-badge{position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:6px;font-size:.5rem;font-weight:700;text-transform:uppercase}.cc-badge.live{background:var(--grn);color:#fff}.cc-badge.free{background:var(--orn);color:#fff}.cc-badge.novo{background:#ef4444;color:#fff;left:8px;right:auto;animation:novoPulse 1.5s ease-in-out infinite;}@keyframes novoPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.5);}50%{box-shadow:0 0 0 5px rgba(239,68,68,.0);}}
 .soon-img{background:var(--bg3);display:flex;align-items:center;justify-content:center}.soon-special{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(245,158,11,.1))}.soon-special .soon-label{color:#ef4444;font-weight:800}.soon-ebook{background:linear-gradient(135deg,rgba(75,139,255,.1),rgba(168,85,247,.1))}.soon-ebook .soon-label{color:#a855f7}.soon-label{font-size:.8rem;font-weight:700;color:var(--orn)}
-/* Body do card - ESCONDIDO - só imagem */
+/* Body do card - altura FIXA para alinhamento */
 .cc-body{
-  display:none !important;
+  padding:12px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-height:80px;
 }
 .cc-body h4{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.3}
 .cc-body p{font-size:.68rem;color:var(--txt2);line-height:1.4;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
-/* Stats grid - ESCONDIDO */
-.cc-stats{display:none !important}
+/* Stats grid - altura fixa */
+.cc-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);flex-shrink:0}
 .ccs{text-align:center;padding:6px 2px;border-right:1px solid var(--brd)}.ccs:last-child{border-right:none}.ccs b{display:block;font-size:.85rem;font-weight:800;color:var(--pri)}.ccs span{font-size:.4rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
-/* Botão UNIFORME - ESCONDIDO */
+/* Botão UNIFORME - sempre alinhado na base */
 .cc-btn{
-  display:none !important;
+  display:block;
+  margin:auto 10px 10px;
+  padding:10px;
+  border-radius:8px;
+  text-align:center;
+  font-size:.72rem;
+  font-weight:700;
+  background:var(--pri3);
+  color:#fff;
+  flex-shrink:0;
+  box-shadow: 0 0 15px rgba(75, 139, 255, 0.3);
+  transition: all 0.3s ease;
 }
 
 .cc-btn:hover {
@@ -743,7 +591,7 @@ body {
 @media(max-width:480px){.points-badge{bottom:16px;right:12px;padding:7px 12px}.points-value{font-size:.88rem}.points-label{font-size:.52rem}}
 .footer{border-top:1px solid var(--brd);padding:28px 24px;text-align:center;margin-top:24px}.footer-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.footer-links a{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:8px;font-size:.7rem;font-weight:600;text-decoration:none;border:1px solid var(--brd);color:inherit}.footer-links a:hover{border-color:var(--pri)}.footer-links .tg{color:#0088cc}.footer-links .ig{color:#e1306c}.footer-brand{font-size:.6rem;color:var(--txt3)}.footer-brand b{color:var(--txt2)}
 @media(max-width:1023px){.row-wrap{padding:0 15px}.row-inner{padding:12px 16px 18px}}
-@media(max-width:640px){.hero h2{font-size:1.5rem}.hero{padding:36px 16px 0}.stats{gap:16px;margin:0 12px}.stat b{font-size:1.1rem}.hdr{padding:0 12px}.hdr-btn{padding:5px 8px;font-size:.6rem}.cr{flex-direction:column}.section-hdr{padding:8px 16px 4px}.cat-sec-inner{padding:6px 16px 4px}}
+@media(max-width:640px){.hero h2{font-size:1.5rem}.hero{padding:36px 16px 0}.stats{gap:16px;margin:0 12px}.stat b{font-size:1.1rem}.hdr{padding:0 12px}.hdr-btn{padding:5px 8px;font-size:.6rem}.cr{flex-direction:column}.section-hdr{padding:14px 16px 6px}.cat-sec-inner{padding:14px 16px 6px}}
 /* ── Mobile: esconder lupa, sininho e emoji dinheiro no cabeçalho ── */
 @media(max-width:640px){
   .sg-trigger-btn{display:none!important;}
@@ -757,13 +605,12 @@ body {
 /* ── Mobile 480px: Cards proporcionais ── */
 @media(max-width:480px){
   .cc{min-width:calc((100vw - 40px)/2);max-width:calc((100vw - 40px)/2)}
-  /* NOTÍCIAS: 1 item por vez no mobile - PERFEITAMENTE CENTRALIZADO */
+  /* NOTÍCIAS: 1 item por vez no mobile (2:3 vertical - GIGANTE) */
   .cat-sec:has(.cat-sec-title.special) .cc{
-    min-width:calc(100vw - 32px) !important;
-    max-width:calc(100vw - 32px) !important;
+    min-width:calc(100vw - 24px) !important;
+    max-width:calc(100vw - 24px) !important;
     aspect-ratio:2/3 !important;
-    margin:0 16px !important;
-    scroll-snap-align: center !important;
+    margin:0 12px !important;
   }
   .cat-sec:has(.cat-sec-title.special) .cc-img{
     aspect-ratio:2/3 !important;
@@ -781,10 +628,6 @@ body {
     padding:12px 0 !important;
     gap:0 !important;
   }
-  .cat-sec:has(.cat-sec-title.special) .row-outer{
-    scroll-snap-type: x mandatory !important;
-    scroll-padding: 0 calc((100vw - (100vw - 32px)) / 2) !important;
-  }
   .cc-img{aspect-ratio:3/4}
   .cc-body{padding:10px;min-height:70px}
   .cc-body h4{font-size:.72rem;line-height:1.25}
@@ -796,11 +639,11 @@ body {
   .hero h2{font-size:1.2rem}
   .hero .sub{font-size:.74rem}
   .hdr-left h1{font-size:.72rem}
-  .ebook-section{padding:14px 2px}
-  .ebook-card{flex:0 0 calc(50% - 3px);max-width:calc(50% - 3px)}
+  .ebook-section{padding:14px 40px}
+  .ebook-card{flex:0 0 calc(50% - 8px)}
   .arr-btn{width:32px;height:32px;font-size:1rem}
 }
-/* Media query removido - usando CSS inline */
+@media(min-width:481px) and (max-width:767px){.ebook-card{flex:0 0 calc(50% - 8px)}.ebook-section{padding:16px 48px}}
 
 /* ══ MA TOPBAR GLOBAL ══ */
 .ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd,#1e1e32);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999;font-family:var(--font,'Outfit',sans-serif)}
@@ -1233,105 +1076,49 @@ body {
 .cat-sec:has(.cat-sec-title.special) .row-outer {
   overflow-x: auto !important;
   overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth !important;
-  width: 100%;
-  scroll-snap-type: x mandatory !important;
-  
-  /* Esconder scroll bar */
   scrollbar-width: none;
-  scrollbar-color: transparent transparent;
   -ms-overflow-style: none;
-  
-  /* Permitir drag/swipe */
-  cursor: grab;
-  -webkit-user-select: none;
-  user-select: none;
+  scroll-snap-type: x mandatory !important;
+  padding: 8px 0;
 }
 
 .cat-sec:has(.cat-sec-title.special) .row-outer::-webkit-scrollbar {
   display: none;
 }
 
-/* ── ROW-INNER: Cards em linha, CENTRALIZADOS ── */
+/* ── ROW-INNER: Cards em linha ── */
 .cat-sec:has(.cat-sec-title.special) .row-inner {
   display: flex !important;
   gap: 0 !important;
   padding: 0 !important;
-  width: fit-content;
+  width: max-content;
   flex-wrap: nowrap !important;
-  overflow: visible !important;
 }
 
-/* ── CARDS: CENTRALIZADOS COM SCROLL-SNAP ── */
+/* ── CARDS NOTÍCIAS: CENTRALIZADO ── */
 .cat-sec:has(.cat-sec-title.special) .cc {
   flex: 0 0 auto !important;
-  width: calc((100vw - 120px) * 0.42) !important;
-  max-width: 40vw !important;
+  width: calc(100vw - 32px) !important;
+  max-width: calc(100vw - 32px) !important;
   height: auto !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   overflow: hidden !important;
-  transition: all 0.3s ease !important;
+  transition: transform .2s ease-out !important;
   cursor: pointer !important;
   background: var(--card) !important;
   border: 0.5px solid var(--brd) !important;
+  margin: 0 16px !important;
   scroll-snap-align: center !important;
-  margin: 0 10px !important;
 }
 
-/* Primeiro e último card com margem extra para centralizar */
-.cat-sec:has(.cat-sec-title.special) .row-inner .cc:first-child {
-  margin-left: calc((100vw - (100vw - 32px)) / 2) !important;
-}
-.cat-sec:has(.cat-sec-title.special) .row-inner .cc:last-child {
-  margin-right: calc((100vw - (100vw - 32px)) / 2) !important;
-}
-
-/* Desktop GRANDE: 40% menor */
-@media (min-width: 1600px) {
-  .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc((100vw - 140px) * 0.42) !important;
-    max-width: 38vw !important;
-  }
-}
-
-/* Desktop: 40% menor */
-@media (min-width: 1200px) and (max-width: 1599px) {
-  .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc((100vw - 120px) * 0.42) !important;
-    max-width: 38vw !important;
-  }
-}
-
-/* Tablet: 40% menor */
-@media (min-width: 768px) and (max-width: 1199px) {
-  .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc((100vw - 60px) * 0.42) !important;
-    max-width: 40vw !important;
-  }
-}
-
-/* Mobile: CENTRALIZADO PERFEITAMENTE */
-@media (max-width: 767px) {
-  .cat-sec:has(.cat-sec-title.special) .cc {
-    width: calc(100vw - 32px) !important;
-    max-width: calc(100vw - 32px) !important;
-    margin: 0 16px !important;
-  }
-  .cat-sec:has(.cat-sec-title.special) .row-inner .cc:first-child {
-    margin-left: 16px !important;
-  }
-  .cat-sec:has(.cat-sec-title.special) .row-inner .cc:last-child {
-    margin-right: 16px !important;
-  }
-}
-
-/* ── IMAGEM: Quadrado 1:1 GIGANTE ── */
+/* ── IMAGEM NOTÍCIAS ── */
 .cat-sec:has(.cat-sec-title.special) .cc-img {
   aspect-ratio: 2/3 !important;
   width: 100% !important;
   height: auto !important;
   overflow: hidden !important;
-  display:block !important;
 }
 
 .cat-sec:has(.cat-sec-title.special) .cc-img img {
@@ -1339,19 +1126,11 @@ body {
   height: 100% !important;
   object-fit: cover !important;
   object-position: center !important;
-  transition: transform 0.3s ease !important;
-  display:block !important;
 }
 
-/* ── HOVER: SEM EXPANSÃO (apenas sombra) ── */
+/* ── HOVER NOTÍCIAS ── */
 .cat-sec:has(.cat-sec-title.special) .cc:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(75,139,255,.2) !important;
-  border-color: var(--pri) !important;
-}
-
-.cat-sec:has(.cat-sec-title.special) .cc:hover .cc-img img {
-  transform: none !important;
+  transform: translateY(-3px) !important;
 }
 
 /* ── BODY: Oculto (apenas imagem) ── */
@@ -1375,50 +1154,15 @@ body {
   display: none !important;
 }
 
-/* ── SETAS: MOSTRAR E ESTILIZAR PARA NOTÍCIAS ── */
+/* ── SETAS: ESCONDIDAS ── */
 .cat-sec:has(.cat-sec-title.special) .arr-btn {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 40px !important;
-  height: 40px !important;
-  background: rgba(75, 139, 255, 0.15) !important;
-  border: 1px solid rgba(75, 139, 255, 0.3) !important;
-  border-radius: 50% !important;
-  color: var(--pri) !important;
-  font-size: 18px !important;
-  font-weight: bold !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  opacity: 0.7 !important;
-  padding: 0 !important;
-  position: absolute !important;
-  z-index: 10 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
+  display: none !important;
 }
 
-.cat-sec:has(.cat-sec-title.special) .arr-btn:hover {
-  background: rgba(75, 139, 255, 0.3) !important;
-  opacity: 1 !important;
-  transform: translateY(-50%) scale(1.1) !important;
-}
-
-.cat-sec:has(.cat-sec-title.special) .arr-btn.ap {
-  left: 10px !important;
-}
-
-.cat-sec:has(.cat-sec-title.special) .arr-btn.an {
-  right: 10px !important;
-}
-
-/* ── STATS: Bem pequeninhos ── */
+/* ── STATS: Escondidos ── */
 .cat-sec:has(.cat-sec-title.special) .cc-stats {
   display: none !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 1px !important;
-  padding: 4px !important;
-  border-top: none !important;
+}
   background: rgba(0,0,0,.3) !important;
 }
 
@@ -1978,13 +1722,12 @@ function makeAutoCover(course, gi, isSoon) {
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
 
-// Scroll contínuo - VERSÃO v4.0 - PARA AO TOCAR, CONTROLE MANUAL
+// Scroll contínuo - VERSÃO v3.1 - VELOCIDADE REDUZIDA
 var _scrollX = 0, _scrollHalf = 0, _scrollRAF = null;
 var _scrollSpeed = 0.3; // velocidade base - BEM LENTA
 var _scrollUserSpeed = 0; // velocidade do usuário (touch/mouse)
 var _scrollIsDragging = false;
 var _scrollBaseSpeed = 0.3; // velocidade quando não está arrastando - BEM LENTA
-var _scrollAutoEnabled = true; // scroll automático ligado por padrão
 
 function startContinuousScroll() {
   var track = document.getElementById('ebookTrack');
@@ -1992,24 +1735,19 @@ function startContinuousScroll() {
   
   function step() {
     // Se usuário está arrastando, usar velocidade do usuário
+    // Senão, usar velocidade base com decaimento suave do momentum
     if (_scrollIsDragging) {
       // Durante arrasto: movimento direto, sem delay
       _scrollX += _scrollUserSpeed;
       _scrollUserSpeed = 0; // consumir velocidade instantaneamente
-    } else if (_scrollAutoEnabled) {
-      // Scroll automático APENAS se não foi desativado pelo usuário
+    } else {
+      // Não arrastando: decaimento suave para velocidade base
       if (Math.abs(_scrollSpeed - _scrollBaseSpeed) > 0.05) {
         _scrollSpeed = _scrollSpeed * 0.92 + _scrollBaseSpeed * 0.08;
       } else {
         _scrollSpeed = _scrollBaseSpeed;
       }
       _scrollX += _scrollSpeed;
-    } else {
-      // Scroll automático desativado - apenas aplicar momentum residual
-      if (Math.abs(_scrollSpeed) > 0.1) {
-        _scrollSpeed *= 0.95; // decaimento do momentum
-        _scrollX += _scrollSpeed;
-      }
     }
     
     // Loop infinito
@@ -2132,15 +1870,14 @@ function buildEbooks() {
     for (var i = 0; i < items.length; i++) dh += '<div class="ebook-dot' + (i===0?' active':'') + '"></div>';
     dotsEl.innerHTML = dh;
   }
-
-  // Scroll nativo - não precisa de JavaScript
+  // Usando scroll nativo - não precisa de startContinuousScroll
 }
 
 
-function ebookGo(idx) { /* no-op: usando scroll nativo */ }
-function ebookNext() { /* no-op: usando scroll nativo */ }
-function ebookPrev() { /* no-op: usando scroll nativo */ }
-function ebookStart() { /* no-op: usando scroll nativo */ }
+function ebookGo(idx) { /* no-op: usando scroll contínuo */ }
+function ebookNext() { _scrollSpeed = 6; }  // dispara momentum para frente
+function ebookPrev() { _scrollSpeed = -6; } // dispara momentum para trás
+function ebookStart() { /* scroll inicia via startContinuousScroll */ }
 function ebookReset() { /* no-op */ }
 
 // ═══════════════════════════════ AUTH (Firebase) ═══════════════════════════════
@@ -2885,19 +2622,18 @@ function addEbookTouchSwipe() {
   if (!track) return;
 
   // ══════════════════════════════════════════════════════════════════
-  // TOUCH ULTRA-RESPONSIVO v4.0 - Para auto ao tocar, controle manual
+  // TOUCH ULTRA-RESPONSIVO v3.0 - Sem delay, aceleração contínua
   // ══════════════════════════════════════════════════════════════════
   var tLastX = 0, tLastY = 0, tDir = null;
   var tVelocityHistory = []; // histórico para calcular velocidade média
   
   track.addEventListener('touchstart', function(e) {
     _scrollIsDragging = true;
-    _scrollAutoEnabled = false; // DESATIVA scroll automático ao tocar
     tLastX = e.touches[0].clientX;
     tLastY = e.touches[0].clientY;
     tDir = null;
     tVelocityHistory = [];
-    _scrollSpeed = 0; // parar movimento imediatamente
+    _scrollSpeed = 0; // parar scroll automático imediatamente
   }, {passive: true});
 
   track.addEventListener('touchmove', function(e) {
@@ -2915,8 +2651,8 @@ function addEbookTouchSwipe() {
     }
     
     if (tDir === 'h') {
-      // MOVIMENTO DIRETO E INSTANTÂNEO - multiplicador 6x para sensibilidade MÁXIMA
-      _scrollUserSpeed = dx * 6;
+      // MOVIMENTO DIRETO E INSTANTÂNEO - multiplicador 3.2x para sensibilidade melhorada
+      _scrollUserSpeed = dx * 3.2;
       
       // Guardar histórico de velocidade para momentum
       tVelocityHistory.push(dx);
@@ -2933,11 +2669,11 @@ function addEbookTouchSwipe() {
     if (tDir === 'h' && tVelocityHistory.length > 0) {
       // Calcular velocidade média do swipe
       var avgVel = tVelocityHistory.reduce(function(a,b){return a+b;}, 0) / tVelocityHistory.length;
-      // Lançar com momentum - multiplicador 6x para MÁXIMA resposta
-      _scrollSpeed = avgVel * 6;
-      // Limitar velocidade máxima (bem alto para fluidez total)
-      if (_scrollSpeed > 100) _scrollSpeed = 100;
-      if (_scrollSpeed < -100) _scrollSpeed = -100;
+      // Lançar com momentum - multiplicador aumentado para mais força
+      _scrollSpeed = avgVel * 3.5;
+      // Limitar velocidade máxima (aumentado)
+      if (_scrollSpeed > 50) _scrollSpeed = 50;
+      if (_scrollSpeed < -50) _scrollSpeed = -50;
     }
     
     tDir = null;
@@ -2945,14 +2681,13 @@ function addEbookTouchSwipe() {
   }, {passive: true});
 
   // ══════════════════════════════════════════════════════════════════
-  // MOUSE DRAG ULTRA-RESPONSIVO - Desativa auto ao clicar
+  // MOUSE DRAG ULTRA-RESPONSIVO
   // ══════════════════════════════════════════════════════════════════
   var mLastX = 0, mVelHistory = [];
   
   track.addEventListener('mousedown', function(e) {
     if (e.button !== 0) return;
     _scrollIsDragging = true;
-    _scrollAutoEnabled = false; // DESATIVA scroll automático ao clicar
     mLastX = e.clientX;
     mVelHistory = [];
     _scrollSpeed = 0;
@@ -2960,7 +2695,7 @@ function addEbookTouchSwipe() {
     var onMove = function(ev) {
       if (!_scrollIsDragging) return;
       var dx = mLastX - ev.clientX;
-      _scrollUserSpeed = dx * 5;
+      _scrollUserSpeed = dx * 2.8;
       mVelHistory.push(dx);
       if (mVelHistory.length > 5) mVelHistory.shift();
       mLastX = ev.clientX;
@@ -2970,9 +2705,9 @@ function addEbookTouchSwipe() {
       _scrollIsDragging = false;
       if (mVelHistory.length > 0) {
         var avgVel = mVelHistory.reduce(function(a,b){return a+b;}, 0) / mVelHistory.length;
-        _scrollSpeed = avgVel * 5;
-        if (_scrollSpeed > 80) _scrollSpeed = 80;
-        if (_scrollSpeed < -80) _scrollSpeed = -80;
+        _scrollSpeed = avgVel * 3.2;
+        if (_scrollSpeed > 45) _scrollSpeed = 45;
+        if (_scrollSpeed < -45) _scrollSpeed = -45;
       }
       mVelHistory = [];
       document.removeEventListener('mousemove', onMove);
@@ -3082,7 +2817,7 @@ document.addEventListener('DOMContentLoaded', function() {
   setupEvents();
   buildEbooks();
   upUI();
-  // Scroll nativo - não precisa de JavaScript para touch/swipe
+  setTimeout(addEbookTouchSwipe, 300);
   updatePointsBadge();
   
   // ── Auto-scroll das notícias ──
@@ -4668,4 +4403,117 @@ document.addEventListener('DOMContentLoaded',function(){
 .mae-note-del:hover{background:rgba(239,68,68,.1);color:#ef4444}
 .mae-notes-empty{padding:40px 20px;text-align:center}
 .mae-notes-empty-icon{font-size:2.2rem;display:block;margin-bottom:10px;opacity:.35}
-.mae-notes-empty-txt{font-siz
+.mae-notes-empty-txt{font-size:.75rem;color:#44445a;font-family:'Outfit',sans-serif}
+
+/* ── REVIEW PANE ── */
+.mae-rev-hero{background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(91,127,255,.08));border:1px solid rgba(34,197,94,.2);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center}
+.mae-rev-hero-title{font-size:.88rem;font-weight:800;color:#fff;font-family:'Playfair Display',serif;margin-bottom:4px}
+.mae-rev-hero-sub{font-size:.65rem;color:#8888aa;font-family:'Outfit',sans-serif}
+.mae-rev-progress-wrap{height:8px;background:#1a1a2e;border-radius:10px;overflow:hidden;margin:10px 0 6px}
+.mae-rev-progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#22c55e,#5b7fff);transition:width .6s ease}
+.mae-rev-pct{font-size:.64rem;color:#22c55e;font-weight:800;font-family:'Outfit',sans-serif}
+.mae-rev-item{background:#111122;border:1px solid #1e1e35;border-radius:12px;padding:13px;margin-bottom:8px;transition:border-color .2s}
+.mae-rev-item.done{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04)}
+.mae-rev-item-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mae-rev-item-icon{width:32px;height:32px;border-radius:8px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.mae-rev-item.done .mae-rev-item-icon{background:rgba(34,197,94,.12)}
+.mae-rev-item-name{flex:1;font-size:.76rem;font-weight:700;color:#e8e8f0;font-family:'Outfit',sans-serif}
+.mae-rev-item-type{font-size:.52rem;padding:2px 7px;border-radius:5px;font-weight:700;font-family:'Outfit',sans-serif}
+.mae-rev-item-type.fav{background:rgba(245,158,11,.12);color:#f59e0b}
+.mae-rev-item-type.fail{background:rgba(239,68,68,.1);color:#ef4444}
+.mae-rev-checklist{display:flex;flex-direction:column;gap:5px}
+.mae-rev-check-item{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:7px;cursor:pointer;transition:background .15s}
+.mae-rev-check-item:hover{background:rgba(255,255,255,.03)}
+.mae-rev-check-item input[type=checkbox]{width:14px;height:14px;accent-color:#22c55e;cursor:pointer;flex-shrink:0}
+.mae-rev-check-label{font-size:.7rem;color:#8888aa;font-family:'Outfit',sans-serif;transition:color .2s;line-height:1.35}
+.mae-rev-check-item input:checked + .mae-rev-check-label{color:#22c55e;text-decoration:line-through}
+.mae-rev-complete-btn{width:100%;margin-top:14px;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;display:none}
+.mae-rev-complete-btn.show{display:block}
+.mae-rev-complete-btn:hover{transform:scale(1.02)}
+.mae-rev-history{margin-top:16px}
+.mae-rev-hist-title{font-size:.72rem;font-weight:800;color:#8888aa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-family:'Outfit',sans-serif}
+.mae-rev-hist-item{background:#111122;border:1px solid #1e1e35;border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.mae-rev-hist-course{flex:1;font-size:.72rem;font-weight:700;color:#e8e8f0;font-family:'Outfit',sans-serif}
+.mae-rev-hist-pct{font-size:.76rem;font-weight:900;color:#22c55e;font-family:'Playfair Display',serif}
+.mae-rev-hist-date{font-size:.58rem;color:#44445a;font-family:'Outfit',sans-serif}
+.mae-rev-empty{padding:30px 20px;text-align:center;font-size:.76rem;color:#44445a;font-family:'Outfit',sans-serif}
+
+/* ── LAST MODULE INDICATOR ── */
+.mae-last-mod-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:20px;
+  background:rgba(91,127,255,.15);border:1px solid rgba(91,127,255,.3);
+  font-size:.56rem;font-weight:700;color:#5b7fff;
+  font-family:'Outfit',sans-serif;
+}
+</style>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   MA ENGINE v3 — Favoritos + Caderno + Revisão Rápida
+   ════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+function gs3(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function ss3(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function today3(){return new Date().toLocaleDateString('pt-BR');}
+function _nid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+function _ago(ts){var d=Date.now()-ts,s=Math.floor(d/1000),m=Math.floor(s/60),h=Math.floor(m/60),dy=Math.floor(h/24);if(dy>0)return dy+'d atrás';if(h>0)return h+'h atrás';if(m>0)return m+'m atrás';return 'agora';}
+
+/* ═══════════════════════════════════
+   PATCH: Extend mae-tabs to 6
+   ═══════════════════════════════════ */
+function _extendTabs(){
+  // Add new tab buttons
+  var tabs=document.querySelector('.mae-tabs');
+  if(!tabs||tabs.dataset.v3)return;
+  tabs.dataset.v3='1';
+  var newTabs=[
+    {i:3,icon:'⭐',label:'Favoritos'},
+    {i:4,icon:'📓',label:'Caderno'},
+    {i:5,icon:'📋',label:'Revisão'}
+  ];
+  newTabs.forEach(function(t){
+    var btn=document.createElement('button');
+    btn.className='mae-tab';btn.id='maeT'+t.i;
+    btn.onclick=function(){window.maeTab&&maeTab(t.i);};
+    btn.innerHTML=t.icon+' '+t.label;
+    tabs.appendChild(btn);
+  });
+  // Add new panes
+  var body=document.querySelector('.mae-body');
+  if(!body)return;
+  var paneHtml=[
+    // Pane 3: Favoritos
+    '<div class="mae-pane" id="maePane3">'
+    +'<div id="maeFavContent"><div class="mae-fav-empty"><span class="mae-fav-empty-icon">⭐</span><div class="mae-fav-empty-txt">Nenhum favorito ainda.<br>Marque módulos como favorito nos cursos!</div></div></div>'
+    +'</div>',
+    // Pane 4: Caderno
+    '<div class="mae-pane" id="maePane4">'
+    +'<div class="mae-notes-toolbar">'
+    +'<input class="mae-notes-search" id="maeNoteSearch" placeholder="🔍 Buscar anotações..." oninput="maeV3RenderNotes()">'
+    +'<select class="mae-notes-filter" id="maeNoteFilter" onchange="maeV3RenderNotes()"><option value="">Todos os cursos</option></select>'
+    +'<button class="mae-notes-export" onclick="maeV3ExportNotes()">📄 PDF</button>'
+    +'</div>'
+    +'<div class="mae-notes-count" id="maeNotesCount">0 anotações</div>'
+    +'<div id="maeNotesList"></div>'
+    +'</div>',
+    // Pane 5: Revisão
+    '<div class="mae-pane" id="maePane5">'
+    +'<div class="mae-rev-hero">'
+    +'<div class="mae-rev-hero-title">📋 Modo Revisão</div>'
+    +'<div class="mae-rev-hero-sub">Revise módulos favoritos e erros de quiz. Ganhe pontos bônus ao concluir 100%.</div>'
+    +'<div class="mae-rev-progress-wrap"><div class="mae-rev-progress-fill" id="maeRevFill" style="width:0%"></div></div>'
+    +'<div class="mae-rev-pct" id="maeRevPct">0% concluído</div>'
+    +'</div>'
+    +'<div id="maeRevModules"></div>'
+    +'<button class="mae-rev-complete-btn" id="maeRevCompleteBtn" onclick="maeV3CompleteReview()">🏆 Concluir Revisão e Ganhar Pontos!</button>'
+    +'<div class="mae-rev-history"><div class="mae-rev-hist-title">Histórico de Revisões</div><div id="maeRevHistory"></div></div>'
+    +'</div>'
+  ];
+  paneHtml.forEach(function(html){
+    var div=document.createElement('div');div.innerHTML=html;
+    while(div.firstChild)body.appendChild(div.firstChild);
+  });
+  //
