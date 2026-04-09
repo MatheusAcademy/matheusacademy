@@ -421,14 +421,14 @@ body {
 .section-wrap{padding:2px 0 2px}.section-hdr{padding:8px 16px 4px}.section-hdr h3{font-family:var(--serif);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.03em}.section-hdr p{font-size:.7rem;color:var(--txt2)}
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   CONTINUAR LEITURA & ÚLTIMOS LANÇAMENTOS - ROLETA SUAVE IGUAL GEOPOLÍTICA
+   CONTINUAR LEITURA & ÚLTIMOS LANÇAMENTOS - SCROLL NATIVO IGUAL GEOPOLÍTICA
+   Sem snap, sem smooth forçado — scroll 100% nativo do navegador
    ══════════════════════════════════════════════════════════════════════════════ */
 #continuarSection .row-outer,
 .section-wrap .row-outer {
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch !important;
-  scroll-behavior: auto !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
   padding: 4px 0 !important;
@@ -457,7 +457,6 @@ body {
   height: auto !important;
   border-radius: 10px !important;
   overflow: hidden !important;
-  will-change: transform !important;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
@@ -2448,8 +2447,6 @@ function setupAutoScrollNews() {
 // ── Normalizar velocidade de todos os carrosséis ──
 function normalizeCarouselSpeed() {
   document.querySelectorAll('.row-outer').forEach(function(outer) {
-    // Só aplica snap e smooth nas seções de notícias (special)
-    // Continuar Leitura e Últimos Lançamentos usam scroll nativo (auto) para não travar
     var isSpecial = outer.closest('.cat-sec') && outer.closest('.cat-sec').querySelector('.cat-sec-title.special');
     var isContinuar = outer.id === 'continuarOuter';
     var isLanc = outer.id === 'lancOuter';
@@ -2457,10 +2454,10 @@ function normalizeCarouselSpeed() {
       outer.style.scrollBehavior = 'smooth';
       outer.style.scrollSnapType = 'x mandatory';
     } else if (isContinuar || isLanc) {
-      // Não aplica snap nem smooth — scroll livre e fluido
-      outer.style.scrollBehavior = 'auto';
+      // Scroll 100% nativo — sem snap, sem smooth forçado
       outer.style.scrollSnapType = 'none';
     } else {
+      // Categorias normais (Geopolítica etc) — scroll nativo livre
       outer.style.scrollBehavior = 'smooth';
     }
   });
@@ -2550,26 +2547,33 @@ function setupEvents() {
     if (!el) return;
     var startX = 0, startY = 0, startScroll = 0, active = false, dir = null;
 
-    // TOUCH — passivo: NUNCA bloqueia scroll vertical da página
-    el.addEventListener('touchstart', function(e) {
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      startScroll = el.scrollLeft;
-      active = true; dir = null;
-    }, {passive: true});
+    // Continuar Leitura e Últimos Lançamentos: scroll 100% NATIVO no touch
+    // Não registra touch handlers customizados — evita conflito com momentum nativo
+    // (Igual ao comportamento das seções de categoria como Geopolítica)
+    var isNativeOnly = (el.id === 'continuarOuter' || el.id === 'lancOuter');
 
-    el.addEventListener('touchmove', function(e) {
-      if (!active) return;
-      var dx = startX - e.touches[0].clientX;
-      var dy = startY - e.touches[0].clientY;
-      if (!dir) dir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
-      if (dir === 'h') el.scrollLeft = startScroll + dx * 1.5; // 1.5× para scroll suave no toque
-      // se dir === 'v': não faz nada, browser cuida do scroll da página
-    }, {passive: true});
+    if (!isNativeOnly) {
+      // TOUCH — passivo: NUNCA bloqueia scroll vertical da página
+      el.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        startScroll = el.scrollLeft;
+        active = true; dir = null;
+      }, {passive: true});
 
-    el.addEventListener('touchend', function() { active = false; dir = null; }, {passive: true});
+      el.addEventListener('touchmove', function(e) {
+        if (!active) return;
+        var dx = startX - e.touches[0].clientX;
+        var dy = startY - e.touches[0].clientY;
+        if (!dir) dir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+        if (dir === 'h') el.scrollLeft = startScroll + dx * 2.5; // 2.5× mais rápido no toque
+        // se dir === 'v': não faz nada, browser cuida do scroll da página
+      }, {passive: true});
 
-    // MOUSE DRAG — click + arrastar horizontalmente
+      el.addEventListener('touchend', function() { active = false; dir = null; }, {passive: true});
+    }
+
+    // MOUSE DRAG — click + arrastar horizontalmente (desktop — mantém para todos)
     el.addEventListener('mousedown', function(e) {
       if (e.button !== 0) return;
       startX = e.clientX; startScroll = el.scrollLeft; active = true;
