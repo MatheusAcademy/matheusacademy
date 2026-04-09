@@ -449,25 +449,6 @@ var MA_COURSES = [
     color: '#8B6914',
     addedTs: 1775749317061,
     active: true
-  },
-  {
-    coverImg: 'assets/capas/empresl.jpg',
-    id: 'empresl',
-    name: 'Curso: Empresa de Alto Nível – Escala, Expansão e Domínio de Mercado',
-    desc: 'Transforme sua empresa em grupo empresarial: escale através de filiais/franquias, expanda via aquisição, domine mercado, implemente governança corporativa.',
-    file: 'empresa-alto-nivel-curso.html',
-    cat: 'Negócios / Empresas',
-    modules: 6,
-    topics: 24,
-    hours: 8,
-    quizzes: 18,
-    salt: 'AN_HENRY_2026_MASTER',
-    ak: 'an_auth',
-    storagePrefix: 'an_',
-    icon: '🎓',
-    color: '#D4AF37',
-    addedTs: 1775751584271,
-    active: true
   }
 ];
 var MA_CATS = [
