@@ -146,28 +146,65 @@ body {
 .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 50% 0%,rgba(75,139,255,.08),transparent 60%);pointer-events:none}
 .hero-logo{width:72px;height:72px;border-radius:16px;margin:0 auto 16px}.hero h2{font-family:var(--serif);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:6px}.hero h2 span{color:var(--pri)}.hero .sub{font-size:.88rem;color:var(--txt2);max-width:480px;margin:0 auto 16px;line-height:1.6}
 .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}.tag{padding:5px 14px;border-radius:20px;font-size:.62rem;font-weight:600;border:1px solid var(--brd2);color:var(--txt2);background:var(--bg2)}
-/* EBOOK CAROUSEL - CARDS GIGANTES COLADOS NAS BORDAS */
-.ebook-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);position:relative;padding:22px 4px;touch-action:pan-y}
-.ebook-overflow{overflow:hidden}
-.ebook-track{display:flex;gap:6px;padding:4px 0;will-change:transform;align-items:flex-start}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   EBOOK CAROUSEL - ESTILO NETFLIX - SCROLL NATIVO FLUIDO
+   ══════════════════════════════════════════════════════════════════════════════ */
+.ebook-section{
+  background:var(--bg2);
+  border-top:1px solid var(--brd);
+  border-bottom:1px solid var(--brd);
+  position:relative;
+  padding:16px 0;
+}
+.ebook-overflow{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  scroll-snap-type:x mandatory;
+  padding:8px 0;
+}
+.ebook-overflow::-webkit-scrollbar{
+  display:none;
+}
+.ebook-track{
+  display:flex;
+  gap:10px;
+  padding:0 12px;
+  width:fit-content;
+}
 .ebook-page{display:contents}
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   EBOOK CARD - CARDS GIGANTES - SEM EFEITO ELÉTRICO, SÓ BALÃO INFLANDO
+   EBOOK CARD - CARDS GRANDES - SCROLL SNAP CENTER
    ══════════════════════════════════════════════════════════════════════════════ */
 .ebook-card{
-  flex:0 0 calc(48% - 4px);
-  max-width:calc(48% - 4px);
+  flex:0 0 calc(46% - 5px);
+  max-width:calc(46% - 5px);
   cursor:pointer;
-  transition:transform .25s ease-out;
+  transition:transform .2s ease-out;
+  scroll-snap-align:start;
 }
-/* Hover/Touch: apenas elevação sutil - SEM brilho elétrico */
+@media(max-width:480px){
+  .ebook-card{
+    flex:0 0 calc(47% - 5px);
+    max-width:calc(47% - 5px);
+  }
+  .ebook-track{
+    gap:8px;
+    padding:0 8px;
+  }
+}
+/* Hover/Touch: apenas elevação sutil */
 .ebook-card:hover{
-  transform:translateY(-6px) scale(1.02);
+  transform:translateY(-4px) scale(1.02);
   z-index:5;
 }
 .ebook-card.touch-active{
-  transform:translateY(-6px) scale(1.02);
+  transform:translateY(-4px) scale(1.02);
   z-index:5;
 }
 .ebook-cover{
@@ -314,7 +351,7 @@ body {
 .ma-logo-glowing{animation:ma-logo-glow .8s ease-in-out!important}
 .ma-logo-ripple{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(91,127,255,.4) 0%,transparent 70%);transform:scale(0);animation:ma-ripple-fx .6s ease-out forwards;pointer-events:none}
 @keyframes ma-ripple-fx{to{transform:scale(4);opacity:0}}
-@media(max-width:767px){.ebook-card{flex:0 0 calc(50% - 3px);max-width:calc(50% - 3px)}.ebook-section{padding:16px 2px}}
+/* Media query removido - usando CSS inline no .ebook-card */
 @media(max-width:480px){
   .ebook-card{flex:0 0 calc(48% - 8px);max-width:calc(48% - 8px)}
   .ebook-section{padding:14px 18px}
@@ -349,7 +386,7 @@ body {
 .section-wrap{padding:2px 0 2px}.section-hdr{padding:10px 24px 6px}.section-hdr h3{font-family:var(--serif);font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.05em}.section-hdr p{font-size:.7rem;color:var(--txt2)}
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   SEÇÃO ÚLTIMOS LANÇAMENTOS - MESMO ESTILO DAS OUTRAS SEÇÕES
+   SEÇÃO ÚLTIMOS LANÇAMENTOS - ESTILO NETFLIX
    ══════════════════════════════════════════════════════════════════════════════ */
 .section-wrap .row-wrap {
   position: relative;
@@ -359,39 +396,39 @@ body {
 }
 .section-wrap .row-outer {
   overflow-x: auto !important;
+  overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
   scroll-behavior: smooth;
-  user-select: none;
-  cursor: grab;
-  -webkit-user-select: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x proximity;
+  padding: 8px 0;
 }
 .section-wrap .row-outer::-webkit-scrollbar {
   display: none;
 }
 .section-wrap .row-inner {
   display: flex !important;
-  gap: 12px !important;
-  padding: 12px 20px !important;
+  gap: 10px !important;
+  padding: 0 16px !important;
   width: fit-content;
   flex-wrap: nowrap;
 }
 .section-wrap .cc {
   flex: 0 0 auto !important;
-  width: calc((100vw - 60px) * 0.46) !important;
+  width: calc(46% - 5px) !important;
   max-width: 46vw !important;
   height: auto !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   overflow: hidden !important;
-  transition: all 0.3s ease !important;
+  transition: transform .2s ease-out !important;
   cursor: pointer !important;
   background: var(--card) !important;
   border: 0.5px solid var(--brd) !important;
+  scroll-snap-align: start;
 }
 .section-wrap .cc:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(75,139,255,.2) !important;
-  border-color: var(--pri) !important;
+  transform: translateY(-4px) !important;
 }
 .section-wrap .cc-img {
   aspect-ratio: 3/4 !important;
@@ -414,19 +451,18 @@ body {
 .section-wrap .cc-btn {
   display: none !important;
 }
-/* Esconder setas da seção lançamentos */
 .section-wrap .arr-btn {
   display: none !important;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 480px) {
   .section-wrap .cc {
-    width: calc((100vw - 40px) * 0.48) !important;
-    max-width: 48vw !important;
+    width: calc(47% - 4px) !important;
+    max-width: 47vw !important;
   }
   .section-wrap .row-inner {
     gap: 8px !important;
-    padding: 12px 12px !important;
+    padding: 0 10px !important;
   }
 }
 
@@ -460,26 +496,39 @@ body {
   scroll-snap-stop: always;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════════════════
+   TODAS AS ROLETAS - ESTILO NETFLIX - SCROLL NATIVO FLUIDO
+   ══════════════════════════════════════════════════════════════════════════════ */
 
-.row-wrap{position:relative;padding:0 0;overflow:hidden;width:100%;margin:0 auto}
-.row-outer{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scroll-behavior:smooth;user-select:none;scroll-snap-type:x mandatory;scrollbar-color:rgba(255,255,255,.1) transparent;cursor:grab;-webkit-user-select:none}
-.row-outer:active{cursor:grabbing}
-.row-outer::-webkit-scrollbar{height:6px}
-.row-outer::-webkit-scrollbar-track{background:rgba(255,255,255,.05)}
-.row-outer::-webkit-scrollbar-thumb{background:rgba(75,139,255,.3);border-radius:3px}
-.row-outer::-webkit-scrollbar-thumb:hover{background:rgba(75,139,255,.5)}
-.row-inner{display:flex !important;gap:20px !important;padding:0 20px !important;width:fit-content;flex-wrap:nowrap;overflow:visible}
+.row-wrap{position:relative;padding:0;overflow:hidden;width:100%;margin:0 auto}
+.row-outer{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  scroll-snap-type:x proximity;
+  padding:8px 0;
+}
+.row-outer::-webkit-scrollbar{display:none}
+.row-inner{
+  display:flex !important;
+  gap:10px !important;
+  padding:0 16px !important;
+  width:fit-content;
+  flex-wrap:nowrap;
+}
 
-/* Cards nas seções normais (não-special) */
+/* Cards nas seções normais (não-special) - ESTILO NETFLIX */
 .cat-sec:not(:has(.cat-sec-title.special)) .cc{
   flex:0 0 auto !important;
-  width:calc((100vw - 120px) * 0.42) !important;
-  max-width:40vw !important;
+  width:calc(46% - 5px) !important;
+  max-width:46vw !important;
   height:auto !important;
-  border-radius:12px !important;
+  border-radius:10px !important;
   overflow:hidden !important;
-  transition:all 0.3s ease !important;
+  transition:transform .2s ease-out !important;
   cursor:pointer !important;
   background:var(--card) !important;
   border:0.5px solid var(--brd) !important;
@@ -751,7 +800,7 @@ body {
   .ebook-card{flex:0 0 calc(50% - 3px);max-width:calc(50% - 3px)}
   .arr-btn{width:32px;height:32px;font-size:1rem}
 }
-@media(min-width:481px) and (max-width:767px){.ebook-card{flex:0 0 calc(50% - 3px);max-width:calc(50% - 3px)}.ebook-section{padding:16px 2px}}
+/* Media query removido - usando CSS inline */
 
 /* ══ MA TOPBAR GLOBAL ══ */
 .ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd,#1e1e32);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999;font-family:var(--font,'Outfit',sans-serif)}
@@ -2084,14 +2133,14 @@ function buildEbooks() {
     dotsEl.innerHTML = dh;
   }
 
-  startContinuousScroll();
+  // Scroll nativo - não precisa de JavaScript
 }
 
 
-function ebookGo(idx) { /* no-op: usando scroll contínuo */ }
-function ebookNext() { _scrollSpeed = 6; }  // dispara momentum para frente
-function ebookPrev() { _scrollSpeed = -6; } // dispara momentum para trás
-function ebookStart() { /* scroll inicia via startContinuousScroll */ }
+function ebookGo(idx) { /* no-op: usando scroll nativo */ }
+function ebookNext() { /* no-op: usando scroll nativo */ }
+function ebookPrev() { /* no-op: usando scroll nativo */ }
+function ebookStart() { /* no-op: usando scroll nativo */ }
 function ebookReset() { /* no-op */ }
 
 // ═══════════════════════════════ AUTH (Firebase) ═══════════════════════════════
@@ -3033,7 +3082,7 @@ document.addEventListener('DOMContentLoaded', function() {
   setupEvents();
   buildEbooks();
   upUI();
-  setTimeout(addEbookTouchSwipe, 300);
+  // Scroll nativo - não precisa de JavaScript para touch/swipe
   updatePointsBadge();
   
   // ── Auto-scroll das notícias ──
@@ -4619,7 +4668,4 @@ document.addEventListener('DOMContentLoaded',function(){
 .mae-note-del:hover{background:rgba(239,68,68,.1);color:#ef4444}
 .mae-notes-empty{padding:40px 20px;text-align:center}
 .mae-notes-empty-icon{font-size:2.2rem;display:block;margin-bottom:10px;opacity:.35}
-.mae-notes-empty-txt{font-size:.75rem;color:#44445a;font-family:'Outfit',sans-serif}
-
-/* ── REVIEW PANE ── */
-.mae-rev-hero{background:linear-gradient(135deg,rgba(34,197,94,.1),rg
+.mae-notes-empty-txt{font-siz
