@@ -639,6 +639,25 @@ var MA_COURSES = [
     color: '#7209B7',
     addedTs: 1775775448497,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pb.jpg',
+    id: 'pb',
+    name: 'Política Brasileira do Zero ao Avançado',
+    desc: 'Curso completo sobre a estrutura política do Brasil: Executivo, Legislativo, Judiciário, eleições, partidos, Constituição, alianças e funcionamento real do sistema.',
+    file: 'curso-politica-brasileira-zero-avancado.html',
+    cat: 'Política Brasileira',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'PB_HENRY_2026_MASTER',
+    ak: 'pb_auth',
+    storagePrefix: 'pb_',
+    icon: '📰',
+    color: '#1B4332',
+    addedTs: 1775775513003,
+    active: true
   }
 ];
 var MA_CATS = [
