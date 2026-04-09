@@ -609,7 +609,7 @@ var MA_TRAILS = [
     name: 'Trilha Empreendedor Digital',
     desc: 'Do zero ao negócio digital lucrativo.',
     badge: '🚀 Empreendedor Digital',
-    courseIds: ['tp', 'ni', 'nl']
+    courseIds: ['em', 'mdd', 'educa', 'ml', 'ec']
   },
   {
     id: 'estrategista',
@@ -619,7 +619,7 @@ var MA_TRAILS = [
     name: 'Trilha Estrategista Global',
     desc: 'Geopolítica + Negócios para uma visão estratégica completa.',
     badge: '🌍 Estrategista Global',
-    courseIds: ['gp', 'ni']
+    courseIds: ['gm', 'gsqw', 'ri', 'gmed', 'educa']
   },
   {
     id: 'cidadao',
@@ -629,7 +629,7 @@ var MA_TRAILS = [
     name: 'Trilha Cidadão Consciente',
     desc: 'Política Brasileira + Geopolítica para uma visão crítica completa.',
     badge: '🏛️ Cidadão Consciente',
-    courseIds: ['pb', 'gp']
+    courseIds: ['pbba', 'gm', 'novao', 'ri']
   },
   {
     id: 'completa',
@@ -639,7 +639,7 @@ var MA_TRAILS = [
     name: 'Trilha Completa Matheus Academy',
     desc: 'O percurso definitivo. Todos os cursos principais.',
     badge: '👑 Mestre Academy',
-    courseIds: ['tp', 'ni', 'gp', 'pb', 'nl', 'mp']
+    courseIds: ['em', 'mdd', 'educa', 'gm', 'pbba', 'novao', 'pco', 'oco', 'gf']
   }
 ];
 
