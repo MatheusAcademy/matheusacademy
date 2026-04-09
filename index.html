@@ -462,13 +462,13 @@ body {
   padding:4px 0;
 }
 .row-outer::-webkit-scrollbar{display:none}
-.row-inner{display:flex !important;gap:10px !important;padding:0 12px !important;width:max-content;flex-wrap:nowrap}
+.row-inner{display:flex;gap:10px;padding:0 10px;width:max-content;flex-wrap:nowrap;align-items:flex-start}
 
-/* Cards nas seções normais (não-special) */
+/* Cards nas seções normais (não-special) - IGUAL À PRIMEIRA ROLETA */
 .cat-sec:not(:has(.cat-sec-title.special)) .cc{
-  flex:0 0 auto !important;
-  width:calc(46% - 5px) !important;
-  max-width:46vw !important;
+  flex:0 0 calc((100vw - 30px) / 2.15) !important;
+  width:calc((100vw - 30px) / 2.15) !important;
+  max-width:calc((100vw - 30px) / 2.15) !important;
   height:auto !important;
   border-radius:10px !important;
   overflow:hidden !important;
@@ -543,52 +543,57 @@ body {
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   MEDIA QUERIES - CARDS DAS SEÇÕES (cat-sec)
+   MEDIA QUERIES - CARDS DAS SEÇÕES (IGUAL AO EBOOK)
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* DESKTOP GRANDE (1600px+) */
 @media(min-width:1600px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
+    flex:0 0 280px !important;
     width:280px !important;
     max-width:280px !important;
   }
-  .row-inner{gap:16px !important;padding:0 24px !important}
+  .row-inner{gap:16px;padding:0 24px}
 }
 
 /* DESKTOP (1200px - 1599px) */
 @media(min-width:1200px) and (max-width:1599px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
+    flex:0 0 240px !important;
     width:240px !important;
     max-width:240px !important;
   }
-  .row-inner{gap:14px !important;padding:0 20px !important}
+  .row-inner{gap:14px;padding:0 20px}
 }
 
 /* TABLET (768px - 1199px) */
 @media(min-width:768px) and (max-width:1199px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
-    width:200px !important;
-    max-width:200px !important;
+    flex:0 0 220px !important;
+    width:220px !important;
+    max-width:220px !important;
   }
-  .row-inner{gap:12px !important;padding:0 16px !important}
+  .row-inner{gap:12px;padding:0 16px}
 }
 
 /* MOBILE GRANDE (481px - 767px) */
 @media(min-width:481px) and (max-width:767px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
+    flex:0 0 calc((100vw - 36px) / 2.15) !important;
     width:calc((100vw - 36px) / 2.15) !important;
     max-width:calc((100vw - 36px) / 2.15) !important;
   }
-  .row-inner{gap:10px !important;padding:0 12px !important}
+  .row-inner{gap:10px;padding:0 12px}
 }
 
 /* MOBILE (até 480px) */
 @media(max-width:480px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
+    flex:0 0 calc((100vw - 28px) / 2.1) !important;
     width:calc((100vw - 28px) / 2.1) !important;
     max-width:calc((100vw - 28px) / 2.1) !important;
   }
-  .row-inner{gap:8px !important;padding:0 10px !important}
+  .row-inner{gap:8px;padding:0 10px}
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -1035,12 +1040,6 @@ body {
 }
 .section-wrap {
   padding: 0 !important;
-}
-
-/* ── ROW INNER: gap ajustado para 6 cards ── */
-.row-inner {
-  gap: 10px !important;
-  padding: 10px 4px 16px !important;
 }
 
 /* ── CARDS DE CARROSSEL SEM BORDA ── */
@@ -2356,54 +2355,9 @@ function scrollRow(id, dir) {
   el.scrollBy({left: dir * step, behavior: 'smooth'});
 }
 
-// ═══════════════════════════════ AUTO SCROLL NOTÍCIAS ═════════════════════════
+// ═══════════════════════════════ AUTO SCROLL NOTÍCIAS - DESATIVADO ═════════════════════════
 function setupAutoScrollNews() {
-  var newsSection = document.querySelector('.cat-sec:has(.cat-sec-title.special)');
-  if (!newsSection) return;
-  
-  var newsOuter = newsSection.querySelector('.row-outer');
-  if (!newsOuter) return;
-  
-  var card = newsSection.querySelector('.cc');
-  if (!card) return;
-  
-  var autoScrollInterval;
-  var isPaused = false;
-  
-  function startAutoScroll() {
-    autoScrollInterval = setInterval(function() {
-      if (isPaused) return;
-      
-      var cardWidth = card.offsetWidth;
-      var gap = 20;
-      var scrollAmount = cardWidth + gap;
-      
-      newsOuter.scrollBy({
-        left: scrollAmount,
-        behavior: 'smooth'
-      });
-      
-      // Volta ao início quando chegar ao final
-      if (newsOuter.scrollLeft + newsOuter.clientWidth >= newsOuter.scrollWidth - 50) {
-        setTimeout(function() {
-          newsOuter.scrollLeft = 0;
-        }, 1000);
-      }
-    }, 5000);
-  }
-  
-  // Pausar ao passar mouse
-  newsOuter.addEventListener('mouseenter', function() {
-    isPaused = true;
-  });
-  
-  // Continuar ao sair o mouse
-  newsOuter.addEventListener('mouseleave', function() {
-    isPaused = false;
-  });
-  
-  // Iniciar scroll automático
-  startAutoScroll();
+  // Auto scroll removido - apenas scroll manual
 }
 
 // ── Normalizar velocidade de todos os carrosséis ──
@@ -4542,4 +4496,28 @@ document.addEventListener('DOMContentLoaded',function(){
 .mae-rev-hist-item{background:#111122;border:1px solid #1e1e35;border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
 .mae-rev-hist-course{flex:1;font-size:.72rem;font-weight:700;color:#e8e8f0;font-family:'Outfit',sans-serif}
 .mae-rev-hist-pct{font-size:.76rem;font-weight:900;color:#22c55e;font-family:'Playfair Display',serif}
-.mae-rev-hist-date{font-size:.58rem;color:#44445a;font-family:'Outfit',sans-se
+.mae-rev-hist-date{font-size:.58rem;color:#44445a;font-family:'Outfit',sans-serif}
+.mae-rev-empty{padding:30px 20px;text-align:center;font-size:.76rem;color:#44445a;font-family:'Outfit',sans-serif}
+
+/* ── LAST MODULE INDICATOR ── */
+.mae-last-mod-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:20px;
+  background:rgba(91,127,255,.15);border:1px solid rgba(91,127,255,.3);
+  font-size:.56rem;font-weight:700;color:#5b7fff;
+  font-family:'Outfit',sans-serif;
+}
+</style>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   MA ENGINE v3 — Favoritos + Caderno + Revisão Rápida
+   ════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+function gs3(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function ss3(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function today3(){return new Date().toLocaleDateString('pt-BR');}
+function _nid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+function _ago(ts){var d=Date.now()-ts,s=Math.floor(d/1000),m=Math.floor(s/60),h=Math.floor(m/60)
