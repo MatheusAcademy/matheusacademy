@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<!-- Mini palette flutuante (aparece ao selecionar texto) -->
+<!-- Mini palette flutuante (3 cores) — aparece ao selecionar texto -->
 <div class="hl-mini-palette" id="hlMiniPalette">
   <div class="hl-mp-dot" data-hl="amarelo" title="Amarelo"></div>
   <div class="hl-mp-dot" data-hl="verde" title="Verde"></div>
@@ -53,7 +53,7 @@
   <div class="hl-mp-sep"></div>
   <div class="hl-mp-remove" title="Remover destaque">✕</div>
 </div>
-<!-- Toolbar antiga mantida oculta para compatibilidade -->
+<!-- Toolbar antiga (oculta, mantida para compatibilidade) -->
 <div class="highlight-toolbar" id="highlightToolbar" style="display:none"></div>
 <div class="hl-note-popup" id="hlNotePopup">
   <div style="font-size:.62rem;color:var(--txt3);margin-bottom:8px;font-weight:700">📝 Anotação sobre o trecho</div>
@@ -711,7 +711,7 @@ function applySelectedHighlight(){
     return;
   }
   _curRange = range.cloneRange();
-  _applyNewHighlight(_activeHlColor);
+  applyHighlight(_activeHlColor);
 }
 
 /* ═══ SOM DE MOEDAS (Web Audio API) ═══ */
@@ -931,7 +931,7 @@ function buildSidebar(){
     var lastMod=MODS[lastMi];
     var lastTop=lastMod.topics[lastTi]||lastMod.topics[0];
     btnCont.style.display='flex';
-    btnCont.innerHTML='<svg class="ccb-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5v14l11-7z"/></svg> Continuar M\u00f3dulo '+(lastMi+1);
+    btnCont.innerHTML='<svg style="width:14px;height:14px;opacity:.6;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5v14l11-7z"/></svg> Continuar M\u00f3dulo '+(lastMi+1);
     btnCont.onclick=function(){selectTopic(lastMi,lastTi||0,true);};
   } else if(btnCont&&done===0){
     btnCont.style.display='none';
@@ -1917,175 +1917,94 @@ function switchTab(tab){
   }
 }
 
-/* ═══ NOVO SISTEMA DE MARCAÇÃO — Selection API + CSS Custom Highlight API ═══ */
-/* 3 cores fixas: amarelo, verde, rosa. Mini palette flutuante. Persistência localStorage. */
-
-var _hlPalette=null,_curRange=null,_pendingHlId=null,_notePopup=null;
-var _supportsCustomHL=!!(CSS&&CSS.highlights); /* CSS Custom Highlight API suportada? */
-var _hlRanges={amarelo:[],verde:[],rosa:[]}; /* ranges ativos por cor */
-
-/* Registra os Highlight objects se API disponível */
-function _initCustomHighlights(){
-  if(!_supportsCustomHL)return;
-  ['amarelo','verde','rosa'].forEach(function(c){
-    if(!CSS.highlights.has('hl-'+c)){
-      CSS.highlights.set('hl-'+c,new Highlight());
-    }
-  });
-}
+/* ═══ MINI PALETTE — selecione texto → 3 cores + remover ═══ */
+var _toolbar=null,_hlPalette=null,_notePopup=null,_curRange=null,_pendingHlId=null;
+var _hlPaletteVisible=false,_selDebounce=null;
 
 function initHighlight(){
+  _toolbar=document.getElementById('highlightToolbar');
   _hlPalette=document.getElementById('hlMiniPalette');
   _notePopup=document.getElementById('hlNotePopup');
-  _initCustomHighlights();
-
-  /* Clique nas bolinhas de cor da mini palette */
-  if(_hlPalette){
-    _hlPalette.querySelectorAll('.hl-mp-dot').forEach(function(dot){
-      dot.addEventListener('click',function(e){
-        e.stopPropagation();
-        var color=this.dataset.hl;
-        _applyNewHighlight(color);
-      });
-    });
-    /* Botão remover */
-    var removeBtn=_hlPalette.querySelector('.hl-mp-remove');
-    if(removeBtn){
-      removeBtn.addEventListener('click',function(e){
-        e.stopPropagation();
-        _removeCurrentHighlight();
-      });
-    }
-  }
-
-  /* Mostra mini palette ao selecionar texto */
-  document.addEventListener('mouseup',_onTextSelectNew);
-  document.addEventListener('touchend',function(){setTimeout(_onTextSelectNew,120);});
-  /* Esconde ao clicar fora */
-  document.addEventListener('mousedown',function(e){
-    if(_hlPalette&&!_hlPalette.contains(e.target))_hideMiniPalette();
+  if(!_hlPalette)return;
+  /* Click handlers nos dots de cor */
+  _hlPalette.querySelectorAll('.hl-mp-dot').forEach(function(dot){
+    dot.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();applyHighlight(this.dataset.hl);});
+    dot.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();applyHighlight(this.dataset.hl);});
   });
+  /* Botão remover */
+  var rb=_hlPalette.querySelector('.hl-mp-remove');
+  if(rb){
+    rb.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();removeHighlight();});
+    rb.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();removeHighlight();});
+  }
+  /* selectionchange — funciona em todos os dispositivos */
+  document.addEventListener('selectionchange',function(){
+    clearTimeout(_selDebounce);
+    _selDebounce=setTimeout(_checkSel,200);
+  });
+  /* mouseup backup para desktop */
+  document.addEventListener('mouseup',function(e){
+    if(_hlPalette&&_hlPalette.contains(e.target))return;
+    setTimeout(_checkSel,50);
+  });
+  /* Esconder ao clicar fora */
+  document.addEventListener('mousedown',function(e){
+    if(_hlPalette&&!_hlPalette.contains(e.target))hideToolbar();
+    if(_notePopup&&!_notePopup.contains(e.target))closeHlNote();
+  });
+  document.addEventListener('touchstart',function(e){
+    if(_hlPalette&&!_hlPalette.contains(e.target))hideToolbar();
+  },{passive:true});
 }
 
-function _onTextSelectNew(){
+function _checkSel(){
   var sel=window.getSelection();
-  if(!sel||sel.rangeCount===0||sel.toString().trim().length<2){_hideMiniPalette();return;}
+  if(!sel||sel.rangeCount===0||sel.toString().trim().length<2){hideToolbar();return;}
   var range=sel.getRangeAt(0);
   var content=document.getElementById('modLessonWrap');
-  if(!content||!content.contains(range.commonAncestorContainer)){_hideMiniPalette();return;}
+  if(!content||!content.contains(range.commonAncestorContainer)){hideToolbar();return;}
   _curRange=range.cloneRange();
-  _showMiniPalette(range);
-}
-
-function _showMiniPalette(range){
-  if(!_hlPalette)return;
   var rect=range.getBoundingClientRect();
-  var ph=_hlPalette.offsetHeight||36;
-  /* Posiciona acima da seleção */
-  var top=rect.top+window.scrollY-ph-10;
-  var left=rect.left+window.scrollX+(rect.width/2);
-  /* Torna visível para medir largura */
-  _hlPalette.style.display='flex';
-  _hlPalette.style.opacity='0';
-  var pw=_hlPalette.offsetWidth||140;
-  left=left-(pw/2);
-  left=Math.max(8,Math.min(left,window.innerWidth-pw-8));
-  if(top<60)top=rect.bottom+window.scrollY+8;
+  if(rect.width===0&&rect.height===0){hideToolbar();return;}
+  /* Posicionar a palette acima da seleção (fixed) */
+  var palH=42;
+  var top=rect.top-palH-10;
+  var left=rect.left+(rect.width/2)-70;
+  if(top<8)top=rect.bottom+8;
+  left=Math.max(8,Math.min(left,window.innerWidth-150));
+  _hlPalette.style.position='fixed';
   _hlPalette.style.top=top+'px';
   _hlPalette.style.left=left+'px';
-  _hlPalette.style.position='absolute';
-  /* Animação de entrada */
-  requestAnimationFrame(function(){_hlPalette.classList.add('visible');});
+  _hlPalette.classList.add('visible');
+  _hlPaletteVisible=true;
 }
 
-function _hideMiniPalette(){
-  if(_hlPalette){_hlPalette.classList.remove('visible');setTimeout(function(){if(!_hlPalette.classList.contains('visible'))_hlPalette.style.display='none';},160);}
+function hideToolbar(){
+  if(_hlPalette){_hlPalette.classList.remove('visible');_hlPaletteVisible=false;}
+  if(_toolbar)_toolbar.classList.remove('visible');
 }
-
-function _applyNewHighlight(color){
+function applyHighlight(color){
   if(!_curRange)return;
-  var text=_curRange.toString().trim();
-  if(text.length<2)return;
-  var hlId='hl_'+Date.now();
-
-  if(_supportsCustomHL){
-    /* CSS Custom Highlight API — não altera DOM */
-    var cloned=_curRange.cloneRange();
-    _hlRanges[color]=_hlRanges[color]||[];
-    _hlRanges[color].push({range:cloned,id:hlId});
-    var hlObj=CSS.highlights.get('hl-'+color);
-    if(hlObj)hlObj.add(cloned);
-  } else {
-    /* Fallback — mark element */
-    var sel=window.getSelection();sel.removeAllRanges();sel.addRange(_curRange);
-    try{
-      var mark=document.createElement('mark');
-      mark.className='hl-'+color;mark.dataset.hlColor=color;mark.dataset.hlId=hlId;
-      _curRange.surroundContents(mark);
-    }catch(e){showToast('Selecione texto simples para destacar','warn');}
-    sel.removeAllRanges();
-  }
-
-  /* Salva no localStorage */
-  _saveHighlightData(hlId,color,text);
-  window.getSelection().removeAllRanges();
-  _hideMiniPalette();
-  _curRange=null;
-  showToast('✏️ Trecho destacado!','ok');
+  var sel=window.getSelection();sel.removeAllRanges();sel.addRange(_curRange);
+  try{
+    var span=document.createElement('mark');
+    span.className='hl-'+color;span.dataset.hlColor=color;span.dataset.hlId='hl_'+Date.now();
+    _curRange.surroundContents(span);
+    saveHighlight(span.dataset.hlId,color,span.textContent);
+    showToast('✏️ Trecho destacado!','ok');
+  }catch(e){showToast('Selecione texto simples sem formatações para destacar','warn');}
+  sel.removeAllRanges();hideToolbar();_curRange=null;
 }
-
-function _removeCurrentHighlight(){
-  /* Tenta remover marca sob a seleção */
-  var sel=window.getSelection();
-  if(!sel||sel.rangeCount===0){showToast('Selecione o texto destacado','warn');_hideMiniPalette();return;}
-
-  if(_supportsCustomHL){
-    /* Remove ranges do CSS Highlight que intersectam a seleção */
-    var selRange=sel.getRangeAt(0);
-    var removed=false;
-    ['amarelo','verde','rosa'].forEach(function(c){
-      var arr=_hlRanges[c]||[];
-      for(var i=arr.length-1;i>=0;i--){
-        if(_rangesOverlap(arr[i].range,selRange)){
-          var hlObj=CSS.highlights.get('hl-'+c);
-          if(hlObj)hlObj.delete(arr[i].range);
-          deleteHighlight(arr[i].id);
-          arr.splice(i,1);
-          removed=true;
-        }
-      }
-    });
-    if(removed)showToast('Destaque removido','ok');
-    else showToast('Selecione um trecho destacado','warn');
-  } else {
-    /* Fallback — remove mark element */
-    var node=sel.getRangeAt(0).commonAncestorContainer;
-    var mark=node.nodeType===3?node.parentElement:node;
-    while(mark&&mark.tagName!=='MARK'&&mark.id!=='modLessonWrap')mark=mark.parentElement;
-    if(mark&&mark.tagName==='MARK'){
-      var hlId=mark.dataset.hlId;var parent=mark.parentNode;
-      while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);
-      parent.removeChild(mark);
-      if(hlId)deleteHighlight(hlId);
-      showToast('Destaque removido','ok');
-    } else {
-      showToast('Selecione um trecho destacado','warn');
-    }
-  }
-  sel.removeAllRanges();_hideMiniPalette();
+function removeHighlight(){
+  var sel=window.getSelection();if(!sel||sel.rangeCount===0){showToast('Clique sobre o texto destacado e selecione-o','warn');return;}
+  var node=sel.getRangeAt(0).commonAncestorContainer;
+  var mark=node.nodeType===3?node.parentElement:node;
+  while(mark&&mark.tagName!=='MARK'&&mark.id!=='modLessonWrap')mark=mark.parentElement;
+  if(mark&&mark.tagName==='MARK'){var hlId=mark.dataset.hlId;var parent=mark.parentNode;while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);parent.removeChild(mark);if(hlId)deleteHighlight(hlId);showToast('Destaque removido','ok');}
+  else showToast('Selecione o texto destacado para remover','warn');
+  sel.removeAllRanges();hideToolbar();
 }
-
-function _rangesOverlap(a,b){
-  return a.compareBoundaryPoints(Range.START_TO_END,b)>0&&
-         b.compareBoundaryPoints(Range.START_TO_END,a)>0;
-}
-
-/* Compatibilidade — funções antigas que outros módulos podem chamar */
-function applyHighlight(color){_applyNewHighlight(color);}
-function removeHighlight(){_removeCurrentHighlight();}
-function hideToolbar(){_hideMiniPalette();}
-
-function _saveHighlightData(id,color,text){
+function saveHighlight(id,color,text){
   var now=new Date();
   var dateStr=now.toLocaleDateString('pt-BR');
   var timeStr=now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
@@ -2093,13 +2012,12 @@ function _saveHighlightData(id,color,text){
   data.unshift({id:id,color:color,text:text.substring(0,500),note:'',topicKey:_curModIdx+'_'+_curTopIdx,date:dateStr,time:timeStr});
   sHlData(data);
 }
-function saveHighlight(id,color,text){_saveHighlightData(id,color,text);}
 function deleteHighlight(id){var data=gHlData().filter(d=>d.id!==id);sHlData(data);}
 function addNoteToHighlight(){
-  if(!_curRange||!_notePopup)return;
-  var rect=_hlPalette?_hlPalette.getBoundingClientRect():{bottom:100,left:100};
-  _notePopup.style.top=(rect.bottom+window.scrollY+8)+'px';
-  _notePopup.style.left=rect.left+'px';
+  if(!_curRange)return;
+  var sel=window.getSelection();
+  if(sel&&sel.rangeCount>0){var node=sel.getRangeAt(0).commonAncestorContainer;var mark=node.nodeType===3?node.parentElement:node;while(mark&&mark.tagName!=='MARK')mark=mark.parentElement;if(mark)_pendingHlId=mark.dataset.hlId;}
+  if(_hlPalette){var palRect=_hlPalette.getBoundingClientRect();_notePopup.style.top=(palRect.bottom+window.scrollY+8)+'px';_notePopup.style.left=palRect.left+'px';}
   _notePopup.classList.add('show');
   document.getElementById('hlNoteInput').focus();
 }
@@ -2109,9 +2027,9 @@ function saveHlNote(){
   if(_pendingHlId){var item=data.find(d=>d.id===_pendingHlId);if(item)item.note=note;}
   else{data.unshift({id:'note_'+Date.now(),color:_activeHlColor,text:window.getSelection().toString().substring(0,200),note:note,topicKey:_curModIdx+'_'+_curTopIdx,date:new Date().toLocaleDateString('pt-BR')});}
   sHlData(data);document.getElementById('hlNoteInput').value='';
-  closeHlNote();_hideMiniPalette();showToast('📝 Anotação salva!','ok');
+  closeHlNote();hideToolbar();showToast('📝 Anotação salva!','ok');
 }
-function closeHlNote(){if(document.getElementById('hlNoteInput'))document.getElementById('hlNoteInput').value='';if(_notePopup)_notePopup.classList.remove('show');_pendingHlId=null;}
+function closeHlNote(){document.getElementById('hlNoteInput').value='';_notePopup.classList.remove('show');_pendingHlId=null;}
 function renderHlNotes(){
   var data=gHlData();
   var el=document.getElementById('hlNotesList');
@@ -3106,9 +3024,9 @@ function updateLessonCoverMini(){
   if(d)d.textContent=COURSE.desc||'';
 }
 
-/* ═══ CANETINHA FLUTUANTE — DESATIVADA (substituída por mini-palette) ═══ */
-var _penActive = false;   // sempre OFF — substituído por seleção nativa
-var _eraserActive = false; // sempre OFF
+/* ═══ CANETINHA FLUTUANTE — ON/OFF + AUTO-HIGHLIGHT ═══ */
+var _penActive = false;   // caneta ON/OFF
+var _eraserActive = false; // borracha ON/OFF
 
 /* Cores CSS de cada nome */
 var _colorMap = {
@@ -3148,9 +3066,12 @@ function _updatePenUI(){
   if(eraserBtn) eraserBtn.style.background = _eraserActive?'rgba(239,68,68,.4)':'rgba(239,68,68,.15)';
 }
 
-/* Toggle ON/OFF — desativado (mini-palette substituiu a canetinha) */
+/* Toggle ON/OFF da canetinha (chamado ao clicar no botão sem arrastar) */
 function fpToggleMode(){
-  /* Não faz nada — sistema antigo desativado */
+  _penActive=!_penActive;
+  if(_penActive) _eraserActive=false;
+  _updatePenUI();
+  showToast(_penActive?'✏️ Caneta ON — toque para marcar':'✏️ Caneta OFF', _penActive?'ok':'');
 }
 
 /* Liga/desliga borracha */
@@ -3423,7 +3344,7 @@ setInterval(function(){
   var e=Math.floor((Date.now()-_start)/1000);
   var m=Math.floor(e/60).toString().padStart(2,'0');
   var s=(e%60).toString().padStart(2,'0');
-  var el=document.getElementById('stTime');if(el)el.textContent=m+':'+s;
+  var el=document.getElementById('stTime');if(el){el.textContent=m+':'+s;el.closest('.study-timer')&&(el.closest('.study-timer').style.display='none');}
   if(e>0&&e%300===0){/* sem pontos por tempo — pontos só de módulos/cursos/streak */}
   if(e%3===0){
     // v3 FIX: lê XP do Firebase via MAStore — gP() já está corrigido
