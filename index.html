@@ -190,8 +190,8 @@ body {
 .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 50% 0%,rgba(75,139,255,.08),transparent 60%);pointer-events:none}
 .hero-logo{width:72px;height:72px;border-radius:16px;margin:0 auto 16px}.hero h2{font-family:var(--serif);font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:6px}.hero h2 span{color:var(--pri)}.hero .sub{font-size:.88rem;color:var(--txt2);max-width:480px;margin:0 auto 16px;line-height:1.6}
 .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px}.tag{padding:5px 14px;border-radius:20px;font-size:.62rem;font-weight:600;border:1px solid var(--brd2);color:var(--txt2);background:var(--bg2)}
-/* EBOOK CAROUSEL - SCROLL NATIVO NETFLIX */
-.ebook-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);position:relative;padding:12px 0}
+/* EBOOK CAROUSEL - PREMIUM DARK NETFLIX */
+.ebook-section{background:linear-gradient(180deg, rgba(8,8,15,0) 0%, rgba(8,8,15,.6) 50%, rgba(8,8,15,0) 100%);position:relative;padding:14px 0;border:none}
 .ebook-overflow{
   overflow-x:auto;
   overflow-y:hidden;
@@ -202,53 +202,55 @@ body {
   padding:4px 0;
 }
 .ebook-overflow::-webkit-scrollbar{display:none}
-.ebook-track{display:flex;gap:10px;padding:0 10px;width:max-content;align-items:flex-start}
+.ebook-track{display:flex;gap:6px;padding:0 6px;width:max-content;align-items:flex-start}
 .ebook-page{display:contents}
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   EBOOK CARD - SEMPRE 2 CARDS VISÍVEIS + PEDACINHO DO TERCEIRO
+   EBOOK CARD - EDGE-TO-EDGE PREMIUM
    ══════════════════════════════════════════════════════════════════════════════ */
 .ebook-card{
-  flex:0 0 calc((100vw - 30px) / 2.15);
-  width:calc((100vw - 30px) / 2.15);
-  max-width:calc((100vw - 30px) / 2.15);
+  flex:0 0 calc((100vw - 18px) / 2.08);
+  width:calc((100vw - 18px) / 2.08);
+  max-width:calc((100vw - 18px) / 2.08);
   cursor:pointer;
-  transition:transform .2s ease-out;
+  transition:transform .3s cubic-bezier(.25,.46,.45,.94), filter .3s ease;
 }
-/* Hover/Touch: apenas elevação sutil - SEM brilho elétrico */
+/* Hover/Touch: elevação + glow sutil premium */
 .ebook-card:hover{
-  transform:translateY(-6px) scale(1.02);
+  transform:translateY(-8px) scale(1.03);
   z-index:5;
+  filter:brightness(1.08);
 }
 .ebook-card.touch-active{
-  transform:translateY(-6px) scale(1.02);
+  transform:translateY(-8px) scale(1.03);
   z-index:5;
+  filter:brightness(1.08);
 }
 .ebook-cover{
-  border-radius:10px;
+  border-radius:12px;
   aspect-ratio:3/4;
   position:relative;
-  overflow:visible;
-  box-shadow:0 6px 24px rgba(0,0,0,.7);
-  transition:box-shadow .25s ease-out;
+  overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.8), 0 0 0 0.5px rgba(255,255,255,.06);
+  transition:box-shadow .3s ease-out;
 }
-.ebook-cover>img,.ebook-cover>.ebook-nocover,.ebook-cover>.p-img-cover,.ebook-cover>.p-name-bar,.ebook-cover>.p-badge{border-radius:10px;overflow:hidden}
-.ebook-cover>img{border-radius:10px}
-/* Hover na capa: sombra mais forte - SEM glow elétrico */
+.ebook-cover>img,.ebook-cover>.ebook-nocover,.ebook-cover>.p-img-cover,.ebook-cover>.p-name-bar,.ebook-cover>.p-badge{border-radius:12px;overflow:hidden}
+.ebook-cover>img{border-radius:12px}
+/* Hover: glow premium na capa */
 .ebook-card:hover .ebook-cover{
-  box-shadow:0 12px 40px rgba(0,0,0,.85);
+  box-shadow:0 16px 48px rgba(0,0,0,.9), 0 0 30px rgba(75,139,255,.12);
 }
 /* Imagem de capa */
 .ebook-cover img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;background:#03030a}
-/* Overlay de nome — DENTRO da capa, na base */
-.p-name-bar{position:absolute;bottom:0;left:0;right:0;padding:28px 10px 10px;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.7) 50%,rgba(0,0,0,.3) 80%,transparent 100%);z-index:4}
-.p-name-bar span{display:block;font-size:.6rem;font-weight:800;color:#fff;line-height:1.25;text-shadow:0 1px 4px rgba(0,0,0,.9);font-family:var(--serif);word-break:break-word}
-/* Overlay que cobre o texto grande do SVG */
-.p-img-cover{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.4) 0%,rgba(0,0,0,.15) 45%,rgba(0,0,0,.6) 100%);z-index:3}
-/* Badge */
-.p-badge{position:absolute;top:8px;left:8px;padding:3px 9px;border-radius:5px;font-size:.48rem;font-weight:700;text-transform:uppercase;z-index:5;letter-spacing:.04em}
-.p-badge.pfree{background:var(--grn);color:#fff}
-.p-badge.ppaid{background:rgba(75,139,255,.85);color:#fff}
+/* Overlay de nome — gradiente premium na base */
+.p-name-bar{position:absolute;bottom:0;left:0;right:0;padding:32px 12px 12px;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.75) 40%,rgba(0,0,0,.25) 75%,transparent 100%);z-index:4}
+.p-name-bar span{display:block;font-size:.62rem;font-weight:800;color:#fff;line-height:1.25;text-shadow:0 1px 6px rgba(0,0,0,.95);font-family:var(--serif);word-break:break-word}
+/* Overlay premium no SVG */
+.p-img-cover{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.3) 0%,rgba(0,0,0,.08) 45%,rgba(0,0,0,.5) 100%);z-index:3}
+/* Badge premium com glassmorphism */
+.p-badge{position:absolute;top:8px;left:8px;padding:4px 10px;border-radius:6px;font-size:.46rem;font-weight:700;text-transform:uppercase;z-index:5;letter-spacing:.06em;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.p-badge.pfree{background:rgba(34,197,94,.85);color:#fff;box-shadow:0 2px 12px rgba(34,197,94,.3)}
+.p-badge.ppaid{background:rgba(75,139,255,.8);color:#fff;box-shadow:0 2px 12px rgba(75,139,255,.3)}
 /* Card sem capa — logo Matheus Academy ocupando tudo */
 .ebook-nocover{position:absolute;inset:0;display:flex;flex-direction:column}
 /* Logo preenche 100% do card */
@@ -298,13 +300,39 @@ body {
   transform:translateX(-50%) scale(1.08);
   pointer-events:none;
 }
-/* Botão abaixo da capa — mesmo padding para todos */
-.ebook-btn{display:block;margin-top:8px;padding:8px;border-radius:8px;text-align:center;font-size:.68rem;font-weight:700;border:none;cursor:pointer;font-family:var(--font);transition:background .2s;width:100%}
-.ebook-btn.btn-free{background:var(--grn);color:#fff}
-.ebook-btn.btn-free:hover{background:#16a34a}
-.ebook-btn.btn-paid{background:var(--pri3);color:#fff}
-.ebook-btn.btn-paid:hover{background:var(--pri)}
-.ebook-dots{display:flex;justify-content:center;gap:6px;padding:12px 0 4px;background:var(--bg2)}.ebook-dot{width:6px;height:6px;border-radius:50%;background:var(--brd2);cursor:pointer;transition:all .3s}.ebook-dot.active{width:20px;border-radius:3px;background:var(--pri)}
+/* Botão premium abaixo da capa */
+.ebook-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-top:10px;padding:9px 8px;border-radius:10px;text-align:center;
+  font-size:.65rem;font-weight:700;border:none;cursor:pointer;
+  font-family:var(--font);transition:all .3s cubic-bezier(.25,.46,.45,.94);
+  width:100%;letter-spacing:.03em;position:relative;overflow:hidden;
+}
+.ebook-btn::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);
+  transition:opacity .3s;
+}
+.ebook-btn:hover::before{opacity:1}
+.ebook-btn.btn-free{
+  background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;
+  box-shadow:0 4px 16px rgba(34,197,94,.25);
+}
+.ebook-btn.btn-free:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(34,197,94,.35);
+}
+.ebook-btn.btn-paid{
+  background:linear-gradient(135deg,rgba(75,139,255,.15),rgba(75,139,255,.08));
+  color:rgba(255,255,255,.9);border:1px solid rgba(75,139,255,.2);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
+.ebook-btn.btn-paid:hover{
+  background:linear-gradient(135deg,rgba(75,139,255,.25),rgba(75,139,255,.12));
+  border-color:rgba(75,139,255,.4);transform:translateY(-2px);
+  box-shadow:0 4px 20px rgba(75,139,255,.15);
+}
+.ebook-dots{display:flex;justify-content:center;gap:6px;padding:14px 0 6px;background:transparent}.ebook-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:all .3s}.ebook-dot.active{width:22px;border-radius:3px;background:var(--pri);box-shadow:0 0 10px rgba(75,139,255,.4)}
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    MATHEUS ACADEMY FIXES v3.1 - CSS
@@ -382,21 +410,21 @@ body {
   .ebook-card{flex:0 0 220px;width:220px;max-width:220px}
   .ebook-track{gap:12px;padding:0 16px}
 }
-/* Mobile grande: 2 cards */
+/* Mobile grande: 2 cards — quase encostando nas bordas */
 @media(min-width:481px) and (max-width:767px){
-  .ebook-card{flex:0 0 calc((100vw - 36px) / 2.15);width:calc((100vw - 36px) / 2.15);max-width:calc((100vw - 36px) / 2.15)}
-  .ebook-track{gap:10px;padding:0 12px}
+  .ebook-card{flex:0 0 calc((100vw - 18px) / 2.05);width:calc((100vw - 18px) / 2.05);max-width:calc((100vw - 18px) / 2.05)}
+  .ebook-track{gap:6px;padding:0 6px}
   .ebook-section{padding:10px 0}
 }
-/* Mobile: 2 cards */
+/* Mobile: 2 cards — EDGE-TO-EDGE */
 @media(max-width:480px){
-  .ebook-card{flex:0 0 calc((100vw - 28px) / 2.1);width:calc((100vw - 28px) / 2.1);max-width:calc((100vw - 28px) / 2.1)}
-  .ebook-track{gap:8px;padding:0 10px}
+  .ebook-card{flex:0 0 calc((100vw - 14px) / 2.04);width:calc((100vw - 14px) / 2.04);max-width:calc((100vw - 14px) / 2.04)}
+  .ebook-track{gap:5px;padding:0 4px}
   .ebook-section{padding:8px 0}
   .nc-title{font-size:.62rem!important;letter-spacing:0}
-  .p-name-bar span{font-size:.54rem!important}
-  .ebook-btn{font-size:.62rem;padding:8px}
-  .p-badge{font-size:.42rem;padding:2px 6px}
+  .p-name-bar span{font-size:.56rem!important}
+  .ebook-btn{font-size:.6rem;padding:9px 6px}
+  .p-badge{font-size:.44rem;padding:3px 7px}
 }
 
 /* ARROW BUTTONS — ESCONDIDAS */
@@ -1848,7 +1876,7 @@ function makeAutoCover(course, gi, isSoon) {
     // Botão CTA
     + '<rect x="16" y="346" width="268" height="28" rx="5" fill="url(#'+pfx+'c)" opacity=".15"/>'
     + '<rect x="16" y="346" width="268" height="28" rx="5" fill="none" stroke="'+t.c1+'" stroke-width=".7" opacity=".5"/>'
-    + '<text x="150" y="365" text-anchor="middle" fill="'+t.c2+'" font-family="Arial" font-weight="800" font-size="9.5" letter-spacing="2">'+(isSoon?'⏳ EM BREVE':'▶ ACESSAR CURSO')+'</text>'
+    + '<text x="150" y="365" text-anchor="middle" fill="'+t.c2+'" font-family="Arial" font-weight="800" font-size="9.5" letter-spacing="2">'+(isSoon?'⏳ EM BREVE':'▶ ASSISTIR AGORA')+'</text>'
     // Cantos decorativos
     + '<path d="M0,0 L20,0 L0,20 Z" fill="'+t.c1+'" opacity=".2"/>'
     + '<path d="M300,0 L280,0 L300,20 Z" fill="'+t.c2+'" opacity=".15"/>'
@@ -1968,7 +1996,7 @@ function buildEbooks() {
     var customCover = c.coverImg || makeSVGCover(c.id) || makeAutoCover(c, gi);
     var badgeTxt = isFree ? 'GR&Aacute;TIS' : (c.hours + 'h');
     var btnCls = isFree ? 'btn-free' : 'btn-paid';
-    var btnTxt = isFree ? '&#127873; Acesse Gr&aacute;tis' : 'Acessar Curso';
+    var btnTxt = isFree ? '&#9654; Assistir Gr&aacute;tis' : '&#9654; Assistir Agora';
     var h = '<div class="ebook-card" data-file="' + c.file + '" style="--glow:' + GLOW[gi] + '">';
     h += '<div class="ebook-cover">';
     h += '<span class="p-badge ' + (isFree ? 'pfree' : 'ppaid') + '">' + badgeTxt + '</span>';
