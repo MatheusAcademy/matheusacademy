@@ -544,9 +544,27 @@ var MA_COURSES = [
     color: '#1b1b3a',
     addedTs: 1775757694403,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/geoq.jpg',
+    id: 'geoq',
+    name: 'Curso: Guerra Econômica — China x EUA',
+    desc: 'Do básico ao avançado: a guerra comercial, tecnológica e monetária entre as duas maiores economias do mundo. Tarifas, semicondutores, terras raras, desdolarização, Belt and Road, IA, Taiwan e o futuro da ordem econômica global.',
+    file: 'curso-guerra-economica-china-eua.html',
+    cat: 'Geopolítica',
+    modules: 5,
+    topics: 20,
+    hours: 3,
+    quizzes: 1,
+    salt: 'GE_HENRY_2026_MASTER',
+    ak: 'ge_auth',
+    storagePrefix: 'ge_',
+    icon: '📰',
+    color: '#c41e3a',
+    addedTs: 1775773233160,
+    active: true
   }
 ];
-
 var MA_CATS = [
   /* ═══ 1. NOTÍCIAS (sempre primeiro) ═══ */
   {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?','Crise Hídrica no Brasil 2026','Guerra Rússia x Ucrânia: O Desfecho','Novo Acordo Comercial BRICS','Colapso do Dólar: Mito ou Realidade?'], isSpecial:true},
