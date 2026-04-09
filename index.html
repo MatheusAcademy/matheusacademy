@@ -475,33 +475,63 @@ body {
   display:none !important;
 }
 
-/* Media queries para seções normais */
+/* ══════════════════════════════════════════════════════════════════════════════
+   MEDIA QUERIES - RESPONSIVO PARA TODOS OS DISPOSITIVOS
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* DESKTOP GRANDE (1600px+) */
 @media(min-width:1600px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
-    width:calc((100vw - 140px) * 0.42) !important;
-    max-width:38vw !important;
+    width:280px !important;
+    max-width:280px !important;
   }
+  .row-inner{gap:16px !important;padding:0 24px !important}
+  .ebook-card{flex:0 0 280px;max-width:280px}
+  .ebook-track{gap:16px;padding:0 24px}
 }
 
+/* DESKTOP (1200px - 1599px) */
 @media(min-width:1200px) and (max-width:1599px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
-    width:calc((100vw - 120px) * 0.42) !important;
-    max-width:38vw !important;
+    width:240px !important;
+    max-width:240px !important;
   }
+  .row-inner{gap:14px !important;padding:0 20px !important}
+  .ebook-card{flex:0 0 240px;max-width:240px}
+  .ebook-track{gap:14px;padding:0 20px}
 }
 
+/* TABLET (768px - 1199px) */
 @media(min-width:768px) and (max-width:1199px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
-    width:calc((100vw - 60px) * 0.42) !important;
-    max-width:40vw !important;
+    width:200px !important;
+    max-width:200px !important;
   }
+  .row-inner{gap:12px !important;padding:0 16px !important}
+  .ebook-card{flex:0 0 200px;max-width:200px}
+  .ebook-track{gap:12px;padding:0 16px}
 }
 
-@media(max-width:767px){
+/* MOBILE GRANDE (481px - 767px) */
+@media(min-width:481px) and (max-width:767px){
   .cat-sec:not(:has(.cat-sec-title.special)) .cc{
-    width:calc((100vw - 28px) * 0.42) !important;
-    max-width:45vw !important;
+    width:calc(46% - 5px) !important;
+    max-width:46vw !important;
   }
+  .row-inner{gap:10px !important;padding:0 12px !important}
+  .ebook-card{flex:0 0 calc(46% - 5px);max-width:calc(46% - 5px)}
+  .ebook-track{gap:10px;padding:0 12px}
+}
+
+/* MOBILE (até 480px) */
+@media(max-width:480px){
+  .cat-sec:not(:has(.cat-sec-title.special)) .cc{
+    width:calc(46% - 4px) !important;
+    max-width:47vw !important;
+  }
+  .row-inner{gap:8px !important;padding:0 10px !important}
+  .ebook-card{flex:0 0 calc(47% - 4px);max-width:calc(47% - 4px)}
+  .ebook-track{gap:8px;padding:0 10px}
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -643,7 +673,6 @@ body {
   .ebook-card{flex:0 0 calc(50% - 8px)}
   .arr-btn{width:32px;height:32px;font-size:1rem}
 }
-@media(min-width:481px) and (max-width:767px){.ebook-card{flex:0 0 calc(50% - 8px)}.ebook-section{padding:16px 48px}}
 
 /* ══ MA TOPBAR GLOBAL ══ */
 .ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(8,8,15,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd,#1e1e32);display:flex;align-items:center;padding:0 14px;gap:8px;z-index:9999;font-family:var(--font,'Outfit',sans-serif)}
@@ -971,73 +1000,13 @@ body {
   display: none !important;
 }
 
-/* ── DESKTOP GRANDE (>1400px): 6 cards por linha ── */
-@media (min-width: 1400px) {
-  .cc {
-    min-width: calc((min(100vw,1600px) - 130px) / 6.15) !important;
-    max-width: calc((min(100vw,1600px) - 130px) / 6.15) !important;
-  }
-}
-
-/* ── DESKTOP MÉDIO (1024–1399px): 6 cards por linha ── */
-@media (min-width: 1024px) and (max-width: 1399px) {
-  .cc {
-    min-width: calc((100vw - 120px) / 6.15) !important;
-    max-width: calc((100vw - 120px) / 6.15) !important;
-  }
-}
-
-/* ── TABLET (768–1023px): 4 cards por linha ── */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .cc {
-    min-width: calc((100vw - 80px) / 4.15) !important;
-    max-width: calc((100vw - 80px) / 4.15) !important;
-  }
-}
-
-/* ── MOBILE MÉDIO (481–767px): 3 cards por linha ── */
-@media (min-width: 481px) and (max-width: 767px) {
-  .cc {
-    min-width: calc((100vw - 60px) / 3.1) !important;
-    max-width: calc((100vw - 60px) / 3.1) !important;
-  }
-}
-
-/* ── MOBILE PEQUENO (≤480px): 2 cards por linha ── */
-@media (max-width: 480px) {
-  .cc {
-    min-width: calc((100vw - 40px) / 2.1) !important;
-    max-width: calc((100vw - 40px) / 2.1) !important;
-  }
-  .cc-img {
-    aspect-ratio: 3/4 !important;
-    height: auto !important;
-  }
-  .cc-body {
-    padding: 8px 10px !important;
-    min-height: 56px !important;
-  }
-  .cc-body h4 {
-    font-size: 0.62rem !important;
-    line-height: 1.2 !important;
-  }
-  .section-hdr h3 {
-    font-size: 0.95rem !important;
-  }
-  .cat-sec-title {
-    font-size: 0.9rem !important;
-  }
-  .row-inner {
-    padding: 8px 12px 14px !important;
-    gap: 8px !important;
-  }
-}
-
 /* ── SEÇÃO "Todos os Cursos" header ── */
 .sec h3 {
   font-size: 1.1rem !important;
   font-weight: 700 !important;
   font-family: 'Outfit', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 .sec p {
   display: none !important;
@@ -1111,6 +1080,30 @@ body {
   border: 0.5px solid var(--brd) !important;
   margin: 0 16px !important;
   scroll-snap-align: center !important;
+}
+
+/* Desktop: notícias menores */
+@media(min-width:1200px){
+  .cat-sec:has(.cat-sec-title.special) .cc {
+    width: 400px !important;
+    max-width: 400px !important;
+    margin: 0 12px !important;
+  }
+  .cat-sec:has(.cat-sec-title.special) .row-inner {
+    padding: 0 20px !important;
+  }
+}
+
+/* Tablet: notícias médias */
+@media(min-width:768px) and (max-width:1199px){
+  .cat-sec:has(.cat-sec-title.special) .cc {
+    width: 320px !important;
+    max-width: 320px !important;
+    margin: 0 10px !important;
+  }
+  .cat-sec:has(.cat-sec-title.special) .row-inner {
+    padding: 0 16px !important;
+  }
 }
 
 /* ── IMAGEM NOTÍCIAS ── */
@@ -4512,8 +4505,4 @@ function _extendTabs(){
     +'<div class="mae-rev-history"><div class="mae-rev-hist-title">Histórico de Revisões</div><div id="maeRevHistory"></div></div>'
     +'</div>'
   ];
-  paneHtml.forEach(function(html){
-    var div=document.createElement('div');div.innerHTML=html;
-    while(div.firstChild)body.appendChild(div.firstChild);
-  });
-  //
+  paneHtml.fo
