@@ -392,6 +392,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775689346243,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ml.jpg',
+    id: 'ml',
+    name: 'Curso: MEI Lucrativo – Do Zero ao Primeiro Lucro',
+    desc: 'Aprenda a estruturar um MEI rentável, desde a formalização até gerar seus primeiros lucros consistentes.',
+    file: 'mei-lucrativo-curso.html',
+    cat: 'Negócios / Empresas',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 9,
+    salt: 'ML_HENRY_2026_MASTER',
+    ak: 'ml_auth',
+    storagePrefix: 'ml_',
+    icon: '🎓',
+    color: '#2ECC71',
+    addedTs: 1775746804118,
+    active: true
   }
 ];
 var MA_CATS = [
