@@ -1761,6 +1761,25 @@ var MA_COURSES = [
     color: '#e76f51',
     addedTs: 1775832795864,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/bv.jpg',
+    id: 'bv',
+    name: 'Como Investir na Bolsa de Valores',
+    desc: 'Aprenda como funciona o mercado de ações, análise de empresas, montagem de carteira, perfil de investidor, estratégias de longo prazo e os cuidados necessários para investir com mais consciência.',
+    file: 'bolsa-valores.html',
+    cat: 'Finanças & Economia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'BV_HENRY_2026_MASTER',
+    ak: 'bv_auth',
+    storagePrefix: 'bv_',
+    icon: '💰',
+    color: '#006d77',
+    addedTs: 1775832798441,
+    active: true
   }
 ];
 var MA_CATS = [
