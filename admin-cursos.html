@@ -5581,27 +5581,416 @@ function listarCategorias(){
   var cats=typeof MA_CATS!=='undefined'?MA_CATS:[];
   var courses=typeof MA_COURSES!=='undefined'?MA_COURSES.filter(function(c){return c.active!==false;}):[];
   var h='';
+  
+  // Botão para adicionar nova categoria
+  h+='<div style="margin-bottom:16px;">';
+  h+='<button onclick="abrirFormAdicionarCategoria()" class="btns" style="width:100%;background:rgba(59,130,246,.2);border-color:rgba(59,130,246,.4);color:var(--acc2);font-weight:700">➕ ADICIONAR NOVA SESSÃO</button>';
+  h+='</div>';
+  
+  h+='<div id="form-add-cat" style="display:none;background:var(--sf);border:1px solid var(--brd);border-radius:10px;padding:14px;margin-bottom:16px">';
+  h+='<div style="font-size:11px;font-weight:700;color:var(--t2);margin-bottom:10px;text-transform:uppercase">Adicionar Nova Sessão</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">';
+  h+='<input type="text" id="cat-nome-novo" placeholder="Nome da Sessão" style="border-radius:6px;padding:8px;font-size:12px">';
+  h+='<input type="text" id="cat-icon-novo" placeholder="Ícone (ex: 🌍)" style="border-radius:6px;padding:8px;font-size:12px">';
+  h+='</div>';
+  h+='<textarea id="cat-desc-novo" placeholder="Descrição da Sessão..." style="border-radius:6px;padding:8px;font-size:12px;min-height:50px;margin-bottom:10px"></textarea>';
+  h+='<div style="display:flex;gap:8px">';
+  h+='<button onclick="salvarNovaCategoria()" class="btns" style="flex:1;background:rgba(34,197,94,.2);border-color:rgba(34,197,94,.4);color:#86efac;font-weight:700">✅ SALVAR</button>';
+  h+='<button onclick="fecharFormAdicionarCategoria()" class="btns" style="flex:1;background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.4);color:#fca5a5;font-weight:700">❌ CANCELAR</button>';
+  h+='</div>';
+  h+='</div>';
+  
   cats.forEach(function(cat,i){
     var cc=courses.filter(function(c){return c.cat===cat.name;});
     var soonCount=(cat.soon||[]).length;
     var statusColor=cc.length>0?'#22c55e':'#f59e0b';
     h+='<div style="background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:14px;margin-bottom:8px;border-left:3px solid '+statusColor+'">';
-    h+='<div style="display:flex;justify-content:space-between;align-items:center">';
+    h+='<div style="display:flex;justify-content:space-between;align-items:flex-start">';
+    h+='<div style="flex:1">';
     h+='<div style="font-size:13px;font-weight:700;color:var(--txt)">#'+(i+1)+' '+cat.name+'</div>';
-    h+='<div style="display:flex;gap:6px">';
-    if(cc.length)h+='<span style="font-size:9px;background:rgba(34,197,94,.15);color:#86efac;padding:2px 8px;border-radius:4px;font-weight:700">'+cc.length+' ativo'+(cc.length>1?'s':'')+'</span>';
-    if(soonCount)h+='<span style="font-size:9px;background:rgba(245,158,11,.15);color:#fcd34d;padding:2px 8px;border-radius:4px;font-weight:700">'+soonCount+' em breve</span>';
-    if(!cc.length&&!soonCount)h+='<span style="font-size:9px;background:rgba(239,68,68,.15);color:#fca5a5;padding:2px 8px;border-radius:4px;font-weight:700">Vazia</span>';
-    h+='</div></div>';
     h+='<div style="font-size:10px;color:var(--t3);margin-top:4px">'+cat.sub+'</div>';
+    h+='</div>';
+    h+='<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">';
+    if(cc.length)h+='<span style="font-size:9px;background:rgba(34,197,94,.15);color:#86efac;padding:3px 8px;border-radius:4px;font-weight:700">'+cc.length+' ativo'+(cc.length>1?'s':'')+'</span>';
+    if(soonCount)h+='<span style="font-size:9px;background:rgba(245,158,11,.15);color:#fcd34d;padding:3px 8px;border-radius:4px;font-weight:700">'+soonCount+' em breve</span>';
+    if(!cc.length&&!soonCount)h+='<span style="font-size:9px;background:rgba(239,68,68,.15);color:#fca5a5;padding:3px 8px;border-radius:4px;font-weight:700">Vazia</span>';
+    h+='</div>';
+    h+='</div>';
+    
     if(cc.length){h+='<div style="margin-top:8px">';cc.forEach(function(c){h+='<span style="display:inline-block;font-size:10px;background:rgba(59,130,246,.1);color:#93c5fd;padding:3px 8px;border-radius:5px;margin:2px 3px 2px 0">'+(c.icon||'📚')+' '+c.name+'</span>';});h+='</div>';}
     if(cat.soon&&cat.soon.length){h+='<div style="margin-top:6px">';cat.soon.forEach(function(s){h+='<span style="display:inline-block;font-size:10px;background:rgba(245,158,11,.08);color:#fcd34d;padding:3px 8px;border-radius:5px;margin:2px 3px 2px 0">🔜 '+s+'</span>';});h+='</div>';}
+    
+    // Botões de ação
+    h+='<div style="margin-top:10px;display:flex;gap:6px;border-top:1px solid var(--brd);padding-top:10px">';
+    h+='<button onclick="abrirFormEditarCategoria('+i+')" class="btns" style="flex:1;background:rgba(96,165,250,.12);border-color:rgba(96,165,250,.3);color:var(--acc2);font-size:11px">✏️ EDITAR</button>';
+    h+='<button onclick="abrirConfirmDelete('+i+')" class="btns" style="flex:1;background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#fca5a5;font-size:11px">🗑️ DELETAR</button>';
+    h+='</div>';
     h+='</div>';
   });
+  
+  // Modal de edição
+  h+='<div id="modal-edit-cat" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center">';
+  h+='<div style="background:var(--sf);border:1px solid var(--brd);border-radius:12px;padding:20px;max-width:400px;width:90%;max-height:80vh;overflow-y:auto">';
+  h+='<div style="font-size:14px;font-weight:700;color:var(--txt);margin-bottom:14px">✏️ Editar Sessão</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">';
+  h+='<input type="text" id="cat-nome-edit" placeholder="Nome da Sessão" style="border-radius:6px;padding:8px;font-size:12px;background:var(--card);border:1px solid var(--brd);color:var(--txt)">';
+  h+='<input type="text" id="cat-icon-edit" placeholder="Ícone (ex: 🌍)" style="border-radius:6px;padding:8px;font-size:12px;background:var(--card);border:1px solid var(--brd);color:var(--txt)">';
+  h+='</div>';
+  h+='<textarea id="cat-desc-edit" placeholder="Descrição da Sessão..." style="border-radius:6px;padding:8px;font-size:12px;min-height:60px;margin-bottom:10px;background:var(--card);border:1px solid var(--brd);color:var(--txt)"></textarea>';
+  h+='<div style="display:flex;gap:8px">';
+  h+='<button onclick="salvarEdicaoCategoria()" class="btns" style="flex:1;background:rgba(34,197,94,.2);border-color:rgba(34,197,94,.4);color:#86efac;font-weight:700">💾 SALVAR</button>';
+  h+='<button onclick="fecharModalEditarCategoria()" class="btns" style="flex:1;background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.4);color:#fca5a5;font-weight:700">❌ CANCELAR</button>';
+  h+='</div>';
+  h+='</div>';
+  h+='</div>';
+  
+  // Modal de confirmação de deleção
+  h+='<div id="modal-confirm-delete" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1001;align-items:center;justify-content:center">';
+  h+='<div style="background:var(--sf);border:1px solid var(--brd);border-radius:12px;padding:20px;max-width:450px;width:90%">';
+  h+='<div style="font-size:14px;font-weight:700;color:#fca5a5;margin-bottom:10px">⚠️ DELETAR SESSÃO</div>';
+  h+='<div id="confirm-msg" style="font-size:12px;color:var(--t2);margin-bottom:14px;line-height:1.6"></div>';
+  h+='<div id="redirect-select-container" style="display:none;margin-bottom:14px">';
+  h+='<label style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;display:block;margin-bottom:6px">Redirecionar cursos para:</label>';
+  h+='<select id="redirect-select" style="width:100%;border-radius:6px;padding:8px;font-size:12px;background:var(--card);border:1px solid var(--brd);color:var(--txt)"></select>';
+  h+='</div>';
+  h+='<div style="display:flex;gap:8px">';
+  h+='<button onclick="confirmarDeleteCategoria()" class="btns" style="flex:1;background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.4);color:#fca5a5;font-weight:700">🗑️ DELETAR</button>';
+  h+='<button onclick="fecharConfirmDelete()" class="btns" style="flex:1;background:rgba(96,165,250,.12);border-color:rgba(96,165,250,.3);color:var(--acc2);font-weight:700">❌ CANCELAR</button>';
+  h+='</div>';
+  h+='</div>';
+  h+='</div>';
+  
   d.innerHTML=h;
 }
 
-/* 18. Exportar Alunos CSV */
+// ========== GERENCIAMENTO COMPLETO DE CATEGORIAS ==========
+
+var _catEditIndex = -1;
+var _catDeleteIndex = -1;
+
+function abrirFormAdicionarCategoria() {
+  document.getElementById('form-add-cat').style.display = 'block';
+  el('cat-nome-novo').focus();
+}
+
+function fecharFormAdicionarCategoria() {
+  document.getElementById('form-add-cat').style.display = 'none';
+  el('cat-nome-novo').value = '';
+  el('cat-icon-novo').value = '';
+  el('cat-desc-novo').value = '';
+}
+
+function salvarNovaCategoria() {
+  var nome = el('cat-nome-novo').value.trim();
+  var icon = el('cat-icon-novo').value.trim() || '📚';
+  var desc = el('cat-desc-novo').value.trim();
+  
+  if (!nome) {
+    alert('❌ Por favor, digite o nome da sessão');
+    return;
+  }
+  
+  var cats = typeof MA_CATS !== 'undefined' ? MA_CATS : [];
+  
+  // Verificar se já existe uma categoria com este nome
+  if (cats.some(function(c) { return c.name === nome; })) {
+    alert('❌ Já existe uma sessão com este nome!');
+    return;
+  }
+  
+  // Criar novo objeto de categoria
+  var novaCat = {
+    name: nome,
+    sub: desc,
+    icon: icon,
+    soon: []
+  };
+  
+  cats.push(novaCat);
+  
+  // Atualizar no courses.js
+  atualizarMACATS(cats, function(sucesso) {
+    if (sucesso) {
+      showRes('catmgr-result', 'ok', '✅ Sessão \"' + nome + '\" adicionada com sucesso!');
+      fecharFormAdicionarCategoria();
+      setTimeout(function() { listarCategorias(); }, 1500);
+    } else {
+      alert('❌ Erro ao salvar a nova sessão!');
+    }
+  });
+}
+
+function abrirFormEditarCategoria(index) {
+  var cats = typeof MA_CATS !== 'undefined' ? MA_CATS : [];
+  if (index < 0 || index >= cats.length) return;
+  
+  _catEditIndex = index;
+  var cat = cats[index];
+  
+  el('cat-nome-edit').value = cat.name || '';
+  el('cat-icon-edit').value = cat.icon || '📚';
+  el('cat-desc-edit').value = cat.sub || '';
+  
+  document.getElementById('modal-edit-cat').style.display = 'flex';
+  el('cat-nome-edit').focus();
+}
+
+function fecharModalEditarCategoria() {
+  document.getElementById('modal-edit-cat').style.display = 'none';
+  _catEditIndex = -1;
+}
+
+function salvarEdicaoCategoria() {
+  if (_catEditIndex < 0) return;
+  
+  var cats = typeof MA_CATS !== 'undefined' ? MA_CATS : [];
+  var nome = el('cat-nome-edit').value.trim();
+  var icon = el('cat-icon-edit').value.trim() || '📚';
+  var desc = el('cat-desc-edit').value.trim();
+  
+  if (!nome) {
+    alert('❌ Por favor, digite o nome da sessão');
+    return;
+  }
+  
+  // Verificar se o novo nome já existe em outra categoria
+  if (cats.some(function(c, i) { return i !== _catEditIndex && c.name === nome; })) {
+    alert('❌ Já existe outra sessão com este nome!');
+    return;
+  }
+  
+  cats[_catEditIndex].name = nome;
+  cats[_catEditIndex].icon = icon;
+  cats[_catEditIndex].sub = desc;
+  
+  atualizarMACATS(cats, function(sucesso) {
+    if (sucesso) {
+      // Atualizar nomes de categorias em MA_COURSES também
+      atualizarNomesCategoriaEmCursos(cats[_catEditIndex], function() {
+        showRes('catmgr-result', 'ok', '✅ Sessão atualizada com sucesso!');
+        fecharModalEditarCategoria();
+        setTimeout(function() { listarCategorias(); }, 1500);
+      });
+    } else {
+      alert('❌ Erro ao atualizar a sessão!');
+    }
+  });
+}
+
+function abrirConfirmDelete(index) {
+  _catDeleteIndex = index;
+  var cats = typeof MA_CATS !== 'undefined' ? MA_CATS : [];
+  var courses = typeof MA_COURSES !== 'undefined' ? MA_COURSES.filter(function(c) { return c.active !== false; }) : [];
+  var catName = cats[index].name;
+  var cursosNaCategoria = courses.filter(function(c) { return c.cat === catName; });
+  
+  var msg = '⚠️ Você está prestes a deletar a sessão <strong>' + catName + '</strong>';
+  
+  var redirectContainer = document.getElementById('redirect-select-container');
+  if (cursosNaCategoria.length > 0) {
+    msg += '<br><br>Esta sessão contém <strong>' + cursosNaCategoria.length + ' curso(s)</strong>:<br>';
+    cursosNaCategoria.forEach(function(c) {
+      msg += '• ' + c.name + '<br>';
+    });
+    msg += '<br>Você precisa informar para qual sessão esses cursos devem ser movidos:';
+    redirectContainer.style.display = 'block';
+    
+    // Popular dropdown com outras categorias
+    var select = el('redirect-select');
+    select.innerHTML = '';
+    cats.forEach(function(c, i) {
+      if (i !== _catDeleteIndex) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = c.name;
+        select.appendChild(opt);
+      }
+    });
+  } else {
+    msg += '<br><br>Esta sessão está <strong>vazia</strong> e pode ser deletada sem risco.';
+    redirectContainer.style.display = 'none';
+  }
+  
+  el('confirm-msg').innerHTML = msg;
+  document.getElementById('modal-confirm-delete').style.display = 'flex';
+}
+
+function fecharConfirmDelete() {
+  document.getElementById('modal-confirm-delete').style.display = 'none';
+  _catDeleteIndex = -1;
+}
+
+function confirmarDeleteCategoria() {
+  if (_catDeleteIndex < 0) return;
+  
+  var cats = typeof MA_CATS !== 'undefined' ? MA_CATS : [];
+  var courses = typeof MA_COURSES !== 'undefined' ? MA_COURSES : [];
+  var catADeletar = cats[_catDeleteIndex];
+  var cursosNaCategoria = courses.filter(function(c) { return c.cat === catADeletar.name; });
+  
+  var novoIndCat = -1;
+  
+  if (cursosNaCategoria.length > 0) {
+    novoIndCat = parseInt(el('redirect-select').value);
+    if (novoIndCat < 0 || novoIndCat >= cats.length || novoIndCat === _catDeleteIndex) {
+      alert('❌ Selecione uma sessão válida para redirecionar os cursos!');
+      return;
+    }
+  }
+  
+  // Redirecionar cursos se necessário
+  if (novoIndCat >= 0) {
+    var novaCatNome = cats[novoIndCat].name;
+    cursosNaCategoria.forEach(function(c) {
+      c.cat = novaCatNome;
+    });
+    // Atualizar MA_COURSES
+    atualizarMAcoURSES(courses);
+  }
+  
+  // Deletar a categoria
+  cats.splice(_catDeleteIndex, 1);
+  
+  atualizarMACATS(cats, function(sucesso) {
+    if (sucesso) {
+      var msg = '✅ Sessão deletada com sucesso!';
+      if (cursosNaCategoria.length > 0) {
+        msg += ' ' + cursosNaCategoria.length + ' curso(s) redirecionado(s).';
+      }
+      showRes('catmgr-result', 'ok', msg);
+      fecharConfirmDelete();
+      setTimeout(function() { listarCategorias(); }, 1500);
+    } else {
+      alert('❌ Erro ao deletar a sessão!');
+    }
+  });
+}
+
+function atualizarMACATS(novasCats, callback) {
+  var ghToken = localStorage.getItem('gh_token');
+  if (!ghToken) {
+    alert('❌ Token GitHub não configurado');
+    return;
+  }
+  
+  // Buscar conteúdo atual do courses.js
+  fetch('https://api.github.com/repos/MatheusAcademy/matheusacademy/contents/courses.js', {
+    headers: { 'Authorization': 'token ' + ghToken }
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    var content = atob(data.content);
+    
+    // Encontrar e substituir a seção de MA_CATS
+    var markerPos = content.indexOf('\\nvar MA_CATS');
+    if (markerPos === -1) {
+      alert('❌ Marcador MA_CATS não encontrado no courses.js');
+      callback(false);
+      return;
+    }
+    
+    // Extrair tudo antes de MA_CATS
+    var beforeMarker = content.substring(0, markerPos + 1);
+    var afterMarkerStart = content.indexOf(';', markerPos);
+    var afterMarker = afterMarkerStart !== -1 ? content.substring(afterMarkerStart) : ';';
+    
+    // Gerar novo conteúdo de MA_CATS
+    var novasCatsStr = 'var MA_CATS = ' + JSON.stringify(novasCats, null, 2);
+    
+    var novoContent = beforeMarker + novasCatsStr + afterMarker;
+    
+    // Enviar para GitHub
+    fetch('https://api.github.com/repos/MatheusAcademy/matheusacademy/contents/courses.js', {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'token ' + ghToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: '[Admin] Atualizar categorias: ' + new Date().toLocaleString('pt-BR'),
+        content: btoa(novoContent),
+        sha: data.sha
+      })
+    })
+    .then(function(res) {
+      if (res.ok) {
+        // Recarregar a página para refletir mudanças
+        setTimeout(function() { location.reload(); }, 500);
+        callback(true);
+      } else {
+        callback(false);
+      }
+    })
+    .catch(function(e) {
+      console.error('Erro:', e);
+      callback(false);
+    });
+  })
+  .catch(function(e) {
+    console.error('Erro:', e);
+    callback(false);
+  });
+}
+
+function atualizarMAcoURSES(novosCourses) {
+  // Similar a atualizarMACATS, mas para cursos
+  var ghToken = localStorage.getItem('gh_token');
+  if (!ghToken) return;
+  
+  fetch('https://api.github.com/repos/MatheusAcademy/matheusacademy/contents/courses.js', {
+    headers: { 'Authorization': 'token ' + ghToken }
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    var content = atob(data.content);
+    
+    // Encontrar e substituir a seção de MA_COURSES
+    var markerPos = content.indexOf('\\nvar MA_COURSES');
+    if (markerPos === -1) return;
+    
+    var beforeMarker = content.substring(0, markerPos + 1);
+    var afterMarkerStart = content.indexOf('];', markerPos);
+    var afterMarker = afterMarkerStart !== -1 ? content.substring(afterMarkerStart + 1) : '';
+    
+    var novosCourseStr = 'var MA_COURSES = ' + JSON.stringify(novosCourses, null, 2);
+    
+    var novoContent = beforeMarker + novosCourseStr + afterMarker;
+    
+    fetch('https://api.github.com/repos/MatheusAcademy/matheusacademy/contents/courses.js', {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'token ' + ghToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: '[Admin] Atualizar categorias de cursos',
+        content: btoa(novoContent),
+        sha: data.sha
+      })
+    })
+    .catch(function(e) { console.error('Erro:', e); });
+  })
+  .catch(function(e) { console.error('Erro:', e); });
+}
+
+function atualizarNomesCategoriaEmCursos(catAtualizada, callback) {
+  // Atualiza todos os cursos que referem à categoria antiga para usar o novo nome
+  var courses = typeof MA_COURSES !== 'undefined' ? MA_COURSES : [];
+  var algumaMudanca = false;
+  
+  courses.forEach(function(c) {
+    if (c.cat === catAtualizada.name) {
+      algumaMudanca = true;
+      c.cat = catAtualizada.name; // Já é o novo nome
+    }
+  });
+  
+  if (algumaMudanca) {
+    atualizarMAcoURSES(courses);
+  }
+  
+  if (callback) callback();
+
 function exportarCSV(){
   if(typeof firebase==='undefined'||!firebase.firestore){alert('Firebase não disponível');return;}
   firebase.firestore().collection('users').get().then(function(snap){
