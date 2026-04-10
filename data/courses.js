@@ -1419,6 +1419,25 @@ var MA_COURSES = [
     color: '#264653',
     addedTs: 1775832747770,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ie.jpg',
+    id: 'ie',
+    name: 'Inteligência Emocional na Prática',
+    desc: 'Curso sobre controle emocional, autoconsciência, empatia, comunicação e equilíbrio em situações difíceis.',
+    file: '11-inteligencia-emocional.html',
+    cat: 'Psicologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'IE_HENRY_2026_MASTER',
+    ak: 'ie_auth',
+    storagePrefix: 'ie_',
+    icon: '🧩',
+    color: '#3f37c9',
+    addedTs: 1775832749697,
+    active: true
   }
 ];
 var MA_CATS = [
