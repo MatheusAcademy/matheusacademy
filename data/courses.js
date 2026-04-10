@@ -753,6 +753,25 @@ var MA_COURSES = [
     color: '#370617',
     addedTs: 1775830988380,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mf.jpg',
+    id: 'mf',
+    name: 'Como a Mente Funciona: Emoções, Memória e Decisão',
+    desc: 'Explica processos mentais fundamentais para entender por que as pessoas sentem, pensam e agem como agem.',
+    file: '12-como-mente-funciona.html',
+    cat: 'Psicologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'MF_HENRY_2026_MASTER',
+    ak: 'mf_auth',
+    storagePrefix: 'mf_',
+    icon: '🧩',
+    color: '#4361ee',
+    addedTs: 1775830991257,
+    active: true
   }
 ];
 var MA_CATS = [
