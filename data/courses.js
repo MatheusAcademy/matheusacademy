@@ -1095,6 +1095,25 @@ var MA_COURSES = [
     color: '#d62828',
     addedTs: 1775831052985,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ca.jpg',
+    id: 'ca',
+    name: 'Grandes Civilizações Antigas',
+    desc: 'Explora Egito, Mesopotâmia, Grécia, Roma e outras civilizações que moldaram a base do mundo ocidental e oriental.',
+    file: '26-civilizacoes-antigas.html',
+    cat: 'História',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'CA_HENRY_2026_MASTER',
+    ak: 'ca_auth',
+    storagePrefix: 'ca_',
+    icon: '📜',
+    color: '#c9a227',
+    addedTs: 1775831057882,
+    active: true
   }
 ];
 var MA_CATS = [
