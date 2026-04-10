@@ -1133,6 +1133,25 @@ var MA_COURSES = [
     color: '#d62828',
     addedTs: 1775831070038,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/dc.jpg',
+    id: 'dc',
+    name: 'Direito do Consumidor Descomplicado',
+    desc: 'Curso para mostrar os principais direitos do consumidor, compras, garantias, cobranças indevidas, contratos e problemas comuns.',
+    file: '13-direito-consumidor.html',
+    cat: 'Direito & Cidadania',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'DC_HENRY_2026_MASTER',
+    ak: 'dc_auth',
+    storagePrefix: 'dc_',
+    icon: '⚖️',
+    color: '#006d77',
+    addedTs: 1775831072358,
+    active: true
   }
 ];
 var MA_CATS = [
