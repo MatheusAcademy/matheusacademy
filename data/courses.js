@@ -1514,6 +1514,25 @@ var MA_COURSES = [
     color: '#9b2226',
     addedTs: 1775832760166,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cb.jpg',
+    id: 'cb',
+    name: 'Casamento Blindado: Construindo uma União Forte e Duradoura',
+    desc: 'Curso sobre comunicação, respeito, confiança, parceria e prevenção de crises dentro do casamento.',
+    file: '37-casamento-blindado.html',
+    cat: 'Família & Relacionamentos',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'CB_HENRY_2026_MASTER',
+    ak: 'cb_auth',
+    storagePrefix: 'cb_',
+    icon: '👨‍👩‍👧‍👦',
+    color: '#e63946',
+    addedTs: 1775832762741,
+    active: true
   }
 ];
 var MA_CATS = [
