@@ -5154,5 +5154,209 @@ on:.2s}
 })();
 </script>
 
+<!-- ════════════════════════════════════════════════════════════════════════════════ -->
+<!-- OVERLAY LOGO - MATHEUS ACADEMY - VERSÃO 1 FINAL -->
+<!-- Logo Centralizada + 20% Menor -->
+<!-- ════════════════════════════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  // ─── CONFIGURAÇÃO DO OVERLAY ───
+  const OVERLAY_CONFIG = {
+    faixaPreta: {
+      width: '179px',
+      height: '34px',
+      background: '#000000',
+      borderRadius: '8px',
+      boxShadow: '0 6px 24px rgba(0,0,0,0.8)',
+      zIndex: '2'
+    },
+    logo: {
+      M: {
+        fontSize: '20.8px',
+        fontWeight: '900',
+        color: '#FFFFFF',
+        textShadow: '0 2.4px 9.6px rgba(0,0,0,0.8)',
+        minWidth: '22px'
+      },
+      separator: {
+        fontSize: '22.4px',
+        color: '#4B8BFF',
+        textShadow: '0 0 12px rgba(75, 139, 255, 1)'
+      },
+      academy: {
+        fontSize: '8.8px',
+        fontWeight: '900',
+        color: '#4B8BFF',
+        letterSpacing: '1.44px',
+        textShadow: '0 0 12px rgba(75, 139, 255, 1)'
+      }
+    }
+  };
+
+  // ─── CRIAR OVERLAY HTML ───
+  function createLogoOverlay() {
+    const container = document.createElement('div');
+    container.className = 'ma-logo-overlay';
+    container.style.cssText = `
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4.8px;
+      height: 34px;
+      z-index: 3;
+    `;
+
+    // M
+    const m = document.createElement('div');
+    m.textContent = 'M';
+    m.style.cssText = `
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-weight: 900;
+      font-size: ${OVERLAY_CONFIG.logo.M.fontSize};
+      color: ${OVERLAY_CONFIG.logo.M.color};
+      text-shadow: ${OVERLAY_CONFIG.logo.M.textShadow};
+      line-height: 1;
+      min-width: ${OVERLAY_CONFIG.logo.M.minWidth};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
+
+    // |
+    const separator = document.createElement('div');
+    separator.textContent = '|';
+    separator.style.cssText = `
+      font-family: Arial, sans-serif;
+      font-weight: 300;
+      font-size: ${OVERLAY_CONFIG.logo.separator.fontSize};
+      color: ${OVERLAY_CONFIG.logo.separator.color};
+      text-shadow: ${OVERLAY_CONFIG.logo.separator.textShadow};
+      line-height: 0.8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
+
+    // ACADEMY
+    const academy = document.createElement('div');
+    academy.textContent = 'ACADEMY';
+    academy.style.cssText = `
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-weight: 900;
+      font-size: ${OVERLAY_CONFIG.logo.academy.fontSize};
+      color: ${OVERLAY_CONFIG.logo.academy.color};
+      letter-spacing: ${OVERLAY_CONFIG.logo.academy.letterSpacing};
+      text-shadow: ${OVERLAY_CONFIG.logo.academy.textShadow};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
+
+    container.appendChild(m);
+    container.appendChild(separator);
+    container.appendChild(academy);
+
+    return container;
+  }
+
+  // ─── CRIAR FAIXA PRETA ───
+  function createFaixaPreta() {
+    const faixa = document.createElement('div');
+    faixa.className = 'ma-faixa-preta';
+    faixa.style.cssText = `
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: ${OVERLAY_CONFIG.faixaPreta.width};
+      height: ${OVERLAY_CONFIG.faixaPreta.height};
+      background: ${OVERLAY_CONFIG.faixaPreta.background};
+      border-radius: ${OVERLAY_CONFIG.faixaPreta.borderRadius};
+      box-shadow: ${OVERLAY_CONFIG.faixaPreta.boxShadow};
+      z-index: ${OVERLAY_CONFIG.faixaPreta.zIndex};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
+    return faixa;
+  }
+
+  // ─── APLICAR OVERLAY EM UMA IMAGEM ───
+  function applyOverlay(imgElement) {
+    // Verificar se já foi aplicado
+    if (imgElement.parentElement.querySelector('.ma-logo-overlay')) {
+      return;
+    }
+
+    // Encontrar o container (cc-img ou ebook-cover)
+    let container = imgElement.closest('.cc-img') || imgElement.closest('.ebook-cover');
+    
+    if (!container) {
+      // Fallback: usar o parentElement
+      container = imgElement.parentElement;
+    }
+
+    // Verificar se o container tem position relativa
+    if (!container.style.position || container.style.position === 'static') {
+      container.style.position = 'relative';
+    }
+
+    // Adicionar faixa preta
+    const faixa = createFaixaPreta();
+    container.appendChild(faixa);
+
+    // Adicionar logo
+    const logo = createLogoOverlay();
+    container.appendChild(logo);
+  }
+
+  // ─── ENCONTRAR E APLICAR EM TODAS AS IMAGENS ───
+  function applyToAllCovers() {
+    // Cards de cursos (.cc-img img)
+    document.querySelectorAll('.cc-img img').forEach(img => {
+      applyOverlay(img);
+    });
+
+    // Ebooks (.ebook-cover img)
+    document.querySelectorAll('.ebook-cover > img').forEach(img => {
+      applyOverlay(img);
+    });
+  }
+
+  // ─── OBSERVER PARA IMAGENS DINÂMICAS ───
+  function setupMutationObserver() {
+    const observer = new MutationObserver(() => {
+      applyToAllCovers();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  // ─── EXECUTAR QUANDO DOM ESTÁ PRONTO ───
+  function init() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(applyToAllCovers, 100);
+        setupMutationObserver();
+      });
+    } else {
+      applyToAllCovers();
+      setupMutationObserver();
+    }
+  }
+
+  init();
+})();
+</script>
+
 </body>
 </html>
