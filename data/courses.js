@@ -1057,6 +1057,25 @@ var MA_COURSES = [
     color: '#560bad',
     addedTs: 1775831048119,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/dt.jpg',
+    id: 'dt',
+    name: 'Direito Trabalhista para Trabalhadores e Empregadores',
+    desc: 'Explica contratação, demissão, férias, horas extras, rescisão, deveres e direitos nas relações de trabalho.',
+    file: '14-direito-trabalhista.html',
+    cat: 'Direito & Cidadania',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'DT_HENRY_2026_MASTER',
+    ak: 'dt_auth',
+    storagePrefix: 'dt_',
+    icon: '⚖️',
+    color: '#0a9396',
+    addedTs: 1775831050615,
+    active: true
   }
 ];
 var MA_CATS = [
