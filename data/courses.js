@@ -905,6 +905,25 @@ var MA_COURSES = [
     color: '#023e8a',
     addedTs: 1775831021020,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rt.jpg',
+    id: 'rt',
+    name: 'Relacionamentos Tóxicos: Como Identificar e se Proteger',
+    desc: 'Aborda sinais de manipulação, dependência emocional, abuso psicológico e caminhos para sair de relações destrutivas.',
+    file: '39-relacionamentos-toxicos.html',
+    cat: 'Família & Relacionamentos',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'RT_HENRY_2026_MASTER',
+    ak: 'rt_auth',
+    storagePrefix: 'rt_',
+    icon: '👨‍👩‍👧‍👦',
+    color: '#6a040f',
+    addedTs: 1775831024654,
+    active: true
   }
 ];
 var MA_CATS = [
