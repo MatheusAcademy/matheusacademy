@@ -1704,6 +1704,25 @@ var MA_COURSES = [
     color: '#c1121f',
     addedTs: 1775832786978,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/fe.jpg',
+    id: 'fe',
+    name: 'Finanças Empresariais e Gestão de Negócios',
+    desc: 'Domine fluxo de caixa, custos, precificação, lucro, capital de giro e planejamento financeiro para construir empresas mais organizadas, lucrativas e sustentáveis.',
+    file: 'financas-empresariais.html',
+    cat: 'Negócios',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'FE_HENRY_2026_MASTER',
+    ak: 'fe_auth',
+    storagePrefix: 'fe_',
+    icon: '🎓',
+    color: '#264653',
+    addedTs: 1775832789967,
+    active: true
   }
 ];
 var MA_CATS = [
