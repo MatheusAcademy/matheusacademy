@@ -1371,6 +1371,8 @@ textarea{resize:vertical;min-height:54px}
       <div class="lt" style="margin:0">👤 Base de Alunos</div>
       <button class="btns" onclick="toggleAddAluno()" style="margin-left:auto">➕ Adicionar aluno</button>
       <button class="btns" onclick="loadAlunos()">🔄 Atualizar</button>
+      <button class="btns" onclick="recalcStreakAll()" style="background:rgba(234,179,8,.12);color:#fde047;border-color:rgba(234,179,8,.25)">🔥 Recalcular Streaks</button>
+      <button class="btns" onclick="debugAluno()" style="font-size:10px;color:var(--t3)">🔍 Debug</button>
     </div>
 
     <div class="add-aluno-form" id="addAlunoForm">
@@ -2738,27 +2740,66 @@ async function loadAlunosStorage(){
     var snap = await maDb.collection('usuarios').orderBy('data_cadastro','desc').limit(500).get();
     _alunosData = snap.docs.map(function(doc){
       var d = doc.data();
+
+      // Resolver ultimo_acesso de varios campos possiveis
+      var ua = d.ultimo_acesso || d.ultimoAcesso || d.lastLogin || d.last_access || d.lastAccess || null;
+      var uaStr = '';
+      if (ua) {
+        if (typeof ua.toDate === 'function') uaStr = ua.toDate().toISOString();
+        else if (ua.seconds) uaStr = new Date(ua.seconds * 1000).toISOString();
+        else if (typeof ua === 'string') uaStr = ua;
+        else if (ua instanceof Date) uaStr = ua.toISOString();
+      }
+
+      // Resolver XP de varios campos possiveis
+      var xp = d.xp_total || d.xpTotal || d.xp || d.totalXp || d.pontos || 0;
+
+      // Resolver streak de varios campos possiveis
+      var streak = d.streak_atual || d.streakAtual || d.streak || d.currentStreak || 0;
+      var streakRec = d.streak_record || d.streakRecord || d.bestStreak || d.melhor_streak || 0;
+
+      // Resolver dias ativos
+      var diasAtivos = d.dias_ativos || d.diasAtivos || d.daysActive || d.total_dias || 0;
+
+      // Recalcular streak baseado no ultimo_acesso se streak==0 e tem acesso recente
+      if (streak === 0 && uaStr) {
+        var uaDate = new Date(uaStr);
+        var hoje = new Date(); hoje.setHours(0,0,0,0);
+        var diffDias = Math.floor((hoje - new Date(uaDate.getFullYear(), uaDate.getMonth(), uaDate.getDate())) / 86400000);
+        if (diffDias <= 1) streak = Math.max(streak, 1); // pelo menos 1 se acessou hoje/ontem
+      }
+
+      // Resolver data cadastro
+      var dc = d.data_cadastro || d.dataCadastro || d.createdAt || d.created_at || null;
+      var dcStr = '';
+      if (dc) {
+        if (typeof dc.toDate === 'function') dcStr = dc.toDate().toISOString();
+        else if (dc.seconds) dcStr = new Date(dc.seconds * 1000).toISOString();
+        else if (typeof dc === 'string') dcStr = dc;
+      }
+
       return {
         id: doc.id,
         uid: doc.id,
-        nome: d.nome||d.displayName||'',
-        email: d.email||'',
-        telefone: d.telefone||d.whatsapp||'',
-        plano: d.plano||'gratuito',
-        cursos: d.cursos_comprados||[],
-        xp: d.xp_total||0,
-        streak: d.streak_atual||0,
-        streakRecord: d.streak_record||0,
-        nivel: d.nivel||1,
-        diasAtivos: d.dias_ativos||0,
-        dataExpiracao: d.data_expiracao||d.dataExpiracao||'',
-        dataCadastro: d.data_cadastro ? d.data_cadastro.toDate().toISOString() : '',
-        ultimoAcesso: d.ultimo_acesso ? d.ultimo_acesso.toDate().toISOString() : '',
-        foto: d.foto||'',
-        ativo: d.ativo!==false,
-        progresso: d.progresso||{},
-        total_minutos: d.total_minutos_estudo||0,
-        obs: d.obs||''
+        nome: d.nome || d.displayName || d.name || '',
+        email: d.email || '',
+        telefone: d.telefone || d.whatsapp || d.phone || '',
+        plano: d.plano || d.plan || 'gratuito',
+        cursos: d.cursos_comprados || d.cursos || d.courses || [],
+        xp: xp,
+        streak: streak,
+        streakRecord: streakRec,
+        nivel: d.nivel || d.level || Math.max(1, Math.floor(xp / 500) + 1),
+        diasAtivos: diasAtivos,
+        dataExpiracao: d.data_expiracao || d.dataExpiracao || d.expiresAt || '',
+        dataCadastro: dcStr,
+        ultimoAcesso: uaStr,
+        foto: d.foto || d.photoURL || '',
+        ativo: d.ativo !== false,
+        progresso: d.progresso || d.progress || {},
+        total_minutos: d.total_minutos_estudo || d.totalMinutos || d.studyMinutes || 0,
+        obs: d.obs || d.notes || '',
+        _raw: d // guardar dados brutos para debug
       };
     });
     _alunosFiltrados = _alunosData.slice();
@@ -2986,6 +3027,145 @@ async function addXP(uid){
     alert('✅ +'+qtd+' XP para '+(a?a.nome:uid)+'!');
     loadAlunos();
   } catch(e){ alert('❌ Erro: '+e.message); }
+}
+
+// ── RECALCULAR STREAK PARA TODOS OS ALUNOS ──
+async function recalcStreakAll() {
+  if (!_alunosData.length) { alert('Carregue os alunos primeiro.'); return; }
+  await _waitFb();
+  if (!window.maDb) { alert('Firebase nao conectado.'); return; }
+
+  var hoje = new Date(); hoje.setHours(0,0,0,0);
+  var updated = 0;
+  var errors = 0;
+
+  for (var i = 0; i < _alunosData.length; i++) {
+    var a = _alunosData[i];
+    try {
+      // Tentar ler historico de acesso do aluno
+      var streakCalc = 0;
+      var diasAtivosCalc = 0;
+
+      // 1. Tentar subcollection 'acessos' ou 'logins'
+      var acessos = [];
+      try {
+        var accSnap = await maDb.collection('usuarios').doc(a.uid).collection('acessos').orderBy('data','desc').limit(90).get();
+        if (!accSnap.empty) {
+          accSnap.docs.forEach(function(d) {
+            var dt = d.data().data;
+            if (dt && typeof dt.toDate === 'function') acessos.push(dt.toDate());
+            else if (dt && dt.seconds) acessos.push(new Date(dt.seconds * 1000));
+          });
+        }
+      } catch(e) {}
+
+      // 2. Se nao tem subcollection, tentar 'logins'
+      if (!acessos.length) {
+        try {
+          var logSnap = await maDb.collection('usuarios').doc(a.uid).collection('logins').orderBy('timestamp','desc').limit(90).get();
+          if (!logSnap.empty) {
+            logSnap.docs.forEach(function(d) {
+              var dt = d.data().timestamp || d.data().ts || d.data().data;
+              if (dt && typeof dt.toDate === 'function') acessos.push(dt.toDate());
+              else if (dt && dt.seconds) acessos.push(new Date(dt.seconds * 1000));
+            });
+          }
+        } catch(e) {}
+      }
+
+      // 3. Se tem historico, calcular streak real
+      if (acessos.length) {
+        // Normalizar para datas unicas (sem horario)
+        var diasUnicos = {};
+        acessos.forEach(function(d) {
+          var key = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+          diasUnicos[key] = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        });
+        diasAtivosCalc = Object.keys(diasUnicos).length;
+
+        // Calcular streak: dias consecutivos a partir de hoje/ontem
+        var sorted = Object.values(diasUnicos).sort(function(a,b){return b-a;});
+        var diffPrimeiro = Math.floor((hoje - sorted[0]) / 86400000);
+        if (diffPrimeiro <= 1) { // acessou hoje ou ontem
+          streakCalc = 1;
+          for (var s = 1; s < sorted.length; s++) {
+            var diffConsec = Math.floor((sorted[s-1] - sorted[s]) / 86400000);
+            if (diffConsec === 1) streakCalc++;
+            else break;
+          }
+        }
+      } else {
+        // 4. Sem historico — estimar pelo ultimo_acesso
+        if (a.ultimoAcesso) {
+          var uaDate = new Date(a.ultimoAcesso);
+          var diffDias = Math.floor((hoje - new Date(uaDate.getFullYear(), uaDate.getMonth(), uaDate.getDate())) / 86400000);
+          if (diffDias <= 1) streakCalc = Math.max(1, a.streak || 1);
+          else streakCalc = 0;
+          diasAtivosCalc = a.diasAtivos || (streakCalc > 0 ? 1 : 0);
+        }
+      }
+
+      // Atualizar no Firebase se mudou
+      var newRecord = Math.max(streakCalc, a.streakRecord || 0);
+      if (streakCalc !== a.streak || diasAtivosCalc !== a.diasAtivos || newRecord !== a.streakRecord) {
+        await maDb.collection('usuarios').doc(a.uid).update({
+          streak_atual: streakCalc,
+          streakAtual: streakCalc,
+          streak_record: newRecord,
+          streakRecord: newRecord,
+          dias_ativos: diasAtivosCalc,
+          diasAtivos: diasAtivosCalc
+        });
+        a.streak = streakCalc;
+        a.streakRecord = newRecord;
+        a.diasAtivos = diasAtivosCalc;
+        updated++;
+      }
+    } catch(e) {
+      errors++;
+      console.log('[Streak] Erro ' + a.uid + ':', e.message);
+    }
+  }
+
+  renderTabela();
+  updateAlStats();
+  alert('🔥 Streak recalculado!\n\n' + updated + ' aluno(s) atualizado(s)' + (errors ? '\n⚠️ ' + errors + ' erro(s)' : ''));
+}
+
+function debugAluno() {
+  if (!_alunosData.length) { alert('Carregue os alunos primeiro.'); return; }
+  var uid = prompt('UID do aluno (ou deixe vazio para ver todos):');
+  var target = uid ? _alunosData.filter(function(a){return a.uid===uid;}) : _alunosData;
+  if (!target.length) { alert('Aluno nao encontrado.'); return; }
+
+  var info = target.map(function(a) {
+    var raw = a._raw || {};
+    return '=== ' + a.nome + ' (' + a.uid + ') ===\n'
+      + 'email: ' + a.email + '\n'
+      + 'xp (resolvido): ' + a.xp + '\n'
+      + 'streak (resolvido): ' + a.streak + '\n'
+      + 'streakRecord: ' + a.streakRecord + '\n'
+      + 'diasAtivos: ' + a.diasAtivos + '\n'
+      + 'ultimoAcesso: ' + (a.ultimoAcesso || 'VAZIO') + '\n'
+      + 'nivel: ' + a.nivel + '\n'
+      + '--- Campos brutos Firebase ---\n'
+      + 'xp_total: ' + (raw.xp_total || 'null') + '\n'
+      + 'xpTotal: ' + (raw.xpTotal || 'null') + '\n'
+      + 'xp: ' + (raw.xp || 'null') + '\n'
+      + 'pontos: ' + (raw.pontos || 'null') + '\n'
+      + 'streak_atual: ' + (raw.streak_atual || 'null') + '\n'
+      + 'streakAtual: ' + (raw.streakAtual || 'null') + '\n'
+      + 'streak: ' + (raw.streak || 'null') + '\n'
+      + 'ultimo_acesso: ' + (raw.ultimo_acesso || 'null') + '\n'
+      + 'ultimoAcesso: ' + (raw.ultimoAcesso || 'null') + '\n'
+      + 'lastLogin: ' + (raw.lastLogin || 'null') + '\n'
+      + 'dias_ativos: ' + (raw.dias_ativos || 'null') + '\n'
+      + 'Todas as chaves: ' + Object.keys(raw).join(', ');
+  }).join('\n\n');
+
+  // Mostrar num alert ou console
+  console.log(info);
+  prompt('Debug (ver console para mais):', info.substring(0, 300));
 }
 
 // ── DRAWER ──
@@ -6350,24 +6530,61 @@ async function loteDiagnostico() {
 
     html += '</tbody></table></div>';
 
+    // Guardar cursos sem capa para uso no upload inline
+    window._diagSemCapa = semCapa;
+    window._diagRegistrados = registrados;
+
     // Dicas de acao
     if (semCapa.length || naoRegistrados.length || semHtml.length) {
       html += '<div style="margin-top:12px;padding:10px;background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);border-radius:8px;font-size:11px;color:#c7d2fe;line-height:1.6">';
       html += '<strong style="color:#a5b4fc">💡 O que fazer:</strong><br>';
-      if (semCapa.length) html += '• <strong>' + semCapa.length + ' cursos sem capa</strong> — va na aba Capas Lote, suba as capas e o OCR vai sincronizar automaticamente<br>';
       if (naoRegistrados.length) html += '• <strong>' + naoRegistrados.length + ' HTMLs nao registrados</strong> — clique em "Retentar erros" ou re-selecione e publique novamente<br>';
       if (semHtml.length) html += '• <strong>' + semHtml.length + ' sem arquivo HTML</strong> — o curso esta no courses.js mas o HTML nao foi encontrado no GitHub. Re-suba o HTML<br>';
+      html += '</div>';
+    }
+
+    // Area de upload de capas faltantes (inline no diagnostico)
+    if (semCapa.length) {
+      html += '<div style="margin-top:16px;padding:14px;background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.25);border-radius:10px">';
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">';
+      html += '<div><div style="font-size:13px;font-weight:800;color:#fde047">🖼️ ' + semCapa.length + ' curso(s) sem capa — suba as imagens aqui</div>';
+      html += '<div style="font-size:10px;color:var(--t3);margin-top:2px">Arraste as capas faltantes. OCR vai associar automaticamente ao curso correto.</div></div>';
+      html += '</div>';
+
+      // Chips dos cursos sem capa
+      html += '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">';
+      semCapa.forEach(function(c) {
+        html += '<span style="padding:3px 8px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.2);border-radius:5px;font-size:9px;color:#fde047;font-family:var(--mono)">' + escH(c.id) + ' · ' + escH(c.name).substring(0,30) + '</span>';
+      });
+      html += '</div>';
+
+      // Dropzone
+      html += '<div id="diag-capa-drop" style="border:2px dashed rgba(234,179,8,.3);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(234,179,8,.02)" onclick="el(\'diag-capa-input\').click()" ondragover="event.preventDefault();this.style.borderColor=\'#fde047\';this.style.background=\'rgba(234,179,8,.08)\'" ondragleave="this.style.borderColor=\'rgba(234,179,8,.3)\';this.style.background=\'rgba(234,179,8,.02)\'" ondrop="event.preventDefault();this.style.borderColor=\'rgba(234,179,8,.3)\';this.style.background=\'rgba(234,179,8,.02)\';diagCapaChosen(event.dataTransfer.files)">';
+      html += '<div style="font-size:12px;font-weight:700;color:#fde047">Arraste as imagens de capa aqui</div>';
+      html += '<div style="font-size:10px;color:var(--t3);margin-top:4px">ou clique para selecionar — PNG, JPG, WebP</div>';
+      html += '<input type="file" id="diag-capa-input" accept="image/*" multiple style="display:none" onchange="diagCapaChosen(this.files)">';
+      html += '</div>';
+
+      // Progress
+      html += '<div id="diag-capa-prog" style="display:none;margin-top:10px">';
+      html += '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t3);margin-bottom:3px"><span id="diag-capa-label">Processando...</span><span id="diag-capa-pct">0/0</span></div>';
+      html += '<div style="height:4px;background:var(--brd);border-radius:2px;overflow:hidden"><div id="diag-capa-bar" style="height:100%;background:linear-gradient(90deg,#eab308,#fde047);border-radius:2px;width:0%;transition:width .3s"></div></div>';
+      html += '</div>';
+
+      // Resultado do match
+      html += '<div id="diag-capa-result" style="display:none;margin-top:12px"></div>';
+
+      // Botao publicar
+      html += '<div id="diag-capa-actions" style="display:none;margin-top:10px;display:flex;gap:6px">';
+      html += '<button class="btnp" id="diag-capa-pub" onclick="diagCapaPublicar()" style="flex:1;background:#22c55e;font-size:12px;padding:10px">✅ Confirmar e subir capas</button>';
+      html += '</div>';
+
       html += '</div>';
     }
 
     html += '</div>';
     el('lote-diag-result').innerHTML = html;
     el('lote-diag-result').style.display = 'block';
-
-    // Mostrar botao de retentar se houver erros
-    if (_loteItems.some(function(it) { return it.status === 'erro'; })) {
-      el('lote-retry-btn').style.display = '';
-    }
 
   } catch (err) {
     el('lote-diag-result').innerHTML = '<div style="color:#fca5a5;padding:12px;font-size:12px">Erro no diagnostico: ' + escH(err.message) + '</div>';
@@ -6376,6 +6593,266 @@ async function loteDiagnostico() {
 
   btn.disabled = false;
   btn.textContent = '🔍 Diagnosticar';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   UPLOAD DE CAPAS FALTANTES — inline no diagnostico
+   ══════════════════════════════════════════════════════════════ */
+var _diagCapaItems = []; // [{file, dataUrl, ocrText, matchedId, matchedName, score, status, origName, chosen}]
+
+function diagCapaChosen(files) {
+  if (!files || !files.length) return;
+  _diagCapaItems = [];
+  for (var i = 0; i < files.length; i++) {
+    if (!files[i].type.match(/image\//)) continue;
+    _diagCapaItems.push({ file: files[i], dataUrl: '', ocrText: '', matchedId: '', matchedName: '', score: 0, status: 'pendente', origName: files[i].name, chosen: true });
+  }
+  if (!_diagCapaItems.length) { alert('Nenhuma imagem valida selecionada.'); return; }
+
+  // Ler previews
+  var loaded = 0;
+  _diagCapaItems.forEach(function(item, idx) {
+    var rd = new FileReader();
+    rd.onload = function(e) {
+      item.dataUrl = e.target.result;
+      loaded++;
+      if (loaded === _diagCapaItems.length) diagCapaRunOCR();
+    };
+    rd.readAsDataURL(item.file);
+  });
+}
+
+async function diagCapaRunOCR() {
+  var semCapa = window._diagSemCapa || [];
+  if (!semCapa.length) { alert('Nenhum curso sem capa encontrado.'); return; }
+
+  // Build course list from _diagSemCapa
+  var courseList = semCapa.map(function(c) { return { id: c.id, name: c.name }; });
+
+  var prog = el('diag-capa-prog');
+  if (prog) prog.style.display = 'block';
+  var total = _diagCapaItems.length;
+
+  try {
+    var worker = await Tesseract.createWorker('por');
+
+    for (var i = 0; i < _diagCapaItems.length; i++) {
+      var item = _diagCapaItems[i];
+      el('diag-capa-label').textContent = 'OCR ' + (i+1) + '/' + total + ': ' + item.origName;
+      el('diag-capa-pct').textContent = (i+1) + '/' + total;
+      el('diag-capa-bar').style.width = ((i+1)/total*100).toFixed(0) + '%';
+
+      try {
+        var result = await worker.recognize(item.dataUrl);
+        item.ocrText = (result.data && result.data.text) ? result.data.text.trim() : '';
+      } catch(e) { item.ocrText = ''; }
+
+      // Match: comparar OCR text + nome do arquivo com cursos sem capa
+      var bestMatch = { id: '', name: '', score: 0 };
+
+      // Tentar pelo nome do arquivo primeiro
+      var fnClean = _normTxt(item.origName.replace(/\.\w+$/, ''));
+      courseList.forEach(function(c) {
+        var nameNorm = _normTxt(c.name);
+        var fnScore = _similarity(fnClean, nameNorm) * 0.4 + _wordMatchBonus(fnClean, c.name) * 0.6;
+        if (fnScore > bestMatch.score) { bestMatch = { id: c.id, name: c.name, score: fnScore }; }
+      });
+
+      // Tentar pelo OCR text
+      if (item.ocrText) {
+        var ocrMatch = _findBestMatch(item.ocrText, courseList);
+        if (ocrMatch.score > bestMatch.score) {
+          bestMatch = ocrMatch;
+        }
+      }
+
+      if (bestMatch.score >= 0.2) {
+        item.matchedId = bestMatch.id;
+        item.matchedName = bestMatch.name;
+        item.score = bestMatch.score;
+        item.status = 'matched';
+      } else {
+        item.status = 'sem_match';
+      }
+    }
+
+    await worker.terminate();
+  } catch(e) {
+    console.log('Erro OCR diag:', e);
+  }
+
+  el('diag-capa-label').textContent = 'Concluido!';
+
+  // Detectar duplicatas: 2+ capas para o mesmo curso
+  var byId = {};
+  _diagCapaItems.forEach(function(it, idx) {
+    if (it.matchedId) {
+      if (!byId[it.matchedId]) byId[it.matchedId] = [];
+      byId[it.matchedId].push(idx);
+    }
+  });
+
+  diagCapaRender(byId);
+}
+
+function diagCapaRender(byId) {
+  byId = byId || {};
+  // Rebuild byId if not passed
+  if (!Object.keys(byId).length) {
+    _diagCapaItems.forEach(function(it, idx) {
+      if (it.matchedId) {
+        if (!byId[it.matchedId]) byId[it.matchedId] = [];
+        byId[it.matchedId].push(idx);
+      }
+    });
+  }
+
+  var html = '';
+  var matched = _diagCapaItems.filter(function(it) { return it.status === 'matched'; });
+  var semMatch = _diagCapaItems.filter(function(it) { return it.status === 'sem_match'; });
+  var dupes = {};
+  for (var cid in byId) { if (byId[cid].length > 1) dupes[cid] = byId[cid]; }
+
+  // Stats
+  html += '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">';
+  html += '<div style="padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(34,197,94,.12);color:#86efac">✅ Associadas: ' + matched.length + '</div>';
+  if (Object.keys(dupes).length) html += '<div style="padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(168,85,247,.12);color:#d8b4fe">🔀 Duplicatas: ' + Object.keys(dupes).length + ' curso(s)</div>';
+  if (semMatch.length) html += '<div style="padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(239,68,68,.12);color:#fca5a5">❌ Sem match: ' + semMatch.length + '</div>';
+  html += '</div>';
+
+  // Duplicatas — escolher qual usar
+  if (Object.keys(dupes).length) {
+    html += '<div style="margin-bottom:12px;padding:10px;background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.2);border-radius:8px">';
+    html += '<div style="font-size:11px;font-weight:800;color:#d8b4fe;margin-bottom:8px">🔀 Capas duplicadas — escolha a melhor para cada curso:</div>';
+
+    for (var dupId in dupes) {
+      var indices = dupes[dupId];
+      var courseName = _diagCapaItems[indices[0]].matchedName;
+      html += '<div style="margin-bottom:10px;padding:8px;background:var(--sf);border-radius:6px">';
+      html += '<div style="font-size:11px;font-weight:700;color:var(--txt);margin-bottom:6px">' + escH(dupId) + ' · ' + escH(courseName) + '</div>';
+      html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
+
+      indices.forEach(function(idx) {
+        var it = _diagCapaItems[idx];
+        var isChosen = it.chosen;
+        var border = isChosen ? 'border:2px solid #22c55e' : 'border:2px solid var(--brd)';
+        html += '<div style="' + border + ';border-radius:8px;padding:6px;width:140px;cursor:pointer;text-align:center;transition:all .2s;' + (isChosen ? 'background:rgba(34,197,94,.06)' : 'background:var(--sf);opacity:.6') + '" onclick="diagCapaChooseDupe(\'' + escH(dupId) + '\',' + idx + ')">';
+        html += '<img src="' + it.dataUrl + '" style="width:100%;height:80px;object-fit:cover;border-radius:4px;margin-bottom:4px">';
+        html += '<div style="font-size:9px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escH(it.origName) + '</div>';
+        html += '<div style="font-size:9px;color:' + (it.score > 0.6 ? '#86efac' : '#fde047') + '">' + Math.round(it.score * 100) + '% match</div>';
+        if (isChosen) html += '<div style="font-size:9px;color:#22c55e;font-weight:700;margin-top:2px">✅ Selecionada</div>';
+        html += '</div>';
+      });
+
+      html += '</div></div>';
+    }
+    html += '</div>';
+  }
+
+  // Cards de match confirmado (sem duplicata)
+  html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
+  _diagCapaItems.forEach(function(it, idx) {
+    if (it.status === 'descartada') return;
+    // Skip duplicatas nao-escolhidas
+    if (it.matchedId && byId[it.matchedId] && byId[it.matchedId].length > 1 && !it.chosen) return;
+
+    var borderColor = it.status === 'matched' ? 'rgba(34,197,94,.4)' : (it.status === 'ok' ? 'rgba(34,197,94,.6)' : 'rgba(239,68,68,.3)');
+    html += '<div style="border:1px solid ' + borderColor + ';border-radius:8px;padding:6px;width:155px;background:var(--sf)">';
+    html += '<img src="' + it.dataUrl + '" style="width:100%;height:80px;object-fit:cover;border-radius:4px;margin-bottom:4px">';
+    html += '<div style="font-size:9px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:2px" title="' + escH(it.origName) + '">' + escH(it.origName) + '</div>';
+
+    if (it.status === 'matched') {
+      html += '<div style="font-size:10px;color:#86efac;font-weight:700;margin-bottom:2px">' + escH(it.matchedId) + '</div>';
+      html += '<div style="font-size:9px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + escH(it.matchedName) + '">' + escH(it.matchedName) + '</div>';
+      html += '<div style="font-size:9px;color:' + (it.score > 0.6 ? '#86efac' : '#fde047') + '">' + Math.round(it.score * 100) + '% match</div>';
+      if (it.status === 'ok') html += '<div style="font-size:9px;color:#22c55e;font-weight:700;margin-top:2px">✅ SUBIDA</div>';
+    } else if (it.status === 'sem_match') {
+      html += '<div style="font-size:10px;color:#fca5a5;font-weight:700">❌ Sem match</div>';
+      // Dropdown manual
+      var semCapa = window._diagSemCapa || [];
+      html += '<select style="width:100%;font-size:9px;padding:2px;margin-top:4px" onchange="diagCapaManualMatch(' + idx + ',this.value)">';
+      html += '<option value="">Selecione o curso...</option>';
+      semCapa.forEach(function(c) {
+        html += '<option value="' + escH(c.id) + '">' + escH(c.id) + ' - ' + escH(c.name).substring(0,25) + '</option>';
+      });
+      html += '</select>';
+    }
+
+    html += '</div>';
+  });
+  html += '</div>';
+
+  var res = el('diag-capa-result');
+  if (res) { res.innerHTML = html; res.style.display = 'block'; }
+
+  // Show publish button if there are matched items
+  var hasMatched = _diagCapaItems.some(function(it) { return it.status === 'matched' && it.chosen; });
+  var act = el('diag-capa-actions');
+  if (act) act.style.display = hasMatched ? 'flex' : 'none';
+}
+
+function diagCapaChooseDupe(courseId, chosenIdx) {
+  _diagCapaItems.forEach(function(it, idx) {
+    if (it.matchedId === courseId) {
+      it.chosen = (idx === chosenIdx);
+    }
+  });
+  diagCapaRender();
+}
+
+function diagCapaManualMatch(idx, courseId) {
+  if (!courseId) return;
+  var semCapa = window._diagSemCapa || [];
+  var course = semCapa.find(function(c) { return c.id === courseId; });
+  if (!course) return;
+  _diagCapaItems[idx].matchedId = courseId;
+  _diagCapaItems[idx].matchedName = course.name;
+  _diagCapaItems[idx].score = 1;
+  _diagCapaItems[idx].status = 'matched';
+  _diagCapaItems[idx].chosen = true;
+  diagCapaRender();
+}
+
+async function diagCapaPublicar() {
+  var cfg = g();
+  if (!cfg.t) { alert('Configure o token GitHub primeiro.'); return; }
+
+  var items = _diagCapaItems.filter(function(it) { return it.status === 'matched' && it.chosen && it.matchedId; });
+  if (!items.length) { alert('Nenhuma capa pronta para subir.'); return; }
+
+  if (!confirm('Confirma o upload de ' + items.length + ' capa(s) faltante(s)?')) return;
+
+  var btn = el('diag-capa-pub');
+  if (btn) btn.disabled = true;
+  el('diag-capa-prog').style.display = 'block';
+
+  var ok = 0, err = 0;
+  for (var j = 0; j < items.length; j++) {
+    var item = items[j];
+    el('diag-capa-label').textContent = 'Subindo ' + (j+1) + '/' + items.length + ': ' + item.matchedId + '.jpg';
+    el('diag-capa-pct').textContent = (j+1) + '/' + items.length;
+    el('diag-capa-bar').style.width = ((j+1)/items.length*100).toFixed(0) + '%';
+
+    try {
+      if (j > 0) await _sleep(800);
+      await uploadCapa(item.file, item.matchedId);
+      item.status = 'ok';
+      ok++;
+      addAudit('🖼️ Diag: subiu capa ' + item.matchedId + '.jpg (era: ' + item.origName + ')');
+    } catch(e) {
+      item.status = 'erro';
+      err++;
+      console.log('[DiagCapa ERRO] ' + item.matchedId + ': ' + e.message);
+    }
+  }
+
+  el('diag-capa-label').textContent = 'Concluido! ' + ok + ' subida(s)' + (err ? ', ' + err + ' erro(s)' : '');
+  if (btn) btn.disabled = false;
+  diagCapaRender();
+
+  if (ok) {
+    alert('✅ ' + ok + ' capa(s) enviada(s) com sucesso!' + (err ? '\n⚠️ ' + err + ' erro(s).' : '') + '\n\nClique em "Diagnosticar" novamente para atualizar o status.');
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════
