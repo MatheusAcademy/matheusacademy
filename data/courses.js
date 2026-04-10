@@ -924,6 +924,25 @@ var MA_COURSES = [
     color: '#6a040f',
     addedTs: 1775831024654,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mh.jpg',
+    id: 'mh',
+    name: 'Mudança de Hábitos: Reprograme sua Rotina e sua Vida',
+    desc: 'Curso para ensinar como substituir hábitos ruins, criar rotinas fortes e construir uma vida mais organizada, produtiva e equilibrada.',
+    file: '01-mudanca-habitos.html',
+    cat: 'Desenvolvimento',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'MH_HENRY_2026_MASTER',
+    ak: 'mh_auth',
+    storagePrefix: 'mh_',
+    icon: '🚀',
+    color: '#e63946',
+    addedTs: 1775831027275,
+    active: true
   }
 ];
 var MA_CATS = [
