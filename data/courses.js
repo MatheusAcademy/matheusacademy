@@ -1190,6 +1190,26 @@ var MA_COURSES = [
     color: '#2a9d8f',
     addedTs: 1775831100058,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/tt.jpg',
+    id: 'tt',
+    name: 'O Tarifaço de Trump',
+    desc: 'Do básico ao avançado, entenda como as tarifas, guerras comerciais e disputas econômicas afetam mercados, países, empresas e o equilíbrio do poder global.',
+    file: 'tarifaco-trump.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'TT_HENRY_2026_MASTER',
+    ak: 'tt_auth',
+    storagePrefix: 'tt_',
+    icon: '📰',
+    color: '#e63946',
+    free: true,
+    addedTs: 1775831105338,
+    active: true
   }
 ];
 var MA_CATS = [
