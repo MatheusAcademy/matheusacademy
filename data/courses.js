@@ -1438,6 +1438,25 @@ var MA_COURSES = [
     color: '#3f37c9',
     addedTs: 1775832749697,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/tp.jpg',
+    id: 'tp',
+    name: 'Tipos de Pessoas: Perfis Comportamentais e Leitura Social',
+    desc: 'Ensina a identificar perfis, padrões emocionais, estilos de comunicação e formas de lidar melhor com cada tipo de pessoa.',
+    file: '10-tipos-pessoas.html',
+    cat: 'Psicologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'TP_HENRY_2026_MASTER',
+    ak: 'tp_auth',
+    storagePrefix: 'tp_',
+    icon: '🧩',
+    color: '#3a0ca3',
+    addedTs: 1775832752373,
+    active: true
   }
 ];
 var MA_CATS = [
