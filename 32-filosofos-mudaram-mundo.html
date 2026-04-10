@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Filósofos que Mudaram o Mundo — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'FM',
+  name: 'Filósofos que Mudaram o Mundo',
+  shortName: 'Filósofos Influentes',
+  cat: 'Liderança e Poder',
+  desc: 'Apresenta pensadores que influenciaram política, ética, ciência, educação e a forma como entendemos a realidade.',
+  salt: 'FM_HENRY_2026_MASTER',
+  ak: 'fm_auth',
+  courseKey: 'fm',
+  prefix: 'fm_',
+  color: '#e8ac65',
+  glow: 'rgba(232,172,101,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 2,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 1,
+    name: 'Pilares da Filosofia Ocidental',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Fundadores do Pensamento Racional',
+      points: [
+        'Platão estabeleceu método dialético e ideias de justiça que influenciaram educação por 2400 anos',
+        'Aristóteles criou lógica formal e sistemas de classificação que fundamentaram ciência moderna',
+        'Descartes revolucionou epistemologia com "Penso, logo existo" e método científico'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual foi a principal contribuição de Platão para educação?',
+        opts: ['Criação de escolas públicas obrigatórias', 'Método dialético de questionamento e Academia de Atenas', 'Invenção do quadro negro', 'Desenvolvimento de currículos técnicos'],
+        correct: 1
+      },
+      {
+        q: 'Que criação intelectual Aristóteles é mais conhecido?',
+        opts: ['Teoria das Ideias', 'Silogismo lógico', 'Teorema de Pitágoras', 'Método cartesiano'],
+        correct: 1
+      },
+      {
+        q: 'Como o pensamento de Descartes revolucionou a filosofia?',
+        opts: ['Rejeitou toda forma de dúvida', 'Começou com dúvida radical e ceticismo metodológico', 'Retornou ao pensamento de Platão', 'Aboliu a razão científica'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Pensadores de Política, Poder e Liberdade',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Ideologias que Transformaram Governos',
+      points: [
+        'Maquiavel redefiniu política como estudo amoral de poder, influenciando realismo político moderno',
+        'Locke e Rousseau fundamentaram democracia liberal e direitos naturais dos homens',
+        'Marx analisou capitalismo e criou ideologia que guiou revoluções do século XX'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual foi a principal inovação intelectual de Maquiavel?',
+        opts: ['Defender monarquia absoluta', 'Separar análise de poder da moral', 'Criar primeira constituição escrita', 'Inventar diplomacia moderna'],
+        correct: 1
+      },
+      {
+        q: 'Que conceito John Locke defendeu que fundamentou democracia?',
+        opts: ['Soberania absoluta do Estado', 'Direitos naturais e consentimento governado', 'Determinismo histórico', 'Supremacia da razão pura'],
+        correct: 1
+      },
+      {
+        q: 'Marx argumentava que capitalismo inevitavelmente levaria a quê?',
+        opts: ['Maior igualdade', 'Colapso de classe trabalhadora e revolução comunista', 'Democracia perfeita', 'Aumento indefinido de bem-estar'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Filósofos da Modernidade e Pós-Modernidade',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Pensamento Contemporâneo',
+      points: [
+        'Nietzsche questionou morais cristãs e criou psicologia do ressentimento e vontade de poder',
+        'Wittgenstein revolucionou filosofia da linguagem entendendo como palavras ganham significado',
+        'Foucault analisou poder, sexualidade, e como conhecimento reproduz estruturas sociais'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual era o alvo principal das críticas de Nietzsche?',
+        opts: ['Capitalismo industrial', 'Moralidade cristã tradicional', 'Tecnologia moderna', 'Educação científica'],
+        correct: 1
+      },
+      {
+        q: 'Wittgenstein revolucionou compreensão de linguagem ao perceber que:',
+        opts: ['Linguagem existe fora da realidade', 'Significado vem de uso em contexto social', 'Palavras têm significado essencial imutável', 'Linguagem é decorativa apenas'],
+        correct: 1
+      },
+      {
+        q: 'O que Foucault investigou primariamente em seu trabalho?',
+        opts: ['Natureza da consciência individual', 'Relação entre poder, conhecimento e identidade social', 'Fundamentos de lógica pura', 'Existência de verdade absoluta'],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'Platão: Fundador da Academia e Método Dialético',
+    dur: '12 min',
+    content: `
+      <h3>O Filósofo que Criou a Primeira Universidade</h3>
+      <p>Platão (428-348 a.C.) nasceu em Atenas, em período turbulento da história grega. Sua família era aristocrática e politicamente influente, o que o posicionava para envolvimento em assuntos públicos. No entanto, o destino que o esperava não era político direto: seria intelectual. Encontrou seu mentor, Sócrates, ainda jovem, e foi transformado por encontro. Diferentemente de outros atenienses que viam Sócrates como mero sofista questionador, Platão entendia que Sócrates estava perseguindo verdade fundamental sobre virtude, beleza, justiça, e realidade subjacente.</p>
+      <p>Quando Sócrates foi julgado e executado em 399 a.C., Platão testemunhou este ato de injustiça que moldaria sua visão de filosofia por toda sua vida. Sócrates morreu porque Atenas não conseguia reconhecer seu valor; não conseguia separar sua busca por verdade de perseguição de "corrupção da juventude". Este trauma inspirou Platão a fundar instituição onde verdade poderia ser perseguida sem interferência política: a Academia de Platão.</p>
+      <h4>A Academia: Primeira Universidade do Mundo</h4>
+      <p>Em 387 a.C., Platão estabeleceu a Academia em bosque sagrado dedicado ao herói Academus fora de Atenas. Não era escola formal com professores e alunos em sistema hierárquico. Era comunidade de investigadores dedicados a compreender verdade através de diálogo e disputa intelectual. A Academia operou por quase 900 anos, tornando-se precursora de universidades modernas. O lema acima da entrada era famoso: "Ninguém entra aqui sem conhecimento de geometria."</p>
+      <p>Isto não era pedantismo. Platão acreditava que matemática e geometria eram disciplinas que treinaviam mente para pensar abstratamente, para ver padrões universais além de aparências particulares. Toda educação começava com matemática porque desenvolvimento de capacidade de raciocinar abstratamente era pré-requisito para filosofia verdadeira. Alunos que chegavam à Academia esperando receber instrução em virtude ou política frequentemente ficavam surpreendidos ao descobrir que anos de estudo começariam com geometria.</p>
+      <blockquote class="tip">
+        💡 A insistência de Platão em matemática como fundação de educação presságiava futura importância de pensamento matemático e lógico em filosofia, ciência, e tecnologia modernas.
+      </blockquote>
+      <h4>A Teoria das Ideias: Platão e o Mundo das Formas</h4>
+      <p>A contribuição intelectual mais duradoura de Platão é sua Teoria das Ideias, também chamada de Teoria das Formas. Platão argumentava que mundo material que percebemos através dos sentidos é apenas sombra de realidade verdadeira. Realidade verdadeira existe em reino das Formas ou Ideias: realidades abstratas, imutáveis, e perfeitas das quais os objetos materiais são meras cópias imperfeitas.</p>
+      <p>Por exemplo, observe dois objetos redondos neste mundo: bola de borracha e prato. Ambos são redondos, mas nenhum é círculo perfeito. Ambos têm manchas, rachaduras, imperfeições. No entanto, você sabe imediatamente que ambos são "redondos" porque você tem acesso a Forma universal de "Redondeza" em sua mente. Esta Forma é perfeita, imutável, e eterna. De onde vem este conhecimento? Platão argumentava que sua alma conheceu as Formas antes do nascimento e reconhece ecos delas no mundo material.</p>
+      <p>Esta teoria, enquanto parece estranha para mente moderna, teve profundas implicações. Sugeria que verdade não é subjetiva, não depende da observação particular. Verdade é universal e a mesma para todos os seres racionais. Esta noção de verdade objetiva e universal é fundação de toda investigação científica subsequente. Sem a ideia de que há verdade universal acessível através de razão, não temos base para ciência.</p>
+      <h4>Método Dialético: Sócrates Através de Platão</h4>
+      <p>Embora Sócrates nunca escreveu nada, conhecemos suas ideias através de diálogos de Platão. Nestes diálogos, Sócrates é personagem central, e Platão preservou seu método intelectual. Este método, chamado de método socrático ou dialético, envolvia questionamento cuidadoso e aparentemente inocente que revelava contradições em pensamento do interlocutor, forçando-o a reconsiderar posições.</p>
+      <p>O dialético começa fingindo ignorância. Alguém afirma conhecer o que é "coragem" ou "virtude" e Sócrates pede que defina. Invariavelmente, definição é inadequada. Sócrates questiona, apresenta contraexemplos, e leva interlocutor para perceber que ele ou ela não realmente compreende o que pensava compreender. Somente através deste processo de destruição de falsas certezas é que busca verdadeira pode começar.</p>
+      <blockquote class="quote">
+        "O conhecimento de si mesmo é o começo da sabedoria." — Sócrates (através de Platão)
+      </blockquote>
+      <p>Este método revolucionou educação. Ao invés de transferir conhecimento de professor para aluno (modelo de instrução passiva), método socrático envolve aluno ativamente no busca de verdade. Força participante pensar criticamente, questionar suposições, e desenvolver compreensão própria. Método persiste em educação superior contemporânea em forma de seminários, discussões, e educação baseada em problemas.</p>
+    `,
+    cards: {
+      q: 'Por que Platão criou a Academia e qual era seu método de educação?',
+      a: 'Platão criou Academia de Atenas em 387 a.C. como comunidade de investigação intelectual, usando método dialético socrático e insistindo que toda educação começasse com matemática para treinar a mente em pensamento abstrato e racional.'
+    }
+  },
+  {
+    id: 2,
+    name: 'Aristóteles: Lógica, Classificação e Método Científico',
+    dur: '12 min',
+    content: `
+      <h3>O Construtor de Sistemas de Conhecimento</h3>
+      <p>Aristóteles (384-322 a.C.) nasceu em Stagira, na Macedônia, não em Atenas. Seu pai era médico, o que talvez explique seu interesse em observação cuidadosa de natureza. Aos 17 anos, mudou-se para Atenas e ingressou na Academia de Platão, onde permaneceu por 20 anos. Inicialmente, era discípulo entusiasmado, mas gradualmente desenvolveu discordâncias com o maestro.</p>
+      <p>Enquanto Platão acreditava que verdade residia em reino imutável das Formas transcendental, Aristóteles era empirista: acreditava que conhecimento vinha de observação cuidadosa do mundo natural. O desacordo filosófico era fundamental. Depois que Platão morreu, Aristóteles deixou Academia. Trabalhou em corte de Filipo de Macedônia como tutor de seu filho, o futuro Alexandre o Grande. Mais tarde retornou a Atenas e fundou sua própria escola, o Liceu.</p>
+      <h4>A Revolução da Lógica Formal</h4>
+      <p>A maior contribuição intelectual de Aristóteles talvez seja invenção da lógica formal. Enquanto Platão havia enfatizado dialética como método de investigação, Aristóteles formalizou as regras do raciocínio válido. Desenvolveu silogismo: método de deduzivelmente raciocínio válido onde duas proposições (premissas) levam necessariamente a conclusão.</p>
+      <p>Exemplo clássico: "Todos os homens são mortais. Sócrates é homem. Portanto, Sócrates é mortal." Esta forma de raciocínio é logicamente válida; não importa qual proposição colocamos no lugar de "homem" ou "mortal", se as premissas são verdadeiras e a forma é válida, a conclusão deve ser verdadeira. Aristóteles mapeou todas as formas possíveis de silogismo válido e identificou aquelas que seriam inválidas.</p>
+      <blockquote class="example">
+        📌 A lógica formal de Aristóteles permaneceu praticamente inalterada por 2000 anos e continua sendo fundação de lógica simbólica moderna usada em computadores e inteligência artificial.
+      </blockquote>
+      <p>Por que isto é revolucionário? Porque primeira vez na história humana, alguém havia formalizado regras de pensamento válido. Isto significa que é possível verificar argumento não apenas pela intuição ou reputação de quem o propõe, mas pela forma lógica em si. Este desenvolvimento foi absolutamente central para ciência: ciência não poderia existir sem sistema de raciocínio que pudesse ser verificado formalmente.</p>
+      <h4>Classificação e Taxonomia: Organizando o Conhecimento</h4>
+      <p>Além de lógica, Aristóteles desenvolveu sistemas de classificação de conhecimento. Dividiu realidade em categorias: substância, quantidade, qualidade, relação, lugar, tempo, posição, estado, ação, e paixão. Desenvolveu sistemas para classificar animais, plantas, e objetos naturais baseado em características compartilhadas. Esta abordagem de organizar conhecimento através de classificação sistemática se tornou fundação de todas as ciências biológicas subsequentes.</p>
+      <p>Quando Carl Linnaeus desenvolveu sistema taxonômico binomial de classificação (reino, filo, classe, ordem, família, gênero, espécie) no século XVIII, estava seguindo aproximação Aristotélica de buscar características compartilhadas para organizar diversidade de vida. Abordagem de Aristóteles para "dividir coisas em grupos baseado em características compartilhadas" permanece o método fundamental de toda ciência classificadora.</p>
+      <h4>Ética e Virtude: Eudaimonia</h4>
+      <p>Além de lógica e classificação, Aristóteles também contribuiu profundamente para ética. Seu conceito de eudaimonia (frequentemente traduzido como "felicidade" ou "prosperidade humana") permanece central em ética contemporânea. Aristóteles argumentava que o bem humano é realização de potencial humano através da excelência (virtude). Virtude não é inato; é hábito desenvolvido através de prática repetida.</p>
+      <p>Para Aristóteles, pessoa virtuosa é pessoa que desenvolveu hábitos de excelência. Coragem, por exemplo, não é ausência de medo, mas desenvolvimento de hábito de agir apropriadamente apesar do medo. Justiça é desenvolvida através de prática repetida de ações justas. Esta concepção é marcadamente diferente de ética baseada em regras ou consequências; é focada em desenvolvimento de caráter através da prática.</p>
+      <blockquote class="tip">
+        💡 A abordagem de Aristóteles para ética baseada em desenvolvimento de virtude através de hábito precedeu por 2300 anos a moderna psicologia de hábito e ainda oferece insights profundos para como vidas humanas devem ser estruturadas.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Qual foi a inovação lógica de Aristóteles que revolucionou o pensamento racional?',
+      a: 'Aristóteles inventou o silogismo, método formal de raciocínio dedutivo que estabelecia regras para inferência válida; isto permitiu verificação de argumentos pela forma lógica em vez de intuição, fornecendo fundação para ciência moderna.'
+    }
+  },
+  {
+    id: 3,
+    name: 'René Descartes: Matemática, Razão e a Revolução Científica',
+    dur: '12 min',
+    content: `
+      <h3>O Fundador da Filosofia Moderna</h3>
+      <p>René Descartes (1596-1650) nasceu na França durante período de transição intelectual entre Renascimento e Ilustração. Recebeu educação jesuíta excelente, que enfatizava lógica e scholasticism medieval. No entanto, durante seus estudos, Descartes ficou insatisfeito: percebeu que muito do que era ensinado era baseado em autoridade de antigos filósofos, e quando diferentes autoridades discordavam, não havia método para determinar quem estava certo.</p>
+      <p>Após completar educação formal, Descartes viajou extensivamente, participou em guerras, e teve tempo para reflexão profunda sobre conhecimento. Em 1628, retirou-se para Holanda, onde viveu por muitos anos dedicado à filosofia e matemática. Foi neste retiro que desenvolveu sua abordagem revolucionária ao conhecimento: se alguém quer conhecimento verdadeiro, deve começar com dúvida radical de tudo que não pode ser absolutamente certo.</p>
+      <h4>Ceticismo Metodológico e Dúvida Radical</h4>
+      <p>Em sua obra "Meditações sobre Filosofia Primeira", Descartes propõe exercício de dúvida radical: duvide de tudo que é possível duvidar. Os sentidos nos enganam? Possivelmente — objetos distantes parecem menores que são realmente, varas em água parecem quebradas, etc. E se estamos em sonho? Como sabemos que não estamos dormindo agora? E se um demônio maligno está nos enganando sistematicamente sobre tudo?</p>
+      <p>Este processo de dúvida sistemática continua até que se atinge algo que não pode ser racionalmente duvidado. Descartes identifica este ponto: dúvida em si. Se você duvida, então deve existir algo fazendo dúvida — um "eu" duvidando. Portanto: "Cogito, ergo sum" — "Penso, logo existo". Este é primeiro princípio absolutamente certo do qual todo conhecimento pode ser reconstruído.</p>
+      <blockquote class="quote">
+        "Penso, logo existo." — René Descartes
+      </blockquote>
+      <p>Esta abordagem foi revolucionária. Ao invés de aceitar autoridade ou tradição, Descartes estabeleceu método baseado em dúvida racional e verificação. Apenas o que passe por teste de razão deveria ser aceito. Este método não apenas transformou filosofia; formou fundação para método científico moderno. Ciência não aceita autoridade ou tradição; aceita apenas o que pode ser verificado através de observação e razão.</p>
+      <h4>Conexão entre Geometria e Filosofia</h4>
+      <p>Descartes era também matemático brilhante. Desenvolveu "geometria analítica", que conectava geometria com álgebra. Isto permitiu problemas geométricos serem resolvidos algebricamente e vice-versa. Sua criação do sistema de coordenadas cartesianas (chamado assim após seu nome latinizado, Cartesius) é fundação da matematização de espaço que permitiu subsequente desenvolvimento de cálculo e moderna física.</p>
+      <p>Mas para Descartes, importância da matemática era epistemológica, não apenas técnica. Matemática era modelo de conhecimento certo. Em matemática, começamos com axiomas simples que são evidentes por si e derivamos conclusões através de razão pura. Descartes visualizava filosofia poderia seguir mesmo modelo: começar com verdades evidentes (como "Penso, logo existo") e construir sistema de conhecimento através de razão dedutiva.</p>
+      <blockquote class="tip">
+        💡 Visão de Descartes de que conhecimento poderia ser estruturado como sistema matemático dedutivo influenciou subsequentes filósofos como Spinoza, que escreveu sua ética "more geometrico" (no modo geométrico).
+      </blockquote>
+      <h4>Dualismos e Questões Persistentes</h4>
+      <p>Descartes também é famoso (ou infame) por seu dualismo mente-corpo. Argumentava que dois substâncias fundamentais existem: res cogitans (coisa pensante, mente) e res extensa (coisa extensa, matéria). Mente é imaterial e livre; matéria é material e governada por leis mecânicas. Esta separação enfatizava importância da razão e livre vontade, mas criou "problema mente-corpo" que filósofos debateram desde então: como mente imaterial interage com corpo material?</p>
+      <p>Apesar de questões deixadas em aberto, contribuição de Descartes foi transformadora. Estabeleceu que filosofia deveria começar com dúvida racional, não com autoridade. Conectou método filosófico com método matemático e científico. Estabeleceu que conhecimento humano é possível através da razão, mesmo que sensorialmente enganados. Estes princípios formaram fundação da Ilustração e ciência moderna.</p>
+    `,
+    cards: {
+      q: 'Como o método de dúvida radical de Descartes revolucionou a filosofia?',
+      a: 'Descartes propôs duvidar sistematicamente de tudo até chegar a algo indubidável: "Penso, logo existo"; isto estabeleceu que conhecimento deveria ser baseado em razão e verificação, não em autoridade ou tradição, formando fundação do método científico moderno.'
+    }
+  },
+  {
+    id: 4,
+    name: 'Nicolau Maquiavel: Realismo Político e Análise do Poder',
+    dur: '12 min',
+    content: `
+      <h3>O Filósofo que Separou Política da Moralidade</h3>
+      <p>Nicolau Maquiavel (1469-1527) foi diplomata e escritor florentino que viveu durante período turbulento de Itália Renaissance. Trabalhou para República Florentina realizando missões diplomáticas delicadas e desenvolveu íntima compreensão de como poder realmente funciona na prática política, não em teoria. Em 1512, foi expulso de cargo quando família Medici retornou ao poder. Durante tempo de retiro forçado, escreveu sua obra mais famosa: "O Príncipe".</p>
+      <p>"O Príncipe" foi projetado como conselho prático para novo príncipe (jovem Medici) sobre como conquistar poder, mantê-lo, e expandi-lo. Ao contrário de tradições medievais de "espelhos de príncipes" que enfatizavam virtudes cristãs de bondade, misericórdia, e honestidade, Maquiavel oferecia análise crua e amoral de que realmente funciona em política.</p>
+      <h4>Virtude Versus Reputação: A Imoralidade da Política</h4>
+      <p>Maquiavel argumentava que um príncipe deveria parecer virtuoso, mas não ser necessariamente virtuoso. Uma aparência de bondade é importante para manter apoio popular, mas príncipe que realmente agisse por bondade seria frequentemente destruído por aqueles menos escrupulosos. Portanto, deve-se cultivar reputação de virtude enquanto mantém liberdade para agir immoralmente quando necessário.</p>
+      <p>Particularmente controverso era sua análise de lealdade. Se vassalos são leais apenas enquanto você aparenta benevolente, então você deve ser capaz de agir sem piedade quando necessário — execução de traidores reais ou imaginários, quebra de promessas quando desejável, e manipulação de população através de mentira e propaganda. Maquiavel não defendia que príncipe deveria ser estes coisas naturalmente; defendia que príncipe deveria ser capaz de ser estas coisas quando circunstâncias demandassem.</p>
+      <blockquote class="news">
+        📰 "O Príncipe" foi considerado tão imoral quando publicado que Igreja Católica o colocou no Índice de Livros Proibidos, e a palavra "maquiavélico" entrou no vocabulário europeu como sinônimo de manipulação sem princípios.
+      </blockquote>
+      <h4>Inovação Intelectual: Separação de Política e Moralidade</h4>
+      <p>A inovação genuína de Maquiavel não era propor que políticos fossem imorais — isto era óbvio a qualquer um observando política real. Inovação era reconhecer e articular que política é domínio separado com suas próprias regras, não subordinado a moralidade pessoal. Política tem lógica própria: busca e manutenção de poder.</p>
+      <p>Esta análise foi revolucionária porque permitiu compreensão desinteressada de política. Em vez de julgar políticos pela conformidade com padrões morais, alguém poderia analisar ações políticas por sua eficácia em alcançar objetivos políticos. Um príncipe que mente para manter poder pode ser "imoralista", mas é eficaz. Esta distinção entre moralidade pessoal e necessidade política continuaria a influenciar pensamento político subsequente.</p>
+      <h4>Legado: Realismo Político e Relações Internacionais</h4>
+      <p>A influência intelectual de Maquiavel foi profunda. Estabeleceu campo do realismo político moderno em relações internacionais. Quando estados contemporâneos calculam estratégia externa, não fazem isto baseado em considerações morais; fazem isto baseado em interesses nacionais e dinâmica de poder. Esta abordagem é diretamente maquiavélica — uma tentativa de entender política internacional em seus próprios termos, sem tentar normalizá-la através de moralidade.</p>
+      <p>Ironia da reputação de Maquiavel é que frequentemente é malentendido. Seu objetivo não era promover imoralismo; era oferecer análise realista de como poder funciona. Entender realmente como política funciona, argumentava Maquiavel, é pré-requisito para qualquer um desejando agir efetivamente nela. Se você insiste em acreditar que políticos agem por bondade quando realmente agem por interesse próprio, você é ingênuo e será explorado.</p>
+      <blockquote class="example">
+        📌 Todas as análises modernas de poder — desde análise de diplomacia até compreensão de política corporativa — carregam influência do entendimento maquiavélico de que poder tem lógica própria separada de moralidade pessoal.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Qual foi a principal inovação intelectual de Maquiavel em sua análise de política?',
+      a: 'Maquiavel separou política de moralidade pessoal, permitindo análise desinteressada de poder: políticos devem parecer virtuosos mas não ser necessariamente virtuosos; isto estabeleceu campo do realismo político moderno independente de considerações morais.'
+    }
+  },
+  {
+    id: 5,
+    name: 'John Locke: Direitos Naturais e Democracia Liberal',
+    dur: '12 min',
+    content: `
+      <h3>O Filósofo da Liberdade Política</h3>
+      <p>John Locke (1632-1704) foi filósofo inglês que viveu durante período de grande instabilidade política — Guerra Civil Inglesa, Interregno de Cromwell, e Restauração de Stuart. Suas experiências políticas moldaram sua filosofia. Serviu como advisor à figuras políticas progressivas e foi forçado ao exílio por algum tempo devido a suas ideias sobre limite ao poder real. Durante exílio, escreveu suas obras mais influentes.</p>
+      <p>Diferentemente de Maquiavel, Locke não tentava ser amoral em análise política. Em vez disso, tendia perguntar: qual é fundação moral legítima de poder político? Como pode governo ser justificado moralmente? Esta pergunta levou a revolucionária resposta que fundamentou democracia liberal moderna.</p>
+      <h4>Direitos Naturais e Estado de Natureza</h4>
+      <p>Locke começou com pergunta: no "estado de natureza" — situação humana anterior a existência de governo — que direitos os humanos possuem? Ao contrário de Thomas Hobbes, que argumentava que estado de natureza era guerra de todos contra todos, Locke argumentava que humanos naturalmente possuem direitos: vida, liberdade, e propriedade.</p>
+      <p>Estes não são direitos conferidos por governo. São direitos naturais que toda pessoa possui simplesmente por ser humana. Governo não cria estes direitos; existem antes dele. O que governo faz é protegê-los. Esta noção era revolucionária: direitos não vêm de graça do príncipe; pertencem a cada pessoa como questão de direito natural.</p>
+      <blockquote class="quote">
+        "Todos os homens nascem com direito igual a viver em liberdade e a perseguir felicidade."
+      </blockquote>
+      <p>Como em governo justificado? Através do "contrato social". Indivíduos concordam em renunciar alguns direitos e submeter-se à lei se governo irá protegê-los em seus direitos naturais restantes. Este consentimento é fundação legítima de poder político. Governo que não protege direitos naturais de seus súditos, que invade propriedade, que restringe liberdade sem justificação — tal governo violou contrato social e povo tem direito de revogá-lo.</p>
+      <h4>Direito à Rebelião: Fundação da Democracia</h4>
+      <p>Esta tese — que povo pode revoltar-se contra governo injusto — era radical. Tradições anteriores de pensamento político havia estabelecido que autoridade dos governantes era absoluta e divina. Locke argumentava que governo é instrumento pelos quais povo alcança fim legítimo: proteção de direitos. Se governo falha neste fim, é quebrado contrato e revolução é justificada.</p>
+      <p>Isto não era puramente teórico. Locke escreveu parcialmente justificando a Revolução Gloriosa de 1688 que depôs James II e estabeleceu monarquia constitucional. Suas ideias também influenciaram diretamente os escritores americanos da Declaração de Independência 88 anos depois. Thomas Jefferson ecoou exatamente linguagem Lockiana quando escreveu que homens eram "endowed by Creator com direitos inalienáveis" de "vida, liberdade, e busca da felicidade".</p>
+      <h4>Separação de Poderes e Limite de Governo</h4>
+      <p>Além de direitos naturais e consentimento, Locke também argumentava para separação e limite de poder governamental. O executivo, legislativo, e "poder federativo" (relações internacionais) deviam ser separados e capazes de verificação recíprocal. Nenhuma pessoa ou instituição deveria concentrar poder demais. Este princípio de separação de poderes se tornou fundação das democracias constitucionais, incluso Estados Unidos.</p>
+      <p>A influência de Locke foi imensa. Suas "Two Treatises of Government" tornaram-se textos fundamentais para revoluções liberais de século XVIII e XIX. Ideia de que governo deve ser limitado, que direitos naturais devem ser protegidos, que consentimento governado é necessário para legitimidade — estes são fundações do liberalismo moderno e democracia constitucional. Sem Locke, mundo moderno liberal não existiria.</p>
+      <blockquote class="tip">
+        💡 Praticamente toda constituição democrática moderna — da Declaração de Independência americana à Declaração Universal de Direitos Humanos da ONU — carrega impressão direta de ideias de Locke sobre direitos naturais e consentimento governado.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Qual foi a contribuição fundamental de John Locke para a teoria política democrática?',
+      a: 'Locke argumentou que humanos possuem direitos naturais inatos de vida, liberdade, e propriedade; governo é justificado apenas se protege estes direitos através de consentimento; se governo viola direitos, povo tem direito de rebelião.'
+    }
+  },
+  {
+    id: 6,
+    name: 'Karl Marx: Materialismo Histórico e Crítica do Capitalismo',
+    dur: '12 min',
+    content: `
+      <h3>O Filósofo que Transformou História</h3>
+      <p>Karl Marx (1818-1883) foi filósofo, economista, e ativista revolucionário que viveu durante industrialização europeia acelerada. Testemunhou transformação da sociedade através da urbanização em massa, mecanização de trabalho, e intensificação de desigualdade. Seus escritos moldaram subsequente século XX mais que talvez qualquer outro intelectual — para bem (inspirando movimentos pelo direitos de trabalhadores) ou mal (fornecendo fundação para totalitarismos comunistas).</p>
+      <p>Marx começou como hegeliano esquerdo, discípulo da filosofia de Hegel que entendia história como desenvolvimento progressivo através de contradição dialética. No entanto, Marx rejeitou aspecto idealista de Hegel. Hegel acreditava que ideia era força motriz da história. Marx inverteu isto: acreditava que materiais condições econômicas — base econômica — determinavam ideias superstrutura (incluindo política, religião, e filosofia) que construída sobre ela.</p>
+      <h4>Materialismo Histórico: Economia Determina História</h4>
+      <p>Esta inversão era revolucionária. Ao invés de ver história como batalha de ideias (liberdade vs. tirania, cristianismo vs. paganismo), Marx via história como batalha econômica entre classes sociais. Cada época histórica tinha seu modo de produção e relações de classe correspondentes. Escravismo tinha senhores escravistas e escravos. Feudalismo tinha nobres e servos. Capitalismo tem burguesia (proprietários de meios de produção) e proletariado (trabalhadores que vendem sua força de trabalho).</p>
+      <p>Crucialmente, Marx argumentava que todas sociedades de classe até então tinham sido construídas sobre exploração. O excedente criado pelo trabalho era appropriated pelo dono dos meios de produção. No feudalismo, servo trabalha para señor e señor toma a maior parte da produção. No capitalismo, trabalhador cria valor muito maior que salário que recebe; diferença é lucro que capitalista apropria.</p>
+      <p>Esta exploração, argumentava Marx, era insustentável. Contradições internas do capitalismo — necessidade de competição leva a concentração de capital, que leva a desemprego aumentado e empobrecimento de trabalhadores — eventualmente causaria colapso. Quando proletariado compreendesse que era explorado, se levantaria em revolução, tomaria controle dos meios de produção, e criaria sociedade comunista sem classe.</p>
+      <blockquote class="example">
+        📌 Marx escreveu que "história de todas as sociedades até agora é história de conflito de classe" — afirmação que transformou como historiadores e pensadores políticos compreendiam o passado.
+      </blockquote>
+      <h4>Crítica do Capitalismo e Análise de Valor</h4>
+      <p>Além de materialismo histórico, Marx ofereceu crítica econômica sofisticada do capitalismo em seu trabalho monumental "Das Kapital". Desenvolveu "teoria do valor do trabalho" — ideia de que valor de mercadoria é determinado pela quantidade de trabalho necessária para produzi-la. No entanto, trabalhador é pago menos que valor criado — a diferença é "mais-valia" que apropriado pelo capitalista.</p>
+      <p>Esta análise, enquanto questionada por economistas posteriores, ofereceu explicação de como lucro era possível no capitalismo. Permitiu foco em exploração sistemática escondida dentro relações contratuais aparentemente iguais entre empregador e empregado. Trabalhador que assina contrato livremente não percebe que está sendo sistematicamente expropriado de valor que cria.</p>
+      <h4>Legado: Ideologia Revolucionária e Crítica Social</h4>
+      <p>Enquanto as previsões específicas de Marx — como que capitalismo desapareceria no século XX ou que países industriais se revolveriam primeiro — não se realizaram, sua influência foi enorme. Proporcionou arcabouço intelectual para revoluções comunistas de século XX na Rússia, China, Vietnã, e alhures. Milhões morreram em guerras ideológicas inspiradas por ideias marxistas.</p>
+      <p>Além disso, mesmo pensadores não-marxistas foram influenciados por lentes que Marx forneceu. Análise de poder econômico, importância de condições materiais, dinâmica de classe — estes se tornaram ferramentas intelectuais que mesmo liberais e conservadores usam. Crítica feminista incorpora análise materialista de gênero. Estudos de raça incorporam análise de exploração econômica. Marx não desapareceu com colapso da União Soviética; permanece intelectual cuja obra oferece ferramentas para crítica de estruturas sociais.</p>
+      <blockquote class="tip">
+        💡 Mesmo críticos de Marx reconhecem que seu trabalho foi tentativa mais ambiciosa para compreender como economia estrutura sociedade — uma pergunta permanentemente importante mesmo se respostas específicas dele fossem equivocadas.
+      </blockquote>
+    `,
+    cards: {
+      q: 'O que Marx entendia por materialismo histórico e como isto diferenciava sua análise de história?',
+      a: 'Marx argumentava que as condições econômicas e relações de classe (base material) determinam ideias, política e cultura (superestrutura), não o inverso; história não é batalha de ideias, mas batalha de classes pela apropriação de valor econômico.'
+    }
+  },
+  {
+    id: 7,
+    name: 'Friedrich Nietzsche: Morte de Deus e Vontade de Poder',
+    dur: '12 min',
+    content: `
+      <h3>O Filósofo que Questionou Toda Moralidade</h3>
+      <p>Friedrich Nietzsche (1844-1900) foi filósofo alemão perturbador que passou sua carreira questionando raízes da civilização ocidental. Começou como estudioso brilhante de filologia clássica, mas gradualmente dedicou-se à filosofia, produzindo uma das obras mais provocativas da tradição ocidental. Sofreu de problemas de saúde crônicos — enxaquecas debilitantes, cegueira parcial, insônia — que influenciaram sua perspectiva pessimista sobre existência humana.</p>
+      <p>A pergunta central que guia pensamento de Nietzsche é: qual é base real de moralidade e valores? Ele observava que sociedade cristã ocidental havia construído sua moralidade sobre conceitos como compaixão, humildade, igualdade, e sacrifício. Mas de onde vieram estes valores? Nietzsche argumentava que eles não eram eternas verdades, mas produtos históricos — e mais, que eram produtos de ressentimento de fracos contra os fortes.</p>
+      <h4>Crítica da Moralidade Cristã e Escrava</h4>
+      <p>Nietzsche distinguiu entre dois tipos de moralidade: "moral dos mestres" e "moral dos escravos". A moral dos mestres — prevalente em sociedades aristocráticas antigas — valoriza força, poder, vitalidade, e afirmação da vida. O bem é associado com força, saúde, e domínio; o mau com fraqueza e escravidão. Isto era uma moralidade de afirmação.</p>
+      <p>A moral escrava surgiu quando escravos e fracos ganharam poder cultural através do cristianismo. Inverteu valores: agora fraqueza é virtude (humildade, compaixão, castidade), força é vício (luxúria, orgulho, agressão). Esta inversão era ato de ressentimento brilhante. Os fracos não conseguiam vencer os fortes em batalha, então inventaram sistema de valores que condenava força como pecaminosa. Conseguiram seu ressentimento psicológico transformando adversários em pecadores.</p>
+      <blockquote class="quote">
+        "Deus está morto." — Friedrich Nietzsche
+      </blockquote>
+      <p>Declaração de Nietzsche que "Deus está morto" não era ataque literal a fé religiosa. Era diagnóstico cultural: o declínio da crença em Deus significava que fundação tradicional de moralidade ocidental havia colapsado. Cristãos ofereciam moralidade baseada em vontade de Deus. Agora que Deus não era mais credível, em que base podemos construir moralidade?</p>
+      <h4>Além do Bem e do Mal: Revalorização de Valores</h4>
+      <p>Nietzsche propunha que precisamos de "revalorização de todos valores". Em vez de aceitar moralidade cristã de compaixão passiva, precisamos de moralidade de afirmação ativa — um "sim" à vida. Aqueles capazes de criar novos valores através de sua própria vontade — os que ele chamava de "super-homem" (Übermensch) — representariam novo tipo de humanidade que transcenderia moralidade convencional.</p>
+      <p>Este conceito foi grotescamente distorcido por nazistas posteriores que tentaram usar Nietzsche para justificar supremacia ariana. Nietzsche horrorizaria com isto. Seu super-homem era indivíduo que transcendia convenção através de excelência intelectual e criatividade, não conquistador militar. No entanto, linguagem de Nietzsche — seu apelo a poder, sua crítica de "rebanho" moral comum, sua visão de "super-homem" — era potencialmente perigosa quando apropriada por ideologias totalitárias.</p>
+      <h4>Vontade de Poder: Dinâmica Fundamental da Existência</h4>
+      <p>Conceito mais penetrante de Nietzsche talvez seja "vontade de poder" — ideia de que força motriz fundamental da vida não é sobrevivência (como darwinistas argumentavam) ou busca de prazer, mas busca de poder e auto-superação. Tudo que vive está constantemente tentando expandir poder, superar resistência, criar novos valores.</p>
+      <p>Isto é diferente de "sobrevivência do mais apto" darwiniano que levou a interpretações brutais de competição. Vontade de poder é mais sutil e pervasiva. Inclui desejo de criar, de expressar, de transformar mundo de acordo com vontade própria. Artista criando obra-prima está exercitando vontade de poder. Cientista buscando verdade está exercitando vontade de poder. Este conceito oferecia explicação de comportamento humano que era mais sofisticada que utilitarismo ou hedonismo simples.</p>
+      <blockquote class="tip">
+        💡 Nietzsche antecipou muitas preocupações da psicologia moderna: importância de ressentimento reprimido, dinâmica de poder em relacionamentos, papel de avaliação pessoal em definição de bem-estar psicológico.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Como Nietzsche criticava a moralidade cristã e qual era sua proposta alternativa?',
+      a: 'Nietzsche argumentava que moralidade cristã era "moral de escravos" baseada em ressentimento — os fracos inverteram valores para condenar a força dos fortes; propunha "revalorização de valores" onde indivíduos extraordinários (super-homens) criariam novos valores através de vontade de poder.'
+    }
+  },
+  {
+    id: 8,
+    name: 'Ludwig Wittgenstein: Filosofia da Linguagem e Significado',
+    dur: '12 min',
+    content: `
+      <h3>O Filósofo que Reformou Pensamento Sobre Linguagem</h3>
+      <p>Ludwig Wittgenstein (1889-1951) foi filósofo austríaco-britânico que trabalhou em dois períodos intelectuais distintos, produzindo duas filosofias quase opostas. Nasceu em Viena em família aristocrática extremamente rica. Inicialmente estudou engenharia, mas foi atraído à filosofia após ler Bertrand Russell. Trabalhou com Russell em Cambridge na lógica, depois serviu como soldado em Primeira Guerra Mundial. Após guerra, tornou-se professor de escola primária na Áustria.</p>
+      <p>Seu primeiro trabalho principal, "Tractatus Logico-Philosophicus", foi manuscrito revolucionário que ele completou durante Primeira Guerra Mundial. Oferecia análise lógica de linguagem como fundação para filosofia. Mas após reler seu próprio trabalho anos depois, Wittgenstein percebeu que era fundamentalmente equivocado. Retornou à filosofia na década de 1930 e gastou seus anos finais desenvolvendo filosofia completamente diferente.</p>
+      <h4>Tractatus: Linguagem como Imagem da Realidade</h4>
+      <p>No Tractatus, Wittgenstein argumentava que linguagem funciona mapeando realidade. Uma proposição é essencialmente imagem de possível estado de coisas. Quando digo "o gato está no tapete", estou oferecendo imagem de situação possível: gato em tal posição em relação a tapete. Esta imagem pode corresponder (verdade) ou não corresponder (falsidade) à realidade.</p>
+      <p>Isto oferecia explicação de como linguagem representa realidade. Também determinava fronteiras da filosofia: coisas que não conseguem ser representadas por linguagem proposicional não podem ser ditas e devem ser silenciadas. Este incluía ética, estética, e misticismo — coisas Wittgenstein pessoalmente considerava mais importantes que ciência factual. "Whereof one cannot speak, thereof one must be silent" ("Sobre aquilo de que não se consegue falar, deve-se calar") é frase final famosa do Tractatus.</p>
+      <blockquote class="example">
+        📌 Tractatus foi tão conciso — apenas 75 páginas — que se tornou um de trabalhos filosóficos mais densos já produzidos. Proposições filosoficamente densas eram apresentadas com notação lógica severa.
+      </blockquote>
+      <h4>Virada Linguística: Significado Como Uso</h4>
+      <p>Nos anos 1930s, Wittgenstein mudou de opinião radicalmente. Começou a ensinar em Cambridge que sua concepção anterior estava equivocada. Significado de palavra não é essência que a palavra representa (como Tractatus sugeria), nem é estrutura lógica profunda. Significado é como palavra é usada em contexto social vivo. Diferentes contextos produzem diferentes significados.</p>
+      <p>Exemplo que oferecia era "jogo". Que essência todas os jogos compartilham? Xadrez, poker, futebol, brincadeira de criança "pega-pega" — Wittgenstein argumentava que não há essência única. São similares de forma que Wittgenstein chamava de "semelhança de família". Eles compartilham sobreposição de características, mas nenhuma característica é comum a todos. O significado de "jogo" é definido pelos usos diferentes em contextos diferentes, não por essência.</p>
+      <p>Esta observação simples mas profunda revolucionou filosofia analítica. Sugeriu que muitos paradoxos filosóficos surgiam de confusão sobre como palavras funcionavam. Muitos problemas filosóficos eram "doenças do pensamento" causadas por uso inadequado de linguagem. Se compreendêssemos como linguagem realmente funciona em contexto, muitos problemas desapareceriam.</p>
+      <h4>Jogos de Linguagem e Formas de Vida</h4>
+      <p>Conceito central de filosofia posterior de Wittgenstein é "jogo de linguagem". Diferentes contextos — pregar, contar histórias, rezar, informar, fazer piada, insultar — são diferentes "jogos de linguagem", cada um com suas próprias regras e significados. Uma palavra pode ter significado completamente diferente em um jogo vs. outro. Para compreender significado, você deve compreender jogo de linguagem específico em que palavra está sendo usada.</p>
+      <p>Além disso, cada jogo de linguagem é inserido em "forma de vida" — contexto de vida humana compartilhado. Somente porque compartilhamos forma de vida comum (temos corpos similares, experiências similares, necessidades similares), conseguimos compreender um ao outro. Não há linguagem privada — significado é necessariamente compartilhado e social.</p>
+      <blockquote class="tip">
+        💡 A ênfase de Wittgenstein em que significado é social e contextual anticipou noções modernas de que sentido é culturalmente construído e que compreensão requer compartilhamento de horizonte comum.
+      </blockquote>
+      <p>Influência de Wittgenstein sobre filosofia, lógica, linguística, e mesmo inteligência artificial foi profunda. Sua insistência que significado vem de uso em contexto social se tornou ortodoxia em filosofia de linguagem. Seu tratamento de problemas filosóficos como arising from linguística confusão moldou filosofia analítica por décadas. Trabalho posterior de teóricos da interpretação e pragmáticos todos se constroem sobre fundações que Wittgenstein estabeleceu.</p>
+    `,
+    cards: {
+      q: 'Como a visão de Wittgenstein sobre significado mudou entre seu Tractatus e suas obras posteriores?',
+      a: 'No Tractatus, Wittgenstein entendia significado como correspondência entre proposição e realidade; depois reformulou radicalmente: significado vem do uso em contextos sociais diferentes (jogos de linguagem) inseridos em formas de vida compartilhadas.'
+    }
+  },
+  {
+    id: 9,
+    name: 'Michel Foucault: Poder, Conhecimento e Identidade Social',
+    dur: '12 min',
+    content: `
+      <h3>O Filósofo que Desmascarou Estruturas de Poder</h3>
+      <p>Michel Foucault (1926-1984) foi filósofo e historiador francês cuja obra transformou como compreendemos poder, sexualidade, e construção de conhecimento. Começou sua carreira como historiador de ideias, mas gradualmente desenvolveu abordagem original que examina como poder opera através de aparentemente instituições neutras como prisões, hospitais, e escolas. Trabalho de Foucault é difícil, frequentemente obscuro, mas sua influência sobre pensamento contemporâneo é imensurável.</p>
+      <p>Uma obsessão consistente na obra de Foucault é relação entre poder e conhecimento. Como distingue-se "conhecimento" de poder? Foucault argumentava que esta distinção é ilusória. Conhecimento não é neutro; é sempre interligado com poder. Quem consegue definir o que conta como "conhecimento" já exerceu poder enorme. Estabelecer disciplina — como psiquiatria ou criminologia — é exercício de poder tanto quanto é criação de conhecimento.</p>
+      <h4>Genealogia do Poder Moderno: Além da Repressão</h4>
+      <p>Foucault propunha que análise tradicional de poder era inadequada. Frequentemente imaginamos poder como fenômeno de repressão: rei que proíbe, estado que pune, elite que oprime. Foucault argumentava que este é compreensão superficial. Poder moderno não funciona principalmente através de repressão negativa. Funciona através de produção positiva — ela produz conhecimento, verdade, identidades, desejos.</p>
+      <p>Exemplo: A "sexualidade" moderno não é simplesmente expresso livremente após liberação de repressão vitoriana. É produzido e regulado através de discursos científicos, médicos, psicológicos. Psiquiatras que catalogam "perversões sexuais" não estão apenas descrevendo realidades pré-existentes; estão criando categorias que definem identidades. Uma vez que você é categorizado como "homossexual" por discurso psiquiátrico, você assume esta identidade e organiza sua vida ao redor dela.</p>
+      <blockquote class="quote">
+        "Poder é aquilo que diz não." — Michel Foucault
+      </blockquote>
+      <p>Esta observação é paradoxal. Foucault diz poder não é apenas repressivo, mas é aquilo que diz não? Mas significado é mais sutil: poder moderno diz não através de produção de conhecimento "verdadeiro". Medicina diz que certas práticas sexuais não são saudáveis. Psicologia diz certas disposições são patológicas. Biologia diz certas características são "naturais" e outras "desviantes". Estes negativos — classificação de o que é anormal — são constructos de poder.</p>
+      <h4>Vigilância e Disciplina: O Panóptico</h4>
+      <p>Uma de observações mais penetrantes de Foucault é análise de disciplina moderna através de metáfora do panóptico. O panóptico é estrutura arquitetônica de prisão (proposto por Jeremy Bentham) onde guarda central pode observar todos os prisioneiros, mas prisioneiros não conseguem saber se estão sendo observados. Resultado é que prisioneiros internalizamvigilância; comportam-se bem mesmo quando ninguém está olhando porque sabem que PODEM estar sendo observados.</p>
+      <p>Foucault enxergava esta dinâmica não apenas em prisões, mas em todo aparato moderno: escolas com sua vigilância de alunos, hospitais com sua observação de pacientes, fábricas com sua supervisão de trabalhadores. Gradualmente, sociedades modernas implementaram técnicas de vigilância distribuídas que criaram "docile bodies" — corpos que se controlam a si mesmos porque internalizaram vigilância.</p>
+      <blockquote class="example">
+        📌 A análise de Foucault do panóptico é profundamente presciente em era de câmeras de segurança, vigilância eletrônica, e coleta de dados — não foi que Foucault predisse tecnologia específica, mas percebeu lógica de controle social através de vigilância distribuída.
+      </blockquote>
+      <h4>Construção Social de Identidade e Sexualidade</h4>
+      <p>Trabalho de Foucault sobre sexualidade e identidade é especialmente influente. Em "A História da Sexualidade", argumentava que sexualidade moderna não é verdade natural descoberta, mas construção histórica produzida através de discurso. Categorias como "heterossexual" e "homossexual" não existiram antes do século XIX. Comportamento sexual existiu sempre, mas identidades sexuais como as conhecemos hoje são produtos de discurso científico e médico do século XIX.</p>
+      <p>Isto não nega realidade de atração sexual ou desejo. Mas sugere que como entendemos e categorizamos nossa sexualidade, como a incorporamos em identidade — isto é historicamente construído. Diferentes culturas em diferentes períodos categorizaram sexualidade diferentemente. A heterossexualidade não é "natural" e tudo mais "desviante"; é categoria historicamente específica produzida em contexto particular.</p>
+      <p>Esta análise teve enormes implicações. Sugeriu que identidades que pareciam naturais e imutáveis eram na verdade contingentes e históricos. Se você consegue questionar como sexualidade é construída, por que não questionar construção de outras categorias identitárias — raça, gênero, classe? Trabalho de Foucault se tornou fundador para estudos de gênero, estudos queer, e análise crítica de raça.</p>
+      <blockquote class="tip">
+        💡 A perspectiva de Foucault que "conhecimento" é frequentemente máscara para exercício de poder, que categorias que parecem naturais são construções históricas — isto se tornou prism através do qual pensadores contemporâneos examinam instituições sociais.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Como Foucault entendia a relação entre poder e conhecimento?',
+      a: 'Foucault argumentava que conhecimento nunca é neutro; é sempre interligado com poder; conhecimento moderno funciona através de produção positiva de categorias, identidades, e discursos que regulam e controlam corpos, não apenas através de repressão negativa.'
+    }
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
