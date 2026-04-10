@@ -1647,6 +1647,25 @@ var MA_COURSES = [
     color: '#bc6c25',
     addedTs: 1775832778905,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/iv.jpg',
+    id: 'iv',
+    name: 'Investimentos para Iniciantes',
+    desc: 'Aprenda os fundamentos para começar a investir, entender risco e retorno, conhecer os principais ativos e construir uma base sólida para tomar decisões financeiras mais inteligentes.',
+    file: 'investimentos-iniciantes.html',
+    cat: 'Finanças & Economia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IV_HENRY_2026_MASTER',
+    ak: 'iv_auth',
+    storagePrefix: 'iv_',
+    icon: '💰',
+    color: '#588157',
+    addedTs: 1775832781951,
+    active: true
   }
 ];
 var MA_CATS = [
