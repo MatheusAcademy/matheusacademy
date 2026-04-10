@@ -1571,6 +1571,25 @@ var MA_COURSES = [
     color: '#F77F00',
     addedTs: 1775832768294,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/fc.jpg',
+    id: 'fc',
+    name: 'Foco e Consistência em um Mundo de Distrações',
+    desc: 'Ensina como vencer a procrastinação, reduzir distrações e manter constância mesmo em ambientes cheios de estímulos.',
+    file: '03-foco-consistencia.html',
+    cat: 'Desenvolvimento',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'FC_HENRY_2026_MASTER',
+    ak: 'fc_auth',
+    storagePrefix: 'fc_',
+    icon: '🚀',
+    color: '#f77f00',
+    addedTs: 1775832770753,
+    active: true
   }
 ];
 var MA_CATS = [
