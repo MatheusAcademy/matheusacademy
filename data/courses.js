@@ -1229,6 +1229,25 @@ var MA_COURSES = [
     color: '#6a0572',
     addedTs: 1775831107592,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/nc.jpg',
+    id: 'nc',
+    name: 'Neurociência do Comportamento Humano',
+    desc: 'Explica como o cérebro influencia emoções, decisões, hábitos, vícios, motivação e mudanças de comportamento.',
+    file: '07-neurociencia-comportamento.html',
+    cat: 'Psicologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'NC_HENRY_2026_MASTER',
+    ak: 'nc_auth',
+    storagePrefix: 'nc_',
+    icon: '🧩',
+    color: '#7209b7',
+    addedTs: 1775831110720,
+    active: true
   }
 ];
 var MA_CATS = [
