@@ -2737,12 +2737,36 @@ async function loadAlunosStorage(){
   if(!window.maDb){ _alunosData=[]; return; }
   try{
     showFbStatus('Carregando alunos do Firebase...');
+
+    // Tentar pegar metadata do Firebase Auth (lastSignInTime) se disponivel
+    var _authMetaMap = {};
+    try {
+      if (window.firebase && firebase.auth) {
+        var authUsers = await firebase.auth().listUsers;
+        // Firebase client SDK nao expoe listUsers, mas podemos pegar do user atual
+        var currentUser = firebase.auth().currentUser;
+        if (currentUser && currentUser.metadata) {
+          _authMetaMap[currentUser.uid] = {
+            lastSignIn: currentUser.metadata.lastSignInTime,
+            creation: currentUser.metadata.creationTime
+          };
+        }
+      }
+    } catch(e) { /* auth metadata opcional */ }
+
     var snap = await maDb.collection('usuarios').orderBy('data_cadastro','desc').limit(500).get();
     _alunosData = snap.docs.map(function(doc){
       var d = doc.data();
 
-      // Resolver ultimo_acesso de varios campos possiveis
-      var ua = d.ultimo_acesso || d.ultimoAcesso || d.lastLogin || d.last_access || d.lastAccess || null;
+      // Resolver ultimo_acesso de MUITOS campos possiveis
+      var ua = d.ultimo_acesso || d.ultimoAcesso || d.lastLogin || d.last_access || d.lastAccess
+        || d.lastSignIn || d.last_sign_in || d.ultimaVisita || d.ultima_visita
+        || d.last_activity || d.lastActivity || d.updatedAt || d.updated_at || null;
+
+      // Se nao achou no Firestore, tentar Auth metadata
+      if (!ua && _authMetaMap[doc.id] && _authMetaMap[doc.id].lastSignIn) {
+        ua = _authMetaMap[doc.id].lastSignIn;
+      }
       var uaStr = '';
       if (ua) {
         if (typeof ua.toDate === 'function') uaStr = ua.toDate().toISOString();
@@ -2752,7 +2776,7 @@ async function loadAlunosStorage(){
       }
 
       // Resolver XP de varios campos possiveis
-      var xp = d.xp_total || d.xpTotal || d.xp || d.totalXp || d.pontos || 0;
+      var xp = d.xp_total || d.xpTotal || d.xp || d.totalXp || d.pontos || d.points || d.score || d.total_points || 0;
 
       // Resolver streak de varios campos possiveis
       var streak = d.streak_atual || d.streakAtual || d.streak || d.currentStreak || 0;
@@ -2935,9 +2959,9 @@ function renderTabela(){
       +'<td><span style="font-family:var(--mono);font-size:11px">'+(a.streak||0)+'🔥</span></td>'
       +'<td style="font-size:11px;color:var(--t2)">'+fmtData(a.ultimoAcesso)+'</td>'
       +'<td><div class="al-actions">'
-        +'<button class="al-btn" onclick="openDrawer(\''+a.uid+'\')">👁</button>'
+        +'<button class="al-btn" onclick="openDrawer(\''+a.uid+'\')" title="Ver detalhes">👁</button>'
+        +'<button class="al-btn" onclick="debugAluno(\''+a.uid+'\')" title="Debug Firebase" style="background:rgba(99,102,241,.08);border-color:rgba(99,102,241,.25)">🔍</button>'
         +(a.telefone?'<button class="al-btn wa" onclick="abrirWA(\''+a.uid+'\')">💬</button>':'')
-        +'<button class="al-btn em" onclick="prepEmail(\''+escH(a.email)+'\')">📧</button>'
         +'<button class="al-btn xp" onclick="addXP(\''+a.uid+'\')">⚡</button>'
         +'<button class="al-btn dl" onclick="delAluno(\''+a.uid+'\')">🗑</button>'
       +'</div></td>'
@@ -3132,40 +3156,141 @@ async function recalcStreakAll() {
   alert('🔥 Streak recalculado!\n\n' + updated + ' aluno(s) atualizado(s)' + (errors ? '\n⚠️ ' + errors + ' erro(s)' : ''));
 }
 
-function debugAluno() {
+function debugAluno(uid) {
   if (!_alunosData.length) { alert('Carregue os alunos primeiro.'); return; }
-  var uid = prompt('UID do aluno (ou deixe vazio para ver todos):');
-  var target = uid ? _alunosData.filter(function(a){return a.uid===uid;}) : _alunosData;
-  if (!target.length) { alert('Aluno nao encontrado.'); return; }
+  if (!uid) uid = prompt('UID do aluno (ou deixe vazio para ver todos):');
+  var target = uid ? _alunosData.filter(function(a){return a.uid===uid||a.email===uid;}) : _alunosData;
+  if (!target.length) { alert('Aluno nao encontrado com: ' + uid); return; }
 
-  var info = target.map(function(a) {
+  // Função para formatar valor bruto
+  function fmtVal(v) {
+    if (v === null || v === undefined) return '<span style="color:#64748b">null</span>';
+    if (typeof v === 'object' && v.toDate) {
+      try { return '<span style="color:#86efac">Timestamp → ' + v.toDate().toISOString() + '</span>'; } catch(e){}
+    }
+    if (typeof v === 'object' && v.seconds) return '<span style="color:#86efac">Seconds → ' + new Date(v.seconds*1000).toISOString() + '</span>';
+    if (typeof v === 'object' && !Array.isArray(v)) return '<span style="color:#a78bfa">{object: ' + Object.keys(v).length + ' keys}</span>';
+    if (Array.isArray(v)) return '<span style="color:#93c5fd">[' + v.length + ' items]</span>';
+    if (typeof v === 'boolean') return '<span style="color:' + (v ? '#86efac' : '#fca5a5') + '">' + v + '</span>';
+    if (typeof v === 'number') return '<span style="color:#fcd34d">' + v + '</span>';
+    return '<span style="color:#e2e8f0">"' + escH(String(v)).substring(0, 100) + '"</span>';
+  }
+
+  var html = '<div style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);z-index:9999;overflow-y:auto;padding:20px" onclick="if(event.target===this)this.remove()">';
+  html += '<div style="max-width:700px;margin:0 auto;background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:20px">';
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">';
+  html += '<div style="font-size:16px;font-weight:800;color:var(--txt)">🔍 Debug Firebase — ' + target.length + ' aluno(s)</div>';
+  html += '<button onclick="this.closest(\'div[style*=fixed]\').remove()" style="background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3);border-radius:6px;padding:4px 12px;cursor:pointer;font-size:11px">✕ Fechar</button>';
+  html += '</div>';
+
+  target.forEach(function(a) {
     var raw = a._raw || {};
-    return '=== ' + a.nome + ' (' + a.uid + ') ===\n'
-      + 'email: ' + a.email + '\n'
-      + 'xp (resolvido): ' + a.xp + '\n'
-      + 'streak (resolvido): ' + a.streak + '\n'
-      + 'streakRecord: ' + a.streakRecord + '\n'
-      + 'diasAtivos: ' + a.diasAtivos + '\n'
-      + 'ultimoAcesso: ' + (a.ultimoAcesso || 'VAZIO') + '\n'
-      + 'nivel: ' + a.nivel + '\n'
-      + '--- Campos brutos Firebase ---\n'
-      + 'xp_total: ' + (raw.xp_total || 'null') + '\n'
-      + 'xpTotal: ' + (raw.xpTotal || 'null') + '\n'
-      + 'xp: ' + (raw.xp || 'null') + '\n'
-      + 'pontos: ' + (raw.pontos || 'null') + '\n'
-      + 'streak_atual: ' + (raw.streak_atual || 'null') + '\n'
-      + 'streakAtual: ' + (raw.streakAtual || 'null') + '\n'
-      + 'streak: ' + (raw.streak || 'null') + '\n'
-      + 'ultimo_acesso: ' + (raw.ultimo_acesso || 'null') + '\n'
-      + 'ultimoAcesso: ' + (raw.ultimoAcesso || 'null') + '\n'
-      + 'lastLogin: ' + (raw.lastLogin || 'null') + '\n'
-      + 'dias_ativos: ' + (raw.dias_ativos || 'null') + '\n'
-      + 'Todas as chaves: ' + Object.keys(raw).join(', ');
-  }).join('\n\n');
+    var keys = Object.keys(raw).sort();
 
-  // Mostrar num alert ou console
-  console.log(info);
-  prompt('Debug (ver console para mais):', info.substring(0, 300));
+    html += '<div style="background:var(--sf);border:1px solid var(--brd);border-radius:10px;padding:14px;margin-bottom:12px">';
+    // Header do aluno
+    html += '<div style="font-size:13px;font-weight:700;color:var(--acc2);margin-bottom:4px">' + escH(a.nome || '—') + '</div>';
+    html += '<div style="font-size:10px;color:var(--t3);margin-bottom:10px">' + escH(a.email) + ' · UID: ' + a.uid + '</div>';
+
+    // Valores resolvidos pelo admin
+    html += '<div style="margin-bottom:12px;padding:8px 10px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:8px">';
+    html += '<div style="font-size:10px;font-weight:700;color:#93c5fd;margin-bottom:6px;text-transform:uppercase">Valores Resolvidos pelo Admin</div>';
+    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px">';
+    html += '<div><span style="color:var(--t3)">XP:</span> <b style="color:#fcd34d">' + (a.xp||0) + '</b></div>';
+    html += '<div><span style="color:var(--t3)">Streak:</span> <b style="color:#f97316">' + (a.streak||0) + '</b></div>';
+    html += '<div><span style="color:var(--t3)">Nível:</span> <b style="color:#a78bfa">' + (a.nivel||1) + '</b></div>';
+    html += '<div><span style="color:var(--t3)">Dias Ativos:</span> <b style="color:#22c55e">' + (a.diasAtivos||0) + '</b></div>';
+    html += '<div style="grid-column:span 2"><span style="color:var(--t3)">Último Acesso:</span> <b style="color:#60a5fa">' + (a.ultimoAcesso || 'VAZIO — NENHUM CAMPO ENCONTRADO') + '</b></div>';
+    html += '</div></div>';
+
+    // Campos brutos do Firebase
+    html += '<div style="font-size:10px;font-weight:700;color:#f97316;margin-bottom:6px;text-transform:uppercase">Todos os Campos Brutos do Firebase (' + keys.length + ' campos)</div>';
+    html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+    html += '<thead><tr style="background:rgba(15,23,42,.4)"><th style="padding:4px 6px;text-align:left;color:var(--t3);font-size:9px">CAMPO</th><th style="padding:4px 6px;text-align:left;color:var(--t3);font-size:9px">TIPO</th><th style="padding:4px 6px;text-align:left;color:var(--t3);font-size:9px">VALOR</th></tr></thead><tbody>';
+
+    keys.forEach(function(k) {
+      var v = raw[k];
+      var tipo = typeof v;
+      if (v === null) tipo = 'null';
+      else if (Array.isArray(v)) tipo = 'array';
+      else if (v && typeof v.toDate === 'function') tipo = 'Timestamp';
+      else if (v && v.seconds) tipo = 'Seconds';
+
+      // Destacar campos de acesso/streak/xp
+      var isImportant = /acesso|login|streak|xp|pontos|active|dias|access|last/i.test(k);
+      var bg = isImportant ? 'background:rgba(245,158,11,.06);' : '';
+
+      html += '<tr style="border-bottom:1px solid rgba(30,45,71,.3);' + bg + '">';
+      html += '<td style="padding:4px 6px;font-family:var(--mono);color:' + (isImportant ? '#fcd34d' : 'var(--acc2)') + '">' + escH(k) + '</td>';
+      html += '<td style="padding:4px 6px;color:var(--t3);font-size:10px">' + tipo + '</td>';
+      html += '<td style="padding:4px 6px">' + fmtVal(v) + '</td>';
+      html += '</tr>';
+    });
+
+    html += '</tbody></table>';
+    html += '</div>';
+  });
+
+  // Botão para verificar subcoleções
+  if (target.length === 1) {
+    var tUid = target[0].uid;
+    html += '<div style="display:flex;gap:8px;margin-top:8px">';
+    html += '<button onclick="debugSubcol(\'' + tUid + '\',\'acessos\')" style="background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:11px;font-weight:700">📂 Ver subcoleção "acessos"</button>';
+    html += '<button onclick="debugSubcol(\'' + tUid + '\',\'logins\')" style="background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:11px;font-weight:700">📂 Ver subcoleção "logins"</button>';
+    html += '<button onclick="debugSubcol(\'' + tUid + '\',\'progresso\')" style="background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:11px;font-weight:700">📂 Ver subcoleção "progresso"</button>';
+    html += '</div>';
+    html += '<div id="debug-subcol-result" style="margin-top:10px"></div>';
+  }
+
+  html += '</div></div>';
+  var overlay = document.createElement('div');
+  overlay.innerHTML = html;
+  document.body.appendChild(overlay.firstChild);
+}
+
+// Debug de subcoleções Firebase
+async function debugSubcol(uid, colName) {
+  var box = el('debug-subcol-result');
+  if (!box) return;
+  box.innerHTML = '<div style="color:var(--acc2);font-size:11px;padding:8px">Carregando subcoleção "' + colName + '"...</div>';
+  try {
+    var snap = await maDb.collection('usuarios').doc(uid).collection(colName).orderBy(
+      colName === 'acessos' ? 'data' : (colName === 'logins' ? 'timestamp' : 'updatedAt'), 'desc'
+    ).limit(30).get().catch(function() {
+      // Se orderBy falhar, tenta sem order
+      return maDb.collection('usuarios').doc(uid).collection(colName).limit(30).get();
+    });
+
+    if (!snap || snap.empty) {
+      box.innerHTML = '<div style="color:#fca5a5;font-size:11px;padding:8px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:8px">❌ Subcoleção "' + colName + '" vazia ou inexistente para este aluno.</div>';
+      return;
+    }
+
+    var h = '<div style="background:var(--sf);border:1px solid var(--brd);border-radius:10px;padding:12px">';
+    h += '<div style="font-size:11px;font-weight:700;color:#a5b4fc;margin-bottom:8px">📂 ' + colName + ' (' + snap.size + ' docs)</div>';
+    h += '<table style="width:100%;border-collapse:collapse;font-size:10px">';
+    h += '<thead><tr style="background:rgba(15,23,42,.4)"><th style="padding:4px 6px;text-align:left;color:var(--t3)">DOC ID</th><th style="padding:4px 6px;text-align:left;color:var(--t3)">CAMPOS</th><th style="padding:4px 6px;text-align:left;color:var(--t3)">DADOS</th></tr></thead><tbody>';
+
+    snap.docs.forEach(function(doc) {
+      var d = doc.data();
+      var vals = Object.keys(d).map(function(k) {
+        var v = d[k];
+        if (v && typeof v.toDate === 'function') return k + ': ' + v.toDate().toISOString();
+        if (v && v.seconds) return k + ': ' + new Date(v.seconds*1000).toISOString();
+        return k + ': ' + JSON.stringify(v);
+      }).join(' | ');
+      h += '<tr style="border-bottom:1px solid rgba(30,45,71,.3)">';
+      h += '<td style="padding:4px 6px;font-family:var(--mono);color:var(--acc2)">' + doc.id + '</td>';
+      h += '<td style="padding:4px 6px;color:var(--t3)">' + Object.keys(d).join(', ') + '</td>';
+      h += '<td style="padding:4px 6px;color:var(--t2);max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + escH(vals) + '">' + escH(vals) + '</td>';
+      h += '</tr>';
+    });
+
+    h += '</tbody></table></div>';
+    box.innerHTML = h;
+  } catch(e) {
+    box.innerHTML = '<div style="color:#fca5a5;font-size:11px;padding:8px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:8px">❌ Erro ao ler "' + colName + '": ' + escH(e.message) + '</div>';
+  }
 }
 
 // ── DRAWER ──
@@ -3178,64 +3303,284 @@ function openDrawer(uid){
   el('dr-nome').textContent=a.nome||'—';
   el('dr-email').textContent=a.email||'—';
   var s=statusAluno(a);
+  var raw = a._raw || {};
   var cursosNomes={'tp':'Tráfego Pago','ni':'Negócios Inteligentes','gp':'Geopolítica Avançada','nl':'Nichos Lucrativos'};
-  var body='';
-  body+='<div class="al-section"><div class="al-section-title">📋 Dados Gerais (Firebase)</div>'
-    +'<div class="al-kv"><span class="k">Status</span><span class="v '+(s==='ativo'?'g':s==='inativo'?'y':'r')+'">'+s.toUpperCase()+'</span></div>'
-    +'<div class="al-kv"><span class="k">Plano</span><span class="v">'+planoPill(a.plano||'gratuito')+'</span></div>'
-    +'<div class="al-kv"><span class="k">Expira</span><span class="v '+(a.dataExpiracao&&new Date(a.dataExpiracao)<new Date()?'r':'')+'">'+((a.dataExpiracao&&new Date(a.dataExpiracao).toLocaleDateString('pt-BR'))||'—')+'</span></div>'
-    +'<div class="al-kv"><span class="k">Cadastro</span><span class="v">'+(a.dataCadastro?new Date(a.dataCadastro).toLocaleDateString('pt-BR'):'—')+'</span></div>'
-    +'<div class="al-kv"><span class="k">Telefone</span><span class="v">'+(a.telefone||'—')+'</span></div>'
-    +'<div class="al-kv"><span class="k">UID</span><span class="v" style="font-size:9px">'+a.uid+'</span></div>'
-    +(a.obs?'<div class="al-kv"><span class="k">Obs</span><span class="v" style="font-size:11px;font-family:var(--sans);text-align:right">'+escH(a.obs)+'</span></div>':'')
-  +'</div>';
-  body+='<div class="al-section"><div class="al-section-title">🎮 Gamificação (Firebase)</div>'
-    +'<div class="al-kv"><span class="k">XP Total</span><span class="v" style="color:var(--acc2)">'+(a.xp||0)+'</span></div>'
-    +'<div class="al-kv"><span class="k">Nível</span><span class="v">'+(a.nivel||1)+'</span></div>'
-    +'<div class="al-kv"><span class="k">Streak atual</span><span class="v">'+(a.streak||0)+' 🔥</span></div>'
-    +'<div class="al-kv"><span class="k">Streak record</span><span class="v">'+(a.streakRecord||0)+' 🔥</span></div>'
-    +'<div class="al-kv"><span class="k">Dias ativos</span><span class="v">'+(a.diasAtivos||0)+'</span></div>'
-    +'<div class="al-kv"><span class="k">Minutos estudo</span><span class="v">'+(a.total_minutos||0)+'</span></div>'
-    +'<div class="al-kv"><span class="k">Último acesso</span><span class="v">'+(a.ultimoAcesso?new Date(a.ultimoAcesso).toLocaleDateString('pt-BR'):'—')+'</span></div>'
-  +'</div>';
-  body+='<div class="al-section"><div class="al-section-title">📚 Cursos com Acesso</div>';
-  if(a.cursos&&a.cursos.length){
-    a.cursos.forEach(function(c){
-      var prog=a.progresso&&a.progresso[c]?a.progresso[c]:null;
-      var pct=prog?prog.percentual:0;
-      body+='<div class="al-course-item"><span>'+escH(cursosNomes[c]||c)+'</span>'
-        +'<span style="font-family:var(--mono);font-size:11px;color:var(--acc2)">'+pct+'%</span></div>';
+
+  // --- Calculos extras ---
+  var hoje = new Date(); hoje.setHours(0,0,0,0);
+  var cadastroDt = a.dataCadastro ? new Date(a.dataCadastro) : null;
+  var diasDesdeCadastro = cadastroDt ? Math.max(1, Math.floor((hoje - cadastroDt) / 86400000)) : 0;
+  var ultimoDt = a.ultimoAcesso ? new Date(a.ultimoAcesso) : null;
+  var diasDesdeAcesso = ultimoDt ? Math.floor((hoje - new Date(ultimoDt.getFullYear(), ultimoDt.getMonth(), ultimoDt.getDate())) / 86400000) : null;
+  var xpPorDia = diasDesdeCadastro > 0 ? ((a.xp||0) / diasDesdeCadastro).toFixed(1) : 0;
+  var minutosTot = a.total_minutos || 0;
+  var horasEstudo = Math.floor(minutosTot / 60);
+  var minsRestantes = minutosTot % 60;
+  var tempoStr = minutosTot > 0 ? (horasEstudo > 0 ? horasEstudo + 'h ' + minsRestantes + 'min' : minsRestantes + 'min') : '0min';
+  var mediaDiaria = diasDesdeCadastro > 0 ? (minutosTot / diasDesdeCadastro).toFixed(0) : 0;
+  var taxaAtividade = diasDesdeCadastro > 0 ? Math.min(100, ((a.diasAtivos||0) / diasDesdeCadastro * 100)).toFixed(0) : 0;
+  var totalCursos = (a.cursos && a.cursos.length) || 0;
+  var cursosComProgresso = 0;
+  var cursosConcluidos = 0;
+  var somaProgresso = 0;
+  if (a.cursos && a.cursos.length && a.progresso) {
+    a.cursos.forEach(function(c) {
+      var p = a.progresso[c];
+      if (p) {
+        var pct = p.percentual || p.percent || p.pct || 0;
+        somaProgresso += pct;
+        cursosComProgresso++;
+        if (pct >= 100) cursosConcluidos++;
+      }
+    });
+  }
+  var mediaProgresso = cursosComProgresso > 0 ? (somaProgresso / cursosComProgresso).toFixed(0) : 0;
+
+  // Nivel XP com detalhes
+  var xpAtual = a.xp || 0;
+  var nivelAtual = a.nivel || Math.max(1, Math.floor(xpAtual / 500) + 1);
+  var xpParaProximo = nivelAtual * 500;
+  var xpNoNivel = xpAtual - ((nivelAtual - 1) * 500);
+  var pctNivel = Math.min(100, (xpNoNivel / 500 * 100)).toFixed(0);
+
+  // Classificação de saúde do aluno
+  var saude = 'novo';
+  var saudeColor = '#94a3b8';
+  var saudeIcon = '⚪';
+  if (diasDesdeAcesso !== null) {
+    if (diasDesdeAcesso === 0) { saude = 'super ativo'; saudeColor = '#22c55e'; saudeIcon = '🟢'; }
+    else if (diasDesdeAcesso <= 2) { saude = 'ativo'; saudeColor = '#86efac'; saudeIcon = '🟢'; }
+    else if (diasDesdeAcesso <= 7) { saude = 'regular'; saudeColor = '#fcd34d'; saudeIcon = '🟡'; }
+    else if (diasDesdeAcesso <= 30) { saude = 'esfriando'; saudeColor = '#f97316'; saudeIcon = '🟠'; }
+    else { saude = 'inativo'; saudeColor = '#ef4444'; saudeIcon = '🔴'; }
+  }
+
+  var body = '';
+
+  // ═══ 1. VISAO GERAL / RESUMO RAPIDO ═══
+  body += '<div class="al-section" style="background:rgba(59,130,246,.04);border:1px solid rgba(59,130,246,.15);border-radius:10px;padding:10px">';
+  body += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center">';
+  body += '<div><div style="font-size:18px;font-weight:900;color:var(--acc2)">' + xpAtual + '</div><div style="font-size:8px;color:var(--t3);text-transform:uppercase">XP Total</div></div>';
+  body += '<div><div style="font-size:18px;font-weight:900;color:#f97316">' + (a.streak||0) + '</div><div style="font-size:8px;color:var(--t3);text-transform:uppercase">Streak</div></div>';
+  body += '<div><div style="font-size:18px;font-weight:900;color:#a78bfa">Nv.' + nivelAtual + '</div><div style="font-size:8px;color:var(--t3);text-transform:uppercase">Nível</div></div>';
+  body += '<div><div style="font-size:18px;font-weight:900;color:' + saudeColor + '">' + saudeIcon + '</div><div style="font-size:8px;color:var(--t3);text-transform:uppercase">' + saude + '</div></div>';
+  body += '</div></div>';
+
+  // ═══ 2. DADOS PESSOAIS ═══
+  body += '<div class="al-section"><div class="al-section-title">📋 Dados Pessoais</div>'
+    + '<div class="al-kv"><span class="k">Nome completo</span><span class="v">' + escH(a.nome||'—') + '</span></div>'
+    + '<div class="al-kv"><span class="k">Email</span><span class="v" style="font-size:10px">' + escH(a.email||'—') + '</span></div>'
+    + '<div class="al-kv"><span class="k">Telefone</span><span class="v">' + (a.telefone || '<span style="color:#fca5a5">não informado</span>') + '</span></div>'
+    + '<div class="al-kv"><span class="k">UID Firebase</span><span class="v" style="font-size:8px;font-family:var(--mono);cursor:pointer" onclick="navigator.clipboard.writeText(\'' + a.uid + '\');this.textContent=\'copiado!\';var s=this;setTimeout(function(){s.textContent=\'' + a.uid + '\'},1500)" title="Clique para copiar">' + a.uid + '</span></div>'
+    + '<div class="al-kv"><span class="k">Foto perfil</span><span class="v">' + (a.foto ? '<img src="' + escH(a.foto) + '" style="width:24px;height:24px;border-radius:50%;vertical-align:middle"> Sim' : '<span style="color:var(--t3)">Sem foto</span>') + '</span></div>'
+    + (a.obs ? '<div class="al-kv"><span class="k">Observações</span><span class="v" style="font-size:10px;text-align:right;max-width:180px">' + escH(a.obs) + '</span></div>' : '')
+  + '</div>';
+
+  // ═══ 3. STATUS E PLANO ═══
+  body += '<div class="al-section"><div class="al-section-title">🏷️ Status e Plano</div>'
+    + '<div class="al-kv"><span class="k">Status</span><span class="v ' + (s==='ativo'?'g':s==='inativo'?'y':'r') + '">' + s.toUpperCase() + '</span></div>'
+    + '<div class="al-kv"><span class="k">Plano</span><span class="v">' + planoPill(a.plano||'gratuito') + '</span></div>'
+    + '<div class="al-kv"><span class="k">Data cadastro</span><span class="v">' + (cadastroDt ? cadastroDt.toLocaleDateString('pt-BR') + ' <span style="color:var(--t3);font-size:9px">(' + diasDesdeCadastro + ' dias)</span>' : '—') + '</span></div>'
+    + '<div class="al-kv"><span class="k">Expiração</span><span class="v ' + (a.dataExpiracao && new Date(a.dataExpiracao) < new Date() ? 'r' : '') + '">' + (a.dataExpiracao ? new Date(a.dataExpiracao).toLocaleDateString('pt-BR') : '<span style="color:var(--t3)">sem expiração</span>') + '</span></div>';
+  if (a.dataExpiracao) {
+    var expDt = new Date(a.dataExpiracao);
+    var diasParaExpirar = Math.floor((expDt - hoje) / 86400000);
+    var expColor = diasParaExpirar < 0 ? '#ef4444' : diasParaExpirar < 7 ? '#f97316' : diasParaExpirar < 30 ? '#fcd34d' : '#86efac';
+    body += '<div class="al-kv"><span class="k">Tempo restante</span><span class="v" style="color:' + expColor + ';font-weight:700">' + (diasParaExpirar < 0 ? 'EXPIRADO há ' + Math.abs(diasParaExpirar) + ' dias' : diasParaExpirar + ' dias restantes') + '</span></div>';
+  }
+  body += '<div class="al-kv"><span class="k">Saúde do aluno</span><span class="v" style="color:' + saudeColor + ';font-weight:700">' + saudeIcon + ' ' + saude.toUpperCase() + '</span></div>'
+    + '</div>';
+
+  // ═══ 4. GAMIFICACAO DETALHADA ═══
+  body += '<div class="al-section"><div class="al-section-title">🎮 Gamificação</div>'
+    + '<div class="al-kv"><span class="k">XP Total</span><span class="v" style="color:var(--acc2);font-weight:700">' + xpAtual + ' XP</span></div>'
+    + '<div class="al-kv"><span class="k">Nível atual</span><span class="v" style="color:#a78bfa;font-weight:700">Nível ' + nivelAtual + '</span></div>'
+    + '<div class="al-kv"><span class="k">Progresso nível</span><span class="v"><span style="font-family:var(--mono);font-size:10px">' + xpNoNivel + '/' + 500 + ' XP (' + pctNivel + '%)</span></span></div>';
+  // Barra de XP do nível
+  body += '<div style="background:rgba(30,45,71,.5);border-radius:4px;height:6px;margin:4px 0 8px"><div style="background:linear-gradient(90deg,#3b82f6,#a78bfa);height:100%;border-radius:4px;width:' + pctNivel + '%;transition:width .3s"></div></div>';
+  body += '<div class="al-kv"><span class="k">XP p/ próximo nível</span><span class="v">' + (500 - xpNoNivel) + ' XP faltam</span></div>'
+    + '<div class="al-kv"><span class="k">Streak atual</span><span class="v" style="color:#f97316;font-weight:700">' + (a.streak||0) + ' 🔥 dias</span></div>'
+    + '<div class="al-kv"><span class="k">Streak recorde</span><span class="v">' + (a.streakRecord||0) + ' 🔥 (melhor sequência)</span></div>'
+    + '<div class="al-kv"><span class="k">Dias ativos total</span><span class="v">' + (a.diasAtivos||0) + ' dias</span></div>'
+    + '<div class="al-kv"><span class="k">XP médio/dia</span><span class="v">' + xpPorDia + ' XP/dia</span></div>'
+  + '</div>';
+
+  // ═══ 5. ENGAJAMENTO E TEMPO ═══
+  body += '<div class="al-section"><div class="al-section-title">⏱️ Engajamento e Tempo</div>'
+    + '<div class="al-kv"><span class="k">Último acesso</span><span class="v" style="font-weight:700;color:' + saudeColor + '">' + (ultimoDt ? ultimoDt.toLocaleDateString('pt-BR') + ' ' + ultimoDt.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'}) : '—') + '</span></div>'
+    + '<div class="al-kv"><span class="k">Dias sem acessar</span><span class="v" style="color:' + saudeColor + '">' + (diasDesdeAcesso !== null ? diasDesdeAcesso + (diasDesdeAcesso === 0 ? ' (hoje!)' : ' dias') : '—') + '</span></div>'
+    + '<div class="al-kv"><span class="k">Tempo total estudo</span><span class="v">' + tempoStr + '</span></div>'
+    + '<div class="al-kv"><span class="k">Média diária</span><span class="v">' + mediaDiaria + ' min/dia</span></div>'
+    + '<div class="al-kv"><span class="k">Taxa de atividade</span><span class="v">' + taxaAtividade + '% dos dias</span></div>'
+    + '<div class="al-kv"><span class="k">Dias desde cadastro</span><span class="v">' + diasDesdeCadastro + ' dias</span></div>'
+  + '</div>';
+
+  // ═══ 6. CURSOS E PROGRESSO ═══
+  body += '<div class="al-section"><div class="al-section-title">📚 Cursos e Progresso (' + totalCursos + ' cursos)</div>';
+  if (totalCursos > 0) {
+    // Resumo
+    body += '<div style="display:flex;gap:8px;margin-bottom:8px">';
+    body += '<span style="font-size:9px;padding:2px 8px;border-radius:4px;background:rgba(34,197,94,.1);color:#86efac;font-weight:700">' + cursosConcluidos + ' concluídos</span>';
+    body += '<span style="font-size:9px;padding:2px 8px;border-radius:4px;background:rgba(59,130,246,.1);color:#93c5fd;font-weight:700">' + (totalCursos - cursosConcluidos) + ' em andamento</span>';
+    body += '<span style="font-size:9px;padding:2px 8px;border-radius:4px;background:rgba(168,85,247,.1);color:#d8b4fe;font-weight:700">Média: ' + mediaProgresso + '%</span>';
+    body += '</div>';
+    a.cursos.forEach(function(c) {
+      var prog = a.progresso && a.progresso[c] ? a.progresso[c] : null;
+      var pct = prog ? (prog.percentual || prog.percent || prog.pct || 0) : 0;
+      var modAtual = prog ? (prog.modulo_atual || prog.currentModule || prog.module || '?') : '?';
+      var ultimaAula = prog ? (prog.ultima_aula || prog.lastLesson || '') : '';
+      var tempoNoCurso = prog ? (prog.minutos || prog.minutes || 0) : 0;
+      var barColor = pct >= 100 ? '#22c55e' : pct >= 50 ? '#3b82f6' : pct > 0 ? '#f59e0b' : '#64748b';
+      body += '<div style="background:rgba(15,23,42,.3);border:1px solid rgba(30,45,71,.4);border-radius:8px;padding:8px;margin-bottom:6px">';
+      body += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">';
+      body += '<span style="font-size:11px;font-weight:700;color:var(--txt)">' + escH(cursosNomes[c] || c) + '</span>';
+      body += '<span style="font-family:var(--mono);font-size:11px;font-weight:700;color:' + barColor + '">' + pct + '%</span>';
+      body += '</div>';
+      body += '<div style="background:rgba(30,45,71,.5);border-radius:3px;height:5px;margin-bottom:4px"><div style="background:' + barColor + ';height:100%;border-radius:3px;width:' + pct + '%;transition:width .3s"></div></div>';
+      body += '<div style="display:flex;justify-content:space-between;font-size:9px;color:var(--t3)">';
+      body += '<span>Módulo: ' + modAtual + '</span>';
+      if (tempoNoCurso) body += '<span>' + tempoNoCurso + 'min estudados</span>';
+      body += '</div>';
+      if (ultimaAula) body += '<div style="font-size:9px;color:var(--t3);margin-top:2px">Última aula: ' + escH(String(ultimaAula)) + '</div>';
+      body += '</div>';
     });
   } else {
-    body+='<div style="font-size:11px;color:var(--t3)">Nenhum curso com acesso.</div>';
+    body += '<div style="font-size:11px;color:var(--t3);padding:6px;text-align:center">Nenhum curso com acesso.</div>';
   }
-  body+='</div>';
-  // Liberação rápida de curso
-  body+='<div class="al-section"><div class="al-section-title">🔑 Liberar Acesso Rápido</div>'
-    +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">'
-    +['tp','ni','gp','nl'].map(function(c){
-      var tem=a.cursos&&a.cursos.indexOf(c)!==-1;
-      return '<button class="al-btn '+(tem?'dl':'wa')+'" onclick="toggleCursoAluno(\''+uid+'\',\''+c+'\')">'+(tem?'❌ ':'')+escH(cursosNomes[c]||c)+'</button>';
+  body += '</div>';
+
+  // ═══ 7. MÉTRICAS E INDICADORES ═══
+  body += '<div class="al-section"><div class="al-section-title">📊 Métricas e Indicadores</div>';
+  body += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">';
+  // Cards de métrica
+  var metricas = [
+    { label: 'Ritmo de estudo', valor: (minutosTot > 0 ? (diasDesdeCadastro > 0 ? (minutosTot/diasDesdeCadastro*7).toFixed(0) + ' min/semana' : '—') : 'Sem dados'), cor: '#3b82f6' },
+    { label: 'Engajamento', valor: taxaAtividade + '%', cor: parseInt(taxaAtividade) >= 50 ? '#22c55e' : parseInt(taxaAtividade) >= 20 ? '#f59e0b' : '#ef4444' },
+    { label: 'Conclusão média', valor: mediaProgresso + '%', cor: parseInt(mediaProgresso) >= 80 ? '#22c55e' : parseInt(mediaProgresso) >= 40 ? '#f59e0b' : '#94a3b8' },
+    { label: 'Cursos concluídos', valor: cursosConcluidos + '/' + totalCursos, cor: cursosConcluidos > 0 ? '#22c55e' : '#94a3b8' },
+    { label: 'Previsão conclusão', valor: (cursosComProgresso > 0 && parseInt(mediaProgresso) > 0 ? Math.ceil((100 - parseInt(mediaProgresso)) / Math.max(1, parseInt(mediaProgresso) / Math.max(1, diasDesdeCadastro)) ) + ' dias' : '—'), cor: '#a78bfa' },
+    { label: 'Score geral', valor: (Math.min(100, Math.round((parseInt(taxaAtividade) * 0.3) + (parseInt(mediaProgresso) * 0.3) + (Math.min(100, (a.streak||0)*10) * 0.2) + (Math.min(100, xpAtual/50) * 0.2)))) + '/100', cor: '#f97316' }
+  ];
+  metricas.forEach(function(m) {
+    body += '<div style="background:rgba(15,23,42,.3);border:1px solid rgba(30,45,71,.4);border-radius:8px;padding:8px;text-align:center">';
+    body += '<div style="font-size:14px;font-weight:800;color:' + m.cor + '">' + m.valor + '</div>';
+    body += '<div style="font-size:8px;color:var(--t3);text-transform:uppercase;margin-top:2px">' + m.label + '</div>';
+    body += '</div>';
+  });
+  body += '</div></div>';
+
+  // ═══ 8. HISTORICO DE ACESSOS ═══
+  body += '<div class="al-section"><div class="al-section-title">📅 Histórico de Acessos</div>';
+  body += '<div id="drawer-hist-' + uid + '" style="font-size:11px;color:var(--t3)">Clique para carregar...</div>';
+  body += '<button class="al-btn" onclick="loadDrawerHistory(\'' + uid + '\')" style="font-size:10px;padding:4px 10px;margin-top:4px;background:rgba(99,102,241,.1);color:#a5b4fc;border-color:rgba(99,102,241,.25)">📂 Carregar histórico</button>';
+  body += '</div>';
+
+  // ═══ 9. DADOS BRUTOS FIREBASE ═══
+  body += '<div class="al-section"><div class="al-section-title">🗂️ Dados Brutos Firebase (' + Object.keys(raw).length + ' campos)</div>';
+  body += '<div style="max-height:150px;overflow-y:auto;font-size:10px;font-family:var(--mono);background:rgba(15,23,42,.4);border-radius:6px;padding:6px;line-height:1.8">';
+  Object.keys(raw).sort().forEach(function(k) {
+    var v = raw[k];
+    var valStr = '';
+    if (v === null || v === undefined) valStr = '<span style="color:#64748b">null</span>';
+    else if (typeof v === 'object' && v.toDate) valStr = '<span style="color:#86efac">' + v.toDate().toISOString() + '</span>';
+    else if (typeof v === 'object' && v.seconds) valStr = '<span style="color:#86efac">' + new Date(v.seconds*1000).toISOString() + '</span>';
+    else if (typeof v === 'object') valStr = '<span style="color:#a78bfa">' + escH(JSON.stringify(v)).substring(0,80) + '</span>';
+    else if (typeof v === 'boolean') valStr = '<span style="color:' + (v?'#86efac':'#fca5a5') + '">' + v + '</span>';
+    else if (typeof v === 'number') valStr = '<span style="color:#fcd34d">' + v + '</span>';
+    else valStr = '<span style="color:#e2e8f0">"' + escH(String(v)).substring(0,60) + '"</span>';
+    var isImp = /acesso|login|streak|xp|pontos|dias|access|last/i.test(k);
+    body += '<div' + (isImp ? ' style="background:rgba(245,158,11,.06);padding:1px 4px;border-radius:3px"' : '') + '><span style="color:' + (isImp ? '#fcd34d' : '#93c5fd') + '">' + escH(k) + '</span>: ' + valStr + '</div>';
+  });
+  body += '</div>';
+  body += '<button class="al-btn" onclick="debugAluno(\'' + uid + '\')" style="font-size:10px;padding:4px 10px;margin-top:6px;background:rgba(99,102,241,.1);color:#a5b4fc;border-color:rgba(99,102,241,.25)">🔍 Debug completo (modal)</button>';
+  body += '</div>';
+
+  // ═══ 10. LIBERAR ACESSO RAPIDO ═══
+  body += '<div class="al-section"><div class="al-section-title">🔑 Liberar Acesso Rápido</div>'
+    + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">'
+    + ['tp','ni','gp','nl'].map(function(c){
+      var tem = a.cursos && a.cursos.indexOf(c) !== -1;
+      return '<button class="al-btn ' + (tem?'dl':'wa') + '" onclick="toggleCursoAluno(\'' + uid + '\',\'' + c + '\')">' + (tem ? '❌ ' : '') + escH(cursosNomes[c]||c) + '</button>';
     }).join('')
-    +'</div>'
-    +'<div style="font-size:9px;color:var(--t3)">Clique para dar/remover acesso ao curso</div></div>';
-  // Mudar plano
-  body+='<div class="al-section"><div class="al-section-title">💳 Alterar Plano</div>'
-    +'<div style="display:flex;gap:6px;flex-wrap:wrap">'
-    +['gratuito','mensal','anual','individual'].map(function(p){
-      return '<button class="al-btn '+(a.plano===p?'wa':'')+'" onclick="alterarPlano(\''+uid+'\',\''+p+'\')">'+p+'</button>';
+    + '</div>'
+    + '<div style="font-size:9px;color:var(--t3)">Clique para dar/remover acesso ao curso</div></div>';
+
+  // ═══ 11. ALTERAR PLANO ═══
+  body += '<div class="al-section"><div class="al-section-title">💳 Alterar Plano</div>'
+    + '<div style="display:flex;gap:6px;flex-wrap:wrap">'
+    + ['gratuito','mensal','anual','individual'].map(function(p){
+      return '<button class="al-btn ' + (a.plano===p?'wa':'') + '" onclick="alterarPlano(\'' + uid + '\',\'' + p + '\')">' + p + '</button>';
     }).join('')
-    +'</div></div>';
-  body+='<div class="al-drawer-actions">'
-    +(a.telefone?'<button class="al-da-btn wa" onclick="abrirWA(\''+uid+'\')">💬 WhatsApp</button>':'')
-    +'<button class="al-da-btn em" onclick="prepEmail(\''+escH(a.email)+'\')">📧 Email</button>'
-    +'<button class="al-da-btn xp" onclick="addXP(\''+uid+'\')">⚡ Dar XP</button>'
-    +'<button class="al-da-btn un" onclick="editarAluno(\''+uid+'\')">✏️ Editar</button>'
-    +'<button class="al-da-btn dl" onclick="delAluno(\''+uid+'\');closeDrawer()">🗑 Excluir</button>'
-  +'</div>';
-  el('dr-body').innerHTML=body;
+    + '</div></div>';
+
+  // ═══ 12. AÇÕES ═══
+  body += '<div class="al-drawer-actions">'
+    + (a.telefone ? '<button class="al-da-btn wa" onclick="abrirWA(\'' + uid + '\')">💬 WhatsApp</button>' : '')
+    + '<button class="al-da-btn em" onclick="prepEmail(\'' + escH(a.email) + '\')">📧 Email</button>'
+    + '<button class="al-da-btn xp" onclick="addXP(\'' + uid + '\')">⚡ Dar XP</button>'
+    + '<button class="al-da-btn un" onclick="editarAluno(\'' + uid + '\')">✏️ Editar</button>'
+    + '<button class="al-da-btn dl" onclick="delAluno(\'' + uid + '\');closeDrawer()">🗑 Excluir</button>'
+  + '</div>';
+
+  el('dr-body').innerHTML = body;
   el('alunoDrawer').classList.add('open');
   el('drawerOverlay').classList.add('on');
+}
+
+// Carregar historico de acessos no drawer
+async function loadDrawerHistory(uid) {
+  var box = document.getElementById('drawer-hist-' + uid);
+  if (!box) return;
+  box.innerHTML = '<span style="color:var(--acc2)">Carregando...</span>';
+  try {
+    // Tentar ler subcoleção acessos
+    var snap = null;
+    try {
+      snap = await maDb.collection('usuarios').doc(uid).collection('acessos').orderBy('data', 'desc').limit(15).get();
+    } catch(e) {}
+    if (!snap || snap.empty) {
+      try {
+        snap = await maDb.collection('usuarios').doc(uid).collection('logins').orderBy('timestamp', 'desc').limit(15).get();
+      } catch(e) {}
+    }
+    if (!snap || snap.empty) {
+      // Tentar sem orderBy
+      try { snap = await maDb.collection('usuarios').doc(uid).collection('acessos').limit(15).get(); } catch(e) {}
+    }
+    if (!snap || snap.empty) {
+      try { snap = await maDb.collection('usuarios').doc(uid).collection('logins').limit(15).get(); } catch(e) {}
+    }
+
+    if (!snap || snap.empty) {
+      box.innerHTML = '<span style="color:#fca5a5">Nenhum registro de acesso encontrado nas subcoleções.</span>';
+      return;
+    }
+
+    var h = '<div style="max-height:180px;overflow-y:auto">';
+    snap.docs.forEach(function(doc, i) {
+      var d = doc.data();
+      var ts = null;
+      // Achar o campo de timestamp
+      ['data', 'timestamp', 'date', 'createdAt', 'created_at'].forEach(function(k) {
+        if (!ts && d[k]) {
+          if (d[k].toDate) ts = d[k].toDate();
+          else if (d[k].seconds) ts = new Date(d[k].seconds * 1000);
+          else if (typeof d[k] === 'string') ts = new Date(d[k]);
+        }
+      });
+      var tsStr = ts ? ts.toLocaleDateString('pt-BR') + ' ' + ts.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'}) : doc.id;
+      var isToday = ts && new Date().toDateString() === ts.toDateString();
+      h += '<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid rgba(30,45,71,.2)">';
+      h += '<span style="width:6px;height:6px;border-radius:50%;background:' + (isToday ? '#22c55e' : (i < 3 ? '#3b82f6' : '#64748b')) + ';flex-shrink:0"></span>';
+      h += '<span style="font-size:10px;color:' + (isToday ? '#86efac' : 'var(--t2)') + ';font-family:var(--mono)">' + tsStr + '</span>';
+      if (isToday) h += '<span style="font-size:8px;background:rgba(34,197,94,.15);color:#86efac;padding:1px 6px;border-radius:3px;font-weight:700">HOJE</span>';
+      h += '</div>';
+    });
+    h += '</div>';
+    box.innerHTML = h;
+  } catch(e) {
+    box.innerHTML = '<span style="color:#fca5a5">Erro: ' + escH(e.message) + '</span>';
+  }
 }
 
 function closeDrawer(){
