@@ -1267,6 +1267,25 @@ var MA_COURSES = [
     color: '#1d3557',
     addedTs: 1775831114326,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/fn.jpg',
+    id: 'fn',
+    name: 'O Poder das Fake News na Política',
+    desc: 'Entenda como a desinformação influencia eleições, opinião pública, reputações, polarização social e estratégias de manipulação dentro do ambiente político contemporâneo.',
+    file: 'fake-news-politica.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'FN_HENRY_2026_MASTER',
+    ak: 'fn_auth',
+    storagePrefix: 'fn_',
+    icon: '📰',
+    color: '#9b2226',
+    addedTs: 1775831116891,
+    active: true
   }
 ];
 var MA_CATS = [
