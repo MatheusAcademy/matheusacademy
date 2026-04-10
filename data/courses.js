@@ -1457,6 +1457,25 @@ var MA_COURSES = [
     color: '#3a0ca3',
     addedTs: 1775832752373,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pc.jpg',
+    id: 'pc',
+    name: 'Pensamento Crítico e Clareza Intelectual',
+    desc: 'Ensina como pensar melhor, argumentar com lógica, identificar manipulações e evitar erros de raciocínio.',
+    file: '21-pensamento-critico.html',
+    cat: 'Filosofia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'PC_HENRY_2026_MASTER',
+    ak: 'pc_auth',
+    storagePrefix: 'pc_',
+    icon: '🦉',
+    color: '#e76f51',
+    addedTs: 1775832755187,
+    active: true
   }
 ];
 var MA_CATS = [
