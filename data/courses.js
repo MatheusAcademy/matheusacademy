@@ -1076,6 +1076,25 @@ var MA_COURSES = [
     color: '#0a9396',
     addedTs: 1775831050615,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/la.jpg',
+    id: 'la',
+    name: 'Linguagens do Amor na Prática',
+    desc: 'Ensina como identificar necessidades emocionais, expressar afeto do jeito certo e fortalecer a conexão no relacionamento.',
+    file: '38-linguagens-amor.html',
+    cat: 'Família & Relacionamentos',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'LA_HENRY_2026_MASTER',
+    ak: 'la_auth',
+    storagePrefix: 'la_',
+    icon: '👨‍👩‍👧‍👦',
+    color: '#d62828',
+    addedTs: 1775831052985,
+    active: true
   }
 ];
 var MA_CATS = [
