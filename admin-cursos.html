@@ -6370,32 +6370,35 @@ async function loteDiagnostico() {
     var csContent = b64d(csFd.content);
 
     // Extrair todos os cursos registrados no courses.js
+    // Usa MESMA logica da lista de cursos ({([^{}]*)}) para evitar divergencia
     var registrados = {};
-    var regEx = /id:\s*['"]([^'"]+)['"]/g;
-    var nameEx = /name:\s*['"]([^'"]+)['"]/g;
-    var fileEx = /file:\s*['"]([^'"]+)['"]/g;
-    var blocks = csContent.split(/\{[\s]*coverImg/g);
-    // Parse mais robusto: extrair cada bloco de curso
-    var courseBlocks = csContent.match(/\{\s*coverImg[\s\S]*?active:\s*(true|false)\s*\}/g) || [];
-    courseBlocks.forEach(function(block) {
-      var idM = block.match(/id:\s*['"]([^'"]+)['"]/);
-      var nameM = block.match(/name:\s*['"]([^'"]+)['"]/);
-      var fileM = block.match(/file:\s*['"]([^'"]+)['"]/);
-      if (idM) {
-        registrados[idM[1]] = {
-          id: idM[1],
-          name: nameM ? nameM[1] : '?',
-          file: fileM ? fileM[1] : '?',
-          inCoursesJs: true,
-          htmlExists: null,
-          capaExists: null
-        };
-      }
-    });
+    var reBlock = new RegExp('{([^{}]*)}','g'), bm;
+    while ((bm = reBlock.exec(csContent)) !== null) {
+      var blk = bm[1];
+      var idM = blk.match(/id:\s*['"]([^'"]+)['"]/);
+      var nameM = blk.match(/name:\s*['"]([^'"]+)['"]/);
+      var fileM = blk.match(/file:\s*['"]([^'"]+)['"]/);
+      if (!idM || !nameM) continue;
+      if (blk.indexOf('TEMPLATE') !== -1) continue;
+      if (!blk.match(/salt:\s*['"]/)) continue;
+      var actM = blk.match(/active:\s*(true|false)/);
+      registrados[idM[1]] = {
+        id: idM[1],
+        name: nameM ? nameM[1] : '?',
+        file: fileM ? fileM[1] : '?',
+        active: actM ? actM[1] === 'true' : true,
+        inCoursesJs: true,
+        htmlExists: null,
+        capaExists: null
+      };
+    }
 
     var ids = Object.keys(registrados);
     var total = ids.length;
-    el('lote-diag-label').textContent = 'Encontrados ' + total + ' cursos no courses.js. Verificando arquivos...';
+    var ativos = ids.filter(function(id) { return registrados[id].active; }).length;
+    var inativos = total - ativos;
+    var extraLabel = inativos > 0 ? ' (' + ativos + ' ativos, ' + inativos + ' ocultos)' : '';
+    el('lote-diag-label').textContent = 'Encontrados ' + total + ' cursos no courses.js' + extraLabel + '. Verificando arquivos...';
     el('lote-diag-bar').style.width = '15%';
 
     // 2. Verificar HTMLs e capas em lotes de 5 (paralelo controlado)
@@ -6479,13 +6482,20 @@ async function loteDiagnostico() {
     html += '<div style="font-size:14px;font-weight:800;color:var(--txt);margin-bottom:12px">📊 Resultado do Diagnostico</div>';
 
     // Stats resumo
-    html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">';
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">';
+    html += '<div style="padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(59,130,246,.15);color:#93c5fd">📦 Total: ' + total + '</div>';
     html += '<div style="padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(34,197,94,.15);color:#86efac">✅ Completos: ' + completos.length + '</div>';
     html += '<div style="padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(234,179,8,.15);color:#fde047">⚠️ Sem capa: ' + semCapa.length + '</div>';
     html += '<div style="padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(249,115,22,.15);color:#fdba74">⚠️ Sem HTML: ' + semHtml.length + '</div>';
     if (semNada.length) html += '<div style="padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(239,68,68,.15);color:#fca5a5">❌ Sem HTML + Sem capa: ' + semNada.length + '</div>';
     if (naoRegistrados.length) html += '<div style="padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(168,85,247,.15);color:#d8b4fe">🚫 Nao registrado no courses.js: ' + naoRegistrados.length + '</div>';
     html += '</div>';
+    // Info ativos vs ocultos
+    if (inativos > 0) {
+      html += '<div style="font-size:10px;color:#94a3b8;margin-bottom:12px;padding:6px 10px;background:rgba(100,116,139,.06);border-radius:6px;border:1px solid rgba(100,116,139,.15)">';
+      html += '👁️ <b>' + ativos + '</b> cursos ativos (visíveis no portal) · <b>' + inativos + '</b> ocultos (registrados mas com active:false)';
+      html += '</div>';
+    }
 
     // Tabela detalhada
     html += '<div style="max-height:400px;overflow-y:auto;border:1px solid var(--brd);border-radius:8px">';
