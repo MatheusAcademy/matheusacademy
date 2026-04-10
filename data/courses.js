@@ -1255,7 +1255,7 @@ var MA_COURSES = [
     name: 'The Great Reset',
     desc: 'Uma análise completa sobre as transformações econômicas, sociais e institucionais discutidas no cenário global e seus possíveis impactos no futuro das nações.',
     file: 'great-reset.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    cat: 'Conspirações & Mistérios',
     modules: 3,
     topics: 9,
     hours: 2,
