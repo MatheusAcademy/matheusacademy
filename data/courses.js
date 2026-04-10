@@ -715,6 +715,25 @@ var MA_COURSES = [
     color: '#2B2D42',
     addedTs: 1775777114228,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/dr.jpg',
+    id: 'dr',
+    name: 'Noções de Direito para a Vida Real',
+    desc: 'Um curso prático sobre contratos, deveres, proteção legal, conflitos do cotidiano e como agir com mais segurança jurídica.',
+    file: '18-direito-vida-real.html',
+    cat: 'Direito & Cidadania',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'DR_HENRY_2026_MASTER',
+    ak: 'dr_auth',
+    storagePrefix: 'dr_',
+    icon: '⚖️',
+    color: '#00b4d8',
+    addedTs: 1775830986041,
+    active: true
   }
 ];
 var MA_CATS = [
