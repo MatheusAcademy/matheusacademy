@@ -810,6 +810,25 @@ var MA_COURSES = [
     color: '#6a040f',
     addedTs: 1775830996781,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/db.jpg',
+    id: 'db',
+    name: 'Direitos Básicos do Cidadão no Brasil',
+    desc: 'Aborda direitos civis, sociais, garantias legais e situações práticas que todo cidadão deveria conhecer.',
+    file: '17-direitos-cidadao.html',
+    cat: 'Direito & Cidadania',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'DB_HENRY_2026_MASTER',
+    ak: 'db_auth',
+    storagePrefix: 'db_',
+    icon: '⚖️',
+    color: '#0077b6',
+    addedTs: 1775831005243,
+    active: true
   }
 ];
 var MA_CATS = [
