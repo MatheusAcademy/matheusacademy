@@ -734,6 +734,25 @@ var MA_COURSES = [
     color: '#00b4d8',
     addedTs: 1775830986041,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pl.jpg',
+    id: 'pl',
+    name: 'Poder, Influência e Construção de Legado',
+    desc: 'Curso sobre liderança, imagem, narrativa, autoridade e como grandes figuras históricas consolidaram seu impacto.',
+    file: '36-poder-legado.html',
+    cat: 'Liderança e Poder',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'PL_HENRY_2026_MASTER',
+    ak: 'pl_auth',
+    storagePrefix: 'pl_',
+    icon: '🎓',
+    color: '#370617',
+    addedTs: 1775830988380,
+    active: true
   }
 ];
 var MA_CATS = [
