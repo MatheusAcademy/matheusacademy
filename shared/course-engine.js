@@ -2157,97 +2157,462 @@ function downloadNotesPDF(){
   showToast('📥 Abrindo para impressão/PDF...','ok');
 }
 
-/* ═══ MAPA MENTAL — PNG RESPONSIVO (v6) ═══ */
+/* ═══ MAPA MENTAL COMPLETO — PDF MULTI-PÁGINA (v8) ═══ */
+/* Extrai resumos, conceitos, estatísticas e gera diagrama visual rico */
+
+function extractTextFromHtml(htmlStr){
+  if(!htmlStr)return '';
+  var tmp=document.createElement('div');
+  tmp.innerHTML=htmlStr;
+  return tmp.textContent||tmp.innerText||'';
+}
+
+function extractFirstParagraph(htmlStr,maxLen){
+  maxLen=maxLen||300;
+  if(!htmlStr)return '';
+  var tmp=document.createElement('div');
+  tmp.innerHTML=htmlStr;
+  var ps=tmp.querySelectorAll('p');
+  var txt='';
+  for(var i=0;i<ps.length&&txt.length<maxLen;i++){
+    var t=(ps[i].textContent||'').trim();
+    if(t.length>30)txt+=(txt?' ':'')+t;
+  }
+  if(!txt){
+    txt=extractTextFromHtml(htmlStr).substring(0,maxLen);
+  }
+  if(txt.length>maxLen)txt=txt.substring(0,maxLen-3)+'...';
+  return txt;
+}
+
+function extractKeyPhrases(htmlStr,max){
+  max=max||5;
+  if(!htmlStr)return [];
+  var tmp=document.createElement('div');
+  tmp.innerHTML=htmlStr;
+  var phrases=[];
+  // Pegar de blockquotes, strong, b, h3, h4
+  var els=tmp.querySelectorAll('blockquote,strong,b,h3,h4');
+  els.forEach(function(el){
+    var t=(el.textContent||'').trim();
+    if(t.length>10&&t.length<120&&phrases.length<max){
+      // Evitar duplicatas
+      if(!phrases.some(function(p){return p.toLowerCase()===t.toLowerCase();})){
+        phrases.push(t);
+      }
+    }
+  });
+  return phrases;
+}
+
+function extractListItems(htmlStr,max){
+  max=max||6;
+  if(!htmlStr)return [];
+  var tmp=document.createElement('div');
+  tmp.innerHTML=htmlStr;
+  var items=[];
+  var lis=tmp.querySelectorAll('li');
+  for(var i=0;i<lis.length&&items.length<max;i++){
+    var t=(lis[i].textContent||'').trim();
+    if(t.length>5&&t.length<150){
+      items.push(t.length>80?t.substring(0,77)+'...':t);
+    }
+  }
+  return items;
+}
+
+function countStats(mods){
+  var totalTopics=0,totalCards=0,totalQuiz=0,totalWords=0;
+  mods.forEach(function(m){
+    m.topics.forEach(function(t){
+      totalTopics++;
+      if(t.cards)totalCards+=t.cards.length;
+      if(t.html)totalWords+=extractTextFromHtml(t.html).split(/\s+/).length;
+    });
+    if(m.quizFinal)totalQuiz+=m.quizFinal.length;
+  });
+  return {topics:totalTopics,cards:totalCards,quiz:totalQuiz,words:totalWords};
+}
+
 function downloadMindMapPDF(){
   if(COURSE.mindMapFree===false&&!isUnlocked()){
     openLockScreen();
     showToast('🔒 Mapa Mental exclusivo para assinantes','warn');
     return;
   }
-  var script=document.createElement('script');
-  script.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-  script.onload=function(){
-    showToast('⏳ Gerando imagem do mapa mental...','info');
-    var cc=COURSE.color||'#4A7EFF';
-    var now=new Date();
-    var exportDate=now.toLocaleDateString('pt-BR');
-    var isMobile=window.innerWidth<768;
-    var modColors=['#4A7EFF','#e63946','#22c55e','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#f97316'];
-    var container=document.createElement('div');
-    container.id='mindmapExportContainer';
-    container.style.cssText='position:fixed;top:-9999px;left:-9999px;width:'+(isMobile?'360px':'1200px')+';background:#0a0a14;font-family:"Segoe UI",Arial,sans-serif;padding:24px;color:#e0e0e0;box-sizing:border-box;';
-    var html='';
-    html+='<div style="text-align:center;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid '+cc+'33;">';
-    html+='<div style="font-size:10px;font-weight:900;color:#4A7EFF;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;">🎓 Matheus Academy</div>';
-    html+='<div style="font-size:20px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px;">🧠 Mapa Mental</div>';
-    html+='<div style="font-size:14px;font-weight:700;color:#ccc;margin-bottom:8px;">'+escHtml(COURSE.name)+'</div>';
-    html+='<div style="font-size:10px;color:#888;letter-spacing:1px;margin-bottom:12px;">Visão completa da estrutura do curso</div>';
-    html+='<div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:11px;color:#aaa;">';
-    html+='<span><b style="color:'+cc+';font-size:13px;">'+COURSE.modules+'</b> módulos</span>';
-    html+='<span><b style="color:'+cc+';font-size:13px;">'+COURSE.topics+'</b> tópicos</span>';
-    html+='<span><b style="color:'+cc+';font-size:13px;">'+COURSE.hours+'</b> horas</span>';
-    html+='</div></div>';
-    html+='<div style="text-align:center;margin-bottom:24px;">';
-    html+='<div style="display:inline-block;background:linear-gradient(135deg,'+cc+','+cc+'cc);color:#fff;font-size:16px;font-weight:900;padding:14px 32px;border-radius:50px;box-shadow:0 0 30px '+cc+'44;letter-spacing:.5px;white-space:nowrap;">'+escHtml(COURSE.shortName||COURSE.name)+'</div>';
+  showToast('⏳ Preparando mapa mental completo...','info');
+
+  var scriptsLoaded=0;
+  var scriptsNeeded=2;
+
+  function checkReady(){
+    scriptsLoaded++;
+    if(scriptsLoaded>=scriptsNeeded) generateFullMindMapPDF();
+  }
+
+  if(window.html2canvas){scriptsLoaded++;}else{
+    var s1=document.createElement('script');
+    s1.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s1.onload=checkReady;
+    s1.onerror=function(){showToast('❌ Erro ao carregar html2canvas','error');};
+    document.head.appendChild(s1);
+  }
+
+  if(window.jspdf||window.jsPDF){scriptsLoaded++;}else{
+    var s2=document.createElement('script');
+    s2.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s2.onload=checkReady;
+    s2.onerror=function(){showToast('❌ Erro ao carregar jsPDF','error');};
+    document.head.appendChild(s2);
+  }
+
+  if(scriptsLoaded>=scriptsNeeded) generateFullMindMapPDF();
+}
+
+function generateFullMindMapPDF(){
+  showToast('⏳ Gerando PDF completo do mapa mental...','info');
+
+  var cc=COURSE.color||'#4A7EFF';
+  var now=new Date();
+  var exportDate=now.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+  var modColors=['#4A7EFF','#e63946','#22c55e','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#f97316','#84cc16','#14b8a6'];
+  var stats=countStats(MODS);
+
+  // Container principal — largura fixa para qualidade
+  var pageWidth=1000;
+  var container=document.createElement('div');
+  container.id='mindmapFullContainer';
+  container.style.cssText='position:absolute;left:-9999px;top:0;width:'+pageWidth+'px;background:#08080f;font-family:"Segoe UI",Arial,sans-serif;color:#e8e8e8;box-sizing:border-box;';
+
+  var html='';
+
+  // ══════════════════════════════════════════════════════════════
+  // PÁGINA 1: CAPA + VISÃO GERAL + DIAGRAMA CENTRAL
+  // ══════════════════════════════════════════════════════════════
+  html+='<div class="mm-page" style="padding:40px;min-height:1400px;background:linear-gradient(180deg,#08080f 0%,#0d0d18 100%);position:relative;overflow:hidden;">';
+
+  // Decoração de fundo
+  html+='<div style="position:absolute;top:0;left:0;right:0;bottom:0;opacity:0.03;background-image:radial-gradient(circle at 20% 30%, '+cc+' 0%, transparent 50%),radial-gradient(circle at 80% 70%, #8b5cf6 0%, transparent 50%);pointer-events:none;"></div>';
+
+  // Header com logo
+  html+='<div style="text-align:center;margin-bottom:40px;position:relative;z-index:1;">';
+  html+='<div style="display:inline-flex;align-items:center;gap:12px;margin-bottom:20px;">';
+  html+='<div style="width:50px;height:50px;background:linear-gradient(135deg,'+cc+',#8b5cf6);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff;box-shadow:0 8px 32px '+cc+'44;">M</div>';
+  html+='<div style="text-align:left;"><div style="font-size:10px;font-weight:700;color:'+cc+';letter-spacing:3px;text-transform:uppercase;">MATHEUS ACADEMY</div><div style="font-size:18px;font-weight:300;color:#888;letter-spacing:1px;">Mapa Mental Completo</div></div>';
+  html+='</div>';
+  html+='<div style="font-size:36px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:12px;text-shadow:0 4px 20px rgba(0,0,0,0.5);">🧠 '+escHtml(COURSE.name)+'</div>';
+  html+='<div style="font-size:14px;color:#888;max-width:600px;margin:0 auto 24px;line-height:1.6;">'+(COURSE.desc||'Guia visual completo com resumos, conceitos-chave, estatísticas e estrutura do curso.')+'</div>';
+  html+='</div>';
+
+  // Cards de estatísticas
+  html+='<div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:40px;position:relative;z-index:1;">';
+  var statsData=[
+    {icon:'📚',value:COURSE.modules,label:'Módulos',color:'#4A7EFF'},
+    {icon:'📝',value:stats.topics,label:'Tópicos',color:'#22c55e'},
+    {icon:'⏱️',value:COURSE.hours,label:'Horas',color:'#f59e0b'},
+    {icon:'🎴',value:stats.cards,label:'Flashcards',color:'#8b5cf6'},
+    {icon:'❓',value:stats.quiz,label:'Questões',color:'#ec4899'},
+    {icon:'📖',value:Math.round(stats.words/1000)+'k',label:'Palavras',color:'#06b6d4'}
+  ];
+  statsData.forEach(function(s){
+    html+='<div style="background:#12121e;border:1px solid #ffffff10;border-radius:16px;padding:20px 28px;text-align:center;min-width:120px;">';
+    html+='<div style="font-size:28px;margin-bottom:6px;">'+s.icon+'</div>';
+    html+='<div style="font-size:32px;font-weight:900;color:'+s.color+';line-height:1;">'+s.value+'</div>';
+    html+='<div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">'+s.label+'</div>';
     html+='</div>';
-    html+='<div style="display:grid;grid-template-columns:'+(isMobile?'1fr':'1fr 1fr')+';gap:'+(isMobile?'12px':'16px 28px')+';width:100%;margin-bottom:20px;">';
-    MODS.forEach(function(mod,mi){
-      var mColor=modColors[mi%modColors.length];
-      var modTitle=mod.name.replace(/^Módulo\s*\d+\s*[—–-]\s*/i,'');
-      html+='<div style="background:#12121e;border-radius:12px;padding:14px 16px;border-left:4px solid '+mColor+';break-inside:avoid;">';
-      html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">';
-      html+='<div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;background:'+mColor+';flex-shrink:0;">'+String(mi+1).padStart(2,'0')+'</div>';
-      html+='<div style="font-size:12px;font-weight:800;color:#fff;line-height:1.3;">'+escHtml(modTitle)+'</div>';
+  });
+  html+='</div>';
+
+  // ══════════════════════════════════════════════════════════════
+  // DIAGRAMA MENTAL CENTRAL (estilo radial)
+  // ══════════════════════════════════════════════════════════════
+  html+='<div style="position:relative;margin:40px auto;width:100%;max-width:900px;min-height:500px;">';
+
+  // Centro do diagrama
+  html+='<div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:180px;height:180px;background:linear-gradient(135deg,'+cc+','+cc+'99);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px '+cc+'66,0 0 100px '+cc+'33;z-index:10;">';
+  html+='<div style="text-align:center;color:#fff;"><div style="font-size:14px;font-weight:900;line-height:1.3;padding:0 15px;">'+escHtml(COURSE.shortName||COURSE.name)+'</div></div>';
+  html+='</div>';
+
+  // Módulos em círculo ao redor
+  var numMods=MODS.length;
+  var radius=220;
+  var angleStep=(2*Math.PI)/numMods;
+  var startAngle=-Math.PI/2; // Começar do topo
+
+  MODS.forEach(function(mod,mi){
+    var angle=startAngle+(mi*angleStep);
+    var x=50+((radius/450)*100)*Math.cos(angle);
+    var y=50+((radius/300)*100)*Math.sin(angle);
+    var mColor=modColors[mi%modColors.length];
+    var modTitle=mod.name.replace(/^Módulo\s*\d+\s*[—–-]\s*/i,'');
+    if(modTitle.length>25)modTitle=modTitle.substring(0,23)+'...';
+
+    // Linha conectora
+    html+='<div style="position:absolute;left:50%;top:50%;width:'+radius+'px;height:2px;background:linear-gradient(90deg,'+mColor+'66,'+mColor+'22);transform-origin:left center;transform:rotate('+(angle*(180/Math.PI))+'deg);z-index:1;"></div>';
+
+    // Nó do módulo
+    html+='<div style="position:absolute;left:'+x+'%;top:'+y+'%;transform:translate(-50%,-50%);z-index:5;">';
+    html+='<div style="background:#12121e;border:2px solid '+mColor+';border-radius:12px;padding:12px 16px;min-width:140px;max-width:180px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.3);">';
+    html+='<div style="width:28px;height:28px;background:'+mColor+';border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;margin:0 auto 8px;">'+String(mi+1).padStart(2,'0')+'</div>';
+    html+='<div style="font-size:11px;font-weight:700;color:#fff;line-height:1.3;">'+escHtml(modTitle)+'</div>';
+    html+='<div style="font-size:9px;color:#888;margin-top:4px;">'+mod.topics.length+' tópicos</div>';
+    html+='</div>';
+    html+='</div>';
+  });
+
+  html+='</div>'; // Fim do diagrama
+
+  // Legenda
+  html+='<div style="text-align:center;margin-top:20px;padding-top:20px;border-top:1px solid #ffffff10;">';
+  html+='<div style="font-size:10px;color:#666;letter-spacing:1px;">📅 Gerado em '+exportDate+' · Matheus Academy</div>';
+  html+='</div>';
+
+  html+='</div>'; // Fim da página 1
+
+  // ══════════════════════════════════════════════════════════════
+  // PÁGINAS DE MÓDULOS (1 por módulo com conteúdo completo)
+  // ══════════════════════════════════════════════════════════════
+  MODS.forEach(function(mod,mi){
+    var mColor=modColors[mi%modColors.length];
+    var modTitle=mod.name.replace(/^Módulo\s*\d+\s*[—–-]\s*/i,'');
+
+    html+='<div class="mm-page" style="padding:40px;min-height:1400px;background:#08080f;page-break-before:always;border-top:4px solid '+mColor+';">';
+
+    // Header do módulo
+    html+='<div style="display:flex;align-items:center;gap:20px;margin-bottom:30px;padding-bottom:20px;border-bottom:1px solid #ffffff10;">';
+    html+='<div style="width:60px;height:60px;background:'+mColor+';border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;box-shadow:0 8px 24px '+mColor+'44;">'+String(mi+1).padStart(2,'0')+'</div>';
+    html+='<div style="flex:1;"><div style="font-size:10px;font-weight:700;color:'+mColor+';letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">MÓDULO '+String(mi+1).padStart(2,'0')+'</div><div style="font-size:26px;font-weight:800;color:#fff;line-height:1.2;">'+escHtml(modTitle)+'</div></div>';
+    html+='<div style="text-align:right;"><div style="font-size:32px;font-weight:900;color:'+mColor+';">'+mod.topics.length+'</div><div style="font-size:10px;color:#888;text-transform:uppercase;">Tópicos</div></div>';
+    html+='</div>';
+
+    // Grid de tópicos com resumos
+    html+='<div style="display:grid;grid-template-columns:1fr;gap:20px;">';
+
+    mod.topics.forEach(function(t,ti){
+      var summary=extractFirstParagraph(t.html,280);
+      var keyPhrases=extractKeyPhrases(t.html,3);
+      var listItems=extractListItems(t.html,4);
+      var hasCards=t.cards&&t.cards.length>0;
+
+      html+='<div style="background:#0f0f1a;border-radius:16px;padding:24px;border-left:4px solid '+mColor+'40;position:relative;overflow:hidden;">';
+
+      // Número decorativo
+      html+='<div style="position:absolute;top:10px;right:20px;font-size:48px;font-weight:900;color:'+mColor+'08;line-height:1;">'+String(ti+1).padStart(2,'0')+'</div>';
+
+      // Título do tópico
+      html+='<div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;">';
+      html+='<div style="width:32px;height:32px;background:'+mColor+'22;border:2px solid '+mColor+';border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:'+mColor+';flex-shrink:0;">'+String(ti+1)+'</div>';
+      html+='<div style="font-size:18px;font-weight:700;color:#fff;line-height:1.4;padding-top:4px;">'+escHtml(t.name)+'</div>';
       html+='</div>';
-      html+='<div style="display:flex;flex-direction:column;gap:6px;margin-left:38px;">';
-      mod.topics.forEach(function(t){
-        html+='<div style="display:flex;align-items:flex-start;gap:8px;font-size:11px;color:#ccc;line-height:1.4;">';
-        html+='<div style="width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:4px;background:'+mColor+'"></div>';
-        html+='<span style="font-weight:600;color:#e8e8e8;">'+escHtml(t.name)+'</span>';
-        html+='</div>';
-      });
-      html+='</div>';
-      if(mod.topics.some(function(t){return t.cards&&t.cards.length;})){
-        html+='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;margin-left:38px;">';
-        mod.topics.forEach(function(t){
-          if(t.cards){
-            t.cards.slice(0,5).forEach(function(c){
-              var short=c.q.length>35?c.q.substring(0,33)+'…':c.q;
-              html+='<span style="font-size:8px;background:#ffffff0a;border:1px solid #ffffff15;padding:2px 6px;border-radius:4px;color:#888;">'+escHtml(short)+'</span>';
-            });
-          }
-        });
+
+      // Resumo do conteúdo
+      if(summary){
+        html+='<div style="background:#12121e;border-radius:12px;padding:16px 18px;margin-bottom:16px;border:1px solid #ffffff08;">';
+        html+='<div style="font-size:9px;font-weight:700;color:'+mColor+';text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">📄 Resumo</div>';
+        html+='<div style="font-size:13px;color:#ccc;line-height:1.7;">'+escHtml(summary)+'</div>';
         html+='</div>';
       }
+
+      // Conceitos-chave
+      if(keyPhrases.length>0){
+        html+='<div style="margin-bottom:16px;">';
+        html+='<div style="font-size:9px;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">💡 Conceitos-Chave</div>';
+        html+='<div style="display:flex;flex-wrap:wrap;gap:8px;">';
+        keyPhrases.forEach(function(phrase){
+          html+='<div style="background:linear-gradient(135deg,#f59e0b22,#f59e0b11);border:1px solid #f59e0b33;border-radius:8px;padding:8px 14px;font-size:11px;color:#f5c563;font-weight:600;">'+escHtml(phrase)+'</div>';
+        });
+        html+='</div>';
+        html+='</div>';
+      }
+
+      // Lista de pontos importantes
+      if(listItems.length>0){
+        html+='<div style="margin-bottom:16px;">';
+        html+='<div style="font-size:9px;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">✅ Pontos Importantes</div>';
+        html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">';
+        listItems.forEach(function(item){
+          html+='<div style="display:flex;align-items:flex-start;gap:8px;font-size:11px;color:#aaa;line-height:1.5;">';
+          html+='<div style="width:6px;height:6px;background:#22c55e;border-radius:50%;flex-shrink:0;margin-top:5px;"></div>';
+          html+='<span>'+escHtml(item)+'</span>';
+          html+='</div>';
+        });
+        html+='</div>';
+        html+='</div>';
+      }
+
+      // Flashcards preview
+      if(hasCards){
+        html+='<div style="background:#8b5cf611;border:1px solid #8b5cf633;border-radius:10px;padding:14px 16px;">';
+        html+='<div style="font-size:9px;font-weight:700;color:#8b5cf6;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">🎴 Flashcards ('+t.cards.length+')</div>';
+        html+='<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+        t.cards.slice(0,3).forEach(function(c){
+          var q=c.q.length>50?c.q.substring(0,48)+'...':c.q;
+          html+='<div style="background:#8b5cf622;border-radius:6px;padding:8px 12px;font-size:10px;color:#c4b5fd;font-weight:500;max-width:280px;">❓ '+escHtml(q)+'</div>';
+        });
+        if(t.cards.length>3){
+          html+='<div style="background:#8b5cf633;border-radius:6px;padding:8px 12px;font-size:10px;color:#a78bfa;font-weight:700;">+'+(t.cards.length-3)+' mais</div>';
+        }
+        html+='</div>';
+        html+='</div>';
+      }
+
+      html+='</div>'; // Fim do card do tópico
+    });
+
+    html+='</div>'; // Fim do grid
+
+    // Quiz do módulo (se existir)
+    if(mod.quizFinal&&mod.quizFinal.length>0){
+      html+='<div style="margin-top:30px;background:#ec489911;border:1px solid #ec489933;border-radius:16px;padding:24px;">';
+      html+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">';
+      html+='<div style="font-size:28px;">🎯</div>';
+      html+='<div><div style="font-size:10px;font-weight:700;color:#ec4899;text-transform:uppercase;letter-spacing:1px;">Quiz do Módulo</div><div style="font-size:14px;font-weight:600;color:#fff;">'+mod.quizFinal.length+' questões para testar seu conhecimento</div></div>';
       html+='</div>';
-    });
+      html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+      mod.quizFinal.slice(0,4).forEach(function(q,qi){
+        var qText=q.q||q.question||'';
+        if(qText.length>80)qText=qText.substring(0,77)+'...';
+        html+='<div style="background:#ec489922;border-radius:8px;padding:12px 14px;font-size:11px;color:#f9a8d4;line-height:1.5;"><b style="color:#ec4899;">Q'+(qi+1)+':</b> '+escHtml(qText)+'</div>';
+      });
+      html+='</div>';
+      html+='</div>';
+    }
+
+    html+='</div>'; // Fim da página do módulo
+  });
+
+  // ══════════════════════════════════════════════════════════════
+  // PÁGINA FINAL: TODOS OS FLASHCARDS
+  // ══════════════════════════════════════════════════════════════
+  if(stats.cards>0){
+    html+='<div class="mm-page" style="padding:40px;min-height:1400px;background:#08080f;page-break-before:always;border-top:4px solid #8b5cf6;">';
+    html+='<div style="text-align:center;margin-bottom:40px;">';
+    html+='<div style="font-size:48px;margin-bottom:12px;">🎴</div>';
+    html+='<div style="font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">Banco de Flashcards</div>';
+    html+='<div style="font-size:14px;color:#888;">'+stats.cards+' cartões para revisão espaçada</div>';
     html+='</div>';
-    html+='<div style="text-align:center;margin-top:20px;padding-top:12px;border-top:1px solid #ffffff12;font-size:9px;color:#555;">Mapa Mental gerado automaticamente por Matheus Academy · '+escHtml(COURSE.name)+' · '+exportDate+'</div>';
-    container.innerHTML=html;
-    document.body.appendChild(container);
-    html2canvas(container,{backgroundColor:'#0a0a14',scale:isMobile?2:3,logging:false,useCORS:true,allowTaint:true,width:isMobile?360:1200}).then(function(canvas){
-      canvas.toBlob(function(blob){
-        var link=document.createElement('a');
-        var fileName='Mapa_Mental_'+COURSE.name.replace(/[^a-z0-9]/gi,'_')+'.png';
-        link.href=URL.createObjectURL(blob);
-        link.download=fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
-        document.body.removeChild(container);
-        showToast('📥 Mapa Mental baixado como PNG!','ok');
-      },'image/png',0.95);
-    }).catch(function(err){
-      document.body.removeChild(container);
-      console.error('Erro ao gerar imagem:',err);
-      showToast('❌ Erro ao gerar mapa mental. Tente novamente.','error');
+
+    html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">';
+    var cardCount=0;
+    MODS.forEach(function(mod,mi){
+      var mColor=modColors[mi%modColors.length];
+      mod.topics.forEach(function(t){
+        if(t.cards){
+          t.cards.forEach(function(c){
+            if(cardCount>=30)return; // Limitar para não ficar muito longo
+            cardCount++;
+            var q=c.q.length>100?c.q.substring(0,97)+'...':c.q;
+            var a=c.a.length>120?c.a.substring(0,117)+'...':c.a;
+            html+='<div style="background:#12121e;border-radius:12px;padding:16px;border-left:3px solid '+mColor+';">';
+            html+='<div style="font-size:10px;font-weight:700;color:'+mColor+';margin-bottom:8px;">M'+String(mi+1).padStart(2,'0')+' · '+escHtml(t.name.substring(0,30))+'</div>';
+            html+='<div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:10px;line-height:1.5;">❓ '+escHtml(q)+'</div>';
+            html+='<div style="font-size:11px;color:#aaa;line-height:1.5;padding-top:10px;border-top:1px dashed #ffffff15;">💡 '+escHtml(a)+'</div>';
+            html+='</div>';
+          });
+        }
+      });
     });
-  };
-  script.onerror=function(){
-    showToast('❌ Erro ao carregar biblioteca de renderização','error');
-  };
-  document.head.appendChild(script);
+    if(stats.cards>30){
+      html+='<div style="grid-column:span 2;text-align:center;padding:20px;background:#8b5cf622;border-radius:12px;color:#a78bfa;font-weight:600;">+ '+(stats.cards-30)+' flashcards adicionais disponíveis no curso</div>';
+    }
+    html+='</div>';
+
+    html+='</div>';
+  }
+
+  // Rodapé final
+  html+='<div style="background:#0a0a12;padding:30px 40px;text-align:center;border-top:1px solid #ffffff10;">';
+  html+='<div style="font-size:12px;color:#666;margin-bottom:8px;">Este mapa mental foi gerado automaticamente pela plataforma Matheus Academy</div>';
+  html+='<div style="font-size:11px;color:#444;">'+escHtml(COURSE.name)+' · '+exportDate+' · matheusacademy.com.br</div>';
+  html+='</div>';
+
+  container.innerHTML=html;
+  document.body.appendChild(container);
+
+  // Renderizar cada página e gerar PDF multi-página
+  requestAnimationFrame(function(){
+    setTimeout(function(){
+      var pages=container.querySelectorAll('.mm-page');
+      if(pages.length===0){
+        pages=[container];
+      }
+
+      var jsPDFLib=window.jspdf||window.jsPDF;
+      var jsPDF=jsPDFLib.jsPDF||jsPDFLib;
+      var pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      var pageW=pdf.internal.pageSize.getWidth();
+      var pageH=pdf.internal.pageSize.getHeight();
+      var margin=8;
+      var maxW=pageW-(margin*2);
+      var maxH=pageH-(margin*2);
+
+      var pageIndex=0;
+
+      function renderNextPage(){
+        if(pageIndex>=pages.length){
+          // Finalizar
+          var fileName='Mapa_Mental_Completo_'+COURSE.name.replace(/[^a-z0-9]/gi,'_')+'.pdf';
+          pdf.save(fileName);
+          document.body.removeChild(container);
+          showToast('📥 Mapa Mental Completo baixado! ('+pages.length+' páginas)','ok');
+          return;
+        }
+
+        var page=pages[pageIndex];
+        html2canvas(page,{
+          backgroundColor:'#08080f',
+          scale:2,
+          logging:false,
+          useCORS:true,
+          allowTaint:true,
+          width:page.scrollWidth,
+          height:page.scrollHeight,
+          windowWidth:page.scrollWidth,
+          windowHeight:page.scrollHeight
+        }).then(function(canvas){
+          if(pageIndex>0)pdf.addPage();
+
+          var imgW=canvas.width;
+          var imgH=canvas.height;
+          var ratio=imgH/imgW;
+
+          var pdfW=maxW;
+          var pdfH=pdfW*ratio;
+
+          // Se muito alto, dividir em múltiplas páginas do PDF
+          if(pdfH>maxH){
+            // Escalar para caber na largura e adicionar múltiplas páginas
+            var scale=maxW/imgW;
+            var scaledH=imgH*scale;
+            var yOffset=0;
+            var imgData=canvas.toDataURL('image/png',1.0);
+
+            while(yOffset<scaledH){
+              if(yOffset>0)pdf.addPage();
+              // Clip vertical
+              var clipH=Math.min(maxH,scaledH-yOffset);
+              pdf.addImage(imgData,'PNG',margin,-yOffset+margin,maxW,scaledH);
+              yOffset+=maxH;
+            }
+          }else{
+            var xOff=(pageW-pdfW)/2;
+            var yOff=margin;
+            var imgData=canvas.toDataURL('image/png',1.0);
+            pdf.addImage(imgData,'PNG',xOff,yOff,pdfW,pdfH);
+          }
+
+          pageIndex++;
+          renderNextPage();
+        }).catch(function(err){
+          console.error('Erro na página '+pageIndex+':',err);
+          pageIndex++;
+          renderNextPage();
+        });
+      }
+
+      renderNextPage();
+    },200);
+  });
 }
 
 /* ═══ ÁUDIO (legado — compatibilidade) ═══ */
