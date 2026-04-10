@@ -1248,6 +1248,25 @@ var MA_COURSES = [
     color: '#7209b7',
     addedTs: 1775831110720,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gr.jpg',
+    id: 'gr',
+    name: 'The Great Reset',
+    desc: 'Uma análise completa sobre as transformações econômicas, sociais e institucionais discutidas no cenário global e seus possíveis impactos no futuro das nações.',
+    file: 'great-reset.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'GR_HENRY_2026_MASTER',
+    ak: 'gr_auth',
+    storagePrefix: 'gr_',
+    icon: '📰',
+    color: '#1d3557',
+    addedTs: 1775831114326,
+    active: true
   }
 ];
 var MA_CATS = [
