@@ -1635,7 +1635,7 @@ var MA_COURSES = [
     name: 'Reformas que Mudaram o Brasil',
     desc: 'Compreenda as principais reformas que transformaram o país ao longo do tempo, seus objetivos, impactos econômicos, efeitos sociais e o papel dessas mudanças na reorganização do Estado brasileiro.',
     file: 'reformas-brasil.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    cat: 'Política Brasileira',
     modules: 3,
     topics: 9,
     hours: 2,
