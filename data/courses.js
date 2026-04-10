@@ -1666,6 +1666,25 @@ var MA_COURSES = [
     color: '#588157',
     addedTs: 1775832781951,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cr69.jpg',
+    id: 'cr69',
+    name: 'Corrupção no Brasil: História e Mecanismos',
+    desc: 'Analise como a corrupção se estruturou historicamente no Brasil, seus mecanismos políticos e institucionais, seus impactos econômicos e sociais e os desafios para o combate à impunidade.',
+    file: 'corrupcao-brasil.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CR_HENRY_2026_MASTER',
+    ak: 'cr_auth',
+    storagePrefix: 'cr_',
+    icon: '📰',
+    color: '#780000',
+    addedTs: 1775832784450,
+    active: true
   }
 ];
 var MA_CATS = [
