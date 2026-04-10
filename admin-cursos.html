@@ -360,47 +360,8 @@ textarea{resize:vertical;min-height:54px}
     <div style="font-size:11px;color:#4a5c7a;margin-top:3px;font-family:'JetBrains Mono',monospace">Painel Administrativo</div>
   </div>
 
-  <!-- Card de login -->
-  <div style="background:#0d1421;border:1px solid #1e2d47;border-radius:16px;padding:32px 28px;width:100%;max-width:360px;margin:0 18px">
-    <div style="font-size:13px;font-weight:700;color:#f0f4ff;margin-bottom:4px">🔐 Acesso Restrito</div>
-    <div style="font-size:11px;color:#4a5c7a;margin-bottom:24px">Digite a senha de administrador para continuar</div>
-
-    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
-      <label style="font-size:10px;font-weight:700;color:#8899bb;text-transform:uppercase;letter-spacing:.06em">Senha</label>
-      <input type="password" id="lock-senha" placeholder="••••••••••••"
-        style="background:#111827;border:1px solid #1e2d47;border-radius:8px;padding:11px 14px;color:#f0f4ff;font-family:'Sora',sans-serif;font-size:14px;outline:none;transition:.2s;width:100%"
-        onkeydown="if(event.key==='Enter')tentarLogin()"
-        oninput="el('lock-erro').style.display='none'"
-        onfocus="this.style.borderColor='#3b82f6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,.13)'"
-        onblur="this.style.borderColor='#1e2d47';this.style.boxShadow='none'">
-    </div>
-
-    <div id="lock-erro" style="display:none;background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.25);color:#fca5a5;border-radius:8px;padding:9px 12px;font-size:12px;margin-bottom:14px">
-      ❌ Senha incorreta. Tente novamente.
-    </div>
-    <div id="lock-tentativas" style="display:none;background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.25);color:#fcd34d;border-radius:8px;padding:9px 12px;font-size:11px;margin-bottom:14px"></div>
-
-    <button onclick="tentarLogin()" id="lock-btn"
-      style="width:100%;background:#3b82f6;color:#fff;border:none;border-radius:10px;padding:13px;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Entrar no Admin
-    </button>
-
-    <div style="text-align:center;margin-top:16px;font-size:10px;color:#2a3a52">
-      Matheus Academy · Admin v10 · Acesso monitorado
-    </div>
-  </div>
-
-  <!-- Bloqueio temporário -->
-  <div id="lock-bloqueado" style="display:none;position:fixed;inset:0;background:#080c14;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;z-index:10000">
-    <div style="font-size:48px">🔒</div>
-    <div style="font-size:16px;font-weight:700;color:#fca5a5">Acesso bloqueado temporariamente</div>
-    <div style="font-size:12px;color:#4a5c7a">Aguarde <span id="lock-timer" style="color:#fcd34d;font-weight:700">60s</span> para tentar novamente</div>
-  </div>
-</div>
-
-<!-- Conteúdo real do admin (oculto até login) -->
-<div id="admin-content" style="display:none">
+<!-- Conteúdo real do admin (acesso direto - sem senha) -->
+<div id="admin-content" style="display:block">
 <header>
   <div class="logo">M</div>
   <div><h1>Matheus Academy <small>Admin</small></h1></div>
