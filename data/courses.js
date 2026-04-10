@@ -1692,7 +1692,7 @@ var MA_COURSES = [
     name: 'Direita, Esquerda e Centro: Ideologias, Correntes Políticas, Guerra Cultural e Polarização',
     desc: 'Compreenda as principais correntes ideológicas, os conflitos de visão de mundo, a disputa cultural, a polarização política e como essas forças moldam o debate público contemporâneo.',
     file: 'direita-esquerda-centro.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    cat: 'Política Brasileira',
     modules: 3,
     topics: 9,
     hours: 2,
