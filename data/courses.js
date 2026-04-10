@@ -1780,6 +1780,25 @@ var MA_COURSES = [
     color: '#006d77',
     addedTs: 1775832798441,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ep.jpg',
+    id: 'ep',
+    name: 'Economia na Prática: Como o Mundo Funciona',
+    desc: 'Descubra como inflação, juros, câmbio, consumo, produção e crises moldam a economia real e influenciam a vida das pessoas e das empresas.',
+    file: 'economia-pratica.html',
+    cat: 'Finanças & Economia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'EP_HENRY_2026_MASTER',
+    ak: 'ep_auth',
+    storagePrefix: 'ep_',
+    icon: '💰',
+    color: '#f4a261',
+    addedTs: 1775832801573,
+    active: true
   }
 ];
 var MA_CATS = [
