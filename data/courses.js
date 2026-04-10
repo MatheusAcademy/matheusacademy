@@ -1742,6 +1742,25 @@ var MA_COURSES = [
     color: '#d62828',
     addedTs: 1775832792728,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/fd.jpg',
+    id: 'fd',
+    name: 'O Futuro da Direita no Brasil',
+    desc: 'Explore a evolução da direita brasileira, suas correntes ideológicas, lideranças, disputas internas, estratégias eleitorais e perspectivas para os próximos anos.',
+    file: 'futuro-direita.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'FD_HENRY_2026_MASTER',
+    ak: 'fd_auth',
+    storagePrefix: 'fd_',
+    icon: '📰',
+    color: '#e76f51',
+    addedTs: 1775832795864,
+    active: true
   }
 ];
 var MA_CATS = [
