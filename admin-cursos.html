@@ -1695,6 +1695,31 @@ textarea{resize:vertical;min-height:54px}
         <div id="lote-summary-content" style="font-size:12px;color:var(--t2);line-height:1.7"></div>
       </div>
 
+      <!-- Restore banner -->
+      <div id="lote-restore-banner" style="display:none;margin-bottom:12px;padding:12px;background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.25);border-radius:10px;color:var(--t2);font-size:12px"></div>
+
+      <!-- Batch actions bar -->
+      <div id="lote-batch-bar" style="display:none;margin-bottom:12px;padding:10px;background:var(--sf);border:1px solid var(--brd);border-radius:10px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          <span style="font-size:11px;font-weight:700;color:var(--t2);margin-right:4px">Acoes em massa:</span>
+          <button class="btns" onclick="loteFixAllIds()" style="font-size:10px;padding:4px 10px;background:rgba(234,179,8,.12);color:#fde047;border-color:rgba(234,179,8,.25)">🔧 Corrigir IDs duplicados</button>
+          <select id="lote-batch-cat-sel" style="font-size:10px;padding:3px 6px;max-width:140px">
+            <option value="">Categoria...</option>
+          </select>
+          <button class="btns" onclick="loteBatchCat(el('lote-batch-cat-sel').value)" style="font-size:10px;padding:4px 10px">Aplicar categoria</button>
+          <button class="btns" onclick="loteExportCSV()" style="font-size:10px;padding:4px 10px;background:rgba(99,102,241,.12);color:#a5b4fc;border-color:rgba(99,102,241,.25)">📥 Exportar CSV</button>
+          <button class="btns" onclick="loteRenderStatusPanel()" style="font-size:10px;padding:4px 10px;background:rgba(34,197,94,.12);color:#86efac;border-color:rgba(34,197,94,.25)">📊 Atualizar status</button>
+        </div>
+      </div>
+
+      <!-- Status panel -->
+      <div id="lote-status-panel" style="display:none;margin-bottom:16px;padding:16px;background:var(--sf);border:1px solid var(--brd);border-radius:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:14px;font-weight:800;color:var(--txt)">📊 Status Real por Curso</div>
+        </div>
+        <div id="lote-status-content"></div>
+      </div>
+
       <!-- Area de erros e reenvio -->
       <div id="lote-erros-wrap" style="display:none;margin-top:20px">
         <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.25);border-radius:12px;padding:16px">
@@ -2188,8 +2213,8 @@ function extractMeta(html,fn){
   // ── Acesso livre? ──
   var isFree = !!(courseData && courseData.free);
 
-  return{id:id,name:name,desc:desc,file:fn,cat:cat,modules:mods,topics:topics,hours:hours,
-         quizzes:quizzes,salt:salt,ak:ak,storagePrefix:pfx,icon:icon,color:color,free:isFree};
+  return{id:id,name:name,desc:desc,file:fn,cat:cat,modules:mods,topics:topics,hours:Math.ceil(mods*0.5),
+         quizzes:mods*3,salt:salt,ak:ak,storagePrefix:pfx,icon:icon,color:color,free:isFree};
 }
 
 function fillUp(m){
@@ -5269,6 +5294,22 @@ function loteHtmlChosen(files) {
         el('lote-count').textContent = total + ' arquivo(s) HTML carregado(s)';
         el('lote-table-wrap').style.display = 'block';
         el('lote-pub-btn').disabled = false;
+        // Show batch bar and status panel
+        el('lote-batch-bar').style.display = 'block';
+        // Populate batch category select
+        var bcs = el('lote-batch-cat-sel');
+        if (bcs && !bcs.options.length || bcs.options.length <= 1) {
+          var sc = el('mCat');
+          for (var ci = 0; ci < sc.options.length; ci++) {
+            bcs.add(new Option(sc.options[ci].text, sc.options[ci].value));
+          }
+        }
+        // Auto render status
+        loteRenderStatusPanel();
+        // Save to localStorage
+        _loteSaveToStorage();
+        // Check restore
+        _loteCheckRestore();
       }
     };
     rd.readAsText(f, 'UTF-8');
@@ -5289,6 +5330,22 @@ function loteCheckDuplicates() {
     }
     seen[item.meta.id] = true;
   });
+}
+
+function _loteRecalc(idx, mods) {
+  _loteItems[idx].meta.modules = mods;
+  _loteItems[idx].meta.quizzes = mods * 3;
+  _loteItems[idx].meta.hours = Math.ceil(mods * 0.5);
+  _loteItems[idx].meta.minutes = mods * 30;
+  loteRenderTable();
+}
+
+function _formatHours(mods) {
+  var mins = mods * 30;
+  if (mins < 60) return mins + 'min';
+  var h = Math.floor(mins / 60);
+  var m = mins % 60;
+  return m ? h + 'h' + (m < 10 ? '0' : '') + m : h + 'h';
 }
 
 function loteRenderTable() {
@@ -5326,10 +5383,10 @@ function loteRenderTable() {
       + '<td style="padding:6px;vertical-align:middle"><input type="text" value="' + escH(item.meta.id) + '" style="width:60px;font-size:11px;padding:4px 6px;font-family:var(--mono)" onchange="_loteItems[' + idx + '].meta.id=this.value.trim().toLowerCase().replace(/[^a-z0-9]/g,\'\').substring(0,8)"></td>'
       + '<td style="padding:6px;vertical-align:middle"><input type="text" value="' + escH(item.meta.name) + '" style="width:140px;font-size:11px;padding:4px 6px" onchange="_loteItems[' + idx + '].meta.name=this.value.trim()"></td>'
       + '<td style="padding:6px;vertical-align:middle"><select style="font-size:10px;padding:3px 4px;width:130px" onchange="_loteItems[' + idx + '].meta.cat=this.value">' + catOpts + '</select></td>'
-      + '<td style="padding:6px;text-align:center;vertical-align:middle"><input type="number" value="' + item.meta.modules + '" min="0" style="width:46px;font-size:11px;padding:3px 4px;font-family:var(--mono);text-align:center;color:var(--acc2)" onchange="_loteItems[' + idx + '].meta.modules=parseInt(this.value)||0"></td>'
+      + '<td style="padding:6px;text-align:center;vertical-align:middle"><input type="number" value="' + item.meta.modules + '" min="1" style="width:46px;font-size:11px;padding:3px 4px;font-family:var(--mono);text-align:center;color:var(--acc2)" onchange="_loteRecalc(' + idx + ',parseInt(this.value)||1)"></td>'
       + '<td style="padding:6px;text-align:center;vertical-align:middle"><input type="number" value="' + item.meta.topics + '" min="0" style="width:46px;font-size:11px;padding:3px 4px;font-family:var(--mono);text-align:center" onchange="_loteItems[' + idx + '].meta.topics=parseInt(this.value)||0"></td>'
-      + '<td style="padding:6px;text-align:center;vertical-align:middle"><input type="number" value="' + item.meta.quizzes + '" min="0" style="width:46px;font-size:11px;padding:3px 4px;font-family:var(--mono);text-align:center" onchange="_loteItems[' + idx + '].meta.quizzes=parseInt(this.value)||0"></td>'
-      + '<td style="padding:6px;text-align:center;vertical-align:middle"><input type="number" value="' + item.meta.hours + '" min="0" style="width:46px;font-size:11px;padding:3px 4px;font-family:var(--mono);text-align:center" onchange="_loteItems[' + idx + '].meta.hours=parseInt(this.value)||0"></td>'
+      + '<td style="padding:6px;text-align:center;vertical-align:middle;font-family:var(--mono);font-size:11px;color:#c4b5fd">' + (item.meta.modules * 3) + '</td>'
+      + '<td style="padding:6px;text-align:center;vertical-align:middle;font-family:var(--mono);font-size:11px;color:#93c5fd">' + _formatHours(item.meta.modules) + '</td>'
       + '<td style="padding:6px;vertical-align:middle;font-family:var(--mono);font-size:10px;color:var(--t3);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + escH(item.file.name) + '">' + escH(item.file.name) + '</td>'
       + '<td style="padding:6px;text-align:center;vertical-align:middle" id="lote-status-' + idx + '">' + statusBadge + '</td>'
       + '</tr>';
@@ -5751,6 +5808,363 @@ function loteLimparErros() {
   });
   loteRenderTable();
   loteRenderErros();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STAGING SYSTEM — mapa completo de vinculo por curso
+   ══════════════════════════════════════════════════════════════ */
+var _stageMap = []; // [{id, htmlTitle, cat, catConf, htmlFile, htmlSent, inCoursesJs, capaSent, capaLinked, capaFile, modules, quizzes, hours, status, error, action}]
+
+function _buildStageMap() {
+  _stageMap = [];
+  var capasById = {};
+  if (_capaLoteItems && _capaLoteItems.length) {
+    _capaLoteItems.forEach(function(c) {
+      if (c.newId && c.status !== 'descartada') {
+        capasById[c.newId] = c;
+      }
+    });
+  }
+
+  _loteItems.forEach(function(item) {
+    var hasCapa = !!capasById[item.meta.id];
+    var capaOk = hasCapa && (capasById[item.meta.id].status === 'ok');
+    var htmlOk = item.status === 'ok';
+    var inCourses = _existIds.indexOf(item.meta.id) !== -1 || htmlOk;
+    var hasValidId = item.meta.id && /^[a-z0-9]{1,8}$/.test(item.meta.id);
+    var hasCOURSE = item.content && /var\s+COURSE\s*=/.test(item.content);
+    var hasMODS = item.content && /var\s+MODS\s*=/.test(item.content);
+    var hasTitle = !!item.meta.name;
+    var hasCat = !!item.meta.cat;
+
+    // Determine status
+    var status, error = '', action = '';
+    if (!hasValidId) {
+      status = 'ID INVALIDO'; error = 'ID vazio ou com caracteres invalidos'; action = 'Edite o ID na tabela (a-z, 0-9, max 8)';
+    } else if (_existIds.indexOf(item.meta.id) !== -1 && item.status !== 'ok') {
+      status = 'ID DUPLICADO'; error = 'ID "' + item.meta.id + '" ja existe no portal'; action = 'Troque o ID para um valor unico';
+    } else if (!hasCOURSE) {
+      status = 'HTML INVALIDO'; error = 'HTML nao contem var COURSE'; action = 'Verifique a estrutura do arquivo HTML';
+    } else if (!hasTitle) {
+      status = 'SEM TITULO'; error = 'Titulo nao detectado'; action = 'Edite o nome na tabela';
+    } else if (!hasCat) {
+      status = 'SEM CATEGORIA'; error = 'Categoria nao detectada'; action = 'Selecione a categoria na tabela';
+    } else if (item.status === 'erro') {
+      status = 'AGUARDANDO REENVIO'; error = item.errorMsg || 'Erro anterior'; action = item.errorAcao || 'Clique em Reenviar';
+    } else if (htmlOk && capaOk) {
+      status = 'COMPLETO';
+    } else if (htmlOk && hasCapa && !capaOk) {
+      status = 'CAPA PENDENTE'; error = 'Capa associada mas nao enviada'; action = 'Publique as capas na aba Capas Lote';
+    } else if (htmlOk && !hasCapa) {
+      status = 'FALTA CAPA'; error = 'Nenhuma capa associada a este curso'; action = 'Suba capas na aba Capas Lote';
+    } else if (!htmlOk && capaOk) {
+      status = 'FALTA HTML'; error = 'Capa enviada mas HTML nao publicado'; action = 'Publique o HTML';
+    } else if (item.status === 'duplicado') {
+      status = 'ID DUPLICADO'; error = 'ID ja existe no portal'; action = 'Troque o ID';
+    } else if (item.status === 'descartado') {
+      status = 'DESCARTADO';
+    } else {
+      status = 'PRONTO'; // ready to publish
+    }
+
+    _stageMap.push({
+      idx: _loteItems.indexOf(item),
+      id: item.meta.id,
+      htmlTitle: item.meta.name,
+      cat: item.meta.cat,
+      htmlFile: item.file ? item.file.name : '?',
+      htmlSent: htmlOk,
+      inCoursesJs: inCourses,
+      capaSent: capaOk,
+      capaLinked: hasCapa,
+      capaFile: hasCapa ? capasById[item.meta.id].origName : '',
+      modules: item.meta.modules,
+      quizzes: item.meta.modules * 3,
+      hours: item.meta.modules * 30,
+      status: status,
+      error: error,
+      action: action,
+      selected: item.selected
+    });
+  });
+  return _stageMap;
+}
+
+function _statusColor(s) {
+  var colors = {
+    'COMPLETO': '#86efac', 'PRONTO': '#93c5fd', 'FALTA CAPA': '#fde047',
+    'FALTA HTML': '#fdba74', 'CAPA PENDENTE': '#fbbf24', 'ID DUPLICADO': '#fca5a5',
+    'ID INVALIDO': '#fca5a5', 'HTML INVALIDO': '#fca5a5', 'SEM TITULO': '#fdba74',
+    'SEM CATEGORIA': '#fdba74', 'AGUARDANDO REENVIO': '#d8b4fe', 'DESCARTADO': '#64748b'
+  };
+  return colors[s] || '#94a3b8';
+}
+
+function loteRenderStatusPanel() {
+  _buildStageMap();
+  var wrap = el('lote-status-panel');
+  if (!_stageMap.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+
+  // Stats
+  var stats = {};
+  _stageMap.forEach(function(s) { stats[s.status] = (stats[s.status] || 0) + 1; });
+
+  var html = '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">';
+  var order = ['COMPLETO','PRONTO','FALTA CAPA','CAPA PENDENTE','FALTA HTML','AGUARDANDO REENVIO','ID DUPLICADO','ID INVALIDO','HTML INVALIDO','SEM TITULO','SEM CATEGORIA','DESCARTADO'];
+  order.forEach(function(s) {
+    if (stats[s]) {
+      html += '<div style="padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;background:' + _statusColor(s) + '22;color:' + _statusColor(s) + '">' + s + ': ' + stats[s] + '</div>';
+    }
+  });
+  html += '</div>';
+
+  // Publish readiness
+  var prontos = _stageMap.filter(function(s) { return s.status === 'PRONTO'; }).length;
+  var completos = _stageMap.filter(function(s) { return s.status === 'COMPLETO'; }).length;
+  var comErro = _stageMap.filter(function(s) { return ['ID DUPLICADO','ID INVALIDO','HTML INVALIDO','SEM TITULO','SEM CATEGORIA','AGUARDANDO REENVIO'].indexOf(s.status) !== -1; }).length;
+
+  if (prontos) {
+    html += '<div style="padding:8px 12px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:8px;font-size:11px;color:#86efac;margin-bottom:10px">';
+    html += '✅ <strong>' + prontos + ' curso(s) pronto(s) para publicar</strong>';
+    if (comErro) html += ' · ⚠️ ' + comErro + ' com erro (bloqueados)';
+    if (completos) html += ' · 🎉 ' + completos + ' ja publicados';
+    html += '</div>';
+  }
+  if (comErro && !prontos) {
+    html += '<div style="padding:8px 12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:8px;font-size:11px;color:#fca5a5;margin-bottom:10px">';
+    html += '🚫 <strong>Nenhum curso pronto para publicar.</strong> Corrija os ' + comErro + ' erro(s) abaixo.';
+    html += '</div>';
+  }
+
+  // Table
+  html += '<div style="max-height:450px;overflow-y:auto;border:1px solid var(--brd);border-radius:8px">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:10px">';
+  html += '<thead><tr style="background:rgba(15,23,42,.7);position:sticky;top:0;z-index:1">';
+  var cols = ['ID','Titulo','Categoria','MOD','QUIZ','Horas','HTML','courses.js','Capa','Vinculada','Status','Erro','Acao'];
+  cols.forEach(function(c) {
+    html += '<th style="padding:6px 4px;text-align:center;color:var(--acc);font-size:9px;text-transform:uppercase;white-space:nowrap">' + c + '</th>';
+  });
+  html += '</tr></thead><tbody>';
+
+  var yn = function(v) { return v ? '<span style="color:#86efac">✅</span>' : '<span style="color:#fca5a5">❌</span>'; };
+
+  // Sort: errors first, then ready, then complete
+  var sorted = _stageMap.slice().sort(function(a, b) {
+    var priority = {'ID DUPLICADO':0,'ID INVALIDO':0,'HTML INVALIDO':0,'SEM TITULO':1,'SEM CATEGORIA':1,'AGUARDANDO REENVIO':2,'FALTA CAPA':3,'FALTA HTML':3,'CAPA PENDENTE':3,'PRONTO':4,'COMPLETO':5,'DESCARTADO':6};
+    return (priority[a.status]||9) - (priority[b.status]||9);
+  });
+
+  sorted.forEach(function(s, i) {
+    var bg = s.status === 'COMPLETO' ? '' : (s.status === 'PRONTO' ? 'background:rgba(59,130,246,.04)' : 'background:rgba(239,68,68,.03)');
+    var fmtHrs = function(mins) { if(mins<60) return mins+'min'; var h=Math.floor(mins/60),m=mins%60; return m?h+'h'+(m<10?'0':'')+m:h+'h'; };
+
+    html += '<tr style="border-bottom:1px solid rgba(30,45,71,.3);' + bg + '">';
+    html += '<td style="padding:4px;font-family:var(--mono);color:var(--acc2);font-size:10px;text-align:center">' + escH(s.id) + '</td>';
+    html += '<td style="padding:4px;color:var(--t2);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + escH(s.htmlTitle) + '">' + escH(s.htmlTitle) + '</td>';
+    html += '<td style="padding:4px;font-size:9px;color:var(--t3);text-align:center;max-width:80px;overflow:hidden;text-overflow:ellipsis" title="' + escH(s.cat) + '">' + escH(s.cat || '?') + '</td>';
+    html += '<td style="padding:4px;text-align:center;font-family:var(--mono);color:var(--acc2)">' + s.modules + '</td>';
+    html += '<td style="padding:4px;text-align:center;font-family:var(--mono);color:#c4b5fd">' + s.quizzes + '</td>';
+    html += '<td style="padding:4px;text-align:center;font-family:var(--mono);color:#93c5fd">' + fmtHrs(s.hours) + '</td>';
+    html += '<td style="padding:4px;text-align:center">' + yn(s.htmlSent) + '</td>';
+    html += '<td style="padding:4px;text-align:center">' + yn(s.inCoursesJs) + '</td>';
+    html += '<td style="padding:4px;text-align:center">' + yn(s.capaSent) + '</td>';
+    html += '<td style="padding:4px;text-align:center">' + yn(s.capaLinked) + '</td>';
+    html += '<td style="padding:4px;text-align:center;white-space:nowrap"><span style="color:' + _statusColor(s.status) + ';font-size:9px;font-weight:700">' + s.status + '</span></td>';
+    html += '<td style="padding:4px;font-size:9px;color:#fca5a5;max-width:120px;overflow:hidden;text-overflow:ellipsis" title="' + escH(s.error) + '">' + escH(s.error || '-') + '</td>';
+    html += '<td style="padding:4px;font-size:9px;color:#86efac;max-width:120px;overflow:hidden;text-overflow:ellipsis" title="' + escH(s.action) + '">' + escH(s.action || '-') + '</td>';
+    html += '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  el('lote-status-content').innerHTML = html;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   AUTO ID — sugestao automatica + correcao em massa
+   ══════════════════════════════════════════════════════════════ */
+function _suggestId(baseId) {
+  var suffixes = ['2','3','b','v2','x','n'];
+  for (var i = 0; i < suffixes.length; i++) {
+    var candidate = (baseId + suffixes[i]).substring(0, 8);
+    if (_existIds.indexOf(candidate) === -1) {
+      var usedInLote = _loteItems.some(function(it) { return it.meta.id === candidate; });
+      if (!usedInLote) return candidate;
+    }
+  }
+  // Random fallback
+  return baseId.substring(0, 5) + (Math.random() * 900 + 100 | 0);
+}
+
+function loteFixAllIds() {
+  var fixed = 0;
+  var seenIds = {};
+  _existIds.forEach(function(id) { seenIds[id] = true; });
+
+  _loteItems.forEach(function(item) {
+    if (item.status === 'ok' || item.status === 'descartado') return;
+    var id = item.meta.id;
+    // Fix invalid
+    if (!id || !/^[a-z0-9]{1,8}$/.test(id)) {
+      id = item.meta.name.toLowerCase().replace(/[^a-z0-9]/g,'').substring(0,4) || 'c' + (Math.random()*9000+1000|0);
+    }
+    // Fix duplicate
+    if (seenIds[id]) {
+      id = _suggestId(id);
+      fixed++;
+    }
+    item.meta.id = id;
+    item.meta.coverImg = 'assets/capas/' + id + '.jpg';
+    seenIds[id] = true;
+    // Reset error if it was ID-related
+    if (item.errorTipo === 'id_duplicado_portal' || item.errorTipo === 'id_duplicado_lote' || item.errorTipo === 'id_invalido') {
+      item.status = 'pendente'; item.errorMsg = ''; item.errorTipo = ''; item.errorAcao = '';
+      item.selected = true;
+    }
+  });
+  loteRenderTable();
+  loteRenderErros();
+  if (el('lote-status-panel').style.display !== 'none') loteRenderStatusPanel();
+  if (fixed) showRes('lote-res', 'ok', fixed + ' ID(s) corrigido(s) automaticamente!');
+  else showRes('lote-res', 'ok', 'Nenhum ID precisou de correcao.');
+}
+
+function loteBatchCat(newCat) {
+  if (!newCat) return;
+  var count = 0;
+  _loteItems.forEach(function(item) {
+    if (item.selected && item.status !== 'ok' && item.status !== 'descartado') {
+      item.meta.cat = newCat;
+      count++;
+    }
+  });
+  loteRenderTable();
+  if (el('lote-status-panel').style.display !== 'none') loteRenderStatusPanel();
+  showRes('lote-res', 'ok', count + ' curso(s) atualizados para categoria "' + newCat + '"');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SAFE PUBLISH — publica em lotes de 10 com pausa em erro
+   ══════════════════════════════════════════════════════════════ */
+var _pubPaused = false;
+
+async function loteSafePublish() {
+  var cfg = g();
+  if (!cfg.t) { alert('Configure o token GitHub primeiro.'); return; }
+
+  // Build stage map and check readiness
+  _buildStageMap();
+  var prontos = _stageMap.filter(function(s) { return s.status === 'PRONTO'; });
+  if (!prontos.length) { alert('Nenhum curso pronto para publicar. Corrija os erros primeiro.'); return; }
+
+  var bloqueados = _stageMap.filter(function(s) { return ['ID DUPLICADO','ID INVALIDO','HTML INVALIDO','SEM TITULO','SEM CATEGORIA'].indexOf(s.status) !== -1; });
+  var msg = 'Publicacao segura:\n\n';
+  msg += '✅ ' + prontos.length + ' curso(s) pronto(s)\n';
+  if (bloqueados.length) msg += '🚫 ' + bloqueados.length + ' bloqueado(s) por erro\n';
+  msg += '\nSerão publicados em lotes de 10 com pausa automatica se houver mais de 3 erros consecutivos.\n\nContinuar?';
+  if (!confirm(msg)) return;
+
+  // Select only the ready ones
+  _loteItems.forEach(function(it) { it.selected = false; });
+  prontos.forEach(function(p) { _loteItems[p.idx].selected = true; });
+
+  _pubPaused = false;
+  await lotePublicar();
+  loteRenderStatusPanel();
+}
+
+function _loteSaveToStorage() {
+  try {
+    var data = {
+      ts: Date.now(),
+      date: new Date().toISOString(),
+      items: _loteItems.map(function(it) {
+        return {
+          id: it.meta.id, name: it.meta.name, cat: it.meta.cat,
+          modules: it.meta.modules, topics: it.meta.topics,
+          quizzes: it.meta.modules * 3, hours: Math.ceil(it.meta.modules * 0.5),
+          fileName: it.file ? it.file.name : '', status: it.status,
+          errorMsg: it.errorMsg || '', errorTipo: it.errorTipo || ''
+        };
+      }),
+      capas: (_capaLoteItems || []).map(function(c) {
+        return { newId: c.newId, origName: c.origName, status: c.status, matchedName: c.matchedName || '' };
+      })
+    };
+    localStorage.setItem('MA_LOTE_BACKUP', JSON.stringify(data));
+  } catch(e) { console.log('Erro ao salvar lote:', e); }
+}
+
+function _loteCheckRestore() {
+  try {
+    var raw = localStorage.getItem('MA_LOTE_BACKUP');
+    if (!raw) return;
+    var data = JSON.parse(raw);
+    if (!data.items || !data.items.length) return;
+    var age = Date.now() - data.ts;
+    if (age > 86400000) { localStorage.removeItem('MA_LOTE_BACKUP'); return; } // >24h, discard
+    var pending = data.items.filter(function(it) { return it.status !== 'ok' && it.status !== 'descartado'; }).length;
+    if (!pending) { localStorage.removeItem('MA_LOTE_BACKUP'); return; }
+    var dt = new Date(data.date);
+    var dateStr = dt.toLocaleDateString('pt-BR') + ' ' + dt.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+    var wrap = el('lote-restore-banner');
+    if (wrap) {
+      wrap.style.display = 'block';
+      wrap.innerHTML = '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
+        + '<span style="font-size:13px">📦</span>'
+        + '<div style="flex:1"><strong>Lote anterior encontrado</strong> (' + dateStr + ')<br>'
+        + '<span style="font-size:11px;color:var(--t3)">' + data.items.length + ' cursos, ' + pending + ' pendente(s)</span></div>'
+        + '<button class="btns" onclick="loteRestore()" style="background:rgba(34,197,94,.15);color:#86efac;border-color:rgba(34,197,94,.3)">Restaurar</button>'
+        + '<button class="btns" onclick="loteDismissRestore()" style="font-size:10px">Ignorar</button>'
+        + '</div>';
+    }
+  } catch(e) {}
+}
+
+function loteDismissRestore() {
+  localStorage.removeItem('MA_LOTE_BACKUP');
+  var wrap = el('lote-restore-banner');
+  if (wrap) wrap.style.display = 'none';
+}
+
+function loteRestore() {
+  // This just shows info about the previous session - actual file restore needs re-upload
+  try {
+    var data = JSON.parse(localStorage.getItem('MA_LOTE_BACKUP'));
+    var html = '<div style="font-size:12px;color:var(--t2);line-height:1.7">';
+    html += '<div style="margin-bottom:8px;font-weight:700">Itens do lote anterior:</div>';
+    data.items.forEach(function(it) {
+      var color = it.status === 'ok' ? '#86efac' : (it.status === 'erro' ? '#fca5a5' : 'var(--t3)');
+      html += '<div style="display:flex;gap:8px;padding:2px 0"><span style="font-family:var(--mono);color:var(--acc2);width:50px">' + it.id + '</span>'
+        + '<span style="flex:1;color:var(--t2)">' + escH(it.name) + '</span>'
+        + '<span style="color:' + color + ';font-size:10px;font-weight:700">' + it.status.toUpperCase() + '</span></div>';
+    });
+    html += '<div style="margin-top:10px;font-size:11px;color:var(--t3)">Para continuar, re-suba os arquivos HTML. O sistema detectara os ja publicados como duplicados.</div>';
+    html += '</div>';
+    el('lote-summary').style.display = 'block';
+    el('lote-summary-content').innerHTML = html;
+    loteDismissRestore();
+  } catch(e) { alert('Erro ao restaurar: ' + e.message); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EXPORT CSV — log completo exportavel
+   ══════════════════════════════════════════════════════════════ */
+function loteExportCSV() {
+  _buildStageMap();
+  if (!_stageMap.length) { alert('Nenhum dado para exportar.'); return; }
+  var lines = ['ID;Titulo;Categoria;Modulos;Quiz;Horas_min;Arquivo_HTML;HTML_Enviado;No_CoursesJS;Capa_Enviada;Capa_Vinculada;Arquivo_Capa;Status;Erro;Acao'];
+  _stageMap.forEach(function(s) {
+    lines.push([s.id, '"'+s.htmlTitle.replace(/"/g,'""')+'"', '"'+s.cat+'"', s.modules, s.quizzes, s.hours, '"'+s.htmlFile+'"',
+      s.htmlSent?'SIM':'NAO', s.inCoursesJs?'SIM':'NAO', s.capaSent?'SIM':'NAO', s.capaLinked?'SIM':'NAO',
+      '"'+(s.capaFile||'')+'"', s.status, '"'+(s.error||'')+'"', '"'+(s.action||'')+'"'].join(';'));
+  });
+  var blob = new Blob(['\uFEFF' + lines.join('\n')], {type:'text/csv;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'lote-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
 /* ══════════════════════════════════════════════════════════════
