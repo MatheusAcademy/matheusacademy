@@ -829,6 +829,25 @@ var MA_COURSES = [
     color: '#0077b6',
     addedTs: 1775831005243,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cr.jpg',
+    id: 'cr',
+    name: 'Comunicação no Relacionamento',
+    desc: 'Curso focado em diálogo, escuta, resolução de conflitos e construção de entendimento entre o casal.',
+    file: '40-comunicacao-relacionamento.html',
+    cat: 'Família & Relacionamentos',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'CR_HENRY_2026_MASTER',
+    ak: 'cr_auth',
+    storagePrefix: 'cr_',
+    icon: '👨‍👩‍👧‍👦',
+    color: '#f77f00',
+    addedTs: 1775831007594,
+    active: true
   }
 ];
 var MA_CATS = [
