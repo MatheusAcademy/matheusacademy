@@ -1723,6 +1723,25 @@ var MA_COURSES = [
     color: '#264653',
     addedTs: 1775832789967,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/eb.jpg',
+    id: 'eb',
+    name: 'Eleições no Brasil: Marketing Político, Campanhas, Redes Sociais, Fake News e Cenário 2026',
+    desc: 'Entenda como funcionam as campanhas eleitorais, a construção de imagem pública, o marketing político, a influência das redes sociais, a guerra de narrativa e os possíveis cenários eleitorais no Brasil.',
+    file: 'eleicoes-brasil.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'EB_HENRY_2026_MASTER',
+    ak: 'eb_auth',
+    storagePrefix: 'eb_',
+    icon: '📰',
+    color: '#d62828',
+    addedTs: 1775832792728,
+    active: true
   }
 ];
 var MA_CATS = [
