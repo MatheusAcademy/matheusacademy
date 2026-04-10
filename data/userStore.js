@@ -14,6 +14,12 @@
  * - Usa sessionStorage para evitar writes duplicados
  * - Garante que todo acesso ao portal é contabilizado
  *
+ * MUDANÇA v4.1:
+ * - Sync Firebase → TODAS as chaves localStorage que as páginas leem
+ * - ma_sessions, ma_streak2, ma_activity_* agora refletem Firebase
+ * - Corrige painel.html, perfil.html, ranking.html, course-engine.js
+ * - Todas as páginas exibem dados consistentes do Firebase
+ *
  * ============================================================
  */
 
@@ -56,6 +62,93 @@ var MAStore = (function() {
     return _cache.userData && (Date.now() - _cache.lastSync) < CACHE_TTL;
   }
 
+  /**
+   * ★ v4.1: Sincroniza dados do Firebase para TODAS as chaves localStorage
+   * que as diferentes páginas do portal leem.
+   *
+   * Páginas afetadas:
+   * - painel.html → lê ma_sessions.streak e ma_streak2.current
+   * - perfil.html → lê ma_streak2, ma_activity_*, calcula calendario
+   * - ranking.html → lê ma_sessions.streak para "meu" streak
+   * - course-engine.js → lê/escreve ma_sessions.streak
+   * - time-tracker.js → lê/escreve ma_online_status
+   *
+   * Ao manter essas chaves sincronizadas com Firebase,
+   * todas as páginas mostram dados corretos sem precisar de rewrite.
+   */
+  function _syncFirebaseToLocalStorage(userData) {
+    if (!userData) return;
+
+    var streak = userData.streak_atual || 0;
+    var record = userData.streak_record || 0;
+    var dias = userData.dias_ativos || 0;
+    var hoje = new Date().toLocaleDateString('pt-BR');
+
+    // 1. ma_sessions — lido por painel.html, ranking.html, course-engine.js
+    try {
+      var sess = JSON.parse(localStorage.getItem('ma_sessions') || '{}');
+      sess.streak = streak;
+      sess.lastStudyDate = sess.lastStudyDate || hoje;
+      sess.count = dias;
+      localStorage.setItem('ma_sessions', JSON.stringify(sess));
+    } catch(e) {}
+
+    // 2. ma_streak2 — lido por painel.html (renderStreak), perfil.html (badges)
+    try {
+      var s2 = JSON.parse(localStorage.getItem('ma_streak2') || '{}');
+      s2.current = streak;
+      s2.max = Math.max(record, s2.max || 0);
+      s2.lastDate = s2.lastDate || hoje;
+      localStorage.setItem('ma_streak2', JSON.stringify(s2));
+    } catch(e) {}
+
+    // 3. ma_online_status — lido por time-tracker.js
+    try {
+      var os = JSON.parse(localStorage.getItem('ma_online_status') || '{}');
+      os.online = true;
+      os.lastSeen = Date.now();
+      os.user = userData.uid || userData.id || '';
+      os.userName = userData.nome || '';
+      localStorage.setItem('ma_online_status', JSON.stringify(os));
+    } catch(e) {}
+
+    // 4. ma_activity_{date} — lido por perfil.html para o calendário
+    // Marca o dia de HOJE como ativo (nível 3 = bom)
+    try {
+      var isoToday = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+      var actKey = 'ma_activity_' + isoToday;
+      var current = parseInt(localStorage.getItem(actKey) || '0');
+      if (current < 1) {
+        localStorage.setItem(actKey, '3'); // Marca como ativo
+      }
+    } catch(e) {}
+
+    // 5. Preencher dias anteriores baseado no streak do Firebase
+    // Se streak = 5, marca os últimos 5 dias como ativos
+    try {
+      if (streak > 0) {
+        for (var i = 1; i <= Math.min(streak, 90); i++) {
+          var d = new Date();
+          d.setDate(d.getDate() - i);
+          var dk = 'ma_activity_' + d.toISOString().split('T')[0];
+          if (!localStorage.getItem(dk)) {
+            localStorage.setItem(dk, '2'); // Nível 2 = ativo (retroativo)
+          }
+        }
+      }
+    } catch(e) {}
+
+    // 6. ma_points — legado, manter sync para compatibilidade
+    try {
+      localStorage.setItem('ma_points', JSON.stringify({
+        total: userData.xp_total || 0,
+        history: []
+      }));
+    } catch(e) {}
+
+    console.log('[MAStore v4.1] Sync Firebase→localStorage: streak=' + streak + ', xp=' + (userData.xp_total||0) + ', dias=' + dias);
+  }
+
   /* ══════════════════════════════════════════════════════════
      USUÁRIO — Dados do Firebase Auth + Firestore
      ══════════════════════════════════════════════════════════ */
@@ -94,6 +187,12 @@ var MAStore = (function() {
         });
 
         _remove('ma_points');
+
+        // ★★★ v4.1: SYNC FIREBASE → TODAS AS CHAVES LOCALSTORAGE ★★★
+        // Isso garante que TODAS as páginas (painel, perfil, ranking, course-engine)
+        // mostrem dados consistentes do Firebase, mesmo lendo do localStorage
+        _syncFirebaseToLocalStorage(userData);
+
         return userData;
       }
     } catch(e) {
@@ -256,12 +355,26 @@ var MAStore = (function() {
   }
 
   /* ══════════════════════════════════════════════════════════
-     STREAK E SESSÕES — 100% Firebase
+     STREAK E SESSÕES — 100% Firebase + sync localStorage
      ══════════════════════════════════════════════════════════ */
   async function getStreak() {
     var user = await getUser();
     if (!user) return 0;
     return user.streak_atual || 0;
+  }
+
+  /**
+   * v4.1: Retorna streak SYNC (sem await) para compatibilidade
+   * Prioriza cache Firebase, fallback localStorage
+   */
+  function getStreakSync() {
+    if (_cache.userData && typeof _cache.userData.streak_atual === 'number') {
+      return _cache.userData.streak_atual;
+    }
+    try {
+      var s2 = JSON.parse(localStorage.getItem('ma_streak2') || '{}');
+      return s2.current || 0;
+    } catch(e) { return 0; }
   }
 
   async function getSessions() {
@@ -272,6 +385,32 @@ var MAStore = (function() {
       record: user.streak_record || 0,
       diasAtivos: user.dias_ativos || 0
     };
+  }
+
+  /**
+   * v4.1: Registra atividade de estudo — atualiza streak e tempo no Firebase
+   * Chamado pelo course-engine.js quando o aluno estuda
+   */
+  async function registerStudyActivity(courseKey, minutesStudied) {
+    var ready = await _waitFirebase();
+    if (!ready || !window.maAuth || !window.maAuth.currentUser) return;
+    var uid = window.maAuth.currentUser.uid;
+    try {
+      // 1. Registrar acesso (atualiza streak, dias_ativos, ultimo_acesso)
+      await MA_DB.registrarAcesso(uid);
+      // 2. Incrementar minutos de estudo se fornecido
+      if (minutesStudied && minutesStudied > 0) {
+        await MA_DB.updateUsuario(uid, {
+          total_minutos_estudo: firebase.firestore.FieldValue.increment(minutesStudied)
+        });
+      }
+      // 3. Invalidar cache para buscar dados frescos
+      _cache.lastSync = 0;
+      var userData = await getUser();
+      console.log('[MAStore v4.1] Atividade registrada: streak=' + (userData ? userData.streak_atual : '?'));
+    } catch(e) {
+      console.warn('[MAStore v4.1] Erro ao registrar atividade:', e);
+    }
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -385,7 +524,7 @@ var MAStore = (function() {
     getTotalPointsSync: getTotalPointsSync,
     hasCourseAccess: hasCourseAccess, unlockAllCourses: unlockAllCourses, unlockCourse: unlockCourse,
     saveProgress: saveProgress, getProgress: getProgress, getAllProgress: getAllProgress, markTopicDone: markTopicDone,
-    getStreak: getStreak, getSessions: getSessions,
+    getStreak: getStreak, getStreakSync: getStreakSync, getSessions: getSessions, registerStudyActivity: registerStudyActivity,
     getMissions: getMissions, setMissions: setMissions, completeMission: completeMission,
     getRecent: getRecent, addRecent: addRecent,
     getTotalMins: getTotalMins, addStudyMins: addStudyMins,
@@ -477,16 +616,37 @@ document.addEventListener('ma:pointsUpdate', function(e) {
             }
           } catch(e2) {}
 
-          // Busca dados frescos do Firestore
+          // Busca dados frescos do Firestore (getUser já faz o sync localStorage)
           var user = await MAStore.getUser();
           if (user) {
             var total = user.xp_total || 0;
-            document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN, #maTbPtsN, #hdrPtsNum').forEach(function(el) {
+            var streak = user.streak_atual || 0;
+
+            // Atualiza TODOS os elementos de XP
+            document.querySelectorAll('#maPtsNum, .ma-tb-pts-num, .maTbPtsN, #maTbPtsN, #hdrPtsNum, #heroPts, #sPts, #fBadgeN, .pts-display, .xp-display, .user-points, #shopBalance').forEach(function(el) {
               el.textContent = total.toLocaleString('pt-BR');
             });
+
+            // Atualiza TODOS os elementos de Streak
+            document.querySelectorAll('#heroStreak, #streakBig, #maStreakNum, .streak-num, .streak-display, #pfStreak').forEach(function(el) {
+              var txt = el.getAttribute('data-suffix') === 'fire' ? streak + '\uD83D\uDD25' : String(streak);
+              el.textContent = txt;
+            });
+
+            // Atualiza TODOS os elementos de dias ativos
+            document.querySelectorAll('#diasAtivos, .dias-ativos-num').forEach(function(el) {
+              el.textContent = String(user.dias_ativos || 0);
+            });
+
             if (window.ptSyncFromFirebase) ptSyncFromFirebase();
             if (window.updTopbar) window.updTopbar();
-            console.log('[MAStore v4] Auth OK —', user.nome, '| XP:', total, '| Streak:', user.streak_atual || 0);
+
+            // v4.1: Chama renderStreak se existir na página (painel.html)
+            if (window.renderStreak) {
+              try { window.renderStreak({ streak: streak, record: user.streak_record || 0 }); } catch(e) {}
+            }
+
+            console.log('[MAStore v4.1] Auth OK —', user.nome, '| XP:', total, '| Streak:', streak, '| Dias:', user.dias_ativos || 0);
           }
         } else {
           MAStore.invalidateCache();
@@ -508,4 +668,55 @@ document.addEventListener('ma:pointsUpdate', function(e) {
 
 })();
 
-console.log('[MAStore v4] ✅ Carregado - Fix: registra acesso a cada visita');
+// ══════════════════════════════════════════════════════════
+// v4.1: FUNÇÕES GLOBAIS para course-engine e outras páginas
+// ══════════════════════════════════════════════════════════
+
+// Função global que course-engine.js pode chamar ao completar uma aula
+window.MA_registerStudy = async function(courseKey, mins) {
+  return await MAStore.registerStudyActivity(courseKey, mins);
+};
+
+// Função global para obter streak sync (sem await)
+window.MA_getStreakSync = function() {
+  return MAStore.getStreakSync();
+};
+
+// Função global para obter sessões (compatibilidade)
+window.MA_getSessions = async function() {
+  return await MAStore.getSessions();
+};
+
+// Interceptar escrita em ma_sessions para manter sync bidirecional
+// Se course-engine.js escrever em ma_sessions, capturamos e sincronizamos
+(function _interceptLocalStorage() {
+  var _origSet = localStorage.setItem.bind(localStorage);
+  localStorage.setItem = function(key, val) {
+    _origSet(key, val);
+
+    // Se escreveu em ma_sessions ou ma_streak2, sincroniza com ma_streak2/ma_sessions
+    if (key === 'ma_sessions') {
+      try {
+        var s = JSON.parse(val);
+        var s2 = JSON.parse(localStorage.getItem('ma_streak2') || '{}');
+        if (s.streak !== undefined) {
+          s2.current = s.streak;
+          if (s.streak > (s2.max || 0)) s2.max = s.streak;
+          _origSet('ma_streak2', JSON.stringify(s2));
+        }
+      } catch(e) {}
+    }
+    if (key === 'ma_streak2') {
+      try {
+        var s2b = JSON.parse(val);
+        var sess = JSON.parse(localStorage.getItem('ma_sessions') || '{}');
+        if (s2b.current !== undefined) {
+          sess.streak = s2b.current;
+          _origSet('ma_sessions', JSON.stringify(sess));
+        }
+      } catch(e) {}
+    }
+  };
+})();
+
+console.log('[MAStore v4.1] ✅ Carregado - Sync completo Firebase↔localStorage');
