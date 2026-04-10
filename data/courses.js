@@ -1400,6 +1400,25 @@ var MA_COURSES = [
     color: '#ff006e',
     addedTs: 1775832744969,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/fp.jpg',
+    id: 'fp',
+    name: 'Filosofias Políticas: Da Liberdade ao Poder do Estado',
+    desc: 'Curso sobre liberalismo, conservadorismo, socialismo, nacionalismo e outras correntes que moldaram a política mundial.',
+    file: '22-filosofias-politicas.html',
+    cat: 'Filosofia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'FP_HENRY_2026_MASTER',
+    ak: 'fp_auth',
+    storagePrefix: 'fp_',
+    icon: '🦉',
+    color: '#264653',
+    addedTs: 1775832747770,
+    active: true
   }
 ];
 var MA_CATS = [
