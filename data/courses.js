@@ -1381,6 +1381,25 @@ var MA_COURSES = [
     color: '#7b2d26',
     addedTs: 1775832742257,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ar.jpg',
+    id: 'ar',
+    name: 'Amor, Respeito e Limites Saudáveis',
+    desc: 'Curso para ensinar como construir relações mais equilibradas, com reciprocidade, clareza emocional e limites bem definidos.',
+    file: '42-amor-respeito-limites.html',
+    cat: 'Família & Relacionamentos',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'AR_HENRY_2026_MASTER',
+    ak: 'ar_auth',
+    storagePrefix: 'ar_',
+    icon: '👨‍👩‍👧‍👦',
+    color: '#ff006e',
+    addedTs: 1775832744969,
+    active: true
   }
 ];
 var MA_CATS = [
