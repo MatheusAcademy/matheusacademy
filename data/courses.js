@@ -772,6 +772,25 @@ var MA_COURSES = [
     color: '#4361ee',
     addedTs: 1775830991257,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ea.jpg',
+    id: 'ea',
+    name: 'Inteligência Emocional no Amor',
+    desc: 'Mostra como lidar com ciúme, insegurança, carência, frustração e maturidade afetiva dentro das relações.',
+    file: '41-inteligencia-emocional-amor.html',
+    cat: 'Família & Relacionamentos',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'EA_HENRY_2026_MASTER',
+    ak: 'ea_auth',
+    storagePrefix: 'ea_',
+    icon: '👨‍👩‍👧‍👦',
+    color: '#9d4edd',
+    addedTs: 1775830994150,
+    active: true
   }
 ];
 var MA_CATS = [
