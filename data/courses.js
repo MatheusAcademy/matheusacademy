@@ -848,6 +848,25 @@ var MA_COURSES = [
     color: '#f77f00',
     addedTs: 1775831007594,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mu.jpg',
+    id: 'mu',
+    name: 'Mulheres que Fizeram História',
+    desc: 'Curso sobre líderes, pensadoras, cientistas, guerreiras e figuras femininas que marcaram épocas e transformaram sociedades.',
+    file: '34-mulheres-historia.html',
+    cat: 'Liderança e Poder',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'MU_HENRY_2026_MASTER',
+    ak: 'mu_auth',
+    storagePrefix: 'mu_',
+    icon: '🎓',
+    color: '#c77dff',
+    addedTs: 1775831010680,
+    active: true
   }
 ];
 var MA_CATS = [
