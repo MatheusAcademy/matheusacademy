@@ -943,6 +943,25 @@ var MA_COURSES = [
     color: '#e63946',
     addedTs: 1775831027275,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ie56.jpg',
+    id: 'ie56',
+    name: 'PNL para Inteligência Emocional e Autocontrole',
+    desc: 'Use PNL para lidar com ansiedade, insegurança, crenças limitantes, sabotadores internos e fortalecimento emocional no dia a dia.',
+    file: 'curso-pnl-inteligencia-emocional.html',
+    cat: 'Desenvolvimento',
+    modules: 3,
+    topics: 12,
+    hours: 2,
+    quizzes: 1,
+    salt: 'IE_HENRY_2026_MASTER',
+    ak: 'ie_auth',
+    storagePrefix: 'ie_',
+    icon: '🚀',
+    color: '#06D6A0',
+    addedTs: 1775831030570,
+    active: true
   }
 ];
 var MA_CATS = [
