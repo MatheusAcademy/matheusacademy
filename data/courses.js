@@ -981,6 +981,25 @@ var MA_COURSES = [
     color: '#582f0e',
     addedTs: 1775831033161,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pp.jpg',
+    id: 'pp',
+    name: 'Psicologia da Persuasão e da Influência',
+    desc: 'Aborda gatilhos mentais, linguagem, percepção, tomada de decisão e formas de influenciar pessoas com mais inteligência.',
+    file: '09-psicologia-persuasao.html',
+    cat: 'Psicologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'PP_HENRY_2026_MASTER',
+    ak: 'pp_auth',
+    storagePrefix: 'pp_',
+    icon: '🧩',
+    color: '#480ca8',
+    addedTs: 1775831040170,
+    active: true
   }
 ];
 var MA_CATS = [
