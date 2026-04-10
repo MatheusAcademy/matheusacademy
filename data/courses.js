@@ -1038,6 +1038,25 @@ var MA_COURSES = [
     color: '#e8ac65',
     addedTs: 1775831045588,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pr.jpg',
+    id: 'pr',
+    name: 'Psicologia das Relações Humanas',
+    desc: 'Curso para entender vínculos, conflitos, carência, apego, convivência e construção de relações mais saudáveis.',
+    file: '08-psicologia-relacoes.html',
+    cat: 'Psicologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'PR_HENRY_2026_MASTER',
+    ak: 'pr_auth',
+    storagePrefix: 'pr_',
+    icon: '🧩',
+    color: '#560bad',
+    addedTs: 1775831048119,
+    active: true
   }
 ];
 var MA_CATS = [
