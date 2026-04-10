@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mulheres que Fizeram História — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'MU',
+  name: 'Mulheres que Fizeram História',
+  shortName: 'Mulheres na História',
+  cat: 'Liderança e Poder',
+  desc: 'Curso sobre líderes, pensadoras, cientistas, guerreiras e figuras femininas que marcaram épocas e transformaram sociedades.',
+  salt: 'MU_HENRY_2026_MASTER',
+  ak: 'mu_auth',
+  courseKey: 'mu',
+  prefix: 'mu_',
+  color: '#c77dff',
+  glow: 'rgba(199,125,255,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 2,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 1,
+    name: 'Rainhas Guerreiras e Líderes Poderosas',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Mulheres que Governaram Impérios',
+      points: [
+        'Cleópatra VII navegou política complexa do Egito Helenístico para preservar reino contra Império Romano',
+        'Rainha Elizabeth I de Inglaterra transformou-a de potência secundária em superpotência global durante 45 anos',
+        'Catarina, a Grande expandiu Império Russo para tamanho que rivalizava Europeu continental'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como Cleópatra conseguiu manter independência do Egito contra Roma?',
+        opts: ['Através de superioridade militar', 'Através de alianças diplomáticas e sedução política', 'Isolamento completo', 'Submissão total'],
+        correct: 1
+      },
+      {
+        q: 'Que reino Elizabeth I transformou em potência global?',
+        opts: ['França', 'Espanha', 'Inglaterra', 'Portugal'],
+        correct: 2
+      },
+      {
+        q: 'Qual foi o alcance da expansão territorial de Catarina a Grande?',
+        opts: ['Redução de território', 'Aumento massivo que rivalizava com Europa', 'Estagnação de borders', 'Perda de poder regional'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Cientistas, Filósofas e Pensadoras Revolucionárias',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Inovação Intelectual Feminina',
+      points: [
+        'Marie Curie revolucionou química e física, sendo primeira mulher a ganhar Prêmio Nobel e única a ganhar em múltiplas disciplinas',
+        'Hypatia de Alexandria foi matemática, astrônoma, e filósofa cuja obra foi perdida, mas influência permanece',
+        'Simone de Beauvoir redefiniu feminismo moderno e filosofia existencialista através de escrita provocadora'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual foi a realização particular de Marie Curie na ciência?',
+        opts: ['Inventou microscópio', 'Descobriu radioatividade e primeira a ganhar múltiplos Prêmios Nobel', 'Desenvolveu antibióticos', 'Criou teoria da relatividade'],
+        correct: 1
+      },
+      {
+        q: 'Hypatia de Alexandria era conhecida por suas contribuições em quais campos?',
+        opts: ['Literatura apenas', 'Matemática, astronomia, e filosofia', 'Política militar', 'Medicina antiga'],
+        correct: 1
+      },
+      {
+        q: 'O trabalho de Simone de Beauvoir influenciou principalmente qual movimento?',
+        opts: ['Abolicionismo', 'Feminismo moderno', 'Comunismo puro', 'Conservadorismo'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Ativistas, Humanitárias e Transformadoras Sociais',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Mudança Social através da Ativismo',
+      points: [
+        'Florence Nightingale revolucionou cuidados de saúde e enfermagem, salvando inúmeras vidas através de reforma',
+        'Rosa Parks desafiou segregação racial em evento que catalitou movimento pelos direitos civis americano',
+        'Aung San Suu Kyi liderou resistência não-violenta contra ditadura militar em Myanmar por décadas'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como Florence Nightingale revolucionou cuidado de saúde?',
+        opts: ['Criou medicamentos novos', 'Reformou práticas de enfermagem e higiene hospitalar', 'Inventou cirurgia moderna', 'Descobriu vacinas'],
+        correct: 1
+      },
+      {
+        q: 'Qual ato de Rosa Parks catalitou o movimento pelos direitos civis?',
+        opts: ['Discurso inflamado', 'Recusa de ceder assento em ônibus segregado', 'Participação em marcha massiva', 'Escrita de manifesto'],
+        correct: 1
+      },
+      {
+        q: 'Por quanto tempo Aung San Suu Kyi resistiu contra ditadura militar de Myanmar?',
+        opts: ['Alguns meses', 'Alguns anos', 'Mais de duas décadas de resistência não-violenta', 'Apenas alguns dias'],
+        correct: 2
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'Cleópatra VII: Poder, Sedução e Diplomacia no Egito Helenístico',
+    dur: '12 min',
+    content: `
+      <h3>A Última Rainha do Egito e Negociadora com Roma</h3>
+      <p>Cleópatra VII Philopator (69-30 a.C.) foi a última monarca ativa do Reino Egípcio Ptolemaico. Nasceu em contexto de declínio gradual do poder egípcio enquanto Império Romano crescia. Seu reino estava dividido internamente, ameaçado militarmente por Roma, e economicamente fraco. Numa situação onde maioria dos líderes sucumbiria, Cleópatra navegou política extraordinária para manter independência egípcia durante quase duas décadas contra poder crescente de Roma.</p>
+      <p>Cleópatra não era apenas beleza famosa pela história. Isto é mito que necessita ser corrigido. Era polimata linguística, matemática, asteonômica, e financeira. Falava múltiplas línguas (grego, egípcio, aramaico, latim, e potencialmente ainda mais). Estava educada em retorica e filosofia. Entendia profundamente economia, diplomacia, e política. Uma testemunha contemporânea descreveu-a não por beleza, mas pela conversa sedutor, inteligência, e capacidade de envolver pessoas em discussão.</p>
+      <h4>A Luta Pelo Trono Egípcio</h4>
+      <p>Quando pai de Cleópatra morreu em 51 a.C., deixou reino instável dividido entre múltiplos herdeiros. Cleópatra inicialmente governou conjuntamente com irmão/esposo (casamento real era frequentemente entre parentes para manter "pureza" da linhagem real). No entanto, politicamente foi desafiada por facções que preferiam seu irmão. Eventualmente foi expulsa de Alexandria.</p>
+      <p>Num movimento de gênio político, Cleópatra buscou aliança com Júlio César, general romano que estava então em Guerra Civil em Roma. César precisava de recursos financeiras; Egito era riquíssimo. Cleópatra oferecia acesso ao tesouro egípcio em troca de apoio militar para reclamar seu trono. Além disso, provavelmente havia atração pessoal — Cleópatra teria talvez 21 anos, César era 52 — mas este não era relacionamento meramente pessoal. Era calculado arranjo político.</p>
+      <h4>Alianças Políticas como Sobrevivência</h4>
+      <p>Com apoio de César, Cleópatra restaurou seu poder. Seu irmão foi derrotado e morto. César retornou a Roma, mas Cleópatra deu-lhe filho, nomeado Caesarion (Pequeno César), que ligava Egito a Roma através de sangue. Este era movimento políticode sofisticação extraordinária. Oferecia legitimidade ao governo de Cleópatra dentro do Egito (conexão com divino através de associação com César) enquanto mantinha dinámica de poder através da criança.</p>
+      <p>Após assassinato de César em 44 a.C., Cleópatra precisava de novo aliado. Marco Antonio emergiu como poderoso general romano. Cleópatra novamente engajou em aliança política — desta vez acompanhada por atração pessoal genuína. Antonio e Cleópatra tiveram múltiplos filhos. Juntos, tentaram construir reino combinado no Oriente Médio que rivalizaria com Roma.</p>
+      <h4>A Derrota Final e Legado</h4>
+      <p>No entanto, o final era inevitável. Quando Octaviano (que se torna Imperador Augusto) venceu Antonio em guerra civil romana, Cleópatra compreendeu que sua posição era perdida. Ao invés de entregar-se a Octaviano, escolheu morte. Sua morte exatamente como aconteceu continua debatido — tradicão diz ela se deixou morder por cobra asp, mas isto pode ser dramatização romana.</p>
+      <p>Morte de Cleópatra marcou fim do reino egípcio independente. Egito se tornou província romana. Mas sua influência persistiu. Escritores romanos, apesar de frequentemente hostilidade política, reconheceram sua inteligência, educação, e habilidade diplomática. Tornou-se modelo de mulher poderosa navegando mundo de poder masculino através de combinação de inteligência, educação, e sofisticação política.</p>
+      <blockquote class="tip">
+        💡 Cleópatra demonstrou que poder feminino não é oposto ao inteligência ou educação; é absolutamente dependente deles. Sua importância era política e intelectual, não meramente baseada em atração física.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Como Cleópatra conseguiu manter poder egípcio contra crescimento de Roma?',
+      a: 'Através de alianças políticas calculadas com líderes romanos poderosos (César e Marco Antonio), educação excepcional, fluência em múltiplas línguas, e sofisticação econômica e diplomática.'
+    }
+  },
+  {
+    id: 2,
+    name: 'Elizabeth I: A Rainha Virgem que Transformou a Inglaterra',
+    dur: '12 min',
+    content: `
+      <h3>Quarenta e Cinco Anos de Reinado que Criaram uma Potência Global</h3>
+      <p>Elizabeth I (1533-1603) nasceu em contexto de incerteza. Seu pai, Henrique VIII, havia queimado católicos e protestantes indiscriminadamente. Sua mãe, Anne Boleyn, foi executada. Elizabeth foi declarada ilegítima. Através de sua juventude, sua vida foi constantemente em perigo — diversos lados o conflito religioso (católicos vs. protestantes) na Inglaterra viam suas como ameaça. Foi presa durante o reinado de sua meia-irmã, Maria, acusada de conspiração.</p>
+      <p>Quando ascendeu ao trono em 1558, aos 25 anos, Elizabeth herdava reino dividido religiosamente, economicamente fraco, e militarmente ameaçado por potências católicas (Espanha e França). Não havia razão para supor que jovem mulher solteira conseguiria estabilizar reino tão problemático. No entanto, durante reinado de 45 anos, transformou Inglaterra em potência militar e econômica que rivalizava com os Hapsburgo e com França.</p>
+      <h4>O Problema do Casamento e a Lógica da Permanência</h4>
+      <p>Uma questão crítica era casamento. Pressão para Elizabeth casar era imensa — esperava-se que rainha encontraria marido que governaria ao lado dela (ou possivelmente no lugar dela). Múltiplos príncipes e nobres ofereceram casamento. Mas Elizabeth percebeu algo profundo: uma vez que casar, poder político passaria automaticamente para marido. Sua melhor estratégia para manter autoridade era permanecer solteira.</p>
+      <p>Portanto, declarou-se "casada com a Inglaterra" — oferecendo simbolismo de que devoção dela era ao reino, não a indivíduo. Isto foi masterstroke político. Evitou casamento que teria subordinado ela à marido, mas também ofereceu narrativa que explicava sua posição solteira como sacrifício pelo reino. Contemporâneos observaram que, apesar de pressão para casar, Elizabeth conseguiu manter controle completo sobre seu governo.</p>
+      <h4>Consolidação Religiosa e Tolerância Relativa</h4>
+      <p>Elizabeth herdava reino dilacerado por guerra religiosa. Sua meia-irmã Maria havia tentado retornar Inglaterra ao catolicismo, executando protestantes (levando a seu epíteto "Bloody Mary"). Católicos viam-na como usurpadora. Protestantes radicais queriam reforma ainda mais completa. Elizabeth precisava de equilíbrio.</p>
+      <p>Adotou abordagem pragmática. Estabeleceu Igreja Anglicana como religião oficial, mas permitiu certa liberdade de consciência "desde que não perturbe paz pública". Isto era revolucionário para época. Não era tolerância no sentido moderno, mas era reconhecimento que guerra religiosa era destrutiva e que coexistência era possível se ambos os lados aceitavam domínio do Estado.</p>
+      <h4>Poder Naval e Derrota da Armada Espanhola</h4>
+      <p>Um momento definitório foi derrota da Armada Espanhola em 1588. Rei Felipe II da Espanha enviou frota gigante para invadir Inglaterra. Inglaterra tinha marinha muito menos poderosa, mas através de tática superior, navios mais manobráveis, e (muita sorte — tempestades ajudaram a destruir naves espanholas), a frota espanhola foi destruída. Isto significou que Inglaterra conseguia agora competir com Espanha como potência naval.</p>
+      <p>Elizabeth compreendeu importância de poder naval para comércio e império. Enquanto Espanha e Portugal ainda dominavam comércio colonial global, Inglaterra começou estabelecer colônias em América do Norte (nomeadas Virginia em honra a Elizabeth, "A Rainha Virgem"). Fundamentos de futura império britânico foram estabelecidos durante reinado de Elizabeth.</p>
+      <blockquote class="quote">
+        "Não tenho corpo de mulher fraca, mas tenho coração e estômago de um rei, e de um rei da Inglaterra também." — Elizabeth I, discurso antes da batalha contra Armada Espanhola.
+      </blockquote>
+      <h4>Legado de uma Mulher que Reinou Sozinha</h4>
+      <p>Morte de Elizabeth em 1603 marcou fim de uma era. Reinado de 45 anos transformou Inglaterra de potência secundária em força principal na Europa. Seu sucesso, em contexto onde as mulheres tinham poder praticamente nenhum, foi extraordinário. Ela conseguiu isto não através de força militar pessoal ou herança fácil, mas através de inteligência política, educação excelente, escolha cuidadosa de conselheiros, e compreensão profunda de que poder era construído através de simbolismo, narrativa, e manipulação das estruturas de poder existentes.</p>
+      <p>Elizabeth demonstrou que gênero não é barreira necessária para liderança extraordinária se mulher consegue navegar estruturas de poder e usar sua posição para exercer controle. Ela não foi feminista no sentido moderno, mas sua existência como monarca poderosa que manteve autoridade própria ofereceu prova de que mulheres conseguem governar.</p>
+      <blockquote class="tip">
+        💡 Elizabeth compreendeu que poder não é meramente força ou violência; é narrativa, simbolismo, e capacidade de manter coalizão de apoiadores através de mistura de carisma e interesse compartilhado.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Por que Elizabeth I decidiu nunca casar apesar de pressão política para fazê-lo?',
+      a: 'Elizabeth percebeu que casamento teria subordinado seu poder a marido; mantendo-se solteira e "casada com a Inglaterra", preservou autoridade completa e ofereceu narrativa que explicava sua posição.'
+    }
+  },
+  {
+    id: 3,
+    name: 'Catarina, a Grande: Expansão Imperial e Despotismo Esclarecido',
+    dur: '12 min',
+    content: `
+      <h3>A Mulher que Expandiu Rússia para Superpotência Continental</h3>
+      <p>Catarina II, conhecida como Catarina, a Grande (1729-1796), foi uma das monarcas mais poderosas da história europeia. Nasceu não como russa, mas como filha de nobre alemão prussiano. Casou com Pedro III, futuro Czar da Rússia, em casamento político que era destinado a solidificar alianças entre Rússia e Prússia. Pedro era fraco, instável, e possivelmente insano. Catarina era inteligente, educada, e extraordinariamente ambiciosa.</p>
+      <p>Quando Pedro ascendeu ao trono em 1761, Catarina utilizou sua posição como consorte para analisar política russa e construir aliança com oficiais militares e nobres poderosos. Dentro de meses, Pedro se tornou extremamente impopular. Seus políticas eram caóticas, sua temperamento era erráticol, e oficiais militares viam-o como incompetente. Catarina, ao contrário, era vista como racional e competente.</p>
+      <h4>A Revolução de Palácio: Tomar o Poder</h4>
+      <p>Em 1762, Catarina orquestrou golpe de palácio. Com apoio de guarda imperial e altos oficiais, Pedro foi forçado a abdicar. Catarina foi coroada como Czarina. Tecnicamente, seu filho Paulo era herdeiro, mas Catarina consolidou controle tal que Paolo seria deixado de fora até após sua morte. Este foi ousado movimento político que requereu absoluta convicção e apoio de elite militar.</p>
+      <p>Uma vez no poder, Catarina consolidou autoridade rapidamente. Confirmou privilégios de nobreza para garantir seu apoio. Reformou burocracia para ser mais eficiente. Mais importantemente, começou guerra agressiva de expansão territorial.</p>
+      <h4>Expansão Territorial e Remodelagem da Europa Oriental</h4>
+      <p>Catarina expandiu Rússia mais do que qualquer monarca anterior. Lutou contra Turquia otomana e venceu, conquistando regiões ao redor do Mar Negro. Participou em divisões de Polônia ao lado de Prússia e Áustria, anexando terras polonesas. No final de seu reinado, Rússia se estendia da Báltico ao Pacífico e havia se tornar potência dominante na Europa Oriental.</p>
+      <p>Estas conquistas transformaram mapa da Europa. Polônia foi efetivamente apagada do mapa durante as divisões — seu território dividido entre Rússia, Prússia, e Áustria. Turquia perdeu territórios que havia mantido por séculos. Rússia emergiu como superpotência continental que rivalizava com qualquer europeia em poder territorial e influência.</p>
+      <blockquote class="example">
+        📌 Durante reinado de Catarina, Rússia adicionou aproximadamente 200.000 milhas quadradas de território — mais que qualquer monarca anterior havia adicionado em tempo tão curto.
+      </blockquote>
+      <h4>Despotismo Esclarecido e Modernização da Rússia</h4>
+      <p>Além de expansão militar, Catarina era interessada em modernizar Rússia. Correspondia com filósofos do Iluminismo, particularmente Voltaire. Implementou reformas educacionais, legal, e administrativa. Encorajou agricultura melhorada, exploração mineral, e desenvolvimento comercial. Patronizava artes — construiu museus, bibliotecas, apoyava artistas e músicos.</p>
+      <p>Isto é frequentemente chamado de "despotismo esclarecido" — ideia de que monarca absoluto poderia modernizar reino através de reformas racionais enquanto mantendo autoridade autocrática. Catarina comprendia que para Rússia competir com Ocidente europeu, precisava de modernização. Mas modernização deveria ser realizada sob controle da Czarina, não através de transformação democrática que teria ameaçado seu poder.</p>
+      <h4>O Paradoxo de Catarina: Progresso e Servidão</h4>
+      <p>Uma contradição em reinado de Catarina é que enquanto promovia iluminismo intelectual e modernização econômica, simultaneamente solidificou servidão — sistema onde camponeses eram propriedade de nobres. Isto pode parecer contraditório, mas tinha lógica política. Catarina precisava do apoio de nobreza para manter poder. Nobreza dependia de servidão para sua riqueza. Portanto, Catarina oferecia às nobres privilégios e poder sobre servos para ganhar sua lealdade, mesmo enquanto modernizava aspectos de governo.</p>
+      <p>Esta contradição — progresso moderno coexistindo com exploração brutal — caracterizaria Rússia por séculos subsequentes. Modernização viria, mas acompanhada por opressão e violência.</p>
+      <blockquote class="tip">
+        💡 Catarina demonstrou que mulheres conseguem exercer poder político absoluto em nível que rivalizava qualquer homem, e consegue usar este poder para transformação territorial e intelectual em escala enorme.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Como Catarina, a Grande conseguiu chegar ao poder na Rússia?',
+      a: 'Através de golpe de palácio orquestrado com apoio de guarda imperial e altos oficiais, depôs seu marido Pedro III que era impopular; depois consolidou poder oferecendo privilégios à nobreza que a apoiava.'
+    }
+  },
+  {
+    id: 4,
+    name: 'Marie Curie: Radioatividade, Ciência, e Barreiras de Gênero',
+    dur: '12 min',
+    content: `
+      <h3>A Mulher que Revolucionou a Química e Física Modernas</h3>
+      <p>Maria Skłodowska nasceu em Varsóvia, Polônia em 1867, em contexto onde educação de mulheres era severamente limitada. Seu pai era professor de matemática e física, que encorajou educação científica de sua filha — atípico para época. Quando Polônia estava sob controle russo, acesso a educação superior era ainda mais restrito, especialmente para mulheres. Maria trabalhou como governanta enquanto sonhava com educação científica.</p>
+      <p>Em 1891, aos 23 anos, mudou-se para Paris para frequentar Universidade de Sorbonne. Paris oferecia acesso à educação que Varsóvia nunca conseguiria. Estudou física e matemática em ambiente onde era rara mulher estudando ciências. Conheceu Pierre Curie, físico já estabelecido e com 8 anos mais velho. Casaram-se e formaram parceria de pesquisa que seria extraordinária.</p>
+      <h4>A Descoberta de Radioatividade</h4>
+      <p>Em final de 1890s, cientistas haviam descrito "rayos misteriosos" emitidos por uranium. Maria se interessou em investigação destes raios. Usando equipamento primitivo, começou a medir radioatividade de diversos materiais. Descobriu que dois elementos — thorium e polonium (nomeado assim em honra à sua pátria) — emitiam radiação muito mais forte que uranium sozinho teria predito.</p>
+      <p>Isto levou à hipótese de que havia elementos previamente desconhecidos no mineral. Através de isolamento químico extraordinariamente difícil, Maria extraiu dois novos elementos: polonium e radium. Sua descoberta foi revolucionária. Oferecia prova de que havia estrutura submicroscópica ao átomo — que energia poderia ser gerada de material invisível.</p>
+      <h4>Prêmios Nobel e Reconhecimento Científico</h4>
+      <p>Em 1903, Marie, Pierre, e Henri Becquerel ganharam Prêmio Nobel de Física por descoberta de radioatividade. Maria foi primeira mulher a ganhar Prêmio Nobel. Isto foi extraordinário reconhecimento em época quando mulheres eram raramente tomadas seriamente como cientistas.</p>
+      <p>Tragicamente, em 1906, Pierre foi atropelado por carroça puxada a cavalo e morreu. Maria foi devastada, mas escolheu continuar pesquisa. Aceitou posição de professora em Universidade de Sorbonne — primeira mulher em tal posição. Continuou pesquisa em radioatividade, refinando compreensão de elementos radioativos e suas propriedades.</p>
+      <p>Em 1911, ganhou segundo Prêmio Nobel, desta vez em Química por descoberta de radium. Tornou-se primeira pessoa a ganhar Prêmios Nobel em duas disciplinas diferentes. Isto era reconhecimento extraordinário de contribuição científica.</p>
+      <blockquote class="quote">
+        "Nada na vida deve ser temido, apenas compreendido. Agora é tempo de compreender mais, então temer menos." — Marie Curie
+      </blockquote>
+      <h4>Legado Científico e Costo Pessoal</h4>
+      <p>Uma tragédia é que exposição prolongada à radiação que Marie havia estudado levou ao seu câncer. No tempo de Marie, perigos de radiação não eram compreendidos. Ela carregava amostras de elementos radioativos em bolsos, armazenava-os em gavetas, e manuseava-os desprotegida. Isto destruiu sua saúde. Morreu em 1934 de aplasia medular — falha de medula óssea provavelmente causada por exposição à radiação.</p>
+      <p>Apesar de morte jovem, legado de Marie é extraordinário. Suas pesquisas abriram campos inteiros de física e química nucleares. Descobertas dela sobre radioatividade foram fundamentais para compreensão moderna de estrutura atômica. Simultaneamente, sua existência como mulher cientista de premier nível ofereça inspiração para gerações subsequentes de mulheres em ciência.</p>
+      <blockquote class="tip">
+        💡 Marie Curie não foi apenas cientista extraordinária; foi símbolo de que gênero não é barreira para excelência científica. Seu exemplo inspirou milhões de mulheres a perseguir carreiras em ciência apesar de barreiras.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Qual foi a descoberta científica central de Marie Curie?',
+      a: 'Marie descobriu e isolou dois novos elementos (polonium e radium) através de investigação de radioatividade; descobertas revolucionaram compreensão de estrutura atômica e abriram campos de física e química nuclear.'
+    }
+  },
+  {
+    id: 5,
+    name: 'Hypatia de Alexandria: Matemática e Filósofa da Antiguidade',
+    dur: '12 min',
+    content: `
+      <h3>A Intelectual que Buscava Verdade Através de Razão</h3>
+      <p>Hypatia de Alexandria (c. 350-415 d.C.) foi uma das intelectuais mais notáveis da antiguidade tardia. Nasceu em Alexandria, Egito durante período em que a cidade era ainda centro de aprendizado e pesquisa extraordinários. Seu pai, Theon, era matemático e astrônomo eminente que educou filha em disciplinas científicas e filosóficas. Isto era extraordinário porque mulheres raramente recebiam educação matemática em época.</p>
+      <p>Hypatia se tornou professora em Neoplatônica (escola de filosofia que misturava platonismo com pensamento orientalista). Ensinava matemática, astronomia, e filosofia. Contemporâneos descrevem-na como intelectual extraordinária que oferecia insights originais sobre geometria, álgebra, e cosmologia. Atraía estudantes de toda Mediterrânia que procuravam aprender em seus pés.</p>
+      <h4>Contribuições em Matemática e Astronomia</h4>
+      <p>Hypatia fez contribuições significativas em múltiplas disciplinas científicas. Em matemática, trabalhou em geometria e ofereceu comentários sobre trabalhos de matemáticos anteriores. Possivelmente inventou astrolábio (instrumento para medir posição de objetos celestes). Trabalhou em problemas em álgebra que permaneceria insolúvel por séculos. Desenvolvimento de pensamento matemático de Hypatia era originalmente notável para época.</p>
+      <p>Além de matemática, era também astrônoma. Estudava movimentos de corpos celestes e tentava compreender estrutura do universo. Compreendia que Terra não estava no centro do universo — noção revolucionária para época quando maioria acreditava que Terra estava em centro de tudo.</p>
+      <h4>Filosofia e Busca por Verdade Racional</h4>
+      <p>Hypatia era filósofa no sentido clássico — alguém que persegue verdade através de razão. Neoplatonismo que ensinava oferecia síntese de filosofia grega com influências orientais. Hypatia aproveitava seu ensinamento filosófico para questionar suposições, para explorar natureza da realidade, para buscar compreensão de cosmos através de razão.</p>
+      <p>Uma característica notável de Hypatia é que oferecia conselhos práticos junto com filosofia teórica. Frequentemente pessoas vinham a ela em busca de orientação moral ou prática. Responderia com mistura de argumento racional e sabedoria prática. Isto oferece evidência de que não era meramente acadêmica isolada, mas intelectual engajada que tentava aplicar filosofia para melhorar vidas de outros.</p>
+      <h4>O Fim Trágico: Morte e Esquecimento</h4>
+      <p>A vida de Hypatia terminou tragicamente em 415 d.C. durante período de crescente tensão religiosa em Alexandria. Cidade havia sido dominada por cristãos que crescentemente viam pagãos (incluindo neoplatonistas como Hypatia) como ameaça à fé cristã. Uma multidão cristã furiosa atacou Hypatia, matou-a brutalmente, e destruiu seus escritos.</p>
+      <p>Morte de Hypatia representa mais do que homicídio trágico. Representa destruição de conhecimento e intolerância religiosa vencendo sobre busca racional de verdade. Seus escritos foram perdidos em sua maioria. O que sabemos sobre seu trabalho vem principalmente de cartas de estudante Synesius e de referências em trabalhos de outras pessoas.</p>
+      <blockquote class="tip">
+        💡 Hypatia é símbolo complexo: dela da iluminação intelectual perseguida pela escuridão da intolerância religiosa. Sua morte marca ponto de virada onde neoplatonismo pagão de Alexandria desapareceria e conhecimento antigo seria parcialmente perdido.
+      </blockquote>
+      <h4>Legado e Importância Histórica</h4>
+      <p>Embora trabalho específico de Hypatia seja frequentemente perdido, sua existência é importante. Oferece prova de que mulheres conseguem alcançar níveis de excelência intelectual extraordinários em matemática, astronomia, e filosofia. Sua morte oferece também lição histórica sobre perigos de intolerância religiosa que suprime busca racional por conhecimento.</p>
+      <p>Em era moderna, Hypatia se tornou ícone para aqueles que vêem ciência e razão como valores que precisam ser defendidos contra obscurantismo. Morte dela é frequentemente usada como exemplo de o que pode acontecer quando fundamentalismo religioso consegue suprimir investigação racional.</p>
+    `,
+    cards: {
+      q: 'Quais eram as principais áreas científicas e filosóficas em que Hypatia contribuiu?',
+      a: 'Hypatia trabalhou em matemática (geometria, álgebra), astronomia (possivelmente inventou astrolábio), e filosofia neoplatonista; contribuições foram originalmente notáveis mas muitos foram perdidos após sua morte.'
+    }
+  },
+  {
+    id: 6,
+    name: 'Simone de Beauvoir: Filosofia, Feminismo, e Existencialismo',
+    dur: '12 min',
+    content: `
+      <h3>A Pensadora que Redefiniu Feminismo Moderno</h3>
+      <p>Simone de Beauvoir (1908-1986) foi filósofa, escritora, e ativista francesa que radicalmente transformou compreensão de feminismo no século XX. Nasceu em Paris em família católica burguesa. Seu pai desejava que filhos tivessem educação excelente, e Simone aproveitou oferta. Frequentou Sorbonne onde estudou filosofia, e posteriormente ensinou em várias escolas francesas.</p>
+      <p>Beauvoir foi intelectual extraordinária e escritora de força extraordinária. Tinha romance longo com filósofo existencialista Jean-Paul Sartre, embora recusasse casamento. A relação foi intelectual e romântica, mas Beauvoir mantinha independência. Isto presagiava sua vida inteira: recusa de ser subordinada a homem, insistência em independência, e busca por authentic existência.</p>
+      <h4>O Segundo Sexo: Manifesto Feminista para Idade Moderna</h4>
+      <p>Em 1949, Beauvoir publicou "Le Deuxième Sexe" (O Segundo Sexo), trabalho que se tornaria fundacional para feminismo moderno. O livro é ensaio filosófico e histórico extraordinário sobre condição de mulher na história, sociedade, e biologicamente. Beauvoir pergunta: por que mulheres são frequentemente tratadas como "segundo sexo" — como complemento para homem em vez de ser humano autônomo em seus próprios direitos?</p>
+      <p>Beauvoir argumenta que opressão de mulheres não é natural ou biológica. É construída socialmente através de processos históricos de socialização. Mulheres são ensinadas desde nascimento a ver si mesmas através de olhos de homem — como objeto de desejo, como complementar a masculinidade, como intrinsecamente dependentes. Isto não é inevitável; é resultado de escolhas sociais e culturais.</p>
+      <p>A frase mais famosa de "O Segundo Sexo" é "Alguém não nasce mulher; se torna mulher" — ideia revolucionária que feminilidade não é essência inata, mas construção social. Isto ofereceu argumento filosófico para feminismo: se feminilidade é construída, pode ser reconstruída ou rejeitada.</p>
+      <blockquote class="quote">
+        "Ninguém nasce mulher; alguém se torna mulher." — Simone de Beauvoir
+      </blockquote>
+      <h4>Existencialismo e Liberdade Radical</h4>
+      <p>Perspectiva filosófica de Beauvoir vinha de existencialismo — corrente que enfatiza que seres humanos são "condenados à liberdade", que não há essência pré-dada que determine nossa natureza, que devemos criar si mesmos através de nossas escolhas. Aplicada para questão de gênero, isto significava que mulheres conseguem recusar papéis prescritos socialmente. Conseguem escolher si mesmas.</p>
+      <p>Isto oferecia esperança, mas também responsabilidade. Se você é livre escolher, então você é responsável por suas escolhas. Isto significa que mulher que aceita papel de dona de casa tradicional é não meramente vítima de opressão social; em algum sentido está escolhendo sua própria subordinação (mesmo que escolha seja feita sob constrangimento social extremo).</p>
+      <h4>Relacionamentos, Sexualidade, e Autenticidade</h4>
+      <p>Um aspecto provocador de pensamento de Beauvoir é sua análise de relacionamentos heterossexuais. Argumentava que muitas mulheres procuram homem que vai definir si mesmas para eles, que vai dar significado e propósito à suas vidas. Isto é erro fundamental. Beauvoir insistia que autenticidade requer que cada pessoa defina si mesma, que procure significado em suas próprias ações e projetos.</p>
+      <p>Isto tinha implicações para como mulher deveria viver vida. Não deveria ser meramente esposa ou mãe (embora pudesse ser), mas deveria perseguir suas próprias ambições, seus próprios projetos. Deveria ter relacionamentos de igualdade, não subordinação. Deveria reconhecer sua própria sexualidade como sua própria, não como presente para homem.</p>
+      <p>Estas ideias eram controversas quando publicadas. Ainda hoje, há aqueles que argumentam que feminismo de Beauvoir é muito individualista, que negligencia valores de cuidado e comunidade. No entanto, sua contribuição foi radical: ofereceu argumento filosófico que mulheres são seres livres totais, não a serem definidas por papéis sociais tradicionais.</p>
+      <blockquote class="tip">
+        💡 Beauvoir oferecia síntese de filosofia (existencialismo), história, e análise sociológica. Seus argumentos não eram meramente apelativos; eram rigorosamente defendidos através de análise filosófica cuidadosa.
+      </blockquote>
+    `,
+    cards: {
+      q: 'O que Simone de Beauvoir argumentava sobre natureza do gênero feminino?',
+      a: 'Beauvoir argumentava que feminilidade não é essência biológica inata, mas construção social; "alguém não nasce mulher, se torna mulher" através de socialização; isto oferecia base filosófica para argumento que mulheres conseguem recusar papéis sociais prescritos.'
+    }
+  },
+  {
+    id: 7,
+    name: 'Florence Nightingale: Revolucionando Enfermagem e Cuidado de Saúde',
+    dur: '12 min',
+    content: `
+      <h3>A Fundadora de Enfermagem Moderna</h3>
+      <p>Florence Nightingale (1820-1910) nasceu em família britânica abastada durante era Vitoriana quando expectativa para mulheres de classe alta era que casa, tivessem filhos, e mantivessem casa. No entanto, desde juventude, Nightingale sentiu chamada vocacional para cuidado de doentes. Sua família se opôs violentamente — trabalho de enfermagem era frequentemente feito por mulheres de classe baixa e frequentemente associado com promiscuidade.</p>
+      <p>No entanto, Nightingale persistiu. Treinou como enfermeira contra desejos de sua família. Rapidamente ganhou reputação de ser excelente organizadora e reformadora de instituições de saúde. Quando Guerra da Crimeia começou em 1853, Nightingale ofereceu seus serviços. Foi enviada para Turquia para supervisar cuidados para soldados britânicos feridos.</p>
+      <h4>Reforma de Hospitais de Guerra e Redução de Mortalidade</h4>
+      <p>Quando Nightingale chegou ao hospital de Scutari, encontrou condições caóticas. Hospitais eram sujos, desorganizados, e soldados morriam de infecções e doenças muito mais que de ferimentos de batalha. Nightingale imediatamente começou reformas radicais. Limpou hospitais, estabeleceu protocolos de higiene, organizou equipe de enfermagem, e assegurou que pacientes tivessem alimentação adequada.</p>
+      <p>Resultados foram dramáticos. Taxa de mortalidade caiu de aproximadamente 40% para aproximadamente 2%. Isto foi transformação extraordinária em curto tempo. Nightingale rastreava meticulosamente estatísticas de mortalidade para provar que suas reformas funcionavam. Após retornar da Crimeia, usou dados estatísticos para argumentar por reformas de hospitais mais amplas.</p>
+      <blockquote class="example">
+        📌 Nightingale foi pioneira no uso de visualizações estatísticas (especificamente, diagramas de rosa que mostravam causas de morte) para comunicar dados de forma que políticos conseguiam compreender. Ela inventou forma de usar dados para mudar política.
+      </blockquote>
+      <h4>Fundação de Profissão de Enfermagem Moderna</h4>
+      <p>Após Guerra da Crimeia, Nightingale dedicou-se a profissionalizar enfermagem. Fundou Nightingale Training School no Hospital St. Thomas em Londres em 1860. Esta foi primeira escola de enfermagem formal que oferecia treinamento sistemático em cuidados de paciente. Paradigma era que enfermeiras precisavam ser bem-educadas e treinadas rigorosamente — não eram simplesmente servas ou criadas.</p>
+      <p>Nightingale desenvolveu curriculum para treinamento de enfermeiras que enfatizava higiene, anatomia, fisiologia, e cuidado compassivo. Encorajava enfermeiras a manter notas detalhadas sobre condições de pacientes. Insistia em disciplina e ética profissional. Seu modelo de treinamento de enfermagem se espalhou para hospitais em toda Grã-Bretanha e eventualmente para mundo inteiro.</p>
+      <h4>Escrita e Influência Intelectual</h4>
+      <p>Nightingale era também escritora prolífica. Publicou relatórios sobre reforma de hospitais, notas sobre enfermagem, e análise estatística de causas de morte em guerra. Seu trabalho "Notes on Nursing" (1859) se tornou textbook standard para enfermeiras por décadas. Não era simplesmente instrutional; era argumento filosófico que cuidado de enfermagem apropriado poderia reduzir sofrimento e salvar vidas.</p>
+      <p>Além disso, Nightingale era ativista de reforma social. Argumentava por melhores condições de vida para pobres, por reforma de instituições públicas, por maior acesso a cuidados de saúde. Não era meramente indivíduo dedicado ao cuidado privado; era pensadora de políticas públicas que entendia que saúde coletiva requeriu ação governamental.</p>
+      <h4>Legado: Profissionalização e Dados-Driven Decision Making</h4>
+      <p>Nightingale revolucionou profissão de enfermagem de atividade causal para carreira profissional exigindo educação, treinamento, e ética. Enfermeiras modernas vêem Nightingale como fundadora de sua profissão. Além disso, ela pionierou importância de dados estatísticos em guiar política pública — algo que hoje é óbvio, mas era revolucionário em seu tempo.</p>
+      <p>Morreu em 1910 aos 90 anos, tendo visto revolucionar cuidados de saúde em seu tempo de vida. Seu legado continua: profissão de enfermagem que ela fundou continua transformando saúde pública, e seu insistência em dados-driven decision-making permanece central em medicina moderna.</p>
+      <blockquote class="tip">
+        💡 Florence Nightingale demonstrou que mudança social pode ser alcançada não através de retórica inflamada, mas através de reformas práticas apoiadas por dados estatísticos rigorosos — um modelo que permanece altamente efetivo hoje.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Como Florence Nightingale revolucionou cuidados de saúde e enfermagem?',
+      a: 'Nightingale reformou hospitais de guerra através de higiene e organização, dramaticamente reduzindo mortalidade; fundou primeira escola de enfermagem formal; usou dados estatísticos para argumentar por reformas; transformou enfermagem de atividade causal em profissão respeitável.'
+    }
+  },
+  {
+    id: 8,
+    name: 'Rosa Parks: Um Ato de Recusa que Catalizou o Movimento de Direitos Civis',
+    dur: '12 min',
+    content: `
+      <h3>A Mulher Cuja Coragem Desafiou Segregação Racial</h3>
+      <p>Rosa Louise Parks (1913-2005) nasceu em Tuskegee, Alabama, em famílias de afro-americanos em era de segregação racial severa no Sul americano. Apesar de leis que supostamente providenciavam "separados mas iguais", realidade era que instalações para negros eram invariavelmente inferiores. Educação era segregada e inadequada. Oportunidades econômicas eram limitadas. E mais fundamentalmente, lei exigia deferência constante — uma espécie de teatro de subordinação onde negros precisavam demonstrar respeito aos brancos em todas as circunstâncias.</p>
+      <p>Rosa Parks tinha espíritos de independência mesmo quando jovem. Frequentou escola, aprendeu a costurar, trabalhou como costureira. Era respeitada em sua comunidade. Mas também era consciente de injustiça da segregação. Num contexto onde muitos aceitavam segregação como inevitável, Parks questionava a legitimidade dela.</p>
+      <h4>O Dia que Mudou Tudo: 1º de Dezembro de 1955</h4>
+      <p>Em 1º de dezembro de 1955, Rosa Parks estava no ônibus em Montgomery, Alabama, voltando para casa do trabalho. O ônibus estava lotado. Conforme mais passageiros brancos entram, motorista ordenou que Parks e outros passageiros negros se levantassem para dar seus assentos para brancos. Parks recusou.</p>
+      <p>Esta não foi ato impulsivo de emoção. Parks era conscientemente desafiando lei discriminatória. Foi presa e acusada de violar lei de segregação. Sua prisão catalizou movimento extraordinário. Líderes da comunidade negra de Montgomery organizaram boicote de ônibus. Por 381 dias, afro-americanos se recusaram a usar transporte de ônibus municipal.</p>
+      <blockquote class="quote">
+        "Eu não fui cansada fisicamente, apesar do que as pessoas depois disseram. Fui cansada de ceder." — Rosa Parks
+      </blockquote>
+      <h4>Boicote de Montgomery e o Movimento de Direitos Civis</h4>
+      <p>O boicote de ônibus de Montgomery foi primeiramente campanha bem-sucedida de não-violência de resistência à segregação. Afro-americanos, por maioria absoluta dos usuários de ônibus, conseguiram impor custos econômicos significantes no sistema. Companhia de ônibus enfrentou perdas financeiras severas. A city estava dividida. Eventualmente, após mais de um ano, sistema de segregação no transporte foi oficialmente derrubado.</p>
+      <p>Mas sucesso de Montgomery era sobre muito mais que ônibus. Era prova de que segregação racial poderia ser desafiada com sucesso, que afro-americanos conseguiam organizar-se, que população branca não precisava apoiar segregação indefinidamente se custos econômicos eram suficientemente altos. Sucesso de Montgomery inspirou subsequentes campanhas de resistência pelo país.</p>
+      <h4>Parks como Símbolo e Ativista Contínuo</h4>
+      <p>Rosa Parks se tornou símbolo do movimento de direitos civis. Sua imagem — mulher dignificada que recusou ceder — foi poderosa porque era tão simples, mas tão profunda. Não foi violência ou agitação; foi recusa de participar em própria subordinação. Isto apelava a imaginação americana de forma que discursos complexos sobre justiça frequentemente não conseguem fazer.</p>
+      <p>No entanto, Parks era mais que símbolo. Continuou sendo ativista pelo resto de sua vida. Dedicou-se a educação civil rights, falou publicamente sobre importância de justiça racial, e apoiou subsequentes movimentos por igualdade. Morreu em 2005, tendo visto mudanças enormes no status de afro-americanos na sociedade americana — mudanças que seu ato de coragem havia ajudado a catalizar.</p>
+      <blockquote class="tip">
+        💡 O ato de Rosa Parks demonstra que grandes mudanças sociais podem ser inicializadas através de atos simples de desobediência civil quando há movimento organizado por trás deles para sustentar e amplificar o desafio.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Como o ato de Rosa Parks em 1º de dezembro de 1955 catalizou o movimento de direitos civis?',
+      a: 'Recusando ceder seu assento em ônibus segregado, Parks foi presa; isto inspirou boicote de 381 dias do sistema de ônibus de Montgomery que finalmente derrubou segregação, provando que resistência não-violenta poderia ser bem-sucedida.'
+    }
+  },
+  {
+    id: 9,
+    name: 'Aung San Suu Kyi: Resistência Não-Violenta Contra Ditadura',
+    dur: '12 min',
+    content: `
+      <h3>A Mulher que Desafiou Ditadura Militar por Décadas</h3>
+      <p>Aung San Suu Kyi (nascida em 1945) é filha do herói nacional da Birmânia (agora Myanmar), General Aung San, que levou país para independência de Grã-Bretanha. Seu pai foi assassinado quando ela tinha apenas 3 anos. Cresceu principalmente no exílio — sua mãe era embaixadora. Frequentou universidades em Grã-Bretanha, estudou filosofia, política, e economia. Casou com acadêmico britânico e viveu vida relativamente quieta como mãe e esposa.</p>
+      <p>No entanto, em 1988, retornou para Birmânia quando regime militar começou a desestabilizar-se. Demonstrações públicas contra junta militar foram organizadas. Inicialmente pensava que seria envolvimento breve — talvez ajudaria a trazer democracia. Em vez disso, tornou-se envolvida em campanha que duraria décadas.</p>
+      <h4>Fundação da Oposição Democrática Não-Violenta</h4>
+      <p>Em 1989, Aung San Suu Kyi e colegas fundaram National League for Democracy (NLD). Partido ofereça visão de Birmânia democrática onde direitos individuais seriam protegidos e eleições justas seriam realizadas. A campanha de NLD era estritamente não-violenta — rejeitava conflito armado apesar de tentações para usar força contra junta militar brutalmente repressiva.</p>
+      <p>A resposta da junta foi óbvia: Aung San Suu Kyi foi colocada sob prisão domiciliar em 1989. Por anos subsequentes, permaneceu confinada à casa, impossível deixar (a menos que aceitasse exílio), impossível receber visitantes, impossível participar diretamente em política. Apesar disso, tornou-se símbolo de resistência democrática.</p>
+      <h4>Mantendo Resistência Apesar de Repressão Severa</h4>
+      <p>O que é extraordinário sobre Aung San Suu Kyi é sua capacidade de manter moralmente e politicamente comprometida mesmo quando enfrentava repressão severa. Permanecia sob prisão domiciliar (ou em prisão), isolada do mundo, conhecendo que regime militar era absolutamente determinado a nunca permitir democracia. Muitos teriam desistido. Alguns teriam tomado armas. Aung San Suu Kyi permanecia comprometida com resistência não-violenta e com visão de futuro democrático.</p>
+      <p>Sua resistência não era meramente simbólica. Ela escreveu ensaios sobre democracia, educação, e direitos humanos (contrabandeados para fora de prisão). Mantinha contato com ativistas de direitos humanos. Inspirava população de Birmânia que vira em ela figura de esperança. Recebia Prêmio Nobel da Paz em 1991 (enquanto ainda estava sob prisão domiciliar).</p>
+      <blockquote class="news">
+        📰 Aung San Suu Kyi passou aproximadamente 15 de 20 anos entre 1989 e 2010 sob prisão domiciliar ou em prisão. Recusou oferta para deixar Birmânia porque isto teria significado abandoning luta por democracia.
+      </blockquote>
+      <h4>Transição e Complexidades Subsequentes</h4>
+      <p>Em 2010-2011, regime militar de Birmânia começou processo de reforma. Alguns detidos foram liberados. Aung San Suu Kyi foi liberada. Eleições parcialmente livres foram realizadas em 2012 e 2015 onde NLD conquistou cadeiras no parlamento. Finalmente, em 2016, Aung San Suu Kyi tornou-se primeira-ministra de Myanmar — e em 2020 venceu novamente, confirmando seu apoio popular extraordinário.</p>
+      <p>No entanto, a história subsequente é mais complicada. Como primeira-ministra, Aung San Suu Kyi enfrentou questões complexas e frequentemente fez decisões que decepcionaram seus admiradores internacionais. Particularmente, sua resposta para questão de minoría Rohingya (grupo étnico/religioso que enfrentou perseguição severa) foi visto por críticos como inadequado ou conivente com limpeza étnica.</p>
+      <p>Isto oferece lição: mesmo resistência heroica contra injustiça não necessariamente prepara líderes para governança complexa no mundo real. Aung San Suu Kyi foi extraordinária como símbolo de resistência e como ativista pela democracia. Mas como primeiro-ministra, enfrentou dificuldades — alguns veem seu governo como decepcionante, outros veem como pragmático dado constrangimentos políticos.</p>
+      <blockquote class="tip">
+        💡 A trajetória de Aung San Suu Kyi demonstra que resistência contra injustiça e capacidade de governar justamente não são necessariamente mesma coisa, e que mesmo figuras heroicamente resistindo podem fazer escolhas questionáveis quando enfrentam realidades complexas do poder.
+      </blockquote>
+    `,
+    cards: {
+      q: 'Como Aung San Suu Kyi resistiu à ditadura militar de Myanmar por décadas?',
+      a: 'Através de resistência não-violenta mesmo quando confinada em prisão domiciliar por aproximadamente 15 anos; fundou National League for Democracy que oferecia visão de democracia; suas escritas e símbolo inspiravam população apesar de repressão severa.'
+    }
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
