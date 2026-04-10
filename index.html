@@ -5155,61 +5155,28 @@ on:.2s}
 </script>
 
 <!-- ════════════════════════════════════════════════════════════════════════════════ -->
-<!-- OVERLAY LOGO - MATHEUS ACADEMY - VERSÃO 1 FINAL -->
-<!-- Logo Centralizada + 20% Menor -->
+<!-- OVERLAY LOGO - MATHEUS ACADEMY - VERSÃO 2 MARCA D'ÁGUA -->
+<!-- Apenas texto + glow (SEM faixa preta) - Não tapa conteúdo -->
 <!-- ════════════════════════════════════════════════════════════════════════════════ -->
 <script>
 (function() {
   'use strict';
 
-  // ─── CONFIGURAÇÃO DO OVERLAY ───
-  const OVERLAY_CONFIG = {
-    faixaPreta: {
-      width: '179px',
-      height: '34px',
-      background: '#000000',
-      borderRadius: '8px',
-      boxShadow: '0 6px 24px rgba(0,0,0,0.8)',
-      zIndex: '2'
-    },
-    logo: {
-      M: {
-        fontSize: '20.8px',
-        fontWeight: '900',
-        color: '#FFFFFF',
-        textShadow: '0 2.4px 9.6px rgba(0,0,0,0.8)',
-        minWidth: '22px'
-      },
-      separator: {
-        fontSize: '22.4px',
-        color: '#4B8BFF',
-        textShadow: '0 0 12px rgba(75, 139, 255, 1)'
-      },
-      academy: {
-        fontSize: '8.8px',
-        fontWeight: '900',
-        color: '#4B8BFF',
-        letterSpacing: '1.44px',
-        textShadow: '0 0 12px rgba(75, 139, 255, 1)'
-      }
-    }
-  };
-
-  // ─── CRIAR OVERLAY HTML ───
-  function createLogoOverlay() {
+  // ─── CRIAR MARCA D'ÁGUA (SEM FUNDO PRETO) ───
+  function createWatermarkLogo() {
     const container = document.createElement('div');
-    container.className = 'ma-logo-overlay';
+    container.className = 'ma-watermark-logo';
     container.style.cssText = `
       position: absolute;
-      bottom: 18px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 4.8px;
-      height: 34px;
-      z-index: 3;
+      z-index: 2;
+      pointer-events: none;
     `;
 
     // M
@@ -5218,11 +5185,10 @@ on:.2s}
     m.style.cssText = `
       font-family: 'Arial Black', Arial, sans-serif;
       font-weight: 900;
-      font-size: ${OVERLAY_CONFIG.logo.M.fontSize};
-      color: ${OVERLAY_CONFIG.logo.M.color};
-      text-shadow: ${OVERLAY_CONFIG.logo.M.textShadow};
+      font-size: 20.8px;
+      color: #FFFFFF;
+      text-shadow: 0 2.4px 9.6px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.4);
       line-height: 1;
-      min-width: ${OVERLAY_CONFIG.logo.M.minWidth};
       display: flex;
       align-items: center;
       justify-content: center;
@@ -5234,9 +5200,9 @@ on:.2s}
     separator.style.cssText = `
       font-family: Arial, sans-serif;
       font-weight: 300;
-      font-size: ${OVERLAY_CONFIG.logo.separator.fontSize};
-      color: ${OVERLAY_CONFIG.logo.separator.color};
-      text-shadow: ${OVERLAY_CONFIG.logo.separator.textShadow};
+      font-size: 22.4px;
+      color: #4B8BFF;
+      text-shadow: 0 0 15px rgba(75, 139, 255, 1.2), 0 0 30px rgba(75, 139, 255, 0.8);
       line-height: 0.8;
       display: flex;
       align-items: center;
@@ -5249,10 +5215,10 @@ on:.2s}
     academy.style.cssText = `
       font-family: 'Arial Black', Arial, sans-serif;
       font-weight: 900;
-      font-size: ${OVERLAY_CONFIG.logo.academy.fontSize};
-      color: ${OVERLAY_CONFIG.logo.academy.color};
-      letter-spacing: ${OVERLAY_CONFIG.logo.academy.letterSpacing};
-      text-shadow: ${OVERLAY_CONFIG.logo.academy.textShadow};
+      font-size: 8.8px;
+      color: #4B8BFF;
+      letter-spacing: 1.44px;
+      text-shadow: 0 0 15px rgba(75, 139, 255, 1), 0 0 30px rgba(75, 139, 255, 0.6);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -5265,32 +5231,10 @@ on:.2s}
     return container;
   }
 
-  // ─── CRIAR FAIXA PRETA ───
-  function createFaixaPreta() {
-    const faixa = document.createElement('div');
-    faixa.className = 'ma-faixa-preta';
-    faixa.style.cssText = `
-      position: absolute;
-      bottom: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: ${OVERLAY_CONFIG.faixaPreta.width};
-      height: ${OVERLAY_CONFIG.faixaPreta.height};
-      background: ${OVERLAY_CONFIG.faixaPreta.background};
-      border-radius: ${OVERLAY_CONFIG.faixaPreta.borderRadius};
-      box-shadow: ${OVERLAY_CONFIG.faixaPreta.boxShadow};
-      z-index: ${OVERLAY_CONFIG.faixaPreta.zIndex};
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    `;
-    return faixa;
-  }
-
-  // ─── APLICAR OVERLAY EM UMA IMAGEM ───
-  function applyOverlay(imgElement) {
+  // ─── APLICAR MARCA D'ÁGUA EM UMA IMAGEM ───
+  function applyWatermark(imgElement) {
     // Verificar se já foi aplicado
-    if (imgElement.parentElement.querySelector('.ma-logo-overlay')) {
+    if (imgElement.parentElement.querySelector('.ma-watermark-logo')) {
       return;
     }
 
@@ -5298,7 +5242,6 @@ on:.2s}
     let container = imgElement.closest('.cc-img') || imgElement.closest('.ebook-cover');
     
     if (!container) {
-      // Fallback: usar o parentElement
       container = imgElement.parentElement;
     }
 
@@ -5307,37 +5250,21 @@ on:.2s}
       container.style.position = 'relative';
     }
 
-    // Adicionar faixa preta
-    const faixa = createFaixaPreta();
-    container.appendChild(faixa);
-
-    // Adicionar logo
-    const logo = createLogoOverlay();
-    container.appendChild(logo);
+    // Adicionar apenas a marca d'água (sem fundo)
+    const watermark = createWatermarkLogo();
+    container.appendChild(watermark);
   }
 
   // ─── ENCONTRAR E APLICAR EM TODAS AS IMAGENS ───
   function applyToAllCovers() {
     // Cards de cursos (.cc-img img)
     document.querySelectorAll('.cc-img img').forEach(img => {
-      applyOverlay(img);
+      applyWatermark(img);
     });
 
     // Ebooks (.ebook-cover img)
     document.querySelectorAll('.ebook-cover > img').forEach(img => {
-      applyOverlay(img);
-    });
-  }
-
-  // ─── OBSERVER PARA IMAGENS DINÂMICAS ───
-  function setupMutationObserver() {
-    const observer = new MutationObserver(() => {
-      applyToAllCovers();
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
+      applyWatermark(img);
     });
   }
 
@@ -5346,11 +5273,25 @@ on:.2s}
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         setTimeout(applyToAllCovers, 100);
-        setupMutationObserver();
+        // Monitor dinâmico
+        const observer = new MutationObserver(() => {
+          applyToAllCovers();
+        });
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
       });
     } else {
       applyToAllCovers();
-      setupMutationObserver();
+      // Monitor dinâmico
+      const observer = new MutationObserver(() => {
+        applyToAllCovers();
+      });
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
     }
   }
 
