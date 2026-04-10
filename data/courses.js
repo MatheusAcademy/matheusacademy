@@ -1305,6 +1305,25 @@ var MA_COURSES = [
     color: '#e9c46a',
     addedTs: 1775831119570,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/hm.jpg',
+    id: 'hm',
+    name: 'História Mundial para Entender o Presente',
+    desc: 'Mostra como o passado ajuda a compreender conflitos atuais, disputas geopolíticas e mudanças na ordem global.',
+    file: '30-historia-mundial.html',
+    cat: 'História',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'HM_HENRY_2026_MASTER',
+    ak: 'hm_auth',
+    storagePrefix: 'hm_',
+    icon: '📜',
+    color: '#1d3557',
+    addedTs: 1775832734509,
+    active: true
   }
 ];
 var MA_CATS = [
