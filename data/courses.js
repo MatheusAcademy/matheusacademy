@@ -1362,6 +1362,25 @@ var MA_COURSES = [
     color: '#8ab17d',
     addedTs: 1775832739774,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ei.jpg',
+    id: 'ei',
+    name: 'A Era dos Impérios',
+    desc: 'Curso sobre ascensão, expansão e queda de grandes impérios que dominaram territórios, culturas e rotas comerciais.',
+    file: '28-era-imperios.html',
+    cat: 'História',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'EI_HENRY_2026_MASTER',
+    ak: 'ei_auth',
+    storagePrefix: 'ei_',
+    icon: '📜',
+    color: '#7b2d26',
+    addedTs: 1775832742257,
+    active: true
   }
 ];
 var MA_CATS = [
