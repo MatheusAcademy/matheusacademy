@@ -1609,6 +1609,25 @@ var MA_COURSES = [
     color: '#ff9f1c',
     addedTs: 1775832773238,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cb84.jpg',
+    id: 'cb84',
+    name: 'Criptomoedas Além do Bitcoin',
+    desc: 'Explore o universo das criptomoedas além do Bitcoin, entendendo altcoins, tokens, utilidade de projetos, riscos do mercado, inovação em blockchain e oportunidades dentro do setor digital.',
+    file: 'criptomoedas-bitcoin.html',
+    cat: 'Criptomoedas',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CB_HENRY_2026_MASTER',
+    ak: 'cb_auth',
+    storagePrefix: 'cb_',
+    icon: '🎓',
+    color: '#f77f00',
+    addedTs: 1775832776174,
+    active: true
   }
 ];
 var MA_CATS = [
