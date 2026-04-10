@@ -1749,7 +1749,7 @@ var MA_COURSES = [
     name: 'O Futuro da Direita no Brasil',
     desc: 'Explore a evolução da direita brasileira, suas correntes ideológicas, lideranças, disputas internas, estratégias eleitorais e perspectivas para os próximos anos.',
     file: 'futuro-direita.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    cat: 'Política Brasileira',
     modules: 3,
     topics: 9,
     hours: 2,
