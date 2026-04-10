@@ -962,6 +962,25 @@ var MA_COURSES = [
     color: '#06D6A0',
     addedTs: 1775831030570,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/di.jpg',
+    id: 'di',
+    name: 'Ditadores: Como Chegaram ao Poder',
+    desc: 'Analisa contextos históricos, crises, propaganda, manipulação de massas e estratégias de ascensão autoritária.',
+    file: '33-ditadores.html',
+    cat: 'Liderança e Poder',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'DI_HENRY_2026_MASTER',
+    ak: 'di_auth',
+    storagePrefix: 'di_',
+    icon: '🎓',
+    color: '#582f0e',
+    addedTs: 1775831033161,
+    active: true
   }
 ];
 var MA_CATS = [
