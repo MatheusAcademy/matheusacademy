@@ -4885,5 +4885,274 @@ on:.2s}
   </a>
 </nav>
 
+<!-- SCRIPT GLOBAL - OVERLAY DE LOGO EM TODAS AS CAPAS -->
+<script>
+(function() {
+  const overlayCSS = `
+    .auto-cover-overlay {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auto-cover-overlay::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, transparent 15%),
+        linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, transparent 20%),
+        linear-gradient(to left, rgba(0, 0, 0, 0.4) 0%, transparent 20%),
+        linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 30%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .auto-logo-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .auto-logo-m {
+      font-size: 60px;
+      font-weight: 900;
+      color: #ffffff;
+      text-shadow: 
+        0 0 20px rgba(0, 212, 255, 0.5),
+        0 0 40px rgba(13, 110, 253, 0.3),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .auto-logo-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+
+    .auto-logo-line {
+      height: 2px;
+      width: 60px;
+      background: linear-gradient(90deg, #0d6efd 0%, #00d4ff 100%);
+      border-radius: 1px;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+
+    .auto-logo-academy {
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: #0d6efd;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    }
+
+    .theme-tp .auto-logo-m {
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(13, 110, 253, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    .theme-tp .auto-logo-line {
+      background: linear-gradient(90deg, #0d6efd 0%, #00d4ff 100%);
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+    .theme-tp .auto-logo-academy {
+      color: #0d6efd;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    }
+
+    .theme-ni .auto-logo-m {
+      text-shadow: 0 0 20px rgba(0, 255, 136, 0.5), 0 0 40px rgba(0, 204, 102, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    .theme-ni .auto-logo-line {
+      background: linear-gradient(90deg, #00cc66 0%, #00ff88 100%);
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    }
+    .theme-ni .auto-logo-academy {
+      color: #00cc66;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+    }
+
+    .theme-gp .auto-logo-m {
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 149, 0, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    .theme-gp .auto-logo-line {
+      background: linear-gradient(90deg, #ff9500 0%, #ffd700 100%);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    .theme-gp .auto-logo-academy {
+      color: #ff9500;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .theme-tb .auto-logo-m {
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(139, 105, 20, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    .theme-tb .auto-logo-line {
+      background: linear-gradient(90deg, #8B6914 0%, #d4af37 100%);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+    .theme-tb .auto-logo-academy {
+      color: #8B6914;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .theme-nl .auto-logo-m {
+      text-shadow: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 40px rgba(255, 20, 147, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    .theme-nl .auto-logo-line {
+      background: linear-gradient(90deg, #ff1493 0%, #ff00ff 100%);
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    }
+    .theme-nl .auto-logo-academy {
+      color: #ff1493;
+      text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .auto-logo-m { font-size: 45px; }
+      .auto-logo-line { width: 45px; }
+      .auto-logo-academy { font-size: 12px; letter-spacing: 1.5px; }
+      .auto-logo-overlay { padding: 15px; }
+    }
+
+    @media (max-width: 480px) {
+      .auto-logo-m { font-size: 35px; }
+      .auto-logo-line { width: 35px; }
+      .auto-logo-academy { font-size: 10px; letter-spacing: 1px; }
+      .auto-logo-overlay { padding: 10px; gap: 10px; }
+    }
+  `;
+
+  const styleTag = document.createElement('style');
+  styleTag.textContent = overlayCSS;
+  document.head.appendChild(styleTag);
+
+  function getThemeForElement(element) {
+    const url = window.location.href.toLowerCase();
+    const html = element.outerHTML.toLowerCase();
+    const parentHTML = element.parentElement ? element.parentElement.outerHTML.toLowerCase() : '';
+
+    if (url.includes('trafico') || url.includes('tp_')) return 'theme-tp';
+    if (url.includes('negocio') || url.includes('ni_')) return 'theme-ni';
+    if (url.includes('geopolitica') || url.includes('gp_')) return 'theme-gp';
+    if (url.includes('teologia') || url.includes('tb_')) return 'theme-tb';
+    if (url.includes('nicho') || url.includes('nl_')) return 'theme-nl';
+
+    if (html.includes('trafico') || parentHTML.includes('trafico')) return 'theme-tp';
+    if (html.includes('negocio') || parentHTML.includes('negocio')) return 'theme-ni';
+    if (html.includes('geopolitica') || parentHTML.includes('geopolitica')) return 'theme-gp';
+    if (html.includes('teologia') || parentHTML.includes('teologia')) return 'theme-tb';
+    if (html.includes('nicho') || parentHTML.includes('nicho')) return 'theme-nl';
+
+    return 'theme-tp';
+  }
+
+  const selectors = [
+    '.course-cover',
+    '.card-capa',
+    '.capa-curso',
+    '.course-card img',
+    '[class*="cover"]',
+    '[class*="capa"]',
+    '[id*="cover"]',
+    '[id*="capa"]',
+    '.card-img',
+    '.course-image',
+    'img[alt*="capa"]',
+    'img[alt*="cover"]'
+  ];
+
+  function applyOverlayToAll() {
+    let processed = new Set();
+
+    selectors.forEach(selector => {
+      try {
+        document.querySelectorAll(selector).forEach(element => {
+          if (processed.has(element)) return;
+          processed.add(element);
+
+          if (element.offsetWidth < 150 || element.offsetHeight < 150) return;
+
+          if (element.classList.contains('auto-cover-overlay')) return;
+
+          const theme = getThemeForElement(element);
+
+          if (element.tagName === 'IMG') {
+            const wrapper = document.createElement('div');
+            wrapper.className = `auto-cover-overlay ${theme}`;
+            wrapper.style.width = element.width || '100%';
+            wrapper.style.height = element.height || 'auto';
+            wrapper.style.backgroundImage = `url('${element.src}')`;
+            wrapper.style.backgroundSize = 'cover';
+            wrapper.style.backgroundPosition = 'center';
+
+            if (element.style.width) wrapper.style.width = element.style.width;
+            if (element.style.height) wrapper.style.height = element.style.height;
+
+            element.parentNode.replaceChild(wrapper, element);
+
+            const logoOverlay = document.createElement('div');
+            logoOverlay.className = `auto-logo-overlay`;
+            logoOverlay.innerHTML = `
+              <div class="auto-logo-m">M</div>
+              <div class="auto-logo-text">
+                <div class="auto-logo-line"></div>
+                <div class="auto-logo-academy">ACADEMY</div>
+              </div>
+            `;
+            wrapper.appendChild(logoOverlay);
+          } 
+          else {
+            element.classList.add('auto-cover-overlay');
+            element.classList.add(theme);
+
+            if (!element.querySelector('.auto-logo-overlay')) {
+              const logoOverlay = document.createElement('div');
+              logoOverlay.className = `auto-logo-overlay`;
+              logoOverlay.innerHTML = `
+                <div class="auto-logo-m">M</div>
+                <div class="auto-logo-text">
+                  <div class="auto-logo-line"></div>
+                  <div class="auto-logo-academy">ACADEMY</div>
+                </div>
+              `;
+              element.appendChild(logoOverlay);
+            }
+          }
+        });
+      } catch (e) {
+        console.log('Seletor não encontrado:', selector);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyOverlayToAll);
+  } else {
+    applyOverlayToAll();
+  }
+
+  const observer = new MutationObserver(function() {
+    applyOverlayToAll();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+})();
+</script>
+
 </body>
 </html>
