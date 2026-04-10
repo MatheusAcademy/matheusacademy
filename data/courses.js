@@ -1171,6 +1171,25 @@ var MA_COURSES = [
     color: '#669bbc',
     addedTs: 1775831075002,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ag.jpg',
+    id: 'ag',
+    name: 'Agenda 2030: Como Está Atualmente e Como Pode se Concluir',
+    desc: 'Compreenda os objetivos da Agenda 2030, seu estágio atual, os desafios de implementação e os possíveis cenários para sua conclusão no sistema internacional.',
+    file: 'agenda-2030.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'AG_HENRY_2026_MASTER',
+    ak: 'ag_auth',
+    storagePrefix: 'ag_',
+    icon: '📰',
+    color: '#2a9d8f',
+    addedTs: 1775831100058,
+    active: true
   }
 ];
 var MA_CATS = [
