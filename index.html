@@ -758,7 +758,7 @@ body {
   position:relative;
 }
 .cc.soon{cursor:default;opacity:.55}.cc.soon:hover{transform:none!important}
-.cc-img{aspect-ratio:2/3;width:100%;background:#03030a;position:relative;overflow:visible;flex-shrink:0}.cc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:.97;transition:opacity .2s}.cc:hover .cc-img img{opacity:1}
+.cc-img{aspect-ratio:2/3;width:100%;background:#03030a;position:relative;overflow:hidden;flex-shrink:0}.cc-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:.97;transition:opacity .2s}.cc:hover .cc-img img{opacity:1}.cc-img::after{content:'M';position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-family:'Arial Black',Arial,sans-serif;font-weight:900;font-size:12px;color:#FFFFFF;text-shadow:0 2px 8px rgba(0,0,0,1.2),0 0 15px rgba(0,61,168,1.5);z-index:100;pointer-events:none;line-height:1;white-space:nowrap}
 .cc-badge{position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:6px;font-size:.5rem;font-weight:700;text-transform:uppercase}.cc-badge.live{background:var(--grn);color:#fff}.cc-badge.free{background:var(--orn);color:#fff}.cc-badge.novo{background:#ef4444;color:#fff;left:8px;right:auto;animation:novoPulse 1.5s ease-in-out infinite;}@keyframes novoPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.5);}50%{box-shadow:0 0 0 5px rgba(239,68,68,.0);}}
 .soon-img{background:var(--bg3);display:flex;align-items:center;justify-content:center}.soon-special{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(245,158,11,.1))}.soon-special .soon-label{color:#ef4444;font-weight:800}.soon-ebook{background:linear-gradient(135deg,rgba(75,139,255,.1),rgba(168,85,247,.1))}.soon-ebook .soon-label{color:#a855f7}.soon-label{font-size:.8rem;font-weight:700;color:var(--orn)}
 /* Body do card - altura FIXA para alinhamento */
@@ -4884,127 +4884,6 @@ on:.2s}
     <span class="bn-label">Perfil</span>
   </a>
 </nav>
-
-<!-- SCRIPT GLOBAL - OVERLAY DE LOGO EM TODAS AS CAPAS -->
-<!-- ════════════════════════════════════════════════════════════════════════════════ -->
-<!-- OVERLAY LOGO - MATHEUS ACADEMY - APENAS M -->
-<!-- Apenas M centralizado e pequeno - Marca d'água minimalista -->
-<!-- ════════════════════════════════════════════════════════════════════════════════ -->
-<script>
-(function() {
-  'use strict';
-
-  // ─── CRIAR MARCA D'ÁGUA (APENAS M) ───
-  function createWatermarkLogo() {
-    const container = document.createElement('div');
-    container.className = 'ma-watermark-logo';
-    container.style.cssText = `
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 99;
-      pointer-events: none;
-      width: auto;
-      padding: 0;
-      margin: 0;
-    `;
-
-    // M
-    const m = document.createElement('div');
-    m.textContent = 'M';
-    m.style.cssText = `
-      font-family: 'Arial Black', Arial, sans-serif;
-      font-weight: 900;
-      font-size: 12px;
-      color: #FFFFFF;
-      text-shadow: 0 2px 8px rgba(0,0,0,1.2), 0 0 15px rgba(0, 61, 168, 1.5);
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 100;
-      padding: 0;
-      margin: 0;
-      white-space: nowrap;
-    `;
-
-    container.appendChild(m);
-
-    return container;
-  }
-
-  // ─── APLICAR MARCA D'ÁGUA EM UMA IMAGEM ───
-  function applyWatermark(imgElement) {
-    // Verificar se já foi aplicado
-    if (imgElement.parentElement.querySelector('.ma-watermark-logo')) {
-      return;
-    }
-
-    // Encontrar o container (cc-img ou ebook-cover)
-    let container = imgElement.closest('.cc-img') || imgElement.closest('.ebook-cover');
-    
-    if (!container) {
-      container = imgElement.parentElement;
-    }
-
-    // Verificar se o container tem position relativa
-    if (!container.style.position || container.style.position === 'static') {
-      container.style.position = 'relative';
-    }
-
-    // Adicionar apenas a marca d'água (sem fundo)
-    const watermark = createWatermarkLogo();
-    container.appendChild(watermark);
-  }
-
-  // ─── ENCONTRAR E APLICAR EM TODAS AS IMAGENS ───
-  function applyToAllCovers() {
-    // Cards de cursos (.cc-img img)
-    document.querySelectorAll('.cc-img img').forEach(img => {
-      applyWatermark(img);
-    });
-
-    // Ebooks (.ebook-cover img)
-    document.querySelectorAll('.ebook-cover > img').forEach(img => {
-      applyWatermark(img);
-    });
-  }
-
-  // ─── EXECUTAR QUANDO DOM ESTÁ PRONTO ───
-  function init() {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(applyToAllCovers, 100);
-        // Monitor dinâmico
-        const observer = new MutationObserver(() => {
-          applyToAllCovers();
-        });
-        observer.observe(document.body, {
-          childList: true,
-          subtree: true
-        });
-      });
-    } else {
-      applyToAllCovers();
-      // Monitor dinâmico
-      const observer = new MutationObserver(() => {
-        applyToAllCovers();
-      });
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-    }
-  }
-
-  init();
-})();
-</script>
 
 </body>
 </html>
