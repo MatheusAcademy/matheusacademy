@@ -1324,6 +1324,25 @@ var MA_COURSES = [
     color: '#1d3557',
     addedTs: 1775832734509,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rv.jpg',
+    id: 'rv',
+    name: 'Revoluções que Transformaram a História',
+    desc: 'Aborda revoluções políticas, sociais e econômicas que mudaram regimes, ideias e estruturas de poder.',
+    file: '29-revolucoes.html',
+    cat: 'História',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'RV_HENRY_2026_MASTER',
+    ak: 'rv_auth',
+    storagePrefix: 'rv_',
+    icon: '📜',
+    color: '#b22234',
+    addedTs: 1775832737107,
+    active: true
   }
 ];
 var MA_CATS = [
