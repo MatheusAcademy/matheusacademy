@@ -1673,7 +1673,7 @@ var MA_COURSES = [
     name: 'Corrupção no Brasil: História e Mecanismos',
     desc: 'Analise como a corrupção se estruturou historicamente no Brasil, seus mecanismos políticos e institucionais, seus impactos econômicos e sociais e os desafios para o combate à impunidade.',
     file: 'corrupcao-brasil.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    cat: 'Política Brasileira',
     modules: 3,
     topics: 9,
     hours: 2,
