@@ -1286,6 +1286,25 @@ var MA_COURSES = [
     color: '#9b2226',
     addedTs: 1775831116891,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/fv.jpg',
+    id: 'fv',
+    name: 'Filosofia para a Vida Real',
+    desc: 'Curso que conecta grandes ideias filosóficas com problemas cotidianos, decisões pessoais, sofrimento, propósito e maturidade.',
+    file: '19-filosofia-vida-real.html',
+    cat: 'Filosofia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'FV_HENRY_2026_MASTER',
+    ak: 'fv_auth',
+    storagePrefix: 'fv_',
+    icon: '🦉',
+    color: '#e9c46a',
+    addedTs: 1775831119570,
+    active: true
   }
 ];
 var MA_CATS = [
