@@ -791,6 +791,25 @@ var MA_COURSES = [
     color: '#9d4edd',
     addedTs: 1775830994150,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/li.jpg',
+    id: 'li',
+    name: 'Líderes que Construíram Impérios',
+    desc: 'Explora trajetórias de governantes, estrategistas e líderes que expandiram poder e deixaram marcas profundas na história.',
+    file: '35-lideres-imperios.html',
+    cat: 'Liderança e Poder',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'LI_HENRY_2026_MASTER',
+    ak: 'li_auth',
+    storagePrefix: 'li_',
+    icon: '🎓',
+    color: '#6a040f',
+    addedTs: 1775830996781,
+    active: true
   }
 ];
 var MA_CATS = [
