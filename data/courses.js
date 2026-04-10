@@ -1730,7 +1730,7 @@ var MA_COURSES = [
     name: 'Eleições no Brasil: Marketing Político, Campanhas, Redes Sociais, Fake News e Cenário 2026',
     desc: 'Entenda como funcionam as campanhas eleitorais, a construção de imagem pública, o marketing político, a influência das redes sociais, a guerra de narrativa e os possíveis cenários eleitorais no Brasil.',
     file: 'eleicoes-brasil.html',
-    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    cat: 'Política Brasileira',
     modules: 3,
     topics: 9,
     hours: 2,
