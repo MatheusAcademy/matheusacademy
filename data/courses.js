@@ -886,6 +886,25 @@ var MA_COURSES = [
     color: '#005f73',
     addedTs: 1775831018588,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pi.jpg',
+    id: 'pi',
+    name: 'Produtividade Inteligente e Gestão do Tempo',
+    desc: 'Mostra como planejar o dia, priorizar tarefas, evitar desperdício de tempo e produzir mais sem viver no caos.',
+    file: '06-produtividade.html',
+    cat: 'Desenvolvimento',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'PI_HENRY_2026_MASTER',
+    ak: 'pi_auth',
+    storagePrefix: 'pi_',
+    icon: '🚀',
+    color: '#023e8a',
+    addedTs: 1775831021020,
+    active: true
   }
 ];
 var MA_CATS = [
