@@ -1343,6 +1343,25 @@ var MA_COURSES = [
     color: '#b22234',
     addedTs: 1775832737107,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/vs.jpg',
+    id: 'vs',
+    name: 'Filosofia, Verdade e Sentido da Vida',
+    desc: 'Curso voltado para reflexão profunda sobre existência, felicidade, sofrimento, liberdade e construção de significado.',
+    file: '24-verdade-sentido-vida.html',
+    cat: 'Filosofia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'VS_HENRY_2026_MASTER',
+    ak: 'vs_auth',
+    storagePrefix: 'vs_',
+    icon: '🦉',
+    color: '#8ab17d',
+    addedTs: 1775832739774,
+    active: true
   }
 ];
 var MA_CATS = [
