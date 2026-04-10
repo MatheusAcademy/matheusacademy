@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Revoluções que Transformaram a História — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'RV',
+  name: 'Revoluções que Transformaram a História',
+  shortName: 'Revoluções',
+  cat: 'História',
+  desc: 'Aborda revoluções políticas, sociais e econômicas que mudaram regimes, ideias e estruturas de poder.',
+  salt: 'RV_HENRY_2026_MASTER',
+  ak: 'rv_auth',
+  courseKey: 'rv',
+  prefix: 'rv_',
+  color: '#b22234',
+  glow: 'rgba(178,34,52,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 2,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 1,
+    name: 'Revoluções Políticas: Regimes Transformados',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Mudanças Políticas Revolucionárias',
+      points: [
+        'Revolução Americana (1776) estabeleceu primeiro república moderna baseada em ideais de igualdade e direitos',
+        'Revolução Francesa (1789-1799) destruiu feudalismo europeu, estabelecendo democracia e estado-nação moderno',
+        'Revolução Gloriosa (1688) transformou monarquia absoluta em monarquia constitucional parlamentar',
+        'Revoluções de 1848 propagaram ideais liberais-nacionalistas através da Europa, apesar de principalmente fracassarem'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Quando ocorreu a Revolução Americana?',
+        opts: ['1765', '1776', '1789', '1812'],
+        correct: 1
+      },
+      {
+        q: 'Qual foi principal resultado da Revolução Francesa?',
+        opts: ['Abolição da monarquia', 'Destruição do feudalismo', 'Ambas', 'Restauração do absolutismo'],
+        correct: 2
+      },
+      {
+        q: 'Qual revolução transformou monarquia absoluta em constitucional?',
+        opts: ['Revolução Americana', 'Revolução Gloriosa', 'Revolução Francesa', 'Revolução Russa'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Revoluções Sociais e Econômicas',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Transformações de Classe e Economia',
+      points: [
+        'Revolução Industrial (1760-1840) mecanizou produção, criando capitalismo moderno e classe trabalhadora urbana',
+        'Revolução Comunista (1917) buscou abolir propriedade privada e criar sociedade sem classes, deixando legado de 100+ milhões de mortes',
+        'Movimentos de direitos dos trabalhadores conquistaram jornada de 8 horas, seguro, representação sindical através de décadas de luta',
+        'Revoluções de gênero e sexualidade desafiaram patriarcado, conquistando direito de voto, igualdade legal para mulheres'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Quando começou a Revolução Industrial?',
+        opts: ['1650s', '1760s', '1850s', '1920s'],
+        correct: 1
+      },
+      {
+        q: 'Qual foi objetivo principal do comunismo soviético?',
+        opts: ['Reforma capitalismo', 'Abolição de propriedade privada', 'Restauração feudalismo', 'Expansão imperial'],
+        correct: 1
+      },
+      {
+        q: 'Qual movimento conquistou direito de voto para mulheres?',
+        opts: ['Sufragismo', 'Feminismo', 'Ambas', 'Socialismo'],
+        correct: 2
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Revoluções Culturais e Científicas',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Revoluções de Ideias e Conhecimento',
+      points: [
+        'Renascença (1300-1600) recuperou conhecimento clássico, desafiando escolastismo medieval, criando humanismo moderno',
+        'Revolução Científica (1500-1700) estabeleceu método científico, desafiando autoridade religiosa, criando ciência moderna',
+        'Revolução Intelectual do Iluminismo (1650-1800) propagou racionalismo, secularismo, direitos individuais que inspiraram revoluções políticas',
+        'Revoluções culturais contemporâneas (feminismo, movimento LGBTQ+, justiça racial) continuam desafiando valores tradicionais'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual movimento intelectual propagou direitos individuais e inspirou revoluções?',
+        opts: ['Humanismo', 'Iluminismo', 'Romantismo', 'Positivismo'],
+        correct: 1
+      },
+      {
+        q: 'Quando ocorreu a Revolução Científica?',
+        opts: ['1200-1400', '1500-1700', '1700-1900', '1900-2000'],
+        correct: 1
+      },
+      {
+        q: 'Qual foi principal conquista da Renascença?',
+        opts: ['Conquista da América', 'Recuperação de conhecimento clássico', 'Revolução industrial', 'Democracia moderna'],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'Revolução Americana: Nascimento de Democracia',
+    dur: '17 min',
+    content: `<h3>Causas da Revolução Americana</h3>
+<p>A Revolução Americana (1775-1783) foi conflito militar e político que resultou na independência de treze colônias britânicas na América do Norte da Grã-Bretanha. As causas eram complexas: impostos britânicos pesados em colônias sem representação parlamentar ("Sem representação, sem tributação" era slogan revolucionário), conflitos sobre autonomia colonial vs. controle britânico, influência de ideias iluministas sobre direitos naturais e consentimento dos governados, ressentimento colonial de interferência metropolitana. As colônias haviam desenvolvido certa autonomia e identidade própria durante séculos de colonização; eram relutantes em aceitar maior tributação e controle da metrópole. Conflitos específicos precipitaram rebelião: Lei do Chá (Tea Act) que favorecia Companhia Britânica das Índias Orientais, levou ao Boston Tea Party (1773) onde colonos jogaram carregamento de chá no mar em protesto. Resposta britânica foi "Atos Intoleráveis" que fecharam porto de Boston, restringindo autonomia. Isto galvanizou sentimento anti-britânico. Primeira Continental Congress (1774) reuniu representantes coloniais para coordenar resistência. Conflito armado começou em Lexington e Concord (1775) quando tropas britânicas buscavam apreender munições coloniais. Declaração de Independência foi adotada em 4 de julho de 1776, declarando formalmente que colônias eram estados livres e independentes. A Declaração, principalmente escrita por Thomas Jefferson, estava baseada em ideias de Locke e iluminismo: "Todos os homens são criados iguais" com "direitos inafienáveis" de "vida, liberdade, e busca da felicidade".</p>
+
+<h4>Curso da Guerra e Vitória</h4>
+<p>A Guerra Revolucionária Americana foi conflito que durou 8 anos de combate extensivo. Inicialmente, Grã-Bretanha tinha vantagem: exército profissional maior, marinha superior, mais recursos. Porém, colonos tinham vantagens: conhecimento do terreno, determinação ideológica, capacidade de dispersar e reconstituir exército. George Washington liderou Exército Continental com estratégia de atrito: evitava batalha decisiva, desgastava Exército Britânico através de emboscadas e combate de guerrilha, mantinha esperança viva. Virada crucial foi Batalha de Saratoga (1777) onde americanos venceram, convencendo França a aliar-se com colonos contra Britânico. Ajuda francesa (dinheiro, armas, soldados, marinha) foi crucial para vitória americana. A guerra foi tão custosa para Grã-Bretanha que ela não podia continuar indefinidamente. Em 1781, General Cornwallis foi cercado em Yorktown e forçado a render. Em 1783, Tratado de Paris reconheceu independência americana. A revolução foi extraordinário sucesso: treze colônias disunidas tornaram-se nação independente. Porém, as consequências não eram claras: havia risco que Estados recém-independentes se desintegrassem em conflito uns com outros. A Constituição dos EUA (1787) tentou resolver isto através de federalismo: poder dividido entre governo federal e estados, sistema de freios e contrapesos entre executivo, legislativo e judiciário. A Constituição estabelecia república presidencialista onde poder executivo era separado de legislativo, inovação que influenciaria constituições posteriores.</p>
+
+<blockquote class="tip">
+💡 <strong>Influência de Ideias:</strong> A Revolução Americana foi primeira revolução moderna explicitamente baseada em ideias iluministas. Isto estabelecia padrão: revoluções futuras também seriam justificadas através de ideologia e princípios racionais em lugar de simplesmente apreensão de poder.
+</blockquote>
+
+<h4>Consequências e Legado Global</h4>
+<p>A Revolução Americana teve impacto global extraordinário. Primeiro, estabelecia que era possível derrotar potência europeia grande através de resistência organizada. Isto inspiraria subsequentemente colônias e povos a buscar independência. Segundo, demonstrava que república sem rei era viável: imaginação política europeia havia tipicamente visto monarquia como necessária para estabilidade. A república americana provou que outro modelo era possível. Terceiro, ideias da Revolução (direitos naturais, consentimento dos governados, soberania popular) foram imediatamente inspiradoras para europeus, particularmente para franceses que logo teriam sua própria revolução. A Revolução Francesa seria em parte resposta aos ideais da Revolução Americana. Quarto, independência americana criou precedente para descolonização subsequente: quando colônias españolas na América Latina se rebelaram (1810s-1820s), estavam seguindo modelo americano. Porém, havia limitações: Revolução Americana não aboliu escravidão (maioria dos Founding Fathers possuíam escravizados), não garantiu direitos para mulheres, não foi verdadeiramente democrática (apenas homens adultos de propriedade podiam votar). Portanto, enquanto estabelecia ideais importantes (igualdade, direitos, soberania popular), sua implementação era severamente limitada. Porém, ideais eram poderosos: subsequentemente foram usados para justificar expansão de direitos. A Revolução Americana marcava transição de mundo de monarquias absolutas para mundo de repúblicas democráticas. Isto era transformação política tão fundamental que a Revolução Americana merece ser considerada uma das mais importantes da história.</p>
+
+<blockquote class="example">
+📌 <strong>Paralelismo Histórico:</strong> Assim como Revolução Americana inspiraria Revolução Francesa, Revolução Francesa inspiraria revoluções na América Latina, Europa, e eventualmente globalmente. Padrão de revolução inspirando subsequentes revoluções permanece em história.
+</blockquote>`,
+    cards: [
+      {
+        q: 'Quais foram principais causas da Revolução Americana?',
+        a: 'Impostos britânicos sem representação colonial, conflitos sobre autonomia, influência de ideias iluministas sobre direitos'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Revolução Francesa: Transformação Radical',
+    dur: '17 min',
+    content: `<h3>Causas da Revolução Francesa</h3>
+<p>A Revolução Francesa (1789-1799) foi a mais radical revolução europeia até então, não apenas mudando regime francês mas transformando fundamentalmente estrutura da sociedade e ideologia política europeia. As causas eram múltiplas e profundas: crise econômica (deficitário orçamentário, dívida massiva em grande parte de guerras caras), crise de legitimidade (absolutismo real era questionado por filósofos iluministas), crisis de fome (colheitas fracas levaram a preços de pão altos, fome entre pobres), estrutura social injusta (sistema de três estados: clero e nobreza tinham privilégios, terceiro estado - povo comum - tinha pouco poder apesar de sendo 98% da população). A convocação dos Estados Gerais (1789) para lidar com crise fiscal foi momento crucial: representantes dos três estados reuniram para discutir tributação. O Terceiro Estado, vendo-se como negligenciado, transformou-se em Assembleia Nacional, determinada a criar constituição. O juramento do Jogo de Péla (1789) foi momento simbólico quando Terceiro Estado jurou não se dispersar até constituição fosse criada. A Declaração dos Direitos do Homem e do Cidadão (agosto 1789) estabelecia princípios radicais: igualdade legal, liberdade de expressão e religião, soberania popular. Isto era revolucionário porque desafiava fundamentalmente princípios de sociedade feudal baseada em privilégios hereditários.</p>
+
+<h4>Radicalizacão e Terror</h4>
+<p>A Revolução começou relativamente moderada (monarquia constitucional sob Constituição de 1791), porém radicalizou-se. Fatores incluíram: oposição interna da nobreza que desejava restaurar antigos privilégios, oposição externa de monarquias europeias que temiam revolução se espalharia, pressão de jacobinos (facção radical) que queriam ir além e estabelecer democracia completa e abolir monarquia, economicamente dificuldades continuadas que deixavam população desesperada. Conflito militar com potências europeias (Guerras Revolucionárias) criou atmosfera de "nós contra eles" que radicalizava política. O Rei Luís XVI foi executado em janeiro de 1793, momento que chocou monarquias europeias. A República foi declarada, mas logo foi dominada por jacobinos radicais. Marat, Robespierre, e outros lideravam Comitê de Salvação Pública que estabelecia Reinado do Terror (1793-1794): suspeitos de "contra-revolução" eram julgados rapidamente e frequentemente executados (aproximadamente 2000-4000 foram guilhotinados). O Terror foi tentativa de purificar revolução através de violência política sistemática. Embora matou alguns contra-revolucionários genuínos, também matou muitas pessoas inocentes, e criou cultura de medo. Ironia é que líderes do Terror como Robespierre eventualmente caíram vítimas dele: Robespierre foi guilhotinado em julho de 1794 no que é chamado "Termidoro" (reação contra Terror). O Terror deixou legado traumático que enfraqueceu apoio para república radical.</p>
+
+<blockquote class="news">
+📰 <strong>Guilhotina como Símbolo:</strong> A guilhotina, mecanismo de execução que se tornou símbolo da Revolução Francesa, foi paradoxalmente visto inicialmente como ferramenta humanitária (morte rápida em lugar de execução lenta). Isto reflete como revolução frequentemente contem dentro dele paradoxos morais.
+</blockquote>
+
+<h4>Legado Político e Cultural</h4>
+<p>A Revolução Francesa, apesar de sua violência e instabilidade, deixou legado transformativo. Primeiro, destruiu feudalismo na França: sistema de privilégios hereditários foi abolido, propriedade da Igreja foi confiscada e vendida, igualdade legal foi estabelecida (pelo menos formalmente). Isto moldaria Europa: Napoleão, que tomou poder após Revolução, implementou Código Civil que codificava reformas revolucionárias, e este código influenciaria lei europeia posteriormente. Segundo, estabeleceu princípios de governo moderno: separação de Igreja-Estado, estado secular ao menos em princípio, direitos individuais, democracia (apesar de frequentemente violadas na prática). Terceiro, inventou nacionalismo moderno: Franceses agora viam-se como "franceses" em lugar de súditos do rei. Este nacionalismo, apesar de perigoso (frequentemente levou a agressão contra nações vizinhas), criava senso de pertencimento colectivo e participação política. Quarto, estabeleceu que revolução radical era possível: enquanto Revolução Americana havia mudado regime, Revolução Francesa havia fundamentalmente restruturado sociedade. Isto inspiraria subsequentemente revolucionários em 1848, 1917, e além. Quinto, criou reação conservadora: monarquias europeias viam Revolução Francesa como ameaça existencial e buscavam restaurar absolutismo. Isto levaria a Guerras Napoleônicas que reconfigurariam Europa. Em conclusão, Revolução Francesa foi evento tão transformativo que marca convencionalmente transição de Idade Moderna para Idade Contemporânea. Seus ideais (liberdade, igualdade, fraternidade) permaneceriam inspiradores apesar de sua implementação sendo frequentemente falha.</p>
+
+<blockquote class="example">
+📌 <strong>Transmissão de Ideias Revolucionárias:</strong> Ideias da Revolução Francesa espalharam-se globalmente através de militares napoleônicos, exilados revolucionários, jornais, e via oral. Isto demonstra como ideias radicais, uma vez "liberadas", são difíceis de conter geograficamente.
+</blockquote>`,
+    cards: [
+      {
+        q: 'O que foi o Reinado do Terror na Revolução Francesa?',
+        a: 'Período (1793-1794) de violência política sistemática onde suspeitos de contra-revolução eram julgados e frequentemente executados'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Revoluções de 1848: Onda Liberal-Nacionalista',
+    dur: '16 min',
+    content: `<h3>Contexto de Revoluções de 1848</h3>
+<p>As Revoluções de 1848 foram onda de revoltas que varreram Europa (França, Impérios Austro-Húngaro e Russo, Reinos Italianos, Reinos Germânicos, Polônia) simultaneamente. Não havia coordenação central; os levantes eram resposta paralela a problemas similares. Causas incluíam: reação contra conservadorismo pós-napoleônico (Restauração de 1815 havia tentado retornar a absolutismo, suprimindo ideias liberais), crise econômica (depressão de 1847-1848 criava desemprego e fome), aspirações nacionalistas (povos buscavam independência de impérios multietnicos, criação de estado-nações baseado em nacionalidade), demandas liberais (direitos constitucionais, representação parlamentar, sufrágio expandido). A revolução na França em fevereiro de 1848 foi ponto de partida: republicanos derrubaram monarquia constitucional de Louis-Philippe, restaurando república. Este sucesso inicial inspirou revoltas em outros lugares: em março, revoluções estouraram em Viena, Berlim, Praga, Bucareste, Milão, e outros lugares. Parecia por um momento que onda revolucionária poderia transformar Europa completamente. As revoluções compartilhavam características: demandas por constituição, parlamento eleito, sufrágio expandido, direitos individuais, frequentemente também demandas por unificação nacional (italianos e alemães buscavam unificar países fragmentadas em múltiplos reinos).</p>
+
+<h4>Fracasso das Revoluções de 1848</h4>
+<p>Apesar do fervor inicial, as revoluções de 1848 foram por grande maioria fracassadas. Monarquias eventualmente mobilizaram exércitos leais e esmagaram revoltas. Fatores em fracasso: revolução era frequentemente urbana (cidades), mas campo permanecia leal à monarquia; classe média revolucionária e classe trabalhadora tinham objetivos divergentes (burguesia queria direitos políticos e constituição, proletariado queria direitos sociais-econômicos), causando divisão; monarquias conseguiram recuperar controle e usar repressão. Por exemplo, na Áustria, revolução em Viena derrubou ministro Metternich (símbolo do conservadorismo), porém o Imperador conseguiu retaliar, matando revolucionários, e restaurando absolutismo. Na Itália, revolução buscava unificar península e derrotar Áustria; porém Áustria enviou tropas que derrotaram revolucionários. Na Alemanha, Assembléia Nacional Constituinte em Frankfurt buscava criar constituição unificada e reino alemão; porém diferenças entre Prússia e Áustria (qual seria líder de Alemanha unificada?) levaram a fracasso do projeto. Apenas dois de revoluções foram bem-sucedidas: França, onde república foi mantida (apesar de logo Napoleão III tomasse poder); e Bélgica e Portugal, onde monarquias constitucionais limitadas foram estabelecidas. O fracasso de 1848 foi desapointment amargo para liberais-nacionalistas que esperavam que revolução transformaria Europa. Porém, não foi completamente vão: ideias liberais-nacionalistas permaneceram influentes, eventualmente levando a mudanças (Itália foi unificada em 1870-71, Alemanha em 1871, constituições foram eventualmente estabelecidas). Porém, isto ocorreria não através de revolução popular, mas através de reforma de cima para baixo por elites (particularmente Bismarck na Prússia, Cavour na Itália).</p>
+
+<blockquote class="tip">
+💡 <strong>Futilidade Percebida:</strong> O fracasso de 1848 levou a desencanto entre liberais europeus. Isto teria consequências: parte renunciou política liberal-democrática, buscando alternativas (marxismo, socialismo, anarquismo). Isto dividiu esquerda política de formas que persistem.
+</blockquote>
+
+<h4>Legado e Significado de 1848</h4>
+<p>Embora revoluções de 1848 fracassarem politicamente, tinham significado simbólico e ideológico duradouro. Demonstraram força de nacionalismo como força política: povos desejavam estado-nações baseados em nacionalidade, não em impérios multietnicos tradicionais. Demonstraram também força de liberalismo como ideologia: mesmo após fracasso, ideias liberais de constituição, parlamento, direitos permaneceriam poderosas. Karl Marx e Friedrich Engels observaram as revoluções com interesse e escreveram sobre elas; isto levaria ao desenvolvimento de marxismo como resposta. Feministas também participaram em 1848; embora suas demandas por direito de voto fossem ignoradas ou rejeitadas, isto plantava sementes para movimento de sufragismo posterior. Revoluções de 1848 estabeleceram padrão para revoltas futuras: combinação de demandas políticas (constituição, democracia), sociais (abolição de privilégios de classe), e nacionais (unificação). Isto padrão repetiria em revoluções russas de 1917. Talvez mais importante, 1848 demonstrou que status quo absolutista era insustentável: mesmo quando revolução era esmagada militarmente, ideias permaneciam vivas e influentes. Isto colocaria conservadores na posição defensiva: precisavam fazer concessões (constituições, parlamentos limitados) para manter legitimidade. Portanto, 1848 foi fracasso político mas vitória ideológica de longo termo: as ideias revolucionárias de 1848 (nacionalismo, liberalismo, democracia) eventualmente moldaram Europa moderna.</p>
+
+<blockquote class="example">
+📌 <strong>Eco de 1848:</strong> O slogan "Trabalhadores de todos os países, uni-vos!" do Manifesto Comunista (1848) refletia esperança de que revolução se espalharia globalmente. Embora 1848 fracassou, este slogan permaneceria chamado à ação para revolucionários posteriores.
+</blockquote>`,
+    cards: [
+      {
+        q: 'Por que as Revoluções de 1848 falharam na maioria dos lugares?',
+        a: 'Divisão entre objetivos de classe média e trabalhadores, monarquias conseguiram mobilizar exércitos leais, falta de coordenação entre revoltas'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Revolução Industrial: Transformação Econômica',
+    dur: '17 min',
+    content: `<h3>Origens e Características da Revolução Industrial</h3>
+<p>A Revolução Industrial (aproximadamente 1760-1840, com efeitos continuando além) foi transformação econômica mais fundamental da história moderna. Começou na Grã-Bretanha e depois espalhou-se globalmente, mecanizando produção agrícola e manufatureira através de máquinas movidas por vapor. As causas radicavam em: acúmulo de capital britânico (através de imperialismo e comércio), disponibilidade de combustível (carvão em abundância), conhecimento tecnológico (máquinas a vapor desenvolvidas), mão-de-obra disponível (enclosure movement havia despossuído camponeses de terra, forçando-os para cidades), mercados para produtos (império britânico fornecia mercados cativos). A mecanização começou na indústria têxtil: James Hargreaves inventou spinning jenny (1764), permitindo fiação mecanizada; Richard Arkwright inventou water frame (1769); Edmund Cartwright inventou power loom (1785). Estes máquinas multiplicavam produtividade humana várias vezes. James Watt melhorou motor a vapor de Thomas Newcomen, tornando-o muito mais eficiente, permitindo seu uso além bombeamento de água em minas. Motor a vapor podia ser usado para powered moinhos de têxteis, ferro-fundições, e eventualmente locomotivas. A Revolução Industrial mecanizou praticamente todos processos produtivos: agricultura foi revolucionada por arados mecânicos, joeiras, e máquinas colhedoras; minação de carvão e ferro foi mecanizada; manufactura foi centralizada em fábricas. Isto criou economia capitalista industrial moderna baseada em propriedade privada dos meios de produção e busca de lucro.</p>
+
+<h4>Impacto Social e Condições de Trabalho</h4>
+<p>A Revolução Industrial criou riqueza e crescimento econômico sem precedentes, mas também criou condições de vida e trabalho desumanas para classe trabalhadora. Fábricas exigiam jornadas de trabalho longas (12-16 horas por dia era comum), em ambientes perigosos (máquinas sem proteção, salas mal ventiladas, risco de fogo), por salários baixos. Crianças frequentemente trabalhavam em fábricas em condições ainda piores que adultos (pequeno tamanho permitia trabalho em espacos apertados). Mulheres trabalhavam em fábricas por salários mais baixos que homens. Trabalhadores viviam em casarões de qualidade miserável em cidades industriais superlotadas (Manchester, Birmingham, Leeds). Saneamento era inexistente, epidemias de cólera, tifo, tuberculose eram comuns. Consumo de álcool era alto como escape de miséria. Isto criava contradição fundamental: enquanto capitalistas enriqueciam, trabalhadores permaneciam pobres apesar de trabalhar. Isto plantava sementes para conflito de classe que dominaria século XIX-XX. Movimentos de trabalhadores emergiram: sindicatos se formaram para negociar melhores condições; greves ocorriam apesar de sendo frequentemente reprimidas violentamente; teorias socialistas (particularmente marxismo) ofereciam crítica intelectual e programa para mudança. Karl Marx observou as condições nas fábricas britânicas e desenvolveu sua teoria de que capitalismo era sistema de exploração de classe que eventualmente se auto-destruiria através de contradições internas (tendência de lucros a cair, concentração de capital, miserabilidade crescente dos trabalhadores). Sua teoria inspiraria revolucionários posteriores.</p>
+
+<blockquote class="news">
+📰 <strong>Condições Chocantes:</strong> Investigações parlamentares britânicas de fábricas revelaram abusos chocantes: crianças de 5 anos trabalhando 12 horas por dia, acidentes levando a amputações, mulheres grávidas trabalhando até dar à luz no chão de fábrica. Isto levaria eventualmente a legislação protetora de trabalho.
+</blockquote>
+
+<h4>Transformação de Sociedade e Cidades</h4>
+<p>A Revolução Industrial transformou radicalmente sociedade: população urbana cresceu de 10% para 50%+ em séculos XIX-XX. Cidades cresciam exponencialmente como fábricas atraíam trabalhadores. Isto criava problemas: superlotação, crime, pobreza concentrada. Porém, também criava oportunidades: classe média urbana (gerentes, profissionais, comerciantes) crescia; educação expandia porque economia precisava de trabalhadores parcialmente educados; mobilidade social aumentava porque trabalho na fábrica oferecia oportunidade diferente que trabalho agrícola rigidamente hierárquico. A família tradicional transformava-se: mulheres e crianças de classe trabalhadora agora trabalhavam fora casa, reduzindo papel de mulher como "rainha do lar". Isto eventualmente contribuiria a movimento de mulheres por direitos iguais e voto. Religião enfraquecia: ciência baseada em máquinas e tecnologia oferecia visão de mundo que era menos religiosa que tradicional; ateísmo e agnosticismo cresciam, particularmente entre intelectuais. Cultura mudava: literatura romântica refletia reação contra mecanização (Wordsworth, Keats escreviam com nostalgia da natureza), depois realismo emergeria como movimento artístico que refletia gritante realidade industrial. Em conclusão, Revolução Industrial foi transformação tão profunda que restruturou fundamentalmente sociedade humana: criou capitalismo moderno, classe trabalhadora urbana, cidades grandes, ciência e tecnologia dominantes, consumismo moderno. Seus efeitos perduram até hoje: crise climática em grande parte resulta de Revolução Industrial baseada em combustível fóssil; desigualdade de classe persiste; mecanização continua deslocando trabalhadores.</p>
+
+<blockquote class="example">
+📌 <strong>Ecos da Revolução:</strong> Quando alguém fala de "progresso" moderno (tecnologia, crescimento econômico), frequentemente significa resultados da Revolução Industrial. Porém, custos ambientais e sociais que frequentemente são ignorados em narrativas de progresso.
+</blockquote>`,
+    cards: [
+      {
+        q: 'Qual foi o principal impacto social negativo da Revolução Industrial?',
+        a: 'Condições desumanas de trabalho em fábricas: jornadas longas, salários baixos, ambientes perigosos, trabalho infantil, superlotação urbana'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'Revolução Comunista de 1917: Socialismo em Prática',
+    dur: '17 min',
+    content: `<h3>Contexto Pré-Revolucionário na Rússia</h3>
+<p>A Revolução Russa de 1917 foi primeira tentativa de implementar socialismo em escala de estado nacional. A Rússia em 1917 estava sob pressão imensa: participava de Primeira Guerra Mundial desde 1914, guerra era impopular e custava centenas de milhares de vidas russas, economia era enfraquecida por gastos militares, fome afligia cidades, população urbana era radicalizadas pelas privações. O Czar Nicolau II era visto como incapaz de lidar com crises: perdeu muita autoridade. Uma classe trabalhadora urbana significativa havia se desenvolvido em cidades (Petrogrado, Moscou), frequentemente exposta a ideologia socialista. Lênin e Bolcheviques (ala radical do Partido Social-Democrata Russo) viam Rússia como ripe para revolução socialista: contra tese de Marx que socialismo emergiria primeiro em países industrializados (Grã-Bretanha, Alemanha), Lênin argumentava que país semi-industrializado como Rússia poderia ter revolução se havia partido revolucionário disciplinado. Esta tese se provou correta. A Revolução de Fevereiro de 1917 derrubou o Czar, estabelecendo governo provisório. Porém, governo provisório continuava guerra impopular, enfraquecendo sua legitimidade. Em outubro 1917, Bolcheviques sob Lênin tomaram poder em Revolução de Outubro, prometendo "paz, terra, pão". Isto era programa simples que apelava a população exaurida: retirada de guerra (paz), redistribuição de terra aos camponeses (terra), segurança alimentar (pão). Lênin conseguiu deliver em suas promessas (retirada de guerra em 1918, confisco de terra de proprietários, racionamento de alimentos).</p>
+
+<h4>Comunismo Soviético e Stalinismo</h4>
+<p>Os Bolcheviques buscavam criar "ditadura do proletariado" onde classe trabalhadora através de partido comunista centralmente controlado estabeleceria sociedade sem propriedade privada e sem classes. Isto requereria eliminação de classes: nobres foram assassinados ou exilados, burguesia foi despossuída, Igreja foi suprimida (propriedade era confiscada). Porém, implementação era brutal. Guerra Civil Russa (1918-1922) entre Bolcheviques (Reds) e anti-Bolcheviques (Whites) matou milhões. A "comunismo de guerra" foi política de requisição brutal de alimentos de camponeses para alimentar exército e cidades; isto causou famine que matou aproximadamente 5 milhões. Quando Lênin morreu em 1924, Joseph Stalin consolidou poder através de manobras políticas internas. Stalin implementou "socialismo em um país" - ideia que URSS deveria industrializar-se rapidamente sem esperar revolução global. Isto requereria sacrifícios enormes: coletivização da agricultura foi implementada pela força (1928-1933), camponeses resistentes (kulaks) eram presos ou assassinados, safras foram requisitadas deixando camponeses famintos. Famine resultante matou aproximadamente 7-10 milhões. Purgas de Stalin (1936-1938) foram tentativa de eliminar "inimigos do povo" percebidos: aproximadamente 700 mil foram executados, milhões foram enviados para Gulag (campos de trabalho forçado). Muitos bolcheviques originais que haviam feito revolução foram presos, torturados, e executados em julgamentos absurdos. Ironia amarga é que Stalin, que era frequentemente marginalizado por outros revolucionários inicialmente, tornou-se ditador absoluto mais brutal que Czar que havia sido derrubado. A promessa de socialismo - sem exploração, sem classes, distribuição igualitária - tornou-se realidade oposta: sistema totalitário onde estado controlava tudo, oligarquia do partido comunista explorava trabalhadores tanto quanto burguesia havia feito.</p>
+
+<blockquote class="news">
+📰 <strong>Ironia Revolucionária:</strong> O Lenin que havia prometido "tudo poder aos Sovietes" (Sovietes = conselhos de trabalhadores) terminou concentrando poder no Partido Comunista, que sob Stalin tornou-se totalitária. A promessa de democracia de trabalhadores tornou-se ficção.</blockquote>
+
+<h4>Legado e Avaliação de Revolução Comunista</h4>
+<p>A Revolução Comunista teve impacto global extraordinário, não porque criou sociedade próspera (URSS permanecia economicamente atrasada em relação ao Ocidente), mas porque oferecia alternativa ideológica ao capitalismo. Isto levou a polarização de século XX: Capitalismo contra Comunismo em Guerra Fria. A URSS inspirou revoltas comunistas globalmente: China, Vietnã, Cuba, e dezenas de outros países buscaram seguir modelo soviético. Porém, resultados foram frequentemente desastrosos: Mao na China implementou "Grande Salto Adiante" que causou famine de 20+ milhões; Pol Pot no Camboja implementou genocídio que matou 2 milhões; diferentes regimes comunistas acumularam historial de violência massiva. Estimativas conservadoras sugerem que comunismo teve responsabilidade por mortes de 65-100 milhões (incluindo guerras, purgas, faminadas). Isto torna comunismo prático um dos piores "experimentos sociais" da história. Porém, isto não invalida inteiramente crítica de Marx ao capitalismo, que tinha muita acuidade: capitalismo frequentemente explora trabalhadores, concentra riqueza, cria desigualdade. O problema é que tentativas de abolir capitalismo através de revolução frequentemente resultavam em totalitarismo que era tão ou mais opressivo que capitalismo. Talvez lição é que mudanças sociais radicais requerem mais que força revolucionária; requerem construção de instituições que protegem liberdade individual enquanto distribuem poder e riqueza mais igualmente. Nenhuma revolução até agora conseguiu isto completamente. O colapso da URSS em 1991 foi reconhecimento que sistema comunista soviético tinha fracassado: economicamente ineficiente, politicamente opressivo, ideologicamente desgastado. Porém, ideias originais de Marx sobre injustiça do capitalismo permanecem influentes entre intelectuais e ativistas que buscam alternativas ao capitalismo.</p>
+
+<blockquote class="example">
+📌 <strong>Tragédia Revolucionária:</strong> Revolução Comunista é exemplo clássico de revolução que começou com ideias nobres (igualdade, fim de exploração) mas degenerou em tiranias. Isto levantou questão permanente: é possível criar sociedade igualitária sem cair em totalitarismo? Esta questão permanece pertinente.
+</blockquote>`,
+    cards: [
+      {
+        q: 'Como Stalin transformou revolução comunista original?',
+        a: 'Concentrou poder no Partido Comunista, implementou coletivização brutal e purgas, criando totalitarismo que traiu promessas revolucionárias'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Revoluções de Direitos: Movimentos Sociais Transformadores',
+    dur: '17 min',
+    content: `<h3>Movimento de Sufragismo: Direito de Voto para Mulheres</h3>
+<p>Uma das revoluções sociais mais importantes foi movimento de sufragismo (direito de voto para mulheres). Mulheres foram excluídas de política formal desde tempos antigos, vistas como inferiores intelectualmente ou moralmente inadequadas para voto. Movimento para direito de voto de mulheres começou no século XIX, ganhando momentum no início do século XX. Figuras como Susan B. Anthony e Elizabeth Cady Stanton nos EUA, Emmeline Pankhurst na Grã-Bretanha, lideraram campanhas apaixonadas. Pankhurst liderou campanha de "direct action" na Grã-Bretanha (1903-1914): ativistas sufragistas quebravam vitrines, incendiavam propriedades, interrompiam eventos públicos. Isto foi tático controverso: alguns viam como necessário para ganhar atenção em sistema que ignorava mulheres; outros viam como contraproducente. Primeira Guerra Mundial paradoxalmente ajudou causa: mulheres assumiram papéis de trabalho e liderança enquanto homens estavam em combate, demonstrando competência. Após guerra, muitos países concederam direito de voto para mulheres (apesar de frequentemente com restrições de idade/propriedade). Grã-Bretanha concedeu em 1928, EUA em 1920, Canadá em 1917. Porém, processo foi longo e não universal: algumas regiões demoraram décadas (suíça concedeu somente em 1971). Movimento de sufragismo foi primeira grande revolução de direitos do século XX, abrindo caminho para subsequentes movimentos.</p>
+
+<h4>Movimento de Direitos Civis e Descolonização</h4>
+<p>Movimento de Direitos Civis nos EUA (1950s-1960s) foi outra revolução social transformadora. Afro-americanos que eram frequentemente marginalizados, segregados, discriminados, organizaram-se para exigir igualdade. Figuras como Martin Luther King Jr., Malcolm X, James Meredith lideraram movimento que usava tanto desobediência civil nonviolenta (similar a Gandhi) quanto mobilização política. O movimento conseguiu legislação importante: Civil Rights Act de 1964 proibiu discriminação legal, Voting Rights Act de 1965 protegeu direito de voto para afro-americanos. Porém, discriminação estrutural persiste: disparidades em renda, educação, encarceramento refletem herança de escravidão e segregação. Movimento de Direitos Civis inspirou movimentos similares globalmente contra discriminação: movimento pelos direitos indígenas, movimento dos direitos dos gays e lésbicas, movimento de justiça racial. Estes movimentos frequentemente usavam estratégias similares: visibilidade (pride parades, protestos), articulação de demandas, mobilização política, e eventualmente legislação. Sucesso variou: alguns países legalizaram casamento do mesmo sexo (holandeses primeiro em 2001), outros criminalizaram ainda (muitos países islâmicos). Porém, direção geral foi de expansão de direitos, apesar de resistência forte de forças conservadoras.</p>
+
+<blockquote class="tip">
+💡 <strong>Revoluções Contínuas:</strong> As revoluções de direitos não foram eventos únicos, mas processos contínuos. Mesmo após legislação ser aprovada, implementação era lenta, e mudança de mentalidades era ainda mais lenta. Isto sugere que revolução social é processo de longo prazo.
+</blockquote>
+
+<h4>Revolução Feminista de Segunda Onda</h4>
+<p>Embora movimento de sufragismo conquistou direito de voto para mulheres, igualdade substantiva permanecia distante. Segunda onda feminismo (1960s-1980s) abordou mais amplo gama de questões: igualdade no trabalho, acesso a educação, direito reprodutivo (contraceptivos, aborto), violência doméstica, assédio sexual. Figuras como Betty Friedan, Gloria Steinem, Simone de Beauvoir articulavam crítica profunda de patriarcado. Friedan argumentava em "Feminine Mystique" que mulheres eram socializadas para aceitar papéis limitados de esposa/mãe apesar de terem capacidade para muito mais. De Beauvoir argumentava em "Second Sex" que mulheres foram historicamente definidas em relação a homens ("o outro") em lugar de serem sujeitos em seu próprio direito. Segunda onda conquistou legislação importante: Equal Pay Acts garantindo salário igual para trabalho igual, Family and Medical Leave Acts permitindo tempo ausente do trabalho por razões familiares, legislação contra assédio sexual. Acesso a educação superior expandiu dramaticamente: proporção de mulheres em universidades cresceu de menos de 35% em 1970 para 50%+ em 2000. Porém, "glass ceiling" persistiu: mulheres permaneciam subrepresentadas em posições de liderança, particularmente em negócios e política. Salário médio de mulheres permanecia significativamente mais baixo que de homens mesmo para mesmo trabalho. Terceira onda feminismo (1990s em diante) continuou abordando estas questões além de expandir definição de feminismo para incluir mulheres de cor, mulheres LGBTQ+, mulheres trans. A revolução feminista foi assim processo multidecadal de expansão gradual de direitos e oportunidades, ainda incompleto.</p>
+
+<blockquote class="example">
+📌 <strong>Interseccionalidade:</strong> Desenvolvimento importante em pensamento de direitos foi reconhecimento de que identidades múltiplas (raça, gênero, classe, sexualidade) se intersectam de formas que criam experiências únicas de discriminação. Isto levou a conceito de "interseccionalidade" importante em ativismo contemporâneo.
+</blockquote>`,
+    cards: [
+      {
+        q: 'Qual foi principal resultado do movimento de sufragismo?',
+        a: 'Conquista do direito de voto para mulheres em maioria dos países ocidentais no século XX'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Renascença: Ressurgimento da Aprendizagem Clássica',
+    dur: '17 min',
+    content: `<h3>Contexto Medieval e Transição para Renascença</h3>
+<p>O Renascimento (1300-1600) foi movimento intelectual-cultural que começou na Itália e espalhou-se por Europa, marcando transição de Idade Média para Idade Moderna. Idade Média havia sido caracterizada por pensamento escolástico (síntese de aristotelismo e cristianismo), autoridade de Igreja indiscutível, e foco em vida espiritual em detrimento de satisfação mundana. O Renascimento buscava recuperar conhecimento clássico greco-romano que havia sido largamente perdido ou neglecto durante Idade Média (embora devemos notar que conhecimento havia sido preservado em mundo islâmico). Esta recuperação de conhecimento começou em Itália em grande parte porque: Itália tinha legado romano direto (Roma física, ruínas, documentos), cidades italianas como Florença e Veneza eram ricas através de comércio e podiam patrocinar eruditos, éxodo de estudiosos bizantinos para Itália após queda de Constantinopla em 1453 trouxe manuscritos gregos. O Renascimento valorizava estudo de clássicos (Dante, Petrarca, Boccaccio para literatura; Brunelleschi, Alberti para arquitetura), desenvolvimento de método filológico (análise crítica de textos antigos para determinar autenticidade e significado preciso), e humanismo (filosofia que enfatizava dignidade humana, valor de vida mundana, importância de educação clássica).</p>
+
+<h4>Humanismo e Mudança de Visão de Mundo</h4>
+<p>O humanismo renascentista representava mudança profunda de perspectiva: em lugar de vida medieval focada em preparação para afterlife, humanismo celebrava potencial e realizações humanas nesta vida. Isto não era necessariamente anti-religioso (muitos humanistas permaneciam cristãos devotos), mas era secular em ênfase: valorizava artes, ciências, política, comércio como merecedoras de esforço e estudo. Educação renascentista enfatizava estudo de linguagens clássicas (latim, grego), literatura, história, matemática, e filosofia. Isto criava elite educada que era diferente de elite medieval que havia sido primariamente nobres guerreiros e clérigos. O conceito renascentista de "homem universal" (uomo universale) - pessoa educada em múltiplas disciplinas como arte, música, literatura, política - refletia este novo ideal. Leonardo da Vinci é exemplo paradigmático: artista, inventor, cientista, engenheiro - buscava compreender tudo. A valização da razão humana e observação empírica (em lugar de simplesmente aceitar autoridade) preparava caminho para Revolução Científica que seguiria. Filosoficamente, renascença reverteu para neoplatonismo (reinterpretação de Platão através de lente de cristianismo) e retorno a Aristóteles, oferecendo alternativas à síntese escolástica medieval. Isto criava espaço intelectual para questionar ortodoxia medieval.</p>
+
+<blockquote class="news">
+📰 <strong>Invenção da Imprensa:</strong> Gutenberg inventou imprensa com tipos móveis aproximadamente em 1440, revolucionando disseminação de conhecimento. Livros que custavam fortuna para copiar à mão podiam agora ser impressos em massa. Isto acelerou dramaticamente disseminação de ideias renascentistas.
+</blockquote>
+
+<h4>Arte, Arquitetura e Legado Renascentista</h4>
+<p>A arte renascentista refletia novos valores: perspectiva linear permitia representação realista de espaço; proporções humanas eram estudadas cuidadosamente; temas não eram apenas religiosos mas também mitológicos e históricos. Mestres como Botticelli, Leonardo, Michelangelo criavam obras que combinavam domínio técnico extraordinário com conteúdo intelectual profundo. A Capela Sistina de Michelangelo é exemplo: enquanto é obra religiosa (pinturas bíblicas), reflete interesse renascentista em forma humana idealizada, conhecimento de anatomia, perspectiva sofisticada. Arquitetura renascentista retornava a proporções clássicas greco-romanas, em lugar da ascensão vertical de gótico medieval. Brunelleschi redesenhou Florença com perspectiva humanista e proporção clássica. Isto refletia mudança mais profunda: lugar de sagrado dominando visão de paisagem (catedrais góticas dominavam cidades medievais), homem renascentista podia desenhar cidade de acordo com razão e proporção. Legado artístico renascentista é imensa: os mestres renascentistas permanecem influentes, método artístico que desenvolveram permanece ensinado, e ideais estéticos que estabeleceram moldaram gosto visual ocidental. Porém, Renascimento também tinha lado sombrio: frequentemente era elitista (apenas ricos podiam patrocinar artistas ou ter educação humanista), frequentemente marginalizava mulheres (apesar de algumas mulheres participarem, como Vittoria Colonna), frequentemente romanticava antiguidade greco-romana sem questionar escravidão e violência daqueles tempos. Além disto, ideias humanistas renascentistas frequentemente não beneficiavam masas comuns: enquanto elite italiana desfrutava artes, pessoas comuns permaneciam em pobreza. Ainda assim, Renascimento representava quebra significativa com medievalismo, abrindo caminho intelectualmente para modernidade.</p>
+
+<blockquote class="example">
+📌 <strong>Definir Renascimento:</strong> Historiadores debatem exatamente o que caracteriza Renascimento e até que ponto foi verdadeiramente "renascimento" (retorno ao clássico) vs. inovação genuína. Talvez "mudança intelectual" seja descrição mais precisa que simplesmente "retorno ao clássico".
+</blockquote>`,
+    cards: [
+      {
+        q: 'Como o Renascimento representou mudança de perspectiva em relação à Idade Média?',
+        a: 'Mudança de foco em vida espiritual para celebração de potencial humano, valorização de conhecimento clássico, humanismo que enfatizava dignidade humana'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Revolução Científica: Método e Razão Dominantes',
+    dur: '17 min',
+    content: `<h3>Origem da Revolução Científica</h3>
+<p>A Revolução Científica (aproximadamente 1500-1700) foi transformação intelectual que estabeleceu ciência moderna baseada em observação, experimentação, e método matemático em lugar de autoridade e especulação. Embora havia ciência na antigüidade e Idade Média (alquimia, astrologia), era frequentemente misturada com magia, religião, e especulação. A Revolução Científica foi separação clara de métodos científicos da religião e filosofia, estabelecendo protocolo que persiste: formular hipótese, testá-la através de experimentação, coletar dados, analisar, e chegar a conclusões. Figuras cruciais incluem: Copérnico que desafiou modelo geocêntrico de universo, propondo heliocentrismo (sol no centro, não terra); Galileo que usou telescópio para observar céu, fornecendo evidência para heliocentrismo, e desenvolveu lei de movimento; Descartes que desenvolveu método de dúvida sistemática e mecanicismo (universo funciona como máquina); Newton que formulou leis de movimento e gravitação, unificando observações em framework matemático coerente; Harvey que através de experimentação demonstrou que sangue circulava (não era estático como pensava-se). Estes cientistas desafiavam não apenas autoridade medieval, mas também autoridade religiosa: Copérnico e Galileo foram perseguidos pela Igreja por suas ideias que contradiziam interpretação literal de Bíblia. Porém, evidência observacional era difícil de negar, e eventualmente Igreja (relutantemente) aceitou heliocentrismo e outros achados científicos.</p>
+
+<h4>Mecanicismo e Desacralização da Natureza</h4>
+<p>A Revolução Científica frequentemente é descrita como criar visão "mecanicista" do universo: ideia que universo funciona como máquina gigante operando de acordo com leis matemáticas fixas. Isto contrastava com visão medieval onde universo era encharcado de significado espiritual, onde cada coisa tinha propósito divino. Descartes foi arquiteto principal desta visão: argumentava que matéria (res extensa) era separada de mente (res cogitans), que universo material podia ser completamente compreendido através de razão matemática sem referência a propósito espiritual. Isto tinha consequência profunda: natureza deixava de ser sagrada, tornava-se recurso a ser explorado. Isto facilitava exploração ambiental sem remorso religioso. Críticos posteriores (particularmente românticos do século XIX) veriam Revolução Científica como desencantando mundo, removendo mistério e beleza em favor de mecanismo frio. Porém, mecanicismo também tinha lado liberador: se universo operava de acordo com leis naturais descritíveis, então homem através de razão poderia compreender natureza e eventualmente controlá-la. Isto foi ilusão de certo modo: homem seria capaz de compreender (ao menos parcialmente) e manipular natureza, mas não sem custos ambientais. A Revolução Científica estabelecia portanto tanto as promessas quanto os perigos da abordagem científica-tecnológica ao mundo.</p>
+
+<blockquote class="tip">
+💡 <strong>Continuidade e Descontinuidade:</strong> Embora chamada "Revolução", Revolução Científica foi menos ruptura abrupta e mais transição gradual de uma forma de entender mundo para outra. Ainda assim, era transformação profunda que moldaria modernidade.
+</blockquote>
+
+<h4>Ciência e Poder: Influência na Sociedade</h4>
+<p>A Revolução Científica não foi puramente intelectual; tinha implicações políticas-sociais profundas. Novo conhecimento científico foi frequentemente patrocinado por estados em busca de vantagem militar ou comercial: conhecimento de navegação (astronomia, cartografia) era crucial para exploração e colonização; conhecimento de metalurgia era crucial para armas. Estados começavam a patrocinar pesquisa científica, criando academias (Academia degli Lincei na Itália, Royal Society na Grã-Bretanha). Isto convertia ciência em empreendimento estatal, vinculando-a ao poder político. Conhecimento científico frequentemente era usado para justificar exploração: ideia de que povos "não-civilizados" podiam ser racionalmente estudados e classificados (como faziam Lineu com organismos vivos) levou a desenvolvimentos de "antropologia" que frequentemente desumanizava povos colonizados. Ciência era usada para justificar racismo: medições de crânios, análises de sangue frequentemente eram manipuladas para "demonstrar" superioridade de certos "raças". Isto é exemplo de como conhecimento científico pode ser distorcido para servir objetivos políticos. Porém, ciência também ofereça ferramentas para questionar poder: evidência científica de que diferenças raciais não eram biológicas reais (moderna genética mostra que todos humanos são geneticamente similares) poderia ser usada para questionar racismo. Assim, ciência é ferramenta neutra que pode ser usada para bem ou mal dependendo de propósitos de quem a usa. Legado da Revolução Científica é que tornou ciência autoridade principal em determinar "verdade" no mundo moderno, substituindo autoridade religiosa ou filosófica medieval. Isto tem vantagens (acesso a conhecimento mais preciso sobre mundo), mas também riscos (quando ciência é politizada ou quando cientistas usam autoridade para propósitos questionáveis).</p>
+
+<blockquote class="example">
+📌 <strong>Ciência como Poder:</strong> A frase de Francis Bacon "conhecimento é poder" captura essência de como Revolução Científica transformou conhecimento: não era simplesmente busca de verdade, era ferramenta de poder sobre natureza e outras pessoas. Esta dimensão de poder permanece importante em ciência contemporânea.
+</blockquote>`,
+    cards: [
+      {
+        q: 'Qual foi a principal característica metodológica da Revolução Científica?',
+        a: 'Ênfase em observação empírica, experimentação, e análise matemática, em lugar de autoridade e especulação'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Iluminismo: Revolução de Ideias e Filosofia',
+    dur: '16 min',
+    content: `<h3>Movimento Iluminista e Valores Centrais</h3>
+<p>O Iluminismo (século XVII-XVIII, com efeitos continuando) foi movimento intelectual que propagava racionalismo, secularismo, direitos individuais, democracia, e progresso como resultados de aplicação de razão. Também chamado de "Século das Luzes" (siècle des lumières em francês), o movimento buscava "iluminar" através de razão aquilo que havia sido deixado no "escuro" da ignorância. Figuras centrais incluem: Descartes (método de dúvida, racionalismo), Locke (teoria dos direitos naturais, contrato social), Montesquieu (separação de poderes), Voltaire (liberdade de expressão, crítica à religião), Rousseau (soberania popular, vontade geral), Diderot (enciclopédia como símbolo do conhecimento racional). Estes pensadores compartilhavam crença que razão humana podia compreender mundo e melhorar sociedade. A religião não era rejeitada universalmente (muitos iluministas eram deístas, acreditando em Deus como causa inicial mas negando religião revelada), mas era questionada. Crítica de Voltaire "eu não concordo com uma palavra que você diz, mas defenderei até a morte seu direito de dizê-la" captura essência de liberalismo iluminista: valorização de liberdade de pensamento mesmo quando em desacordo. O Iluminismo rejeitava autoridade (seja de Igreja, monarquia, ou tradição) como base para conhecimento, substituindo com razão e evidência.</p>
+
+<h4>Impacto nas Revoluções Políticas</h4>
+<p>As ideias iluministas tiveram impacto direto em revoluções políticas: Declaração da Independência Americana refletia ideias de Locke sobre direitos naturais; Declaração dos Direitos do Homem Francesa refletia ideias iluministas sobre igualdade; Constituição dos EUA refletia Montesquieu na separação de poderes. Revolucionários frequentemente citavam filósofos iluministas para justificar revoluções: se governo era baseado em vontade do povo (Rousseau), então povo tinha direito de derrotar governo que violava seus direitos (Locke). Os direitos de liberdade de expressão, liberdade religiosa, igualdade perante lei que são centrais para democracia moderna vêm diretamente de Iluminismo. Porém, havia contradições: muitos iluministas, apesar de pregarem igualdade universal, não estendiam direitos para mulheres ou povos colonizados. Rousseau falava de "vontade geral" e igualdade, porém sua vontade geral frequentemente significava vontade da maioria (homens proprietários), deixando minorias desprotegidas. Ainda assim, ideias iluministas foram liberadoras comparadas a medievalismo: forneciam base intelectual para questionar autoridade, reivindicar direitos, e imaginar sociedades alternativas.</p>
+
+<blockquote class="news">
+📰 <strong>Enciclopédia de Diderot:</strong> A Grande Enciclopédia (Encyclopédie) de Diderot e D'Alembert foi empreendimento massivo de 35 volumes que buscava compilar conhecimento racional de época. Foi símbolo de ambição iluminista de organizar conhecimento de forma racional e torná-lo acessível. Também era frequentemente polêmica, criticando Igreja e monarquia.
+</blockquote>
+
+<h4>Legado Contraditório do Iluminismo</h4>
+<p>O Iluminismo deixou legado complexo: por um lado, estabeleceu direitos humanos, democracia, liberdade de expressão como ideais a buscar; por outro lado, algumas ideias iluministas foram usadas para justificar exploração. Por exemplo, ideia de "progresso" era frequentemente usada para justificar colonialismo: povos colonizados eram vistos como "não-progressivos" e precisavam de "civilização" europeia. Ideia de universalismo (valores são universais, não culturalmente relativo) podia ser usada para impor valores europeus em outras culturas. Cientificismo (fé excessiva em ciência como resolver todos problemas) frequentemente ignorava que ciência pode ser usada para propósitos questionáveis. O Iluminismo enfatizava razão, mas frequentemente negligenciava emoção, tradição, comunidade - aspectos que também são importantes na vida humana. Críticos posteriores (romantismo particularmente) reagiriam contra excesso de racionalismo iluminista. Ainda assim, o Iluminismo permanece influente: defesa moderna de direitos humanos, democracia, estado de direito, liberdade de expressão, educação universal vêm diretamente de Iluminismo. Reformadores buscando mudança social frequentemente retornam a ideias iluministas. Conflitos contemporâneos entre secularismo e religiosidade refletem em grande parte tensões iluministas entre razão e revelação. Portanto, enquanto ideias iluministas têm limitações e foram frequentemente usadas para exploração, elas também forneceram base intelectual para grande parte do progresso social moderno.</p>
+
+<blockquote class="example">
+📌 <strong>Iluminismo Global:</strong> Embora Iluminismo é frequentemente visto como europeu, havia movimentos similares de racionalismo-iluminismo em outras partes do mundo (Osmanlı "Tanzimat", China durante dinastias finais buscando modernizar-se). Isto sugere que impulso por racionalismo e modernização era mais universal que "particularmente europeu".
+</blockquote>`,
+    cards: [
+      {
+        q: 'Quais foram principais valores do Iluminismo?',
+        a: 'Racionalismo, secularismo, direitos individuais, democracia, liberdade de expressão, progresso através de razão'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
