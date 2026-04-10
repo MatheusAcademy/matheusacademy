@@ -1210,6 +1210,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1775831105338,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mm.jpg',
+    id: 'mm',
+    name: 'Macroeconomia, Mercados e Cenário Global',
+    desc: 'Entenda como bancos centrais, dólar, commodities, juros, geopolítica e ciclos econômicos movimentam os mercados e redefinem o cenário mundial.',
+    file: 'macroeconomia-mercados.html',
+    cat: 'Finanças & Economia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'MM_HENRY_2026_MASTER',
+    ak: 'mm_auth',
+    storagePrefix: 'mm_',
+    icon: '💰',
+    color: '#6a0572',
+    addedTs: 1775831107592,
+    active: true
   }
 ];
 var MA_CATS = [
