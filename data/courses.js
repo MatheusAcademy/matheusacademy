@@ -867,6 +867,25 @@ var MA_COURSES = [
     color: '#c77dff',
     addedTs: 1775831010680,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cf.jpg',
+    id: 'cf',
+    name: 'Constituição Federal Descomplicada',
+    desc: 'Curso para entender os princípios básicos da Constituição, direitos fundamentais, poderes da República e organização do Estado.',
+    file: '16-constituicao-federal.html',
+    cat: 'Direito & Cidadania',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'CF_HENRY_2026_MASTER',
+    ak: 'cf_auth',
+    storagePrefix: 'cf_',
+    icon: '⚖️',
+    color: '#005f73',
+    addedTs: 1775831018588,
+    active: true
   }
 ];
 var MA_CATS = [
