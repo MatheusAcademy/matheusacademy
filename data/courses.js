@@ -1114,6 +1114,25 @@ var MA_COURSES = [
     color: '#c9a227',
     addedTs: 1775831057882,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/dz.jpg',
+    id: 'dz',
+    name: 'Disciplina do Zero ao Avançado',
+    desc: 'Focado em autocontrole, constância, execução e construção de uma mentalidade disciplinada para resultados reais no dia a dia.',
+    file: '02-disciplina.html',
+    cat: 'Desenvolvimento',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'DZ_HENRY_2026_MASTER',
+    ak: 'dz_auth',
+    storagePrefix: 'dz_',
+    icon: '🚀',
+    color: '#d62828',
+    addedTs: 1775831070038,
+    active: true
   }
 ];
 var MA_CATS = [
