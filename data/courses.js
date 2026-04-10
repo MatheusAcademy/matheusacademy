@@ -1590,6 +1590,25 @@ var MA_COURSES = [
     color: '#f77f00',
     addedTs: 1775832770753,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ev.jpg',
+    id: 'ev',
+    name: 'Empreendedores Visionários que Mudaram o Mundo',
+    desc: 'Curso sobre grandes nomes dos negócios, visão estratégica, inovação, construção de impérios e mentalidade de liderança.',
+    file: '31-empreendedores-visionarios.html',
+    cat: 'Liderança e Poder',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 1,
+    salt: 'EV_HENRY_2026_MASTER',
+    ak: 'ev_auth',
+    storagePrefix: 'ev_',
+    icon: '🎓',
+    color: '#ff9f1c',
+    addedTs: 1775832773238,
+    active: true
   }
 ];
 var MA_CATS = [
