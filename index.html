@@ -4887,14 +4887,14 @@ on:.2s}
 
 <!-- SCRIPT GLOBAL - OVERLAY DE LOGO EM TODAS AS CAPAS -->
 <!-- ════════════════════════════════════════════════════════════════════════════════ -->
-<!-- OVERLAY LOGO - MATHEUS ACADEMY - VERSÃO 2 MARCA D'ÁGUA -->
-<!-- Apenas texto + glow (SEM faixa preta) - Não tapa conteúdo -->
+<!-- OVERLAY LOGO - MATHEUS ACADEMY - APENAS M -->
+<!-- Apenas M centralizado e pequeno - Marca d'água minimalista -->
 <!-- ════════════════════════════════════════════════════════════════════════════════ -->
 <script>
 (function() {
   'use strict';
 
-  // ─── CRIAR MARCA D'ÁGUA (SEM FUNDO PRETO) ───
+  // ─── CRIAR MARCA D'ÁGUA (APENAS M) ───
   function createWatermarkLogo() {
     const container = document.createElement('div');
     container.className = 'ma-watermark-logo';
@@ -4906,7 +4906,6 @@ on:.2s}
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 4.8px;
       z-index: 99;
       pointer-events: none;
     `;
@@ -4917,9 +4916,9 @@ on:.2s}
     m.style.cssText = `
       font-family: 'Arial Black', Arial, sans-serif;
       font-weight: 900;
-      font-size: 20.8px;
+      font-size: 16px;
       color: #FFFFFF;
-      text-shadow: 0 4px 16px rgba(0,0,0,1.2), 0 0 30px rgba(255,255,255,0.6);
+      text-shadow: 0 4px 16px rgba(0,0,0,1.2), 0 0 25px rgba(0, 61, 168, 1.5);
       line-height: 1;
       display: flex;
       align-items: center;
@@ -4928,43 +4927,7 @@ on:.2s}
       z-index: 100;
     `;
 
-    // |
-    const separator = document.createElement('div');
-    separator.textContent = '|';
-    separator.style.cssText = `
-      font-family: Arial, sans-serif;
-      font-weight: 300;
-      font-size: 22.4px;
-      color: #003DA8;
-      text-shadow: 0 0 25px rgba(0, 61, 168, 2), 0 0 50px rgba(0, 61, 168, 1.5), 0 4px 16px rgba(0,0,0,1.2);
-      line-height: 0.8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 100;
-    `;
-
-    // ACADEMY
-    const academy = document.createElement('div');
-    academy.textContent = 'ACADEMY';
-    academy.style.cssText = `
-      font-family: 'Arial Black', Arial, sans-serif;
-      font-weight: 900;
-      font-size: 8.8px;
-      color: #003DA8;
-      letter-spacing: 1.44px;
-      text-shadow: 0 0 25px rgba(0, 61, 168, 2), 0 0 50px rgba(0, 61, 168, 1.5), 0 4px 16px rgba(0,0,0,1.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 100;
-    `;
-
     container.appendChild(m);
-    container.appendChild(separator);
-    container.appendChild(academy);
 
     return container;
   }
