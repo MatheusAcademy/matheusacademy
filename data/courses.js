@@ -1628,6 +1628,25 @@ var MA_COURSES = [
     color: '#f77f00',
     addedTs: 1775832776174,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rb.jpg',
+    id: 'rb',
+    name: 'Reformas que Mudaram o Brasil',
+    desc: 'Compreenda as principais reformas que transformaram o país ao longo do tempo, seus objetivos, impactos econômicos, efeitos sociais e o papel dessas mudanças na reorganização do Estado brasileiro.',
+    file: 'reformas-brasil.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'RB_HENRY_2026_MASTER',
+    ak: 'rb_auth',
+    storagePrefix: 'rb_',
+    icon: '📰',
+    color: '#bc6c25',
+    addedTs: 1775832778905,
+    active: true
   }
 ];
 var MA_CATS = [
