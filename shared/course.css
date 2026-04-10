@@ -3212,3 +3212,126 @@ body.light .hl-mp-sep{background:rgba(0,0,0,.1);}
     padding:7px 14px;border-radius:8px;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   MATHEUS ACADEMY — GLOBAL WATERMARK + VIGNETTE EFFECT
+   Logo M branco + Filtro de borda tipo capa de filme (2025)
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── VIGNETTE EFFECT: Borda escura tipo capa de filme ── */
+.course-cover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 5;
+  
+  /* Vignette radial gradient — efeito tipo cinema */
+  background: 
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.15) 40%,
+      rgba(0, 0, 0, 0.35) 70%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+  
+  /* Sombra de borda extra para contraste cinema */
+  box-shadow: 
+    inset 0 0 60px rgba(0, 0, 0, 0.4),
+    inset 0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ── LOGO M WATERMARK: Branco nítido no meio inferior ── */
+.course-cover::after {
+  content: '';
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* Dimensões do logo */
+  width: 56px;
+  height: 56px;
+  
+  /* SVG do M branco estilizado */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><filter id="glow"><feGaussianBlur stdDeviation="1.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><text x="50" y="72" font-size="85" font-weight="900" fill="white" text-anchor="middle" font-family="Arial Black, sans-serif" filter="url(%23glow)" letter-spacing="-3">M</text></svg>');
+  
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  
+  /* Opacidade e efeitos */
+  opacity: 0.85;
+  
+  /* Drop shadow — nítido contra a vignette */
+  filter: 
+    drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 16px rgba(0, 221, 255, 0.25));
+  
+  /* Impedir interação */
+  pointer-events: none;
+  
+  /* Layering — EM FRENTE ao vignette (z-index: 5) */
+  z-index: 6;
+  
+  /* Transição suave para hover (opcional) */
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* Efeito hover — glow mais intenso ao passar mouse */
+.course-cover:hover::after {
+  opacity: 1;
+  filter: 
+    drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7))
+    drop-shadow(0 0 24px rgba(0, 221, 255, 0.4));
+}
+
+/* ── VARIAÇÕES DE CORES POR TEMA ── */
+
+/* Tema claro — M branco com sombra más delicada */
+body.light .course-cover::after {
+  filter: 
+    drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2))
+    drop-shadow(0 0 12px rgba(79, 110, 247, 0.2));
+}
+
+body.light .course-cover:hover::after {
+  filter: 
+    drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
+    drop-shadow(0 0 18px rgba(79, 110, 247, 0.35));
+}
+
+/* ── RESPONSIVIDADE: Ajustar tamanho em mobile ── */
+@media (max-width: 768px) {
+  .course-cover::after {
+    width: 48px;
+    height: 48px;
+    bottom: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .course-cover::after {
+    width: 40px;
+    height: 40px;
+    bottom: 14px;
+  }
+  
+  .course-cover::before {
+    background: 
+      radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.1) 40%,
+        rgba(0, 0, 0, 0.25) 70%,
+        rgba(0, 0, 0, 0.4) 100%
+      );
+    box-shadow: 
+      inset 0 0 40px rgba(0, 0, 0, 0.3),
+      inset 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+}
