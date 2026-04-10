@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>História do Brasil Completa — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'HB',
+  name: 'História do Brasil Completa',
+  shortName: 'História do Brasil',
+  cat: 'História',
+  desc: 'Curso amplo sobre formação do Brasil, colônia, império, república, crises, transformações sociais e cenário contemporâneo.',
+  salt: 'HB_HENRY_2026_MASTER',
+  ak: 'hb_auth',
+  courseKey: 'hb',
+  prefix: 'hb_',
+  color: '#009b3a',
+  glow: 'rgba(0,155,58,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 2,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 1,
+    name: 'Brasil Colônia: Descoberta e Desenvolvimento',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Período Colonial Brasileiro',
+      points: [
+        'O Brasil foi descoberto por Pedro Álvares Cabral em 1500 e passou por 322 anos de colonização portuguesa',
+        'A economia colonial baseou-se no ciclo da cana-de-açúcar, criando estruturas de latifúndio e escravidão',
+        'Jesuítas, bandeirantes e colonos moldaram a sociedade colonial através de conflitos, conversões e exploração',
+        'A organização administrativa portuguesa criou capitanias hereditárias, câmaras municipais e um sistema de governo centralizado'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Em que ano Pedro Álvares Cabral descobriu o Brasil?',
+        opts: ['1498', '1500', '1502', '1504'],
+        correct: 1
+      },
+      {
+        q: 'Qual foi o principal produto econômico durante o ciclo agroexportador colonial?',
+        opts: ['Ouro', 'Cana-de-açúcar', 'Algodão', 'Café'],
+        correct: 1
+      },
+      {
+        q: 'Qual ordem religiosa foi fundamental na catequese dos indígenas no Brasil colonial?',
+        opts: ['Franciscanos', 'Dominicanos', 'Jesuítas', 'Beneditinos'],
+        correct: 2
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Império e República: Transformações Políticas',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Período Imperial e Transição Republicana',
+      points: [
+        'O Brasil declarou independência em 1822 sob Dom Pedro I, estabelecendo um império com monarquia constitucional',
+        'A abolição gradual da escravidão culminou com a Lei Áurea em 1888, libertando aproximadamente 700 mil escravizados',
+        'A proclamação da república em 1889 substituiu a monarquia por um regime presidencialista, inicialmente oligárquico',
+        'Crises políticas, golpes militares e instabilidade institucional marcaram os primeiros anos da república até 1930'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Quem proclamou a independência do Brasil e se tornou seu primeiro imperador?',
+        opts: ['Dom João VI', 'Dom Pedro I', 'Dom Pedro II', 'Tiradentes'],
+        correct: 1
+      },
+      {
+        q: 'Em que ano foi assinada a Lei Áurea, abolindo a escravidão no Brasil?',
+        opts: ['1871', '1880', '1888', '1889'],
+        correct: 2
+      },
+      {
+        q: 'Qual golpe militar em 1889 terminou o período imperial?',
+        opts: ['Golpe de 1964', 'Proclamação da República', 'Movimento de 1930', 'Revolução Constitucionalista'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Brasil Contemporâneo: Ditadura, Redemocratização e Presente',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Brasil Moderno: 1930 aos Dias Atuais',
+      points: [
+        'A Era Vargas (1930-1945) centralizou o poder, aboliu a federação, e criou as bases do estado corporativista',
+        'O regime militar (1964-1985) impôs censura, repressão política, mas também desenvolveu economia com endividamento externo',
+        'A redemocratização culminou com a Constituição de 1988, restabelecendo direitos civis e eleições presidenciais diretas',
+        'Nas últimas décadas, o Brasil enfrentou crises econômicas, corrupção, desigualdade social e polarização política'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Quantos anos durou o regime militar no Brasil?',
+        opts: ['15 anos', '17 anos', '21 anos', '25 anos'],
+        correct: 2
+      },
+      {
+        q: 'Em que ano foi promulgada a Constituição Cidadã que redemocratizou o Brasil?',
+        opts: ['1985', '1987', '1988', '1989'],
+        correct: 2
+      },
+      {
+        q: 'Qual foi o primeiro presidente eleito diretamente após a ditadura militar?',
+        opts: ['Itamar Franco', 'Fernando Henrique Cardoso', 'Fernando Collor', 'Tancredo Neves'],
+        correct: 2
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'O Descobrimento e os Primeiros Séculos',
+    dur: '15 min',
+    content: `<h3>O Descobrimento do Brasil e a Chegada Portuguesa</h3>
+<p>Em 22 de abril de 1500, a frota de Pedro Álvares Cabral, que se dirigia para a Índia, chegou às terras que se tornaria o Brasil. Este evento, frequentemente chamado de "descobrimento", marcou o início da colonização portuguesa nas Américas. A chegada não foi acidental, mas parte de uma estratégia expansionista portuguesa que já havia estabelecido rotas comerciais na África e no Oriente. A expedição inicial explorou o litoral baiano, estabelecendo contato com povos indígenas tupis e tamoios, iniciando um processo de encontro que seria repleto de conflitos, trocas culturais e tragédias.</p>
+
+<h4>Os Primeiros Contatos e Povos Indígenas</h4>
+<p>Quando os portugueses chegaram, o território era habitado por aproximadamente 1 a 4 milhões de indígenas, distribuídos em diversas nações e tribos com idiomas, culturas e sistemas políticos distintos. Os principais grupos incluíam os Tupis (na costa), Guaranis (no sul), Gês (no interior) e Caraíbas. Essas populações praticavam agricultura de subsistência, caça, pesca e possuíam sistemas de parentesco e organização social complexos. Possuíam também conhecimento profundo sobre o cultivo da mandioca, do milho e do amendoim, assim como técnicas de processamento da cana-de-açúcar que posteriormente os portugueses aproveitariam. Os indígenas, porém, não possuíam tecnologia de ferro, nem animais de tração como cavalos, o que colocou-os em posição de desvantagem militar diante dos invasores europeus.</p>
+
+<blockquote class="tip">
+💡 <strong>Dica de Estudo:</strong> Lembre-se que o termo "descobrimento" é eurocentrado. Para os povos originários, tratava-se de uma invasão. Historiadores moderno preferem usar "chegada" ou "encontro" para melhor contextualizar o evento.
+</blockquote>
+
+<h4>Primeiras Décadas de Exploração e Conflitos</h4>
+<p>Nos primeiros 50 anos após 1500, a colonização portuguesa foi lenta e desorganizada. Os portugueses realizavam expedições de reconhecimento, capturavam indígenas para escravidão, e extraíam o pau-brasil, madeira de alto valor comercial na Europa. Durante este período, a Coroa Portuguesa não investiu significativamente em colonização de terra firme, focando seus esforços principalmente no comércio asiático através da Rota do Cabo. A ausência de uma política colonizadora sistemática permitiu que franceses, holandeses e outros europeus estabelecessem focos de exploração no litoral brasileiro, particularmente na região do Rio de Janeiro e no Maranhão.</p>
+
+<blockquote class="news">
+📰 <strong>Fato Histórico:</strong> A exploração do pau-brasil foi tão intensa que a árvore quase foi extinta. Uma viagem de navio podia carregar 500 toneladas de pau-brasil, altamente lucrativos nos mercados europeus para produção de tintas.
+</blockquote>
+
+<h4>A Organização das Capitanias Hereditárias</h4>
+<p>Em 1534, o Rei João III implementou um sistema de colonização através das Capitanias Hereditárias. O território foi dividido em 15 faixas de terra, entregues a donatários (geralmente nobres e comerciantes) que receberiam títulos de propriedade hereditária em troca de investimentos em colonização. Cada capitania tinha autonomia administrativa, fiscal e militar, mas tinha a obrigação de fundar vilas, construir fortificações, explorar recursos e defender o território. Este sistema foi parcialmente bem-sucedido: Pernambuco e São Vicente tornaram-se prósperas, enquanto muitas outras capitanias fracassaram economicamente ou foram invadidas por potências estrangeiras. A falta de unidade administrativa se tornaria um problema crônico que seria resolvido apenas com a criação do Governo Geral em 1549.</p>
+
+<h4>Economia e Sociedade Colonial Primitiva</h4>
+<p>Nestes primeiros séculos, a economia era baseada principalmente na extração de recursos naturais (pau-brasil) e na busca por ouro, que não havia em quantidades significativas. A mão-de-obra era predominantemente indígena escravizada, capturada através de guerras ou comprada de traficantes. A sociedade era hierárquica, composta por colonos, funcionários da Coroa, jesuítas, indígenas escravizados e alguns homens brancos pobres ou degredados. As mulheres indígenas frequentemente eram estupradas por colonos europeus, originando descendência mestiça que se tornaria importante demograficamente. A produção de alimentos era voltada para subsistência, com poucos excedentes para comércio. Não havia ainda concentração de terra em latifúndios grandes, mas este sistema começaria a se formar conforme a economia açucareira se desenvolvesse.`,
+    cards: [
+      {
+        q: 'Quando Pedro Álvares Cabral chegou ao Brasil e por qual motivo?',
+        a: 'Em 22 de abril de 1500, chegando acidentalmente durante viagem para a Índia, iniciando a colonização portuguesa'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Ciclo da Cana-de-Açúcar e Estrutura Escravocrata',
+    dur: '18 min',
+    content: `<h3>A Economia Açucareira como Base do Brasil Colonial</h3>
+<p>A partir de meados do século XVI, especialmente após 1550, a cana-de-açúcar tornou-se o motor da economia colonial brasileira. Este ciclo transformou a colônia de um simples entreposto comercial em um grande produtor agrícola voltado para a exportação, moldando a sociedade, a geografia e a política por mais de dois séculos. O açúcar colonial era produzido em engenhos que combinavam agricultura, manufatura e comércio, gerando lucros imensos para portugueses e colonos. Pernambuco e Bahia transformaram-se em regiões de grande riqueza, atraindo investimentos portugueses e holandeses. O sucesso do açúcar se deveu a fatores como: demanda europeia crescente, clima tropical favorável, tecnologia portuguesa já dominada em ilhas atlânticas, e acesso a mão-de-obra escravizada.</p>
+
+<h4>Tecnologia, Produção e Estrutura dos Engenhos</h4>
+<p>Um engenho de cana era uma complexa unidade produtiva que compreendia: os canaviais (campos de cultivo), a casa-grande (residência do senhor), a senzala (alojamento dos escravizados), a moenda (máquina para esmagar a cana), as caldeiras (para cozimento do caldo), e as casarolas (para cristalização). A produção era mecanizada para a época, usando rodas movidas por água ou animais para esmagar as canas. Um grande engenho empregava 50 a 300 escravizados e produzia entre 100 a 500 toneladas de açúcar anualmente. A tecnologia açucareira portuguesa era sofisticada, havendo sido aperfeiçoada em Madeira e São Tomé. Os senhores de engenho eram uma elite poderosa, frequentemente absenteístas que viviam em Recife ou Salvador, deixando a administração do engenho a um administrador ou feitor. O investimento inicial para construir um engenho era elevadíssimo, criando barreira de entrada que concentrava riqueza em poucas mãos.</p>
+
+<blockquote class="tip">
+💡 <strong>Conceito Chave:</strong> O "tripé do engenho" consistia em: terra (canaviais), capital (para construção e manutenção) e mão-de-obra (escravizados). Possuir os três elementos garantia enorme poder econômico e político.
+</blockquote>
+
+<h4>Escravidão Indígena e Transição para Africana</h4>
+<p>Inicialmente, os engenhos utilizavam mão-de-obra indígena escravizada, obtida através de guerras ou comércios. Porém, a população indígena diminuiu rapidamente devido a doenças trazidas pelos europeus (varíola, sarampo, gripe) para as quais não tinham imunidade, além de mortes causadas pela exploração brutal. A resistência indígena também cresceu, com muitos fugindo para o interior. Jesuítas frequentemente defendiam os indígenas, criando aldeias protegidas onde poderiam ser "civilizados" e evangelizados. Para suprir a demanda crescente de mão-de-obra, os colonizadores começaram a importar escravizados africanos em maior escala a partir de 1570. O tráfico atlântico se organizou: traficantes portugueses capturavam ou compravam escravizados na costa africana e os transportavam em navios negreiros até o Brasil, onde eram vendidos em mercados de escravos. Estima-se que aproximadamente 4,9 milhões de africanos escravizados foram trazidos para o Brasil durante todo o período colonial e imperial, representando cerca de 46% do total de escravizados das Américas.</p>
+
+<blockquote class="news">
+📰 <strong>Dado Histórico:</strong> A transição de mão-de-obra indígena para africana não foi rápida. Até 1630, ainda havia mais indígenas escravizados que africanos no Brasil, mas a proporção se inverteria nos séculos seguintes.
+</blockquote>
+
+<h4>Estrutura Social Rígida e Patrimonialismo</h4>
+<p>A sociedade açucareira desenvolveu uma estrutura social fortemente hierárquica. No topo estavam os proprietários de engenho (brancos, geralmente de origem fidalga ou burguesa), seguidos por funcionários da Coroa, padres jesuítas, e uma nascente classe média de mercadores e artesãos. Abaixo destes, estava a massa de trabalhadores livres pobres (colonos, lavradores de cana que alugavam terra do senhor), e no piso social estavam escravizados indígenas e africanos. Havia também uma população crescente de mestiços livres (filhos de brancos com indígenas ou africanas) que ocupavam posições intermediárias. Este sistema criou uma sociedade extremamente patrimonialista, onde o poder político, econômico e social estava concentrado nas mãos de uma elite rural branca. Os senhores de engenho exerciam poder quase absoluto sobre suas terras, pessoas e escravizados, sem grande interferência da Coroa. Este patrimonialismo se tornaria uma característica marcante da sociedade brasileira, perpetuando-se para além da abolição.</p>
+
+<h4>Impactos Econômicos e Demográficos</h4>
+<p>O ciclo açucareiro criou grande riqueza, mas concentrou-a enormemente. As cidades portuárias como Recife, Salvador e Olinda cresceram como centros comerciais, mas o interior permanecia pouco povoado. A importação de escravizados africanos transformou a demografia brasileira, criando uma sociedade multirracial, embora hierarquizada. O Brasil se tornou o maior produtor mundial de açúcar no século XVII, gerando receitas substanciais para a Coroa Portuguesa. Porém, este modelo econômico baseado em monocultura e escravidão criou fragilidades: dependência de um único produto, vulnerabilidade a flutuações de preço internacional, e conflitos permanentes entre colonos e indígenas. A descoberta de ouro em Minas Gerais no final do século XVII romperia o monopólio econômico do açúcar, iniciando uma nova fase da colonização.`,
+    cards: [
+      {
+        q: 'Por que a cana-de-açúcar se tornou tão importante na economia colonial?',
+        a: 'Combinação de demanda europeia crescente, clima favorável, tecnologia portuguesa dominada e acesso a mão-de-obra escravizada'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Administração Colonial, Jesuítas e Conflitos Territoriais',
+    dur: '17 min',
+    content: `<h3>O Governo Geral e Organização Administrativa Portuguesa</h3>
+<p>Em 1549, o Rei João III criou o cargo de Governador Geral para centralizar a administração da colônia e substituir o descentralizado sistema de Capitanias Hereditárias. Tomé de Sousa foi o primeiro Governador Geral, establecendo sua sede em Salvador. A criação de um governo central buscava aumentar o controle português sobre a colônia, organizá-la administrativamente, defender contra invasões estrangeiras, e garantir a cobrança de impostos. Sob o Governo Geral, a colônia foi dividida em comarcas, cada uma sob um capitão-mor. Cidades foram estabelecidas com câmaras municipais (senados da câmara) que possuíam alguma autonomia local. A administração portuguesa criou um sistema de metrópole-colônia clássico: a colônia existia para servir economicamente à metrópole, exportando produtos de valor e importando manufaturados. Este modelo gerou conflitos permanentes entre os interesses dos colonos (que queriam maior autonomia e menor tributação) e os da Coroa (que buscava controle e lucro).</p>
+
+<h4>A Igreja Católica e os Jesuítas na Colonização</h4>
+<p>A Igreja Católica foi uma instituição central na colonização portuguesa. O Cristianismo era visto como instrumento de "civilização" dos indígenas e consolidação do poder português. A Ordem dos Jesuítas (Companhia de Jesus), fundada em 1534, chegou ao Brasil em 1549 com a missão de catequizar indígenas. Os jesuítas estabeleceram aldeias indígenas (reduções) onde indígenas eram concentrados, evangelizados, e "civilizados" segundo padrões europeus. Nessas aldeias, ensinavam português, latim, agricultura europeia, e principalmente a fé católica. O sistema jesuíta, embora frequentemente criticado como opressivo, proporcionou alguma proteção aos indígenas contra a escravidão descontrolada de colonos. Os jesuítas também atuaram como cronistas, registrando informações sobre indígenas, flora, fauna e clima, fornecendo dados valiosos que ajudaram a consolidar o conhecimento europeu sobre a colônia. Porém, as reduções jesuítas também destruíram culturas indígenas, impondo catolicismo, português, e estruturas de trabalho. A influência jesuíta era tão grande que geravam conflitos com colonos que desejavam escravizar indígenas livremente. Este conflito permanente entre jesuítas (defensores dos indígenas) e colonos (exploradores de indígenas) marcaria todo o período colonial.</p>
+
+<blockquote class="tip">
+💡 <strong>Complexidade Histórica:</strong> Os jesuítas não eram "bons" ou "maus" de forma simples. Protegiam indígenas da escravidão predatória, mas também destruíam suas culturas, impondo religião e estruturas alienígenas. Sua ação refletia a mentalidade europeia da época.
+</blockquote>
+
+<h4>Bandeirantes e Expansão Territorial</h4>
+<p>Os bandeirantes foram grupos de paulistas (colonos de São Paulo) que organizavam expedições ao interior para capturar indígenas escravizados, explorar minerais e expandir o território. Começando no século XVI, intensificaram-se nos séculos XVII e XVIII. Os bandeirantes viajavam por semanas ou meses, penetrando profundamente no interior, frequentemente atacando aldeias jesuítas para capturar indígenas. Embora frequentemente vistos como heróis nacionais, eram violentos exploradores que dizimaram populações inteiras. Porém, historicamente, suas expedições expandiram significativamente o território português além dos limites do Tratado de Tordesilhas, levando a descobertas de ouro em Minas Gerais, Goiás e Mato Grosso. Muitos bandeirantes também se miscigenavam com indígenas, gerando populações mestiças que ocupariam o interior. As entradas (expedições menores) complementavam o trabalho dos bandeirantes, explorando novas regiões e estabelecendo rotas comerciais. A ação dos bandeirantes tinha custos humanos imensos para povos indígenas, mas geograficamente moldou o Brasil moderno.</p>
+
+<h4>Invasões Estrangeiras e Conflitos Fronteiriços</h4>
+<p>Durante os séculos XVI e XVII, diversas potências europeias tentaram estabelecer presença no Brasil. A França ocupou o Rio de Janeiro (1555-1567) com a "França Antártica", tentando fundar uma colônia protestante. Os holandeses, potência comercial em ascensão, invadiram Pernambuco (1630-1654), conquistando a rica região açucareira. Durante a ocupação holandesa, a administração foi eficiente, os impostos moderados, e houve maior liberdade religiosa. A retirada holandesa em 1654 deveu-se mais a dificuldades financeiras em Amsterdam do que a capacidade bélica portuguesa. Na região sul, portugueses e espanhóis disputavam territórios através de expedições e fundação de cidades. A presença de potências estrangeiras obrigou Portugal a investir em defesa, construindo fortalezas no litoral e centralizando ainda mais a administração. Os conflitos fronteiriços com a América Espanhola también afetaram o desenvolvimento da colônia, levando a tratados como o de Madrid (1750) que tentavam delimitar possessões. A necessidade de defender o vasto território levou a militar portuguesa a estabelecer guarnições e a criar uma incipiente força naval brasileira.</p>
+
+<blockquote class="example">
+📌 <strong>Exemplo Histórico:</strong> A invasão holandesa de Pernambuco foi tão impactante que levou ao desenvolvimento de uma identidade pernambucana peculiar e à rebelião de escravizados (Quilombo dos Palmares) sob liderança de Zumbi, que duraria até 1694.
+</blockquote>
+
+<h4>Sistema Tributário e Dependência Econômica</h4>
+<p>A Coroa Portuguesa extraía riqueza da colônia através de diversos impostos e monopólios. O quinto era o imposto principal, cobrando 20% de toda extração de ouro. Havia impostos sobre exportação de produtos como açúcar, tabaco e algodão, e monopólios sobre sal e diamantes. A colônia pagava elevadas taxas alfandegárias e devia comprar produtos portugueses a preços inflacionados. Este sistema criava dependência econômica: Portugal lucrava enormemente com a colônia, enquanto investia pouco em seu desenvolvimento. A colônia fornecia recursos, recebia produtos manufaturados caros, e tinha sua economia controlada pela metrópole. Este modelo de exploração colonial criaria ressentimentos que culminariam em movimentos pela independência no século XIX. A ausência de investimentos em educação, pesquisa e diversificação econômica manteria o Brasil dependente de exportações de produtos primários por séculos.`,
+    cards: [
+      {
+        q: 'Qual foi o papel dos jesuítas na colonização do Brasil?',
+        a: 'Catequizaram indígenas em aldeias, proporcionaram alguma proteção contra escravidão predatória, mas também destruíram culturas nativas impondo religião europeia'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Independência e Formação do Império Brasileiro',
+    dur: '16 min',
+    content: `<h3>Contexto da Independência Brasileira</h3>
+<p>A independência do Brasil ocorreu em contexto muito diferente de outras colônias americanas. Enquanto as treze colônias inglesas e colônias espanholas revoltaram-se contra metrópoles distantes, o Brasil independizou-se mantendo a monarquia e a dinasta real portuguesa. As causas foram múltiplas: crescimento do sentimento nativista entre colonos, influência das ideias iluministas, crise do Antigo Regime em Portugal, ascensão de uma elite brasileira que desejava poder político, e conflitos comerciais com Portugal. A transferência da Corte Portuguesa para o Rio de Janeiro em 1808 (fugindo das tropas napoleônicas) foi crucial, elevando a colônia ao status de Reino Unido. Porém, retorno de D. João VI a Portugal em 1821 criou tensões: Os portugueses queriam que o Brasil voltasse ao status de colônia subordinada, enquanto a elite brasileira resistia. Seu filho, Dom Pedro I, foi deixado como príncipe regente e logo liderou a causa da independência.</p>
+
+<h4>O Processo de Independência (1821-1822)</h4>
+<p>A crise política em Portugal levou à ascensão de uma ideologia regeneradora que questionava o absolutismo monárquico. Portugal, enfraquecida economicamente pela guerra com França e pelo isolamento comercial, buscava recuperar o controle sobre o Brasil como fonte de riqueza. O Cortes (parlamento) português exigiu que Dom Pedro regressasse a Portugal e que o Brasil fosse subordinado novamente. Simultaneamente, a elite brasileira (proprietários, comerciantes, padres) via a independência como forma de manter seus privilégios sem interferência portuguesa. A Assembleia Constituinte brasileira foi convocada em 1822, refletindo os desejos da elite. No dia 7 de setembro de 1822, Dom Pedro declarou a independência às margens do rio Ipiranga, em gesto teatral que se tornaria simbólico. A independência não foi resultado de guerra revolucionária, mas de negociações políticas entre elites. Diferentemente das repúblicas latino-americanas, o Brasil manteve monarquia, continuidade institucional, e elite escravocrata no poder. Este arranjo preservaria a elite, mas criaria tensões que emergiriam décadas depois.</p>
+
+<blockquote class="tip">
+💡 <strong>Particularidade Brasileira:</strong> A independência brasileira manteve monarquia, escravidão e elite no poder. Isto contrasta com movimentos independentistas hispano-americanos que eram mais revolucionários, embora frequentemente também tivessem oligarquias no comando.
+</blockquote>
+
+<h4>Dom Pedro I e Consolidação da Independência</h4>
+<p>Dom Pedro I (1798-1834) foi o primeiro imperador brasileiro, reinando de 1822 a 1831. Seu reinado foi marcado por tensões entre tendências centralistas (autoritárias) e liberais (constitucionais). Inicialmente, Dom Pedro havia prometido uma constituição, mas em 1823 dissolveu a Assembleia Constituinte e outorgou a Constituição de 1824, que concentrava poder na Coroa. Esta carta magna criava: Poder Executivo (Imperador), Poder Legislativo bicameral (Câmara dos Deputados e Senado), Poder Judiciário, e inovadoramente um Poder Moderador exercido pelo Imperador para "preservar a harmonia" entre poderes. O poder político estava limitado a uma elite de proprietários (voto censitário baseado em renda), e havia restrições ao sufrágio universal. A Constituição de 1824 permaneceria em vigor até 1891, refletindo o conservadorismo político da elite imperial. Dom Pedro I enfrentou crises: conflitos com Portugal (reconhecimento da independência só em 1825), guerra pela Cisplatina (que levaria à Uruguai separar-se), abdicação da mãe de sua esposa na Áustria. Crescentes descontentamentos levaram à sua abdicação em 1831.</p>
+
+<h4>Período Regencial e Instabilidade Política</h4>
+<p>Após abdicação de Dom Pedro I em 1831, seu filho Pedro de Alcântara era criança (cinco anos), levando a um período de regência até sua maioridade em 1840. Este Período Regencial (1831-1840) foi tumultuado, caracterizado por rebeliões provinciais, conflitos entre tendências políticas, e busca de poder por diferentes grupos de elite. A elite dividiu-se entre restauradores (que queriam Dom Pedro I de volta), absolutistas (que queriam monarquia forte) e liberais (que queriam constituição e participação política ampliada). Diversas revoltas ocorreram: Revolta de Cabanagem (Pará, 1835-1840), Revolta Farroupilha (Rio Grande do Sul, 1835-1845), Sabinada (Bahia, 1837-1838). Estas revoltas frequentemente envolviam conflitos de classe, com pobres rurais, escravizados e pessoas marginalizadas buscando melhorias, embora geralmente dominadas por líderes elites. A instabilidade revelou a fragilidade das instituições brasileiras e a dificuldade de consolidação de um Estado Nacional. O Ato Adicional de 1834 tentou descentralizar poder através de maior autonomia provincial, mas criou confusão administrativa. Esta instabilidade só seria resolvida com a antecipação da maioridade de Dom Pedro II em 1840.</p>
+
+<h4>A Elite Escravocrata no Poder</h4>
+<p>Um aspecto crucial é que a elite que liderou independência era predominantemente de proprietários de escravizados. A abolição da escravidão não estava na agenda de Dom Pedro I, apesar de crescentes pressões britânicas. De fato, o comércio de escravizados intensificou-se após a independência: entre 1822 e 1830, aproximadamente 430 mil escravizados foram importados, número significativamente alto. A nova elite imperial buscava enriquecer rapidamente através da expansão das plantações de cana, algodão e café, necessitando de mão-de-obra escravizada crescente. O tráfico transatlântico era ilegal segundo tratados com Inglaterra desde 1808, mas era amplamente praticado por contrabandistas com conivência de autoridades. A escravidão moldaria a história do Brasil independente, criando conflitos que culminariam em guerras civis (Revolta dos Malês) e finalmente na abolição em 1888. A estrutura social escravocrata, iniciada no período colonial, perpetuar-se-ia na sociedade imperial, criando desigualdades profundas que marcariam o Brasil até hoje.`,
+    cards: [
+      {
+        q: 'Como Dom Pedro I declarou a independência do Brasil?',
+        a: 'No dia 7 de setembro de 1822, às margens do rio Ipiranga, após pressões para subordinação português'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'Império Consolidado: Dom Pedro II e Transformações Sociais',
+    dur: '17 min',
+    content: `<h3>Reinado de Dom Pedro II e Estabilização do Império</h3>
+<p>Dom Pedro II (1825-1891), filho de Dom Pedro I, tornou-se imperador com maioridade antecipada em 1840, reinando até 1889. Seu longo reinado de 49 anos foi o mais importante do período imperial, marcado por estabilização política, modernização econômica e transformações sociais profundas. Dom Pedro II era educado, culto, falava vários idiomas, e tinha personalidade contemplativa. Diferentemente de seu pai, mantinha postura constitucional, respeitando limitações do poder imperial. Seu reinado foi caracterizado por: relativa estabilidade política após turbulências do Período Regencial, consolidação das instituições monárquicas, modernização econômica (ferro, vapor), transformação da base econômica (açúcar dá lugar ao café), conflitos crescentes sobre escravidão, e desenvolvimento intelectual. O Império Brasileiro sob Dom Pedro II era frequentemente comparado aos impérios europeus, particularmente à monarquia inglesa constitucional. Dom Pedro II cultivava imagem de monarca esclarecido, associado ao progresso e à modernização, o que contribuía para legitimidade política.</p>
+
+<h4>Transição para Economia Cafeeira</h4>
+<p>Durante o reinado de Dom Pedro II, a economia brasileira sofreu transformação radical: o açúcar deixou de ser principal produto de exportação, sendo substituído pelo café. Esta transição ocorreu gradualmente entre 1840 e 1880. O café era cultivado principalmente no Vale do Paraíba (Rio de Janeiro, São Paulo, Espírito Santo) em clima tropical úmido extremamente favorável. O café brasileiro, de qualidade excepcional, conquistou mercados mundiais. Em 1850, café representava 18% das exportações; em 1880, representava 60%. Esta mudança teve consequências profundas: deslocamento de riqueza de Pernambuco e Bahia (açúcar) para Rio de Janeiro e São Paulo (café), criação de nova elite cafeeira, intensificação da demanda por escravizados (café demandava mão-de-obra intensiva), e posteriormente, quando escravidão foi abolida, intensificação da imigração europeia. A economia cafeeira impulsionou modernização: estradas de ferro foram construídas para transportar café, cidades cresceram em torno de ferrovias, bancos e comércio se expandiram. Porém, a dependência de um único produto criava vulnerabilidade: flutuações de preço internacional do café afetavam economicamente toda a nação. A elite cafeeira dominaria politicamente o Brasil até 1930.</p>
+
+<blockquote class="news">
+📰 <strong>Dado Econômico:</strong> Em 1890, Brasil produzia 80% do café mundial. Superprodução em 1929 contribuiu para crise econômica global que levaria à queda de Dom Pedro II em 1889.
+</blockquote>
+
+<h4>Escravidão, Abolicionismo e Lei Áurea</h4>
+<p>Um dos temas mais controversos do reinado de Dom Pedro II foi a escravidão. O Brasil foi última nação americana a abolir escravidão (1888), mais de 20 anos após abolição nos EUA. A elite imperial era majoritariamente escravocrata, vendo na escravidão o fundamento de sua riqueza. Porém, pressões internas e externas cresceram: movimentos abolicionistas europeus e norte-americanos condenavam a prática; influência inglesa buscava eliminar tráfico atlântico (concretizado em 1888 com proibição final); intelectuais brasileiros começavam a questionar moralidade e racismo; escravizados resistiam continuamente através de fugas, rebeliões e quilombos; e população livre pobre crescia, questionando competição com trabalho escravizado. Várias leis intermediárias foram promulgadas: Lei Eusébio de Queirós (1850) proibiu tráfico atlântico; Lei do Ventre Livre (1871) libertava filhos de escravizadas nascidos após lei; Lei dos Sexagenários (1885) libertava escravizados com mais de 60 anos. Estas leis representavam transição gradual, mas ainda mantinham escravidão. Finalmente, em 13 de maio de 1888, a Princesa Regente Isabela (filha de Dom Pedro II) assinou a Lei Áurea, abolindo completamente escravidão no Brasil. A abolição foi conquista importante para direitos humanos, mas também refletiu incapacidade de escravizados e abolicionistas de transformar estruturas sociais de forma mais radical. Os escravizados foram libertados sem indenizações, terras ou políticas de integração, levando a marginalização persistente da população negra.</p>
+
+<h4>Guerra do Paraguai e Consolidação Nacional</h4>
+<p>A Guerra da Tríplice Aliança (1864-1870), também conhecida como Guerra do Paraguai, foi conflito decisivo que consolidou o Brasil como potência regional e definiu suas fronteiras modernas. A guerra opôs Brasil, Argentina e Uruguai contra Paraguai. As causas incluíam: tentativa do Paraguai de expandir influência regional, conflitos de fronteira com Brasil, e disputa por hegemonia no Prata. A guerra durou seis anos, foi devastadora, e custou cerca de 300 mil vidas (em população de apenas 2 milhões, o Paraguai perdeu proporcionalmente mais que qualquer país em conflito moderno). O Brasil mobilizou aproximadamente 150 mil soldados e contraiu empréstimos externos substanciais. A Marinha Imperial Brasileira demonstrou superioridade tecnológica. Vitória sobre Paraguai consolidou Brasil como maior potência sul-americana, definiu fronteiras atuais, e elevou prestígio imperial. Porém, a guerra deixou cicatrizes: economia enfraquecida por gastos militares, dívida externa aumentada, soldados retornando com ressentimentos que afetariam república futura. Ironicamente, alguns historiadores argumentam que a guerra acelerou crise do Império ao fortalecer setor militar que posteriormente apoiaria golpe de 1889.</p>
+
+<blockquote class="example">
+📌 <strong>Impacto Duradouro:</strong> A Guerra do Paraguai solidificou controle brasileiro sobre regiões como Mato Grosso do Sul e criou tratados de navegação fluvial. Paraguai, porém, enfraquecido militarmente, permaneceria menos desenvolvido economicamente que Brasil até hoje.
+</blockquote>
+
+<h4>Modernização, Ferrovias e Desenvolvimento Intelectual</h4>
+<p>O Brasil Imperial experimentou modernização significativa sob Dom Pedro II. Primeira ferrovia brasileira (Rio-Queimados) foi inaugurada em 1854. Ferrovias expandiram rapidamente, particularmente em São Paulo e Minas Gerais, facilitando transporte de café e integração econômica. Telegrafia foi introduzida, comunicação telegráfica conectando cidades. Educação superior expandiu com criação de faculdades de direito, medicina e engenharia. Uma intelectualidade brasileira emergiu, incluindo escritores como Machado de Assis, poetas, juristas e pensadores. O Brasileiro começava a desenvolver identidade nacional, refletida em literatura e artes. Dom Pedro II era mecenas das artes, promovendo museus, bibliotecas e academias. Porém, educação primária permanecia limitada, e analfabetismo era generalizado. As modernizações beneficiavam principalmente as elites urbanas nas cidades maiores (Rio, São Paulo, Salvador); o interior rural permanecia praticamente inalterado. Este dualismo (moderno nas cidades, arcaico no campo) persistiria para além da república.`,
+    cards: [
+      {
+        q: 'Quando e como ocorreu a abolição da escravidão no Brasil?',
+        a: 'Em 13 de maio de 1888, com assinatura da Lei Áurea pela Princesa Isabela, libertando todos os escravizados'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Crise do Império e Proclamação da República',
+    dur: '16 min',
+    content: `<h3>Fatores de Crise da Monarquia Imperial</h3>
+<p>Apesar do longo reinado estável de Dom Pedro II, o Império Brasileiro enfrentava crises profundas que culminariam em sua queda em 1889. Embora Dom Pedro II fosse respeitado e culto, a instituição monárquica enfrentava pressões múltiplas. A elite agrária, especialmente cafeeira, crescentemente buscava poder político e questionava a monarquia parlamentar. O exército, fortalecido na Guerra do Paraguai, desenvolveu aspirações políticas e ressentimentos contra governo civil. Intelectuais, influenciados pelo positivismo francês, questionavam monarquia como regime obsoleto. A abolição da escravidão em 1888 alienou a elite escravocrata, particularmente em São Paulo, que havia apoiado a monarquia. A Igreja Católica, apesar de privilegiada, tinha conflitos com estado sobre autonomia. A população urbana crescente, particularmente no Rio de Janeiro, questionava privilégios monárquicos e buscava república democrática. Estes diversos grupos não formavam coalizão coerente, mas suas críticas convergiam na percepção de que monarquia era regime do passado, incompatível com progresso. Dom Pedro II, envelhecido (83 anos em 1889), afastava-se de governança ativa, delegando a filha Princesa Isabela, cujo marido, Conde d'Eu, era impopular.</p>
+
+<h4>Movimentos Republicanos e Intelectuais</h4>
+<p>Movimentos republicanos organizados emergiram particularmente a partir de 1870. O Manifesto Republicano de 1870 e posteriormente o Partido Republicano Brasileiro articulavam demandas por república presidencialista. O republicanismo penetrou especialmente em São Paulo, Rio de Janeiro e Minas Gerais. Intelectuais como Ruy Barbosa (jurista), Quintino Bocaiúva (jornalista) e outros promoviam ideias republicanas através de jornais e discursos. O positivismo de Auguste Comte influenciava gerações de estudantes, particularmente militares, que viam positivismo como filosofia do progresso e modernidade. O lema "Ordem e Progresso" da Constituição Republicana reflete diretamente influência positivista. O republicanismo brasileiro não era democrático radical; buscava principalmente substituição de monarquia por república presidencialista, mantendo ordem social e estruturas econômicas. A maioria dos republicanos eram proprietários rurais, comerciantes e intelectuais que não questionavam escravidão até perto de seu fim. O republicanismo, portanto, refletia aspirações da elite por modernidade e poder, não aspirações revolucionárias de classes populares.</p>
+
+<blockquote class="tip">
+💡 <strong>Nuance Importante:</strong> O republicanismo brasileiro não foi movimento democrático radical como revoluções francesa ou norte-americana. Era elite buscando reorganizar poder, mantendo estrutura social hierarquizada.
+</blockquote>
+
+<h4>O Golpe Militar de 1889</h4>
+<p>A proclamação da república em 15 de novembro de 1889 foi resultado de conspirações militares, particularmente do general Benjamin Constant Botelho Magalhães e do general Manuel Deodoro da Fonseca. Não foi golpe popular revolucionário, mas golpe militar sofisticado, desencadeado por intriga palaciosa. A sequência de eventos: Dom Pedro II transferira poder para filha Princesa Isabela e seu marido, Conde d'Eu, que era tido como nepotista e incompetente. Dissensões militares cresciam sobre questão do status de militares (Barão de Cotegipe queria reduzir gastos militares, alienando oficialidade). Benjamin Constant era positivista convencido que república era regime necessário para progresso. Deodoro da Fonseca era militar respeitado com ambições políticas. Em 15 de novembro de 1889, militares marcharam para o Palácio do Governo e exigiram abdicação de Dom Pedro II. O monarca, sem suporte de tropas leais, não ofereceu resistência. Exilou-se com sua família na Europa. Não houve resistência popular pela monarquia; o golpe foi praticamente indolor politicamente, refletindo falta de ligação emocional entre população e monarquia, ou falta de poder de mobilização de monarquistas. Deodoro da Fonseca tornou-se primeiro presidente da república.</p>
+
+<h4>Transição Monárquico-Republicana</h4>
+<p>A transição da monarquia para república foi institucional, não revolucionária. Manteve-se: estrutura estatal, elites políticas, propriedade (incluindo terras), sistema econômico (agroexportador baseado agora em café). O que mudou foi forma de governo (república presidencialista) e simbologia (bandeira, brasão, valores). Uma Assembleia Constituinte foi convocada para elaborar nova constituição. A Constituição de 1891, promulgada por Deodoro da Fonseca, estabelecia: sistema presidencialista (separação clara entre presidente e legislativo), federalismo (estados com autonomia significativa), sufrágio universal masculino (exceto analfabetos, mulheres permaneceriam sem voto até 1932). A constituição era liberal em princípios, mas mantinha desigualdades: voto censitário inicial (apenas alfabetizados podiam votar), exclusão de mulheres, exclusão de analfabetos (95% da população em 1890). O federalismo, particularmente, favorecia estados agrários maiores (São Paulo, Minas Gerais) em detrimento do poder federal. A república nasceu oligárquica, refletindo interesses de elites regionais. A história da república brasileira seria história de tensões entre tendências centralizadoras (poder federal) e federalistas (poder estadual), entre tendências democráticas e autoritárias.</p>
+
+<h4>Destino de Dom Pedro II e Memória Imperial</h4>
+<p>Dom Pedro II exilou-se em Portugal, morrendo em 1891 em Lisboa, apenas dois anos após queda de seu império. Seu corpo permaneceu em Portugal por décadas, sendo repatriado ao Brasil apenas em 1920. A memória de Dom Pedro II permaneceu ambígua: alguns o veneravam como monarca sábio e progressista que manteve Brasil unido; outros o criticavam como escravocrata que não aboliu escravidão cedo o suficiente; outros ainda viam-no como símbolo de um regime que havia se tornado obsoleto. A monarquia foi abolida, mas monarquistas permaneceram, especialmente entre conservadores. Alguns royalistas sonhavam com restauração monárquica, movimento que tinha alguma força nos primeiros anos da república, mas eventualmente desapareceu. A queda da monarquia em 1889 foi decisiva para trajetória brasileira: consolidou poder de repúblicas presidencialista (problema e oportunidades), federalismo (descentralização), e eleições periódicas (mesmo que frequentemente fraudulentas). A república, embora inicialmente oligárquica e instável, criaria mecanismos para participação política mais ampla ao longo do século XX.`,
+    cards: [
+      {
+        q: 'Como e quando ocorreu a proclamação da república no Brasil?',
+        a: 'Em 15 de novembro de 1889, através de golpe militar liderado por Deodoro da Fonseca, forçando abdicação de Dom Pedro II'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Primeira República e Era Vargas',
+    dur: '17 min',
+    content: `<h3>Primeira República (1889-1930): Oligarquia e Instabilidade</h3>
+<p>A Primeira República Brasileira durou 41 anos (1889-1930) e foi caracterizada por poder oligárquico, fraudes eleitorais, instabilidade política, e dependência econômica de agroexportação. Apesar de declarar-se democrática, era altamente excludente: mulheres não votavam, analfabetos eram excluídos (representando 80% da população), voto era descoberto (voto público, não secreto) facilitando coerção. O sistema político funcionava através de coronelismo: grande proprietário rural (coronel) controlava votos de seus dependentes econômicos em troca de proteção e benefícios. As máquinas eleitorais fraudavam sistematicamente para favorecer candidatos alinhados à oligarquia. Estados maiores, particularmente São Paulo e Minas Gerais, dominavam presidência através da "política do café com leite": alternavam presidência entre paulistas e mineiros, excluindo outras regiões de poder. Este sistema criava resentimentos regionais, levando a rebeliões e revoltas (Revolta da Vacina 1904, Revolta da Chibata 1910, Tenentismo 1920s). A economia permanecia agroexportadora, dependente de preços internacionais de café. Quando preços caíram (especialmente após crise de 1929), a república entrou em colapso.</p>
+
+<h4>Crises Econômicas e Tentativas de Modernização</h4>
+<p>Durante a Primeira República, o Brasil enfrentou crises econômicas periódicas. A crise de 1898, precipitada por superprodução cafeeira e queda de preços, levou o governo a apoiar fortemente produtores através de Convênio de Taubaté (1906), que comprava e armazenava excedentes de café para manter preços altos. Esta política funcionou por um tempo, mas criou dependência: produtores brasileiros viam seus ganhos perpetuamente ameaçados por flutuações de preço mundial. A Primeira Guerra Mundial (1914-1918) teve impacto moderado no Brasil: interrompeu importação de produtos manufaturados da Europa, encorajando industrialização substitutiva; criou demanda por café e outros produtos; mas também gerou inflação. Alguns presidentes tentaram reformas modernizantes: Rodrigues Alves promoveu reformas urbanas no Rio de Janeiro (Pereira Passos); Afonso Pena buscou diversificação econômica; mas reforma estrutural permanecia bloqueada pela oligarquia. A industrialização começava lentamente, particularmente em São Paulo onde capital acumulado da cafeicultura criava oportunidades de investimento. Porém, a industrialização era limitada: Brasil permanecia fundamentalmente agroexportador, fornecendo produtos primários para mundo industrial europeu e norte-americano.</p>
+
+<blockquote class="news">
+📰 <strong>Contexto Global:</strong> A Primeira República coincidiu com Grande Depressão (1929), que devastou economias agroexportadoras. Queda de preço do café de 50% entre 1929-1930 foi catástrofe para Brasil.
+</blockquote>
+
+<h4>Tenentismo e Movimentos de Reforma Militar</h4>
+<p>Tenentismo foi movimento de jovens oficiais militares que, entre 1920 e 1930, contestavam a oligarquia da Primeira República através de revoltas armadas. Os tenentes, frequentemente com educação superior e ideias modernizantes, viam a república oligárquica como corrupta e ineficiente. Suas revoltas, embora fracassadas militarmente, expressavam ânsia por modernidade e crítica ao coronelismo. A Revolta de 1922 (Forte de Copacabana), a Revolta de 1924 (São Paulo) e a Coluna Prestes (1925-1927) foram manifestações tenentistas. A Coluna Prestes, liderada por Luís Carlos Prestes, marchava pelo interior do Brasil promovendo modernização e criticando oligarquia. Embora militarmente derrotada, a Coluna Prestes conquistou apoio de setores populares e permaneceu como símbolo de crítica ao regime. O tenentismo preparou caminho para Getúlio Vargas: muitos tenentes apoiariam Vargas na Revolução de 1930, fornecendo base militar para novo regime. Vargas seria mais bem-sucedido em implementar alguns objetivos tenentistas (modernização, centralização, redução de poder oligárquico) do que os próprios tenentes haviam sido.</p>
+
+<h4>A Revolução de 1930 e Ascensão de Getúlio Vargas</h4>
+<p>Em 24 de outubro de 1930, Getúlio Vargas, apoiado por militares tenentes e setores da elite dissidente, tomou o poder em golpe que encerrou Primeira República. Vargas (1882-1954) era político gaúcho, ex-governador do Rio Grande do Sul, que tinha grande capacidade de manobra política. A revolução não era popular espontânea, mas resultado de conspirações de elites, particularmente da Aliança Liberal que havia perdido eleição presidencial fraudulenta de 1930. Porém, a Revolução de 1930 marcava ruptura com Primeira República: destruía poder oligárquico da "política do café com leite", centralizava poder no Executivo, e iniciava modernização estatal. Getúlio Vargas dissolveu congresso, estados foram subordinados ao poder federal, oligarquias regionais foram destituídas. A revolução tinha apoio de setores modernizantes: militares tenentes, industrialistas paulistas, trabalhadores urbanos que esperavam melhorias. Vargas, perspicaz politicamente, equilibraria estes diferentes grupos, implementando políticas que simultaneamente apoiavam industrialização e mantinham controle sobre movimentos trabalhistas. Seu regime evoluiria de governo revolucionário (1930-1934) para governo constitucional (1934-1937) a governo autoritário (1937-1945), refletindo suas mudanças contínuas de estratégia política.</p>
+
+<h4>Era Vargas: Autoritarismo e Transformação Social</h4>
+<p>A Era Vargas (1930-1945) foi período de transformação estatal profunda. Vargas criou ministérios especializados (Trabalho, Educação, Justiça), centralizando controle estatal. A Constituição de 1934 (substituta de 1891) introduzia direitos trabalhistas inéditos: jornada de 8 horas, direito de greve, direito de associação profissional, proteção ao trabalho feminino e infantil. Foram criadas sindicatos oficiais controlados pelo estado através do Ministério do Trabalho. Este sistema corporativista oferecia proteções, mas subordinava movimentos de trabalhadores ao controle estatal. Vargas implementou industrialização através de protecionismo e investimento estatal: criou Companhia Siderúrgica Nacional (1941), expandiu acesso a energia elétrica, e promoveu substituição de importações. A educação foi expandida, como símbolo de "desenvolvimento". Porém, o regime Vargas permanecia fundamentalmente autoritário: reprimia oposição, controlava mídia através de DIP (Departamento de Imprensa e Propaganda), e suspendia direitos políticos. Em 1937, Vargas fechou congresso e instaurou o "Estado Novo", regime explicitamente ditatorial, alegando necessidade de força contra ameaças comunistas e integralistas. Este Estado Novo duraria até 1945, consolidando estado corporativista interventor que moldaria Brasil por décadas.</p>
+
+<blockquote class="example">
+📌 <strong>Legado Ambíguo:</strong> Vargas é celebrado por alguns como modernizador que industrializou Brasil e criou direitos trabalhistas. Criticado por outros como ditador que reprimiu liberdades e consolidou estado autoritário que persistiria em diferentes formas até 1985.
+</blockquote>`,
+    cards: [
+      {
+        q: 'Qual foi o principal legado da Primeira República para a história do Brasil?',
+        a: 'Oligarquia, fraudes eleitorais, coronelismo, instabilidade política, dependência de agroexportação que culminaria em crise em 1930'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Regime Militar Brasileiro (1964-1985)',
+    dur: '18 min',
+    content: `<h3>Contexto Pré-Golpe e Governo Jango</h3>
+<p>O golpe militar de 1964 que instaurou regime ditatorial de 21 anos não surgiu do nada, mas de crises acumuladas desde 1945. Após queda de Vargas em 1945, o Brasil tinha experimentado períodos de democracia relativa sob constituições de 1946, mas com golpes (1954) e dificuldades. Quando João Goulart (Jango) assumiu presidência em 1961 após morte de Jânio Quadros, enfrentava economia enfraquecida (inflação alta, dívida externa crescente), mobilizações trabalhistas crescentes (greves, demandas por reforma agrária), e polarização política. O Brasil se encontrava preso entre tendências: pressão dos EUA (em contexto de Guerra Fria) por alinhamento anti-comunista; aspirações de grupos de esquerda por transformações radicais; e resistência de elites tradicionais e militares contra mudanças. Jango era visto pela direita como próximo a comunistas por sua simpatia a reformas sociais. Jango tentava equilibrar pressões, buscando reformas moderadas ("reformas de base"), mas encontrava oposição de congress conservador. Manifestações de massa cresciam: comícios pró-reforma de Jango no Rio de Janeiro (março de 1964) reuniram centenas de milhares, aterrorizando elites que temiam revolução. A direita se mobilizava: empresários, militares e Igreja Católica crescentemente questionavam governo Jango como "comunista" ou próximo disso.</p>
+
+<h4>O Golpe de 1964 e Regime Militar Inicial</h4>
+<p>Em 31 de março de 1964, militares mobilizados por cúpulas do Exército, Marinha e Aeronáutica, em coordenação com setores civis (empresários, políticos conservadores, Igreja), executaram golpe derrubando Jango. O golpe alegava defender a "democracia e cristianismo" contra "ameaça comunista", embora buscasse primariamente defender privilégios da elite. Surpreendentemente para os golpistas, encontraram pouca resistência: Jango fugia para o Uruguai, não havia mobilização massiva de trabalhadores para defender governo, forças que se opunham eram desorganizadas. O golpe foi relativamente indolor militarmente, embora consequências políticas fossem profundas. Castelinho Branco, general respeitado, foi escolhido como presidente. O regime militar inicial (1964-1967, governo Casteleiro Branco) apresentava-se como transitório, buscando "limpeza" do comunismo e depois retirada. Porém, criava mecanismos que persistiriam: Atos Institucionais (decretos presidenciais com força de lei), cassação de direitos políticos de adversários, reformas institucionais. Porém, ainda havia eleições, congresso funcionava (embora constrangido), e justiça mantinha relativa independência. Este período é considerado regime autoritário, mas não totalitário comparado ao que viria depois.</p>
+
+<blockquote class="tip">
+💡 <strong>Contexto Internacional:</strong> O golpe brasileiro de 1964 não era isolado: fazparte de padrão de golpes militares na América Latina durante Guerra Fria (Argentina 1966, Uruguai 1973, Chile 1973, etc.). EUA frequentemente apoiava estes golpes contra governos de esquerda ou tidos como comunistas.
+</blockquote>
+
+<h4>Endurecimento do Regime: Costa e Silva e Ato Institucional Nº 5</h4>
+<p>Após Casteleiro Branco (1964-1967), Artur da Costa e Silva assumiu presidência (1967-1969). Com Costa e Silva, o regime endureceu significativamente. Oposição estudantil crescia contra regime militar, particularmente a partir de 1968 com movimentos globais contestação (Maio de 1968 francês reverberava no Brasil). Passeatas de estudantes e trabalhadores cresciam. A contracultura e movimentos anti-guerra influenciavam juventude brasileira. Intelectuais, artistas e padres questionavam regime. A Igreja Católica, particularmente progressistas, criticava autoritarismo militar e injustiça social. A repressão se intensificava: polícia e DOI-CODI (órgão de repressão) prendiam ativistas, torturavam prisioneiros, matavam opositores. Em 13 de dezembro de 1968, Costa e Silva decretou o Ato Institucional Nº 5 (AI-5), que suspendia direitos civis, permitia prisão sem habeas corpus, fechava congresso, e concentrava poder no Executivo militar. O AI-5 transformou o regime de autoritário em claramente totalitário. Começava período mais repressivo da ditadura, com violência política se intensificando.</p>
+
+<h4>Ditadura "Milagre Econômico" (1968-1973)</h4>
+<p>Paradoxalmente, entre 1968 e 1973, o Brasil experimentou crescimento econômico notável, chamado de "Milagre Econômico". O PIB crescia em média 11% ao ano, industrialização acelerava, exportações cresciam. Cidades se transformavam: São Paulo tornava-se megacidade industrial; favelas cresciam exponencialmente; classe média expandia. O regime militar, sob Emílio Garrastazu Médici (1969-1974), divulgava imagem de ordem, eficiência e progresso. Construíram-se grandes obras: Transamazônica, rodovias, hidrelétricas. Promovia-se símbolo de potência: Seleção Brasileira de futebol conquistava Tri-Campeonato Mundial em 1970. Porém, o "milagre" era baseado em: endividamento externo crescente (Brasil contraía empréstimos no exterior), concentração de renda (pobres permaneciam pobres, ricos enriqueciam), exploração de recursos naturais (destruição de Amazônia), e salários deprimidos (regime proibia greves e sindicatos). Quando preços de petróleo aumentaram dramaticamente em 1973 (crise do petróleo), a fragilidade do modelo se revelou. Inflação disparou, dívida externa cresceu, crescimento desacelerou. O "milagre" era ilusão fundada em endividamento insustentável.</p>
+
+<blockquote class="news">
+📰 <strong>Símbolo do Período:</strong> A Transamazônica, construída com objetivo de "integrar" e "civilizar" Amazônia, é vista agora como símbolo de devastação ambiental e autoritarismo, refletindo prioridades distorcidas do regime militar.
+</blockquote>
+
+<h4>Repressão, Luta Armada e Resistência</h4>
+<p>Embora o regime militar apresentasse imagem de ordem, repressão era sistemática. Agências como DOI-CODI (Destacamento de Operações de Informação - Centro de Operações de Defesa Interna), SNI (Serviço Nacional de Informações) e polícia política mantinham rede de espionagem infiltrando sindicatos, universidades e organizações políticas. Prisioneiros políticos eram frequentemente torturados: eram técnicas como afogamento simulado, choques elétricos, privação sensorial. Dezenas foram mortos, números exatos ainda são desconhecidos. Grupos guerrilheiros de esquerda, pequenos mas organizados, tentavam luta armada contra regime: ALN (Ação Libertadora Nacional), VAR-Palmares, MR-8. Embora militarmente derrotados pela superioridade de forças estatais, seus atos (sequestros, assaltos a bancos para financiar luta) causavam desconforto no regime. A luta armada, porém, foi marginal e nunca ameaçou seriamente o regime. A resistência mais significativa veio de setores pacíficos: sindicatos clandestinos, Igreja progredista, intelectuais e artistas que usavam criatividade e sátira para criticar regime. Clandestinamente, circulavam publicações contestatórias. Músicos e cineastas usavam metáfora para escapar censura. A resistência cultural era importante, mesmo que fisicamente impotente contra aparato militar.</p>
+
+<h4>Transição Democrática e Declínio do Regime</h4>
+<p>Na década de 1970, o regime militar começava a decair. Economicamente, o "milagre" havia terminado: inflação alta (50%+ ao ano em 1980), desemprego crescia, dívida externa era insustentável. Politicamente, pressões se acumulavam: anistia para prisioneiros políticos e exilados era demandada; eleições diretas para presidente eram exigidas; mobilizações populares (greves, manifestações) cresciam. A Igreja Católica, liderada por Dom Paulo Evaristo Arns, documentava violações de direitos humanos e oferecia espaço para resistência. Intelectuais organizavam movimentos pela democracia. Movimentos sociais emergiam: movimento de mulheres, movimento negro, movimento ambientalista. João Batista Figueiredo (1979-1985), último presidente militar, tentava abertura "lenta, gradual e segura", mas pressões por democratização cresciam. Em 1984, o movimento pelas "Diretas Já" mobilizava centenas de milhares em manifestações pedindo eleições presidenciais diretas. Embora congresso (ainda não eleito diretamente) rejeitasse mudança constitucional, o regime estava politicamente derrotado. Ironicamente, eleição indireta de Tancredo Neves em 1985 (que morreu semanas depois) foi celebrada como "derrota do regime", mesmo que ocorrida dentro de regras institucionais. Sua morte catalisou ansiedade por democracia, e José Sarney assumiu presidência inaugurando período de redemocratização.</p>
+
+<blockquote class="example">
+📌 <strong>Legado Traumático:</strong> A ditadura deixou cicatrizes: centenas de mortos, milhares de torturados, desaparecidos cujos corpos nunca foram encontrados, traumatizando gerações. A falta de justiça por crimes (Lei de Anistia de 1979 perdoou militares) deixa questões históricas não resolvidas até hoje.
+</blockquote>`,
+    cards: [
+      {
+        q: 'Quantos anos durou o regime militar no Brasil e que eventos marcaram seu final?',
+        a: '21 anos (1964-1985), terminando com mobilizações por eleições diretas ("Diretas Já") e eleição indireta de Tancredo Neves'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Redemocratização, Constituição de 1988 e Brasil Contemporâneo',
+    dur: '16 min',
+    content: `<h3>Redemocratização (1985-1988) e Anseios de Mudança</h3>
+<p>Após a morte de Tancredo Neves em 1985, José Sarney assumiu presidência, inaugurando período de redemocratização. Este período foi caracterizado por esperança de mudança profunda, mobilizações sociais para democracia, e reconstrução de instituições. Sarney, originário da ditadura militar (havia sido ministro de Castelo Branco), era visto com desconfiança por democratas, mas sua fraqueza política criava espaço para sociedade civil se organizar. Uma Assembleia Constituinte foi convocada para criar nova constituição, refletindo aspirações de uma nação que havia enfrentado 21 anos de repressão. Grupos diversos mobilizavam-se para influenciar constituinte: sindicatos, movimentos sociais, Igreja, empresários, intelectuais, todos buscando incorporar seus interesses na carta magna. O processo constituinte foi participativo: audiências públicas ouviram sociedade civil, lobbies pressionavam, mídia debatia intensamente. Esta democracia constituinte, embora imperfeita, representava mudança radical em relação à ditadura que havia imposto constituições sem participação. Economicamente, o período era difícil: inflação era alta, dívida externa pesava, crescimento era lento. Isto criava tensões: esperança por mudança política coexistia com ansiedade econômica.</p>
+
+<h4>Constituição de 1988: "Constituição Cidadã"</h4>
+<p>A Constituição promulgada em 5 de outubro de 1988 é chamada de "Constituição Cidadã" por Ulysses Guimarães porque incorporava amplos direitos e proteções. Era uma constituição progressista comparada a constituições anteriores. Principais características incluem: declaração de direitos humanos fundamentais; liberdade de expressão, imprensa e associação; direitos trabalhistas ampliados (jornada de 8 horas, décimo terceiro salário, férias remuneradas); direitos sociais (saúde, educação, assistência social como direitos); direitos ambientais; direitos de minorias (indígenas, deficientes); direitos de crianças e adolescentes; mecanismos de democracia participativa (plebiscitos, referendos, iniciativas populares); sistemas de freios e contrapesos (separação de poderes); judiciário independente; ministério público com autonomia. A constituição também criava sistemas específicos: SUS (Sistema Único de Saúde), sistema de seguridade social, proteção ambiental. Era constituição extensa e ambiciosa, refletindo aspirações acumuladas de duas décadas. Porém, também era constituição que combinava interesses diversos, frequentemente contraditórios, criando complexidade. A implementação seria difícil: muitos direitos garantidos constitucionalmente nunca seriam efetivamente implementados por falta de recursos, vontade política ou burocracia ineficiente.</p>
+
+<blockquote class="tip">
+💡 <strong>Paradoxo Brasileiro:</strong> A Constituição de 1988 é uma das mais progressistas do mundo, garantindo direitos abrangentes. Porém, sua implementação permanece incompleta: pobreza, desigualdade e violência persistem apesar de garantias constitucionais.
+</blockquote>
+
+<h4>Primeiros Anos de República: Crises Econômicas e Políticas</h4>
+<p>Os primeiros anos da nova república (1988-1994) foram tumultuados. Sarney tentava governar sem legitimidade eleitoral forte, enfrentando congresso não alinhado. A economia deteriorava: inflação disparava (chegou a 2500% em 1990 em termos anualizados), o cruzado (moeda que substituiu cruzeiro) era constantemente desvalorizado, compra de poder caía dramaticamente. Tentativas de estabilizar economia fracassavam: Plano Cruzado (1986) funcionou inicialmente, mas colapsou; Plano Verão (1989) fracassou. A população enfrentava inflação galopante, salários não acompanhavam, pobreza crescia. Em 1989, primeira eleição presidencial direta desde 1960 ocorreu, com Collor de Mello vencendo sobre Lula em disputa polarizada. Collor prometia combater "marajás" (funcionários públicos com privilégios) e modernizar Brasil, mas seu governo revelou-se caótico: economia continuava instável, corrupção desencontrolada, incompetência administrativa. Em 1992, Collor foi acusado de corrupção grave (presidente da república aceitando propinas de empresário) e sofreu impeachment. Fernando Henrique Cardoso (FHC) assumiu como vice-presidente. Apesar das crises, democracia institucional persistia: congresso funcionava, justiça punia presidente (ainda que tardiamente), eleições ocorriam, mídia era livre. Isto representava avanço em relação à ditadura, ainda que a realidade política fosse muitas vezes frustrante.</p>
+
+<h4>Estabilização Econômica e Fernando Henrique Cardoso (1994-2002)</h4>
+<p>Fernando Henrique Cardoso (1994-2002) implementou políticas econômicas neoliberais que estabilizaram a economia. O Plano Real (1994) introduziu nova moeda atrelada ao dólar, controlando inflação dramática através de âncora cambial (dólar oficial fixo com reais). Inflação caiu de 2000%+ para single digits. A economia crescia moderadamente. Porém, as políticas econômicas criavam contradições: controle de inflação era acompanhado por desemprego crescente, privatizações de empresas estatais frequentemente com preços questionáveis e favores a conectados, abertura comercial que prejudicava indústria nacional. Para população pobre, estabilização não se traduzia necessariamente em melhoria de vida. Programas de assistência social como Bolsa Escola começavam, mas eram modestos. FHC era intelectual respeitado (sociólogo), promovia imagem de presidente ilustrado e racional, mas suas políticas refletiam orientação pró-mercado que beneficiava elites e prejudicava mais pobres. As duas eleições de FHC (1994, 1998) foram vitórias para sua coalizão, refletindo apoio de elites urbanas e setores medios a quem estabilização beneficiava. Porém, descontentamento crescia entre setores marginalizados economicamente. Lula, líder sindicalista e presidente do PT (Partido dos Trabalhadores), permanecia como principal figura de oposição, representando esperança de grupos que se sentiam prejudicados.</p>
+
+<blockquote class="news">
+📰 <strong>Transformação Eleitoral:</strong> O PT crescia eleitoralmente durante anos 1990: Lula recebeu 17% em 1989, 27% em 1994, 40% em 1998. Em 2002, finalmente conquistaria presidência em primeiro turno com 53% dos votos.
+</blockquote>
+
+<h4>Era Lula e Expansão Social (2003-2010)</h4>
+<p>Luiz Inácio Lula da Silva, eleito em 2002, assumiu presidência em 2003 como primeira presidente de origem operária e de esquerda. Seu governo marcava ruptura significativa: prioritizava políticas sociais, expansão de direitos, mas mantinha estabilidade macroeconômica (não abandonou ancoragem cambial rigidamente). Programas emblemáticos incluem: Bolsa Família (programa de transferência de renda que beneficiava 50 milhões de brasileiros em seu auge), expansão de universidades federais, criação de universidades federais em cidades pequenas, expansão de acesso a educação superior através do ProUni e FIES. Economicamente, Lula era beneficiado por ciclo positivo: preços de commodities (especialmente minério de ferro e soja) disparavam globalmente, criando receitas externas crescentes. Brasil acumulava reservas de dólares, reduzia dívida externa, crescimento era robusto (5% ao ano em média). A classe média expandia: pessoas saiam da pobreza, acesso a consumo crescia. O otimismo econômico era palpável. Lula era celebrado internacionalmente como presidente que combinava estabilidade macroeconômica com distribuição social. Sua reeleição em 2006 foi esmagadora (61%). Porém, críticos apontavam que expansão social era superficial: dependia de ciclo econômico favorável, não mudava estruturas, e criava ilusão de mudança sem transformação profunda. Criminalidade permanecia, desigualdade continuava enorme, racismo estrutural não era abordado.</p>
+
+<h4>Brasil Contemporâneo: Crises Política e Econômica (2010-2026)</h4>
+<p>A década de 2010 foi tumultuada. Governo Dilma Rousseff (2011-2016), sucessora de Lula, enfrentava crise econômica quando preços de commodities caíram em 2014-2016. Crescimento desacelerava, desemprego crescia, confiança caía. Erros de política econômica (manutenção de gastos quando receitas caíram) agravavam situação. Paralelamente, escândalos de corrupção envolvendo PT (Lula, Dilma, otros) e grandes empreiteiras (Odebrecht) emergiram, minando apoio político. Manifestações em 2013 (Jornadas de Junho) questionavam gastos em Copa do Mundo enquanto serviços básicos eram precários. Polarização política crescia: direita crescia, esquerda defensiva. Dilma foi impeachada em 2016 em processo questionado judicialmente, e Michel Temer assumiu como vice. Temer era político tradicional, não tinha legitimidade democrática clara, e seu governo era impopular (aproval ratings 5-10%). Eleição de 2018 refletia polarização extrema: Jair Bolsonaro, ex-capitão do exército com passado de defesa de tortura durante ditadura, venceu contra Fernando Haddad do PT. Governo Bolsonaro (2019-2022) era controversial: defendia agenda conservadora social, reduzia proteções ambientais (Amazônia sofria desmatamento acelerado), questionava instituições. Surgia a pandemia de COVID-19 em 2020, que Bolsonaro minimizava, causando centenas de milhares de mortes. A polarização política extrema se perpetuava. Em eleição de 2022, Lula venceu Bolsonaro em disputa apertada (50.9% vs 49.1%), retornando à presidência. Governo Lula (2023-presente) busca reconstruir instituições, enfrentar pobreza e desigualdade, mas enfrenta congresso conservador e polarização política. O Brasil contemporâneo é um país de extremos: grande potência econômica e demográfica, mas com imensa desigualdade; democracia institucional consolidada, mas com qualidade questionável; recursos naturais abundantes, mas degradação ambiental crescente. As transformações do Brasil moderno refletem lutas permanentes entre diferentes projetos políticos, visões do país, e interesses conflitantes.</p>
+
+<blockquote class="example">
+📌 <strong>Reflexão Histórica:</strong> A história do Brasil desde 1985 reflete tensões entre democracia e autoritarismo, entre neoliberalismo e estado social, entre desenvolvimento e sustentabilidade. Estas tensões persistem até hoje, moldando futuro do país.
+</blockquote>`,
+    cards: [
+      {
+        q: 'Quais foram as principais características da Constituição de 1988 conhecida como "Constituição Cidadã"?',
+        a: 'Amplos direitos humanos, liberdades políticas, direitos sociais, proteção ambiental, mecanismos de democracia participativa, judiciário independente'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
