@@ -117,39 +117,9 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 #mae-btn,#maeChatBtn,#maeChatWin,.ma-fpts,#maFpts,.points-badge,#fBadge,.f-badge{display:none!important}
 
 
-/* ══ TOPBAR PADRAO MA ══ */
-.ma-topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(4,4,10,.99);border-bottom:1px solid rgba(91,127,255,.15);display:flex;align-items:center;padding:0 14px;gap:6px;z-index:9999;font-family:var(--font)}
-.ma-topbar::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent 0%,#4A7EFF 30%,#00d4ff 65%,transparent 100%);opacity:.75}
-.ma-tb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
-.ma-tb-logo svg{display:block;flex-shrink:0}
-.ma-tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0}
-.ma-tb-page-name{font-size:.64rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase}
-.ma-tb-spacer{flex:1;min-width:0}
-.ma-tb-pts-block{display:flex;align-items:center;gap:7px;text-decoration:none;flex-shrink:0;padding:5px 12px 5px 10px;border-radius:22px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);transition:all .2s;cursor:pointer}
-.ma-tb-pts-block:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08)}
-.ma-tb-trophy{color:#f59e0b;display:flex;align-items:center}
-.ma-tb-trophy svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.ma-tb-pts-num{font-size:.78rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
-.ma-tb-menu-btn{width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;padding:0}
-.ma-tb-menu-btn svg{width:16px;height:16px;stroke:currentColor;pointer-events:none}
-.ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
-.ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}
-.ma-menu-overlay.open{display:block}
-.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:240px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
-.ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
-.ma-menu-user{padding:14px 16px 12px;border-bottom:1px solid #1e1e35}
-.ma-mu-name{font-size:.85rem;font-weight:700;color:#fff;display:block;margin-bottom:3px}
-.ma-mu-pts{font-size:.6rem;color:rgba(255,255,255,.35)}
-.ma-menu-sec{padding:5px 0}
-.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
-.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
-.ma-mi:hover{background:#161628;color:#e8e8f0}
-.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
-.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
-body{padding-top:56px!important;padding-bottom:58px!important}
-
-.ma-fpts{display:none!important}.f-badge{display:none!important}.points-badge{display:none!important}
+/* Topbar CSS agora vem do portal-topbar.js — estilos locais mínimos */
 body{padding-bottom:80px!important}
+.ma-fpts{display:none!important}.f-badge{display:none!important}.points-badge{display:none!important}
 
 /* ══ BOTTOM NAV ══ */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:rgba(4,4,10,.98);border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-around;z-index:999;padding:0 8px;padding-bottom:env(safe-area-inset-bottom)}
@@ -171,74 +141,14 @@ body{padding-bottom:80px!important}
 <script src="data/userStore.js"></script>
 <script src="firebase-config.js"></script>
 <script src="shared/time-tracker.js"></script>
+<script src="shared/portal-topbar.js"></script>
 
 <!-- MA-Fixes: SEO, LGPD cookies, error monitoring, lazy loading -->
 <script src="shared/ma-fixes.js"></script>
 </head>
 <body>
-<nav class="ma-topbar">
-  <a class="ma-tb-logo" href="index.html">
-    <svg width="130" height="38" viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
-      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
-      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
-      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
-      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
-      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF" font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
-    </svg>
-  </a>
-  <div class="ma-tb-sep"></div>
-  <span class="ma-tb-page-name">Ranking</span>
-  <div class="ma-tb-spacer"></div>
-  <a class="ma-tb-pts-block" href="painel.html">
-    <span class="ma-tb-trophy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/></svg></span>
-    <span class="ma-tb-pts-num" id="maPtsNum">000</span>
-  </a>
-  <button class="ma-tb-menu-btn" onclick="toggleMenu()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
-  </button>
-</nav>
-<div class="ma-menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-<div class="ma-menu-dd" id="menuDd">
-  <div class="ma-menu-user" id="menuUserSec"></div>
-  <div class="ma-menu-sec">
-    <a class="ma-mi" href="index.html"><span class="ma-mi-icon">🏠</span>Início</a>
-    <a class="ma-mi" href="cursos.html"><span class="ma-mi-icon">🎓</span>Meus Cursos</a>
-    <a class="ma-mi" href="painel.html"><span class="ma-mi-icon">📊</span>Meu Painel</a>
-    <a class="ma-mi" href="ranking.html"><span class="ma-mi-icon">🏆</span>Ranking</a>
-    <a class="ma-mi" href="perfil.html"><span class="ma-mi-icon">👤</span>Meu Perfil</a>
-    <a class="ma-mi" href="indicacoes.html"><span class="ma-mi-icon">🤝</span>Indicações</a>
-    <a class="ma-mi" href="trilhas.html"><span class="ma-mi-icon">🗺️</span>Trilhas</a>
-    <a class="ma-mi" href="loja.html"><span class="ma-mi-icon">🛒</span>Loja de XP</a>
-    <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
-  </div>
-  <div class="ma-menu-sec">
-    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
-  </div>
-  <div class="ma-menu-sec" id="menuAuthSec"></div>
-</div>
-<script>
-(function(){
-  function up(){
-    try{
-      // v3 FIX: Lê xp_total do Firebase (via MAStore ou ma_user) — NUNCA de ma_points
-      var xp=0;
-      if(window.MAStore&&MAStore.getTotalPointsSync){xp=MAStore.getTotalPointsSync();}
-      else{var u=JSON.parse(localStorage.getItem('ma_user')||'null');xp=(u&&typeof u.xp_total==='number')?u.xp_total:0;}
-      var el=document.getElementById('maTbPtsN');if(el)el.textContent=xp.toLocaleString('pt-BR');
-      // Sincroniza async com Firebase sempre que possível
-      if(window.MAStore&&MAStore.getUser){MAStore.getUser().then(function(usr){if(usr&&typeof usr.xp_total==='number'){var el2=document.getElementById('maTbPtsN');if(el2)el2.textContent=usr.xp_total.toLocaleString('pt-BR');}});}
-    }catch(e){}
-  }
-  function uu(){try{var u=JSON.parse(localStorage.getItem('ma_user')||'null');var s=document.getElementById('maMenuUser'),a=document.getElementById('maMenuAuth');
-    // v3 FIX: Lê xp_total do ma_user (Firebase) — NUNCA de ma_points
-    var xp=(u&&typeof u.xp_total==='number')?u.xp_total:0;
-    if(window.MAStore&&MAStore.getTotalPointsSync){xp=MAStore.getTotalPointsSync();}
-    if(u&&u.email){if(s)s.innerHTML='<span class="ma-mu-name">'+(u.name||u.email)+'</span><div class="ma-mu-pts"><b>'+xp.toLocaleString('pt-BR')+'</b> XP</div>';if(a)a.innerHTML='<button class="ma-mi red" onclick="maTbLogout()"><span class="ma-mi-i">🚪</span>Sair da conta</button>';}}catch(e){}}
-  document.addEventListener('DOMContentLoaded',up);setInterval(up,8000);
-})();
-</script>
-
-<!-- TOPBAR -->
+<!-- Topbar injetada automaticamente pelo portal-topbar.js -->
+<!-- Topbar gerenciada pelo portal-topbar.js (sem duplicação) -->
 
 
 
@@ -352,9 +262,9 @@ async function loadRankingFirestore(){
         av:    avColor(nome),
         foto:  d.foto || null,
         // XP por período
-        xp_mes:    d.xp_mes    || Math.round((d.xp_total||0) * 0.35),
-        xp_semana: d.xp_semana || Math.round((d.xp_total||0) * 0.12),
-        xp_hoje:   d.xp_hoje   || Math.round((d.xp_total||0) * 0.02),
+        xp_mes:    d.xp_mes    || 0,
+        xp_semana: d.xp_semana || 0,
+        xp_hoje:   d.xp_hoje   || 0,
       });
     });
     _rankLoaded = true;
@@ -455,9 +365,9 @@ function buildList(players, tab){
 
 function getTabPlayers(tab){
   var all = _rankPlayers.slice();
-  if(tab==='diario')  return all.map(function(p){ return Object.assign({},p,{pts: p.xp_hoje   || Math.round(p.pts*0.02)}); }).sort(function(a,b){return b.pts-a.pts;});
-  if(tab==='semanal') return all.map(function(p){ return Object.assign({},p,{pts: p.xp_semana || Math.round(p.pts*0.12)}); }).sort(function(a,b){return b.pts-a.pts;});
-  if(tab==='mensal')  return all.map(function(p){ return Object.assign({},p,{pts: p.xp_mes    || Math.round(p.pts*0.35)}); }).sort(function(a,b){return b.pts-a.pts;});
+  if(tab==='diario')  return all.map(function(p){ return Object.assign({},p,{pts: p.xp_hoje   || 0}); }).sort(function(a,b){return b.pts-a.pts;});
+  if(tab==='semanal') return all.map(function(p){ return Object.assign({},p,{pts: p.xp_semana || 0}); }).sort(function(a,b){return b.pts-a.pts;});
+  if(tab==='mensal')  return all.map(function(p){ return Object.assign({},p,{pts: p.xp_mes    || 0}); }).sort(function(a,b){return b.pts-a.pts;});
   return all; // geral — já vem ordenado do Firestore
 }
 
@@ -625,7 +535,7 @@ function maLogout(){if(window.MA_AUTH)MA_AUTH.logout().catch(function(){});local
   var _lp=null;setInterval(function(){var p=gP();if(_lp!==null&&p.total>_lp)_bumpPts();_lp=p.total;},1500);
   (function(){var r=new URLSearchParams(window.location.search).get('ref');if(r){var mc=localStorage.getItem('ma_ref_code');if(!mc||mc!==r.toUpperCase())localStorage.setItem('indicadoPor',r.toUpperCase());}})();
   (function(){if(!gU())return;var today=new Date().toLocaleDateString('pt-BR');var ms;try{ms=JSON.parse(localStorage.getItem('ma_missions'))||{};}catch(e){ms={};}if(!ms.done||ms.date!==today)ms={date:today,done:{}};if(!ms.done.aula){ms.done.aula=true;localStorage.setItem('ma_missions',JSON.stringify(ms));window.MA_addPoints('Missão: Acessou a plataforma',10);}})();
-  var _ss=Date.now();function _saveSess(){var dur=Math.floor((Date.now()-_ss)/60000);var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}s.count=(s.count||0)+1;s.lastDuration=dur;var today=new Date().toLocaleDateString('pt-BR'),yest=new Date(Date.now()-86400000).toLocaleDateString('pt-BR');if(s.lastStudyDate===yest)s.streak=(s.streak||0)+1;else if(s.lastStudyDate!==today)s.streak=1;s.lastStudyDate=today;localStorage.setItem('ma_sessions',JSON.stringify(s));}
+  var _ss=Date.now();function _saveSess(){var dur=Math.floor((Date.now()-_ss)/60000);var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}s.count=(s.count||0)+1;s.lastDuration=dur;/* NÃO mexe em streak nem lastStudyDate aqui — gerenciado pelo checkStreak() do course-engine */localStorage.setItem('ma_sessions',JSON.stringify(s));}
   window.addEventListener('beforeunload',_saveSess);window.addEventListener('pagehide',_saveSess);
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',window.updTopbar);else window.updTopbar();
 })();
@@ -2018,23 +1928,9 @@ document.addEventListener('DOMContentLoaded',function(){
   // Init notification bell - inject into topbar
   _updateBell();
   _autoNotifs();
-  // Position bell inside topbar (not fixed)
-  (function(){
-    var bell=document.getElementById('maeBell');
-    if(!bell)return;
-    var target=document.querySelector('.ma-tb-menu-btn')
-              ||document.querySelector('.tb-menu-btn');
-    var hdrRight=document.querySelector('.hdr-right');
-    if(target){
-      target.parentNode.insertBefore(bell,target);
-      bell.classList.add('mae-bell-visible');
-    }else if(hdrRight){
-      // index.html: insert as first item in hdr-right
-      hdrRight.insertBefore(bell,hdrRight.firstChild);
-      bell.classList.add('mae-bell-visible');
-      bell.style.marginRight='4px';
-    }
-  })();
+  // Bell de notificações — NÃO injetar na topbar (topbar agora é gerenciada pelo portal-topbar.js)
+  // O sino fica oculto para manter topbar igual ao perfil
+  // Para acessar notificações, usar o menu de 3 pontos
   // Hook module complete (after short delay to let v1 load first)
   setTimeout(_hookModuleComplete, 200);
   // Poll points every 3s
@@ -3386,15 +3282,8 @@ var _inp=null;
 document.addEventListener('DOMContentLoaded',function(){
   _inp=document.getElementById('maeSG-input');
   if(_inp)_inp.addEventListener('input',function(){_sgShow(this.value);});
-  // Injetar botão de busca na topbar
-  setTimeout(function(){
-    var btn=document.createElement('button');
-    btn.className='sg-trigger-btn';btn.title='Busca Global (Ctrl+K)';btn.innerHTML='🔍';
-    btn.addEventListener('click',maeSGOpen);
-    var tgt=document.querySelector('.ma-tb-menu-btn,.tb-menu-btn,.hdr-right');
-    if(tgt&&tgt.tagName!=='DIV')tgt.parentNode.insertBefore(btn,tgt);
-    else if(tgt){tgt.insertBefore(btn,tgt.firstChild);}
-  },200);
+  // Busca global acessível pelo atalho Ctrl+K (sem botão na topbar para não cobrir o menu)
+  // Botão de busca removido da topbar para manter layout igual ao perfil
 });
 document.addEventListener('keydown',function(e){
   if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();maeSGOpen();return;}
@@ -3416,32 +3305,14 @@ document.addEventListener('keydown',function(e){
 
 <script src="shared/points-fix.js"></script>
 
-<!-- ═══ NEW TOPBAR FUNCTIONS ═══ -->
+<!-- Topbar agora gerenciada pelo portal-topbar.js — funções de menu/pontos/tema vêm de lá -->
 <script>
-/* ══ MENU ══ */
-function toggleMenu(){document.getElementById('menuDd').classList.toggle('open');document.getElementById('menuOverlay').classList.toggle('open');}
-function closeMenu(){document.getElementById('menuDd').classList.remove('open');document.getElementById('menuOverlay').classList.remove('open');}
-function updateMenuUser(){
-  var u;try{u=JSON.parse(localStorage.getItem('ma_user')||'null');}catch(e){u=null;}
-  var pts=0;if(window.MAStore&&MAStore.getTotalPointsSync){pts=MAStore.getTotalPointsSync()||0;}else{try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');if(_u&&typeof _u.xp_total==='number')pts=_u.xp_total;}catch(e){}}
-  var us=document.getElementById('menuUserSec'),as=document.getElementById('menuAuthSec');
-  if(u){
-    if(us)us.innerHTML='<span class="ma-mu-name">'+((u.name||u.email||'').split(' ')[0])+'</span><div class="ma-mu-pts">'+pts.toLocaleString('pt-BR')+' pontos</div>';
-    if(as)as.innerHTML='<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
-  }else{
-    if(us)us.innerHTML='<span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span>';
-    if(as)as.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
-  }
-}
-function doLogout(){if(typeof MAStore!=='undefined'){MAStore.logout();return;}if(window.MA_AUTH){MA_AUTH.logout().catch(function(){});}localStorage.removeItem('ma_user');closeMenu();location.href='index.html';}
-
-
-/* ══ PONTOS ══ */
-function updatePts(){var el=document.getElementById('maPtsNum');if(!el)return;var pts=0;if(window.MAStore&&MAStore.getTotalPointsSync){pts=MAStore.getTotalPointsSync()||0;}else{try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');if(_u&&typeof _u.xp_total==='number')pts=_u.xp_total;}catch(e){}}el.textContent=pts<1000?String(pts).padStart(3,'0'):pts.toLocaleString('pt-BR');}
-
-document.addEventListener('DOMContentLoaded',function(){updatePts();updateMenuUser();});
-setInterval(updatePts,8000);
-setInterval(updateMenuUser,8000);
+/* Fallback: funções legadas que outros scripts podem chamar */
+function toggleMenu(){if(typeof ptToggleMenu==='function')ptToggleMenu();}
+function closeMenu(){if(typeof ptCloseMenu==='function')ptCloseMenu();}
+function updateMenuUser(){if(typeof ptUpdateMenuUser==='function')ptUpdateMenuUser();}
+function updatePts(){if(typeof ptUpdatePts==='function')ptUpdatePts();}
+function doLogout(){if(typeof ptLogout==='function')ptLogout();}
 </script>
 
 <nav class="bottom-nav" id="bottomNav">
