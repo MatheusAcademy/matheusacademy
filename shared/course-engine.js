@@ -22,6 +22,40 @@
 .lesson-content p[title]:hover,.lesson-content li[title]:hover{
   background:rgba(91,127,255,0.08);outline:1px solid rgba(91,127,255,0.2);
 }
+
+/* ═══ CANETINHA — palette mobile-friendly + FAB ═══ */
+/* Ícone de canetinha na palette */
+.hl-mp-icon{font-size:20px;margin-right:6px;line-height:1;pointer-events:none;}
+/* Dots maiores no mobile */
+@media(max-width:768px){
+  .hl-mini-palette.visible{
+    position:fixed!important;
+    bottom:60px!important;
+    top:auto!important;
+    left:50%!important;
+    transform:translateX(-50%)!important;
+    padding:10px 16px!important;
+    border-radius:28px!important;
+    z-index:99999!important;
+    gap:12px!important;
+  }
+  .hl-mp-dot{width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;border-width:3px!important;}
+  .hl-mp-remove{width:36px!important;height:36px!important;font-size:18px!important;line-height:36px!important;}
+  .hl-mp-icon{font-size:24px!important;}
+}
+/* FAB canetinha flutuante */
+.hl-fab-pen{
+  position:fixed;bottom:80px;left:16px;z-index:9998;
+  width:48px;height:48px;border-radius:50%;border:none;
+  background:linear-gradient(135deg,#FFD700,#FFA500);
+  color:#333;font-size:22px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(255,165,0,0.4);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .2s,box-shadow .2s;
+}
+.hl-fab-pen:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(255,165,0,0.5);}
+.hl-fab-pen.active{background:linear-gradient(135deg,#FF6B6B,#FF4757);color:#fff;animation:hl-fab-pulse 1.5s infinite;}
+@keyframes hl-fab-pulse{0%,100%{box-shadow:0 4px 16px rgba(255,71,87,0.4);}50%{box-shadow:0 4px 24px rgba(255,71,87,0.7);}}
 </style>
 <div class="toast" id="toast"></div>
 
@@ -47,12 +81,15 @@
 
 <!-- Mini palette flutuante (3 cores) — aparece ao selecionar texto -->
 <div class="hl-mini-palette" id="hlMiniPalette">
+  <span class="hl-mp-icon">&#9997;&#65039;</span>
   <div class="hl-mp-dot" data-hl="amarelo" title="Amarelo"></div>
   <div class="hl-mp-dot" data-hl="verde" title="Verde"></div>
   <div class="hl-mp-dot" data-hl="rosa" title="Rosa"></div>
   <div class="hl-mp-sep"></div>
-  <div class="hl-mp-remove" title="Remover destaque">✕</div>
+  <div class="hl-mp-remove" title="Remover destaque">&#10005;</div>
 </div>
+<!-- Botão flutuante de canetinha (FAB) — alternativa para ativar marcação -->
+<button class="hl-fab-pen" id="hlFabPen" onclick="toggleHlFabMode()" title="Ativar canetinha de marcação">&#9997;&#65039;</button>
 <!-- Toolbar antiga (oculta, mantida para compatibilidade) -->
 <div class="highlight-toolbar" id="highlightToolbar" style="display:none"></div>
 <div class="hl-note-popup" id="hlNotePopup">
@@ -1449,25 +1486,53 @@ function launchConfetti(){
   },30);
 }
 
-/* ── STREAK 7 DIAS CONSECUTIVOS → +500 pts ── */
+/* ── STREAK DIAS CONSECUTIVOS → +500 pts a cada 7 dias ── */
+function _dateKey(d){
+  // Formato YYYY-MM-DD para comparação segura (evita problema de locale/DST)
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function _isYesterday(storedDateKey){
+  // Compara se a data armazenada é exatamente o dia anterior
+  var today=new Date();
+  var yest=new Date(today.getFullYear(),today.getMonth(),today.getDate()-1);
+  return storedDateKey===_dateKey(yest);
+}
+function _isToday(storedDateKey){
+  return storedDateKey===_dateKey(new Date());
+}
 function checkStreak(){
   var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}
-  var today=new Date().toLocaleDateString('pt-BR');
-  var yest=new Date(Date.now()-86400000).toLocaleDateString('pt-BR');
+  var todayKey=_dateKey(new Date());
+
+  // Migração: se lastStudyDate está no formato antigo (dd/mm/yyyy), converte
+  if(s.lastStudyDate&&s.lastStudyDate.indexOf('/')!==-1){
+    var parts=s.lastStudyDate.split('/');
+    if(parts.length===3)s.lastStudyDate=parts[2]+'-'+parts[1]+'-'+parts[0];
+  }
+
   // Se já acessou hoje, não reconta
-  if(s.lastStudyDate===today)return;
+  if(s.lastStudyDate===todayKey)return;
+
   // Calcula streak
-  if(s.lastStudyDate===yest){s.streak=(s.streak||0)+1;}
-  else{s.streak=1;}
-  s.lastStudyDate=today;
+  if(s.lastStudyDate&&_isYesterday(s.lastStudyDate)){
+    s.streak=(s.streak||0)+1;
+  } else if(!s.lastStudyDate){
+    // Primeira vez
+    s.streak=1;
+  } else {
+    // Pulou 1 ou mais dias → reseta
+    s.streak=1;
+  }
+  s.lastStudyDate=todayKey;
   localStorage.setItem('ma_sessions',JSON.stringify(s));
-  // 7 dias consecutivos → premia uma vez por ciclo
+
+  // A cada 7 dias consecutivos → premia uma vez por ciclo
   if(s.streak>0&&s.streak%7===0){
     var streakKey='streak_bonus_'+Math.floor(s.streak/7);
     if(!localStorage.getItem(streakKey)){
       localStorage.setItem(streakKey,'1');
       addPoints('7 dias consecutivos de acesso!',500);
-      showMotiv('🔥','Sequência de 7 Dias!','Você acessou por 7 dias seguidos! Incrível!','+500 pontos');
+      showMotiv('\u{1F525}','Sequ\u00EAncia de 7 Dias!','Voc\u00EA acessou por 7 dias seguidos! Incr\u00EDvel!','+500 pontos');
     }
   }
 }
@@ -1548,6 +1613,7 @@ function _mlFetchTTS(texto,abortSignal){
 }
 
 /* ── PRÉ-CARREGA ao abrir tópico ── */
+var _mlPrePromises={};   // { 'mi_ti': Promise<blobUrl> } — para esperar preload em vez de refazer fetch
 function _mlPreload(mi,ti){
   var ttsUrl=window.MA_TTS_URL||'';if(!ttsUrl)return;
   var key=mi+'_'+ti;
@@ -1559,9 +1625,10 @@ function _mlPreload(mi,ti){
   _mlBlocos[key]=_mlExtrairBlocos(t.content,t.name);
   _mlPreCache[key]='loading';
   var ac=new AbortController();
-  _mlFetchTTS(texto,ac.signal)
-    .then(function(url){_mlPreCache[key]=url;})
-    .catch(function(){_mlPreCache[key]=null;});
+  var p=_mlFetchTTS(texto,ac.signal)
+    .then(function(url){_mlPreCache[key]=url;delete _mlPrePromises[key];return url;})
+    .catch(function(){_mlPreCache[key]=null;delete _mlPrePromises[key];return null;});
+  _mlPrePromises[key]=p;
 }
 
 /* ── Toca blobUrl com velocidade ── */
@@ -1636,29 +1703,54 @@ function mlToggleModAudio(mi){
     return;
   }
 
+  // Se preload está em andamento → ESPERA ele (não faz novo fetch duplicado)
+  if(cached==='loading'&&_mlPrePromises[key]){
+    _mlLoading=true;_mlSetBtn(mi,'loading');
+    var reqMi=mi;
+    _mlPrePromises[key].then(function(url){
+      if(_mlModMi!==reqMi){if(url)URL.revokeObjectURL(url);return;}
+      _mlLoading=false;
+      if(url){
+        _mlPreCache[key]=null;
+        _mlPlayUrl(url,spd,mi,null);
+      } else {
+        // Preload falhou → fallback voz navegador
+        _mlSetBtn(mi,'idle');
+        _mlFallbackBrowser(topicoAberto,spd,mi);
+      }
+    });
+    return;
+  }
+
   // Sem cache → fetch agora (tópico inteiro, 1 chamada)
   var texto=_mlExtrairTexto(topicoAberto.content,topicoAberto.name);
   if(!texto.trim()){showToast('Sem conteúdo para narrar','warn');return;}
   if(!_mlBlocos[key])_mlBlocos[key]=_mlExtrairBlocos(topicoAberto.content,topicoAberto.name);
   _mlLoading=true;_mlSetBtn(mi,'loading');
   _mlAbort=new AbortController();
-  var reqKey=key,reqMi=mi;
+  var reqKey=key,reqMi2=mi;
   _mlFetchTTS(texto,_mlAbort.signal)
     .then(function(url){
-      if(_mlModMi!==reqMi){URL.revokeObjectURL(url);return;}
+      if(_mlModMi!==reqMi2){URL.revokeObjectURL(url);return;}
       _mlLoading=false;_mlAbort=null;
       _mlPlayUrl(url,spd,mi,null);
     })
     .catch(function(e){
       if(e.name==='AbortError')return;
       _mlLoading=false;_mlAbort=null;_mlSetBtn(mi,'idle');
-      // Fallback: voz do navegador
-      try{window.speechSynthesis.cancel();}catch(ex){}
-      var utt=new SpeechSynthesisUtterance(texto.slice(0,2000));
-      utt.lang='pt-BR';utt.rate=Math.min(spd,2);
-      utt.onend=function(){_mlSetBtn(mi,'idle');};
-      window.speechSynthesis.speak(utt);
+      _mlFallbackBrowser(topicoAberto,spd,mi);
     });
+}
+
+/* ── Fallback: voz do navegador quando TTS API falha ── */
+function _mlFallbackBrowser(topico,spd,mi){
+  try{window.speechSynthesis.cancel();}catch(ex){}
+  var texto=_mlExtrairTexto(topico.content,topico.name);
+  var utt=new SpeechSynthesisUtterance(texto.slice(0,2000));
+  utt.lang='pt-BR';utt.rate=Math.min(spd,2);
+  utt.onend=function(){_mlSetBtn(mi,'idle');};
+  _mlSetBtn(mi,'playing');
+  window.speechSynthesis.speak(utt);
 }
 
 /* ── CLIQUE EM PARÁGRAFO — pula para posição proporcional no áudio ── */
@@ -1957,6 +2049,15 @@ function initHighlight(){
   },{passive:true});
 }
 
+var _hlFabMode=false; // modo canetinha ativo via FAB
+function toggleHlFabMode(){
+  _hlFabMode=!_hlFabMode;
+  var fab=document.getElementById('hlFabPen');
+  if(fab){fab.classList.toggle('active',_hlFabMode);}
+  if(_hlFabMode){showToast('Canetinha ativada! Selecione o texto para marcar','ok');}
+  else{showToast('Canetinha desativada','info');hideToolbar();}
+}
+
 function _checkSel(){
   var sel=window.getSelection();
   if(!sel||sel.rangeCount===0||sel.toString().trim().length<2){hideToolbar();return;}
@@ -1966,15 +2067,27 @@ function _checkSel(){
   _curRange=range.cloneRange();
   var rect=range.getBoundingClientRect();
   if(rect.width===0&&rect.height===0){hideToolbar();return;}
-  /* Posicionar a palette acima da seleção (fixed) */
-  var palH=42;
-  var top=rect.top-palH-10;
-  var left=rect.left+(rect.width/2)-70;
-  if(top<8)top=rect.bottom+8;
-  left=Math.max(8,Math.min(left,window.innerWidth-150));
-  _hlPalette.style.position='fixed';
-  _hlPalette.style.top=top+'px';
-  _hlPalette.style.left=left+'px';
+  var isMobile=window.innerWidth<=768;
+  if(isMobile){
+    /* MOBILE: posiciona como barra fixa no bottom (acima da nav) — NÃO conflita com toolbar nativa */
+    _hlPalette.style.position='fixed';
+    _hlPalette.style.top='auto';
+    _hlPalette.style.bottom='60px';
+    _hlPalette.style.left='50%';
+    _hlPalette.style.transform='translateX(-50%)';
+  } else {
+    /* DESKTOP: posiciona acima da seleção */
+    var palH=42;
+    var top=rect.top-palH-10;
+    var left=rect.left+(rect.width/2)-70;
+    if(top<8)top=rect.bottom+8;
+    left=Math.max(8,Math.min(left,window.innerWidth-150));
+    _hlPalette.style.position='fixed';
+    _hlPalette.style.top=top+'px';
+    _hlPalette.style.left=left+'px';
+    _hlPalette.style.bottom='';
+    _hlPalette.style.transform='';
+  }
   _hlPalette.classList.add('visible');
   _hlPaletteVisible=true;
 }
