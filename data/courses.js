@@ -1844,13 +1844,9 @@ var MA_CATS = [
   {name:'Saúde & Ciência', sub:'Seu corpo é seu maior patrimônio — cuide dele com conhecimento', courses:[], soon:['Nutrição e Alimentação Inteligente','Saúde Mental na Prática','Medicina Preventiva','Neurociência do Dia a Dia','Longevidade: Viver Mais e Melhor']},
   /* ═══ 21. INGLÊS ═══ */
   {name:'Inglês', sub:'O idioma que abre portas no mundo inteiro', courses:[], soon:['Inglês do Zero ao Fluente','Business English','Inglês para Viagens','Pronúncia Perfeita','Inglês com Filmes e Séries']},
-  /* ═══ 22. ENGENHARIA ═══ */
-  {name:'Engenharia', sub:'Conhecimento técnico de alta precisão e aplicação real', courses:[], soon:['Instalações Hidráulicas e Gás','Fundamentos de Engenharia Civil','Projetos Estruturais','Elétrica Predial na Prática','Laudo Técnico e Normas']},
-  /* ═══ 23. MECÂNICA ═══ */
-  {name:'Mecânica', sub:'Do básico ao avançado em manutenção e diagnóstico automotivo', courses:[], soon:['Mecânica Básica Automotiva','Diagnóstico e Manutenção','Elétrica Automotiva','Injeção Eletrônica','Mecânica de Motos']},
-  /* ═══ 24. MEIO AMBIENTE & SUSTENTABILIDADE ═══ */
+  /* ═══ 22. MEIO AMBIENTE & SUSTENTABILIDADE ═══ */
   {name:'Meio Ambiente & Sustentabilidade', sub:'O planeta precisa de você — entenda os desafios e as soluções', courses:[], soon:['Mudanças Climáticas Descomplicadas','Energias Renováveis','Sustentabilidade nos Negócios','Amazônia: O Pulmão do Mundo','Água: O Recurso Mais Valioso']},
-  /* ═══ 25. EBOOKS (sempre por último) ═══ */
+  /* ═══ 23. EBOOKS (sempre por último) ═══ */
   {name:'Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x Irã','Devocional 2026','Estamos Próximos do Fim?','Manual do Investidor Iniciante'], isEbook:true}
 ];
 
