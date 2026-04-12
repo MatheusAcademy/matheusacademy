@@ -2787,6 +2787,25 @@ var MA_COURSES = [
     color: '#AD1457',
     addedTs: 1776024636090,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/hs66.jpg',
+    id: 'hs66',
+    name: 'Hábitos de Sucesso e Rotina de Resultado',
+    desc: 'Mostra como criar hábitos positivos, substituir padrões ruins e manter uma rotina produtiva e sustentável.',
+    file: '36-habitos-sucesso.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'HS_HENRY_2026_MASTER',
+    ak: 'hs_auth',
+    storagePrefix: 'hs_',
+    icon: '🏆',
+    color: '#558B2F',
+    addedTs: 1776024642034,
+    active: true
   }
 ];
 var MA_CATS = [
