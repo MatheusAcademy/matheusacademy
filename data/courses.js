@@ -3248,6 +3248,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776024769258,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ip.jpg',
+    id: 'ip',
+    name: 'Inglês para Pronúncia e Listening',
+    desc: 'Trabalha escuta ativa, compreensão de falantes nativos, ritmo, entonação e correção de pronúncia.',
+    file: '17-ingles-pronuncia.html',
+    cat: 'Inglês',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IP_HENRY_2026_MASTER',
+    ak: 'ip_auth',
+    storagePrefix: 'ip_',
+    icon: '🇺🇸',
+    color: '#00838F',
+    addedTs: 1776024775014,
+    active: true
   }
 ];
 var MA_CATS = [
