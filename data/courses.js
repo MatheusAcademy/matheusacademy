@@ -1989,6 +1989,25 @@ var MA_COURSES = [
     color: '#2e7d32',
     addedTs: 1776024433493,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/hf.jpg',
+    id: 'hf',
+    name: 'Biografia de Henry Ford',
+    desc: 'O criador da Ford e da produção em massa que revolucionou a indústria.',
+    file: '40-bio-henry-ford.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'HF_HENRY_2026_MASTER',
+    ak: 'hf_auth',
+    storagePrefix: 'hf_',
+    icon: '👤',
+    color: '#003478',
+    addedTs: 1776024437670,
+    active: true
   }
 ];
 var MA_CATS = [
