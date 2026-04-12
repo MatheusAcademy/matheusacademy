@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inglês Avançado para Comunicação Natural — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'IA',
+  name: 'Inglês Avançado para Comunicação Natural',
+  shortName: 'Inglês Avançado',
+  cat: 'Inglês',
+  desc: 'Curso voltado para refinamento da fala, escuta, vocabulário avançado e expressão mais natural e confiante.',
+  salt: 'IA_HENRY_2026_MASTER',
+  ak: 'ia_auth',
+  courseKey: 'ia',
+  prefix: 'ia_',
+  color: '#7B1FA2',
+  glow: 'rgba(123,31,162,.35)',
+  free: true,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'ia_mod1',
+    name: 'Sofisticação Semântica: Nuance, Registro, e Contexto',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Resumo do Módulo 1: A Elegância da Escolha Vocabular',
+      points: [
+        'Sinônimos não são completamente intercambiáveis—cada palavra tem seu contexto e connotação específicos',
+        'Registro (formal vs. informal) determina qual palavra é apropriada em qual contexto social',
+        'Compreender nuance semântica transforma você de falante competente para verdadeiramente sofisticado',
+        'Escolha de palavras precisa é o que diferencia escrita comum de escrita excelente'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual palavra é mais apropriada em contexto acadêmico: "Commence", "Start", ou "Get going"?',
+        opts: ['Start', 'Commence', 'Get going', 'Ambos Start e Commence'],
+        correct: 1
+      },
+      {
+        q: 'Qual é a diferença entre "skinny" e "slender"?',
+        opts: ['Nenhuma', '"Skinny" é neutro, "slender" é mais elegante/positivo', '"Slender" é pejorativo', 'Apenas diferença de sotaque'],
+        correct: 1
+      },
+      {
+        q: 'Complete com o verbo apropriado: "The company ___ tremendous growth last year."',
+        opts: ['experienced', 'went through', 'had', 'achieved'],
+        correct: 0
+      }
+    ]
+  },
+  {
+    id: 'ia_mod2',
+    name: 'Argumentação Sofisticada: Lógica, Evidência, e Persuasão',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Resumo do Módulo 2: O Poder do Argumento Bem Construído',
+      points: [
+        'Argumentação efetiva requer estrutura clara, evidência sólida, e reconhecimento de contraposições',
+        'Diferentes tipos de evidência (estatística, anedotal, teórica) funcionam melhor em contextos diferentes',
+        'Rebater argumentos opostos com respeito aumenta credibilidade ao invés de diminui-la',
+        'Dominar argumentação avançada abre portas para debates, escrita persuasiva, e influência genuína'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual estrutura argumentativa é MAIS credível em contexto acadêmico?',
+        opts: ['Opinião pessoal forte', 'Evidência estatística + reconhecimento de limitações', 'Anedota emocional', 'Autoridade pessoal'],
+        correct: 1
+      },
+      {
+        q: 'Complete: "While I understand the opposition\'s concern, I would argue that ___."',
+        opts: ['they are wrong', 'my evidence is more compelling', 'my perspective addresses their concern more effectively', 'everyone agrees with me'],
+        correct: 2
+      },
+      {
+        q: 'Qual frase demonstra reconhecimento genuíno de um ponto válido?',
+        opts: ['I disagree completely', 'Your point has merit, though I believe...', 'That\'s silly', 'You\'re obviously wrong'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'ia_mod3',
+    name: 'Análise Crítica: Além da Superfície da Linguagem',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Resumo do Módulo 3: Pensamento Crítico em Inglês',
+      points: [
+        'Análise crítica envolve não apenas entender o quê foi dito, mas POR QUÊ e QUE EFEITO tem',
+        'Falhos em lógica (logical fallacies) são ferramentas essenciais para identificar argumentos fracos',
+        'Bias (preconceito) consciente e inconsciente molda como linguagem é usada e interpretada',
+        'Pensar criticamente em inglês desenvolve pensamento crítico geral que transcende linguagem'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual é um exemplo de "ad hominem fallacy" (apelar ao homem)?',
+        opts: ['Argumentar com estatística', 'Atacar a pessoa ao invés do argumento', 'Fazer analogia', 'Oferecer evidência'],
+        correct: 1
+      },
+      {
+        q: 'Complete: "This argument commits the fallacy of ___ when it assumes..."',
+        opts: ['strawman', 'begging the question', 'false dichotomy', 'All of the above'],
+        correct: 3
+      },
+      {
+        q: 'Qual pergunta melhor identifica bias em um texto?',
+        opts: ['Quem é o autor?', 'O que grupo tem a ganhar com essa narrativa?', 'Qual informação está ausente propositalmente?', 'Todas acima'],
+        correct: 3
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'Sinônimos Sofisticados: Além do Dicionário Básico',
+    dur: 35,
+    content: `<h3>A Arte da Escolha Precisa: Sinônimos e Suas Nuances</h3>
+<p>Você já sabe muitas palavras. Mas saber MUITAS palavras é diferente de saber como ESCOLHER a palavra certa para a situação certa. Isto é sofisticação linguística. Três palavras diferentes podem ter significado similar ("happy", "pleased", "delighted"), mas cada uma carrega connotações e contextos únicos. Dominar essas nuances é o que diferencia um falante bom de um excepcional.</p>
+
+<h4>Começar, Iniciar, Dar Início: Sinônimos de "Begin"</h4>
+<p>"Begin" é genérico. "Commence" é formal, frequentemente acadêmico ou oficial: "The ceremony commenced at precisely 6 PM" (A cerimônia teve início em exatamente 6 da tarde). "Start" é casual e comum. "Initiate" é técnico ou formal, frequentemente sobre processos: "We will initiate a new project" (Vamos iniciar um novo projeto). "Embark on" é mais literário, sugerindo uma jornada: "She embarked on a new adventure" (Ela começou uma nova aventura).</p>
+
+<p>Qual você usaria para descrever um filme começando? "The movie started at 7" (casual). Para um procedimento formal? "The legal proceedings commenced" (formal). Para começar uma carreira? "I'm embarking on a new career path" (aspiracional e literário). Cada palavra cria um tom DIFERENTE mesmo expressando o mesmo conceito básico.</p>
+
+<blockquote class="tip">
+<strong>Dica de Aprendizado Semântico:</strong> Quando encontra um sinônimo, não apenas anote a tradução. Pesquise: Qual contexto é mais apropriado? Qual tom cria? Qual audiência usaria? Escreva 2-3 sentenças exemplo para cada contexto. Isto consolida VERDADEIRA compreensão.
+</strongquote>
+
+<h4>Beleza, Lindeza, Graça: Adjetivos de Aparência Positiva</h4>
+<p>"Beautiful" é universal, o padrão. "Lovely" é mais carinhoso, mais quente, frequentemente usado para pessoas amadas: "Her lovely smile" (Seu sorriso encantador). "Gorgeous" é intenso, frequentemente sexual ou admirador: "That dress is gorgeous!" (Aquele vestido é magnífico!). "Handsome" é tradicionalmente para homens, expressando beleza digna/elegante. "Pretty" é mais leve, frequentemente feminino, menos profundo que "beautiful".</p>
+
+<p>"Elegant" é sofisticado e refinado, frequentemente sobre estilo: "An elegant solution" (Uma solução elegante). "Stunning" é dramático, deixa sem palavras: "That sunset was absolutely stunning" (Aquele pôr do sol foi absolutamente arrebatador). "Exquisite" é refinado, sofisticado, frequentemente sobre detalhes delicados: "The exquisite craftsmanship" (O trabalho exquisito). Notar como cada uma cria FEELING diferente?</p>
+
+<h4>Entender, Compreender, Apreender: Sinônimos de "Understand"</h4>
+<p>"Understand" é padrão. "Comprehend" é mais formal, sugerindo compreensão completa e profunda. "Grasp" (literalmente "agarrar") é metafórico, sugerindo compreensão rápida e firme: "I grasp the concept" (Entendo o conceito). "Fathom" frequentemente é usado negativamente: "I can't fathom why he did that" (Não consigo entender por que fez isso). "Apprehend" tem significado legal (prender), mas também pode significar "entender com medo/apreensão".</p>
+
+<p>"Get" é casual: "Do you get what I mean?" (Entende o que quero dizer?). "Discern" é mais sofisticado, sugerindo compreensão perspicaz: "She discerned his true intentions" (Ela discerniu suas verdadeiras intenções). "Perceive" é formal, frequentemente sobre compreensão sensorial: "I perceive a change in attitude" (Percebo uma mudança de atitude).</p>
+
+<blockquote class="example">
+<strong>Exemplos de Contexto Específico:</strong>
+Contexto informal: "I got it! Understood!"
+Contexto acadêmico: "Students comprehend the key concepts through rigorous study."
+Contexto metafórico: "Finally grasped the significance of the discovery."
+Contexto negativo: "I can't fathom the logic behind that decision."
+Contexto formal-sofisticado: "The analyst discerned patterns that others missed."
+</strongquote>
+
+<h4>Dizer, Afirmar, Declarar, Asseverar: Sinônimos de "Say"</h4>
+<p>"Say" é padrão. "Tell" frequentemente envolve um objeto: "She told me a secret" (Ela me contou um segredo). "Mention" é mais casual, menos formal: "He mentioned it briefly" (Mencionou levemente). "State" é mais formal, frequentemente sobre afirmação clara: "She stated her position clearly" (Ela afirmou sua posição claramente). "Declare" é oficial/solene: "The president declared the emergency" (O presidente declarou emergência).</p>
+
+<p>"Remark" é mais casual, frequentemente observação: "He remarked that the weather was nice" (Comentou que o tempo estava bom). "Contend" é argumentativo: "He contends that the policy is unfair" (Ele sustenta que a política é injusta). "Assert" é forte, confiante: "She asserts her innocence" (Ela afirma sua inocência). "Utter" é literário: "Not a word was uttered" (Nem uma palavra foi proferida).</p>
+
+<h4>Diferenciando Por Registro e Contexto</h4>
+<p>Imagine descrever um experimento científico:
+- Casual: "The results showed that..."
+- Formal: "The findings indicate that..."
+- Academic: "The empirical data demonstrate that..."
+- Highly Technical: "The quantitative analysis elucidates that..."
+
+Cada palavra é tecnicamente correta, mas cada uma cria diferente TONE e é apropriada para diferente CONTEXTO. Num trabalho científico, usar linguagem casual soa unprofessional. Numa conversa casual, usar linguagem muito técnica soa pretencioso.</p>
+
+<h4>Exercício Prático: Seus Próprios Sinônimos Contextualizados</h4>
+<p>Pegue estes verbos comuns: "look", "go", "get", "make", "think". Para cada um, encontre pelo menos 5 sinônimos e escreva um contexto onde cada seria melhor. Exemplo:
+- Look: gaze (romantic), glance (quick), stare (intense), examine (careful), behold (literary)
+- "She gazed into his eyes" vs. "She examined the document" vs. "He stared in disbelief"
+
+Isto treina sua sensibilidade para nuance semântica de forma muito prática!`,
+    cards: [
+      {
+        q: 'Qual é a diferença de registro entre "commence", "start", e "get going"?',
+        a: '"Commence" = muito formal/oficial. "Start" = neutro/comum. "Get going" = muito casual/amigável. Use cada uma para registro apropriado.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Registro e Contexto Social: Falando Apropriadamente em Qualquer Situação',
+    dur: 35,
+    content: `<h3>O Código Social da Língua: Falando Apropriadamente</h3>
+<p>Uma das diferenças entre falante "estrangeiro" e "nativo" é compreensão instintiva de REGISTRO—o nível de formalidade apropriado para cada contexto social. Você fala diferente com sua avó, seu chefe, seus amigos, e um cliente? Claro! Em inglês, essa variação é ainda mais importante porque o inglês tem distinções muito claras entre registros. Dominar isso transforma você de alguém que fala inglês para alguém que fala inglês APROPRIADAMENTE.</p>
+
+<h4>Registros Principais em Inglês</h4>
+<p>Registro FORMAL/ACADÊMICO é usado em contextos profissionais, acadêmicos, legais. Vocabulário sofisticado, sentenças complexas, sem contrações, sem gírias. "I appreciate your consideration of this matter" (Aprécio sua consideração deste assunto). "The aforementioned data demonstrates significant correlation" (Os dados previamente mencionados demonstram correlação significativa).</p>
+
+<p>Registro NEUTRO/PADRÃO é usado na maioria das situações profissionais, notícias, comunicação formal mas não extremamente rígida. Linguagem clara, simples, profissional mas acessível. "Thank you for your email regarding the project" (Obrigado por seu email sobre o projeto). "We will review the proposal and respond within three business days" (Revisaremos a proposta e responderemos em três dias úteis).</p>
+
+<p>Registro CASUAL/COLOQUIAL é usado entre amigos, família, contextos informais. Contrações, expressões casuales, às vezes gírias. "Hey! How's it going? I've been meaning to call you" (E aí! Como vai? Estava querendo ligar para você). "That's so cool! We should totally hang out this weekend" (Que legal! Deveríamos definitivamente nos encontrar neste fim de semana).</p>
+
+<p>Registro SLANG/MUITO CASUAL é entre amigos próximos, online, muito descontraído. Gírias, omissão de palavras, linguagem muito reduzida. "Yo, wassup? You coming tonight or what?" (E aí, beleza? Você vem ou não?). "That movie was sick!" (Aquele filme era demais!). Este registro é perigoso para aprendizes porque pode parecer desrespeitoso se usado no contexto errado.</p>
+
+<blockquote class="tip">
+<strong>Regra de Ouro de Registro:</strong> Quando em dúvida, USE REGISTRO MAIS FORMAL. Um falante de segundo idioma que usa linguagem um pouco formal é respeitado. Um falante de segundo idioma que usa slang pode ser visto como presunçoso ou desrespeitoso. É melhor ser um pouco formal demais que informal demais!
+</blockquote>
+
+<h4>Sinais de Formalidade em Inglês</h4>
+<p>Contrações ("don't", "can't", "I'm") são MAIS FORMAIS quando não usadas. Você diz "I do not agree" (não acordo) em contexto formal vs. "I don't agree" em casual. Pronúncias cheias vs. reduzidas: "Got to" (muito formal) vs. "gotta" (casual). Palavras latinas/gregas ("utilize") vs. simples ("use"): "Utilize this resource" é mais formal que "Use this resource".</p>
+
+<p>Sentenças longas, complexas são mais formais. "Due to unforeseen circumstances, the meeting has been rescheduled" (Devido circunstâncias imprevistas, reunião foi remarcada) vs. "The meeting got pushed back because of stuff that came up" (Reunião foi adiada por causa de coisas que surgiram).</p>
+
+<h4>Exemplos de Mesma Ideia em Diferentes Registros</h4>
+<p>IDEIA: "Discordo com sua opinião"
+- FORMAL: "I respectfully disagree with your assessment."
+- NEUTRO: "I don't agree with your opinion."
+- CASUAL: "I don't really agree with you on that."
+- SLANG: "Nah, I'm not feeling that take."
+
+IDEIA: "Trabalhe mais eficientemente"
+- FORMAL: "I would recommend increasing your productivity metrics."
+- NEUTRO: "Try to work more efficiently."
+- CASUAL: "You should probably try to get more done."
+- SLANG: "Dude, you gotta step it up!"
+
+Qual você usaria para seu chefe? Para um amigo? Para um colega que mal conhece?</p>
+
+<blockquote class="example">
+<strong>Email Completo em Diferentes Registros:</strong>
+
+FORMAL:
+"Dear Mr. Johnson,
+I trust this message finds you well. I would like to request your consideration regarding the proposed modification to our project timeline. I believe this adjustment would optimize our resource allocation and enhance overall project efficiency.
+Respectfully,
+Maria"
+
+NEUTRO:
+"Hi Mr. Johnson,
+I wanted to suggest that we consider adjusting our project timeline. I think it could help us manage our resources better and finish the project more smoothly.
+Best regards,
+Maria"
+
+CASUAL:
+"Hey Johnson!
+So, I was thinking—what if we changed the timeline a bit? I think it could actually help us get things done better and not be so crazy stressful.
+Talk soon,
+Maria"
+</strongquote>
+
+<h4>Reconhecendo Quando Mudar Registro</h4>
+<p>Sinais de que você precisa ser MAIS formal: Está em uma entrevista? Falando com alguém de autoridade? É comunicação escrita permanente (email profissional, inscrição)? Há consequências se ficar mal? Qualquer destas → seja mais formal.</p>
+
+<p>Sinais de que você pode ser MAIS casual: Conversa entre amigos? Chat informal? Contexto já estabelecido de amizade? Você foi convidado a ser casual ("Feel free to be yourself")? Tudo bem ser mais casual.</p>
+
+<p>Uma habilidade real é MUDAR registro durante conversa. Você começa formal com colega novo, depois à medida que fica mais próximo, pode flexionar para neutro, e eventualmente casual se a amizade se desenvolve. Observar e adaptar é crucial!</p>
+
+<h4>Prática: Reescrevendo para Diferentes Registros</h4>
+<p>Pegue uma mensagem que você escreveu. Reescreva três vezes: uma em registro muito formal, uma em neutro, uma em casual. Qual sentiria melhor para diferentes destinatários? Este exercício treina sua flexibilidade de registro de forma poderosa e prática.</p>
+
+<p>Exercício de imersão: Assista a diferentes vídeos em inglês—um debate formal, podcast casual entre amigos, noticiário, stand-up comedy. Observe COMO a linguagem muda. Qual palavra se usa em qual contexto? Como tom de voz muda? Qual expressão são aceitáveis aqui mas não ali? Isto desenvolve sensibilidade instintiva para registro!`,
+    cards: [
+      {
+        q: 'Complete de forma FORMAL: "I ___ utilize ___ resource para ___ objectives."',
+        a: 'Resposta esperada formal: "I will utilize this resource to accomplish business objectives." Note: "will" (não "\'ll"), "utilize" (não "use"), "accomplish" (mais sofisticado que "do").'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Connotação e Implicatura: Além do Significado Literal',
+    dur: 35,
+    content: `<h3>O Significado Oculto: Connotação, Implicatura, e Subtexto</h3>
+<p>Você chegou a um nível onde a maioria dos falantes satisfeitos para. Mas verdadeira maestria linguística envolve entender que PALAVRAS SIGNIFICAM MAIS do que suas definições de dicionário. Cada palavra carrega bagagem cultural, emocional, e histórica. Isto é CONNOTAÇÃO. E além disso, às vezes comunicamos significados que não expressamos diretamente—IMPLICATURA. Dominar estes conceitos sofisticados é o que diferencia um falante proficiente de um verdadeiramente sofisticado.</p>
+
+<h4>Connotação: O Significado Emocional de Palavras</h4>
+<p>A DENOTAÇÃO é o significado literal: "Home" denota a estrutura física onde você vive. Mas a CONNOTAÇÃO de "home" é: segurança, conforto, identidade, amor, memórias, pertencimento. Quando alguém diz "I'm going home", não é apenas sobre locomção geográfica—é emocionalmente carregado.</p>
+
+<p>Compare sinônimos literais: "House" (denotação pura, estrutura neutra), "Home" (carinhoso, pessoal), "Residence" (formal, legal), "Abode" (poético/literário), "Dwelling" (técnico), "Pad" (casual/slang). Qual você escolhe muda o FEELING completo da frase. "I love my house" é diferente de "I love my home"—o segundo é muito mais emocional.</p>
+
+<p>Outro exemplo: "Thin" vs. "Slender" vs. "Skinny". Denotação similar (sem muita gordura corporal). Mas "thin" é neutro, "slender" é elegante/positivo, "skinny" é ligeiramente crítico ou infantilizado. Chamar alguém de "slender" é complimento, "skinny" pode parecer crítico. Conotação importa MUITO!</p>
+
+<blockquote class="tip">
+<strong>Exercício de Connotação:</strong> Pegue uma palavra que você frequentemente usa (ex: "interesting", "different", "bold"). Procure por 10 palavras com denotação similar. Para cada uma, pesquise conotação. Qual é mais positiva? Mais crítica? Qual contexto? Esta exploração profunda consolida compreensão real.
+</blockquote>
+
+<h4>Implicatura: Significado Não Dito</h4>
+<p>Implicatura é quando alguém comunica algo que não disse explicitamente, mas que você entende pelo contexto. Seu amigo diz "You should definitely go to that restaurant" e você entende não apenas que o restaurante é bom, mas frequentemente—IMPLICITLY—que os dois deveriam ir juntos. Ou quando seu chefe diz "This report is... interesting", frequentemente implica que há problemas, sem dizer explicitamente.</p>
+
+<p>Exemplo clássico: Alguém pergunta "Would you like some coffee?" Você responde "I've had three cups already." Você não disse "No", mas foi claramente implicado. O outro entende a negativa implícita.</p>
+
+<p>Implicaturas são perigosas para aprendizes de língua porque não estão no dicionário. Você pode compreender cada palavra de uma frase e ainda perder completamente seu REAL significado. "That's one way to do it" frequentemente implica crítica ("...uma forma INFERIOR ao que sugeri"), não aceitar positivamente.</p>
+
+<h4>Subtexto: O Drama Emocional Invisível</h4>
+<p>Subtexto é a emoção, significado, e conflito ABAIXO das palavras superficiais. Numa cena de filme:
+- A diz: "How was your day?"
+- B responde: "Fine. How was yours?"
+
+Suponha que A e B tiveram uma discussão. Então a MESMA troca tem SUBTEXTO totalmente diferente—frieza, recusa de engajamento emocional, talvez até agressão passiva. As palavras são idênticas, mas o significado é completamente diferente!</p>
+
+<p>Captar subtexto em inglês é habilidade crítica. Quando alguém diz "You're free to do whatever you want", superficialmente é permissão. Mas às vezes implica crítica ("...mas você vai se arrepender", ou "...porque não me importa mais"). Você compreende ouvindo tom de voz, contexto, dinâmica da relação.</p>
+
+<blockquote class="example">
+<strong>Mesmo Diálogo, Diferentes Subtetxos:</strong>
+
+CENÁRIO 1: Couple in love
+A: "Where do you want to eat tonight?"
+B: "I don't know, wherever you want is fine."
+SUBTEXTO: Affection, deferring to partner's preference
+
+CENÁRIO 2: Couple about to break up
+A: "Where do you want to eat tonight?"
+B: "I don't know, wherever you want is fine."
+SUBTEXTO: Apathy, detachment, resignation
+
+MESMAS PALAVRAS. Totalmente diferente significado!
+</strongquote>
+
+<h4>Ironia, Sarcasmo, e Understatement</h4>
+<p>IRONIA: Significado oposto ao literal. "Oh great, it's raining" (quando é bom que chova) ou "Just fantastic" (quando algo horrível aconteceu). Você entende ironia porque o tom de voz, contexto, ou expressão facial denotam significado oposto.</p>
+
+<p>SARCASMO: Ironia com intenção de ridicularizar ou criticar. "Yeah, that's really smart" (para algo claramente estúpido). "You're so graceful" (para alguém que tropeçou). Sarcasmo é arriscado em segundo idioma porque requer TIMING, entonação, e conhecimento cultural preciso.</p>
+
+<p>UNDERSTATEMENT (subtração de expressão): Dizer algo menos intenso que a realidade. "The hurricane was somewhat inconvenient" (subestimação extrema—furacão causa danos massivos!). "Her father was not best pleased" (literalmente "não muito agradado"—implica raiva considerável). Understatement é frequentemente britânico e é muito sofisticado.</p>
+
+<h4>Prática: Analisando Subtexto em Textos Reais</h4>
+<p>Assista a uma cena de filme/série com legendas. Escolha uma conversa simples. PAUSE e analise cada troca: Qual é o significado literal? Qual é o significado real/subtexto? Como tom de voz muda significado? Qual emoção está presente abaixo das palavras?</p>
+
+<p>Exemplo: Analyse uma conversa do seu podcast favorito. Qual conotação escolheu o falante? Por quê aquela palavra específica e não um sinônimo? Qual implicatura está operando? Você consegue identificar sarcasmo ou ironia? Esta análise crítica profunda desenvolve sofisticação real.`,
+    cards: [
+      {
+        q: 'Qual é a diferença entre "home" e "house"? E entre o que alguém diz literalmente vs. seu subtexto?',
+        a: '"Home" tem connotação emocional (pertencimento, amor), "house" é neutro (estrutura física). Subtexto é o significado emocional/real abaixo das palavras literais. Ambos requeirem compreensão cultural, não apenas dicionário.'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Argumentação Sofisticada: Estrutura, Evidência, e Contra-argumentação',
+    dur: 40,
+    content: `<h3>O Poder de um Argumento Bem Construído</h3>
+<p>Você pode expressar sua opinião. Mas expressá-la de forma CONVINCENTE, com lógica sólida e evidência, é habilidade completamente diferente. Argumentação sofisticada é usada em debates, negociações, escrita persuasiva, conversas importantes. Dominar argumentação em inglês não apenas melhora sua comunicação—melhora seu pensamento crítico e sua capacidade de influência genuína.</p>
+
+<h4>Estrutura Clássica de Argumento</h4>
+<p>A estrutura mais efetiva tem cinco partes: (1) TESE (sua posição central), (2) ARGUMENTO PRINCIPAL (razão principal por que você acredita isso), (3) EVIDÊNCIA (dados, exemplos, que suportam seu argumento), (4) CONTRA-ARGUMENTO (reconhecer objeção válida), (5) REFUTAÇÃO (por que seu ponto ainda é válido apesar da objeção).</p>
+
+<p>Exemplo completo sobre educação:
+TESE: "Educação online revolucionará aprendizagem global."
+ARGUMENTO: "Educação online fornece acesso a bilhões de pessoas que de outra forma não teriam oportunidade."
+EVIDÊNCIA: "Plataformas como Coursera e Khan Academy já alcançaram 60 milhões de estudantes em 190 países."
+CONTRA-ARGUMENTO: "Alguns argumentam que educação online carece de conexão pessoal e comunidade que educação presencial oferece."
+REFUTAÇÃO: "Enquanto isso tem mérito, tecnologia está rapidamente criando comunidades online engajadas, além de que acesso é prioritário sobre perfeição pedagógica. Milhões sem qualquer educação se beneficiam imensamente mesmo de modelo imperfeito."</p>
+
+<blockquote class="tip">
+<strong>Dica Argumentativa:</strong> O reconhecimento de contra-argumentos AUMENTA sua credibilidade, não diminui! Você parece inteligente e justo ao admitir que há mais de um lado. Você então pode mostrar por que seu ponto ainda é superior.
+</strongquote>
+
+<h4>Tipos de Evidência e Sua Credibilidade</h4>
+<p>EVIDÊNCIA ESTATÍSTICA: números, pesquisa, dados. "Studies show 87% of online learners report improved performance." Altamente credível em contextos acadêmicos/científicos, mas pode ser manipulada. Sempre questione: Quem fez o estudo? Qual era seu financiamento? Qual era amostra?</p>
+
+<p>EVIDÊNCIA ANEDÓTICA: histórias pessoais, exemplos. "I took an online course and completely transformed my career." Muito relatable e emocionalmente poderosa, mas não probatória cientificamente. Melhor quando combinada com evidência estatística.</p>
+
+<p>EVIDÊNCIA LÓGICA/TEÓRICA: argumento racional. "If we remove barriers to education, more people will be educated. Online education removes geographical and temporal barriers. Therefore, online education will increase education rates." Lógica clara e válida se premissas forem aceitadas.</p>
+
+<p>EVIDÊNCIA DE AUTORIDADE: citação de especialistas. "As Dr. James Chen, leading education researcher, states..." Credível se a autoridade é genuína e apropriada ao tópico. Cuidado com FALSO autoridade (celebridade comentando sobre medicina, por exemplo).</p>
+
+<h4>Reconhecer Falhas Lógicas em Argumentos Alheios</h4>
+<p>AD HOMINEM: Atacar a pessoa em vez do argumento. "You say we should eat less meat, but you drove an SUV yesterday!" Isto é irrelevante—a validade sobre consumo de carne não é afetada pelo padrão de combustível da pessoa.</p>
+
+<p>STRAWMAN: Simplificar ou distorcer o argumento de alguém para refutá-lo facilmente. Se alguém diz "We should have stricter environmental regulations", refutar dizendo "So you want to shut down all industry!" é strawman—ninguém disse isso.</p>
+
+<p>FALSE DICHOTOMY: Apresentar apenas duas opções quando existem mais. "Either we allow unlimited immigration or we're xenophobic" ignora posições moderadas no meio. "You're either with us or against us" é false dichotomy clássica.</p>
+
+<p>BEGGING THE QUESTION: Usar a conclusão como premissa. "We should ban this book because it's harmful." Mas é o que precisamos provar! "Harmful" não é um dado, é a conclusão que você quer demonstrar.</p>
+
+<blockquote class="example">
+<strong>Reconhecendo Falhas em Conversas Reais:</strong>
+
+ARGUMENTO FRACO: "You shouldn't trust his opinion on healthcare because he's a billionaire."
+ANÁLISE: Ad hominem. Sua riqueza não torna seu conhecimento sobre medicina válido ou inválido. O argumento aborda a pessoa, não o mérito de sua posição.
+
+ARGUMENTO FRACO: "Young people today are lazy because they're always on their phones."
+ANÁLISE: False cause/effect. Apenas porque duas coisas correlacionam não significa uma causa a outra. E simplifica demais uma população complexa.
+
+ARGUMENTO FRACO: "We must ban this technology because if we don't, society will collapse."
+ANÁLISE: Slippery slope (encosta escorregadia). Assume cadeia de eventos inevitável sem evidência real. Muito dramático e improvável.
+</strongquote>
+
+<h4>Técnicas Avançadas de Argumentação</h4>
+<p>CONCESSÃO ESTRATÉGICA: "You're right that online education has limitations. That said, these are minor compared to benefits." Você concede um ponto mas o coloca em contexto que favorece seu argumento. Isto é muito sofisticado!</p>
+
+<p>REFRAMING: Apresentar mesmo fato sob contexto diferente. Ao invés de "This product is expensive", poderia dizer "This product represents significant value per use over its lifetime." Mesma realidade, linguagem diferente cria percepção diferente.</p>
+
+<p>EVIDÊNCIA CRESCENTE: Começar com argumentos mais fracos, terminar com o mais forte. Isto deixa audiência com sua melhor evidência na mente. (Oposto seria começar com o melhor e terminar fraco—erra em impacto.)</p>
+
+<h4>Prática: Um Debate Estruturado Completo</h4>
+<p>Escolha um tópico controverso que você tenha opinião (educação, trabalho remoto, tecnologia social, imigração). Escreva um argumento completo DE 500 PALAVRAS com: Tese clara, 3 argumentos principais, 3 evidências diferentes, reconhecimento de contra-argumento principal, refutação sofisticada. Depois escreva o OUTRO LADO—argumentos do oposto. Isto treina sua capacidade de ver múltiplas perspectivas e argumentar sofisticadamente.</p>
+
+<p>Teste sua argumentação: peça a alguém para simular o oposto. Tenha um debate de verdade. Onde sua lógica é fraca? Onde você foi persuasivo? Este feedback real é invaluável!`,
+    cards: [
+      {
+        q: 'Qual é uma técnica para aumentar credibilidade quando seu ponto é questionado?',
+        a: 'Reconhecer legitimidade do contra-argumento ("You make a fair point"), depois explicar por que seu ponto ainda é superior. Isto mostra inteligência e justiça ao invés de parecer defensivo ou dogmático.'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'Persuasão Ética e Psicologia Social em Linguagem',
+    dur: 40,
+    content: `<h3>A Psicologia da Persuasão: Influência Eticamente Responsável</h3>
+<p>Argumentação é sobre lógica. Persuasão é sobre influência. Entender COMO as palavras influenciam psicologia humana é conhecimento poderoso. Dominar persuasão ética significa conseguir comunicar sua mensagem de forma efetiva sem manipular ou explorar. Este é o nível genuinamente sofisticado de comunicação—quando você consegue ser influente SEM ser desonesto.</p>
+
+<h4>Princípios Psicológicos de Influência</h4>
+<p>RECIPROCIDADE: Pessoas tendem a retornar favores. Se você oferece algo valioso (informação, ajuda) gratuitamente, pessoas se sentem obrigadas reciprocamente. Em linguagem: "I've shared my expertise freely, so I hope you'll consider my perspective." SOCIAL PROOF: Pessoas tendem a seguir o que outros fazem. "Millions of people have successfully learned English with this method." AUTORIDADE: Pessoas confiam em especialistas. Mas use com honestidade—cite experts reais, não fake ones.</p>
+
+<p>SCARCITY: Pessoas valorizam coisas raras. "This offer is only available for 3 more days" cria urgência. Mas é ético apenas se verdadeiro! LIKING: Pessoas são mais persuadidas por quem elas gostam. Encontrar terreno comum, ser genuíno, mostrar interesse genuíno em outro. "I really admire your work on this topic, and I think..." combina honestidade com conexão.</p>
+
+<p>CONSISTENCY: Pessoas querem ser consistentes com suas afirmações públicas. Se alguém disse que valoriza educação, são mais propensos a aceitar argumento sobre investimento em educação.</p>
+
+<blockquote class="tip">
+<strong>A Linha Entre Persuasão e Manipulação:</strong> Persuasão ética = você genuinamente acredita no que está dizendo e apresenta fatos honestamente. Manipulação = você distorce, omite, ou inventa para forçar concordância. Sempre pergunte a si mesmo: "Estou sendo honesto aqui? Estaria confortável se meus motivos fossem expostos?"
+</strongquote>
+
+<h4>Linguagem que Ativa Influência Psicológica</h4>
+<p>USE LINGUAGEM CONCRETA em vez de abstrata. "Thousands of students have improved their grades" é mais persuasivo que "Many have seen benefits." Números e exemplos específicos ativam psicologia humana mais fortemente que generalizações.</p>
+
+<p>USE NARRATIVA ao invés de apenas fatos. Uma história sobre uma pessoa específica é mais persuasiva que estatística. "Maria, um mãe de dois filhos, conseguiu aprender inglês em 6 meses e conseguiu promoção" é mais impactful que "85% dos estudantes conseguem promoção."</p>
+
+<p>CRIE CONEXÃO EMOCIONAL ao mesmo tempo que mantém lógica. "Consider this statistic: 1 in 3 children don't have access to education. But imagine if that were YOUR child." Você conecta fato frio com emoção humana.</p>
+
+<p>USE QUESTIONS ao invés de afirmações. "Wouldn't you prefer to learn at your own pace?" ativa pensamento ativo melhor que "Learning at your own pace is better." As pessoas persuadem a si mesmas melhor.</p>
+
+<h4>Framing: Como Você Apresenta Muda Completamente Significado</h4>
+<p>GLASS HALF FULL vs. HALF EMPTY: "This option has 20% failure rate" vs. "This option has 80% success rate." Mesma realidade, frames diferentes criam percepções completamente diferentes. O segundo é mais persuasivo porque frame positivo.</p>
+
+<p>LOSS vs. GAIN: "Save 40% on this product!" (frame ganho) é mais persuasivo que "You'll lose 40% savings if you don't buy now." (frame perda), embora sejam logicamente equivalentes. Ganho se sente melhor psicologicamente.</p>
+
+<p>IDENTITY vs. BEHAVIOR: "You're a healthy person" (identity frame) é mais persuasivo para mudança comportamental que "Being healthy requires exercise." (behavior frame). Quando conecta ao identity, pessoa internaliza melhor.</p>
+
+<blockquote class="example">
+<strong>Exemplos de Framing Poderoso:</strong>
+
+Produto com 95% aprovação:
+FRAME BAIXA: "There's a 5% chance you won't like this."
+FRAME ALTA: "95% of customers love this product."
+
+Sobre aprender uma língua difícil:
+FRAME NEGATIVA: "This will take 1000s of hours of study."
+FRAME POSITIVA: "In just 10 minutes a day for a year, you'll speak fluently."
+
+Sobre mudança de carreira:
+FRAME RISCO: "You might fail and lose your current stability."
+FRAME OPORTUNIDADE: "You could discover a passion and double your earning potential."
+</strongquote>
+
+<h4>Evitando Manipulação: Persuasão Ética</h4>
+<p>REVELE CONFLITOS DE INTERESSE. Se você tem stake financeiro em resultado, seja honesto. "Full disclosure: I am a business partner in this company" aumenta credibilidade enquanto transparência.</p>
+
+<p>OUÇA ATIVAMENTE. Persuasão não é monólogo. Ouça objeções genuinamente. Responda a elas honestamente. Isto é verdadeira conversação, não "vender."</p>
+
+<p>RESPEITE AUTONOMIA. Apresente argumentos, depois deixe pessoa decidir. "These are the facts; ultimately, the choice is yours" respeita autonomia humana.</p>
+
+<p>EVITE PRESSÃO ARTIFICIAL. "Order today or opportunity is lost!" pode ser verdade, mas se usada manipulativamente, é desonesto. Use urgência apenas quando genuína.</p>
+
+<h4>Prática: Analyze Persuasão em Publicidade</h4>
+<p>Assista comerciais de TV/YouTube. Para cada um, identifique:
+- Qual princípio psicológico está operando? (Reciprocidade? Social proof? Scarcity?)
+- Como linguagem cria emoção?
+- Qual frame está sendo usado?
+- É persuasão ética ou manipulação?
+
+Este análise crítica desenvolve sua consciência de COMO persuasão funciona, tornando você resistente a manipulação e também melhor em persuasão ética!`,
+    cards: [
+      {
+        q: 'Qual é a diferença entre "95% success rate" e "5% failure rate"? Como linguagem muda percepção?',
+        a: 'Mesma realidade, mas "success rate" (frame ganho/positivo) é psicologicamente mais persuasivo que "failure rate" (frame perda/negativo). O frame muda como informação é recebida.'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Ironia, Paradoxo, e Complexidade Semântica: Pensamento Não-Linear',
+    dur: 40,
+    content: `<h3>Além da Linearidade: Ironia, Paradoxo, e Verdades Contraditórias</h3>
+<p>Até agora, você aprendeu linguagem que é fundamentalmente linear—ponto A leva a ponto B. Mas grande parte de pensamento humano real é NÃO-LINEAR. Paradoxos, ironia, contradições aparentes que são profundamente verdadeiras—estas complexidades sofisticadas são onde linguagem realmente viva. Dominar estes é o que diferencia falante competente de verdadeiro pensador linguístico.</p>
+
+<h4>Paradoxo: Quando Duas Truths Aparentemente Contraditórias Coexistem</h4>
+<p>PARADOXO LÓGICO: "This statement is false." Se é verdadeiro, então é falso. Se é falso, então é verdadeiro. Insolúvel! Não é apenas brinquedo lógico—expressa complexidade real.</p>
+
+<p>PARADOXO HUMANO: "The more you pursue happiness, the less happy you become." Verdadeiro! Perseguição obsessiva de felicidade cria ansiedade. Paradoxalmente, soltar-se da busca frequentemente gera mais felicidade.</p>
+
+<p>PARADOXO HISTÓRICO/POLÍTICO: "We must be strong to maintain peace" ou "We must be free to be truly safe." Ambas parecem contraditórias mas ambas contêm verdade profunda. Apreciar paradoxo mostra pensamento sofisticado.</p>
+
+<blockquote class="tip">
+<strong>Reconhecendo Paradoxo:</strong> Quando encontra dois statements que parecem contraditórios, não assuma que um está errado. Pergunte: "Como ambos poderiam ser verdadeiros simultaneamente?" Isto abre pensamento para complexidade real do mundo.
+</strongquote>
+
+<h4>Ironia: Expectativa vs. Realidade</h4>
+<p>IRONIA SITUACIONAL: Realidade é oposto do que esperamos. Alguém que ensina sobre segurança morre em acidente. Cozinheiro experiente queima a comida. É inesperado e frequentemente cômico, mas também poderoso narrativamente.</p>
+
+<p>IRONIA VERBAL: Dizer algo que significa exatamente o oposto. "Oh, great, another meeting" quando odia reuniões. Comunicamos através de linguagem que diz literalmente o oposto do que queremos. Requer que listener entenda tom, contexto, relacionamento.</p>
+
+<p>IRONIA DRAMÁTICA: Audiência conhece verdade que characters não conhecem. No filme, você sabe que o personagem está em perigo, mas ele não sabe. Cria tensão através conhecimento assimétrico.</p>
+
+<h4>Linguagem que Expressa Complexidade: "Both... And" Thinking</h4>
+<p>Em vez de "Either/or", use "Both/and" para expressar paradoxo. "Education is both a right AND a responsibility. Freedom is both liberating AND isolating. Technology is both a solution AND a problem." Esta linguagem expressa sofisticação rara.</p>
+
+<p>OXYMORON: Combinar palavras aparentemente contraditórias para expressar verdade paradoxal. "Deafening silence" (silêncio muito notável), "Bittersweet" (doce e amargo simultaneamente), "Cruel kindness" (crueldade que tem fins benevolentes). Oxymora funcionam porque capturam complexidade de experiência real.</p>
+
+<p>UNDERSTATEMENT: Expressar algo importante como trivial. "The atomic bomb was somewhat significant to history" (subestimar monumentalmente). Cria tom irônico que expressa verdade através aparente negação.</p>
+
+<blockquote class="example">
+<strong>Expressando Complexidade Sem Cair em Simplicidade:</strong>
+
+SIMPLES: "Success requires sacrifice."
+COMPLEXO: "Success requires sacrifice, yet sacrifice without meaning breeds emptiness."
+
+SIMPLES: "Change is good."
+COMPLEXO: "Change is inevitable and often beneficial, yet also terrifying and destabilizing. Both are true."
+
+SIMPLES: "You should follow your passion."
+COMPLEXO: "Follow your passion—but temper it with pragmatism. The best path is neither pure idealism nor pure pragmatism, but integration of both."
+</strongquote>
+
+<h4>Reconhecendo Ironia em Textos Sofisticados</h4>
+<p>Muita literatura, jornalismo opinioso, e conversa sofisticada usa ironia de formas sutis. "He was a man of his word—unfortunately, his words were lies." A estrutura sugere algo positivo, mas final revela ironia. Você precisa ler entre linhas.</p>
+
+<p>Na política, ironia frequentemente mascara crítica. "Bless your heart" (expressão sulista americana) literalmente significa "que Deus o proteja," mas frequentemente implica "você é tolo." É ironia verbal maldisfarçada.</p>
+
+<h4>Prática: Identificando Ironia em Conversas Reais</h4>
+<p>Assista a cenas de comédia/drama. Pause quando ator usa ironia. Questione: Qual era expectativa? Qual é realidade? Como você SABE que é ironia? (Tom? Contexto? Contradição lógica?) Isto treina seu instinto para reconhecer ironia em contexto.</p>
+
+<p>Leia artigos de opinião ou satírico. Identifique todas as instâncias de ironia. Como o autor expressa crítica através inversão? Isto mostra técnicas sofisticadas de escrita persuasiva.</p>
+
+<h4>Escrevendo com Ironia: Perigoso Mas Poderoso</h4>
+<p>Ironia bem executada é extremamente efetiva. Ironia malexecutada é confusa ou parece amadora. NUNCA use ironia em comunicação importante sem estar ABSOLUTAMENTE CERTO que será entendido. Em contextos profissionais, está alta o risco de ser mal interpretado.</p>
+
+<p>Melhor prática: Use ironia em contextos onde relacionamento está claro e audiência conhece seu estilo. Com amigos próximos, sim. Em email profissional a desconhecido? Muito arriscado.</p>
+
+<p>Quando USE ironia, deixe-a clara através tom, timing, ou contexto visual (em escrita, pode usar aspas ou emoticons, embora isto seja menos sofisticado). "The boss decided to 'improve efficiency' by adding three more meetings per week" (aspas sugerem ironia).</p>`,
+    cards: [
+      {
+        q: 'Qual é um exemplo de paradoxo genuíno e como você o expressaria em inglês sofisticado?',
+        a: 'Exemplo: "The more you pursue happiness, the less happy you become." Ou "We must be strong to maintain peace." Use "Both...and" ou "Yet" para expressar complexidade contraditória genuína.'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Gêneros de Discurso: Dominando Múltiplos Estilos de Comunicação',
+    dur: 45,
+    content: `<h3>Navegando Gêneros: Do Formal ao Poético, Do Técnico ao Narrativo</h3>
+<p>Cada tipo de comunicação tem suas próprias regras, convenções, e expectativas. Um email profissional não parece com um texto a amigo. Uma apresentação acadêmica é radicalmente diferente de história contada em bar. Um artigo jornalístico segue padrões diferentes de poesia. Dominar múltiplos GÊNEROS de discurso é o que torna você verdadeiramente versátil em linguagem. Você não apenas fala inglês—você fala inglês em QUALQUER contexto apropriadamente.</p>
+
+<h4>Gêneros Principais e Suas Características</h4>
+<p>ACADÉMICO: Vocabulário sofisticado, estrutura lógica clara, sem contrações, terceira pessoa quando possível, citação de fontes, conclusões evidência-baseadas. "The research demonstrates that..." Muito formal, muito estruturado.</p>
+
+<p>JORNALÍSTICO: Inverted pyramid structure (informação mais importante primeiro), who/what/when/where/why respondidas rapidamente, linguagem clara mas sofisticada, tom objetivo (idealmente). "The mayor announced yesterday that the new park will open in June."</p>
+
+<p>PUBLICITÁRIO: Emotionalmente carregado, vocabulário persuasivo, conciso, memorizável, frequentemente dirá você tomar ação. "Transform your life in 30 days." Muito manipulador (propositalmente), linguagem forte.</p>
+
+<p>NARRATIVO (história): Desenvolvimento de personagem, arco narrativo, diálogo, descrição sensória, tensão e resolução. Menos sobre fatos, mais sobre experiência. "She walked through the door, her heart pounding. The room was darker than she expected..."</p>
+
+<p>CONVERSACIONAL: Contrações, filler words, estrutura menos formal, possível repetição, interruções. "So like, I went to this café yesterday, right? And the coffee was just... amazing."</p>
+
+<blockquote class="tip">
+<strong>Reconhecendo Gênero:</strong> Quando você lê/ouve algo em inglês, primeiro pergunte: "Que gênero é isso?" Resposta determina como você deve interpretar—quanta confiança dar aos statements? Qual é objetivo? Isto contextualiza tudo.
+</strongquote>
+
+<h4>Gênero Académico: Escrita Sofisticada</h4>
+<p>Estrutura típica: (1) Introdução com tese clara, (2) Literatura review (o que outros estudaram), (3) Metodologia (como você pesquisou), (4) Resultados (o que encontrou), (5) Discussão (o que significa), (6) Conclusão (resumo de implicações).</p>
+
+<p>Características linguísticas: Passiva voice frequente ("The data were collected..."), hedge language ("may suggest", "could indicate"), precise citations, avoidance de generalizations. Tone é objective, authoritative mas não agressivo.</p>
+
+<p>Exemplo: "Research suggests that multitasking may impair cognitive function, particularly in tasks requiring sustained attention. Smith et al. (2019) found that subjects engaging in simultaneous media consumption demonstrated 20% longer task completion times."</p>
+
+<h4>Gênero Jornalístico: Informação Rápida</h4>
+<p>Inverted pyramid significa informação CRÍTICA primeiro, detalhos suportivos depois. Se alguém só lê primeiro parágrafo, recebe histórico completa. Quem? O quê? Quando? Onde? Por quê? (Às vezes Como?) São respondidos rapidamente.</p>
+
+<p>Exemplo headline: "MAYOR ANNOUNCES NEW PARK, EXPECTED TO ATTRACT 50,000 ANNUAL VISITORS" (Who/What/When em 8 palavras). Primeira sentença expande: "Mayor Jennifer Smith announced yesterday that the Riverside Park project will open June 15, creating 50,000 square feet of green space in downtown." Depois parágrafos suportam com funding details, timeline, community response.</p>
+
+<h4>Gênero Narrativo: Contar Histórias</h4>
+<p>Narrativa efetiva tem: (1) Setup (introdução de personagens/situação), (2) Complication (problema surge), (3) Rising action (tensão aumenta), (4) Climax (ponto de máxima tensão), (5) Resolution (problema é resolvido).</p>
+
+<p>Linguagem descritiva é essencial: não é suficiente dizer "She was scared." Você mostra: "Her hands trembled. Her breath came in shallow gasps. She couldn't make her legs move toward the door." Show > Tell em narrativa.</p>
+
+<p>Diálogo avança narrativa e caracteriza personagens: "I can't do this," she whispered. The capitalization e word choice revelam medo e hesitação. Diálogo bom soa como verdadeiros humanos, não como script.</p>
+
+<h4>Gênero Persuasivo: Convencendo Através Linguagem</h4>
+<p>Gênero persuasivo (editorial, carta opinião, apresentação de negócio) combina características académica (credibilidade através evidência) com narrativo (engajamento emocional) com publicitário (chamada para ação).</p>
+
+<p>Estrutura típica: (1) Hook (abertura que captura atenção), (2) Contexto (por que isso importa), (3) Proposição clara (o que você quer que audiência pense/faça), (4) Suporte com evidência, (5) Antecipação de objeções e refutação, (6) Chamada para ação (o que você quer que façam).</p>
+
+<h4>Práctica: Reescrevendo a Mesma Ideia em Múltiplos Gêneros</h4>
+<p>Pegue um fato simples: "A company's new product improved productivity." Reescreva este fato em CINCO gêneros diferentes:
+
+1. ACADÉMICO: "Analysis of 200 organizations revealed that implementation of Product X correlated with 23% productivity increase, with effect sustained over 6-month period."
+
+2. JORNALÍSTICO: "Company Introduces Revolutionary Productivity Tool. New Product Increases Efficiency by Nearly 25%, Early Adopters Report."
+
+3. PUBLICITÁRIO: "TRANSFORM YOUR WORKPLACE! Product X increases your team's productivity by up to 25%. Start your free trial today!"
+
+4. NARRATIVO: "Jennifer had been skeptical when her manager showed her Product X. But after the first week, something shifted. Tasks that took hours now took minutes. Her team seemed lighter, more energized."
+
+5. CONVERSACIONAL: "So this company came out with this new product, right? And like, it actually totally works. We tried it and our productivity went up like crazy—maybe 25 percent or something."
+
+Note como PALAVRA-POR-PALAVRA são diferentes? Mas mensagem central é idêntica. Isto é domínio de gênero!
+
+Prática continuada: Pegue um artigo de notícia. Reescreva como se fosse romance (narrativo), como se fosse email para amigo (conversacional), como se fosse paper acadêmico (formal). Isto constrói flexibilidade real!</p>
+
+<blockquote class="news">
+<strong>Verdade sobre Maestria Linguística:</strong> Falantes realmente fluentes não conhecem apenas uma forma de inglês—conhecem MÚLTIPLAS formas para múltiplos contextos. Eles movem fluidamente entre formal/informal, académico/casual, narrativo/técnico. Este é verdadeiro marca de sofisticação linguística!
+</strongquote>`,
+    cards: [
+      {
+        q: 'Como você transformaria "profits increased" em linguagem académica, jornalística, e publicitária?',
+        a: 'Académico: "Financial analysis indicates revenue enhancement..." Jornalístico: "COMPANY REPORTS PROFIT SURGE" Publicitário: "YOUR EARNINGS SKYROCKET! Join winning teams...!" Gênero determina tom completamente.'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Análise Crítica de Mídia: Reconhecendo Bias, Retórica, e Manipulação',
+    dur: 45,
+    content: `<h3>Lendo Criticamente: Além da Superfície da Mensagem</h3>
+<p>Você vive rodeado por texto—notícias, publicidade, redes sociais, discurso político. Cada texto tem intenção. Cada linguagem foi escolhida para criar efeito específico. Leitura crítica media significa reconhecer não apenas O QUE está sendo comunicado, mas COMO está sendo comunicado, PORQUÊ, e QUEM se beneficia. Isto não é apenas habilidade linguística—é defesa contra manipulação e caminho para pensamento autêntico.</p>
+
+<h4>Identificando Retórica: Técnicas de Persuasão em Linguagem</h4>
+<p>REPETIÇÃO: Repetir uma frase para fixá-la na mente. Político diz "Make America Great Again" obsessivamente. Não é argumento—é técnica de memorização através repetição. Funciona psicologicamente mesmo sem lógica subjacente.</p>
+
+<p>APELO EMOCIONAL: Apelar para emoção ao invés de razão. "Think of the children! We must protect them!" combina children (emocionalmente carregado) com imperativo. Funciona porque ativa emoção, não lógica.</p>
+
+<p>LOADED LANGUAGE: Usar palavras com forte connotação emocional. "Freedom fighters" vs. "terrorists"—mesmas pessoas, mas linguagem radicalmente diferente cria percepção completamente diferente. Jornalismo supostamente objetivo frequentemente usa loaded language.</p>
+
+<p>GLITTERING GENERALITIES: Usar palavras bonitas sem conteúdo específico. "Hope", "Change", "Progress"—quem poderia estar contra? Mas o que SIGNIFICAM especificamente? Vago o suficiente para projetar aspirações próprias.</p>
+
+<blockquote class="tip">
+<strong>Exercício de Linguagem Carregada:</strong> Encontre artículo noticiando mesmo evento de múltiplas fontes políticas. Compare linguagem usada. Uma fonte dirá "freedom of expression", outra dirá "dangerous speech". Mesma realidade, linguagem radicalmente diferente. Isto mostra poder de retórica!
+</strongquote>
+
+<h4>Reconhecendo Bias Linguístico</h4>
+<p>LINGUAGEM ATIVA vs. PASSIVA muda responsabilidade. "The police shot the suspect" (ativo, claro) vs. "The suspect was shot" (passivo, obscurece agência). Jornalismo frequentemente usa passiva para obscurecer responsabilidade de atores poderosos.</p>
+
+<p>SELEÇÃO DE TÓPICO: O que jornalista escolhe cobrir revela bias. Se todos os crimes por imigrantes são noticiados mas crimes por cidadãos locais são ignorados, isto revela bias editorial—seleção cria narrativa falsa.</p>
+
+<p>TERMINOLOGIA: Como você nomeia algo revela posição. "Collateral damage" (military term) vs. "civilian deaths" (humanitarian term). "Undocumented workers" vs. "illegal aliens"—terminologia escolhida revela ideologia do falante.</p>
+
+<p>FONTE SELECTION: Quem jornalista cita como "expert"? Que credentials têm? Bias ideológico frequentemente entra seleção de que vozes são amplificadas como authoritativas.</p>
+
+<h4>The "Missing Middle" e Narrativas Simplificadas</h4>
+<p>Mídia frequentemente apresenta false dichotomies que simplificam realidade complexa. "Either you support the police completely or you hate law enforcement"—ignora posição nuançada do meio onde alguém pode reconhecer problemas sistêmicos enquanto ainda apoiar policiamento efetivo.</p>
+
+<p>Análise crítica envolve sempre questionar: Que perspectivas estão AUSENTES? Que lado da história não está sendo contado? A narrativa é realmente tão preto-e-branco quanto apresentado?</p>
+
+<blockquote class="example">
+<strong>Análise Crítica de Manchete Noticiosa:</strong>
+
+MANCHETE: "Migrants Storm Border, Overwhelming Officials"
+
+Análise:
+- "Storm" = linguagem de invasão militar, ativa emoção de ameaça
+- "Overwhelm" = sugere caos, falta de controle
+- "Officials" = enquadra imigrantes vs. autoridades, criando conflito
+
+MANCHETE ALTERNATIVA COM LINGUAGEM MAIS NEUTRA:
+"Record Number of Asylum Seekers Arrive at Border"
+
+- "Record number" = informação factual
+- "Asylum seekers" = descrição precisa de categoria
+- Sem linguagem de ameaça
+
+AMBAS são tecnicamente "verdadeiras", mas primeira manipula emoção enquanto segunda informa.</strongquote>
+
+<h4>Técnicas de Verificação de Fatos (Fact-Checking)</h4>
+<p>VERIFICAR ORIGEM: Aonde este artigo vem? Qual é credibilidade da fonte? Você já ouviu falar dela? Ela está em lista de fontes confiáveis de fact-checkers? Uma fonte que você nunca ouviu falar é red flag.</p>
+
+<p>VERIFICAR CITAÇÕES: Se artigo cita estudo ou estatística, ela fornece link/referência? Você consegue encontrar o estudo original? Muitas fontes citam estudos de forma incorreta ou descontextualizada.</p>
+
+<p>VERIFICAR CORROBORAÇÃO: O que outras fontes respeitadas estão dizendo sobre mesmo tópico? Se apenas uma fonte reporta algo sensacional que ninguém mais menciona, é red flag. Notícia real é geralmente reportada em múltiplas fontes.</p>
+
+<p>VERIFICAR MOTIVAÇÃO: Qual é incentivo financeiro/político da pessoa/organização fazendo afirmação? Se está vendendo produto, tem bias óbvio. Se é filiada a partido político, tenha cuidado. Não significa que é desonesto, mas revela perspectiva.</p>
+
+<h4>Leitura Crítica de Redes Sociais</h4>
+<p>Redes sociais são arena especialmente perigosa porque algorithmos amplificam conteúdo emocional extremo. Posts que encolerizam você são amplificados porque you're more likely to engage (comentar, compartilhar). Isto cria bolha de extremismo.</p>
+
+<p>VERIFICAR CONTEXTO TEMPORAL: Foto de 5 anos atrás frequentemente é compartilhada como notícia atual. Verificar datas é essencial. Verificar se foto é autêntica (não manipulada, deepfake, etc.).</p>
+
+<p>VERIFICAR COMPARTIIHAMENTO: Se algo foi compartilhado 100 mil vezes com emoji de choque/ódio, é red flag. Conteúdo viral frequentemente é conteúdo que manipula emoção, não necessariamente conteúdo que é verdadeiro.</p>
+
+<h4>Prática: Análise Crítica Estruturada de Texto</h4>
+<p>Encontre um artigo que você discorde (de qualquer fonte política). Faça análise estruturada:
+1. Qual é afirmação central?
+2. Qual evidência é oferecida? É sólida?
+3. Que argumentos opostos são reconhecidos? Como são refutados?
+4. Que linguagem carregada é usada?
+5. Quem se beneficia desta narrativa?
+6. Que perspectivas estão ausentes?
+7. Como você reescreveria isto de forma mais neutra?
+
+Este exercício desenvolve pensamento crítico genuíno que transcende linguagem!</p>
+
+<blockquote class="news">
+<strong>O Objetivo Final de Análise Crítica:</strong> Não é ser cínico ou desconfiar de tudo. É desenvolver capacidade de compreender INTENT por trás comunicação, reconhecer técnicas de manipulação quando vê, e tomar decisões baseadas em compreensão completa ao invés de reação emocional. Isto é sabedoria real!
+</strongquote>`,
+    cards: [
+      {
+        q: 'Qual é a diferença retórica entre "freedom fighters" e "terrorists"? Como linguagem cria percepção?',
+        a: '"Freedom fighters" = pessoas heroicas luta por liberação. "Terrorists" = violentos, moralmente condenáveis. Mesmas pessoas! Linguagem escolhida revela (e cria) posição política do falante. Isto mostra poder de retórica na realidade.'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Síntese Final: Sua Voz Pessoal, Autêntica, e Verdadeiramente Confiante',
+    dur: 45,
+    content: `<h3>Desenvolvendo Sua Voz: O Ponto de Convergência</h3>
+<p>Você percorreu uma jornada extraordinária. Do básico até o avançado, aprendeu não apenas inglês, mas COMO pensar em inglês, como argumentar em inglês, como influenciar em inglês, como ler criticamente em inglês. Agora chegou o momento final: integrar TUDO isso em uma voz genuinamente SUAS—não uma voz de textbook, não uma voz de alguém imitando falante nativo, mas SUA própria voz autêntica expressa em inglês.</p>
+
+<h4>Integração: De Peças para Totalidade</h4>
+<p>Você conhece muitos "elementos" de inglês sofisticado: tempos verbais complexos, vocabulário nuançado, conectores, expressões idiomáticas, estruturas argumentativas, retórica, análise crítica. Mas grande parte de falantes competentes falha na integração—parecem mecânicos, como se estivessem "usando" inglês ao invés de vivendo nele.</p>
+
+<p>Integração significa que quando você fala, elementos diversos funcionam JUNTO, não como partes separadas. Você naturalmente escolhe registro apropriado, naturalmente reconhece nuance semântica, naturalmente estrutura argumentos. Isto não é consciente—é automático. Como um músico experiente que não pensa em "dedos em teclas" mas simplesmente toca.</p>
+
+<p>Como chegar lá? Uma palavra: IMERSÃO. Você precisa de exposure consistente a inglês autêntico e oportunidade de usar inglês authenticamente por período de tempo. Leia livros, jornais, artigos variados. Assista filmes, podcasts, palestras. Mais importante: CONVERSE. Com pessoas reais. Sobre tópicos que importam a você.</p>
+
+<blockquote class="tip">
+<strong>O Segredo de Integração:</strong> Parar de aprender "sobre inglês" e começar "a viver em inglês". Sua dedicação não é mais 30 minutos em aplicação. É ver mundo através lente inglês. Quando você pensa, seus pensamentos são em inglês também. Isto é quando integração verdadeira acontece.
+</strongquote>
+
+<h4>Sua Voz Pessoal: Autenticidade vs. Imitação</h4>
+<p>Há perigo em aprender "muito corretamente"—você pode perder autenticidade. Falantes nativos cometem erros gramaticais, usam gírias, falam imperfeitamente. Se você está SEMPRE perfeito, você parece artificial. Se você consegue cometer erros GRACIOSAMENTE e continuar comunicando, você parece genuíno.</p>
+
+<p>Sua voz pessoal envolve: (1) suas peculiaridades de pensamento, (2) seu sotaque ou "accent" pessoal no inglês, (3) suas escolhas de vocabulário baseadas em tópicos que você ama, (4) sua personalidade emergindo através linguagem. Um nerd apaixonado por tecnologia falará inglês tecnicamente diferente de um artista apaixonado por arte. Ambos estão corretos!</p>
+
+<p>Procure desenvolver VOICE, não PERFECTION. Voice é imediatamente reconhecível, memorável, genuíno. Perfection é robótica e frequentemente entediante.</p>
+
+<h4>Confiança: O Ingrediente Final</h4>
+<p>Toda a sofisticação linguística do mundo não importa se você não fala com CONFIANÇA. Confiança não é arrogância—é disposição de se engajar genuinamente, de correr risco de errar, de TENTAR. Pessoas não recordam sua gramática perfeita. Recordam se você foi confiante, genuíno, interessante.</p>
+
+<p>Como ganhar confiança? HÁBITO. Fale todos os dias. Inicialmente com aplicações ou parceiros, depois com estranhos. Quanto mais você fala, mais confiante você se torna. Comece assumindo risco pequeno (conversa com amigos) e escale (apresentações em público). Cada vitória constrói confiança.</p>
+
+<p>Lembre-se: falantes nativos também cometem erros! Eles também hesitam! Eles também não sabem algumas palavras! A diferença é que não deixam isso pará-los. Continue se comunicando apesar disso.</p>
+
+<blockquote class="example">
+<strong>Exemplo de Voz Autêntica:</strong>
+
+ROBÓTICO (muito "textbook"): "I believe that education constitutes a fundamental pillar upon which societal development depends, and therefore, significant resource allocation toward educational infrastructure is imperative."
+
+AUTÊNTICO COM CONFIANÇA: "Look, I'm passionate about education because I've seen how it transforms lives. And I'm not just talking theory—when governments actually invest in schools and teachers, communities change. It's not complicated, but it requires real commitment."
+
+Qual parece mais... pessoa real? Qual você crê mais?
+</strongquote>
+
+<h4>Continuação: O Aprendizado Nunca Termina</h4>
+<p>Você completou este curso. Mas aprendizado de linguagem não tem verdadeiro "fim". Há sempre mais vocabulário a aprender, mais nuances a dominar, mais contextos a navegar. Mas agora você TEM as ferramentas. Você PODE continuar crescendo.</p>
+
+<p>Daqui em frente: (1) Defina objetivos específicos (falar em público em inglês? Escrever artigos? Liderar reuniões internacionais?). (2) Procure experiências que desafiem você. (3) Busque feedback genuíno de falantes nativos. (4) Sempre aprenda em CONTEXTO (palavras como parte de histórias, argumentos, conversas—não isoladas em listas). (5) Mantenha curiosidade genuína sobre linguagem, cultura, ideias.</p>
+
+<p>Lembre-se: aprender um idioma é aprender uma perspectiva diferente do mundo. Diferentes idiomas codificam diferentes formas de pensar. Ao dominar inglês verdadeiramente, você não apenas aprendeu comunicar—você expandiu sua capacidade cognitiva e sua conexão ao mundo.</p>
+
+<h4>Reflexão Final: De Onde Você Veio, Aonde Você Está</h4>
+<p>Pense naquele primeiro dia, naquele módulo sobre alfabeto e cumprimentos básicos. Você conhecia praticamente nada de inglês prático. Agora? Você consegue:
+<ul>
+<li>Conversas complexas sobre praticamente qualquer tópico</li>
+<li>Argumentação sofisticada com lógica sólida e evidência</li>
+<li>Análise crítica de texto e mídia</li>
+<li>Compreensão de nuance, ironia, e complexidade semântica</li>
+<li>Adaptação para múltiplos registros e gêneros</li>
+<li>Reconhecimento de retórica e manipulação linguística</li>
+<li>Expressão autêntica de sua própria voz pessoal</li>
+</ul>
+
+Você não apenas aprendeu inglês—você aprendeu a PENSAR melhor. A COMUNICAR mais efetivamente. A ENTENDER o mundo mais profundamente. Isto é transformação genuína.</p>
+
+<h4>Seu Próximo Passo</h4>
+<p>Não volte a falar português quando puder falar inglês. Busque oportunidades para usar inglês em contextos reais, significativos. Converse. Discuta. Debata. Escreva. Apresente. Cada uso real consolida e expande sua capacidade.</p>
+
+<p>E quando encontra alguém aprendendo inglês, compartilhe sua jornada. Porque você aprendeu não apenas uma linguagem—você aprendeu como aprender, como persistir, como crescer. Estas lições transcendem inglês.</p>
+
+<blockquote class="news">
+<strong>Verdade Final:</strong> Você provavelmente SUPERESTIMA quanto tempo ainda tem a aprender e SUBESTIMA quanto já aprendeu. Você é agora um usuário sofisticado de inglês. Sim, há mais a aprender—sempre há. Mas você já cruzou o limiar de "aprendiz" para "falante". Celebre isto. Você o merece!
+</strongquote>
+
+<p>Parabéns. Você completou uma jornada extraordinária. Sua dedicação, sua paciência, sua disposição de desafiar a si mesmo—isto é admirável. Continue assim. O mundo de idiomas, cultura, conexões humanas que agora se abre para você é infinito.</p>
+
+<p>Você consegue isto. Creia em si mesmo. Porque nós cremos em você. Agora, vá lá e fale inglês como um verdadeiro falante. Com autenticidade. Com confiança. Com sua voz genuína.</p>`,
+    cards: [
+      {
+        q: 'Qual é a diferença entre perfecção linguística e voz autêntica? Por que voz importa mais?',
+        a: 'Perfection = gramaticalmente correto mas frequentemente robótico. Voz autêntica = genuína, reconhecível, memorável, até com pequenos erros. Pessoas conectam com voz, não com perfection. Confiança + autenticidade > perfection.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
