@@ -3307,6 +3307,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776024784753,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/be.jpg',
+    id: 'be',
+    name: 'Business English para Reuniões e E-mails',
+    desc: 'Curso específico para ambiente corporativo, com inglês para reuniões, apresentações, negociações e e-mails profissionais.',
+    file: '16-business-english.html',
+    cat: 'Inglês',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'BE_HENRY_2026_MASTER',
+    ak: 'be_auth',
+    storagePrefix: 'be_',
+    icon: '🇺🇸',
+    color: '#37474F',
+    addedTs: 1776024789865,
+    active: true
   }
 ];
 var MA_CATS = [
