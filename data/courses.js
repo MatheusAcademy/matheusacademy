@@ -2331,6 +2331,25 @@ var MA_COURSES = [
     color: '#0076ce',
     addedTs: 1776024514823,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/lp.jpg',
+    id: 'lp',
+    name: 'Biografia de Larry Page',
+    desc: 'Um dos fundadores do Google e sua contribuição para a revolução da internet.',
+    file: '27-bio-larry-page.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'LP_HENRY_2026_MASTER',
+    ak: 'lp_auth',
+    storagePrefix: 'lp_',
+    icon: '👤',
+    color: '#4285f4',
+    addedTs: 1776024519823,
+    active: true
   }
 ];
 var MA_CATS = [
