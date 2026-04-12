@@ -1818,6 +1818,25 @@ var MA_COURSES = [
     color: '#4e342e',
     addedTs: 1776024397840,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/el.jpg',
+    id: 'el',
+    name: 'Biografia de Estée Lauder',
+    desc: 'A empresária que construiu um império global de cosméticos e beleza.',
+    file: '54-bio-estee-lauder.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'EL_HENRY_2026_MASTER',
+    ak: 'el_auth',
+    storagePrefix: 'el_',
+    icon: '👤',
+    color: '#1a237e',
+    addedTs: 1776024401461,
+    active: true
   }
 ];
 var MA_CATS = [
