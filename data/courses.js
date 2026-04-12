@@ -1894,6 +1894,25 @@ var MA_COURSES = [
     color: '#e91e63',
     addedTs: 1776024413486,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rh.jpg',
+    id: 'rh',
+    name: 'Biografia de Reed Hastings',
+    desc: 'O cofundador da Netflix e a reinvenção do entretenimento mundial.',
+    file: '45-bio-reed-hastings.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'RH_HENRY_2026_MASTER',
+    ak: 'rh_auth',
+    storagePrefix: 'rh_',
+    icon: '👤',
+    color: '#e50914',
+    addedTs: 1776024417561,
+    active: true
   }
 ];
 var MA_CATS = [
