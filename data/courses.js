@@ -2160,6 +2160,25 @@ var MA_COURSES = [
     color: '#555555',
     addedTs: 1776024470908,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ow.jpg',
+    id: 'ow',
+    name: 'Biografia de Oprah Winfrey',
+    desc: 'A empresária da comunicação que construiu influência e negócios multimilionários.',
+    file: '34-bio-oprah-winfrey.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'OW_HENRY_2026_MASTER',
+    ak: 'ow_auth',
+    storagePrefix: 'ow_',
+    icon: '👤',
+    color: '#9c27b0',
+    addedTs: 1776024475083,
+    active: true
   }
 ];
 var MA_CATS = [
