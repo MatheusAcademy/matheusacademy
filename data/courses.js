@@ -1799,6 +1799,25 @@ var MA_COURSES = [
     color: '#f4a261',
     addedTs: 1775832801573,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cw.jpg',
+    id: 'cw',
+    name: 'Biografia de Madame C. J. Walker',
+    desc: 'Uma das primeiras mulheres a construir grande fortuna com empreendedorismo próprio.',
+    file: '55-bio-madame-cj-walker.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'CW_HENRY_2026_MASTER',
+    ak: 'cw_auth',
+    storagePrefix: 'cw_',
+    icon: '👤',
+    color: '#4e342e',
+    addedTs: 1776024397840,
+    active: true
   }
 ];
 var MA_CATS = [
