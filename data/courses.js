@@ -3189,6 +3189,25 @@ var MA_COURSES = [
     color: '#e76f51',
     addedTs: 1776024751130,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ig.jpg',
+    id: 'ig',
+    name: 'IA Generativa e Prompt Engineering',
+    desc: 'Ensina a usar IA generativa de forma prática para criar textos, ideias, análises, automações e produtividade.',
+    file: '22-ia-generativa.html',
+    cat: 'Tecnologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IG_HENRY_2026_MASTER',
+    ak: 'ig_auth',
+    storagePrefix: 'ig_',
+    icon: '💻',
+    color: '#6A1B9A',
+    addedTs: 1776024757140,
+    active: true
   }
 ];
 var MA_CATS = [
