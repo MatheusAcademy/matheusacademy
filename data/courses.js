@@ -2730,6 +2730,25 @@ var MA_COURSES = [
     color: '#264653',
     addedTs: 1776024620068,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rm.jpg',
+    id: 'rm',
+    name: 'Resiliência Mental em Tempos de Pressão',
+    desc: 'Curso sobre resistência emocional, adaptação, recuperação após crises e fortalecimento psicológico.',
+    file: '40-resiliencia-mental.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'RM_HENRY_2026_MASTER',
+    ak: 'rm_auth',
+    storagePrefix: 'rm_',
+    icon: '🏆',
+    color: '#BF360C',
+    addedTs: 1776024625968,
+    active: true
   }
 ];
 var MA_CATS = [
