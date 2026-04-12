@@ -1913,6 +1913,25 @@ var MA_COURSES = [
     color: '#e50914',
     addedTs: 1776024417561,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/hs.jpg',
+    id: 'hs',
+    name: 'Biografia de Howard Schultz',
+    desc: 'O nome que expandiu a Starbucks e transformou café em experiência.',
+    file: '44-bio-howard-schultz.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'HS_HENRY_2026_MASTER',
+    ak: 'hs_auth',
+    storagePrefix: 'hs_',
+    icon: '👤',
+    color: '#00704a',
+    addedTs: 1776024421574,
+    active: true
   }
 ];
 var MA_CATS = [
