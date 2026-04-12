@@ -2464,6 +2464,25 @@ var MA_COURSES = [
     color: '#1565c0',
     addedTs: 1776024549794,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/sd.jpg',
+    id: 'sd',
+    name: 'Segurança Digital e Privacidade',
+    desc: 'Proteção de dados, senhas, golpes virtuais e segurança online.',
+    file: '17-seguranca-digital.html',
+    cat: 'Segurança & Sobrevivência',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'SD_HENRY_2026_MASTER',
+    ak: 'sd_auth',
+    storagePrefix: 'sd_',
+    icon: '🔐',
+    color: '#023e8a',
+    addedTs: 1776024554873,
+    active: true
   }
 ];
 var MA_CATS = [
