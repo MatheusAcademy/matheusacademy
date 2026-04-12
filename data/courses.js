@@ -2312,6 +2312,25 @@ var MA_COURSES = [
     color: '#ff9900',
     addedTs: 1776024509725,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/md.jpg',
+    id: 'md',
+    name: 'Biografia de Michael Dell',
+    desc: 'O criador da Dell e sua visão de vendas diretas e eficiência.',
+    file: '37-bio-michael-dell.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'MD_HENRY_2026_MASTER',
+    ak: 'md_auth',
+    storagePrefix: 'md_',
+    icon: '👤',
+    color: '#0076ce',
+    addedTs: 1776024514823,
+    active: true
   }
 ];
 var MA_CATS = [
