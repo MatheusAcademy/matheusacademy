@@ -2844,6 +2844,25 @@ var MA_COURSES = [
     color: '#00BFA5',
     addedTs: 1776024652026,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/bw.jpg',
+    id: 'bw',
+    name: 'Blockchain, Web3 e o Futuro da Internet',
+    desc: 'Curso sobre descentralização, contratos inteligentes, identidade digital e novas estruturas da internet.',
+    file: '28-blockchain-web3.html',
+    cat: 'Tecnologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'BW_HENRY_2026_MASTER',
+    ak: 'bw_auth',
+    storagePrefix: 'bw_',
+    icon: '💻',
+    color: '#F9A825',
+    addedTs: 1776024657091,
+    active: true
   }
 ];
 var MA_CATS = [
