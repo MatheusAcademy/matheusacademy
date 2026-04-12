@@ -2122,6 +2122,25 @@ var MA_COURSES = [
     color: '#da291c',
     addedTs: 1776024462753,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/lt.jpg',
+    id: 'lt',
+    name: 'Biografia de Luiza Helena Trajano',
+    desc: 'A empresária que transformou o Magazine Luiza em referência em varejo.',
+    file: '48-bio-luiza-trajano.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'LT_HENRY_2026_MASTER',
+    ak: 'lt_auth',
+    storagePrefix: 'lt_',
+    icon: '👤',
+    color: '#0086ff',
+    addedTs: 1776024466909,
+    active: true
   }
 ];
 var MA_CATS = [
