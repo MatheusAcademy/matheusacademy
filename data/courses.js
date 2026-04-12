@@ -2103,6 +2103,25 @@ var MA_COURSES = [
     color: '#ff6a00',
     addedTs: 1776024458637,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rk.jpg',
+    id: 'rk',
+    name: 'Biografia de Ray Kroc',
+    desc: 'O homem que transformou o McDonald\'s em potência global do fast food.',
+    file: '43-bio-ray-kroc.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'RK_HENRY_2026_MASTER',
+    ak: 'rk_auth',
+    storagePrefix: 'rk_',
+    icon: '👤',
+    color: '#da291c',
+    addedTs: 1776024462753,
+    active: true
   }
 ];
 var MA_CATS = [
