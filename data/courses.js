@@ -3093,6 +3093,25 @@ var MA_COURSES = [
     color: '#0277BD',
     addedTs: 1776024723027,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/hp.jpg',
+    id: 'hp',
+    name: 'Alta Performance para Vida e Carreira',
+    desc: 'Curso completo sobre foco, energia, execução, metas e construção de desempenho acima da média.',
+    file: '31-alta-performance.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'HP_HENRY_2026_MASTER',
+    ak: 'hp_auth',
+    storagePrefix: 'hp_',
+    icon: '🏆',
+    color: '#E65100',
+    addedTs: 1776024727998,
+    active: true
   }
 ];
 var MA_CATS = [
