@@ -3036,6 +3036,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776024706103,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cr2r.jpg',
+    id: 'cr2r',
+    name: 'Cristologia: Jesus do Texto à Doutrina',
+    desc: 'Estudo aprofundado sobre a pessoa, missão, natureza e obra de Jesus Cristo nas Escrituras e na tradição cristã.',
+    file: '09-cristologia.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CR_HENRY_2026_MASTER',
+    ak: 'cr_auth',
+    storagePrefix: 'cr_',
+    icon: '✝️',
+    color: '#AD1457',
+    addedTs: 1776024712032,
+    active: true
   }
 ];
 var MA_CATS = [
