@@ -2977,6 +2977,25 @@ var MA_COURSES = [
     color: '#880E4F',
     addedTs: 1776024690011,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ic.jpg',
+    id: 'ic',
+    name: 'Inglês para Conversação com Confiança',
+    desc: 'Curso focado em speaking, respostas rápidas, diálogos naturais e perda do medo de falar inglês.',
+    file: '18-ingles-conversacao.html',
+    cat: 'Inglês',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IC_HENRY_2026_MASTER',
+    ak: 'ic_auth',
+    storagePrefix: 'ic_',
+    icon: '🇺🇸',
+    color: '#E65100',
+    addedTs: 1776024694959,
+    active: true
   }
 ];
 var MA_CATS = [
