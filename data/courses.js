@@ -2179,6 +2179,25 @@ var MA_COURSES = [
     color: '#9c27b0',
     addedTs: 1776024475083,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/dpvf.jpg',
+    id: 'dpvf',
+    name: 'Defesa Pessoal Estratégica',
+    desc: 'Prevenção, postura, leitura de risco e técnicas básicas de autoproteção.',
+    file: '18-defesa-pessoal.html',
+    cat: 'Segurança & Sobrevivência',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'DP_HENRY_2026_MASTER',
+    ak: 'dp_auth',
+    storagePrefix: 'dp_',
+    icon: '🔐',
+    color: '#780000',
+    addedTs: 1776024479223,
+    active: true
   }
 ];
 var MA_CATS = [
