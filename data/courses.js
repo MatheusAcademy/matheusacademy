@@ -1875,6 +1875,25 @@ var MA_COURSES = [
     color: '#ff5722',
     addedTs: 1776024409548,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/sl.jpg',
+    id: 'sl',
+    name: 'Biografia de Sara Blakely',
+    desc: 'A fundadora da Spanx e uma das empresárias mais admiradas do mundo.',
+    file: '53-bio-sara-blakely.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'SL_HENRY_2026_MASTER',
+    ak: 'sl_auth',
+    storagePrefix: 'sl_',
+    icon: '👤',
+    color: '#e91e63',
+    addedTs: 1776024413486,
+    active: true
   }
 ];
 var MA_CATS = [
