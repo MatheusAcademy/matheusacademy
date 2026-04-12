@@ -2673,6 +2673,25 @@ var MA_COURSES = [
     color: '#2d6a4f',
     addedTs: 1776024604977,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/le.jpg',
+    id: 'le',
+    name: 'Grandes Lendas do Esporte',
+    desc: 'A trajetória de atletas históricos, seus feitos, desafios e legado.',
+    file: '13-lendas-esporte.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'LE_HENRY_2026_MASTER',
+    ak: 'le_auth',
+    storagePrefix: 'le_',
+    icon: '🏆',
+    color: '#ffd166',
+    addedTs: 1776024609859,
+    active: true
   }
 ];
 var MA_CATS = [
