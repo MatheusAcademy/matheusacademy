@@ -2559,6 +2559,25 @@ var MA_COURSES = [
     color: '#f4a261',
     addedTs: 1776024574049,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/am.jpg',
+    id: 'am',
+    name: 'Amazônia: O Pulmão do Mundo',
+    desc: 'A importância estratégica, ambiental e climática da Amazônia para o Brasil e para o planeta.',
+    file: '04-amazonia.html',
+    cat: 'Meio Ambiente & Sustentabilidade',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'AM_HENRY_2026_MASTER',
+    ak: 'am_auth',
+    storagePrefix: 'am_',
+    icon: '🌱',
+    color: '#1b4332',
+    addedTs: 1776024579805,
+    active: true
   }
 ];
 var MA_CATS = [
