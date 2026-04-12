@@ -3267,6 +3267,26 @@ var MA_COURSES = [
     color: '#00838F',
     addedTs: 1776024775014,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/it.jpg',
+    id: 'it',
+    name: 'Inglês para Trabalho e Entrevistas',
+    desc: 'Foco em currículo, entrevistas, comunicação profissional, reuniões básicas e vocabulário corporativo.',
+    file: '15-ingles-trabalho.html',
+    cat: 'Inglês',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IT_HENRY_2026_MASTER',
+    ak: 'it_auth',
+    storagePrefix: 'it_',
+    icon: '🇺🇸',
+    color: '#455A64',
+    free: true,
+    addedTs: 1776024779851,
+    active: true
   }
 ];
 var MA_CATS = [
