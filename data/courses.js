@@ -2198,6 +2198,25 @@ var MA_COURSES = [
     color: '#780000',
     addedTs: 1776024479223,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ik.jpg',
+    id: 'ik',
+    name: 'Biografia de Ingvar Kamprad',
+    desc: 'O fundador da IKEA e sua revolução no varejo de móveis acessíveis.',
+    file: '42-bio-ingvar-kamprad.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'IK_HENRY_2026_MASTER',
+    ak: 'ik_auth',
+    storagePrefix: 'ik_',
+    icon: '👤',
+    color: '#0051ba',
+    addedTs: 1776024484823,
+    active: true
   }
 ];
 var MA_CATS = [
