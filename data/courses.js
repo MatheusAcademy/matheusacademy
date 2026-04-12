@@ -3405,6 +3405,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776024810730,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ac.jpg',
+    id: 'ac',
+    name: 'Apologética Cristã e Defesa da Fé',
+    desc: 'Curso voltado para respostas bíblicas e racionais sobre fé, existência de Deus, Bíblia, sofrimento e críticas ao cristianismo.',
+    file: '06-apologetica-crista.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'AC_HENRY_2026_MASTER',
+    ak: 'ac_auth',
+    storagePrefix: 'ac_',
+    icon: '✝️',
+    color: '#C62828',
+    addedTs: 1776024815891,
+    active: true
   }
 ];
 var MA_CATS = [
