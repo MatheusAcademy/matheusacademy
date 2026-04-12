@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inglês Básico do Zero à Conversação — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'IB',
+  name: 'Inglês Básico do Zero à Conversação',
+  shortName: 'Inglês Básico',
+  cat: 'Inglês',
+  desc: 'Curso ideal para iniciantes absolutos, com foco em vocabulário essencial, frases do dia a dia, compreensão e fala.',
+  salt: 'IB_HENRY_2026_MASTER',
+  ak: 'ib_auth',
+  courseKey: 'ib',
+  prefix: 'ib_',
+  color: '#1976D2',
+  glow: 'rgba(25,118,210,.35)',
+  free: true,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'ib_mod1',
+    name: 'Fundamentos: Alfabeto, Sons e Cumprimentos',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Resumo do Módulo 1: Suas Primeiras Palavras',
+      points: [
+        'O alfabeto inglês é a base de toda a pronuncia correta e escrita fluida em inglês',
+        'Os sons do inglês diferem bastante do português, exigindo prática consistente de pronúncia',
+        'Cumprimentos e expressões básicas são ferramentas imediatas para comunicação genuína',
+        'Repetição com pronúncia correta acelera a memorização e a confiança inicial'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual é a pronúncia correta da letra "R" no início de uma palavra em inglês?',
+        opts: ['Como "r" do português', 'Com a língua enrugada para trás', 'Com os lábios arredondados', 'Praticamente não se pronuncia'],
+        correct: 1
+      },
+      {
+        q: 'Qual cumprimento é apropriado usar a qualquer hora do dia?',
+        opts: ['Good morning', 'Good evening', 'Hello', 'Good night'],
+        correct: 2
+      },
+      {
+        q: 'Como você responde à pergunta "How are you?"',
+        opts: ['I am fine, thanks. And you?', 'Yes, I am', 'I am a teacher', 'You are good'],
+        correct: 0
+      }
+    ]
+  },
+  {
+    id: 'ib_mod2',
+    name: 'Estruturas Essenciais: Verbo To Be, Números e Cores',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Resumo do Módulo 2: Estruturas que Sustentam Frases',
+      points: [
+        'O verbo "to be" é o alicerce de praticamente todas as conversas iniciais em inglês',
+        'Números são vitais para compras, horas, idades e praticamente qualquer contexto cotidiano',
+        'Cores não apenas descrevem o mundo visual, mas enriquecem significativamente sua expressão',
+        'Dominar essas estruturas abre portas para sentenças muito mais complexas e interessantes'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual é a forma correta do verbo "to be" para "eu" (I)?',
+        opts: ['are', 'am', 'is', 'be'],
+        correct: 1
+      },
+      {
+        q: 'Como você diz o número 25 em inglês?',
+        opts: ['Twenty-five', 'Two-five', 'Twent-five', 'Twenty five'],
+        correct: 0
+      },
+      {
+        q: 'Complete a frase: "The sky is ___"',
+        opts: ['red', 'blue', 'green', 'yellow'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'ib_mod3',
+    name: 'Primeiras Conversas: Apresentações, Família e Rotina',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Resumo do Módulo 3: Conversando Naturalmente',
+      points: [
+        'Apresentações pessoais são momentos cruciais para criar primeira impressão positiva',
+        'Vocabulário de família expande seu universo de conversação a contextos pessoais',
+        'Descrições de rotina diária preparam você para falar sobre a vida de forma autêntica',
+        'Integrar tudo aprendido anteriormente cria confiança para conversas reais'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual frase de apresentação é mais comum e natural?',
+        opts: ['I am a boy', 'My name is John and I am happy', 'Hi, I\'m John', 'Hello, pleased to meet you, I am John'],
+        correct: 2
+      },
+      {
+        q: 'Como você diz "meu irmão" em inglês?',
+        opts: ['my brother', 'my sister', 'my father', 'my uncle'],
+        correct: 0
+      },
+      {
+        q: 'Complete: "Every morning I ___"',
+        opts: ['sleep', 'wake up', 'go to bed', 'have dinner'],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'Alfabeto Inglês e Pronunciação Básica',
+    dur: 20,
+    content: `<h3>Bem-vindo ao Mundo do Inglês!</h3>
+<p>Que alegria e entusiasmo ter você aqui começando sua jornada no inglês! Aprender uma nova língua é uma aventura extraordinária, e você está no lugar certo. Vamos começar pelo fundamento absoluto: o alfabeto inglês e a pronunciação básica.</p>
+
+<p>O alfabeto inglês possui 26 letras, assim como em português, mas a forma como pronunciamos cada letra é completamente diferente. A pronunciação correta desde o início é crucial para seu desenvolvimento futuro, porque quando você pronuncia bem, sua memorização melhora exponencialmente, sua confiança cresce, e você consegue se comunicar de forma mais clara e inteligível para falantes nativos.</p>
+
+<h4>Os Sons Básicos do Alfabeto</h4>
+<p>Vamos explorar cada letra e seu som correspondente. Começamos com as letras A até F. A letra "A" se pronuncia como "ei" (como em "eight" — oito). A letra "B" é simplesmente "bi". A letra "C" tem dois sons principais: quando vem antes de E, I ou Y, soa como "s" (como em "city"), e em outros casos soa como "k" (como em "car"). A letra "D" é "di", e a letra "E" soa como "i" (como em "egg"). A letra "F" é "ef".</p>
+
+<blockquote class="tip">
+<strong>Dica Importante:</strong> A melhor forma de aprender pronúncia é ouvindo repetidamente e tentando imitar. Procure por vídeos de pronúncia do alfabeto e repita em voz alta pelo menos 10 vezes. Seu cérebro e sua boca precisam se familiarizar com esses novos sons!
+</blockquote>
+
+<p>Continuando com G até L. A letra "G" é "ji" (com som de "j" como em "jóia"). A letra "H" é "etch". A letra "I" soa como "ai" (como em "eye" — olho). A letra "J" é "jei". A letra "K" é "kei". A letra "L" é "el".</p>
+
+<p>De M até R temos: "M" é "em", "N" é "en", "O" soa como "ou" (como em "oh"), "P" é "pi", "Q" é "kiu", "R" é "ar". O "R" inglês é muito diferente do "R" português! Em inglês, você coloca a língua ligeiramente enrugada para trás, sem tocar no palato. Pratique isso muitas vezes!</p>
+
+<p>Finalizando com S até Z: "S" é "es", "T" é "ti", "U" soa como "iu", "V" é "vi", "W" é "dáblio", "X" é "éks", "Y" é "guai", "Z" é "zed" (ou "zee" nos EUA).</p>
+
+<h4>A Importância da Pronúncia Correta</h4>
+<p>Você pode estar se perguntando por que é tão importante pronunciar cada letra corretamente. A razão é simples mas poderosa: quando você pronuncia bem, você entra em sintonia com o padrão sonoro do inglês. Seu cérebro começa a reconhecer padrões de sons que você ouvirá em palavras completas. Além disso, se você ensinar a si mesmo pronunciações incorretas desde agora, será extremamente difícil corrigir depois.</p>
+
+<blockquote class="news">
+<strong>Fato Interessante:</strong> Estudos de neurociência mostram que adultos aprendendo uma nova língua conseguem pronunciação mais autêntica quando praticam regularmente nos primeiros 2-3 meses. É como um "período crítico" para impressionar os sons na sua memória de longo prazo!
+</blockquote>
+
+<h4>Exercícios Práticos de Pronúncia</h4>
+<p>Aqui está um exercício fantástico para você fazer agora: diga o alfabeto inteiro em voz alta, lentamente, focando em cada som. Depois, repita mais rápido. Depois ainda mais rápido! Isso treina sua capacidade de transição entre sons. Em seguida, escolha 5 letras aleatoriamente e pratique pronunciá-las perfeitamente antes de passar para a próxima série de 5 letras.</p>
+
+<p>Outro exercício excelente é a "pronúncia em espelho". Fique em frente a um espelho e observe seu movimento de boca, lábios e língua enquanto pronuncia cada letra. Compare com vídeos de pronúncia de falantes nativos. Qual é a diferença? Seu queixo se move diferente? Seus lábios estão na posição certa? Este feedback visual ajuda MUITO a corrigir erros.</p>
+
+<blockquote class="example">
+<strong>Exemplo Prático:</strong> A letra "R" é um desafio comum. Coloque seu dedo sob o queixo e tente não deixar ele tocar no palato superior enquanto diz "ar". Você sentirá quando está certo. Depois pratique palavras como "run", "red", "right". Repita cada uma 10 vezes com clareza total.
+</blockquote>
+
+<h4>Conectando Letras: Sílabas Simples</h4>
+<p>Agora que você está começando a dominar o alfabeto, vamos conectar as letras em sílabas simples. Quando você combina uma consoante com uma vogal, nasce uma sílaba. Por exemplo: "BA" (B + A), "CA" (C + A), "DA" (D + A). Pratique estas combinações básicas. Você está começando a construir os blocos de construção das palavras reais!</p>
+
+<p>A pronúncia de sílabas é onde você começa a sentir o "ritmo" do inglês. O inglês é uma língua de ritmo acentuado, diferente do português. Isso significa que algumas sílabas são pronunciadas com mais força e outras mais suavemente. Quando você pratica sílabas, está começando a desenvolver esse senso de ritmo.</p>
+
+<h4>Seu Compromisso a Partir de Agora</h4>
+<p>Faça um compromisso com você mesmo: durante a próxima semana, dedique 5 minutos por dia apenas para pronunciar o alfabeto e as sílabas básicas. Use um cronômetro se precisar. 5 minutos é pouco tempo, mas é consistente e poderoso. Quando você pratica pouco e bem regularmente, você progride mais do que quem pratica muito esporadicamente. Seu cérebro precisa dessa repetição espaçada.</p>
+
+<p>Você está fazendo algo extraordinário ao aprender uma nova língua. Você está expandindo sua mente, abrindo portas para novas culturas, novas amizades, novas oportunidades. Cada letra que você pronuncia corretamente é um passo em direção a esse futuro brilhante. Continue assim!`,
+    cards: [
+      {
+        q: 'Qual é a diferença de pronúncia entre a letra "C" antes de "E" e antes de "A"?',
+        a: 'Antes de E soa como "s" (city), antes de A soa como "k" (car). Este é um dos padrões mais importantes do inglês.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Cumprimentos e Expressões de Cortesia Essenciais',
+    dur: 20,
+    content: `<h3>Seus Primeiros Contatos: Cumprimentos que Abrem Portas</h3>
+<p>Imagine que você acabou de desembarcar em um país de língua inglesa. A primeira coisa que você vai fazer é cumprimentar alguém! Os cumprimentos são a porta de entrada para toda comunicação humana. Eles estabelecem tom, mostram respeito, e criam uma atmosfera positiva para conversa. Vamos explorar os cumprimentos mais essenciais e úteis que você usará praticamente todos os dias.</p>
+
+<h4>Cumprimentos Principais e Contextos</h4>
+<p>"Hello" é provavelmente o cumprimento mais universal e seguro em inglês. Funciona em qualquer hora do dia, em qualquer situação, formal ou informal. Você pode usar "Hello" para saudar um colega de trabalho, um vendedor em uma loja, ou um novo amigo. É simples, claro, e ninguém jamais se sentirá desconfortável ao ser cumprimentado com "Hello".</p>
+
+<p>"Good morning" é usado desde o amanhecer até aproximadamente meio-dia. Quando você diz "Good morning", você está literalmente desejando que a pessoa tenha uma boa manhã. É uma expressão calorosa e genuína. "Good afternoon" cobre o período após o almoço até o entardecer, normalmente até às 6 da tarde. "Good evening" é usado a partir do entardecer até tarde da noite, digamos até às 8 ou 9 da noite. "Good night" é especial: você SOMENTE diz isso quando alguém está indo embora, porque você está desejando uma boa noite de sono. Você não diz "Good night" quando chegando em algum lugar!</p>
+
+<blockquote class="tip">
+<strong>Dica Crucial:</strong> Muitos brasileiros confundem "Good night" com "boa noite". Em português, "boa noite" funciona tanto para cumprimento quanto para despedida. Em inglês, "Good night" é APENAS despedida. Para cumprimentar à noite, use "Good evening".
+</blockquote>
+
+<p>"Hi" é uma variação informal de "Hello". Funciona muito bem entre amigos, colegas próximos, ou contextos muito informais. "Hi there!" é ainda mais amigável e descontraído. "Yo!" é usado em contextos muito casuais, entre amigos jovens, mas não é apropriado em ambientes profissionais.</p>
+
+<h4>Respostas Naturais aos Cumprimentos</h4>
+<p>Quando alguém o cumprimenta, você precisa responder. A resposta mais comum é simplesmente ecoar o cumprimento: se alguém diz "Hello", você diz "Hello". Se alguém diz "Good morning", você diz "Good morning". Mas você pode ir além!</p>
+
+<p>A pergunta "How are you?" (Como você está?) é quase sempre feita logo após um cumprimento. Esta é uma questão social extremamente importante em inglês. A resposta mais comum é "I'm fine, thanks. And you?" (Estou bem, obrigado. E você?). Outra resposta muito natural é simplesmente "Good, thanks!" ou "Pretty good!". Você também pode ser mais específico: "I'm great!" (Estou ótimo!), "I'm okay" (Estou bem), ou "I'm not feeling so good" (Não estou me sentindo bem).</p>
+
+<blockquote class="news">
+<strong>Padrão Cultural:</strong> Em culturas de língua inglesa, quando alguém pergunta "How are you?", eles realmente querem saber como você está. Não é apenas uma frase vazia como às vezes é em português. Mas em contextos muito informais ou apressados, você pode simplesmente responder "Good!" sem elaborar.
+</blockquote>
+
+<h4>Expressões de Cortesia Fundamentais</h4>
+<p>"Please" significa "por favor". É simples, poderoso, e absolutamente essencial. "Please pass me the salt" (Por favor, passe-me o sal). "Two coffees, please" (Dois cafés, por favor). O "please" transforma uma ordem em um pedido gentil. SEMPRE use "please" quando pedir algo!</p>
+
+<p>"Thank you" significa "obrigado". "Thank you very much" é ainda mais enfático. "Thanks!" é informal e amigável. Uma variação comum é "Thanks a lot!" que expressa gratidão sincera. Quando alguém diz "Thank you", a resposta padrão é "You're welcome" (De nada), ou informalmente "No problem!" ou "My pleasure!" (Com prazer!).</p>
+
+<p>"Excuse me" e "Sorry" servem funções diferentes mas igualmente importantes. "Excuse me" é usado quando você precisa chamar atenção de alguém ou passar por eles: "Excuse me, could you help me?" (Desculpe, você poderia me ajudar?). "Sorry" é um pedido de desculpas verdadeiro: "I'm sorry I'm late" (Desculpe, estou atrasado). Você pode responder a um pedido de desculpas com "No problem", "That's okay", ou "Don't worry about it".</p>
+
+<h4>Expressões Temporárias e de Licença</h4>
+<p>"See you later" (Até mais tarde), "See you tomorrow" (Até amanhã), "See you soon" (Até em breve), e simplesmente "Bye!" ou "Goodbye" são formas de se despedir. Informalmente, você também pode dizer "Take care!", "Have a nice day!", ou "Talk to you later!" (Falamos depois!).</p>
+
+<p>"Nice to meet you" é essencial quando conhece alguém pela primeira vez. A resposta é geralmente "Nice to meet you too" (Prazer em conhecê-lo também) ou simplesmente "You too!".</p>
+
+<blockquote class="example">
+<strong>Diálogo Completo Básico:</strong>
+- A: "Hello! How are you?"
+- B: "Hi! I'm fine, thanks. And you?"
+- A: "I'm good! Nice to meet you. My name is John."
+- B: "Nice to meet you, John. I'm Sarah."
+- A: "Pleased to meet you, Sarah!"
+</blockquote>
+
+<h4>Variações Regionais e Contextos</h4>
+<p>Você pode encontrar variações dependendo se está em um país que fala inglês americano, britânico, australiano, etc. Por exemplo, britânicos frequentemente dizem "How do you do?" em contextos mais formais. Australianos podem dizer "G'day!" ou "How ya going?" de forma muito casual. Mas os cumprimentos que ensinei aqui funcionam em QUALQUER lugar onde se fale inglês.</p>
+
+<p>Em contextos mais formais, como entrevistas de trabalho ou reuniões importantes, você usará: "Good morning, my name is..." e apertará mão de forma firme enquanto mantém contato visual. Em contextos informais, você pode simplesmente dizer "Hey, what's up?" entre amigos.</p>
+
+<h4>Prática e Naturalidade</h4>
+<p>A chave para soar natural é praticar esses cumprimentos em voz alta. Não apenas leia, mas PRONUNCIE. Sinta o ritmo, a entonação, o fluxo natural. Grave-se falando e ouça novamente. Compare sua pronúncia com falantes nativos. Você notar que os falantes nativos:
+<ul><li>Pronunciam mais rápido e com menos pausas</li><li>Usam entonação e ritmo natural</li><li>Parecem relaxados, não artificiais</li><li>Muitas vezes combinam palavras (gonna = going to, wanna = want to)</li></ul>
+Seu objetivo não é ser perfeito palavra por palavra, mas ser compreensível e soar genuíno. Continue praticando!`,
+    cards: [
+      {
+        q: 'Qual é a diferença entre "Good night" e "Good evening"?',
+        a: '"Good evening" é um cumprimento usado ao entardecer. "Good night" é APENAS uma despedida, usada quando alguém está indo dormir ou indo embora à noite.'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Primeira Conversa: Apresentação Pessoal Completa',
+    dur: 20,
+    content: `<h3>Sua Primeira Verdadeira Conversa em Inglês</h3>
+<p>Parabéns! Você já aprendeu pronunciação básica e cumprimentos. Agora vamos construir sua primeira conversa completa! Isso é um momento emocionante. Você não está apenas aprendendo palavras, está construindo a capacidade de se comunicar como um ser humano em uma nova língua. Isso é transformador!</p>
+
+<h4>A Estrutura de uma Apresentação Pessoal</h4>
+<p>Uma apresentação básica em inglês segue uma estrutura simples e previsível: (1) Cumprimento inicial, (2) Nome, (3) De onde você é, (4) O que você faz ou estuda, (5) Um detalhe pessoal interessante, (6) Resposta agradecida. Seguir essa estrutura dá a você confiança porque você sabe exatamente o que dizer em cada passo.</p>
+
+<p>Começamos com o cumprimento: "Hello! Hi there! It's nice to meet you!" Você pode escolher qualquer um desses dependendo do quão formal ou casual quer ser. Em seguida, apresente seu nome: "My name is [seu nome]" ou a forma mais casual "I'm [seu nome]". Ambas funcionam perfeitamente bem.</p>
+
+<blockquote class="tip">
+<strong>Dica de Pronúncia:</strong> "My name is" soa naturalmente como "mai neim iz" quando falado rapidamente. "I'm" soa como "aim". Na conversa real, falantes nativos frequentemente misturam e encurtam palavras. Está TUDO bem! O objetivo é comunicação, não perfeição mecânica.
+</blockquote>
+
+<h4>Falando Sobre Onde Você É</h4>
+<p>"I'm from Brazil" (Sou do Brasil) ou "I'm from São Paulo" (Sou de São Paulo). Quando alguém pergunta "Where are you from?", você responde com essa estrutura simples. Se quiser adicionar mais detalhes, pode dizer: "I'm from Brazil. I live in Rio de Janeiro" (Sou do Brasil. Eu moro no Rio de Janeiro). "I live in" é como você fala onde você mora atualmente, que pode ser diferente de onde você é originário.</p>
+
+<p>Você também pode descrever seu país ou cidade um pouco: "Brazil is a beautiful country with wonderful beaches" (Brasil é um país bonito com praias maravilhosas). "São Paulo is a big and lively city" (São Paulo é uma cidade grande e vibrante). Esses detalhes fazem a conversa mais interessante e ajudam a construir conexão com a outra pessoa.</p>
+
+<h4>Falando Sobre o Que Você Faz</h4>
+<p>"What do you do?" é uma pergunta muito comum em inglês, especialmente em contextos profissionais. Se você trabalha, responde: "I'm a teacher" (Sou professor), "I'm a doctor" (Sou médico), "I work in marketing" (Trabalho em marketing). Se você estuda, responde: "I'm a student" (Sou estudante) ou "I study medicine at university" (Estudo medicina na universidade).</p>
+
+<p>Se você faz ambos, trabalha e estuda, é totalmente aceitável dizer: "I study engineering and work part-time at a company" (Estudo engenharia e trabalho em tempo parcial em uma empresa). Falantes nativos adoram saber o que as pessoas fazem porque ajuda a construir contexto e validação para continuar a conversa.</p>
+
+<blockquote class="example">
+<strong>Exemplos de Apresentação Completa:</strong>
+- "Hi, my name is Ana. I'm from Brazil, from Rio de Janeiro. I'm a student studying graphic design. I love art and design!"
+- "Hello, I'm Carlos. I'm from São Paulo. I work as an engineer at a tech company. I'm passionate about technology and innovation."
+- "Hi! I'm Maria. I'm a teacher in Brazil. I teach English, actually! I'm learning new teaching methods every day."
+</blockquote>
+
+<h4>Detalhes Pessoais que Tornam Você Interessante</h4>
+<p>Aqui é onde você mostra sua personalidade! "I like..." (Gosto de...) é a estrutura para falar sobre seus interesses. "I like reading", "I like cooking", "I like playing football", "I like traveling". Você também pode usar "I love..." (Adoro...) para expressar paixão genuína, e "I enjoy..." (Aproveito/Desfruto) para uma expressão mais sofisticada.</p>
+
+<p>"I have a hobby..." (Tenho um hobby...) é outra forma. "I have a hobby of painting" ou "I'm interested in photography". Essas informações pessoais fazem você parecer real, interessante, e humano. Ninguém quer conversar com alguém que soa como um robô apenas recitando fatos!</p>
+
+<p>Você pode também mencionar se tem animais de estimação: "I have a dog named Lucky" (Tenho um cachorro chamado Lucky), ou coisas que o tornam único: "I speak three languages", "I'm learning to play guitar", "I recently started a blog about travel".</p>
+
+<h4>Respondendo e Mantendo a Conversa Viva</h4>
+<p>Quando a outra pessoa termina sua apresentação, é sua vez de mostrar interesse genuíno. Não apenas diga "okay, nice to meet you" e silêncio! Faça perguntas: "That's interesting! Where do you work?", "Oh, I love that too! What's your favorite book?", "Tell me more about your hobby!"</p>
+
+<p>Quando respondendo, use formas naturais de concordar ou expressar interesse: "That's cool!", "That's awesome!", "I love that!", "I've always wanted to try that!", "That sounds fun!". Essas pequenas expressões fazem você parecer um conversador engajado e entusiasmado.</p>
+
+<blockquote class="news">
+<strong>Fato Social Importante:</strong> Falantes nativos frequentemente dizem "that's cool!" ou "that's awesome!" para praticamente tudo que alguém compartilha. Não é insinceridade, é uma forma de manter o fluxo conversacional positivo e encorajador. Use e abuse dessa expressão!
+</blockquote>
+
+<h4>Estrutura Completa de Conversa de Apresentação</h4>
+<p>Aqui está como uma conversa real se desenrola:
+<ul>
+<li>A: "Hi! How are you?"</li>
+<li>B: "I'm good, thanks! And you?"</li>
+<li>A: "I'm great! I'm John, by the way."</li>
+<li>B: "Nice to meet you, John! I'm Sarah."</li>
+<li>A: "Where are you from, Sarah?"</li>
+<li>B: "I'm from Brazil, from Curitiba. I'm a teacher."</li>
+<li>A: "Oh, that's cool! What do you teach?"</li>
+<li>B: "I teach English to high school students. I love it!"</li>
+<li>A: "That's awesome! I've always wanted to teach. What else do you like to do?"</li>
+<li>B: "Well, I love reading and traveling. I recently visited Spain!"</li>
+<li>A: "Wow, Spain is beautiful! I've heard the food is amazing."</li>
+<li>B: "Oh yes! The culture is so rich and vibrant."</li>
+</ul>
+</p>
+
+<p>Note como essa conversa flui naturalmente de pergunta para resposta, com cada pessoa mostrando interesse genuíno. Este é exatamente o padrão que você deve imitar. Não é um script rígido, é um fluxo natural de comunicação humana.</p>
+
+<h4>Sua Primeira Conversa Atual</h4>
+<p>Agora é sua vez de praticar! Tome papel e caneta (ou seu computador) e escreva sua própria apresentação pessoal completa em inglês. Inclua: seu nome, de onde você é, o que você faz, e pelo menos um detalhe pessoal interessante. Depois pronuncie em voz alta. Gravado se puder. Ouça novamente. Como soa? Corrija qualquer coisa que soe artificial. Continue praticando até soar natural e seguro.</p>
+
+<p>Após escrever, memorize o essencial mas não se torne um papagaio. Deixe o restante ser natural. Quando você encontrar alguém de verdade, a conversa pode ir em direções inesperadas, e está perfeitamente bem! Você tem as ferramentas agora. Use-as com confiança!`,
+    cards: [
+      {
+        q: 'Qual é a forma mais natural de responder "What do you do?" em inglês?',
+        a: 'Você pode dizer sua profissão ("I\'m a teacher"), seu campo ("I work in marketing"), ou seu status de estudante ("I\'m a student"). O importante é ser específico e natural.'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'O Verbo To Be: O Alicerce de Todas as Sentenças',
+    dur: 25,
+    content: `<h3>Dominando "To Be": O Verbo Mais Importante do Inglês</h3>
+<p>Se a apresentação pessoal foi seu primeiro passo na língua inglesa, então o verbo "to be" é o alicerce sobre o qual você construirá tudo. Praticamente TODA conversa significativa usa o verbo "to be" em alguma forma. Compreender completamente este verbo abrirá portas para centenas de outras estruturas e sentenças. Vamos dominar isso juntos!</p>
+
+<h4>As Formas do Verbo To Be no Presente</h4>
+<p>O verbo "to be" tem várias formas dependendo da pessoa. Para "I" (eu), a forma é "am": "I am a teacher" (Sou professor). Para "he", "she", "it" (ele, ela, isso), a forma é "is": "He is smart" (Ele é inteligente), "She is happy" (Ela é feliz). Para "we", "you", "they" (nós, você/vocês, eles), a forma é "are": "We are friends" (Somos amigos), "They are students" (Eles são estudantes).</p>
+
+<p>Organizando isso em uma tabela mental:
+<ul>
+<li>I am</li>
+<li>You are</li>
+<li>He/She/It is</li>
+<li>We are</li>
+<li>They are</li>
+</ul>
+Este padrão é tão fundamental que você precisará memorizá-lo completamente. Não é suficiente entender, você precisa que se torne automático. Quando alguém disser "He ___?", você automaticamente saberá que precisa de "is", não "am" ou "are".</p>
+
+<blockquote class="tip">
+<strong>Memorização Rápida:</strong> Use a música ou o ritmo para memorizar. Cante: "I-am, you-are, he-is, she-is, it-is, we-are, they-are." Repita 10 vezes em voz alta. Seu cérebro memoriza melhor com ritmo! Depois, peça para alguém perguntar aleatoriamente "What about she?", e você responde "is!" automaticamente.
+</blockquote>
+
+<h4>Usando To Be para Descrições e Características</h4>
+<p>O verbo "to be" é perfeito para descrever características pessoais e permanentes. "I am Brazilian" (Sou brasileiro). "She is tall" (Ela é alta). "They are intelligent" (Eles são inteligentes). "The book is red" (O livro é vermelho). Quando você quer descrever COMO algo é, você usa "to be".</p>
+
+<p>Aqui está a beleza: depois de "to be", você pode colocar um adjetivo (uma palavra que descreve), e a sentença fica completa. "I am happy" (Estou feliz). "She is beautiful" (Ela é bonita). "They are tired" (Eles estão cansados). Você está criando sentenças reais e significativas!</p>
+
+<p>Você também usa "to be" para profissões e identidades: "I am a doctor" (Sou médico), "She is an engineer" (Ela é engenheira), "We are friends" (Somos amigos). Note que em inglês, quando você quer dizer sua profissão ou identidade, você precisa de "a" ou "an" antes da profissão. Você não diz "I am teacher", você diz "I am a teacher".</p>
+
+<blockquote class="example">
+<strong>Exemplos de Sentenças com To Be:</strong>
+- I am 25 years old. (Tenho 25 anos)
+- You are very kind. (Você é muito gentil)
+- He is from England. (Ele é da Inglaterra)
+- She is a nurse. (Ela é enfermeira)
+- It is a beautiful day. (É um dia bonito)
+- We are ready. (Estamos prontos)
+- They are my family. (Eles são minha família)
+</blockquote>
+
+<h4>Usando To Be para Localização e Existência</h4>
+<p>Você também usa "to be" para dizer onde algo ou alguém está. "I am at home" (Estou em casa). "The keys are on the table" (As chaves estão na mesa). "Where are you?" (Onde você está?). Esta é provavelmente uma das formas mais comuns de "to be" em conversas cotidianas.</p>
+
+<p>A estrutura é sempre: sujeito + to be + preposição + local. "My books are in my room" (Meus livros estão em meu quarto). "The school is near my house" (A escola fica perto de minha casa). "Are the children at the park?" (As crianças estão no parque?)</p>
+
+<h4>Formas Negativas de To Be</h4>
+<p>Para fazer uma sentença negativa com "to be", você adiciona "not" após a forma do verbo. "I am not tired" (Não estou cansado). "He is not here" (Ele não está aqui). "They are not students" (Eles não são estudantes). As formas contraídas são muito comuns em inglês falado: "I'm not", "He's not" (ou "He isn't"), "They're not" (ou "They aren't").</p>
+
+<p>Cuidado aqui: a contração negativa de "is" pode ser "isn't" ou "is not". A contração negativa de "are" é "aren't" ou "are not". Para "am", é sempre "am not" (não há contração padrão). Aqui está a tabela:
+<ul>
+<li>I am not (Não há contração comum, mas alguns dizem "I ain't" em muito informal)</li>
+<li>You aren't / are not</li>
+<li>He/She/It isn't / is not</li>
+<li>We aren't / are not</li>
+<li>They aren't / are not</li>
+</ul>
+</p>
+
+<blockquote class="news">
+<strong>Uso Natural:</strong> Em conversa casual, os falantes nativos usam muito as contrações. "I'm not sure" (Não tenho certeza), "He's not here" (Ele não está aqui), "They aren't coming" (Eles não vêm). Estas são as formas naturais de falar!
+</blockquote>
+
+<h4>Fazendo Perguntas com To Be</h4>
+<p>Em inglês, para fazer uma pergunta com "to be", você coloca o verbo antes do sujeito. É simples! Ao invés de "I am happy" (Estou feliz), você pergunta "Am I happy?" (Sou feliz?). Ao invés de "She is here" (Ela está aqui), você pergunta "Is she here?" (Ela está aqui?). Ao invés de "They are ready" (Eles estão prontos), você pergunta "Are they ready?" (Eles estão prontos?).</p>
+
+<p>A estrutura é: to be + sujeito + resto da sentença. Exemplos práticos:
+<ul>
+<li>"Are you ready?" (Você está pronto?)</li>
+<li>"Is he a doctor?" (Ele é médico?)</li>
+<li>"Where are you from?" (De onde você é?)</li>
+<li>"How old is she?" (Quantos anos ela tem?)</li>
+<li>"Are they coming tomorrow?" (Eles vêm amanhã?)</li>
+</ul>
+Quando alguém faz uma pergunta com "to be", você responde com a mesma forma. "Are you ready?" → "Yes, I am" ou "No, I'm not". "Is he here?" → "Yes, he is" ou "No, he isn't".</p>
+
+<h4>Consolidando Seu Conhecimento de To Be</h4>
+<p>Neste ponto, você conhece "to be" bem. Você pode fazer sentenças afirmativas, negativas, e perguntas. Você pode descrever características, profissões, localizações, e identidades. O verbo "to be" é a porta de entrada para toda a gramática inglesa!</p>
+
+<p>Aqui está um exercício poderoso: pegue 10 fotos (de revista, internet, ou sua vida) e para cada uma, crie 3 sentenças com "to be". Exemplo: uma foto de uma menina sorrindo → "She is beautiful. She is happy. She is young." Uma foto de um cachorro dormindo → "It is tired. It is brown. It is at home." Depois converta cada sentença para negativa e pergunta. Este exercício treina sua flexibilidade com o verbo!</p>
+
+<blockquote class="example">
+<strong>Exercício Completo com Uma Foto:</strong>
+Foto: Um casal em frente à Torre Eiffel
+- Sentença 1: They are in Paris. (Eles estão em Paris)
+- Sentença 2: They are happy. (Eles estão felizes)
+- Sentença 3: The view is beautiful. (A vista é bonita)
+- Negativas: They are not sad. The view is not ugly.
+- Perguntas: Are they in Paris? Is the view beautiful?
+</blockquote>
+
+<h4>Continuando com Confiança</h4>
+<p>Parabéns! Você domina o verbo "to be". Este é um marco REAL em sua jornada de aprendizado. Você não está apenas aprendendo palavras, está aprendendo a estrutura fundamental da língua. Daqui para frente, cada novo verbo que você aprender será mais fácil porque você entenderá padrões. Está ficando cada vez mais fácil!`,
+    cards: [
+      {
+        q: 'Complete: "She ___ a teacher. Are they ___?"',
+        a: 'She IS a teacher. Are they ARE? Não, a resposta correta é "Are they?" sem o "are" repetido. Mas se a sentença fosse "Are they teachers?", a resposta seria "Yes, they are."'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'Números de 1 a 100: Contagem, Preços e Quantidades',
+    dur: 25,
+    content: `<h3>Números: A Linguagem Universal da Quantidade</h3>
+<p>Números são um dos aspectos mais práticos da língua inglesa. Você usará números para compras, para dizer as horas, para expressar sua idade, para contar objetos, e para praticamente qualquer interação comercial ou cotidiana. Felizmente, os números em inglês são muito mais regulares e lógicos que muitos outros idiomas!</p>
+
+<h4>Números Fundamentais de 1 a 20</h4>
+<p>Vamos começar com os números básicos que formam a base de tudo. De 1 a 10: one, two, three, four, five, six, seven, eight, nine, ten. Estes números você já está começando a reconhecer de nossos exercícios anteriores. Pronuncie cada um claramente e repita 5 vezes em voz alta.</p>
+
+<p>De 11 a 20 temos: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty. Note que "eleven" e "twelve" não seguem nenhum padrão lógico, então você simplesmente precisa memorizá-los. Mas a partir de "thirteen" em diante, há um padrão: "three-teen" (13), "four-teen" (14), "five-teen" (15), "six-teen" (16), "seven-teen" (17), "eight-teen" (18), "nine-teen" (19).</p>
+
+<blockquote class="tip">
+<strong>Dica de Pronúncia:</strong> Os números terminados em "-teen" têm o acento tônico na segunda sílaba: thir-TEEN, four-TEEN. Isto é importante porque em português muitas vezes o acento está na primeira sílaba. Pratique: "Thir-TEEN, Four-TEEN, Fif-TEEN." Repita até ficar automático!
+</blockquote>
+
+<h4>Números em Dezenas: 20 a 100</h4>
+<p>As dezenas seguem um padrão muito claro: twenty (20), thirty (30), forty (40), fifty (50), sixty (60), seventy (70), eighty (80), ninety (90), one hundred (100). Para números entre as dezenas, você combina: twenty-one (21), twenty-two (22), thirty-five (35), ninety-nine (99).</p>
+
+<p>Curiosidade linguística: você escreve com hífen quando o número é composto, como "twenty-five", mas em conversa você pode pronunciar sem pausa: "twenty five" ou "twenty-five", ambas funcionam naturalmente.</p>
+
+<p>Aqui está uma tabela mental para consolidar:
+<ul>
+<li>20 = twenty</li>
+<li>30 = thirty</li>
+<li>40 = forty (note: não é "fourty", é "forty")</li>
+<li>50 = fifty</li>
+<li>60 = sixty</li>
+<li>70 = seventy</li>
+<li>80 = eighty</li>
+<li>90 = ninety</li>
+<li>100 = one hundred (ou apenas "a hundred")</li>
+</ul>
+</p>
+
+<blockquote class="example">
+<strong>Exemplos de Números Compostos:</strong>
+- 23 = twenty-three
+- 45 = forty-five
+- 67 = sixty-seven
+- 89 = eighty-nine
+- 99 = ninety-nine
+</blockquote>
+
+<h4>Usando Números em Contextos Reais</h4>
+<p>Na compra de um café: "One coffee, please" (Um café, por favor). Na contagem de pessoas em um grupo: "There are fifteen people" (Há quinze pessoas). Ao discutir idade: "I am twenty-five years old" (Tenho vinte e cinco anos). Note que em inglês, você diz "I am [número] years old", não apenas "Tenho [número]" como em português.</p>
+
+<p>Para preços: "How much is this?" "It's twelve dollars" (Quanto custa? Custa doze dólares). "Can I have five apples?" (Posso ter cinco maçãs?). "The book costs thirty-five pounds" (O livro custa trinta e cinco libras). Quando você está falando sobre dinheiro, os números são absolutamente essenciais!</p>
+
+<p>Para horários, você também usa números: "It's three o'clock" (São três horas), "The meeting is at nine thirty" (A reunião é às 9h30), "Let's meet at five fifteen" (Vamos nos encontrar às 5h15). Este é um uso extremamente comum de números.</p>
+
+<blockquote class="news">
+<strong>Detalhe Importante sobre Horários:</strong> Em inglês britânico, você diz "It's half past nine" para "São 9h30". Em inglês americano, você diz "It's nine thirty". Ambas as formas estão corretas, você apenas precisa saber qual sua audiência usa!
+</blockquote>
+
+<h4>Expressões com Números</h4>
+<p>"A couple" significa dois, especialmente em contexto de pessoas ou coisas relacionadas: "A couple of friends" (Um casal de amigos), "A couple of days" (Um par de dias). "A few" significa "alguns", normalmente entre 3 e 5: "Give me a few minutes" (Me dê alguns minutos). "Several" significa "vários", usualmente entre 5 e 10: "I have several books" (Tenho vários livros).</p>
+
+<p>"A lot of" ou "lots of" significa "muito/muitos": "I have a lot of work" (Tenho muito trabalho), "There are lots of people" (Há muitas pessoas). "Many" é formal e usado principalmente em perguntas e negativas: "How many books do you have?" (Quantos livros você tem?), "I don't have many friends" (Não tenho muitos amigos). "Much" é para coisas incontáveis: "I don't have much time" (Não tenho muito tempo).</p>
+
+<h4>Jogo de Prática: Reconhecimento Rápido</h4>
+<p>Aqui está um exercício desafiador: peça para alguém ler números aleatoriamente entre 1 e 100 e você escreve ou fala qual é. Comece lentamente, depois mais rápido. Você quer que os números saiam de sua boca automaticamente, sem pensar. Isto é fluência com números! Se possível, pratique também ao contrário: você fala um número e alguém escreve.</p>
+
+<p>Outro exercício ótimo é praticar preços reais. Pegue produtos ao seu redor, imagina preços em dólares ou pounds, e pratica dizendo: "This notebook costs twelve dollars", "The pen is forty cents", "The computer is two hundred dollars". Esta prática conecta números a contextos reais.</p>
+
+<blockquote class="example">
+<strong>Diálogo Prático com Números:</strong>
+- A: "How much is this shirt?"
+- B: "It's thirty-five dollars."
+- A: "And these shoes?"
+- B: "Those are sixty-eight dollars. But we have a sale! You save fifteen dollars if you buy both!"
+- A: "Great! So it's about ninety dollars total?"
+- B: "Actually, ninety-three after tax. We have thirteen percent sales tax."
+</blockquote>
+
+<h4>Consolidando Números 1-100</h4>
+<p>Nesta altura, você deve ser capaz de: (1) Pronunciar qualquer número de 1 a 100 corretamente, (2) Escrever um número quando ouve em inglês, (3) Usar números em sentenças completas com "to be", (4) Entender números em contextos de preços, idades, e horários. Estes são competências REAIS que você vai usar constantemente.</p>
+
+<p>Continue praticando! Quando você ouve um número agora, não apenas registre a informação, mas PRONUNCIE o número em voz alta em inglês. "Que horas são?" Você olha para o relógio e diz em voz alta: "It's three forty-two" (São 3h42). Esta prática contínua torna os números automáticos, o que é a chave para fluência!`,
+    cards: [
+      {
+        q: 'Como você escreve e pronuncia o número 47 em inglês?',
+        a: 'Forty-seven. É "forty" (40) + "seven" (7). Pronuncie com acento em "FOR-ty se-VEN" normalmente, mas em conversa rápida é "fortyseven".'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Cores, Adjetivos Descritivos e Combinações Naturais',
+    dur: 25,
+    content: `<h3>Cores e Descrição: Pintando o Mundo com Palavras</h3>
+<p>As cores são muito mais do que simples nomes de tons. Cores são universais, são emocionais, e são absolutamente vitais para descrever o mundo ao seu redor. Quando você pode falar sobre cores com confiança, você de repente pode descrever qualquer objeto, pessoa, ou cena com muito mais riqueza e precisão. Vamos explorar o arco-íris do inglês!</p>
+
+<h4>As Cores Primárias e Básicas</h4>
+<p>Começamos com as cores mais fundamentais: red (vermelho), blue (azul), yellow (amarelo). Estas três são chamadas de "primary colors" (cores primárias) porque toda outra cor pode ser feita kombinando estas três. Depois temos green (verde), orange (laranja), purple (roxo), pink (rosa), brown (marrom), black (preto), white (branco), gray (cinza).</p>
+
+<p>Pronunciação importante: "blue" rima com "true" (verdade), não soa como "bloo" ou "bleu" como em francês. "Purple" soa como "PUR-pol", com o acento na primeira sílaba. "Orange" é interessante porque não rima com nada em inglês, mas soa como "AOR-inj", com um som bem definido.</p>
+
+<blockquote class="tip">
+<strong>Dica Prática:</strong> Olhe ao seu redor agora e identifique cores em voz alta em inglês. "The wall is white. My shirt is blue. The floor is brown. The lamp is yellow." Faça isto todos os dias e as cores se tornarão automáticas na sua mente!
+</blockquote>
+
+<h4>Cores Compostas e Nuances</h4>
+<p>Você pode criar tons mais específicos combinando cores. "Light blue" (azul claro), "dark blue" (azul escuro), "bright yellow" (amarelo brilhante), "pale pink" (rosa pálido). "Navy blue" é um azul muito escuro usado em marinhas militares. "Olive green" é um verde acinzentado. "Maroon" é um vermelho muito escuro.</p>
+
+<p>Quando você quer descrever algo mais vividamente, você pode usar: "sky blue" (azul do céu), "grass green" (verde da grama), "blood red" (vermelho de sangue), "snow white" (branco como neve). Estas expressões fazem seu inglês soar muito mais natural e vivido!</p>
+
+<p>Há também cores que vêm de fontes: "coral" (como o coral do mar), "turquoise" (como uma pedra de turquesa), "gold" (dourado), "silver" (prateado), "bronze" (bronzeado), "copper" (cor de cobre). Estas palavras adicionam sofisticação à sua paleta descritiva.</p>
+
+<blockquote class="example">
+<strong>Descrições Vívidas de Cores:</strong>
+- The sunset was bright orange and pink. (O pôr do sol era laranja brilhante e rosa)
+- She wore a navy blue dress with silver shoes. (Ela vestia um vestido azul marinho com sapatos prateados)
+- The old painting had yellowed to a sickly pale yellow. (A pintura antiga havia amarelecido para um amarelo pálido doentio)
+- His car was a metallic gray. (Seu carro era um cinza metálico)
+</blockquote>
+
+<h4>Adjetivos Descritivos que Frequentemente Acompanham Cores</h4>
+<p>As cores são adjetivos, e em inglês, adjetivos geralmente vêm ANTES do substantivo que descrevem. "A red car" (um carro vermelho), não "a car red". "Beautiful blue eyes" (olhos azuis bonitos), não "eyes blue beautiful". Isto é uma regra importante de ordem de palavras em inglês!</p>
+
+<p>Quando você tem múltiplos adjetivos antes de um substantivo, há uma ordem preferencial: opiniões gerais, tamanho, cor, material, origem. Exemplos: "a beautiful small red car" (um bonito carro vermelho pequeno), "an interesting old blue painting" (uma pintura azul antiga interessante). Você não precisa memorizar essa ordem complexa agora, apenas saiba que existem padrões preferenciais.</p>
+
+<h4>Adjetivos Comuns para Descrever Características Visuais</h4>
+<p>Além de cores, você vai querer descrever textura e aparência. "Soft" (macio), "hard" (duro), "rough" (áspero), "smooth" (liso), "shiny" (brilhante), "dull" (opaco). Para tamanho: "big" (grande), "small" (pequeno), "tiny" (minúsculo), "huge" (enorme). Para temperatura: "hot" (quente), "cold" (frio), "warm" (morno).</p>
+
+<p>Para estado: "clean" (limpo), "dirty" (sujo), "wet" (molhado), "dry" (seco), "fresh" (fresco), "stale" (passado/deteriorado). Para qualidade: "beautiful" (bonito), "ugly" (feio), "pretty" (bonito/lindo), "handsome" (bonito - para homens), "attractive" (atraente).</p>
+
+<blockquote class="news">
+<strong>Diferença Cultural:</strong> "Handsome" é geralmente usado para descrever homens como bonitos, enquanto "pretty" é frequentemente usado para mulheres ou coisas. Mas esta é uma convenção social flexível que está mudando. O mais seguro é usar "beautiful" ou "lovely" que funcionam para qualquer coisa!
+</blockquote>
+
+<h4>Fazendo Comparações com Cores e Adjetivos</h4>
+<p>Para comparar dois objetos, você usa "is ... than" (é ... que). "This apple is redder than that one" (Esta maçã é mais vermelha que aquela). "Her dress is more beautiful than mine" (Seu vestido é mais bonito que o meu). Para adjetivos curtos, você adiciona "-er": redder, bigger, smaller. Para adjetivos longos, você usa "more": more beautiful, more interesting.</p>
+
+<p>Para dizer que algo é o maior, melhor, ou extremo, você usa "the ... est" ou "the most": "This is the biggest apple" (Esta é a maior maçã), "She has the most beautiful eyes" (Ela tem os olhos mais bonitos). Estas comparações tornam suas descrições ainda mais vividas e comparativas.</p>
+
+<h4>Prática: Descrevendo Objetos Completamente</h4>
+<p>Pegue qualquer objeto ao seu redor e descreva-o completamente usando cores, tamanho, textura, e qualidade. Exemplo, uma caneta: "This is a small, black plastic pen. It is very smooth and shiny. The ink is blue." Ou uma xícara: "This is a large, white ceramic mug. It is smooth but has a rough handle. Inside, there is hot brown coffee."</p>
+
+<p>Agora descreva a si mesmo ou alguém próximo usando cores e adjetivos: "I have brown eyes and black hair. I am wearing a blue shirt and gray pants. The weather outside is cold and gray." Você está pintando imagens em palavras! Isto é uma habilidade linguística genuína e poderosa.</p>
+
+<blockquote class="example">
+<strong>Descrição Completa de Uma Cena:</strong>
+"The garden is absolutely beautiful today. The grass is bright green after the rain. There are red roses and yellow flowers. The sky is a light blue with white clouds. The old wooden bench is brown and weathered. A small white bird is sitting on the fence. Everything feels fresh and clean."
+</blockquote>
+
+<h4>Consolidando Cores e Descrição</h4>
+<p>Você agora possui um vocabulário robusto para descrever o mundo visualmente. Isto é mais importante do que parece: descrições vividas e precisas são o que torna uma conversa interessante e memorável. Quando você diz "a big blue thing" versus "a magnificent sapphire blue silk dress", a diferença é enorme!</p>
+
+<p>Continue praticando descrições vívidas. Assista filmes em inglês e descreva o que vê em voz alta. Leia descrições de produtos online e identifique como adjetivos e cores são usados para vender. Você está se tornando não apenas um falante de inglês, mas um falante descritivo e expressivo!`,
+    cards: [
+      {
+        q: 'Como você diz "um carro azul escuro e bonito" em inglês?',
+        a: 'A beautiful dark blue car. Em inglês, a ordem é: adjetivo opinativo (beautiful) + cor com qualificador (dark blue) + substantivo (car). Nunca coloque a cor antes de "dark".'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Apresentação Profunda: Falando Sobre Familiares e Relações',
+    dur: 30,
+    content: `<h3>Família: O Fundamento de Quem Somos</h3>
+<p>A família é um assunto universal que aparece em praticamente toda conversa significativa entre pessoas. Seja em contextos sociais, profissionais, ou pessoais, você frequentemente será perguntado sobre sua família, e você também desejará perguntar sobre a de outros. Dominar o vocabulário de família e ser capaz de falar sobre seus parentes com profundidade é uma habilidade crucial para conversação autêntica.</p>
+
+<h4>Vocabulário Fundamental de Família</h4>
+<p>Começamos com os relacionamentos mais próximos. "Mother" ou "mom" (mãe), "father" ou "dad" (pai), "sister" (irmã), "brother" (irmão). "Grandmother" ou "grandma" (avó), "grandfather" ou "grandpa" (avô). "Son" (filho), "daughter" (filha). Estes são os termos que você usará mais frequentemente.</p>
+
+<p>Ampliando para a família estendida: "uncle" (tio), "aunt" (tia), "cousin" (primo/prima), "nephew" (sobrinho), "niece" (sobrinha). "Husband" (marido), "wife" (esposa), "wife" em contextos formais. "Boyfriend" (namorado), "girlfriend" (namorada). "In-laws" (parentes por afinidade): "mother-in-law" (sogra), "father-in-law" (sogro), "brother-in-law" (cunhado), "sister-in-law" (cunhada).</p>
+
+<blockquote class="tip">
+<strong>Pronúncia Importante:</strong> "Sister" soa como "SIS-ter", "brother" como "BRU-ther", "cousin" como "KU-zin". Pronuncie claramente cada sílaba. Também note que "spouse" é um termo formal e técnico para marido ou esposa juntos, mas em conversa casual, você simplesmente diz "husband" ou "wife".
+</blockquote>
+
+<h4>Descrevendo Sua Família Pessoal</h4>
+<p>Quando alguém pergunta "Tell me about your family" (Conte-me sobre sua família), você deve estar pronto para fornecer uma descrição bem-estruturada. Uma resposta natural segue este padrão:
+<ul>
+<li>Tamanho da família: "I have a small family" ou "I come from a large family"</li>
+<li>Membros principais: "My mother is a teacher and my father is an engineer"</li>
+<li>Irmãos: "I have two brothers and one sister" ou "I'm an only child"</li>
+<li>Detalhe pessoal: "We are very close and spend a lot of time together"</li>
+</ul>
+</p>
+
+<p>Exemplo de resposta natural: "I come from a family of five. My mother is a nurse, my father works in construction, and I have two younger brothers. We live in São Paulo and we're very close. We see each other almost every weekend. My brothers are both still in high school." Veja como isto é uma narrativa natural e fluida?</p>
+
+<h4>Usando Adjetivos para Descrever Familiares</h4>
+<p>Você pode descrever membros da sua família não apenas por sua profissão, mas por suas características pessoais. "My mother is kind and caring" (Minha mãe é gentil e atenciosa). "My father is hardworking but sometimes strict" (Meu pai é trabalhador mas às vezes rigoroso). "My sister is creative and artistic" (Minha irmã é criativa e artística). Isto adiciona dimensão pessoal à sua descrição.</p>
+
+<p>Você também pode descrever aparência física: "My father is tall and has dark hair" (Meu pai é alto e tem cabelo escuro). "My mother is shorter with red hair" (Minha mãe é mais baixa com cabelo vermelho). "My brother looks exactly like my father" (Meu irmão parece exatamente como meu pai). "I inherited my mother's eyes" (Herdei os olhos da minha mãe).</p>
+
+<blockquote class="example">
+<strong>Descrição Profunda de Família:</strong>
+"My father is a retired engineer. He's tall, maybe 1.85 meters, with gray hair and brown eyes. He's very calm and patient, always willing to help anyone. My mother is a high school teacher. She's shorter, about 1.65 meters, with long black hair. She's very energetic and social. I have a sister who's three years younger. She's studying graphic design and is very artistic, like my mother. I also have a twin brother—yes, we're identical! He's more introverted than me. We were born in Rio de Janeiro, but we moved to São Paulo when we were teenagers."
+</blockquote>
+
+<h4>Falando Sobre Relacionamentos Pessoais</h4>
+<p>Se você está solteiro, você pode simplesmente dizer "I'm single" (Sou solteiro/a). Se você tem um parceiro, você pode dizer "I have a boyfriend" ou "I have a girlfriend", ou em relacionamentos sérios, "I'm in a relationship". Se você é casado, "I'm married" ou "My husband/wife is...". Você também pode dizer "I'm engaged" (Estou noivo/a) se você vai se casar em breve.</p>
+
+<p>Quando descrevendo seu relacionamento, você pode dizer coisas como: "We've been together for three years" (Estamos juntos há três anos), "He's very supportive and understanding" (Ele é muito apoiador e compreensivo), "We have a lot in common" (Temos muito em comum), "We complement each other well" (Nos complementamos bem).</p>
+
+<h4>Perguntas Comuns Sobre Família e Como Responder</h4>
+<p>"How many brothers and sisters do you have?" — "I have one brother and two sisters" (Tenho um irmão e duas irmãs). "Are you close to your family?" — "Yes, very close. We talk almost every day" (Sim, muito próximos. Falamos quase todos os dias). "What does your father do?" — "He's a doctor. He works at the local hospital" (Ele é médico. Trabalha no hospital local). "Where is your family from?" — "We're from Minas Gerais originally, but we've lived in São Paulo for fifteen years" (Somos de Minas Gerais originalmente, mas vivemos em São Paulo há quinze anos).</p>
+
+<blockquote class="news">
+<strong>Fato Cultural Importante:</strong> Em culturas de língua inglesa, as pessoas podem fazer perguntas sobre sua família pessoal relativamente rapidamente em uma conversa, mas não perguntas muito intrusivas sobre dinheiro ou detalhes médicos. Está ok compartilhar sobre sua família, seu trabalho, seus hobbies, mas não necessariamente detalhes financeiros ou problemas pessoais profundos cedo.
+</blockquote>
+
+<h4>Expressões Especiais com Família</h4>
+<p>"Family tree" (árvore genealógica) é uma forma de mostrar visualmente toda sua família. "Extended family" (família estendida) inclui tios, primos, avós. "Immediate family" (família imediata) é apenas você, seus pais, e irmãos. "My whole family" (minha família toda) ou "All my relatives" (Todos meus parentes).</p>
+
+<p>Expressões idiomáticas relacionadas a família: "Blood is thicker than water" (O sangue é mais espesso que água - significando que laços familiares são mais fortes), "Family comes first" (A família vem em primeiro lugar), "A family affair" (Um assunto de família - significando algo que envolve toda a família).</p>
+
+<h4>Prática: Sua Narrativa Familiar</h4>
+<p>Agora, escreva uma narrativa completa sobre sua família em inglês. Inclua: tamanho da família, onde vocês são de, o que cada membro faz, características pessoais deles, quão próximos vocês são, tradições familiares, etc. Faça isto com pelo menos 200 palavras. Depois pratique falando isso em voz alta, gravando-se, e ouvindo novamente. Você está criando sua história pessoal em inglês!</p>
+
+<p>Em seguida, pratique respondendo a perguntas específicas sobre sua família. Peça a um amigo ou tutor para fazer perguntas aleatórias sobre sua família e responda naturalmente. Isto prepara você para conversas reais onde você não sabe exatamente o que será perguntado.</p>
+
+<blockquote class="example">
+<strong>Narrativa Familiar Completa:</strong>
+"I have a close-knit family of six people. My mother is a nurse and my father is an architect. They've been married for thirty years and still seem very much in love. I'm the oldest of four children. I have two sisters and one brother. My eldest sister is a lawyer, very serious and career-focused. My brother is the joker of the family, always making us laugh. My youngest sister is still in high school, studying hard for her exams. We grew up in Brasília but moved to Rio when I was seventeen. My parents still live in Rio, but my sisters and I are now scattered in different cities for work and studies. We try to gather at least once a year for family vacation, usually at a beach somewhere. Family is very important to us—we talk every week and support each other through good and bad times."
+</blockquote>
+
+<h4>Concluindo Sobre Família</h4>
+<p>Familia é o assunto mais humanizante que você pode discutir. Quando você consegue falar sobre sua família com profundidade, nuance, e emoção, você não está apenas falando inglês, você está criando conexão humana genuína com outra pessoa. Continue desenvolvendo sua capacidade de falar sobre família com riqueza e autenticidade!`,
+    cards: [
+      {
+        q: 'Complete a pergunta: "What ___ your parents ___?" e forneça uma resposta natural.',
+        a: '"What do your parents do?" Resposta: "My mother is a teacher and my father is an engineer." Ou qualquer profissão apropriada à situação.'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Rotina Diária: Presente Simples em Ação e Conjugação',
+    dur: 30,
+    content: `<h3>Sua Vida em Dia: O Presente Simples em Ação</h3>
+<p>Descrever sua rotina diária é absolutamente fundamental em inglês. Você o fará em entrevistas de emprego, em pequenas conversas com novas amizades, em contextos profissionais e pessoais. Para isso, você precisa dominar o "Present Simple" (Presente Simples), que é como você descreve ações que você faz regularmente, hábitos, e atividades rotineiras.</p>
+
+<h4>Introdução ao Present Simple (Presente Simples)</h4>
+<p>O Present Simple é usado para descrever ações habituais, verdades gerais, e rotinas. "I wake up at 6 AM" (Acordo às 6 da manhã). "She studies English every day" (Ela estuda inglês todos os dias). "They go to work by bus" (Eles vão ao trabalho de ônibus). Você não usa Present Simple para ações que estão acontecendo NESTE MOMENTO (para isso usa Present Continuous), mas para o que você faz regularmente.</p>
+
+<p>A estrutura básica é: sujeito + verbo + resto da sentença. "I go to school" (Vou à escola), "You play football" (Você joga futebol), "He works in an office" (Ele trabalha em um escritório). A maioria dos verbos em terceira pessoa do singular (he, she, it) ADICIONA um "s" no final: "She walks to work" (Ela caminha para o trabalho).</p>
+
+<blockquote class="tip">
+<strong>Regra do "S" em Terceira Pessoa:</strong> Para a maioria dos verbos, você simplesmente adiciona "s": walk → walks, talk → talks, play → plays. Mas se o verbo termina em "s", "x", "z", "ch", ou "sh", você adiciona "es": watch → watches, miss → misses, buzz → buzzes. Se termina em consoante + "y", você muda "y" para "i" e adiciona "es": study → studies, cry → cries.
+</blockquote>
+
+<h4>Verbos de Ação Comuns em Rotina Diária</h4>
+<p>"Wake up" (acordar), "get up" (levantar), "shower" (tomar banho), "get dressed" (se vestir), "eat breakfast" (comer café da manhã), "brush teeth" (escovar dentes), "leave home" (sair de casa), "go to school/work" (ir à escola/trabalho), "arrive" (chegar), "work/study" (trabalhar/estudar), "have lunch" (almoçar), "continue working" (continuar trabalhando), "finish work" (terminar trabalho), "go home" (ir para casa), "cook dinner" (cozinhar jantar), "eat dinner" (comer janta), "watch TV" (assistir TV), "read" (ler), "go to bed" (ir para cama), "sleep" (dormir).</p>
+
+<p>Você precisa conhecer estes verbos não apenas na infinitiva, mas como usá-los em sentenças. "I wake up at 6 AM" (Acordo às 6 da manhã), "She gets dressed after breakfast" (Ela se veste após o café da manhã), "He arrives at work at 9 AM" (Ele chega ao trabalho às 9 da manhã). Note como cada um deles funciona em sentenças reais.</p>
+
+<h4>Descrevendo Sua Rotina Matinal Completa</h4>
+<p>Vamos construir uma descrição completa da manhã. "I usually wake up at 6:30 in the morning. I get out of bed and go to the bathroom. First, I take a shower. After that, I brush my teeth. Then, I get dressed. I put on my clothes and put on my shoes. I go to the kitchen and have breakfast. I usually eat cereal or toast with coffee. After breakfast, I check my phone for any messages. At 7:45, I leave home and walk to the train station. I take the train to work. I arrive at work at about 8:30."</p>
+
+<p>Veja como isto é estruturado? Você começa com quando acorda, progride através de cada ação, e termina quando chega ao trabalho. Você usa conectores como "First" (Primeiro), "Then" (Depois), "After that" (Após isso), "At" (Em) para criar sequência lógica. Isto torna a narrativa clara e fácil de seguir.</p>
+
+<blockquote class="example">
+<strong>Diálogo Sobre Rotina:</strong>
+- A: "What time do you usually wake up?"
+- B: "I usually wake up at 6:30."
+- A: "That's early! What do you do after waking up?"
+- B: "I shower first, then I have breakfast."
+- A: "What do you eat for breakfast?"
+- B: "Usually eggs and toast with orange juice."
+- A: "How do you get to work?"
+- B: "I take the bus. It takes about thirty minutes."
+</blockquote>
+
+<h4>A Rotina Noturna e o Fim do Dia</h4>
+<p>Sua rotina não termina quando você chega ao trabalho! A rotina noturna é igualmente importante para descrever. "After work, I go home. I usually arrive home at about 6 PM. I'm tired, so I rest for a while. I read or watch TV. At 7 PM, I cook dinner. My family eats together at 7:30. After dinner, we clean up the kitchen. In the evening, I do homework or work on personal projects. At 10:30, I prepare for bed. I brush my teeth, put on pajamas, and go to bed. I usually fall asleep around 11 PM."</p>
+
+<p>Note os verbos novos aqui: "rest" (descansar), "read" (ler), "cook" (cozinhar), "eat together" (comer junto), "clean up" (limpar), "prepare" (preparar), "put on" (colocar), "fall asleep" (adormecer). Cada um desses é útil em múltiplos contextos, não apenas rotina diária.</p>
+
+<h4>Falando Sobre Frequência e Regularidade</h4>
+<p>Para expressar com que frequência você faz algo, você usa advérbios de frequência: "always" (sempre), "usually" (usualmente), "often" (frequentemente), "sometimes" (às vezes), "rarely" (raramente), "never" (nunca). Posição desses advérbios é importante: eles geralmente vêm ANTES do verbo principal. "I always eat breakfast" (Sempre como café da manhã), "She usually arrives late" (Ela usualmente chega atrasada), "They rarely go out" (Eles raramente saem).</p>
+
+<p>Você também pode usar expressões de tempo: "every day" (todos os dias), "twice a week" (duas vezes por semana), "once a month" (uma vez por mês), "on Mondays" (nas segundas-feiras), "on weekends" (nos finais de semana), "in the morning/afternoon/evening" (de manhã/tarde/noite). "I exercise three times a week" (Faço exercício três vezes por semana), "We have team meetings every Monday" (Temos reuniões de equipe toda segunda-feira).</p>
+
+<blockquote class="news">
+<strong>Diferença Importante:</strong> "On" é usado para dias específicos: "on Monday", "on Tuesday". "In" é usado para períodos maiores: "in the morning", "in the afternoon", "in January", "in summer". "At" é usado para horas específicas: "at 3 PM", "at night", "at breakfast time".
+</blockquote>
+
+<h4>Fazendo Perguntas Sobre Rotina</h4>
+<p>As perguntas sobre rotina seguem o padrão: "Do you...?" para segunda pessoa. "Do you wake up early?" (Você acorda cedo?), "Do you have breakfast?" (Você toma café da manhã?), "Do you exercise?" (Você faz exercício?). A resposta é "Yes, I do" ou "No, I don't". Para terceira pessoa, é "Does he/she/it...?": "Does she work on weekends?" (Ela trabalha nos finais de semana?). A resposta é "Yes, she does" ou "No, she doesn't".</p>
+
+<p>"What time do you...?" é uma pergunta muito comum. "What time do you wake up?" (Que horas você acorda?), "What time do you finish work?" (Que horas você termina trabalho?), "What time do you usually eat dinner?" (Que horas você normalmente come janta?). Você responde com uma hora: "I wake up at 6:30", "I finish work at 5 PM".</p>
+
+<h4>Seu Dia Completo em Inglês</h4>
+<p>Agora escreva sua rotina diária COMPLETA em inglês, desde o momento em que acorda até quando vai dormir. Inclua todos os verbos de ação, horários, frequência, e detalhes. Mínimo 300 palavras. Depois pratique falando isso em voz alta, várias vezes, até ficar fluido e natural. Você está descrevendo sua vida real em uma nova língua!</p>
+
+<blockquote class="example">
+<strong>Rotina Diária Completa:</strong>
+"My typical day starts early. I wake up at 6 AM every weekday. I immediately get out of bed and take a cold shower—this helps me wake up completely. After showering, I get dressed in business clothes because I work in an office. I brush my teeth and have a quick breakfast, usually just coffee and toast, because I'm always in a hurry. By 7:30, I leave my apartment and take the metro to work. It takes about 40 minutes. I arrive at the office at about 8:15. I usually start working around 8:30, reviewing emails and planning my day. I work with clients, so I have many meetings throughout the day. Around noon, I take a lunch break. I either eat at my desk or grab something quick from a nearby café. I work until 5:30 PM, then I either go to the gym or head straight home. At home, around 7 PM, I prepare dinner—nothing fancy, just simple healthy meals. I eat while watching the news. In the evening, I check emails one more time, maybe read for thirty minutes, and I'm usually in bed by 11 PM. On weekends, my routine is completely different—I wake up later, spend time with friends, and do personal projects. This weekday routine is consistent, and while sometimes it's exhausting, it gives structure to my life."
+</blockquote>
+
+<h4>Expandindo Sobre Sua Rotina</h4>
+<p>Você agora pode descrever sua rotina, responder perguntas sobre ela, e fazer perguntas sobre a rotina de outros. Este é um tópico que você usará regularmente em conversas, então continue praticando e refinando sua capacidade de descrever sua vida diária com naturalidade e detalhe. Cada melhoria em sua fluência nesta área é uma melhoria em sua capacidade geral de comunicação!`,
+    cards: [
+      {
+        q: 'Complete: "She ___ breakfast every morning. Does he ___ to the gym?"',
+        a: 'She EATS breakfast every morning. Does he GO to the gym? Lembre-se: he/she/it adiciona "s" ao verbo (eats), e para perguntas você coloca "does" antes de he/she/it.'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Conversas Naturais: Integração Total de Tudo Que Aprendeu',
+    dur: 30,
+    content: `<h3>Sua Primeira Conversa Real: Integrando Tudo</h3>
+<p>Você chegou ao ponto de inflexão! Você conhece: pronunciação, cumprimentos, apresentação pessoal, o verbo "to be", números, cores e adjetivos, vocabulário de família, rotina diária, e estruturas de presente simples. Agora vamos integrar tudo isso em conversas reais, naturais, e engajantes que você poderia ter em qualquer lugar do mundo de língua inglesa.</p>
+
+<h4>A Estrutura de uma Conversa Natural</h4>
+<p>Uma conversa real não é uma série de frases soltas, é um fluxo orgânico de troca de informações e conexão. Normalmente segue este padrão: (1) Cumprimento e pequena conversa inicial, (2) Informações pessoais e contexto, (3) Perguntas e respostas recíprocas, (4) Exploração de tópicos comuns de interesse, (5) Encerramento natural ou troca de contatos.</p>
+
+<p>O segredo de parecer natural é fazer PERGUNTAS de acompanhamento genuínas. Quando alguém te diz algo, você não apenas diz "okay" e muda de assunto. Você mostra interesse: "Oh interesting! Tell me more. How long have you been doing that?" Isto faz você parecer um conversador genuinamente interessado e atencioso.</p>
+
+<h4>Cenário 1: Conhecendo Alguém em Uma Festa</h4>
+<p>
+<strong>A:</strong> "Hi! I haven't seen you before. I'm John." (Oi! Não te vi antes. Sou John.)
+<br><strong>B:</strong> "Oh, hi John! Nice to meet you. I'm Sarah. I'm a friend of Michael." (Oi, John! Prazer conhecê-lo. Sou Sarah. Sou amiga do Michael.)
+<br><strong>A:</strong> "Ah, how do you know Michael?" (Ah, como você conhece o Michael?)
+<br><strong>B:</strong> "We work together at the tech company downtown. We've worked together for about two years now." (Trabalhamos juntos na empresa de tecnologia no centro. Estamos trabalhando juntos por cerca de dois anos agora.)
+<br><strong>A:</strong> "Oh, that's cool! What do you do there?" (Ah, que legal! O que você faz lá?)
+<br><strong>B:</strong> "I'm a software engineer. I design applications. What about you? What do you do?" (Sou engenheira de software. Desenho aplicações. E você? O que você faz?)
+<br><strong>A:</strong> "I'm a graphic designer. I freelance, so I work on different projects." (Sou designer gráfico. Trabalho por conta própria, então trabalho em diferentes projetos.)
+<br><strong>B:</strong> "That sounds interesting! Do you enjoy freelancing?" (Parece interessante! Você gosta de trabalhar por conta própria?)
+<br><strong>A:</strong> "Yes, I do! It's flexible. I can choose my own schedule. Sometimes it's challenging, but I love the freedom." (Sim, gosto! É flexível. Posso escolher meu próprio horário. Às vezes é desafiador, mas amo a liberdade.)
+<br><strong>B:</strong> "I can imagine. Where are you from originally?" (Posso imaginar. De onde você é originalmente?)
+<br><strong>A:</strong> "I'm from Rio de Janeiro, but I moved to São Paulo five years ago for work. How about you?" (Sou do Rio de Janeiro, mas me mudei para São Paulo há cinco anos por trabalho. E você?)
+<br><strong>B:</strong> "I was born in São Paulo, so I'm a Paulista! I still live here with my family." (Nasci em São Paulo, então sou Paulista! Ainda moro aqui com minha família.)
+</p>
+
+<p>Veja como esta conversa flui naturalmente? Cada pessoa faz perguntas de acompanhamento. Eles compartilham informações pessoais gradualmente. Há interesse genuíno demonstrado. Isto é uma conversa real!</p>
+
+<blockquote class="tip">
+<strong>Dica de Conversação:</strong> Se você não sabe o que dizer a seguir, sempre pode fazer uma pergunta. Perguntas mantêm a conversa viva. "How about you?", "What about your family?", "Tell me more about that", "That's interesting! Why is that?" São todas formas perfeitamente naturais de continuar.
+</blockquote>
+
+<h4>Cenário 2: No Café com Uma Colega de Classe</h4>
+<p>
+<strong>A:</strong> "Hey! How are you?" (Oi! Como vai?)
+<br><strong>B:</strong> "I'm good, thanks! A bit tired today, though. I had a long morning." (Estou bem, obrigada! Um pouco cansada hoje, embora. Tive uma manhã longa.)
+<br><strong>A:</strong> "Oh no! What happened?" (Ah não! O que aconteceu?)
+<br><strong>B:</strong> "Well, I woke up late, so I had to rush to get ready. And then the bus was late. By the time I got to school, the first class had already started." (Bom, acordei atrasada, então tive que me apressar para me preparar. E então o ônibus atrasou. Pela hora que cheguei à escola, a primeira aula já tinha começado.)
+<br><strong>A:</strong> "That's rough! Do you usually take the bus?" (Isso é difícil! Você normalmente pega o ônibus?)
+<br><strong>B:</strong> "Yeah, most days. It's usually on time, but not today, apparently! Do you take the bus too?" (Sim, a maioria dos dias. Geralmente é pontual, mas não hoje, aparentemente! Você também pega o ônibus?)
+<br><strong>A:</strong> "Sometimes. When I don't walk. I live pretty close to school, actually. Only about fifteen minutes away." (Às vezes. Quando não ando. Eu moro bem perto da escola, na verdade. Apenas a uns quinze minutos de distância.)
+<br><strong>B:</strong> "Wow, that's lucky! I have to travel about forty minutes." (Que sorte! Tenho que viajar cerca de quarenta minutos.)
+<br><strong>A:</strong> "That's a long commute. Do you study much on the bus?" (Esse é um trajeto longo. Você estuda bastante no ônibus?)
+<br><strong>B:</strong> "Sometimes I do homework or read, but mostly I just listen to music and relax. After a full day of school, I'm too tired to study." (Às vezes faço lição de casa ou leio, mas principalmente ouço música e me relaxo. Depois de um dia inteiro de aula, estou muito cansada para estudar.)
+<br><strong>A:</strong> "I totally understand! Oh, are you coming to the study group tonight? We're studying for the English test." (Eu entendo totalmente! Ah, você vem ao grupo de estudo hoje à noite? Estamos estudando para o teste de inglês.)
+<br><strong>B:</strong> "Oh, I forgot about that! What time?" (Ah, esqueci disso! Que horas?)
+<br><strong>A:</strong> "Seven o'clock at the library. Interested?" (Sete horas na biblioteca. Interessada?)
+<br><strong>B:</strong> "Definitely! I need help with the grammar section. See you then!" (Definitivamente! Preciso de ajuda com a seção de gramática. Até lá!)
+</p>
+
+<p>Nesta conversa, você vê como as pessoas fazem perguntas quando algo interessante é mencionado. Quando B disse que acordou atrasada, A perguntou por quê. Quando B mencionou o trajeto longo, A comentou e fez outra pergunta. Isto é conversação natural!</p>
+
+<blockquote class="example">
+<strong>Padrões de Conversa Natural:</strong>
+- Alguém menciona algo → você mostra interesse com "Oh!", "Wow!", "Really?"
+- Você faz uma pergunta de acompanhamento
+- Você ouve a resposta
+- Você continua com outra pergunta ou compartilha algo relacionado de sua própria vida
+- Você cria oportunidades para conexão mútua
+</blockquote>
+
+<h4>Cenário 3: Entrevista Informal (Conhecendo Seu Professor)</h4>
+<p>
+<strong>Professor:</strong> "Hi! Welcome to my class. I'm Mr. Thompson. What's your name?" (Oi! Bem-vindo à minha aula. Sou o Sr. Thompson. Como você se chama?)
+<br><strong>Aluno:</strong> "Hi, Mr. Thompson. I'm Carlos. Nice to meet you." (Oi, Sr. Thompson. Sou Carlos. Prazer conhecê-lo.)
+<br><strong>Professor:</strong> "Nice to meet you too, Carlos. Is this your first English class?" (Prazer conhecê-lo também, Carlos. Esta é sua primeira aula de inglês?)
+<br><strong>Aluno:</strong> "Yes, it is. I'm a bit nervous, but excited to learn." (Sim, é. Estou um pouco nervoso, mas empolgado para aprender.)
+<br><strong>Professor:</strong> "That's great! Don't worry, you'll do well. Where are you from?" (Ótimo! Não se preocupe, você se sairá bem. De onde você é?)
+<br><strong>Aluno:</strong> "I'm from Bahia, but I moved to São Paulo last year. My family moved here for work." (Sou da Bahia, mas me mudei para São Paulo no ano passado. Minha família se mudou aqui por trabalho.)
+<br><strong>Professor:</strong> "Ah, Bahia! That's a beautiful place. What's your family like?" (Ah, Bahia! É um lugar bonito. Como é sua família?)
+<br><strong>Aluno:</strong> "It's great. I have two sisters and a brother. My father is an engineer and my mother is a teacher, like you." (É ótima. Tenho duas irmãs e um irmão. Meu pai é engenheiro e minha mãe é professora, como você.)
+<br><strong>Professor:</strong> "Oh, your mother is a teacher! That's wonderful. What does she teach?" (Ah, sua mãe é professora! Que maravilha. O que ela ensina?)
+<br><strong>Aluno:</strong> "She teaches Portuguese and literature at a high school." (Ela ensina português e literatura em uma escola de ensino médio.)
+<br><strong>Professor:</strong> "That's excellent. Well, I'm sure you'll do great here. We have a lot of fun while learning. See you in class!" (Excelente. Bem, tenho certeza que você se sairá bem aqui. Nos divertimos enquanto aprendemos. Até na aula!)
+</p>
+
+<h4>Erros Comuns e Como Evitá-los</h4>
+<p>Um erro comum é tentar ser perfeito gramaticalmente em cada palavra. Falantes nativos NÃO fazem isto! Eles cometem erros gramaticais menores o tempo todo. O que importa é clareza e fluxo comunicativo. "I go to store yesterday" é gramaticalmente incorreto (deveria ser "I went to the store yesterday"), mas um falante nativo entenderia perfeitamente.</p>
+
+<p>Outro erro é pensar demais. Você pausa por 10 segundos pensando na palavra correta. Falantes nativos preenchem estes silêncios com "um", "você sabe", "tipo". Em inglês, eles dizem "uh", "like", "you know". "Um, I think, like, the best thing to do is, you know, to practice every day." Isto soa MUITO mais natural do que silêncio prolongado.</p>
+
+<blockquote class="news">
+<strong>Verdade Libertadora:</strong> Você NÃO precisa de vocabulário perfeito ou gramática flawless para ser um conversador bom! Você precisa de confiança, clareza, e disposição de se engajar genuinamente com a outra pessoa. Estes são os ingredientes verdadeiros de boa conversação!
+</strongquote>
+
+<h4>Prática: Suas Próprias Conversas Escritas</h4>
+<p>Agora é sua vez. Escreva 3 conversas diferentes sobre: (1) Conhecendo alguém novo em um contexto social, (2) Falando com um colega/amigo sobre seu dia, (3) Uma entrevista ou conversa mais formal com um professor/superior. Cada conversa deve ter pelo menos 15 turnos (trocas). Depois pratique falando essas conversas em voz alta, tomando ambos os papéis.</p>
+
+<p>Melhor ainda: encontre um parceiro de prática (um amigo, tutor, ou membro da família) e pratique estas conversas realmente falando. Peça-lhes para fazer papel de "Pessoa B" e veja se você consegue manter uma conversa natural. Se você ficar preso, está totalmente bem! Pergunte "Can you say that more slowly?" (Pode dizer isso mais lentamente?) ou "What does that word mean?" (O que essa palavra significa?). Falantes nativos fazem isso o tempo todo.</p>
+
+<blockquote class="example">
+<strong>Sua Própria Conversa Personalizada:</strong>
+Agora, com base em TUDO que aprendeu neste curso, escreva uma conversa onde você se apresenta a alguém novo, compartilha sobre sua família, descreve sua rotina diária, e faz perguntas significativas sobre sua vida. Use números, cores, adjetivos, vocabulário de família, presente simples, e cumprimentos naturais. Isto é uma síntese completa de tudo que dominamos!
+</blockquote>
+
+<h4>Celebrando Seu Progresso</h4>
+<p>Você completou um marco extraordinário! Você começou literalmente do zero—não conhecia o alfabeto inglês—e agora você consegue ter uma conversa real, natural, e significativa com um falante nativo. Você pode se apresentar, falar sobre sua vida, fazer perguntas, e engajar genuinamente com outros.</p>
+
+<p>Este é apenas o começo! Há ainda muito para aprender—tempos verbais mais complexos, vocabulário especializado, sotaques e entonação, gírias e expressões idiomáticas. Mas você tem agora a FUNDAÇÃO sólida. Você conhece os blocos de construção. Cada passo adiante é construir sobre o que já sabe.</p>
+
+<p>Continue praticando, continue conversando, continue se desafiando. Procure oportunidades reais para falar inglês—com amigos, online, em aplicativos de troca de idiomas. Quanto mais você fala, mais fluido e confiante você se torna. Você está no caminho certo. Continue assim!`,
+    cards: [
+      {
+        q: 'Em uma conversa natural, quando você não sabe o que dizer a seguir, qual é a melhor estratégia?',
+        a: 'Fazer uma pergunta genuína sobre a outra pessoa. "Tell me more about that", "What do you mean?", "How did that make you feel?" Perguntas mantêm a conversa viva e mostram interesse genuíno.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
