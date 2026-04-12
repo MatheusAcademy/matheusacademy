@@ -2920,6 +2920,25 @@ var MA_COURSES = [
     color: '#1565C0',
     addedTs: 1776024673797,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cs84.jpg',
+    id: 'cs84',
+    name: 'Cibersegurança na Nova Era Digital',
+    desc: 'Aborda proteção de dados, ameaças digitais, boas práticas, segurança pessoal e fundamentos de defesa cibernética.',
+    file: '23-ciberseguranca.html',
+    cat: 'Tecnologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CS_HENRY_2026_MASTER',
+    ak: 'cs_auth',
+    storagePrefix: 'cs_',
+    icon: '💻',
+    color: '#D32F2F',
+    addedTs: 1776024679069,
+    active: true
   }
 ];
 var MA_CATS = [
