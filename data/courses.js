@@ -1837,6 +1837,25 @@ var MA_COURSES = [
     color: '#1a237e',
     addedTs: 1776024401461,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/dv.jpg',
+    id: 'dv',
+    name: 'Biografia de David Vélez',
+    desc: 'O fundador do Nubank e sua revolução no setor financeiro.',
+    file: '52-bio-david-velez.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'DV_HENRY_2026_MASTER',
+    ak: 'dv_auth',
+    storagePrefix: 'dv_',
+    icon: '👤',
+    color: '#820ad1',
+    addedTs: 1776024405399,
+    active: true
   }
 ];
 var MA_CATS = [
