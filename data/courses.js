@@ -2616,6 +2616,25 @@ var MA_COURSES = [
     color: '#d62828',
     addedTs: 1776024589824,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pe.jpg',
+    id: 'pe',
+    name: 'Psicologia Esportiva',
+    desc: 'Foco, disciplina, controle emocional e mentalidade de competição no esporte.',
+    file: '11-psicologia-esportiva.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'PE_HENRY_2026_MASTER',
+    ak: 'pe_auth',
+    storagePrefix: 'pe_',
+    icon: '🏆',
+    color: '#e63946',
+    addedTs: 1776024594961,
+    active: true
   }
 ];
 var MA_CATS = [
