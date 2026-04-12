@@ -2293,6 +2293,25 @@ var MA_COURSES = [
     color: '#000000',
     addedTs: 1776024504866,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/jbee.jpg',
+    id: 'jbee',
+    name: 'Biografia de Jeff Bezos',
+    desc: 'A jornada do fundador da Amazon e a transformação do comércio mundial.',
+    file: '23-bio-jeff-bezos.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'JB_HENRY_2026_MASTER',
+    ak: 'jb_auth',
+    storagePrefix: 'jb_',
+    icon: '👤',
+    color: '#ff9900',
+    addedTs: 1776024509725,
+    active: true
   }
 ];
 var MA_CATS = [
