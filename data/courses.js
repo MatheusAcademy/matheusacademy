@@ -2692,6 +2692,25 @@ var MA_COURSES = [
     color: '#ffd166',
     addedTs: 1776024609859,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/sm.jpg',
+    id: 'sm',
+    name: 'Saúde Mental na Prática',
+    desc: 'Autocuidado emocional, gestão do estresse e bem-estar mental no cotidiano.',
+    file: '07-saude-mental.html',
+    cat: 'Saúde & Ciência',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'SM_HENRY_2026_MASTER',
+    ak: 'sm_auth',
+    storagePrefix: 'sm_',
+    icon: '🧬',
+    color: '#7209b7',
+    addedTs: 1776024614889,
+    active: true
   }
 ];
 var MA_CATS = [
