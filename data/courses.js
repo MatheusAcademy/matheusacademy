@@ -2084,6 +2084,25 @@ var MA_COURSES = [
     color: '#0071dc',
     addedTs: 1776024454279,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/jm.jpg',
+    id: 'jm',
+    name: 'Biografia de Jack Ma',
+    desc: 'O fundador do Alibaba e símbolo do empreendedorismo chinês.',
+    file: '29-bio-jack-ma.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'JM_HENRY_2026_MASTER',
+    ak: 'jm_auth',
+    storagePrefix: 'jm_',
+    icon: '👤',
+    color: '#ff6a00',
+    addedTs: 1776024458637,
+    active: true
   }
 ];
 var MA_CATS = [
