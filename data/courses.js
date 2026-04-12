@@ -2654,6 +2654,25 @@ var MA_COURSES = [
     color: '#2ec4b6',
     addedTs: 1776024599974,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mc.jpg',
+    id: 'mc',
+    name: 'Mudanças Climáticas Descomplicadas',
+    desc: 'Entenda o que são as mudanças climáticas, suas causas e impactos no planeta.',
+    file: '01-mudancas-climaticas.html',
+    cat: 'Meio Ambiente & Sustentabilidade',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'MC_HENRY_2026_MASTER',
+    ak: 'mc_auth',
+    storagePrefix: 'mc_',
+    icon: '🌱',
+    color: '#2d6a4f',
+    addedTs: 1776024604977,
+    active: true
   }
 ];
 var MA_CATS = [
