@@ -2540,6 +2540,25 @@ var MA_COURSES = [
     color: '#118ab2',
     addedTs: 1776024568974,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/er.jpg',
+    id: 'er',
+    name: 'Energias Renováveis',
+    desc: 'Conheça as fontes de energia limpa e seu papel no futuro do planeta.',
+    file: '02-energias-renovaveis.html',
+    cat: 'Meio Ambiente & Sustentabilidade',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'ER_HENRY_2026_MASTER',
+    ak: 'er_auth',
+    storagePrefix: 'er_',
+    icon: '🌱',
+    color: '#f4a261',
+    addedTs: 1776024574049,
+    active: true
   }
 ];
 var MA_CATS = [
