@@ -2768,6 +2768,25 @@ var MA_COURSES = [
     color: '#00695C',
     addedTs: 1776024630964,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/af.jpg',
+    id: 'af',
+    name: 'Autoconfiança, Postura e Identidade Forte',
+    desc: 'Trabalha segurança pessoal, imagem, decisão, postura emocional e fortalecimento interno.',
+    file: '38-autoconfianca.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'AF_HENRY_2026_MASTER',
+    ak: 'af_auth',
+    storagePrefix: 'af_',
+    icon: '🏆',
+    color: '#AD1457',
+    addedTs: 1776024636090,
+    active: true
   }
 ];
 var MA_CATS = [
