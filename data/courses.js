@@ -2996,6 +2996,26 @@ var MA_COURSES = [
     color: '#E65100',
     addedTs: 1776024694959,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/iv2v.jpg',
+    id: 'iv2v',
+    name: 'Inglês para Viagens e Situações Reais',
+    desc: 'Ensina inglês prático para aeroporto, hotel, restaurante, compras, emergências e interações comuns em viagens.',
+    file: '14-ingles-viagens.html',
+    cat: 'Inglês',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IV_HENRY_2026_MASTER',
+    ak: 'iv_auth',
+    storagePrefix: 'iv_',
+    icon: '🇺🇸',
+    color: '#F57C00',
+    free: true,
+    addedTs: 1776024700142,
+    active: true
   }
 ];
 var MA_CATS = [
