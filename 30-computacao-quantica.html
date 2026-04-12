@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Computação Quântica para Inovadores — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'CQ',
+  name: 'Computação Quântica para Inovadores',
+  shortName: 'Computação Quântica',
+  cat: 'Tecnologia e Inovação',
+  desc: 'Introdução acessível a uma das tecnologias mais promissoras do futuro, explicando conceitos, potencial e desafios.',
+  salt: 'CQ_HENRY_2026_MASTER',
+  ak: 'cq_auth',
+  courseKey: 'cq',
+  prefix: 'cq_',
+  color: '#00BFA5',
+  glow: 'rgba(0,191,165,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'cq_m1',
+    name: 'Fundamentos de Computação Quântica',
+    free: true,
+    topics: ['cq_t1', 'cq_t2', 'cq_t3'],
+    summary: {
+      title: 'Resumo do Módulo 1',
+      points: [
+        'Computador clássico usa bits (0 ou 1). Computador quântico usa qubits (0 e 1 simultaneamente)',
+        'Superposição permite qubit ser múltiplos estados ao mesmo tempo. Emaranhamento conecta qubits de forma estranha',
+        'Interferência destrutiva cancela respostas erradas, construtiva amplifica certas. Resulta em resposta correta',
+        'Computador quântico é exponencialmente mais poderoso em certas tarefas (fatoração, simulação, otimização)'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'O que é um qubit?',
+        opts: ['Uma unidade de bit quente', 'Unidade de informação quântica que é 0 e 1 simultaneamente (superposição)', 'Uma partícula', 'Um quantum'],
+        correct: 1
+      },
+      {
+        q: 'O que é superposição?',
+        opts: ['Colocar coisas em cima', 'Qubit estar em múltiplos estados ao mesmo tempo até ser medido', 'Sobreposição de camadas', 'Múltiplas posições'],
+        correct: 1
+      },
+      {
+        q: 'Qual é a vantagem de computador quântico vs clássico?',
+        opts: ['Mais rápido em tudo', 'Exponencialmente mais rápido em certos problemas (fatoração, simulação)', 'Não há vantagem', 'Lento em tudo'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'cq_m2',
+    name: 'Aplicações Práticas e Impacto',
+    free: false,
+    topics: ['cq_t4', 'cq_t5', 'cq_t6'],
+    summary: {
+      title: 'Resumo do Módulo 2',
+      points: [
+        'Fatoração: quebra RSA, revoluciona criptografia. Blockchain é vulnerável',
+        'Simulação: moléculas quânticas, medicamentos, materiais novos descobertos rapidamente',
+        'Otimização: rota ótima para bilhões de variáveis em segundos. Logística, finanças transformadas',
+        'Busca: encontrar padrão em base de dados gigante muito mais rápido'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como computador quântico quebra criptografia RSA?',
+        opts: ['Força bruta', 'Algoritmo de Shor fatoriza rapidamente (impossível em clássico)', 'Hacking', 'Computador quântico não consegue'],
+        correct: 1
+      },
+      {
+        q: 'Qual aplicação de quantum é mais próxima de realidade em 2026?',
+        opts: ['Criptografia RSA quebrada', 'Simulação de moléculas (descobrir medicamentos)', 'Warp drive', 'Teletransporte'],
+        correct: 1
+      },
+      {
+        q: 'Por que quantum é bom para otimização?',
+        opts: ['Não é bom', 'Consegue explorar múltiplas soluções simultaneamente (superposição)', 'Apenas marketing', 'Acaso'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'cq_m3',
+    name: 'Desafios, Limitações e Futuro de Quantum',
+    free: false,
+    topics: ['cq_t7', 'cq_t8', 'cq_t9'],
+    summary: {
+      title: 'Resumo do Módulo 3',
+      points: [
+        'Decoerência: qubits perdem estado quântico muito rapidamente (milissegundos). Difícil manter qubits estáveis',
+        'Error correction: para cada qubit lógico, precisa 1.000+ qubits físicos. Escala é imenso desafio',
+        'Quantum advantage ainda não é "real" em 2026 (maioria de benchmarks são teóricos)',
+        'Computador quântico prático esperado 2030-2040, revolucionará indústrias após isso'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual é o maior desafio técnico de computação quântica?',
+        opts: ['Custo de energia', 'Decoerência (qubits perdem estado rápido)', 'Software', 'Ninguém sabe'],
+        correct: 1
+      },
+      {
+        q: 'O que é quantum advantage?',
+        opts: ['Computador quântico é sempre melhor', 'Computador quântico resolve problema mais rápido que clássico', 'Computador quântico é mais barato', 'Não existe'],
+        correct: 1
+      },
+      {
+        q: 'Quando computador quântico prático será disponível?',
+        opts: ['Já existe em 2026', '2030-2040 para aplicações reais', 'Nunca', '2100'],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 'cq_t1',
+    name: 'O Que É Computação Quântica e Por Que Importa',
+    dur: '16 min',
+    content: `
+      <h3>Computação Clássica vs Quântica</h3>
+      <p>Computador que você usa (laptop, smartphone) é clássico. Usa bits. Bit é 0 ou 1. Em dado momento, bit é exatamente um ou outro. Bilhões de bits são processados por segundo. Processador es decompõe problema em passos sequenciais ou paralelos, tudo baseado em bits.</p>
+
+      <p>Computador quântico é radicalmente diferente. Usa qubits. Qubit é 0 ou 1 ou... ambos simultaneamente. Conceito está além de intuição clássica. Por isso é difícil entender.</p>
+
+      <blockquote class="tip">
+        Pense em bit como moeda. Bit é cara ou coroa (dois estados). Qubit é moeda girando no ar (está em ambos os estados até parar). Quando você mede (pega moeda), é uma ou outra.
+      </blockquote>
+
+      <h3>Por Que Quantum Importa Agora?</h3>
+      <p>Alguns problemas são "hard" para computador clássico. Exemplo: fatorar número muito grande (produto de dois primos gigantes). Computador clássico levaria 10.000 anos. Computador quântico levaria segundos. Diferença é existencial. RSA criptografia (que protege seu banco, governo, secretos militares) seria quebrado em segundos.</p>
+
+      <p>Outros problemas: simular moléculas quânticas (para descobrir medicamentos), otimizar rotas de bilhões de variáveis (para logística), buscar padrões em dados gigantes. Computador clássico é "burro" nesses. Quântico é "gênio".</p>
+
+      <p>Por essas razões, governos (USA, China, Europa) e corporações (IBM, Google, Microsoft) investem bilhões em computação quântica. Não é ficção. É prioridade tecnológica mundial.</p>
+
+      <blockquote class="news">
+        USA investiu R$1.5 bilhões em National Quantum Initiative (2018-2026). China investiu ainda mais (segredo, mas estimado R$3+ bilhões). Europa investiu R$1 bilhão (Quantum Flagship). Essa é escala de investimento de Manhattan Project.
+      </blockquote>
+
+      <h3>Quantum Computing é Mágica?</h3>
+      <p>Não é mágica. É física. Física quântica é estranha (em escala atômica, coisas se comportam estranho), mas é bem compreendida há 100 anos. Engenheiros agora aprendem a explorar propriedades quânticas para computação.</p>
+
+      <p>Possível? Sim, definitivamente. Computadores quânticos existem em 2026 (IBM, Google, IonQ, Rigetti têm máquinas). Problema: são primitivos (50-1000 qubits). Precisam milhões de qubits para ser úteis. Ainda em pesquisa básica.</p>
+
+      <h3>Aplicações Potenciais (Resumidas)</h3>
+      <ul>
+        <li><strong>Criptografia:</strong> Quebra RSA em segundos. Revoluciona segurança.</li>
+        <li><strong>Medicamentos:</strong> Simula moléculas quânticas. Descobre drogas muito mais rápido.</li>
+        <li><strong>Materiais:</strong> Simula propriedades de novos materiais. Descoberta de supercondutores à temperatura ambiente é possível?</li>
+        <li><strong>Otimização:</strong> Acha solução ótima para logística, finanças, manufatura. Economies gigantes.</li>
+        <li><strong>Machine Learning:</strong> Treina modelos muito mais rápido em certos problemas.</li>
+        <li><strong>Busca:</strong> Encontra padrão em base de dados terabyte em segundos.</li>
+      </ul>
+
+      <p>Impacto potencial: R$5-10 trilhões de valor econômico em próximas 2 décadas. Indústrias inteiras (farmacêutica, logística, finanças) serão transformadas.</p>
+
+      <h3>Hype vs Realidade em 2026</h3>
+      <p>Hype: "computador quântico é o futuro, vai resolver tudo". Realidade: computador quântico não substitui clássico. É ferramenta especializada. Você usa quantum para problemas específicos. Para a maioria das coisas (ler email, navegar web), clássico é perfeito.</p>
+
+      <p>Hype: "quantum é impossível". Realidade: quantum é possível mas muito difícil. Máquinas primitivas existem. Progresso é real mas lento.</p>
+
+      <p>Verdade: quantum é tecnologia transformadora que mudará certas indústrias completamente. Mas adoption larga é 10-20 anos afastado (2036-2046).</p>
+    `,
+    cards: [
+      {
+        q: 'Qual é a diferença fundamental entre bit e qubit?',
+        a: 'Bit é 0 ou 1 (um estado). Qubit é 0 e 1 simultaneamente (superposição) até ser medido. Isso permite processamento exponencialmente mais poderoso.'
+      }
+    ]
+  },
+  {
+    id: 'cq_t2',
+    name: 'Superposição, Emaranhamento e Interferência',
+    dur: '18 min',
+    content: `
+      <h3>Superposição: Estar em Múltiplos Estados</h3>
+      <p>Superposição é quando qubit está em múltiplos estados simultaneamente. Imagine que você tem caixa. Dentro tem bola. Bola é vermelha e azul ao mesmo tempo (enquanto você não abre caixa). Quando você abre (mede), bola é vermelha ou azul (colapsa para um estado).</p>
+
+      <p>Matematicamente, superposição é representada como: qubit = 0.7|0⟩ + 0.7|1⟩. Isso significa "70% de chance de ser 0, 70% de chance de ser 1" quando medido. Espera, 140%? Não faz sentido clássico. Mas em quântica, amplitude pode ser negativa ou complexa. Interferência (abaixo) resolve essa estranheza.</p>
+
+      <p>Implicação: com 300 qubits em superposição, você consegue representar 2^300 estados simultaneamente. É mais que número de átomos no universo. Computador clássico com 300 bits representa apenas 1 dos 2^300 estados por vez. Diferença exponencial.</p>
+
+      <blockquote class="tip">
+        Superposição é o porquê de computador quântico ser exponencialmente mais poderoso. Você consegue explorar bilhões de soluções em paralelo.
+      </blockquote>
+
+      <h3>Emaranhamento: Correlação Estranha</h3>
+      <p>Emaranhamento é quando dois qubits são relacionados de forma que mudar um afeta o outro instantaneamente, mesmo se estão longe. Einstein chamou de "spooky action at a distance" (ação fantasmagórica à distância). Ele achava errado. Estava errado (experimentalmente provado).</p>
+
+      <p>Exemplo: você tem dois qubits emaranhados. Se um é medido como 0, outro é garantidamente 1. Se um é 1, outro é 0. Correlação perfeita. Mas nem você nem seu colega consegue controlar qual será (aleatório). Porém, correlação é garantida. Estranho? Sim. Real? Sim.</p>
+
+      <p>Implicação: emaranhamento permite que múltiplos qubits trabalhem juntos de formas que clássico não consegue. Combinado com superposição, resulta em poder de processamento exponencial.</p>
+
+      <h3>Interferência: Amplificar Certos e Cancelar Outros</h3>
+      <p>Onda é interferência. Onda em poça: você vê cristas (onde ondas constroem) e vales (onde ondas cancelam). Qubits usam interferência para computar.</p>
+
+      <p>Algoritmo quântico é designado para: (1) Amplificar amplitude das respostas corretas (construtiva). (2) Cancelar amplitude das respostas erradas (destrutiva). Resultado: quando você mede, tem altíssima chance de obter resposta correta.</p>
+
+      <p>Exemplo Simples: Problema é "qual é a raiz quadrada de 16?". Possíveis respostas: 4, -4, ou outras números aleatórios. Algoritmo quântico manipula amplitudes: 4 tem amplitude alta, outras têm amplitude próxima a zero. Quando mede, é 4 (correto) com 99.9% de chance.</p>
+
+      <h3>Os Três Pilares: Superposição + Emaranhamento + Interferência</h3>
+      <p>Superposição permite explorar múltiplas soluções. Emaranhamento permite correlação entre qubits. Interferência amplifica certas e cancela outras. Combinados, resultam em poder computacional incrível para certos problemas.</p>
+
+      <h4>Visualização Simplificada</h4>
+      <p>Computador clássico com 3 bits testa 1 combinação por vez (000, 001, 010, ..., 111). Computador quântico com 3 qubits testa todas 8 combinações simultaneamente (superposição). Algoritmo manipula amplitudes (interferência). Emaranhamento conecta qubits. Resultado: resposta certa é encontrada em uma medição.</p>
+
+      <h3>Limitações Práticas</h3>
+      <p>(1) <strong>Decoerência:</strong> Superposição é frágil. Qualquer perturbação (calor, vibração, eletromagnetismo) destrói. Qubits colapsam rapidamente. (2) <strong>Erro:</strong> Operações quânticas são imprecisas. Cada operação introduz pequeno erro. Após muitas operações, erro acumula. (3) <strong>Medição:</strong> Quando você mede, superposição colapsa. Você obtém uma resposta, não todas. Precisas organizar algoritmo que a resposta correta tenha amplitude alta.</p>
+
+      <h3>Algoritmos Quânticos Conhecidos</h3>
+      <p><strong>Shor's Algorithm:</strong> Fatora números muito rapidamente. Quebra RSA. <strong>Grover's Algorithm:</strong> Busca em base de dados não-estruturada muito mais rápido. <strong>VQE (Variational Quantum Eigensolver):</strong> Simula moléculas quânticas. <strong>QAOA (Quantum Approximate Optimization Algorithm):</strong> Resolve problemas de otimização. Esses foram descobertos. Novos algoritmos continuam sendo descobertos.</p>
+    `,
+    cards: [
+      {
+        q: 'Como superposição, emaranhamento e interferência trabalham juntos para computação quântica?',
+        a: 'Superposição permite explorar múltiplas soluções em paralelo. Emaranhamento cria correlação entre qubits. Interferência amplifica respostas certas e cancela erradas. Combinado = poder exponencial.'
+      }
+    ]
+  },
+  {
+    id: 'cq_t3',
+    name: 'Tipos de Computadores Quânticos e Hardware',
+    dur: '16 min',
+    content: `
+      <h3>Desafio Fundamental: Materializando Qubits</h3>
+      <p>Teórico é fácil. Prático é difícil. Como você cria qubit? Precisa usar partícula ou sistema que tem propriedades quânticas. Opções incluem: elétrons, fótons, íons aprisionados, átomos frios, supercondutores. Cada tipo tem trade-offs.</p>
+
+      <h3>Supercondutores (IBM, Google, Rigetti)</h3>
+      <p>Qubit é pequeno circuito elétrico resfriado a temperatura próxima ao zero absoluto (-273°C). Elétrons conseguem se mover sem resistência (supercondutor). Propriedade quântica permite qubit. Vantagem: escala (consegue fazer centenas de qubits). Desvantagem: resfriamento é caro/complexo, decoerência é rápida (~100 microsegundos).</p>
+
+      <p>IBM tem máquina com 433 qubits (2024). Google tem 53+ qubits. Máquinas maiores estão em desenvolvimento.</p>
+
+      <h4>Temperatura de Operação</h4>
+      <p>Qubits supercondutores precisam de <20 millikelvin (mais frio que espaço intergaláctico). Resfriamento usa hélio líquido em cascata. Custo de manutenção é alto. Uma máquina custa R$10-50 milhões.</p>
+
+      <h3>Íons Aprisionados (IonQ, Honeywell)</h3>
+      <p>Qubit é íon (átomo com elétron faltando) suspenso usando campos eletromagnéticos no vácuo. Propriedades quânticas permitem qubit. Vantagem: decoerência é muito mais lenta (segundos), não resfriamento extremo, qualidade de qubit é alta. Desvantagem: escala é difícil (governo de múltiplos íons é complexo), atualmente <100 qubits.</p>
+
+      <p>IonQ tem máquina com ~11 qubits que consegue resolver alguns problemas reais. Qualidade é excelente.</p>
+
+      <h3>Átomos Frios (Atom Computing, Pasqal)</h3>
+      <p>Qubit é átomo neutro (sem carga) resfriado para microkelvin e aprisionado com laser. Propriedades quânticas do átomo permitem qubit. Vantagem: escala (consegue fazer centenas de átomos), operação é mais fácil que supercondutores. Desvantagem: ainda novo, menos maduro que supercondutores/íons.</p>
+
+      <p>Atom Computing anunciou plano para máquina com 1000+ qubits em 2026.</p>
+
+      <h3>Fótons (Xanadu, PsiQuantum)</h3>
+      <p>Qubit é fóton (partícula de luz). Propriedades quânticas de luz permitem qubit. Vantagem: temperatura ambiente (sem resfriamento extremo), integração com fibra ótica. Desvantagem: difícil de gerar/controlar fótons, entanglement é difícil, scale é lenta.</p>
+
+      <p>Ainda em fase early. Xanadu tem máquina com poucos qubits.</p>
+
+      <h3>Comparação de Tecnologias</h3>
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <tr style="background: #f0f0f0;">
+          <th style="border: 1px solid #ddd; padding: 10px;">Tipo</th>
+          <th style="border: 1px solid #ddd; padding: 10px;">Qubits</th>
+          <th style="border: 1px solid #ddd; padding: 10px;">Decoerência</th>
+          <th style="border: 1px solid #ddd; padding: 10px;">Resfriamento</th>
+          <th style="border: 1px solid #ddd; padding: 10px;">Maturidade</th>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Supercondutor</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">100-500</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Rápida (~μs)</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Muito frio</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Alta</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Íons</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">10-100</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Lenta (s)</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Mínimo</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Média</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Átomos Frios</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">100-1000</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Média (ms)</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Frio</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Baixa</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Fótons</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">&lt;10</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Variável</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Nenhum</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">Baixa</td>
+        </tr>
+      </table>
+
+      <h3>Quantum Cloud: Acesso sem Máquina Própria</h3>
+      <p>Em 2026, você não precisa máquina quântica própria. IBM oferece acesso via cloud (IBM Quantum). AWS oferece quantum computing (Braket). Google oferece Cirq. Você escreve código, envia para servidor deles, máquina executa, resultados voltam. Democratiza acesso.</p>
+
+      <blockquote class="example">
+        Caso Real: Pesquisador em universidade em país pobre acessa IBM Quantum via cloud. Usa 100 qubits. Realiza simulação de molécula. Publica paper. Tudo sem gastar R$50M em máquina própria.
+      </blockquote>
+
+      <h3>Roadmap de Hardware até 2030</h3>
+      <p>(2026): 300-1000 qubits, decoerência é limitação. (2028): 10.000+ qubits, error correction começa. (2030): 1 milhão+ qubits, aplicações reais de utilidade surgem. Timeline é agressivo; alguns experts acham otimista.</p>
+    `,
+    cards: [
+      {
+        q: 'Qual é a diferença entre supercondutores e íons aprisionados como qubits?',
+        a: 'Supercondutores escalam melhor (100s qubits) mas decoerência é rápida. Íons têm decoerência lenta mas escala é difícil (<100 qubits). Trade-offs diferentes.'
+      }
+    ]
+  },
+  {
+    id: 'cq_t4',
+    name: 'Aplicações: Criptografia, Medicamentos e Otimização',
+    dur: '20 min',
+    content: `
+      <h3>Ameaça à Criptografia RSA</h3>
+      <p>RSA é padrão de criptografia. Você envia dados para servidor (banco, governo). Dados são encriptados com chave pública (qualquer um consegue). Servidor desencripta com chave privada (secreto). Segurança baseia-se em: fatorar número muito grande é "hard" para computador clássico.</p>
+
+      <p>Quantum muda tudo. Algoritmo de Shor em computador quântico consegue fatorar número de 2048-bit em segundos (computador clássico levaria 10.000 anos). RSA é quebrado. Todo dado encriptado em internet pode ser desencriptado.</p>
+
+      <blockquote class="news">
+        NIST iniciou competição para "Post-Quantum Cryptography" (criptografia resistente a quantum). Objetivo: novos algoritmos que nem quantum consegue quebrar rápido. Primeiros padrões esperados em 2026. Todos governos/corporações precisarão fazer transição até 2030-2035 (antes que quantum seja poderoso).</blockquote>
+
+      <h4>Implicações Práticas</h3>
+      <p>(1) <strong>Dados Coletados Hoje:</strong> Adversários coletam dados encriptados hoje (assumindo quantum vai existir em futuro). Quando quantum estiver pronto, conseguem desencriptar. "Harvest now, decrypt later" é ameaça real. (2) <strong>Transição:</strong> Infraestrutura inteira de segurança precisa ser mudada. Custo é imenso. (3) <strong>Legislação:</strong> Governos vão exigir transição em período específico. Empresas que não migrarem serão multas/sanções.</p>
+
+      <h3>Simulação de Medicamentos</h3>
+      <p>Desenvolver medicamento é lento (10+ anos, R$2+ bilhões). Maioria dos candidatos falham. Razão: moléculas são quânticas. Propriedades delas só conseguem ser calculadas com simulação quântica (computador clássico não consegue). Químicos fazem experimentação física (caro, lento).</p>
+
+      <p>Computador quântico simula moléculas perfeitamente. Você desenha candidato a medicamento. Computador quântico calcula propriedades (ligação a proteína alvo, efeitos colaterais, etc). Desenho ruim? Descarta. Desenho bom? Testa em laboratório. Processo fica muito mais rápido.</p>
+
+      <h4>Exemplos</h4>
+      <ul>
+        <li><strong>Covid-19:</strong> Se quantum estivesse disponível em 2019, vacina poderia ser desenvolvida em meses em vez de anos.</li>
+        <li><strong>Câncer:</strong> Simulação de moléculas alvo de câncer. Desenho de medicamento é acelerado.</li>
+        <li><strong>Alzheimer:</strong> Compreensão de agregação de proteína. Simulação quântica revela mecanismo. Medicamento é designado.</li>
+      </ul>
+
+      <p>Timeline: Primeiro medicamento desenvolvido com ajuda de quantum computing: 2030-2035.</p>
+
+      <h3>Materiais Novos</h3>
+      <p>Supercondutores, baterias melhores, painéis solares mais eficientes - todos dependem de compreensão de propriedades quânticas. Computador quântico simula. Descoberta de novas fórmulas é acelerada.</p>
+
+      <p>Exemplo: supercondutores à temperatura ambiente seriam revolução (criogenia cara não seria necessária). Busca de materiais é acelerada por quantum.</p>
+
+      <h3>Otimização: O "Killer App" Mais Próximo</h3>
+      <p>Muitos problemas do mundo real são otimização. Exemplos: (1) <strong>Logística:</strong> UPS tem 100.000+ rotas. Qual é rota mais eficiente? Economiza gasolina, emissões, tempo. (2) <strong>Finanças:</strong> Portfolio óptimo de 1000 ativos com bilhões de restrições. (3) <strong>Manufatura:</strong> Escalonamento de máquinas em fábrica. (4) <strong>Tráfego:</strong> Otimização de semáforos em cidade inteira.</p>
+
+      <p>Computador clássico é muito lento nesses (exploração combinatória explode). Computador quântico consegue explorar bilhões de soluções em paralelo (superposição). QAOA (algoritmo quântico) encontra solução ótima em fração do tempo.</p>
+
+      <h4>Impacto Econômico</h4>
+      <p>Otimização de 1% em logística global economiza R$100+ bilhões por ano. Otimização de portfolio em 1% economiza R$10+ bilhões em gestão de risco. Impacto é imenso.</p>
+
+      <blockquote class="example">
+        Caso Real (Teórico): FedEx tem 500.000+ rotas por dia. Otimização quantum de 2% economizaria R$500M/ano. Custo de máquina quantum é R$100M. Payback: 2-3 anos.
+      </blockquote>
+
+      <h3>Machine Learning Quântico</h3>
+      <p>IA e ML usam muita álgebra linear. Computador quântico consegue fazer álgebra linear muito mais rápida. Treinamento de modelo fica mais rápido. Alguns problemas de ML que são impossíveis em clássico (muitos dados) ficam possíveis.</p>
+
+      <p>Expectativa: quantum ML será transformador para análise de big data.</p>
+
+      <h3>Busca de Padrões</h3>
+      <p>Grover's algorithm de quantum consegue buscar em base de dados gigante (não-estruturada) muito mais rápido. Computador clássico precisa verificar todas as entradas (N). Quantum consegue em sqrt(N). Aceleração é enorme.</p>
+
+      <p>Aplicação: busca em bilhões de registros, detecção de fraude, segurança.</p>
+
+      <h3>Timeline Realista de Aplicações</h3>
+      <p>(2026): Demonstrações (academia). Otimização teórica em toy problems. (2028-2030): Primeiras aplicações reais (otimização em produção, simulação de moléculas). (2030-2040): Impacto económico significativo (medicamentos novos, materiais, logística). (2040+): Quase toda indústria usa quantum em algum nível.</p>
+    `,
+    cards: [
+      {
+        q: 'Como computador quântico ameaça criptografia RSA?',
+        a: 'Algoritmo de Shor consegue fatorar números muito rápido em quantum (segundos). RSA é seguro porque fatoração é hard em clássico. Quantum quebra isso.'
+      }
+    ]
+  },
+  {
+    id: 'cq_t5',
+    name: 'Decoerência, Erro e Correção de Erros',
+    dur: '18 min',
+    content: `
+      <h3>O Problema Fundamental: Decoerência</h3>
+      <p>Qubits são frágeis. Qualquer perturbação (calor, vibração, eletromagnetismo) destrói superposição. Qubit colapsa para 0 ou 1 (aleatoriamente). Isso é decoerência. Tempo típico de decoerência: milissegundos para supercondutores, segundos para íons, microsegundos para certos sistemas.</p>
+
+      <p>Problema: você precisa executar algoritmo em qubits (múltiplas operações). Cada operação leva tempo (~nanosegundos). Antes que algoritmo termine, qubits decoem. Resultado: resposta é lixo.</p>
+
+      <h4>Exemplo Numérico</h4>
+      <p>Computador quântico tem 300 qubits. Algoritmo precisa 1 bilhão de operações (para problema realista). Operação leva 10 nanosegundos. Tempo total: 10 bilhões nanosegundos = 10 segundos. Decoerência: 100 microssegundos. Você consegue fazer ~10.000 operações antes de decoem. Insuficiente.</p>
+
+      <h3>Erros de Operação</h3>
+      <p>Além de decoerência, cada operação (gate) em qubits é imprecisa. Fidelidade típica: 99%+ (parece bom). Mas em 1 bilhão de operações, 1% de erro em cada = erro massivo acumulado. Resultado: resposta está completamente errada.</p>
+
+      <h3>Correção de Erros Quânticos</h3>
+      <p>Solução: correção de erros quânticos. Conceito é simples: para proteger 1 qubit lógico (informação que você quer preservar), você usa múltiplos qubits físicos (100-1000). Redudância permite detectar e corrigir erro.</p>
+
+      <h4>Como Funciona (Simplificado)</h4>
+      <p>Qubit lógico é armazenado em 5-10 qubits físicos via "entanglement planejado". Se 1 qubit físico sofre erro, padrão de entanglement muda. Sistema detecta qual qubit errou. Corrige aplicando operação inversa. Qubit lógico fica protegido.</p>
+
+      <h4>Overhead de Quantum</h4>
+      <p>Para 1 qubit lógico, você precisa 1.000+ qubits físicos (estimativa é otimista; pode ser 10.000+ em realidade). Para computador quantum útil (1 milhão de qubits lógicos), você precisa 1 trilhão de qubits físicos. Escalabilidade é desafio imenso.</p>
+
+      <h3>Threshold de Erro</h3>
+      <p>Existe "threshold de erro". Se fidelidade de cada operação é acima de threshold (~99.9% para supercondutores), correção de erros funciona. Se abaixo, acumula. Pesquisa em 2026 é levantar threshold (melhorar fidelidade).</p>
+
+      <h3>Pesquisa Atual (2026) em Correção</h3>
+      <p>Google, IBM, Microsoft investem pesado em correção de erros. Google anunciou progresso (2023-2024): usando múltiplos qubits, conseguiram reduzir taxa de erro. Tendência é clara: correção de erros está melhorando.</p>
+
+      <blockquote class="news">
+        Google anunciou em 2024: usando código de correção de erro de superfície, conseguiram reduzir taxa de erro exponencialmente com mais qubits. Milestone importante. Esperança é que correção de erro de superfície (que require muitos qubits) seja padrão até 2028-2030.
+      </blockquote>
+
+      <h3>Desafios Práticos</h3>
+      <p>(1) <strong>Custo Computacional:</strong> Correção de erros usa bilhões de operações apenas para manter 1 qubit lógico estável. Overhead é imenso. (2) <strong>Latência:</strong> Correção leva tempo. Qubits decoem enquanto sistema está corrigindo. (3) <strong>Crosstalk:</strong> Qubits interagem entre si (crosstalk). Ao corrigir 1, você afeta outro. Coordenação é complexa.</p>
+
+      <h3>Timeline de Correção de Erros</h3>
+      <p>(2026): Demonstrações iniciais. Qubits lógicos begin a ser criados. (2028-2030): Rotina. Computadores quantum operacionalistas usam correção de erros. (2030+): Melhorias contínuas. Overhead reduz, escalabilidade melhora.</p>
+
+      <p>Conclusão: correção de erros é desafio maior de computação quântica. Mas é solucionável. Não é bloqueador fundamental.</p>
+    `,
+    cards: [
+      {
+        q: 'Qual é o desafio de decoerência em computação quântica?',
+        a: 'Qubits perdem estado quântico muito rapidamente (milissegundos). Algoritmo precisa rodar em tempo < decoerência. Solução: correção de erros (usa 1000+ qubits físicos por lógico).'
+      }
+    ]
+  },
+  {
+    id: 'cq_t6',
+    name: 'Quantum Advantage: Mito vs Realidade',
+    dur: '16 min',
+    content: `
+      <h3>O que é Quantum Advantage?</h3>
+      <p>Quantum advantage é quando computador quântico resolve problema mais rápido que melhor computador clássico conhecido. Sounds simples. Realidade é complicada.</p>
+
+      <h3>Google's Quantum Supremacy Claim (2019)</h3>
+      <p>Google anunciou "quantum supremacy". Máquina quântica (Sycamore, 53 qubits) resolveu problema em 200 segundos. Melhor computador clássico levaria 10.000 anos. Implicação: quantum é 54 trilhões de vezes mais rápido!</p>
+
+      <p>Realidade: problema é artificial (não tem aplicação prática). Problema foi designado especificamente para favorecer quantum. Pega padrão aleatório e verifica se saída corresponde. Computador clássico consegue resolver em horas (não 10.000 anos) com otimizações.</p>
+
+      <blockquote class="tip">
+        "Quantum supremacy" é demonstração teórica importante (prova que quantum consegue fazer coisas que clássico acha muito difícil) mas não é "aplicação prática útil".
+      </blockquote>
+
+      <h3>Quantum Advantage vs Quantum Supremacy</h3>
+      <p><strong>Supremacy:</strong> Quantum resolve problema mais rápido (mesmo que problema é inútil). <strong>Advantage:</strong> Quantum resolve problema ÚTIL mais rápido. Advantage é que importa. Supremacy é nice-to-have.</p>
+
+      <p>Em 2026, supremacy é demonstrada. Advantage não é. Espera-se advantage em 2030-2035.</p>
+
+      <h3>Benchmark Problems</h3>
+      <p>Comunidade está designando problemas para testar. Exemplos: (1) <strong>Simulação de moléculas:</strong> H2, H6 (pequenas moléculas). Quantum consegue? (2) <strong>Otimização:</strong> MaxCut, TSP pequeno. (3) <strong>ML:</strong> Classificação simples.</p>
+
+      <p>Status: simulação de H2 é feita (demonstração). Otimização é feita parcialmente. ML é demonstração apenas. Nada é "útil em produção" em 2026.</p>
+
+      <h3>Curva de Hype vs Realidade</h3>
+      <p>Início (2000s): "Quantum computing is future". Hype crescimento. 2016-2019: Pico de hype. Expectativas irrealistas. 2020-2023: "Quantum is slow, failed" (desapontamento). 2024-2026: "Quantum é lento mas progresso é real, espera 10 anos". 2030+: Realidade se aproxima de (baixa) expectativa.</p>
+
+      <h4>Timeline Expectativa Realista</h4>
+      <p>(2026): Quantum consegue demonstrações, nada comercial. (2028-2030): Primeiras aplicações com quantum advantage (limitado). (2030-2040): Quantum é usado em produção por corporações, impacto economico é visível. (2040+): Quantum é standard como computador clássico hoje.</p>
+
+      <h3>Razão da Lentidão</h3>
+      <p>(1) Decoerência e erro são muito piores que esperado. (2) Correção de erros requer overhead imenso. (3) Escalabilidade é muito mais difícil (cada qubit adicional quebra coerência dos outros). (4) Algoritmos são limitados (maioria de problemas não têm algoritmo quântico eficiente). (5) Hardware é primitivo (ainda em estágio de pesquisa).</p>
+
+      <h3>Não é Falha, É Desafio Técnico Normal</h3>
+      <p>Computador clássico levou 50+ anos para ser prático (1950s era experimental, 1980s era mainstream). Quantum em 2026 é equivalente a computador clássico em 1950. Esperar 50 anos é realista.</p>
+
+      <p>Progresso é real (máquinas em 2026 são 1000x melhor que em 2016). Mas "revolucionário" é exagero. "Transformador em longo prazo" é certo.</p>
+
+      <blockquote class="news">
+        Yuri Alexeev (IBM) em 2026: "Quantum computing não vai substituir classical. Quantum vai ser ferramenta especializada para problemas específicos. Quando? 2030-2040. Paciência."
+      </blockquote>
+    `,
+    cards: [
+      {
+        q: 'O que é quantum advantage e quando será realizado?',
+        a: 'Quantum vence clássico em problema ÚTIL. Demonstrações teóricas existem (supremacy). Aplicações práticas esperadas 2030-2035. Ainda 4-9 anos afastado.'
+      }
+    ]
+  },
+  {
+    id: 'cq_t7',
+    name: 'Aplicações Práticas Hoje: Quantum Cloud e Simuladores',
+    dur: '18 min',
+    content: `
+      <h3>Quantum Computing Na Nuvem (2026)</h3>
+      <p>Você não precisa máquina quântica própria. Acesso via nuvem democratiza. Provedores: IBM Quantum, AWS Braket, Azure Quantum, Google Quantum AI. Você escreve código (Qiskit para IBM, Cirq para Google, etc), envia para nuvem, máquina executa, resultados voltam.</p>
+
+      <h4>IBM Quantum Experience</h4>
+      <p>Gratuito (com limites). Acesso a máquinas reais (5-433 qubits dependendo de máquina). Simuladores também disponíveis. Milhões de usuários podem aprender em 2026.</p>
+
+      <h4>AWS Braket</h4>
+      <p>Acesso a múltiplos provedores (D-Wave, IonQ, Rigetti). Você escolhe qual hardware. Custa dinheiro mas é relativamente acessível (R$1-10 por uso).</p>
+
+      <h3>Programação Quântica: Linguagens e Frameworks</h3>
+      <p><strong>Qiskit:</strong> Biblioteca Python para IBM. Mais populares. <strong>Cirq:</strong> Biblioteca Python para Google. <strong>Q#:</strong> Linguagem de Microsoft para Azure Quantum. <strong>ProjectQ:</strong> Framework open-source. <strong>Ocean:</strong> SDK D-Wave para quantum annealing.</p>
+
+      <h4>Exemplo Simples (Qiskit)</h4>
+      <pre style="background: #f4f4f4; padding: 10px; border-left: 4px solid #00BFA5;">from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
+
+# Criar circuito com 1 qubit
+qc = QuantumCircuit(1, 1)
+qc.h(0)  # Hadamard (superposição)
+qc.measure(0, 0)  # Medir (colapsa para 0 ou 1)
+      </pre>
+
+      <p>Código acima cria superposição, mede. 50% de chance de 0, 50% de 1.</p>
+
+      <h3>Simuladores Clássicos</h3>
+      <p>Para aprendizado, você usa simulador clássico. Simula computador quântico em computador clássico. Não é rápido (exponencial) mas funciona para qubits pequenos (até ~25).</p>
+
+      <p>Simuladores são ferramentas de aprendizado. Você testa algoritmo, debugg, depois envia para máquina real.</p>
+
+      <h3>Benchmarks Quânticos</h3>
+      <p>Comunidade está desenvolvendo benchmarks para testar. Exemplos: (1) <strong>VQE (Variational Quantum Eigensolver):</strong> Encontra energia mínima de molécula. (2) <strong>QAOA (Quantum Approximate Optimization Algorithm):</strong> Resolve otimização. (3) <strong>Grover's Algorithm:</strong> Busca. (4) <strong>Shor's Algorithm:</strong> Fatoração (ainda não demonstrado em máquina realista).</p>
+
+      <p>Progress em benchmarks: VQE funciona em moléculas pequenas. QAOA é demonstrado. Grover's é demonstrado. Shor's ainda é teórico (precisa milhões de qubits).</p>
+
+      <h3>Quantum Chemistry (Caso de Uso Prático)</h3>
+      <p>Simulação de moléculas é uma das primeiras aplicações práticas. VQE permite aproximar energia de estado fundamental de molécula. Química usa isso para: (1) Entender reações. (2) Desenhar medicamentos. (3) Otimizar catalisadores.</p>
+
+      <p>Corporações (Roche, Merck, BioNTech) estão explorando quantum para drug discovery. Espera-se primeiro resultado prático em 2030-2035.</p>
+
+      <h3>Quantum Optimization (Caso de Uso Prático)</h3>
+      <p>QAOA consegue (aproximadamente) resolver problemas de otimização em quantum. Não é perfeito mas é 10-100x mais rápido que clássico para certos problemas.</p>
+
+      <p>Corporações (Volkswagen, Lufthansa, JPMorgan) estão testando quantum para otimização de logística, portfolio, scheduling. Alguns resultados preliminares são promissores.</p>
+
+      <blockquote class="example">
+        Caso Real (Volkswagen): Testa quantum para otimização de tráfego em Berlim. Quantum conseguiu encontrar rota 10% mais eficiente que algoritmo clássico (em problema pequeno). Escalabilidade é desafio.</example>
+
+      <h3>Quantum Machine Learning</h3>
+      <p>Pesquisa em usar quantum para ML. Alguns algoritmos têm aceleração teórica. Na prática, implementação é difícil. Expectativa: quantum ML será prático depois de quantum advantage ser provado em otimização.</p>
+
+      <h3>Timeline de Adopção</h3>
+      <p>(2026): Cloud access, educação, pesquisa básica. (2028-2030): Primeiras aplicações em produção (otimização pequena, simulação de moléculas pequenas). (2030-2040): Adoção corporativa mainstream. Quantum é tool padrão em laboratorios, data centers.</p>
+    `,
+    cards: [
+      {
+        q: 'Como alguém pode aprender/usar computação quântica em 2026?',
+        a: 'Acesso via cloud (IBM Quantum, AWS Braket, Google Quantum AI). Aprenda linguagens (Qiskit, Cirq). Comece com simuladores, depois máquinas reais. Gratuito para educação.'
+      }
+    ]
+  },
+  {
+    id: 'cq_t8',
+    name: 'Quantum vs Clássico: Complementários, Não Substitutivos',
+    dur: '16 min',
+    content: `
+      <h3>Mito: Quantum Vai Substituir Clássico</h3>
+      <p>Falso. Computador quantum não substitui clássico. São complementários. Computador clássico é bom em: (1) Problemas gerais (leitura, escrita, navegação). (2) Procesamento sequencial. (3) Lógica booleana. (4) Armazenamento. Quantum é bom em: (1) Problemas específicos (fatoração, simulação, otimização). (2) Exploração paralela. (3) Problemas quânticos.</p>
+
+      <h3>Arquitetura Híbrida</h3>
+      <p>Computador do futuro é híbrido. Computador clássico faz a maioria do trabalho. Para tarefas específicas (simular molécula, otimizar), offload para quantum. Resultado volta para clássico.</p>
+
+      <p>Exemplo: pharmtceutical company em 2035. Banco de dados de moléculas (armazenado em clássico). Pesquisador quer testar 1000 moléculas. Clássico separa tarefa em 10 batches (paralelização). Cada batch vai para quantum. Quantum simula 100 moléculas em paralelo (superposição). Resultados voltam. Clássico agrega.</p>
+
+      <h3>Quando Usar Quantum</h3>
+      <ul>
+        <li>Simulação de sistemas quânticos (moléculas, materiais)</li>
+        <li>Otimização com muitas variáveis (logística, finanças)</li>
+        <li>Busca em base de dados não-estruturada gigante</li>
+        <li>Fatoração (criptografia)</li>
+        <li>Certos tipos de machine learning</li>
+      </ul>
+
+      <h3>Quando Usar Clássico</h3>
+      <ul>
+        <li>Tudo mais</li>
+        <li>99% de computação moderna</li>
+      </ul>
+
+      <h3>Economia de Quantum</h3>
+      <p>Quantum é caro (máquina: R$10-100M, manutenção: R$1-10M/ano). Você só usa se economia é clara. ROI precisa ser positivo.</p>
+
+      <p>Exemplo: logística empresa economiza R$100M/ano com otimização quantum. Máquina custa R$100M. Payback: 1 ano. Worth it.</p>
+
+      <p>Contraexemplo: startup pequena quer usar quantum porque é cool. Não há problema específico. ROI é negativo. Não worth it.</p>
+
+      <h3>Quantum Cloud vs Próprio</h3>
+      <p><strong>Cloud:</strong> Custo baixo (R$1-100 por execução). Acesso a múltiplos hardwares. Escala. Ideal para pesquisa, startups. <strong>Próprio:</strong> Custo alto (R$10-100M setup). Controle total. Ideal para corporações grandes com problema crítico.</p>
+
+      <p>Maioria de adopção inicial (2026-2035) será cloud. Corporações gigantes podem ter próprio.</p>
+
+      <h3>Quantum + Classical Frameworks</h3>
+      <p>Ferramentas estão emergindo para fazer hybrid fácil. Exemplos: (1) <strong>Amazon Braket:</strong> Escreva código em Python, especifique onde rodar (clássico, quantum, simulador). Framework cuida de offload. (2) <strong>Microsoft Azure Quantum:</strong> Integra com Azure backend (clássico). (3) <strong>IBM Hybrid:</strong> Integra Qiskit com clássico.</p>
+
+      <h3>Futuro: Quantum-Classical Fusion</h3>
+      <p>Em 2040+, desenvolvedores não pensam mais em "quantum vs clássico". Pensam em problema. Framework automaticamente decide qual parte roda em quantum (aqui ela acelerada exponencialmente, aqui não). Developer escreve uma vez, framework otimiza.</p>
+
+      <p>Semelhante a como hoje você não se importa se GPU ou CPU faz computação (framework decide).</p>
+    `,
+    cards: [
+      {
+        q: 'Como quantum e computador clássico se relacionam?',
+        a: 'Complementários, não substitutivos. Clássico para maioria. Quantum para problemas específicos (simulação, otimização, fatoração). Arquitetura futura é híbrida.'
+      }
+    ]
+  },
+  {
+    id: 'cq_t9',
+    name: 'Futuro de Quantum: 2026-2050 e Visão Além',
+    dur: '20 min',
+    content: `
+      <h3>Roadmap Tecnológico até 2050</h3>
+      <h4>2026-2030: NISQ Era (Noisy Intermediate-Scale Quantum)</h4>
+      <p>Máquinas com 100-1000 qubits. Ruído e erro são altos. Algoritmos são aproximativos. Nenhuma correção de erros ainda (insuficiente qubits). Aplicações: demontrações, pesquisa, otimização pequena, simulação pequena.</p>
+
+      <h4>2030-2040: Correção de Erros</h4>
+      <p>Máquinas com 10.000-1 milhão de qubits. Correção de erros emerge. Computadores quantum de propósito geral são viáveis. Aplicações: medicamentos (simulação de moléculas), otimização em escala, machine learning, criptografia quebrada.</p>
+
+      <h4>2040-2050: Quantum Mainstream</h4>
+      <p>Máquinas com bilhões de qubits. Custo cai 10.000x (comparável a supercomputador clássico). Quantum é ferramenta padrão em labs, data centers, universidades. Impacto econômico é transformador (R$5-10 trilhões de valor criado).</p>
+
+      <h3>Impacto em Indústrias</h3>
+      <h4>Farmacêutica (2030s)</h4>
+      <p>Ciclo de desenvolvimento de medicamento reduz de 10 anos para 2-3 anos. Bilhões em custos são salvos. Novos medicamentos para doenças antes intratáveis são descobertos. Qualidade de vida humana melhora dramaticamente.</p>
+
+      <h4>Materiais (2030s-2040s)</h4>
+      <p>Supercondutores à temperatura ambiente são descobertos. Baterias 10x melhor são designadas. Painéis solares 5x mais eficientes. Impacto ambiental é imenso.</p>
+
+      <h4>Finanças (2030s)</h4>
+      <p>Otimização de portfolio é perfeita. Risco é minimizado. Criptografia é quebrada, nova criptografia emerge (quantum-resistant). Segurança de transações é transformada.</p>
+
+      <h4>Logística (2030s)</h4>
+      <p>Rotas são otimizadas globalmente. Eficiência de 20%+ é conseguida. Bilhões em custos são economizados. Emissões de carbono da logística caem 20%+.</p>
+
+      <h4>IA/ML (2040s)</h4>
+      <p>Treinamento de modelos IA em data gigante é possível. Inteligência artificial é transformada por quantum. Capacidades de IA vão além de imaginação hoje.</p>
+
+      <h3>Desafios Sociais e Éticos</h3>
+      <h4>Segurança Criptográfica</h4>
+      <p>Quando quantum quebrar RSA, privacidade antiga é violada. Governos precisam transição para quantum-resistant crypto antes que quantum seja poderoso. Competição entre países para quantum (similar a corrida nuclear) pode levar a regulação.</p>
+
+      <h4>Desigualdade</h4>
+      <p>Corporações ricas com quantum (farmacêuticas, finanças) ganham vantagem imensa. Países pobres sem quantum ficam para trás. Risco de aumentar desigualdade global. Requer política pública para democracização de acesso.</p>
+
+      <h4>Privacidade</h4>
+      <p>Quantum pode quebrar criptografia, mas também habilita criptografia quântica (inquebrável). Balanço é complexo.</p>
+
+      <h3>Convergência com Outras Tecnologias</h3>
+      <p>Quantum + IA: AI treina com quantum, obtém capacidades super-humanas. Quantum + IoT: IoT gera dados, quantum otimiza. Quantum + Blockchain: quantum quebra blockchain, novo blockchain quantum-resistant emerge. Convergência é explosiva.</p>
+
+      <h3>Seu Papel no Futuro de Quantum</h3>
+      <p>(1) <strong>Aprender:</strong> Python, Qiskit, Cirq. Entender superposição, emaranhamento. (2) <strong>Explorar:</strong> Acesse cloud quantum. Simule algoritmos. (3) <strong>Especialize:</strong> Se interesse em criptografia, otimização, química quântica. (4) <strong>Inovate:</strong> Novos algoritmos são descobertos. Você pode ser próximo.</p>
+
+      <h3>Visão Filosofal: Computação Quântica e Realidade</h3>
+      <p>Computação quântica explora propriedades fundamentais da realidade (superposição, emaranhamento). Usar quantum para computar é, em certo sentido, explorar a natureza de realidade para resolver problemas humanos.</p>
+
+      <p>Implicação: conforme quantum matura, compreensão humana de física também se aprofunda. Quantum computing é ferramenta e laboratório para explorar universo.</p>
+
+      <h3>Esperança Final</h3>
+      <p>Quantum computing é uma das tecnologias mais promissoras do século 21. Impacto será comparable a eletricidade, internet. Você está aqui, agora (2026), no início. Próximos 25 anos (2026-2051) serão tempo de exponencial crescimento e descoberta.</p>
+
+      <p>Educação em quantum é investimento no seu futuro. Demanda será enorme. Oportunidades serão infinitas. O futuro será feito por aqueles que entendem quantum.</p>
+
+      <p>Bem-vindo à revolução quântica.</p>
+    `,
+    cards: [
+      {
+        q: 'Qual será o impacto principal de computação quântica nos próximos 25 anos?',
+        a: 'Transformação de indústrias (farmacêutica, finanças, materiais, logística). Medicamentos descobertos mais rápido. Criptografia é quebrada e re-inventada. Valor econômico de R$5-10 trilhões criado.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
