@@ -2388,6 +2388,25 @@ var MA_COURSES = [
     color: '#2800d7',
     addedTs: 1776024529791,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/bg.jpg',
+    id: 'bg',
+    name: 'Biografia de Bill Gates',
+    desc: 'A história do criador da Microsoft e filantropo global.',
+    file: '22-bio-bill-gates.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'BG_HENRY_2026_MASTER',
+    ak: 'bg_auth',
+    storagePrefix: 'bg_',
+    icon: '👤',
+    color: '#00a4ef',
+    addedTs: 1776024534792,
+    active: true
   }
 ];
 var MA_CATS = [
