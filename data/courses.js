@@ -1932,6 +1932,25 @@ var MA_COURSES = [
     color: '#00704a',
     addedTs: 1776024421574,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ss.jpg',
+    id: 'ss',
+    name: 'Biografia de Silvio Santos',
+    desc: 'O comunicador que construiu um dos maiores grupos de mídia do Brasil.',
+    file: '50-bio-silvio-santos.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'SS_HENRY_2026_MASTER',
+    ak: 'ss_auth',
+    storagePrefix: 'ss_',
+    icon: '👤',
+    color: '#ffd600',
+    addedTs: 1776024425467,
+    active: true
   }
 ];
 var MA_CATS = [
