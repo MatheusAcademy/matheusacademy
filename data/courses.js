@@ -3424,6 +3424,25 @@ var MA_COURSES = [
     color: '#C62828',
     addedTs: 1776024815891,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/es.jpg',
+    id: 'es',
+    name: 'Escatologia Bíblica sem Complicação',
+    desc: 'Estudo claro e organizado sobre fim dos tempos, segunda vinda de Cristo, juízo, arrebatamento e esperança cristã.',
+    file: '07-escatologia-biblica.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'ES_HENRY_2026_MASTER',
+    ak: 'es_auth',
+    storagePrefix: 'es_',
+    icon: '✝️',
+    color: '#4527A0',
+    addedTs: 1776024820975,
+    active: true
   }
 ];
 var MA_CATS = [
