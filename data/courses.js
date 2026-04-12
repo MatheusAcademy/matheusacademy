@@ -2008,6 +2008,25 @@ var MA_COURSES = [
     color: '#003478',
     addedTs: 1776024437670,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ps.jpg',
+    id: 'ps',
+    name: 'Primeiros Socorros Essenciais',
+    desc: 'Ações imediatas em acidentes e atendimento inicial até ajuda profissional chegar.',
+    file: '20-primeiros-socorros.html',
+    cat: 'Segurança & Sobrevivência',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'PS_HENRY_2026_MASTER',
+    ak: 'ps_auth',
+    storagePrefix: 'ps_',
+    icon: '🔐',
+    color: '#e5383b',
+    addedTs: 1776024441585,
+    active: true
   }
 ];
 var MA_CATS = [
