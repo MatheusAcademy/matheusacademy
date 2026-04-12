@@ -2958,6 +2958,25 @@ var MA_COURSES = [
     color: '#311B92',
     addedTs: 1776024684985,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rqvb.jpg',
+    id: 'rqvb',
+    name: 'Preparação Completa para IELTS',
+    desc: 'Formação voltada para reading, listening, speaking e writing, com estratégia de prova e treino por habilidade.',
+    file: '19-preparacao-ielts.html',
+    cat: 'Inglês',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'PI_HENRY_2026_MASTER',
+    ak: 'pi_auth',
+    storagePrefix: 'pi_',
+    icon: '🇺🇸',
+    color: '#880E4F',
+    addedTs: 1776024690011,
+    active: true
   }
 ];
 var MA_CATS = [
