@@ -3346,6 +3346,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776024795084,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ts.jpg',
+    id: 'ts',
+    name: 'Teologia Sistemática Essencial',
+    desc: 'Reúne as grandes doutrinas cristãs em um só curso: Deus, pecado, salvação, igreja, Espírito Santo, Cristo e eternidade.',
+    file: '08-teologia-sistematica.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'TS_HENRY_2026_MASTER',
+    ak: 'ts_auth',
+    storagePrefix: 'ts_',
+    icon: '✝️',
+    color: '#1565C0',
+    addedTs: 1776024800785,
+    active: true
   }
 ];
 var MA_CATS = [
