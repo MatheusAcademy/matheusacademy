@@ -1856,6 +1856,25 @@ var MA_COURSES = [
     color: '#820ad1',
     addedTs: 1776024405399,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ja.jpg',
+    id: 'ja',
+    name: 'Biografia de João Apolinário',
+    desc: 'O fundador da Polishop e sua habilidade de transformar produtos em desejo.',
+    file: '51-bio-joao-apolinario.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'JA_HENRY_2026_MASTER',
+    ak: 'ja_auth',
+    storagePrefix: 'ja_',
+    icon: '👤',
+    color: '#ff5722',
+    addedTs: 1776024409548,
+    active: true
   }
 ];
 var MA_CATS = [
