@@ -3170,6 +3170,25 @@ var MA_COURSES = [
     color: '#00796B',
     addedTs: 1776024745089,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/na.jpg',
+    id: 'na',
+    name: 'Nutrição e Alimentação Inteligente',
+    desc: 'Princípios de alimentação equilibrada e estratégias práticas para o dia a dia.',
+    file: '06-nutricao-alimentacao.html',
+    cat: 'Saúde & Ciência',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'NA_HENRY_2026_MASTER',
+    ak: 'na_auth',
+    storagePrefix: 'na_',
+    icon: '🧬',
+    color: '#e76f51',
+    addedTs: 1776024751130,
+    active: true
   }
 ];
 var MA_CATS = [
