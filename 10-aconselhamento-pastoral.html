@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aconselhamento Pastoral — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'AP',
+  name: 'Aconselhamento Pastoral com Base Bíblica',
+  shortName: 'Aconselhamento',
+  cat: 'Bíblia e Teologia',
+  desc: 'Curso voltado para cuidado espiritual, escuta, orientação e aconselhamento à luz da Bíblia em situações reais.',
+  salt: 'AP_HENRY_2026_MASTER',
+  ak: 'ap_auth',
+  courseKey: 'ap',
+  prefix: 'ap_',
+  color: '#00695C',
+  glow: 'rgba(0,105,92,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'ap_mod1',
+    name: 'Fundamentos do Cuidado Pastoral',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Resumo do Módulo 1',
+      points: [
+        'Aconselhamento pastoral é ministério de cuidado espiritual baseado em verdades bíblicas e compaixão de Cristo',
+        'O conselheiro pastoral reflete o caráter de Cristo — amor, verdade, sabedoria e poder do Espírito Santo',
+        'Escuta ativa e empatia são ferramentas essenciais — permitir que as pessoas sintam-se ouvidas e compreendidas',
+        'A Bíblia é autoridade suprema, mas sabedoria pastoral reconhece complexidade de situações humanas'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual é o objetivo primário do aconselhamento pastoral cristão?',
+        opts: [
+          'Resolver todos os problemas práticos para a pessoa',
+          'Facilitar transformação espiritual pela graça de Deus, oferta bíblica e cuidado compassivo',
+          'Oferecer apenas conselho prático secular',
+          'Condenar pessoas pelos seus pecados'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Por que a escuta ativa é tão importante em aconselhamento pastoral?',
+        opts: [
+          'Porque permite ao conselheiro fazer menos trabalho',
+          'Porque permite ao aconselhado sentir-se verdadeiramente ouvido e compreendido, criando segurança para abertura',
+          'Porque não importa realmente',
+          'Porque prova que você é mais sábio'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Qual é a relação apropriada entre aconselhamento bíblico e busca de ajuda profissional (terapia, psicologia)?',
+        opts: [
+          'São completamente opostos; você deve escolher um',
+          'Complementares — bíblico fornece verdade espiritual; profissional pode oferecer conhecimento útil sobre mente',
+          'Profissional é superior ao bíblico',
+          'Nenhum tem valor'
+        ],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'ap_mod2',
+    name: 'Questões Práticas: Luto, Tentação, Relacionamentos',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Resumo do Módulo 2',
+      points: [
+        'Luto é processo legítimo de morte — o conselheiro acompanha a pessoa através das etapas com compaixão',
+        'Tentação é universal, mas Cristo oferece poder para vitória — o conselheiro oferece esperança e estratégia',
+        'Conflitos relacionais são oportunidade para crescimento — o conselheiro facilita reconciliação e perdão',
+        'Em cada situação, a Palavra de Deus oferece princípios que aplicam ao contexto específico'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como um conselheiro pastoral deve responder a alguém em luto?',
+        opts: [
+          'Dizer-lhe para "parar de chorar e confiar em Deus"',
+          'Acompanhar compassivamente, reconhecer legitimidade do luto, oferecer esperança baseada em ressurreição',
+          'Ignorar o luto e falar sobre outros assuntos',
+          'Prometer que a dor desaparecerá imediatamente'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Qual é a resposta cristã apropriada à tentação ao pecado?',
+        opts: [
+          'Ceder porque é inevitável',
+          'Reconhecer que Cristo oferece poder para recusar, buscar ajuda do Espírito Santo e conhecer escape de Deus',
+          'Envergonha-se em silêncio',
+          'Ignorar completamente'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Por que o perdão é central para aconselhamento pastoral sobre relacionamentos prejudicados?',
+        opts: [
+          'Porque permite à pessoa prejudicada continuar sendo prejudicada',
+          'Porque liberta tanto o que perdoa quanto o perdoado; sem ele, amargura envenena a alma',
+          'Porque é sinal de fraqueza',
+          'Porque elimina necessidade de justiça'
+        ],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'ap_mod3',
+    name: 'Situações de Crise e Recursos Especializados',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Resumo do Módulo 3',
+      points: [
+        'Crises como suicídio, abuso, vícios exigem resposta imediata, recursos especializados e grande compaixão',
+        'O conselheiro pastoral reconhece seus limites — quando encaminhar para profissionais qualificados',
+        'Autopreservação do conselheiro é importante — lidar com luto alheio requer auto-cuidado próprio',
+        'A Igreja é comunidade de cura — o aconselhamento acontece melhor dentro de contexto comunitário apoiador'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como um conselheiro pastoral deve responder a alguém expressando pensamentos suicidas?',
+        opts: [
+          'Ignorar ou minimizar a declaração',
+          'Levar seriamente, questionar segurança, encaminhar para profissional de saúde mental imediatamente',
+          'Argumentar que suicídio é pecado e portanto não deve ser considerado',
+          'Deixar que resolva sozinho'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Qual é a importância de um conselheiro pastoral reconhecer seus próprios limites profissionais?',
+        opts: [
+          'Não é importante; deve resolver todos os problemas',
+          'Importante para não prejudicar aconselhados; encaminhar para ajuda profissional quando apropriado',
+          'Mostra fraqueza',
+          'Não importa'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Por que a comunidade de Igreja é essencial para aconselhamento pastoral eficaz?',
+        opts: [
+          'Porque o pastor não precisa fazer nada',
+          'Porque cura é processo comunitário — amizade, oração, apoio de Igreja sustentam aconselhado',
+          'Porque Igreja é irrelevante',
+          'Porque cada pessoa deve resolver problemas completamente sozinha'
+        ],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'O Chamado do Conselheiro Pastor: Qualificações e Atitude',
+    dur: '29 min',
+    content: `<h3>Aconselhamento Pastoral Como Ministério Cristão</h3>
+<p>Aconselhamento pastoral é ministério de cuidado — resposta amorosa àqueles que sofrem, lutam, ou buscam orientação. Não é terapia profissional, embora possa complementar terapia. É cuidado pastoral — espiritual, relacional, fundamentado na verdade de Deus. Tiago 5:19-20 oferece perspectiva: "Meus irmãos, se alguém dentre vós se extraviou da verdade, e alguém o converter, saiba que aquele que converter o pecador do erro do seu caminho, salvará da morte uma alma, e cobrirá uma multidão de pecados."</p>
+<p>O aconselhador pastoral é aquele que ajuda outro a retornar à verdade de Deus quando se extraviou, a encontrar esperança quando desanimado, a descobrir direção quando confuso, a experimentar graça quando condenado. Isto é obra nobre e sagrada. Está cuidando das ovelhas de Cristo — ajudando-as a conhecer Seu pastor, experienciar Seu cuidado, crescer em fé. Qualquer cristão que recebe este chamado deve levá-lo com seriedade.</p>
+
+<h3>Qualificações Espirituais: Caráter Moldado Por Cristo</h3>
+<p>1 Timóteo 3 oferece qualificações para liderança espiritual. O mesmo que aplica a pastores aplica a conselheiros: "É necessário que o bispo seja irrepreensível, marido de uma só mulher, sóbrio, prudente, bem-comportado, hospitaleiro, apto para ensinar; não dado ao vinho, não briguento, não ganancioso, mas moderado, não contencioso, não amigo de dinheiro... que governe bem a sua própria casa... porque, se não sabe governar a sua própria casa, como cuidará da igreja de Deus?"</p>
+<p>Isto não significa perfeição. Significa que o conselheiro está buscando viver uma vida cristã genuína — crescente em caráter, diminuindo em iniquidade. Se você aconselha alguém sobre fidelidade no casamento, você deve estar buscando fidelidade. Se aconselha sobre honestidade, você deve praticar honestidade. Se aconselha sobre perdão, você deve estar perdoando. O conselheiro é espelho da vida de Cristo que procura ajudar outros a refletir também.</p>
+
+<h3>Sabedoria e Conhecimento: Equipamento do Conselheiro</h3>
+<p>O aconselhador pastoral não precisa ter diploma de psicologia (embora conhecimento útil é bem-vindo). Precisa de sabedoria — compreensão de como Deus trabalha, como pessoas funcionam, como aplicar verdade bíblica a situações específicas. Tiago 1:5 oferece promessa: "Se, porém, algum de vós tem falta de sabedoria, peça-a a Deus, que a todos dá liberalmente, e não o censura; e ser-lhe-á dada."</p>
+<p>Além de sabedoria, aconselhador precisa de conhecimento — conhecimento da Bíblia, entendimento básico de psicologia humana, reconhecimento de patologias que exigem ajuda profissional, conhecimento de recursos da comunidade. 2 Timóteo 2:15 exorta: "Procure apresentar-se a Deus aprovado, como obreiro que não tem do que se envergonhar e que maneja corretamente a palavra da verdade." Isto envolve estudo contínuo da Bíblia e compreensão de como aplicá-la.</p>
+
+<h3>Compaixão e Humildade: O Coração do Conselheiro</h3>
+<p>A qualificação mais importante é coração — amor genuíno pelas pessoas, compaixão por seus sofrimentos, humildade que reconhece suas próprias fraquezas e limitações. Gálatas 6:1-2 instrui: "Irmãos, se um homem cair em alguma falta, vós, que sois espirituais, restaurai-o com espírito de mansidão; considerando a ti mesmo, para que não sejas também tentado. Levai as cargas uns dos outros, e assim cumprireis a lei de Cristo."</p>
+<p>"Espírito de mansidão" — não superioridade ou condenação. Reconhecimento de que "considerando a ti mesmo, para que não sejas também tentado" — você não está acima da pessoa em dificuldade. Você é fraco também. Mas está oferecendo Cristo. 2 Coríntios 1:3-4 expressa isto: "Bendito seja o Deus e Pai de nosso Senhor Jesus Cristo, o Pai das misericórdias e Deus de toda a consolação, que nos consola em toda a nossa tribulação, para que também possamos consolar aos que estão em alguma tribulação, pelo consolo com que nós mesmos somos consolados de Deus."</p>
+
+<h3>A Atitude do Conselheiro: Esperança e Poder</h3>
+<p>Um conselheiro pastoral oferece algo que mundo não pode — esperança fundamentada em Jesus Cristo. Mundo oferece falsa esperança — "as coisas vão melhorar se você tiver bastante dinheiro" ou "a vida é pura sorte." Cristão oferece esperança real — "Deus é soberano, Cristo redimiu, o Espírito capacita, há eternidade de esperança."</p>
+<p>Além de esperança, oferece poder. Não poder humano (persuasão, influência) que pode fracassar. Poder divino. 1 Coríntios 2:4-5 explica: "E a minha palavra, e a minha pregação, não foi com palavras persuasivas de sabedoria humana, mas com demonstração do Espírito e de poder; para que a vossa fé não se apoiasse em sabedoria de homens, mas no poder de Deus." O conselheiro cristão canaliza poder de Deus através de oração, Bíblia, presença do Espírito Santo.</p>
+
+<h3>Dependência de Deus: Reconhecendo Que Você Não Está Sozinho</h3>
+<p>Uma das maiores armadilhas para conselheiro é pensar que depende de sua própria sabedoria ou força. Isto é arrogância e será exposto. O conselheiro sábio é aquele que se apoia em Deus continuamente. Antes de sessão de aconselhamento, ora: "Senhor, dê-me sabedoria. Revele-me o que precisa ser dito. Trabalhe através de mim." Durante aconselhamento, continua atento ao Espírito Santo — para direcionar conversação, para oferecer palavra apropriada, para trazer convicção ou consolo.</p>
+<p>Isto significa que aconselhador não é curador. Apenas Deus cura. Aconselhador é instrumento — facilitador que ajuda outro a encontrar Deus, sua verdade, seu poder. Isto tira peso tremendo. Você não é responsável por transformar a pessoa. Deus é. Você está apenas facilitando o processo. Isto oferece liberdade para ser humano — para não ter todas as respostas, para admitir limitações, para confiar que Deus fará o trabalho que você não consegue fazer.</p>`,
+    cards: [
+      {
+        q: 'Qual é a diferença mais importante entre aconselhamento pastoral e terapia profissional, e qual é a base do aconselhador pastoral?',
+        a: 'Aconselhamento pastoral é ministério espiritual baseado em verdade bíblica, fundamentado em caráter cristão de conselheiro, e depende de poder do Espírito Santo. Não é terapia profissional, mas cuidado compassivo que aponta para Cristo como fonte de cura e transformação.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Escuta Ativa e Empatia: Ferramentas Essenciais',
+    dur: '27 min',
+    content: `<h3>A Importância de Realmente Ouvir</h3>
+<p>Em um mundo barulhento, ser ouvido é raro e precioso. Muitas pessoas nunca experienciam alguém que genuinamente os ouve — não para responder, não para consertar, não para julgar — mas para compreender. Isto é dom poderoso que um conselheiro pode oferecer. Provérbios 18:15 afirma: "O coração do prudente adquire conhecimento, e o ouvido dos sábios busca conhecimento." Sabedoria começa com escuta.</p>
+<p>Muitas vezes, as pessoas não precisam de sermão. Precisam de alguém que as ouça. Existem múltiplos níveis de escuta. Escuta superficial — você ouve palavras, mas sua mente está em outro lugar. Escuta ativa — você está completamente presente, engajado, captando não apenas palavras mas emoção, significado, necessidade por trás delas. O conselheiro oferece escuta ativa.</p>
+
+<h3>Técnicas de Escuta Ativa</h3>
+<p>Escuta ativa é habilidade que pode ser desenvolvida. Primeiro, mantenha contato visual. Isto comunica "você tem minha atenção completa." Não está olhando para relógio, telefone, outro lugar. Está aqui, agora, para a pessoa. Segundo, minimize distrações. Coloque telefone em silêncio. Feche a porta. Sente em postura aberta (não braços cruzados). Isto comunica receptividade.</p>
+<p>Terceiro, use linguagem corporal congruente. Se sua boca diz "eu me importo" mas seu corpo está tenso ou distante, há incongruência que a pessoa percebe. Seu corpo comunica verdade — se você está genuinamente interessado, seu corpo refletirá isto. Quarto, use reflexões verbais: "O que ouço você dizer é..." ou "Se entendi corretamente..." Isto verifica se você realmente compreendeu e oferece à pessoa oportunidade de clarificar.</p>
+
+<h3>Perguntas Abertas vs. Fechadas: Permitindo Exploração</h3>
+<p>Perguntas fechadas têm resposta sim/não — "Você está feliz?" Perguntas abertas convidam exploração — "Como você está se sentindo sobre isso?" A primeira encerra conversa. A segunda a abre. O conselheiro usa perguntas abertas para permitir que a pessoa explore seus sentimentos e pensamentos profundos. "Conte-me mais sobre..." ou "O que você sentia quando aquilo aconteceu?" Estas perguntas convidam à elaboração.</p>
+<p>É também importante saber quando ficar quieto. Há poder no silêncio. Quando você faz pergunta, espere resposta — mesmo que leve tempo. Não preencha silêncio incômodo com sua própria fala. Às vezes pessoa precisa de tempo para processar emoções profundas. Seu silêncio calmante comunica "não tenho pressa; seu processo é importante."</p>
+
+<h3>Empatia: Caminhando nos Sapatos do Outro</h3>
+<p>Empatia é capacidade de entender e compartilhar emoção de outra pessoa. Não é simpatia (sentir pena de alguém). É empatia — "Eu entendo o que você está sentindo." Isto é diferente de "Eu passei por algo similar" — porque cada pessoa é única e cada situação é única. É mais "seu sofrimento importa, e eu estou aqui com você nisto."</p>
+<p>Romanos 12:15 oferece instrução: "Alegra-vos com os que se alegram; e chorai com os que choram." É tão simples e tão poderoso. Você chora com quem chora — não porque você tem todas as respostas ou pode resolver seu problema, mas porque seu sofrimento é seu sofrimento também, em torno deles. Isto é empatia. Isto é presença compassiva. Muitos conselhos serão esquecidos, mas empatia — sensação de ser compreendido e acompanhado — é lembrada.</p>
+
+<h3>Evitando Armadilhas: Não Minimizar ou Apressar</h3>
+<p>Uma armadilha comum é minimizar a dor de alguém — "Oh, não é tão ruim" ou "Outros têm problemas piores." Isto comunica que sua dor não importa, ou que você não entende. Outra é apressar a pessoa — querer "resolver" rápido para que a conversa termine. Isto comunica impacência e comunica que você realmente não quer estar ali. Verdade é que resolver problemas profundos leva tempo. Sua disposição de estar presente no processo, sem pressa para concluir, é ministério em si mesma.</p>
+<p>Outra armadilha é dar conselho muito cedo. Multas vezes conselheiro salta para "o que você deveria fazer" antes da pessoa se sentir completamente compreendida. Isto pode parecer abrupto ou não empático. Geralmente é melhor primeiro permitir completa expressão e exploração. Somente depois que se sente verdadeiramente ouvido a pessoa está pronta para orientação ou conselho.</p>
+
+<h3>Integrando Escuta Com Fé e Ação</h3>
+<p>Escuta ativa e empatia não são apenas sobre "sinto muito." São ferramentas para criar ambiente onde cura divina pode ocorrer. Quando alguém se sente completamente compreendido, seus muros de defesa abaixam. Eles se tornam mais abertos a receber verdade, mais receptivos a perspectiva de fé. É então que conselheiro pode oferecer visão bíblica, esperança em Cristo, direção baseada em Palavra de Deus.</p>
+<p>Portanto escuta não é fim em si mesma. É meio — caminho para levar alguém para mais perto de Cristo, sua verdade, seu poder. Você começa com escuta. Move para compreensão empática. Continua com verdade bíblica e fé. Encerra com esperança e, frequentemente, ação prática — como pode a pessoa mover para frente em cura e crescimento espiritual? Escuta abre porta. Cristo é Aquele que entra.</p>`,
+    cards: [
+      {
+        q: 'Como a escuta ativa e empatia trabalham juntas como ferramentas fundamentais de aconselhamento, e qual é o resultado quando alguém se sente verdadeiramente ouvido?',
+        a: 'Escuta ativa comunica atenção completa e compreensão; empatia comunica "eu entendo seu sentimento." Quando alguém se sente verdadeiramente ouvido, seus muros de defesa abaixam, se tornam abertos a verdade, e o conselheiro pode então oferecer perspectiva bíblica e esperança em Cristo.'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Bíblia no Aconselhamento: Aplicação Sábia de Verdade',
+    dur: '28 min',
+    content: `<h3>A Bíblia Como Autoridade, Não Como Arma</h3>
+<p>Para cristão, a Bíblia é autoridade suprema — verdade de Deus inspirada e confiável. Mas há forma errada de usar Bíblia em aconselhamento — como arma para bater em alguém com seus pecados. "A Bíblia diz que você é pecador" — verdade, sim. Mas dito com dureza, comunica condenação, não compaixão. Este não é o modo de Cristo. Jesus veio "não para condenar o mundo, mas para que o mundo seja salvo por ele" (João 3:17).</p>
+<p>Aconselhador sábio usa Bíblia como instrumento de cura, não punição. A Bíblia oferece esperança, direção, conforto, verdade. Gera fé, não desespero. 2 Timóteo 3:16-17 afirma: "Toda a Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção e para o treinamento na justiça, para que o homem de Deus seja apto e bem equipado para toda boa obra." Sim, inclui repreensão e correção. Mas serve para equipar para bem, não para danificar.</p>
+
+<h3>Escolhendo o Texto Apropriado Para a Situação</h3>
+<p>Alguém em luto não precisa ouvir sermão sobre justiça de Deus em permitir morte. Precisa de conforto — "Bem-aventurados os que choram, porque eles serão consolados" (Mateus 5:4). Alguém lutando com culpa não precisa ouvir lista de condenações. Precisa de graça — "Se confessar nossos pecados, ele é fiel e justo para nos perdoar os pecados e nos purificar de toda injustiça" (1 João 1:9). Alguém enfrentando medo não precisa de discurso sobre medo como pecado. Precisa de segurança — "Porque Deus não nos deu espírito de medo, mas de poder, de amor, e de disciplina" (2 Timóteo 1:7).</p>
+<p>Isto requer conhecimento da Bíblia e discernimento pastoral. Qual verdade apropriada para esta pessoa neste momento? A arte está em conhecer onde pessoa está emocionalmente e espiritualmente, então oferecer texto que fala exatamente à necessidade deles. Uma passagem sobre graça quando alguém está condenado. Uma passagem sobre paciência quando alguém está impaciente. Uma passagem sobre esperança quando alguém está desanimado.</p>
+
+<h3>Interpretação Correta: Evitando Prova de Escritura</h3>
+<p>Uma armadilha é usar Bíblia para "prova" o ponto do conselheiro — prova de escritura. Isto é quando você seleciona versículos isolados para apoiar sua conclusão pré-determinada, ignorando contexto maior. Por exemplo, citando "Tira tua vida" (Mateus 10:39) para significar que você deveria morrer literalmente, ignorando o contexto de sacrifício espiritual. Ou citando "Ele é nosso Senhor" para significar que devemos obediência cega, ignorando chamado à justiça pessoal e responsabilidade moral.</p>
+<p>Interpretação apropriada leva em conta contexto — contexto histórico, contexto literário, contexto de passagem. Lê versículo em relação a todo livro, toda Bíblia. Reconhece que diferentes gêneros (história, poesia, lei, evangelho) comunicam verdade diferentemente. Um conselheiro sábio estuda Bíblia diligentemente não apenas para ter versículos memorizado, mas para compreender verdade profunda que eles ensinam.</p>
+
+<h3>Ligando Verdade Bíblica à Situação Presente</h3>
+<p>O poder da Bíblia em aconselhamento está em sua aplicação à vida presente. Não é suficiente dizer "A Bíblia diz...". Você deve mostrar como isto fala à situação específica da pessoa. Alguém lutando com ira — "Efésios 4:26 diz 'Irai-vos, porém não pequeis.' Isto não nega a ira, mas a direciona para reclamação justa, não para pecado. Como você pode canalizar sua ira para bem?"</p>
+<p>Alguém questionando propósito — "Jeremias 29:11 afirma 'Eu bem sei os pensamentos que tenho a vosso respeito, diz o Senhor, pensamentos de paz, e não de mal, para vos dar um fim esperado.' Isto não significa que compreenderá imediatamente. Significa que Deus tem plano, mesmo se você está confuso agora. Como você pode confiar nele no escuro?"</p>
+
+<h3>Equilibrando Bíblia Com Sabedoria Humana</h3>
+<p>A Bíblia é autoridade suprema para crente. Mas Deus também deu sabedoria através de estudo de mente humana, psicologia, neurologia. Um conselheiro cristão não é obrigado a ignorar conhecimento útil porque não está escrito em Bíblia. Provérbios 22:3 afirma "O prudente vê o mal e se refugia; mas os simples passam adiante e são castigados." Prudência — sabedoria prática — é valor cristão.</p>
+<p>Se alguém está deprimido, verdade bíblica sobre conforto de Deus é essencial. Mas compreensão de como depressão funciona no cérebro, qual exercício e sono adequados podem ajudar, quando encaminhar para profissional de saúde mental — isto não é anti-bíblico. É prudência. É reconhecer que Deus trabalha através de múltiplos meios. Um conselheiro equilibrado oferece verdade bíblica, mas também reconhece quando ajuda profissional é apropriada.</p>
+
+<h3>A Bíblia Ofrecendo Esperança Final</h3>
+<p>O que distingue aconselhamento cristão é que oferece esperança que mundo não pode oferecer — esperança baseada em ressurreição de Cristo, promessas de Deus, e eternidade. Quando tudo parece sem esperança, conselheiro cristão pode dizer com sinceridade "Mas há Aquele que é maior que sua situação. Há Aquele que venceu morte, e em Ele há vitória final."</p>
+<p>Isto não é minimização de dor presente. É contextualização — sua dor é real e importante, mas não é final. Deus não o abandonou. Cristo morreu e ressuscitou pela você. O Espírito Santo continua operando. E há eternidade onde toda lágrima será enxugada. Este é poder da Bíblia em aconselhamento — não escapismo, mas esperança fundamentada em verdade eterna de Deus.</p>`,
+    cards: [
+      {
+        q: 'Como um conselheiro pastoral deve usar a Bíblia em aconselhamento de forma apropriada — como instrumento de cura em vez de arma de condenação?',
+        a: 'Escolha texto apropriado para situação específica — conforto para luto, graça para culpa, esperança para desânimo. Interprete corretamente com contexto. Aplique à vida presente da pessoa. Use para apontar para Cristo e Sua esperança, não para condenar. Equilibre com sabedoria prática apropriada.'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Aconselhamento em Luto: Caminhando Com os Que Sofrem',
+    dur: '30 min',
+    content: `<h3>A Realidade e Legitimidade do Luto</h3>
+<p>Morte é inimigo final — consequência do pecado que entrou no mundo. Romanos 6:23 afirma "o salário do pecado é a morte." Ninguém gosta de morte. Todos a temem. Quando vem — morte de ente querido, morte iminente para si mesmo — deixa ferida profunda. Luto é resposta apropriada. Não é falta de fé. Não é desconfiança em Deus. É resposta humana apropriada à perda.</p>
+<p>Jesus mesmo chorou diante da morte de amigo (João 11:35 — "Jesus chorou"). Ele sabia que ressuscitaria Lázaro em minutos. Ainda chorou. Por quê? Porque a morte é trágica. Porque o sofrimento dos que amam é real. Porque a separação duele mesmo que temporária. Se Jesus, Filho de Deus, chorou — então é apropriado que os conselhados chorem também. Conselheiro reconhece isto e autoriza o luto.</p>
+
+<h3>As Etapas do Luto: Entendendo o Processo</h3>
+<p>Elisabeth Kübler-Ross descreveu cinco etapas de luto: negação (não pode ser verdade), ira (por quê isso aconteceu comigo?), barganha (se apenas pudesse mudar o que aconteceu), depressão (profunda tristeza), aceitação (finalmente reconhecer realidade). Não é processo linear — alguém pode passar por múltiplas etapas no mesmo dia. Pode retornar a etapa anterior. Diferentes pessoas experienciam em diferentes ordens ou intensidades. Mas oferece moldura útil para compreender o processo.</p>
+<p>O conselheiro reconhece que pessoa em luto pode não estar racional — ira de pessoa é frequentemente raiva em Deus, não raiva na pessoa falecida. Pessoa pode negar realidade como mecanismo de proteção. Pessoa pode fazer acordos estranhos ("Se apenas eu tivesse..."). Isto tudo é normal. Conselheiro não julga. Acompanha compassivamente através do processo.</p>
+
+<h3>Terapia de Validação: "Seu Luto É Apropriado"</h3>
+<p>Uma coisa mais poderosa que conselheiro pode dizer a alguém em luto é "sua dor é apropriada." Não "não se preocupe, ele está em melhor lugar" (embora pode ser verdade). Não "você deveria estar melhor agora" (embora pessoa possa se sentir isto). Mas "você amou essa pessoa, e sua perda é real. Seu luto é apropriado. Está tudo bem chorar."</p>
+<p>Isto é validação. Diz que os sentimentos deles importam. Diz que você "obtém" por quê estão sofrendo. Diz que eles não estão loucos por estar tristezas. Isto abre espaço seguro para processamento genuíno. Muitas pessoas nunca recebem permissão de chorar — foram ensinadas "homens não choram" ou "ser forte significa não mostrar emoção." Conselheiro oferece permissão — permissão para sentir, para chorar, para processar.</p>
+
+<h3>Respondendo às Questões Difíceis: "Por Quê Isso Aconteceu?"</h3>
+<p>Alguém em luto frequentemente pergunta "Por quê?" Por quê Deus permitiu isto? Por quê agora? Por quê essa pessoa boa? Não há respostas fáceis a estas questões. É melhor ser honesto — "Não sei. Não há resposta perfeita para sua pergunta." Isto é melhor que oferecer clichê ("É parte do plano de Deus" — pode fazer mais dano). Ou pisei demais — "Deus estava precisando de anjo" (implica que Deus tirou pessoa da vida daqueles que amam).</p>
+<p>Ao invés, você pode oferecer o que você sabe: Deus não causou a morte (embora permitiu-a). Deus sofre com você (Cristo chorou, morre conosco na cruz). Deus tem poder até mesmo sobre morte (ressurreição oferece esperança). Deus será com você através do processo (promessa contínua de presença divina). E há eternidade onde encontrará novamente (ressurreição oferece reunião futura). Isto oferece esperança sem negar a dor presente.</p>
+
+<h3>Práticas Pastorais: Além da Conversa</h3>
+<p>Aconselhamento em luto envolve mais que conversação. Às vezes o que pessoa precisa é presença — você senta quieto com eles. Às vezes é refeição — você traz comida porque pessoa não tem força para cozinhar. Às vezes é oração — você ora pelos falecidos e pela família enlutada. Às vezes é ajuda prática — você ajuda com planejamento do serviço fúnebre, chamando amigos, lidando com questões legais.</p>
+<p>Além disto, luto não termina com enterro. Algumas das estações mais difíceis vêm depois — o "segundo luto" quando realidade bate que não voltará. Conselheiro mantém contato — confirma semanas depois "Como você está fazendo?" Oferece suporte contínuo. Reconhece datas — aniversário da morte, dia da memória. Isto comunica "seu luto importa, e eu estou aqui para você através disso."</p>
+
+<h3>Esperança Escatológica: A Morte Não É Final</h3>
+<p>Finalmente, esperança cristã é que morte não é separação final. 1 Tessalonicenses 4:13-14 oferece consolo: "Não queremos, porém, irmãos, deixá-los sem entender acerca dos que dormem, para que não vos contristes como os que não têm esperança. Porque se cremos que Jesus morreu e ressuscitou, assim também aqueles que dormiram em Jesus Deus os tornará a trazer com ele." Ressurreição é esperança — você será reunido com aqueles em Cristo.</p>
+<p>Isto é ofertado não como escapismo de dor presente, mas como contexto para cura. Sua separação agora é temporária. Sua dor agora é real, mas não eterna. Deus está vindo para restaurar todas as coisas — para trazer os mortos a vida, para eliminar a morte, para trazer alegria eterna. Quando oferece esta esperança — não como substituto de empatia, mas como destino final — oferece esperança que pode sustentar pessoa através do luto presente.</p>`,
+    cards: [
+      {
+        q: 'Como um conselheiro pastoral deve responder apropriadamente ao luto de alguém, equilibrando validação da dor presente com esperança cristã futura?',
+        a: 'Validar que luto é resposta apropriada à perda. Acompanhar compassivamente através das etapas de luto. Oferecer presença, apoio prático, e permissão para sentimentos. Reconhecer limitação de respostas racionais a "por quê". Oferecer esperança de ressurreição e reunião futura, não como escapismo, mas como contexto eterno para dor temporal.'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'Tentação, Pecado e Libertação: Caminhos Para Vitória',
+    dur: '29 min',
+    content: `<h3>A Universalidade da Tentação: Você Não Está Sozinho</h3>
+<p>Uma das grandes vergonhas que muitos cristãos carregam é tentação — e especialmente tentação persistente a pecados específicos. Alguém é tentado à luxúria, outro à ira, outro à desonestidade. Muitos pensam "Eu sou único em isto. Ninguém mais luta assim." Isto é mentira. A verdade? Hebreus 4:15 afirma que Jesus "foi em tudo tentado como nós, porém sem pecado." Se até Jesus foi tentado, tentação é experiência universal da humanidade.</p>
+<p>Além disso, você não está sozinho em sua tentação específica. 1 Coríntios 10:13 oferece verdade reconfortante: "Nenhuma tentação vos sobreveio, senão humana; mas fiel é Deus, que não vos deixará tentar acima do que podeis, antes com a tentação fará também a saída, para que a possais suportar." Sua tentação é comum. Outras pessoas lutam com isto. E Deus oferece escape — força para recusar.</p>
+
+<h3>Diferenciando Tentação de Pecado</h3>
+<p>Uma confusão frequente é entre tentação e pecado. Tentação é convite — "você deveria fazer isto." Pecado é consentimento — você escolhe fazer isto. Não é pecado ser tentado. É pecado ceder à tentação. James 1:14-15 esclarece: "Mas cada um é tentado, quando é atraído e engodado pela sua própria concupiscência. Depois, havendo a concupiscência concebido, dá à luz o pecado; e o pecado, sendo consumado, gera a morte."</p>
+<p>Portanto, tentação é processo mental — o desejo surgir, a tentação oferecer satisfação dele. Mas você pode recusar em qualquer ponto do processo. Conselheiro ajuda pessoa a compreender isto — que tentação não é fracasso. É uma luta. E há poder em cada luta. Cada vez que você recusa tentação, você está ficando mais forte, construindo novo padrão neural, desenvolvendo caráter resistente.</p>
+
+<h3>Entendendo Origem da Tentação: Satanás, Mundo e Carne</h3>
+<p>De onde vem tentação? Três fontes: (1) Satanás — o acusador ativo buscando derrotar você (1 Pedro 5:8: "O diabo, vosso adversário, anda em derredor, como um leão que ruge, procurando a quem possa devorar"). (2) O mundo — sistemas de valores anti-Deus que promovem lascívia, avareza, orgulho (1 João 2:16). (3) A carne — sua própria natureza pecaminosa que quer satisfação imediata (Gálatas 5:17: "Porque a carne tem desejos contrários ao Espírito").</p>
+<p>Compreender isto ajuda a pessoa a não ser surpreendida ou condenada. Está sendo atacado — por inimigo poderoso, por sistemas culturais, por sua própria natureza. Mas isto não significa que é vítima impotente. Significa que a luta é real, mas você não está desarmado. Tem poder de Deus. Tem Palavra de Deus. Tem Espírito Santo. Tem comunidade de crentes. Tem recursos para vencer.</p>
+
+<h3>Estratégias Práticas Para Evitar Queda</h3>
+<p>Conselheiro ajuda pessoa a desenvolver estratégia específica contra tentação deles. Se é tentação à luxúria — evite situações que a estimulam (certos websites, programas, companhias). Se é tentação à ira — identifique gatilhos e desenvolha resposta diferente (ficar quieto, sair para andar, orar). Se é tentação à ganância — restrinja acesso a dinheiro, estabeleça plano de generosidade voluntária.</p>
+<p>Além disto, Conselheiro encoraja vida disciplinada — oração regular, leitura da Bíblia, adoração, comunidade. Estes não são meramente "coisas religiosas." São práticas que fortalecem relacionamento com Deus e preenchem espaço que tentação tentaria ocupar. Você não pode simplesmente parar de pensar em pecado. Você deve preencher mente com coisa mais importante — Deus, Sua verdade, Sua presença.</p>
+
+<h3>Respondendo ao Fracasso: Confissão, Arrependimento, Restauração</h3>
+<p>Apesar dos melhores esforços, alguém às vezes cede à tentação. Então vem culpa e vergonha. É aqui que mensagem do evangelho é tão poderosa. 1 João 1:8-9 afirma: "Se dissermos que não temos pecado, enganamo-nos a nós mesmos, e a verdade não está em nós. Se confessarmos os nossos pecados, ele é fiel e justo para nos perdoar os pecados e nos purificar de toda injustiça."</p>
+<p>O processo é: (1) Confissão — admitir o pecado a Deus e ao conselheiro se apropriado. (2) Arrependimento — verdadeiro remorso e disposição de virar-se de novo. (3) Restituição se possível — pedir desculpas, reparar dano. (4) Esperança — saber que Deus perdoou completamente. Conselheiro oferece espaço seguro para isto — não para condenar ("você é tal fracasso"), mas para facilitar restauração ("Deus ofereceu perdão completo; como você continua à partir daqui?").</p>
+
+<h3>Libertação Contínua: De Cativo a Livre</h3>
+<p>Verdadeira vitória sobre tentação persistente é longa jornada. Pode tomar meses ou anos para construir novas respostas padrão. Mas há esperança. Cada dia oferece nova chance. Cada falha oferece lição. Cada pequena vitória edifica confiança. Conselheiro oferece esperança — não esperança de perfeição, mas esperança de progresso. Esperança de que Deus está operando em você. Esperança de que dia chegará quando tentação será significativamente diminuída. Esperança de que eternidade você será completamente livre.</p>`,
+    cards: [
+      {
+        q: 'Como um conselheiro pastoral deve ajudar alguém que luta com tentação persistente a compreender tanto o realismo da luta quanto a esperança de vitória?',
+        a: 'Validar que tentação é universal, não vergonha. Diferenciar tentação (convite) de pecado (consentimento). Ajudar a identificar origem e estratégia da tentação. Desenvolver plano prático para evitar. Oferecer graça quando há falha. Focar em progresso a longo prazo, não perfeição, com esperança fundamentada em poder de Deus.'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Conflitos Relacionais: Facilitando Reconciliação e Perdão',
+    dur: '28 min',
+    content: `<h3>A Realidade de Conflitos em Relacionamentos</h3>
+<p>Alguns cristãos carecem de ilusão que em vida cristã não há conflito — tudo será harmonioso. Na realidade, conflito é inevitável quando duas pessoas (ou mais) com diferentes perspectivas, necessidades, desejos vivem juntas. Esposas lutam com maridos. Crianças lutam com pais. Amigos discordam. Colegas de trabalho entram em conflito. Até apóstolos tiveram conflitos — Paulo e Barnabás discordaram tão severa que se separaram (Atos 15:36-39).</p>
+<p>O ponto não é evitar conflito — é impossível — mas responder apropriadamente. Conselheiro ajuda pessoas a compreender que conflito pode ser oportunidade para crescimento, não catástrofe. Como você trabalha através de desacordo, como você comunica quando difícil, como você perdoa ofensa — isto constrói relacionamento mais forte e mais profundo.</p>
+
+<h3>Comunicação Eficaz: Ouvindo e Sendo Ouvido</h3>
+<p>Muitos conflitos são perpetuados por comunicação pobre. Uma pessoa fala; o outro não ouve realmente. Ou escuta defensivamente — buscando falha em lo que sendo dito em vez de procurando compreender. Conselheiro ensina comunicação eficaz. Isto começa com escuta ativa — o que você estudou anteriormente. Cada pessoa sente-se ouvida antes que possa se mover para resolução.</p>
+<p>Além disso, comunicação verdadeira envolve expressão "eu" em vez de acusação "você". "Eu sinto ferido quando..." é diferente de "Você sempre..." O primeiro expressa seu sentimento; o segundo acusa. O primeiro abre diálogo; o segundo coloca outro na defensiva. Conselheiro ajuda casal ou amigos a reformular — "Como você pode expressar isto sem culpabilidade?" Esta simples mudança abre canal para resolução genuína.</p>
+
+<h3>A Questão de Culpa: Quem Está Certo?</h3>
+<p>Frequentemente em conflito, há obsessão com "quem está certo?" A verdade é que frequentemente há verdade em ambos os lados. Conselheiro não determina culpa — isto não é trabalho. Ao invés, conselheiro facilita compreensão mútua — ambas as pessoas compreendendo perspectiva, sentimentos, e preocupações do outro. Frequentemente quando alguém se sente verdadeiramente compreendido, indignação começa a diminuir.</p>
+<p>Além disto, conselheiro pode ajudar a identificar dinâmicas não saudáveis — padrões de comportamento que perpetuam conflito. Alguém sempre crítico? Alguém sempre defensivo? Alguém recusa falar enquanto outro domina? Identificando padrões, pessoas podem começar a quebrá-los. "Toda vez que faço isto, você faz aquilo. Como podemos quebrar este ciclo?"</p>
+
+<h3>O Poder do Perdão: Soltando Amargura</h3>
+<p>Se conflito não é resolvido, amargura cresce. Hebreus 12:15 avisa: "vede se alguém se priva da graça de Deus; se alguma raiz de amargura, brotando, vos perturbe, e por ela muitos se contaminem." Amargura é venenosa. Envenena o que está dentro e infecta outros. Perdão é antídoto. Não perdão significa "o que você fez estava certo." Significa "Estou liberando minha raiva e deixando isto ir. Não vou deixar isto estragar minha vida."</p>
+<p>Perdão é difícil. Às vezes é impossível sem ajuda de Deus. Mas conselheiro oferece estrutura — você pode escolher perdoar mesmo se não se sente como perdoador. Escolha de vontade pode preceder sentimento. "Senhor, eu perdoo [nome] por [o quê]. Peço para remover amargura do meu coração." Ao longo do tempo, conforme você prática perdão, o sentimento segue. Conselheiro oferece esperança — perdão é possível, e cura segue.</p>
+
+<h3>Reconstruindo Confiança Após Traição</h3>
+<p>Quando há traição — infidelidade, mentira, abuso de confiança — perdão é ainda mais difícil. Conselheiro oferece caminho realista — perdão e confiança são diferentes. Você pode perdoar alguém imediatamente. Mas restaurar confiança toma tempo. Requer que pessoa traidora seja consistentemente confiável, demonstrando arrependimento genuíno, disposição de reparar dano.</p>
+<p>Conselheiro também ajuda pessoa traída a compreender que reconciliação pode nem sempre ser possível ou saudável — se alguém continua comportamento prejudicial, proteção é apropriada. Mas perdão — soltando raiva e amargura — é sempre opção. É para seu bem, não para bem do traidor. Permite-lhe mover para frente, mesmo se relacionamento mudou ou terminou.</p>
+
+<h3>Restauração e Crescimento</h3>
+<p>O objetivo final de aconselhamento relacional é restauração — relacionamento curado ou, se nem sempre possível, pessoa curada. Às vezes isto significa casal que aprende a comunicar melhor, discorda respeitosamente, e realiza conexão mais profunda. Às vezes significa amigos que trabalham através de mal-entendido e emergem com relacionamento mais forte. Às vezes isto significa pessoa ferida que perdoa, liberta amargura, e redescobre alegria.</p>
+<p>Conselheiro oferece esperança — conflito não é fim. Pode ser início de novo capítulo. Pode ser oportunidade para crescimento. Pode ser lugar onde graça de Deus é encontrada profundamente. Quando pessoas trabalham através de conflito com sabedoria, humildade, e fé, emergem transformadas — mais compassivas, mais sábias, mais capazes de amar.</p>`,
+    cards: [
+      {
+        q: 'Como um conselheiro pastoral facilita movimento de conflito relacional para reconciliação, e qual é a relação entre perdão e reconstrução de confiança?',
+        a: 'Ensine comunicação eficaz — escuta ativa e expressão "eu". Ajude a compreender perspectiva mútua. Facilite perdão — soltando raiva/amargura. Reconheça que confiança é reconstruída lentamente através de comportamento consistente. Ofereça esperança de crescimento através de conflito trabalhado bem.'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Situações de Crise: Suicídio, Abuso e Vício',
+    dur: '32 min',
+    content: `<h3>Reconhecendo Sinais de Crise Severa</h3>
+<p>Um conselheiro pastoral deve ser treinado para reconhecer sinais de crise — momento em que alguém está em perigo imediato. Pensamentos suicidas, ideação homicida, comportamento abusivo ativo, intoxicação severa — estas não são questões para lidar sozinho em escritório pastoral. Requerem intervenção imediata e possibilmente hospitalização. Conselheiro que não reconhece sinais corre risco de dano severo ou morte.</p>
+<p>Portanto, educação é essencial. Um conselheiro pastoral deve receber treinamento em reconhecimento de crise, resposta apropriada, e recursos disponíveis. Isto inclui conhecimento de números de telefone de crise (linhas de prevenção de suicídio, departamento de polícia de emergência), conhecimento de hospitais psiquiátricos na área, conhecimento de mandatos de relato (abuso de criança ou idoso), e disposição de envolver profissionais quando apropriado.</p>
+
+<h3>Suicídio: Levando a Sério, Ofertando Esperança</h3>
+<p>Suicídio é crise máxima. Se alguém expressa pensamentos suicidas, isto é emergência. Conselheiro não deve minimizar ("Oh, você não faria realmente") ou prometer segredo ("não vou dizer a ninguém"). Ao invés, conselheiro leva seriamente e age. Questões apropriadas: "Você está pensando em se matar?" "Você tem plano?" "Você tem meios para executar plano?" Quanto mais específico o plano, maior o risco.</p>
+<p>Se há risco imediato — pessoa tem meios, tem plano específico, sem esperança presente — conselheiro não os deixa sozinhos. Encaminha para emergência. Se risco é menos imediato, conselheiro trabalha com pessoa a identificar razões para viver, recursos de apoio, e profissional de saúde mental. Mas conselheiro também oferece verdade espiritual — "Sua vida importa a Deus. Ele tem propósito para você. Há esperança mesmo se você não consegue vê-la agora."</p>
+
+<h3>Abuso: Proteção Primeira, Cura Depois</h3>
+<p>Se alguém revela estar em relacionamento abusivo — verbal, físico, sexual — conselheiro deve primeiro assegurar segurança. Isto pode significar ajudar pessoa a desenvolver plano de fuga, conectar com abrigo de abuso, notificar autoridades se houver crime. Frequentemente há resistência — "Ele/ela apenas teve um mau dia" ou "É minha culpa de alguma forma." Conselheiro oferece verdade: "Abuso nunca é sua culpa. Você merece estar seguro."</p>
+<p>Em muitos lugares, conselheiro é obrigado a relatar suspeita de abuso — especialmente abuso infantil. Isto é mandata legal. Conselheiro deve conhecer leis locais. Medo de quebrar confiança não deveria impedir relatório quando há perigo. Proteção sobrepassa confidencialidade. Depois que segurança está estabelecida, pode haver cura — conselheiro frequentemente encaminha para terapeuta treinado em trauma.</p>
+
+<h3>Vício: Reconhecendo Padrão Patológico</h3>
+<p>Vício — a álcool, drogas, comportamento — é padrão patológico onde pessoa continua usar apesar de consequências negativas. Conselheiro não julga. Reconhece que vício é doença que requer intervenção. Primeira coisa é ajudar pessoa a reconhecer padrão — "Você está pensando sobre isto todo dia? Está perdendo relacionamentos por causa disto? Você não pode parar apesar de tentar repetidamente?"</p>
+<p>Recuperação de vício frequentemente requer múltiplas abordagens: (1) Ajuda espiritual — reconhecer que apenas Jesus pode preencher vazio que droga/álcool tenta preencher. (2) Ajuda médica — desintoxicação, às vezes medicação para reduzir cravings. (3) Ajuda psicológica — terapeuta para tratar problema subjacente que vício mascara. (4) Ajuda comunitária — grupos de suporte como AA ou NA onde pessoas em recuperação apoiam um ao outro.</p>
+
+<h3>Conhecendo Seus Limites: Quando Encaminhar</h3>
+<p>Um dos maiores favores que conselheiro pastoral pode fazer é saber quando encaminhar para profissional. Se pessoa tem transtorno mental severo, risco de suicídio, comportamento abusivo ativo, intoxicação severa, abuso de trauma — estes geralmente exigem mais do que conselheiro pastoral pode oferecer. É não falha reconhecer isto. É sabedoria. É amor — querendo oferecer melhor ajuda possível.</p>
+<p>Conselheiro mantém lista de profissionais confiáveis — psicólogos, psiquiatras, terapeutas, conselheiros de vício, abrigos de abuso. Conhece quais seguem valores cristãos se isto é importante para aconselhado. Oferece encaminhamento não como rejeição ("Você é mudar para alguém mais qualificado"), mas como colaboração ("Você merece melhor ajuda. Vou ajudar a conectar com profissional que pode oferecer especialidade que você precisa").</p>
+
+<h3>Auto-Cuidado do Conselheiro: Evitando Burnout</h3>
+<p>Lidar com crises é desgastante. Conselheiro que absorve tragédia alheia sem limite queimará. É essencial que conselheiro cuidar de si — fisicamente (exercício, sono, comida), emocionalmente (apoio próprio, limite de cases), e espiritualmente (oração, meditação, comunidade). Conselheiro não pode ajudar ninguém se está caído.</p>
+<p>Além disto, conselheiro deve ter supervisão — alguém mais experiente para processar cases desafiadoras, oferecer conselho, oferecer suporte. Nunca carregue crises sozinho. Procure sabedoria de outros, suporte de colegas, e força de Deus. Isto permite que você ministério longe, fielmente, sem exaustão.</p>`,
+    cards: [
+      {
+        q: 'Como um conselheiro pastoral deve responder a crises severas (suicídio, abuso, vício) ao mesmo tempo que reconhece seus próprios limites profissionais?',
+        a: 'Leve suicídio seriamente — questione especificidade de plano, assegure segurança. Proteja abuso — reporte se obrigado legalmente. Encaminhe vício para especialistas. Reconheça quando profissional é necessário; isto é sabedoria, não falha. Sempre mantenha lista de recursos e seja disposição a encaminhar para melhor ajuda possível.'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'A Comunidade da Igreja: Cura em Contexto Comunitário',
+    dur: '27 min',
+    content: `<h3>Aconselhamento Não é Função Solo do Pastor</h3>
+<p>Uma compreensão tradicional é que o pastor (ou conselheiro especializado) faz todo o aconselhamento pastoral. Mas a Bíblia oferece visão mais ampla. Romanos 15:14 afirma "Estou plenamente convencido, meus irmãos, de que vocês mesmos estão cheios de bondade, repletos de conhecimento e capazes de se instruírem uns aos outros." A Igreja — corpo de crentes — é chamada a ministrar uns aos outros. Aconselhamento não é função especializada apenas. É ministério comum.</p>
+<p>Isto não significa que todo mundo é conselheiro — alguns tem chamado e treinamento especial. Mas significa que cada membro pode oferecer suporte — ouvir um amigo que sofre, compartilhar palavra apropriada, ajudar na dificuldade. Tiago 5:16 encoraja "Confessai as vossas culpas uns aos outros, e orai uns pelos outros, para que sareis." Comunidade é espaço seguro para vulnerabilidade e cura.</p>
+
+<h3>Grupos de Pequeno: Lugar de Intimidade</h3>
+<p>Um lugar onde aconselhamento comunitário prospera é grupo pequeno — seja grupo de estudo bíblico, grupo de oração, grupo de companheirismo. Nestes ambientes, pessoas se conhecem. Há confiança. Vulnerabilidade é segura. Quando alguém enfrenta luta, grupo ora. Grupo oferece sabedoria coletiva. Grupo oferece suporte prático. Isto é aconselhamento de comunidade em sua melhor forma.</p>
+<p>Conselheiro pastoral pode envolver pequenos grupos — educando-os sobre como ouvir bem, como oferecer sabedoria bíblica, como orar eficazmente. Um grupo bem-treinado pode oferecer suporte contínuo de forma que uma sessão semanal com pastor não consegue. Isto não diminui papel do pastor. Expande ministério de cura através de todo corpo de Cristo.</p>
+
+<h3>Mentoring: Sabedoria Passada Adiante</h3>
+<p>Outra forma de aconselhamento comunitário é mentoring — pessoa mais experiente andando ao lado pessoa menos experienciada. Paulo deixou isto claro a Timóteo: "O que de mim ouviste entre muitas testemunhas, isso encadeia a homens fiéis, que sejam idôneos para ensinar também a outros" (2 Timóteo 2:2). Verdade passa através de gerações — de Paulo a Timóteo a "homens fiéis" a "também a outros."</p>
+<p>Mentoring é informal frequentemente — não necessariamente sessão semanal agendada, mas relacionamento onde pessoa mais antiga oferece guia. "Como você lidar com isto quando era mais jovem?" "Eu experimentei algo similar; deixe-me oferecer o que aprendi." Isto é aconselhamento de vida real. Transmissão de sabedoria. Conselheiro pastoral pode encorajar isto — criando oportunidades para mentores e mentoreados conectarem.</p>
+
+<h3>Accountability: Amigos Que Te Conhecem e Cuidam</h3>
+<p>Um aspecto frequentemente desprezado da cura é accountability — tendo pessoas em sua vida que conhecem seus lutadores e o acompanham. "Como você está fazendo com aquela tentação?" "Você seguiu através no que decidiu fazer?" Isto pode soar controlador se feito desastrosamente, mas quando feito em amor é poderoso. Está pedindo ajuda de amigos.</p>
+<p>A estrutura de accountability pode ser simples — um amigo você checa com semanalmente. Pode ser mais estruturada — grupo de responsabilidade com encontros regulares. O ponto é que você não é sozinho em sua luta. Amigos conhecem, cuidam, e ajudam a manter você responsável. Frequentemente isto é mais eficaz do que conselheiro profissional porque é relacionamento de confiança mútua desenvolvida ao longo do tempo.</p>
+
+<h3>Celebração e Comunhão: Alegria Compartilhada</h3>
+<p>Aconselhamento não é apenas sobre sofrimento. Também sobre celebração — "Alegra-vos com os que se alegram" (Romanos 12:15). Comunidade que compartilha alegrias — nascimentos, casamentos, sucessos — é comunidade que cura. Quando você pode convidar amigos para compartilhar sua alegria, isto amplifica alegria. Quando pode oferecer sua presença em alegria alheia, é oferta de comunidade.</p>
+<p>Isto é por que adoração comunitária, festas, celebrações são importantes. Não são frivolidade. Oferecem espaço para alegria legítima. Oferecem remissão de carga. Oferecem lembrança que vida não é meramente sofrimento — há alegria também. Conselheiro pastoral pode encorajar isto — não só acompanhando pessoas através de dificuldade, mas celebrando com eles em alegria.</p>
+
+<h3>Implicação Prática: Uma Igreja Que Cura</h3>
+<p>Visão é uma Igreja que é comunidade de cura — onde pessoas se sentem seguras para vulnerabilidade, onde sabedoria é compartilhada, onde suporte é oferecido, onde cura acontece. Isto requer intenção. Conselheiro pastoral é catalisador — educando, capacitando, conectando. Mas resultado é corpo de Cristo em sua totalidade ministrando uns aos outros.</p>
+<p>Quando isto acontece, efeito é transformador. Pessoa isolada em luto encontra comunidade que caminha com ela. Pessoa em tentação encontra amigos que a apoiam. Pessoa ferida encontra lugar seguro para cura. Pessoa recuperando encontra celebração de vitória. Esta é a Igreja em seu melhor — não instituição, mas comunidade viva de crentes acompanhando um ao outro para Jesus.</p>`,
+    cards: [
+      {
+        q: 'Por que a cura pastoral é mais eficaz em contexto comunitário do que como ministério apenas do pastor, e como a Igreja pode ser capacitada para isto?',
+        a: 'Comunidade oferece conhecimento coletivo, suporte contínuo, relacionamento de confiança, e múltiplas formas de cura. Pastor capacita através de educação, mentoring, facilitação de grupos pequenos. Resultado é corpo de Cristo inteiro ministrando uns aos outros — cura multiplicada através de comunidade.'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Excelência em Aconselhamento: Crescimento Contínuo do Conselheiro',
+    dur: '28 min',
+    content: `<h3>Educação Contínua: Permanecendo Atual e Eficaz</h3>
+<p>Um conselheiro que para de aprender é um que envelhece rapidamente em eficácia. O mundo muda. Novas questões emergem. Novas técnicas são desenvolvidas. Conselheiro comprometido continua estudando. Isto pode significar leitura de livros sobre aconselhamento cristão, frequência de seminários de conferências, busca de cursos formais em aconselhamento. Isto pode significar exposição a novas realidades — ficando atualizado sobre adicções emergentes, transtornos mentais prevalentes, crises culturais.</p>
+<p>2 Timóteo 2:15 oferece mandamento: "Procure apresentar-se a Deus aprovado, como obreiro que não tem do que se envergonhar e que maneja corretamente a palavra da verdade." "Manegador corretamente" sugere estudo séria — compreendendo profundamente, interpretando com precisão, aplicando com sabedoria. Este é trabalho de vida, não algo que você completa e depois para.</p>
+
+<h3>Supervisão e Mentoring: Aprendendo de Seus Sábios</h3>
+<p>Um conselheiro mais experiente é tesouro. Alguém que tem anos de prática, que aprendeu através de sucesso e fracasso, que pode oferecer perspectiva e sabedoria. É tremendamente valioso procurar supervisão de tal pessoa. Isto pode ser supervisão formal — encontrando-se regularmente para processar cases. Ou informal — telefonando quando algo desafiador surge.</p>
+<p>Mentor oferece mais que conselho. Oferece modelagem — como tal pessoa aborda situações difíceis? Que perguntas faz? Que sabedoria oferece? Oferece validação — confirmação de que você está no trilho certo. Oferece desafio — questões que o fazem pensar profundamente. Oferece encorajamento — lembrança que você está fazendo diferença. Um conselheiro sábio sempre tem alguém acima dele buscando sabedoria.</p>
+
+<h3>Autoconhecimento: Compreendendo Seu Próprio Bagage</h3>
+<p>Um conselheiro traz sua própria história em cada sessão. Se você foi maltratado, você pode super-identificar com alguém em situação similar e perder objetividade. Se você foi promiscuado, você pode ser muito duro com alguém lutando com lascívia. Se você carrega culpa sobre algo, você pode projetar isto em aconselhado. Portanto, é essencial que conselheiro seja autoconsciente — compreendendo suas próprias feridas, botões sensíveis, preconceitos.</p>
+<p>Isto frequentemente requer trabalhar com seu próprio conselheiro ou terapeuta. Não é sinal de fraqueza. É sinal de sabedoria — querendo ser tão saudável e integral quanto possível para poder ministrar eficazmente. Quando você compreende seu próprio bagage, pode separar de aconselhado. Pode responder com compaixão sem reatividade.</p>
+
+<h3>Ética Professional: Limites e Integridade</h3>
+<p>Código de ética profissional existe por boas razões. Conselheiro não deve misturar relacionamento profissional com pessoal — não faz amizade intima com aconselhado enquanto ainda em aconselhamento. Conselheiro não deve oferecer conselho em áreas onde não tem competência. Conselheiro não deve fazer promessas que não pode manter. Conselheiro não deve violar confidencialidade (exceto quando mandatado legalmente).</p>
+<p>Além disto, conselheiro deve estar alerta para abuso de poder — tentação de dizer a alguém vulnerável o que fazer, em vez de facilitar seu próprio discernimento. Ou para relação dual — por exemplo, oferecendo amizade enquanto é conselheiro (confunde linhas). Ou para exploração sexual (indefensível). Estas não são situações hipotéticas — têm acontecido. Conselheiro cristão é chamado a integridade máxima.</p>
+
+<h3>Sabedoria Versus Conhecimento: O Coração Que Cura</h3>
+<p>Finalmente, o mais importante não é conhecimento — embora seja importante. É sabedoria. Conhecimento é saber fatos. Sabedoria é saber como aplicar fatos com amor em situação específica. Você pode conhecer cada técnica de conselhamento e ainda ser conselheiro pobre se lhe falta sabedoria. Você pode ter sabedoria limitada mas ser conselheiro excelente se seu coração está certo.</p>
+<p>Esta sabedoria vem de Deus. Tiago 1:5 oferece promessa: "Se, porém, algum de vós tem falta de sabedoria, peça-a a Deus, que a todos dá liberalmente, e não o censura; e ser-lhe-á dada." Portanto, conselheiro que é principalmente um em oração é conselheiro que tem acesso a sabedoria divina. Orar antes de sessão — "Senhor, dê-me sabedoria para esta pessoa. Revele-me o que precisa ouvir. Trabalhe através de mim." — isto posiciona você como instrumento de Deus em vez de especialista de sua própria sabedoria.</p>
+
+<h3>Visão Final: Conselheiro Como Testemunho de Cristo</h3>
+<p>No final, um conselheiro pastoral é testemunho de Cristo. Sua compaixão reflete a de Cristo. Sua verdade reflete a de Cristo. Seu poder está no Espírito Santo de Cristo. As pessoas não vêm ao conselheiro para conhecer a sabedoria do conselheiro (embora possa haver um pouco). Vêm para conhecer a Cristo. Vêm para experienciar Seu amor. Vêm para encontrar cura em Sua presença.</p>
+<p>Portanto, o trabalho mais importante do conselheiro não é técnica perfeita. É caráter contínuo — crescimento em santidade, compaixão, fé. É oração consistente — conectando a Deus continuamente. É disponibilidade — estar presente com aconselhados em suas dor e alegria. É esperança — ofrecendo visão de que Deus trabalha, que cura é possível, que há eternidade de esperança. Quando você oferece estas coisas — quando você aponta consistentemente a Cristo — você está fazendo verdadeiro aconselhamento pastoral.</p>`,
+    cards: [
+      {
+        q: 'Qual é a integração necessária entre técnica, sabedoria, integridade pessoal e fé para um conselheiro pastoral ser eficaz e eticamente sólido?',
+        a: 'Técnica oferece estrutura; sabedoria oferece aplicação apropriada; integridade oferece confiança; fé oferece poder divino. Conselheiro comprometido continua estudando, busca supervisão, trabalha sua própria saúde, respeita ética, e primariamente confia em Deus. O resultado é testemunho de Cristo que cura.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
