@@ -2426,6 +2426,25 @@ var MA_COURSES = [
     color: '#8d6e63',
     addedTs: 1776024539831,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/sh.jpg',
+    id: 'sh',
+    name: 'Biografia de Soichiro Honda',
+    desc: 'O fundador da Honda, marcado por superação e inovação automotiva.',
+    file: '41-bio-soichiro-honda.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'SH_HENRY_2026_MASTER',
+    ak: 'sh_auth',
+    storagePrefix: 'sh_',
+    icon: '👤',
+    color: '#cc0000',
+    addedTs: 1776024544813,
+    active: true
   }
 ];
 var MA_CATS = [
