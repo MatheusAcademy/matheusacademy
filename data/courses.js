@@ -2027,6 +2027,25 @@ var MA_COURSES = [
     color: '#e5383b',
     addedTs: 1776024441585,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rbvd.jpg',
+    id: 'rbvd',
+    name: 'Biografia de Richard Branson',
+    desc: 'O fundador do Grupo Virgin e seu estilo ousado de empreendedorismo.',
+    file: '35-bio-richard-branson.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'RB_HENRY_2026_MASTER',
+    ak: 'rb_auth',
+    storagePrefix: 'rb_',
+    icon: '👤',
+    color: '#d32f2f',
+    addedTs: 1776024445693,
+    active: true
   }
 ];
 var MA_CATS = [
