@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blockchain, Web3 e o Futuro da Internet — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'BW',
+  name: 'Blockchain, Web3 e o Futuro da Internet',
+  shortName: 'Blockchain e Web3',
+  cat: 'Tecnologia e Inovação',
+  desc: 'Curso sobre descentralização, contratos inteligentes, identidade digital e novas estruturas da internet.',
+  salt: 'BW_HENRY_2026_MASTER',
+  ak: 'bw_auth',
+  courseKey: 'bw',
+  prefix: 'bw_',
+  color: '#F9A825',
+  glow: 'rgba(249,168,37,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'bw_m1',
+    name: 'Fundamentos de Blockchain e Criptografia',
+    free: true,
+    topics: ['bw_t1', 'bw_t2', 'bw_t3'],
+    summary: {
+      title: 'Resumo do Módulo 1',
+      points: [
+        'Blockchain é livro-razão distribuído, imutável, que registra transações de forma transparent',
+        'Criptografia garante segurança - chaves privadas e públicas permitem autenticação e encriptação',
+        'Hash criptográfico cria pegada digital única - alteração mínima muda completamente',
+        'Consenso distribuído (PoW, PoS) permite que rede concorde sem intermediário central'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'O que é blockchain?',
+        opts: ['Uma moeda digital', 'Um livro-razão distribuído e imutável que registra transações', 'Um tipo de computador', 'Uma rede social'],
+        correct: 1
+      },
+      {
+        q: 'Qual é a função de uma chave privada em blockchain?',
+        opts: ['Compartilhar com todos', 'Autenticar e assinar transações (manter em segredo)', 'Abrir portas', 'Criptografar internet'],
+        correct: 1
+      },
+      {
+        q: 'O que significa "consenso" em blockchain?',
+        opts: ['Votação popular', 'Mecanismo que permite rede concordar sobre estado válido sem autoridade central', 'Um banco aprovando', 'Maioria sempre certa'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'bw_m2',
+    name: 'Web3, Smart Contracts e Aplicações Descentralizadas',
+    free: false,
+    topics: ['bw_t4', 'bw_t5', 'bw_t6'],
+    summary: {
+      title: 'Resumo do Módulo 2',
+      points: [
+        'Web3 reimagina internet com descentralização: usuários controlam dados e identidade, não corporações',
+        'Smart contracts são programas que executam em blockchain, sem intermediário, com código como lei',
+        'DApps (aplicações descentralizadas) rodam em blockchain, combinam frontend com smart contracts no backend',
+        'DeFi (finanças descentralizadas) oferece serviços financeiros sem banco: empréstimos, trocas, savings'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual é a principal diferença entre Web2 e Web3?',
+        opts: ['Web3 é mais rápida', 'Web3 é descentralizada - usuários controlam dados e identidade', 'Web3 é igual, só nome novo', 'Web3 não precisa de internet'],
+        correct: 1
+      },
+      {
+        q: 'O que é um smart contract?',
+        opts: ['Um contrato em papel', 'Um programa que executa automaticamente em blockchain quando condições são atendidas', 'Um contrato com inteligência artificial', 'Uma assinatura digital'],
+        correct: 1
+      },
+      {
+        q: 'Qual é a vantagem de DeFi vs finanças tradicionais?',
+        opts: ['Mais rápido, sem intermediário, 24/7, acessível globalmente', 'Exactamente igual', 'Mais seguro porque tem banco', 'Sem vantagens'],
+        correct: 0
+      }
+    ]
+  },
+  {
+    id: 'bw_m3',
+    name: 'Identidade Digital, NFTs e Futuro Descentralizado',
+    free: false,
+    topics: ['bw_t7', 'bw_t8', 'bw_t9'],
+    summary: {
+      title: 'Resumo do Módulo 3',
+      points: [
+        'Identidade auto-soberana em blockchain - você controla seus dados, não governo ou corporação',
+        'NFTs registram propriedade de ativos digitais ou físicos de forma verificável e única',
+        'DAOs (organizações autônomas descentralizadas) funcionam por código e votação, sem CEO',
+        'Futuro de Web3 combina descentralização, privacidade, propriedade digital e poder pessoal'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'O que é identidade auto-soberana em blockchain?',
+        opts: ['Anônimo total', 'Você controla seus dados de identidade, não governo ou corporação', 'Identidade falsa', 'Blockchain não permite identidade'],
+        correct: 1
+      },
+      {
+        q: 'O que é um NFT?',
+        opts: ['Uma moeda', 'Um token único que registra propriedade de ativo digital ou físico', 'Uma foto', 'Uma piada'],
+        correct: 1
+      },
+      {
+        q: 'Qual é a estrutura organizacional de uma DAO?',
+        opts: ['CEO no topo', 'Código executa regras, votação descentralizada, ninguém em topo', 'Governo', 'Banco'],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 'bw_t1',
+    name: 'O Problema Que Blockchain Resolve',
+    dur: '16 min',
+    content: `
+      <h3>Confiança Sem Intermediário</h3>
+      <p>Histórico: toda transação de valor (dinheiro, propriedade, contrato) requer intermediário. Você vender casa? Precisa tabelião + cartório. Você transferir dinheiro? Precisa banco. Você fazer contrato? Precisa advogado. Esses intermediários cobram taxas (2-5%), têm dias úteis, são lentos, e podem falhar. Ainda pior: você confia intermediário com seus dados. Dados vazam (Cambridge Analytica), ou intermediário usa seu dinheiro (2008, bancos usaram depósitos em especulação arriscada).</p>
+
+      <p>Blockchain resolve isto: permite transação de valor entre duas pessoas DIRETO, sem intermediário. Como? Via criptografia e consenso distribuído. A Pessoa A envia dinheiro para Pessoa B. Rede valida transação (verificando que A tem dinheiro). Transação é registrada em ledger distribuído (cópia em milhares de computadores). Agora é imutável - ninguém consegue alterar ou reverter. Não precisa banco, tabelião, advogado. Apenas criptografia matemática.</p>
+
+      <blockquote class="tip">
+        Blockchain não é apenas sobre moeda. É sobre transferência de qualquer valor (dinheiro, propriedade, dados, certificados) sem intermediário. Isso é revolucionário.
+      </blockquote>
+
+      <h3>Problemas que Blockchain Resolve</h3>
+      <h4>1. Double Spending (Gasto Duplo)</h4>
+      <p>Digital é fácil copiar. Se você enviar arquivo de dinheiro digital, receptor recebe, mas você ainda tem cópia. Você consegue enviar mesma cópia para outra pessoa. Problema: como garantir que dinheiro é gasto apenas uma vez? Sem intermediário, não tem como. Blockchain resolve: cada transação é registrada publicamente. Se tenta gastar duas vezes, a segunda tentativa é rejeitada (rede vê que coins já foram gastos).</p>
+
+      <h4>2. Transparência com Privacidade</h4>
+      <p>Sistema bancário é opaco. Você não vê operações do banco. Blockchain é transparente - toda transação é visível para todos (data pública). Mas identidades são criptografadas (você vê endereço A enviando para endereço B, não vê "João para Maria"). Resultado: máxima transparência, máxima privacidade.</p>
+
+      <h4>3. Resistência a Censura</h4>
+      <p>Se governo não gosta de você (político oposto, denunciante), consegue bloquear sua conta bancária. Blockchain: ninguém consegue bloquear. Dados estão em milhares de computadores. Governo precisaria derrotar internet inteira. Impossível. Isso é poder imenso (bom para dissidente, ruim se você é criminoso).</p>
+
+      <h4>4. Sem Fronteiras</h4>
+      <p>Banco demora dias para transferência internacional, cobra taxas altas, precisa permissão regulatória. Blockchain: transferência é quase instantânea (10 min para Bitcoin, 12 seg para Ethereum), custo mínimo (R$1 em vez de R$100), sem regulação.</p>
+
+      <blockquote class="example">
+        Caso Real: Remessas de imigrantes para família no exterior. Tradicional: via MoneyGram/Western Union, taxa é 7-10%. Blockchain: enviar diretamente, taxa <0.5%. Resultado: família recebe 14x mais dinheiro. Para países pobres, diferença é enorme.
+      </blockquote>
+
+      <h3>Limitações de Blockchain (Honestidade)</h3>
+      <p>Blockchain não é mágica. Tem limitações: (1) <strong>Velocidade:</strong> Bitcoin processa 7 transações/segundo. Visa processa 65.000/segundo. Gap ainda existe em 2026 (soluções de layer 2 ajudam mas não resolvem 100%). (2) <strong>Escalabilidade:</strong> Cada node precisa armazenar blockchain inteiro (~500 GB para Bitcoin). Não é viável em celular ou IoT de bateria fraca. (3) <strong>Finança:</strong> Criptomoedas são voláteis. Bitcoin variou de R$50k para R$300k em 2 anos. Instável para usar como dinheiro diário. (4) <strong>Irreversibilidade:</strong> Transação enviada por erro? Não consegue reverter. Enviou para endereço errado? Dinheiro sumiu para sempre. (5) <strong>Complexidade:</strong> Entender e usar é complicado (chaves privadas, wallets, gas fees, slippage). Usuário médio se confunde.</p>
+
+      <p>Apesar das limitações, tendência é clara: blockchain é futuro de transações financeiras e registros imutáveis. Limitações são solucionáveis com tempo e tecnologia.</p>
+
+      <h3>Blockchain vs Outras Tecnologias</h3>
+      <p><strong>Blockchain vs Banco Tradicional:</strong> Banco é rápido (online), mas centralizado (riscos de hack, manipulação). Blockchain é lento, mas descentralizado (seguro). <strong>Blockchain vs Banco de Dados:</strong> Banco de dados é muito rápido, muito escalável. Blockchain é não-centralizável. Trade-off. <strong>Blockchain vs Public Ledger (ex: contabilidade):</strong> Ledger tradicional é confiável mas centralizado em empresa. Blockchain é distribuído - ninguém consegue falsificar.</p>
+
+      <p>Resumo: Blockchain é ferramenta específica. Não é melhor em TUDO. Mas em casos onde descentralização, imutabilidade e resistência a censura são importantes, blockchain é ótima.</p>
+    `,
+    cards: [
+      {
+        q: 'Qual é o principal problema que blockchain resolve?',
+        a: 'Permitir transferência de valor entre duas pessoas sem intermediário, via criptografia e consenso distribuído, garantindo imutabilidade e segurança.'
+      }
+    ]
+  },
+  {
+    id: 'bw_t2',
+    name: 'Como Funciona Blockchain: Blocos, Hashes e Consenso',
+    dur: '18 min',
+    content: `
+      <h3>Anatomia de um Bloco</h3>
+      <p>Blockchain é série de "blocos" encadeados. Cada bloco contém: (1) <strong>Dados (Transações):</strong> Lista de transações (A enviou 1 BTC para B, C enviou 2 ETH para D, etc). (2) <strong>Timestamp:</strong> Horário exato que bloco foi criado. (3) <strong>Hash do Bloco Anterior:</strong> Identificador criptográfico do bloco anterior, criando "cadeia". (4) <strong>Hash Atual:</strong> Identificador único deste bloco. (5) <strong>Nonce:</strong> Número aleatório usado em Proof of Work (explicado adiante).</p>
+
+      <h3>Hashes Criptográficos Explicados</h3>
+      <p>Hash é função matemática que transforma qualquer input em string fixa de caracteres. Exemplo: SHA-256 (usado em Bitcoin) sempre produz output de 256 bits. Propriedades importantes: (1) <strong>Determinístico:</strong> Mesmo input sempre produz mesmo hash. (2) <strong>Unidirecional:</strong> Dado hash, impossível calcular input (um jeito). (3) <strong>Sensibilidade Extrema:</strong> Alteração mínima no input muda hash completamente. Exemplo:</p>
+      <blockquote class="example">
+        Hash de "Blockchain é futuro" = a3f8c2d... Hash de "Blockchain é futuro." (adicionou ponto) = 9e2k1x4... Completamente diferente!
+      </blockquote>
+
+      <p>Isso é genial: se alguém tenta alterar transação em bloco 5, hash muda. Isso quebra cadeia (bloco 6 referencia hash errado). Para consertar, precisa recalcular bloco 6. Isso quebra bloco 7. E assim em diante. Alterando um bloco requer recalcular TUDO depois. Com Proof of Work, isso é computacionalmente impossível.</p>
+
+      <h3>Proof of Work (PoW) - Bitcoin</h3>
+      <p>Problema: quem cria novos blocos? Se qualquer um consegue, atacante cria blocos falsos. Solução: Proof of Work. Para criar bloco, precisa resolver quebra-cabeça criptográfico muito difícil. Quebra-cabeça: "encontre valor de Nonce tal que hash(bloco) começa com N zeros". Não tem atalho, é tentativa-e-erro. Tomar 10 minutos (no caso de Bitcoin). Primeiro computador que acha, cria bloco, rede valida, novo bloco é adicionado. Criador recebe recompensa (novas moedas + taxas de transação).</p>
+
+      <blockquote class="tip">
+        Proof of Work é como "trabalho" para criar bloco. Quanto mais trabalho, mais seguro. Atacante precisaria fazer mais trabalho que rede inteira, o que é impossível.
+      </blockquote>
+
+      <p>Desvantagem: Proof of Work consome muita eletricidade. Bitcoin usa ~150 terawatts por ano (como alguns países). Em 2026, essa é preocupação ambiental legítima.</p>
+
+      <h3>Proof of Stake (PoS) - Ethereum</h3>
+      <p>Alternativa ecológica a PoW. Em vez de resolver quebra-cabeça, você "deposita" cripto como stake. Rede então escolhe aleatoriamente quem vai criar próximo bloco (probabilidade proporcional ao stake). Se bloco é válido, validador recebe recompensa. Se bloco é inválido (tenta trapaçar), validador perde seu stake. Resultado: incentivos alinhados. Trapaça é cara (perde stake), honestidade é recompensada. Consumo de energia: 99.95% menor que PoW. Ethereum mudou para PoS em 2022.</p>
+
+      <h3>Consenso: Rede Concorda Sem Líder</h3>
+      <p>Como rede concorda sobre novo bloco legítimo? Em Bitcoin com PoW: maior parte da rede é honesta. Quando novo bloco é criado, nós validam se transações são legítimas. Se sim, aceitam. Se não, rejeitam. Bloco é aceito quando maioria dos nós o validam. Resultado: consenso emergente, sem votação formal.</p>
+
+      <p>Em Ethereum com PoS: validadores são escolhidos para propor bloco. Outros validadores "atestam" (aprovam) o bloco. Supermaioria de atestações = consenso.</p>
+
+      <h3>Merke Tree e Prova Eficiente</h3>
+      <p>Blockchain tem bilhões de transações. Baixar tudo para verificar é ineficiente. Solução: Merkle tree. Transações são hash-adas em pares (AB, CD), depois esses hashes são hash-ados (ABCD), até chegar a único hash (Merkle root). Estrutura em árvore permite verificar se transação específica está em bloco sem baixar todo bloco. Apenas baixa caminho até root (~10 hashes em vez de bilhões).</p>
+
+      <h3>Forks (Divisões) em Blockchain</h3>
+      <p>Às vezes rede se divide. Razão: comunidade discorda sobre mudança. Exemplo: Bitcoin vs Bitcoin Cash (2017). Comunidade discordou sobre tamanho de bloco. Alguns rodavam código novo (Bitcoin Cash), outros mantinham código antigo (Bitcoin). Resultado: dois blockchains separados, duas moedas separadas. Fork é mudança ao código que todos nós precisam atualizar. Hard fork: mudança incompatível. Todos PRECISAM atualizar ou ficam em versão velha. Soft fork: mudança compatível. Nós antigos ainda conseguem interoperar com nós novos.</p>
+
+      <blockquote class="news">
+        Em 2026, consenso é: PoS é futuro (eficiência), PoW é passado (poluição). Blockchains ainda em PoW estão sob pressão para mudar. Expectativa é que maioria esteja em PoS ou variantes até 2028.
+      </blockquote>
+    `,
+    cards: [
+      {
+        q: 'O que é um hash criptográfico e por que é importante em blockchain?',
+        a: 'Um identificador único para cada bloco. Alteração mínima no bloco muda hash completamente, criando cadeia que é impossível falsificar sem recalcular todos os blocos posteriores.'
+      }
+    ]
+  },
+  {
+    id: 'bw_t3',
+    name: 'Criptografia, Chaves e Assinaturas Digitais',
+    dur: '16 min',
+    content: `
+      <h3>Criptografia Assimétrica (Public Key Cryptography)</h3>
+      <p>Fundação de blockchain é criptografia assimétrica. Você tem dois números únicos relacionados matematicamente: (1) <strong>Chave Pública:</strong> Número que você compartilha com mundo. Qualquer um consegue usá-lo. (2) <strong>Chave Privada:</strong> Número secreto que você guarda. Se alguém consegue, podem se passar por você.</p>
+
+      <h4>Como Funciona</h4>
+      <p>Pessoa A tem chave privada, dela mesma, e chave pública de B. A quer enviar mensagem segura para B: (1) A encripta mensagem com chave pública de B. (2) A envia mensagem encriptada. (3) Alguém intercepta, mas sem chave privada de B, é ilegível. (4) B recebe, desencripta com sua chave privada. Apenas B consegue ler. Resultado: confidencialidade.</p>
+
+      <blockquote class="tip">
+        Chave pública é como número de conta bancária (você compartilha). Chave privada é como senha (você guarda). Se alguém consegue sua chave privada, consegue se passar por você e roubar seus ativos.
+      </blockquote>
+
+      <h3>Assinaturas Digitais - O Coração da Autenticação</h3>
+      <p>Criptografia assimétrica permite algo mágico: provar que você fez algo sem revelar como você fez. Chamado "assinatura digital". Funciona assim:</p>
+
+      <h4>Processo de Assinatura</h4>
+      <p>Você quer assinar transação "enviar 1 BTC para endereço XYZ". Processo: (1) Hash a transação. (2) Encripta hash com sua chave privada (cria "assinatura"). (3) Envia transação + assinatura para rede. (4) Rede toma assinatura, desencripta com sua chave pública (que é conhecida). (5) Se resultado combina com hash da transação, assinatura é válida. Conclusão: você enviou a transação (prova), mas sem revelar sua chave privada.</p>
+
+      <p>Por que é mágico? Qualquer um consegue verificar assinatura com sua chave pública. Mas ninguém consegue falsificar assinatura (precisaria da sua chave privada). Resultado: autenticação sem intermediário.</p>
+
+      <h3>Algoritmos Principais</h3>
+      <h4>RSA</h4>
+      <p>Mais antigo. Baseia-se em dificuldade de fatorar números muito grandes. Chaves são ~2048-4096 bits. Lento, mas muito seguro. Uso: emails encriptados, servidores web (HTTPS).</p>
+
+      <h4>Curva Elíptica (ECC)</h4>
+      <p>Mais novo. Baseia-se em matemática de curvas elípticas. Chaves são ~256 bits. Muito mais rápido que RSA para mesma segurança. Blockchain usa ECC (ex: secp256k1 em Bitcoin). Por que? Velocidade é crítica em blockchain.</p>
+
+      <h3>Carteiras de Criptomoedas - Onde Vivem Chaves</h3>
+      <p>Onde você armazena suas chaves privadas? Em uma carteira (wallet). Tipos:</p>
+
+      <h4>Carteira Quente (Hot Wallet)</h4>
+      <p>Conectada à internet. Exemplos: app no celular, site da exchange. Vantagem: fácil de usar. Desvantagem: vulnerável a hackers. Se dispositivo é hackeado, chaves são roubadas.</p>
+
+      <h4>Carteira Fria (Cold Wallet)</h4>
+      <p>Desconectada da internet. Exemplos: hardware wallet (USB especial), papel com chave privada escrita. Vantagem: segura contra hackers online. Desvantagem: incômodo de usar (precisa conectar hardware, validar manualmente).</p>
+
+      <h4>Custódia (Exchange ou Instituição)</h4>
+      <p>Você não controla chave privada. Exchange (Binance, Kraken) guarda. Vantagem: seguro (eles têm expertise). Desvantagem: você confia intermediário (risco de hack deles, ou eles confiscarem seu ativo).</p>
+
+      <blockquote class="example">
+        Caso Real: Em 2022, FTX exchange faliu. Clientes perderam bilhões porque confiaram seus ativos à exchange. Moraleja: "Not your keys, not your coins" - se você não controla chave privada, não controla ativo.
+      </blockquote>
+
+      <h3>Segurança de Chave Privada</h3>
+      <p>Como proteger chave privada? (1) <strong>Escrita em papel:</strong> Imprima chave, armazene em cofre. Impossível de hackear remotamente. (2) <strong>Hardware Wallet:</strong> Dispositivo especial que armazena chave offline. (3) <strong>Criptografia adicional:</strong> Encrype chave com password adicional. (4) <strong>Backup:</strong> Faça cópia de chave (em local seguro). Se perde original, consegue recuperar. (5) <strong>Seed Phrase:</strong> 12-24 palavras que regeneram suas chaves. Memorizáveis, deriváveis se perder carteira.</p>
+
+      <blockquote class="news">
+        Tendência 2026: Biometria (rosto, impressão digital) está entrando em carteiras. Acesso seguro sem memorizar senhas. Mas ainda em fase inicial (não 100% seguro).
+      </blockquote>
+
+      <h3>Quantum Computing e Fim da Criptografia?</h3>
+      <p>Computadores quânticos (esperados em 2030-2040) conseguem quebrar RSA e ECC facilmente (fatoração rápida). Blockchain é vulnerável? Parcialmente. Bitcoin usa ECDSA (derivado de ECC), quebrável por quantum. Mas Bitcoin consegue fazer soft fork para algoritmo quantum-resistant. Ethereum tem plano similar. Industria está preparada. Não é problema imediato mas é considerado.</p>
+    `,
+    cards: [
+      {
+        q: 'Como funcionam assinaturas digitais em blockchain?',
+        a: 'Você encripta hash da transação com sua chave privada (criando assinatura). Rede desencripta com sua chave pública para verificar. Prova que você enviou transação sem revelar chave privada.'
+      }
+    ]
+  },
+  {
+    id: 'bw_t4',
+    name: 'Web3: A Internet Descentralizada',
+    dur: '20 min',
+    content: `
+      <h3>Web1, Web2, Web3: Evolução da Internet</h3>
+      <p><strong>Web1 (1990s-2000s):</strong> Internet era read-only. Websites estáticos. Você lia. Yahoo direcionava para sites. Não havia interação.</p>
+      <p><strong>Web2 (2000s-2020s):</strong> Internet é read-write. Você cria conteúdo (Facebook, Instagram, YouTube). Mas corporações (Meta, Google, Amazon) controlam dados. Elas monetizam seus dados vendendo anúncios. Você cria, elas lucram. Elas têm poder imenso (podem deletar sua conta, alterar algoritmo, vender dados).</p>
+      <p><strong>Web3 (2020+):</strong> Internet é read-write-own. Você cria, você controla, você lucra. Dados são seus. Você monetiza seu próprio conteúdo, se quiser. Nenhuma corporação no meio. Descentralizado.</p>
+
+      <blockquote class="tip">
+        Web3 não é sobre tecnologia específica (blockchain). É sobre filosofia: você, não corporações, controla seus dados e identidade.
+      </blockquote>
+
+      <h3>Diferenças Práticas: Web2 vs Web3</h3>
+      <h4>Propriedade de Dados</h4>
+      <p><strong>Web2:</strong> Você usa Facebook. Seus dados (fotos, amigos, mensagens) são propriedade de Meta. Meta faz o que quer. (Web3: Você usa aplicação descentralizada. Seus dados são seus. Você controla.</p>
+
+      <h4>Intermediários</h4>
+      <p><strong>Web2:</strong> Para enviar dinheiro, precisa PayPal. Para vender item, precisa eBay (eles cobram 15%). Para emprestar, precisa banco. <strong>Web3:</strong> Enviam dinheiro direto (blockchain). Venda direto (smart contract garante entrega antes do pagamento). Emprestar direto (protocolo DeFi faz matching).</p>
+
+      <h4>Censura</h4>
+      <p><strong>Web2:</strong> Plataforma pode banir você. Twitter baniu Trump. Você perdeu audiência. <strong>Web3:</strong> Ninguém consegue banir. Dados estão em rede distribuída. Irremovível.</p>
+
+      <h4>Privacidade</h4>
+      <p><strong>Web2:</strong> Corporações rastreiam você (cookies, tracking pixels). Vendem dados (anonymized). Governo consegue dados fácil (subpoena). <strong>Web3:</strong> Você é pseudônimo. Rede não sabe quem você é (apenas endereço criptográfico). Privacidade é default.</p>
+
+      <h3>Smart Contracts - Código é Lei</h3>
+      <p>Smart contract é programa que roda em blockchain. Quando condições são atendidas, executa automaticamente. Exemplo: contrato de seguros. Você faz seguro de viagem. Contrato diz: "se voo é cancelado, reembolso automático". Sistema monitora voos. Voo é cancelado? Contrato dispara. Você recebe reembolso em segundos. Sem formulários, sem espera, sem negligência de companhia de seguros.</p>
+
+      <blockquote class="example">
+        Caso Real (MakerDAO): Protocolo de stablecoin. Você deposita ETH como colateral. Recebe DAI (moeda estável). Colateral cai de valor? Contrato avisa: "adicione colateral ou será liquidado". Você não responde? Colateral é vendido automaticamente. Sistema é honesto, não há subjetividade, não há corrupção. Roda desde 2015, nunca falhou.
+      </blockquote>
+
+      <h3>DApps: Aplicações Descentralizadas</h3>
+      <p>DApp é como app normal, mas backend roda em blockchain (smart contract). Frontend é GUI normal (website, mobile app). Exemplo: Uniswap (exchange descentralizado). Interface web normal (parece exchange tradicional). Mas backend é smart contract em Ethereum. Quando você troca tokens: (1) Frontend envia transação com seu trade. (2) Smart contract valida. (3) Contrato faz swap de tokens. (4) Blockchain registra. Resultado: exchange sem proprietário, sem conta (só precisa wallet), sem KYC, 24/7.</p>
+
+      <h3>DAOs: Organizações Sem CEO</h3>
+      <p>DAO é organização que funciona via smart contracts e votação. Não tem CEO, não tem diretoria. Decisões são votadas. Fundos são gerenciados via smart contracts. Exemplo: Uniswap Labs. Token UNI representa direito de voto. Holders votam em mudanças. Maioria decide. Resultado: organização democrática, trustless. Ninguém consegue fazer mudança unilateral.</p>
+
+      <blockquote class="news">
+        Tendência 2026: DAOs estão crescendo. Não é apenas DeFi protocols. Há DAOs de produtoras de conteúdo, DAOs de investimento imobiliário, DAOs de pesquisa científica. Padrão organizacional completamente novo emergindo.
+      </blockquote>
+
+      <h3>Identidade Auto-Soberana</h3>
+      <p>Seu certificado de nascimento? Governo controla. Sua licença de direção? Estado controla. Sua conta bancária? Banco controla. Web3 propõe: você controla sua identidade. Certificados são registrados em blockchain. Só você consegue "provar" que tem certificado (via chave privada). Governo não consegue cancelar (está em blockchain imutável). Você consegue controlar acesso (prove apenas idade sem revelar nome, se quiser).</p>
+
+      <p>Casos de uso: refugiados sem documentação conseguem identidade verificável. Desbancarizados conseguem conta via identidade blockchain. Dissidentes conseguem participar de economia sem governo rastrear.</p>
+
+      <h3>Desafios Práticos de Web3 em 2026</h3>
+      <p>(1) <strong>Usabilidade:</strong> Blockchain é complicado. Chaves privadas, gas fees, slippage - usuário médio se confunde. (2) <strong>Regulação:</strong> Governo não ama descentralização (não consegue coletar impostos facilmente, rastrear criminosos). Regulação está apertando em 2025-2026. (3) <strong>Escalabilidade:</strong> Blockchain base é lento. Layer 2 solutions ajudam mas não resolvem 100%. (4) <strong>Segurança:</strong> Smart contracts têm bugs. Bugs são explorados. Bilhões são roubados anualmente. (5) <strong>Experiência:</strong> Ainda é muito "tech-heavy". Não é tão simples quanto clicar botão.</p>
+
+      <p>Apesar dos desafios, Web3 é movimento irreversível. Tendência é que próxima geração (Gen Z em diante) crescerá assumindo controle de seus dados como normal.</p>
+    `,
+    cards: [
+      {
+        q: 'Qual é a diferença fundamental entre Web2 e Web3?',
+        a: 'Web2: corporações controlam seus dados e lucram com eles. Web3: você controla seus dados, identidade e propriedade sem intermediário corporativo.'
+      }
+    ]
+  },
+  {
+    id: 'bw_t5',
+    name: 'DeFi: Finanças Descentralizadas e Oportunidades',
+    dur: '20 min',
+    content: `
+      <h3>O Que é DeFi?</h3>
+      <p>DeFi significa finanças descentralizadas. É construir sistema financeiro em blockchain sem bancos, fundos de investimento, ou intermediários. Tudo é substituído por smart contracts. Protocolo automático. Sem taxas altas. Sem burocracia. Sem horário. 24/7/365.</p>
+
+      <h3>Componentes Principais de DeFi</h3>
+      <h4>1. Exchanges Descentralizadas (DEXs)</h4>
+      <p>Você quer trocar Bitcoin por Ethereum. Tradicional: vai Binance, faz contanto, Binance guarda seu dinheiro temporariamente (risco de Binance falir/hackear). Descentralizado: você conecta wallet ao Uniswap. Seleciona Bitcoin → Ethereum. Clica swap. Smart contract automaticamente troca seu Bitcoin pelo Ethereum de outro usuário. Nenhum intermediário. Você controla o tempo todo.</p>
+
+      <p>DEXs funcionam via Liquidity Pools. Pessoas deposita pares de tokens (BTC + ETH em igual valor). Ganham taxas quando alguém faz trade. Exemplo: você deposita 1 BTC + 15 ETH em Uniswap. Ganhou LP token (representa sua quota). Conforme pessoas tradejam, você ganha pequena taxa (~0.25%) de cada trade. No final de ano, retira 1.1 BTC + 16.5 ETH (ganhou!).</p>
+
+      <blockquote class="tip">
+        DEXs são inovação game-changing. Permitem trading 24/7 sem corretora. Taxas são frações de percentual em vez de 0.1-1%. Acessível para quantias pequenas.
+      </blockquote>
+
+      <h4>2. Empréstimos (Lending)</h4>
+      <p>Você tem Ethereum, quer emprestar para ganhar juros. Tradicional: banco dá 0.01% de juros (roubada). Descentralizado: vai Aave, deposita ETH. Recebe jUSDC (token que representa sua posição). Conforme tempo passa, token cresce em valor. Ganhas ~8% de juros anual (muito melhor).</p>
+
+      <p>Quem paga juros? Outros usuários que querem emprestar. Você tem ETH deposita. Alguém quer pegar emprestado ETH. Contrato de empréstimo é criado automaticamente. Mutuário fornece colateral (mais ETH que está pegando). Se mutuário não paga, colateral é liquidado para cobrir empréstimo. Sistema é trustless: nenhum humano julgando se você consegue pagar.</p>
+
+      <h4>3. Stablecoins</h4>
+      <p>Problema com cripto: volatilidade. Bitcoin varia 20% em um dia. Impossível usar como dinheiro diário. Solução: stablecoin. Moeda digital que não flutua. Como? (1) <strong>Backed por Fiat:</strong> USDC, USDT. Cada coin é backed por dólar em banco. Você confia que existe dólar no banco. Mas é centralizado (banco controla). (2) <strong>Backed por Cripto:</strong> DAI. Você deposita Ethereum como colateral. Contrato faz matching: valor de DAI emitido = 150% do valor de ETH. Se ETH cai, seu colateral é liquidado. Overcollateralization garante DAI fica perto de $1. Descentralizado, ninguém pode "imprimir" DAI arbitrariamente.</p>
+
+      <h4>4. Derivativos</h4>
+      <p>Aposta em preço futuro. Exemplo: você acha Bitcoin vai subir. Você compra "contract for difference" (CFD) que diz "pague R$100, ganhe R$10 para cada R$1 que Bitcoin sube" (leverage). Se Bitcoin sobe R$5.000, você ganha R$50.000. Mas se cai R$5.000, você perde R$50.000. DeFi oferece derivativos via protokols como Synthetix, dYdX. Sem corretora. Direto.</p>
+
+      <h3>Oportunidades e Riscos de DeFi</h3>
+      <h4>Oportunidades</h4>
+      <ul>
+        <li>Acesso democratizado a finanças (não precisa ser rico, não há account minimum)</li>
+        <li>Retornos altos (8-20% APY em lending vs 0.01% em banco tradicional)</li>
+        <li>Inovação rápida (novos protocolos a cada semana)</li>
+        <li>Transparência (código é aberto, sabe exatamente como funciona)</li>
+        <li>Sem intermediários (você controla)</li>
+      </ul>
+
+      <h4>Riscos</h4>
+      <ul>
+        <li>Smart contract bugs (código tem vulnerabilidade, bilhões são roubados anualmente)</li>
+        <li>Flash loans (ataque onde alguém empresta quantidade enorme de cripto, manipula preço, lucra, repaga tudo em 1 bloco, tudo instantaneamente)</li>
+        <li>Liquidação (colateral cai de valor rápido, você é liquidado, perde tudo)</li>
+        <li>Rug pull (desenvolvedores pegam dinheiro dos usuários e somem)</li>
+        <li>Volatilidade (preço muda 50% em um dia)</li>
+      </ul>
+
+      <blockquote class="example">
+        Caso Real: Em 2023, protocolo Curve teve vulnerability. Atacante tirou R$600 milhões. Moraleja: DeFi ainda é fronteira selvagem. Recompensa é alta mas risco é imenso.
+      </blockquote>
+
+      <h3>DeFi 2.0: Evolução em 2026</h3>
+      <p>DeFi em 2023-2024 era "Wild West". 2026? Mais maduro, mais seguro. Tendências: (1) Auditorias rigorosas antes de launch. (2) Seguro (protocolos de seguros permitem você ser reembolsado se hack). (3) Governança melhorada (DAO token holders votam em mudanças). (4) Composabilidade (protocolos se integram - "lego blocks" financeiros). (5) Regulação (SEC e reguladores estão estabelecendo regras).</p>
+
+      <p>DeFi não vai substituir finanças tradicionais completamente em 2026. Mas está erodindo market share. Banks tradicionais estão criando "blockchain divisions" para competerem. Hibridização está acontecendo.</p>
+    `,
+    cards: [
+      {
+        q: 'Como funcionam exchanges descentralizadas (DEXs) comparado a tradicionais?',
+        a: 'DEXs usam smart contracts e liquidity pools. Usuários trocam diretamente um com outro. Sem exchange controlando. Taxas são frações de percentual. 24/7. Sem KYC.'
+      }
+    ]
+  },
+  {
+    id: 'bw_t6',
+    name: 'Implementação Prática: Como Começar com Blockchain e Cripto',
+    dur: '18 min',
+    content: `
+      <h3>Primeiros Passos com Blockchain</h3>
+      <p>Se quer explorar blockchain, comece com prudência. Não invista tudo. Comece com pequena quantia que você consegue perder.</p>
+
+      <h3>Passo 1: Criar Carteira</h3>
+      <p>Primeira coisa: carteira. Opções: (1) <strong>MetaMask (Hot Wallet Web):</strong> Extensão de navegador. Fácil de usar. Suportado por maioria de apps. Risco: computador é hackeado, roubo. (2) <strong>Ledger/Trezor (Cold Wallet Hardware):</strong> Dispositivo físico (~R$600). Muito seguro. Incômodo de usar. (3) <strong>Mobile Wallet (Argent, Trust Wallet):</strong> App no celular. Mais fácil que desktop. Um pouco menos seguro.</p>
+
+      <p>Recomendação para iniciante: MetaMask. Fácil, seguro o suficiente se você toma precauções (não clica em links suspeitos, não compartilha seed phrase).</p>
+
+      <h3>Passo 2: Conseguir Cripto Inicialmente</h3>
+      <p>Você cria carteira. Agora precisa colocar cripto lá. Opções: (1) <strong>Comprar em Exchange (Binance, Kraken, Coinbase):</strong> Mais fácil. KYC requerido (submete ID). Você faz depósito (PIX, transferência bancária). Compra Bitcoin/Ethereum. Transfiere para sua carteira. (2) <strong>Receber de alguém:</strong> Amigo que tem cripto transfere para seu endereço. Você apenas fornece endereço público da sua carteira (seguro compartilhar). (3) <strong>Minerar:</strong> Seu computador resolve problemas matemáticos, recebe cripto. Só viável se tem GPU potente e eletricidade barata.</p>
+
+      <h3>Passo 3: Explorar DeFi com Pequenas Quantidades</h3>
+      <p>Uma vez que tem cripto, acessar DeFi. Exemplo: Ethereum + USDC. (1) Vá ao Uniswap. Conecte carteira MetaMask. (2) Selecione Ethereum → USDC. Escolha quantidade. (3) Reviese transação (taxa de gas, taxa de Uniswap). (4) Clique "Swap". (5) MetaMask pede confirmação. Você aprova com botão. (6) Transação é enviada para blockchain. Aguarde ~30 segundos. (7) Transação é confirmada. Seu wallet agora tem USDC em vez de ETH.</p>
+
+      <p>Isso é simples! Você apenas trocou tokens direto, sem intermediário. Sem conta de exchange. Sem KYC no swap.</p>
+
+      <h3>Passo 4: Aprender Gerenciamento de Risco</h3>
+      <p>Crypto é volátil. Você pode perder tudo. Regras: (1) <strong>Nunca invista mais que consegue perder.</strong> (2) <strong>Diversifique.</strong> Não coloca tudo em 1 moeda. (3) <strong>Dollar-Cost Averaging (DCA):</strong> Ao invés de comprar tudo de uma vez (pode ser no pico), compre pequenas quantidades regularmente (pode ser na média). (4) <strong>Não use alavancagem (leverage)</strong> inicialmente. (5) <strong>Não faça day-trading.</strong> Statistically, traders perdem dinheiro.</p>
+
+      <blockquote class="tip">
+        Estratégia mais simples e efetiva para iniciante: compra Bitcoin/Ethereum, armazena em cold wallet, esquece por 5 anos. Histórico mostra que fazendo isso você ganha. Tudo mais é gambling.
+      </blockquote>
+
+      <h3>Passo 5: Estudar Casos de Uso Reais</h3>
+      <p>Blockchain não é apenas moeda especulativa. Casos de uso: (1) <strong>Fintech para desbancarizados:</strong> Remessas com fees baixas. (2) <strong>Supply Chain:</strong> Rastrear origem de produtoVia blockchain. (3) <strong>Identidade:</strong> Pessoas sem documentação conseguem ID em blockchain. (4) <strong>Propriedade Intelectual:</strong> NFTs provam você é creator original. (5) <strong>Saúde:</strong> Registros médicos em blockchain (você controla, compartilha com médicos).</p>
+
+      <h3>Segurança Prática: Checklist</h3>
+      <ul>
+        <li>Guarde seed phrase em lugar seguro (não em telefone, não compartilhe)</li>
+        <li>Mantenha software (MetaMask, etc) atualizado</li>
+        <li>Nunca clique em links em emails sobre cripto (phishing)</li>
+        <li>Sempre verifique URL de sites (scammers fazem sites fake que parecem reais)</li>
+        <li>Se algo pede sua chave privada, é scam (ninguém legítimo pede)</li>
+        <li>Teste carteira com pequena quantia antes de colocar valor grande</li>
+        <li>Use hardware wallet se tem quantia grande (>R$10.000)</li>
+      </ul>
+
+      <h3>Tendências Práticas em 2026</h3>
+      <p>(1) <strong>Account Abstraction:</strong> Carteiras estão ficando mais fáceis (menos precisa de seed phrases). (2) <strong>Layer 2s:</strong> Blockchain base é lento. Layer 2 (como Arbitrum, Optimism em Ethereum) oferece transações rápidas e baratassobre Ethereum base. (3) <strong>Mobile Crypto:</strong> Maioria de entrada será via mobile, não desktop. (4) <strong>Integração Corporativa:</strong> Empresas (até conservadores como Starbucks) estão explorando blockchain para loyalty programs, supply chain.</p>
+
+      <h3>Quando Não Usar Blockchain</h3>
+      <p>Seja honesto: blockchain não é solução para tudo. Não use se: (1) Você quer armazenar arquivo grande (muito caro em blockchain). (2) Você quer muita velocidade (blockchain é lento vs banco de dados centralizado). (3) Você confia um intermediário (não precisa descentralização). (4) Você quer privacidade total (blockchain é transparente).</p>
+
+      <p>Use blockchain se: (1) Você quer descentralização. (2) Você quer imutabilidade. (3) Você quer resistência a censura. (4) Você quer eliminar intermediário (economizar taxas, tempo).</p>
+    `,
+    cards: [
+      {
+        q: 'Qual é o primeiro passo para começar a explorar blockchain como usuário?',
+        a: 'Criar uma carteira (como MetaMask), conseguir pequena quantidade de cripto, e explorar com prudência. Nunca invista mais que consegue perder.'
+      }
+    ]
+  },
+  {
+    id: 'bw_t7',
+    name: 'NFTs e Propriedade Digital',
+    dur: '18 min',
+    content: `
+      <h3>O Que É Um NFT?</h3>
+      <p>NFT = Non-Fungible Token. "Non-fungible" significa único, não intercambiável. Dólar é fungível (meu dólar é igual ao seu, você consegue trocar). NFT é não-fungível (meu NFT é diferente do seu). NFT é certificado digital que prova você é dono de algo. Algo pode ser: arte digital, música, vídeo, item de jogo, imóvel, identidade, qualquer coisa que tem valor.</p>
+
+      <h3>Como Funciona Um NFT</h3>
+      <p>(1) Você cria artwork digital. (2) Faz "minting" - criar NFT que representa artwork. Blockchain registra: "NFT de ID 12345 representa artwork 'Pintura Azul', criado por endereço 0x123456...". (3) NFT existe em blockchain eternamente (imutável). (4) Você vende NFT para alguém (preço: 5 ETH). Blockchain registra novo proprietário. (5) Novo proprietário pode vender novamente. Cada transação é registrada na blockchain.</p>
+
+      <h3>Diferença Entre NFT e Arquivo Digital</h3>
+      <p>Alguém copiar seu artwork digital? Consegue (copy-paste). Arquivo agora existe em bilhões de computadores. Qual é "original"? Com NFT, há diferença. Há um NFT (blockchain prova). Arquivo pode ser copiado, mas apenas um NFT existe. É como a diferença entre foto de Mona Lisa (bilhões têm) vs Mona Lisa original no Louvre (apenas um).</p>
+
+      <p>Value de NFT não é no arquivo. É na "autenticidade" registrada em blockchain. Você possui certificado de propriedade que é verificável eternamente.</p>
+
+      <blockquote class="tip">
+        NFT é melhor entendido como "título de propriedade" não como arquivo. O arquivo é público, copiável. O título é único, registrado em blockchain.
+      </blockquote>
+
+      <h3>Casos de Uso Práticos de NFTs</h3>
+      <h4>1. Arte Digital</h4>
+      <p>Artista cria arte. Faz NFT. Vende para colecionador. Artista pode colocar cláusula: a cada vez que NFT é revendido, artista recebe 10% de royalty. Automático, sem intermediário (galeria de arte).</p>
+
+      <h4>2. Itens de Jogo</h4>
+      <p>Você ganha espada lendária em jogo. Espada é NFT. Você consegue vender para outro jogador. Verdadeira propriedade (jogo não consegue deletar, roubar, ou desvalorizar arbitrariamente). Jogar é investimento potencial.</p>
+
+      <h4>3. Identidade e Credenciais</h4>
+      <p>Você tem diploma de universidade. Diploma é NFT. Registrado em blockchain. Você pode provar que é engenheiro sem revelar seu nome (privacidade). Universidade não consegue cancelar (está em blockchain imutável).</p>
+
+      <h4>4. Rastreabilidade e Propriedade de Bens Físicos</h4>
+      <p>Você compra bolsa de designer. Bolsa vem com QR code. Escaneia no smartphone. NFT aparece ligado a bolsa. Prova autenticidade. Quando vende bolsa, transfere NFT. Próximo comprador sabe cadeia de propriedade completa. Impossível falsificar bolsa autêntica.</p>
+
+      <h4>5. Eventos e Tickets</h4>
+      <p>Você compra ticket de show como NFT. Você consegue revender. Mas artista coloca regra: só consegue revender uma vez (evita "scalping" - revender ticket por 10x o preço). Flexibilidade via smart contract.</p>
+
+      <h3>Críticas Legítimas de NFTs</h3>
+      <p>(1) <strong>Especulação Desenfreada:</strong> 2021-2022, muitos NFTs sem valor real foram criados. Hype. Bolha explodiu. (2) <strong>Impacto Ambiental:</strong> NFTs em blockchain que usa PoW (como Bitcoin) consomem muita energia. Em Ethereum (agora PoS) não é problema. (3) <strong>Pirataria:</strong> Alguém pega arte de outro, cria NFT, vende. Blockchain prova que alguém vendeu, mas não prova que era dono legítimo. (4) <strong>Utilidade Duvidosa:</strong> Muitos NFTs não têm real utility. Apenas "colecionável" com esperança de preço subir.</p>
+
+      <blockquote class="example">
+        Especulação de 2021-2022: Pessoa compra imagem de macaco aleátória (Bored Ape) por R$5.000. Espera valorizar para R$50.000. Não acontece. Moraleja: NFT especulativo é gambling, não investimento.
+      </blockquote>
+
+      <h3>O Futuro de NFTs: 2026+</h3>
+      <p>Em 2021-2022, NFTs foram sobre arte especulativa. 2026? Muito mais prático. Expectativas: (1) <strong>Propriedade Real:</strong> Imóveis como NFTs. Certificado de propriedade em blockchain. Transferência de imóvel é transferência de NFT (segundos, sem cartório). (2) <strong>Identidade:</strong> Diplomas, certificados profissionais como NFTs. Você prova credencial sem papel. (3) <strong>Gaming:</strong> Itens de jogo são NFTs. Você realmente possui (não é "empréstimo" de developer). Jogo pode fechar mas você ainda possui itens. (4) <strong>Corporativo:</strong> Empresas usam NFTs para supply chain (rastreamento de produto), certificados de autenticidade, programas de lealdade.</p>
+
+      <h3>Investindo em NFTs (Com Prudência)</h3>
+      <p>Se quer explorar NFTs como investimento: (1) <strong>Entenda Projeto:</strong> Por que NFT tem valor? Qual é "utility"? (2) <strong>Não Especule Cegamente:</strong> Evita memes aleatórios. (3) <strong>Diversifique:</strong> Não coloca tudo em 1 NFT. (4) <strong>Longo Prazo:</strong> Especulação de curto prazo é gambling. (5) <strong>Suporte Comunidade:</strong> NFTs com comunidade ativa (Discord, eventos) tendem a manter valor. Projetos mortos perdem valor.</p>
+
+      <p>Realidade: maioria de NFTs vai para zero. Alguns vão valorizar 100x. É exposição de risco alto/recompensa alta.</p>
+    `,
+    cards: [
+      {
+        q: 'O que é um NFT e por que é diferente de apenas compartilhar um arquivo digital?',
+        a: 'NFT é um certificado de propriedade registrado em blockchain. O arquivo pode ser copiado, mas apenas um NFT existe (imutável). Prova autenticidade e propriedade original.'
+      }
+    ]
+  },
+  {
+    id: 'bw_t8',
+    name: 'Identidade Auto-Soberana e Governança Descentralizada',
+    dur: '20 min',
+    content: `
+      <h3>O Problema com Identidade Centralizada</h3>
+      <p>Seu ID é emitido pelo governo. Seu passaporte é emitido pelo governo. Sua carteira de motorista é emitida pelo governo. Seu diploma é emitido pela universidade. Dependência: se governo não gosta de você, pode revogar ID (pessoa desaparece legalmente). Se universidade for hackeada, diploma é falso (não tem como verificar autenticidade). Se ID é perdido, burocracia imensa para emitir novo.</p>
+
+      <p>Problemas globais: 850 milhões de pessoas não têm documento de identificação (ACNUR). São invisíveis para sistema financeiro e legal. Não conseguem abrir conta bancária, assinar contrato, votar.</p>
+
+      <h3>Identidade Auto-Soberana (Self-Sovereign Identity)</h3>
+      <p>Conceito: você é dono e gerente da sua própria identidade. Não depende de governo ou corporação. Implementação em blockchain:</p>
+
+      <h4>Como Funciona</h4>
+      <p>(1) Você cria identificação (usando chave privada seu, que só você controla). (2) Você credenciais são registradas em blockchain (imutável). (3) Você compartilha credenciais com quem precisa (universidade vê seu diploma, banco vê seu ID). (4) Cada compartilhamento é verificável (blockchain confirma autenticidade). (5) Você consegue controlar granularidade (provar idade sem revelar nome, provar nacionalidade sem revelar endereço).</p>
+
+      <blockquote class="tip">
+        Auto-soberania não significa "sem padrões". Significa você, não intermediário, controla. Universidade ainda emite seu diploma, mas diploma registrado em blockchain, você controla acesso.
+      </blockquote>
+
+      <h3>Padrões de Identidade em Blockchain</h3>
+      <h4>DIDs (Decentralized Identifiers)</h4>
+      <p>Identificador único, você controla. Formato: did:example:123456. Não é nome, não é email. É ID criptográfico. Qualquer um consegue resolver (verificar) mas apenas você consegue controlar (com chave privada).</p>
+
+      <h4>VCs (Verifiable Credentials)</h4>
+      <p>Documento que prova algo sobre você. Exemplo: "João Silva tem diploma de engenharia da USP, emitido em 2020, válido indefinidamente". Assinado digitalmente por USP. Você consegue compartilhar com empregador. Empregador verifica assinatura. Sabe que USP de fato emitiu. Impossível forjar.</p>
+
+      <h3>Casos de Uso Práticos de SSI</h3>
+      <h4>1. Refugiados e Deslocados</h4>
+      <p>Pessoa é refugiada em novo país. Perdeu documentos (ou governo destruiu). Consegue registrar identidade em blockchain. Prova quem é sem papel. Consegue trabalho, abre conta bancária, aluga casa. Anteriormente impossível.</p>
+
+      <h4>2. Pessoas Não-Bancarizadas</h4>
+      <p>Pessoa vive em país instável (sem governo estável). Consegue identidade via blockchain. Abre conta DeFi. Economiza cripto (mais seguro que guardar dinheiro em casa). Acessa mercados financeiros globais.</p>
+
+      <h4>3. Diplomas Verificáveis</h4>
+      <p>Estudante se forma. Universidade emite diploma como VC. Estudante compartilha com empregador. Empregador verifica (e sabe que é falso, não consegue forjar). Sem necessidade de universidade confirmar manualmente.</p>
+
+      <h4>4. Renda Básica Digital</h4>
+      <p>Governo emite renda básica universal em cripto. Identidade em blockchain garante apenas residentes recebem. Distribuição é automática, sem burocracia.</p>
+
+      <h3>Governança Descentralizada (DAOs)</h3>
+      <p>Como uma organização funciona sem CEO? Via DAO.</p>
+
+      <h4>Estrutura Típica de DAO</h4>
+      <p>(1) <strong>Tokenomics:</strong> Organização emite token governança. Token holders votam em decisões. (2) <strong>Proposta:</strong> Alguém propõe mudança (contratar pessoa, alocar budget, mudar regra). (3) <strong>Discussão:</strong> Comunidade discute em forum/Discord. (4) <strong>Votação:</strong> Token holders votam. Maioria decide. (5) <strong>Execução:</strong> Smart contract executa decisão automaticamente (transfere fundos, muda parâmetros, etc).</p>
+
+      <h4>Exemplos de DAOs</h4>
+      <p><strong>Uniswap DAO:</strong> Governa protocolo Uniswap (exchange descentralizado). Holders de UNI votam em mudanças. <strong>Maker DAO:</strong> Governa protocolo Maker (stablecoin). MKR holders votam em parâmetros de risco. <strong>Loot DAO:</strong> DAO de investimento imobiliário. Token holders votam em que propriedade comprar. Ganhos são distribuídos proporcionalmente.</p>
+
+      <blockquote class="example">
+        Caso Real: Ethereum Classic 51% Attack. Alguns queriam mudar blockchain para reverter transações. Votação aconteceu. Maioria votou "não". Decisão foi respeitada. Se fosse corporação, CEO poderia fazer unilateralmente. DAO deixa comunidade decidir.
+      </blockquote>
+
+      <h3>Desafios de DAOs em 2026</h3>
+      <p>(1) <strong>Voter Apathy:</strong> Nem todo token holder vota. Quorum frequentemente é problema. (2) <strong>Plutocratia:</strong> Quem tem mais tokens tem mais voto. Pessoas ricas dominam. (3) <strong>Lentidão:</strong> Votação leva dias. Corporação consegue mudar direção em minutos. (4) <strong>Regulação:</strong> Legal status de DAO é confuso (é empresa? é associação? é isso que governo não sabe).</p>
+
+      <h3>Futuro: Hybrid Governance</h3>
+      <p>Tendência emergente: não é "DAO puro" ou "corporação pura". É híbrido. Empresa tem CEO mas DAO governance para decisões específicas (finanças públicas, mulher). Exemplo: Meta (Facebook) poderia ter "Oversight Board" de stakeholders votarem em polêmicas (livre expressão, moderation). DAO oferece precedente.</p>
+    `,
+    cards: [
+      {
+        q: 'O que é identidade auto-soberana (SSI) e qual é o benefício?',
+        a: 'Identidade que você controla e registra em blockchain, não dependendo de governo. Benefício: você prova quem é, compartilha credenciais, sem intermediário. Especialmente importante para refugiados e não-bancarizados.'
+      }
+    ]
+  },
+  {
+    id: 'bw_t9',
+    name: 'Futuro de Web3 e Blockchain: 2026-2030 e Além',
+    dur: '20 min',
+    content: `
+      <h3>A Convergência de Tecnologias</h3>
+      <p>Em 2026, blockchain não é isolado. Converge com: (1) IA - IA faz decisões financeiras descentralizadas. (2) IoT - dispositivos fazem transações automaticamente. (3) 5G - latência ultra-baixa para blockchain. (4) Quantum - ameaça criptografia e oportunidade de quantum-resistant crypto. Essa convergência criará realidade que hoje parece ficção.</p>
+
+      <h3>1. Economia Tokenizada</h3>
+      <p>Futuro: tudo tem token. Seu tempo é token (você trabalha, recebe token). Seu conteúdo é token (você publica, recebe token de leitores). Até seu voto é token (democracia liquid). Economia torna-se granular, líquida, global. Pessoa pode monetizar qualquer coisa em tempo real.</p>
+
+      <p>Implicação: intermediários (YouTube, Facebook, banco) desaparecem. Você interage diretamente com consumidor/cliente. Você captura 100% de valor em vez de 70% (YouTube tira 30%).</p>
+
+      <h3>2. Privacy por Default</h3>
+      <p>Hoje: você é rastreado (cookies, IP, geolocalização). Futuro: privacidade é default. Zero-knowledge proofs permitem você provar algo (você tem credencial, você tem fundos) sem revelar identidade. Exemplo: você vota, blockchain registra você votou, mas não vota em quem (privacidade de voto garantida).</p>
+
+      <blockquote class="news">
+        Tendência 2026: Privacy-centric blockchains (Monero, Zcash) estão ganhando relevância. Governos não gostam (não conseguem rastrear criminosos), mas liberdades civis defendem.
+      </blockquote>
+
+      <h3>3. Propriedade Fracionada (Fractional Ownership)</h3>
+      <p>Você quer comprar Picasso, custa R$100 milhões. Impossível sozinho. Com blockchain: Picasso é tokenizado em 1 milhão de tokens. Você compra 1000 tokens (R$100 mil). 1000 outros fazem o mesmo. Todos são proprietários fracionados. Quando Picasso é vendido, lucro é dividido proporcionalmente. Desbloqueou acesso a investimentos antes exclusivos de ricos.</p>
+
+      <h3>4. Automatização Completa via DAO + AI</h3>
+      <p>DAO roda via smart contracts. Adicione IA que decide automaticamente (sem votação). Exemplo: "Se mercado é bearish por 7 dias, venda 20% de posição". IA monitora, vende automaticamente. Não há humano fazendo manejo ativo. Resultado: portfolio otimizada continuamente, sem intervenção.</p>
+
+      <h3>5. Metaverso Econômico Descentralizado</h3>
+      <p>Metaverso é virtual world. Em 2026, começará ter economia própria. Você trabalha em metaverso (designer, construtor de mundo), recebe cripto. Compra terreno virtual (NFT), constrói loja, vende itens. Economia virtual é tão real quanto física. Blockchain permite que seja descentralizado (Roblox não consegue controlar, tomar seus ativos).</p>
+
+      <blockquote class="example">
+        Visão Futura (2030): Você tem identidade em blockchain. Você ganho renda em cripto fazendo trabalho remoto. Você gasta em metaverso comprando terreno, construindo casa, investindo em DAO. Você nunca usa banco tradicional. Possível? Sim. Normal? Ainda não em 2026, mas em caminho.
+      </blockquote>
+
+      <h3>6. Regulação Clara (Finalmente)</h3>
+      <p>Em 2023-2024, regulação era incerta. FTX colapsou por falta de supervisão. Em 2026+, esperamos: (1) Definição clara de "moeda", "segurança", "commodity". (2) Requerimentos de capital e reserava para exchanges. (3) Proteção ao consumidor. (4) Impostos claros. Não é "fim da cripto", é "cripto crescendo em ecossistema regulado".</p>
+
+      <h3>7. Scalability Resolvida</h3>
+      <p>Em 2026, blockchain base (Bitcoin, Ethereum) ainda é lento. Mas Layer 2s (Arbitrum, Optimism) e outras chains (Solana, Polygon) resolvem. Transações são rápidas e baratas. Isso reduz barreira de entrada. Adoção aumenta exponencialmente.</p>
+
+      <h3>8. Blockchain Corporativo (Enterprise)</h3>
+      <p>Grandes empresas (Walmart, Apple, JPMorgan) estão explorando blockchain para supply chain, pagamentos internacionais, etc. Não é sobre descentralização radical. É sobre eficiência. Em 2030, maioria de grandes corporações usa blockchain de alguma forma.</p>
+
+      <h3>Cenários Contrastantes: Otimista vs Pessimista</h3>
+      <h4>Cenário Otimista (2030)</h4>
+      <p>Blockchain é ubíquo. Pessoas usam sem saber (UX é transparente). Identidade é autossouverana. Governos são accountable via blockchain (gastos públicos são transparent). Economia é descentralizada. Pessoas têm agência. Criatividade e inovação explodem.</p>
+
+      <h4>Cenário Pessimista (2030)</h4>
+      <p>Blockchain foi co-opted por corporações mega-sized (Amazon, Google, Apple). Descentralização foi ilusão. Cérebros de blockchain agora trabalham para corporações. Governos regulam de forma a enfraquecer. Adoção é lenta. Esperanças não se realizam.</p>
+
+      <p>A verdade provavelmente está no meio: alguns sucessos, algumas falhas, realidade mais matizada que visão utópica ou distópica.</p>
+
+      <h3>Seu Role no Futuro de Web3</h3>
+      <p>Se quer participar: (1) <strong>Aprenda:</strong> Blockchain, smart contracts, DeFi, DAOs. (2) <strong>Experimente:</strong> Use protocolo (Uniswap, Aave, OpenSea). Veja como funciona. (3) <strong>Construa:</strong> Blockchain precisa de developers, designers, marketers. Demanda é enorme. (4) <strong>Questione:</strong> Não aceite tudo como verdade. Cripto tem hype. Mantenha pensamento crítico. (5) <strong>Comunidade:</strong> Participe de comunidades (DAOs, protocolos). Blockchain é movimento comunitário.</p>
+
+      <h3>Advertência Final: Segurança e Sanidade</h3>
+      <p>Blockchain é poderoso, mas também é perigoso se usado irresponsavelmente. Pessoa perde chave privada? Dinheiro sumiu para sempre. Pessoa investe em scam coin? Perde tudo. Pessoa vira DeFi degen (usa leverage demais)? Liquidado. Blockchain não tem rede de segurança. Você é responsável. Educação e prudência são essenciais.</p>
+
+      <p>Com isso dito, blockchain é uma das tecnologias mais importantes do século. Entender agora (2026) você posiciona para décadas de oportunidade à frente.</p>
+    `,
+    cards: [
+      {
+        q: 'Qual será a tendência dominante de blockchain de 2027-2030?',
+        a: 'Economia tokenizada descentralizada, privacidade por default, escalabilidade resolvida, adoção corporativa, e regulação clara criando ecossistema maduro e útil.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
