@@ -3055,6 +3055,25 @@ var MA_COURSES = [
     color: '#AD1457',
     addedTs: 1776024712032,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ap56v.jpg',
+    id: 'ap56v',
+    name: 'Aconselhamento Pastoral com Base Bíblica',
+    desc: 'Curso voltado para cuidado espiritual, escuta, orientação e aconselhamento à luz da Bíblia em situações reais.',
+    file: '10-aconselhamento-pastoral.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'AP_HENRY_2026_MASTER',
+    ak: 'ap_auth',
+    storagePrefix: 'ap_',
+    icon: '✝️',
+    color: '#00695C',
+    addedTs: 1776024717245,
+    active: true
   }
 ];
 var MA_CATS = [
