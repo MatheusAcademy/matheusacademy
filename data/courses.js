@@ -2749,6 +2749,25 @@ var MA_COURSES = [
     color: '#BF360C',
     addedTs: 1776024625968,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/lp35.jpg',
+    id: 'lp35',
+    name: 'Liderança Pessoal e Tomada de Decisão',
+    desc: 'Mostra como assumir responsabilidade, decidir melhor, agir com clareza e conduzir a própria vida com direção.',
+    file: '39-lideranca-pessoal.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'LP_HENRY_2026_MASTER',
+    ak: 'lp_auth',
+    storagePrefix: 'lp_',
+    icon: '🏆',
+    color: '#00695C',
+    addedTs: 1776024630964,
+    active: true
   }
 ];
 var MA_CATS = [
