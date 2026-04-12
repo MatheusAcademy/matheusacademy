@@ -2521,6 +2521,25 @@ var MA_COURSES = [
     color: '#06d6a0',
     addedTs: 1776024563983,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/tf.jpg',
+    id: 'tf',
+    name: 'Treinamento Físico Inteligente',
+    desc: 'Planejamento de treinos, eficiência física e evolução de desempenho.',
+    file: '14-treinamento-fisico.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'TF_HENRY_2026_MASTER',
+    ak: 'tf_auth',
+    storagePrefix: 'tf_',
+    icon: '🏆',
+    color: '#118ab2',
+    addedTs: 1776024568974,
+    active: true
   }
 ];
 var MA_CATS = [
