@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inglês Intermediário para Fluência Real — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'II',
+  name: 'Inglês Intermediário para Fluência Real',
+  shortName: 'Inglês Intermediário',
+  cat: 'Inglês',
+  desc: 'Desenvolve estrutura, vocabulário e prática oral para quem já sabe o básico e quer começar a falar melhor.',
+  salt: 'II_HENRY_2026_MASTER',
+  ak: 'ii_auth',
+  courseKey: 'ii',
+  prefix: 'ii_',
+  color: '#388E3C',
+  glow: 'rgba(56,142,60,.35)',
+  free: true,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'ii_mod1',
+    name: 'Tempos Verbais Fundamentais: Past e Future',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Resumo do Módulo 1: Vivendo em Todos os Tempos',
+      points: [
+        'O passado simples permite você contar histórias reais sobre eventos que já aconteceram na sua vida',
+        'O futuro é essencial para planos, promessas, e expressão de intenções genuínas',
+        'Entender "was" e "were" consolida sua compreensão de "to be" em múltiplos tempos',
+        'Dominar dois tempos além do presente abre centenas de novas possibilidades comunicativas'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Complete: "I ___ at home yesterday. She ___ in the library."',
+        opts: ['am, was', 'was, was', 'was, were', 'am, were'],
+        correct: 1
+      },
+      {
+        q: 'Qual frase expressa um plano futuro de forma mais natural?',
+        opts: ['I will go tomorrow', 'I am going tomorrow', 'I go tomorrow', 'I will be going'],
+        correct: 1
+      },
+      {
+        q: 'Como você diz "Ontem eu estudei inglês"?',
+        opts: ['I study English yesterday', 'I am studying English yesterday', 'I studied English yesterday', 'I have studied English yesterday'],
+        correct: 2
+      }
+    ]
+  },
+  {
+    id: 'ii_mod2',
+    name: 'Estruturas de Opinião e Expressão Pessoal Autêntica',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Resumo do Módulo 2: Sua Voz Pessoal em Inglês',
+      points: [
+        'Expressar opiniões com clareza e nuance é o que diferencia um conversador básico de um intermediário',
+        'Estruturas como "I think", "In my opinion", e "I believe" oferecem múltiplas formas de expressar pensamento',
+        'Concedendo pontos opostos ("I understand, but...") mostra maturidade intelectual',
+        'Sua capacidade de discordar respeitosamente abre portas para conversas mais profundas'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Complete: "I think that ___ is important in life."',
+        opts: ['education', 'the education', 'educations', 'a education'],
+        correct: 0
+      },
+      {
+        q: 'Qual é a forma mais polida de expressar desacordo?',
+        opts: ['You\'re wrong', 'I disagree completely', 'I see your point, but I disagree', 'That\'s stupid'],
+        correct: 2
+      },
+      {
+        q: 'Como você expressa uma opinião não muito forte?',
+        opts: ['I definitively think', 'I sort of think', 'I certainly think', 'I absolutely think'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'ii_mod3',
+    name: 'Conectores Avançados: Fluência Natural no Discurso',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Resumo do Módulo 3: Conectando Ideias com Maestria',
+      points: [
+        'Conectores como "however", "furthermore", e "nevertheless" transformam sua fala em discurso sofisticado',
+        'Transições suaves entre ideias fazem você parecer um falante experiente e confiante',
+        'Conjunções avançadas como "whereas", "whilst", e "whereas" adicionam complexidade intelectual',
+        'Dominar conectores abre portas para debates, argumentação, e conversas profundas'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Complete: "Education is important. ___, it\'s not the only factor in success."',
+        opts: ['However', 'Because', 'Although', 'Yet'],
+        correct: 0
+      },
+      {
+        q: 'Qual conector expressa ADIÇÃO de informação?',
+        opts: ['Moreover', 'However', 'Nevertheless', 'Although'],
+        correct: 0
+      },
+      {
+        q: 'Complete: "I wanted to go to the party, ___ I was too tired."',
+        opts: ['because', 'but', 'so', 'however'],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'Passado Simples (Past Simple): Contando Histórias',
+    dur: 25,
+    content: `<h3>O Passado Simples: Sua Ferramenta para Histórias Reais</h3>
+<p>Bem-vindo ao Inglês Intermediário! Você já domina o presente básico. Agora vamos expandir para o PASSADO, que é onde as histórias reais vivem. Quando você consegue contar histórias sobre o que aconteceu ontem, a semana passada, ou anos atrás, você abre um universo totalmente novo de comunicação. O Passado Simples é a forma mais comum de falar sobre eventos completados no passado.</p>
+
+<h4>Formação do Passado Simples Regular</h4>
+<p>Para a maioria dos verbos em inglês, você forma o passado simplesmente adicionando "-ed" ao final do verbo infinitivo. "Play" vira "played" (joguei/joguei), "Walk" vira "walked" (caminhei), "Talk" vira "talked" (falei), "Study" vira "studied" (estudei). Isto é muito simples e previsível! Quando você vê um verbo terminado em "-ed", você imediatamente sabe que é passado.</p>
+
+<p>Há algumas pequenas regras de grafia. Se o verbo termina em "e", você apenas adiciona "d": "Love" vira "loved", "Like" vira "liked", "Use" vira "used". Se o verbo termina em consoante + "y", você muda "y" para "i" e adiciona "ed": "Study" vira "studied", "Try" vira "tried", "Cry" vira "cried". Se é uma vogal + "y", você apenas adiciona "ed": "Play" vira "played", "Stay" vira "stayed".</p>
+
+<blockquote class="tip">
+<strong>Pronúncia do "-ed":</strong> O "-ed" tem três pronúncias diferentes. Depois de sons de "t" ou "d", soa como "id": "wanted" (WAN-tid), "needed" (NEE-did). Depois de sons surdos como "p", "k", "s", soa como "t": "walked" (WAWKT), "stopped" (STOPT), "missed" (MISST). Depois de outros sons, soa como "d": "played" (PLAYD), "loved" (LUVD), "moved" (MOOVD).
+</blockquote>
+
+<h4>Verbos Irregulares: Os Vilões da Língua Inglesa</h4>
+<p>Agora, vêm os verbos irregulares, que não seguem esta regra simples. Você simplesmente precisa memorizá-los. Alguns dos mais comuns: "Go" vira "went", "Have" vira "had", "Do" vira "did", "Say" vira "said" (pronunciado "sed"), "Get" vira "got", "Make" vira "made", "Take" vira "took", "See" vira "saw", "Come" vira "came", "Think" vira "thought", "Know" vira "knew", "Give" vira "gave", "Find" vira "found", "Tell" vira "told", "Become" vira "became", "Leave" vira "left", "Feel" vira "felt", "Bring" vira "brought", "Begin" vira "began", "Seem" vira "seemed".</p>
+
+<p>Memorizar estes verbos é crucial porque são usados constantemente. Uma estratégia útil é criar cartões de memória: no verso escreva o infinitivo, no anverso o passado e uma sentença de exemplo. "Go → Went: I went to the beach yesterday." Pratique estes cartões 5 minutos por dia. Em uma semana, você conhecerá os 20 verbos irregulares mais comuns.</p>
+
+<blockquote class="example">
+<strong>Exemplos de Verbos Irregulares em Sentenças:</strong>
+- I went to the cinema last night. (Fui ao cinema ontem à noite)
+- She had a great time at the party. (Ela se divertiu muito na festa)
+- He did his homework yesterday. (Ele fez a lição dele ontem)
+- They saw a beautiful sunset. (Eles viram um pôr do sol bonito)
+- I thought about your advice all day. (Pensei no seu conselho o dia todo)
+</blockquote>
+
+<h4>Estrutura de Frases no Passado Simples</h4>
+<p>A estrutura básica é: sujeito + verbo no passado + resto da frase. "I played football yesterday" (Joguei futebol ontem), "She studied hard last week" (Ela estudou muito a semana passada), "They traveled to Europe last summer" (Eles viajaram para a Europa no verão passado). Note que você frequentemente adiciona informações de QUANDO no final: "yesterday" (ontem), "last week" (semana passada), "last year" (ano passado), "three days ago" (há três dias), "in 2020" (em 2020).</p>
+
+<p>Para fazerer perguntas no passado simples, você coloca "Did" no início: "Did you play football yesterday?" (Você jogou futebol ontem?), "Did she study?" (Ela estudou?), "When did they arrive?" (Quando eles chegaram?). A resposta é "Yes, I did" ou "No, I didn't".</p>
+
+<h4>Contando uma História Completa no Passado</h4>
+<p>Aqui está uma história curta que demonstra como usar o Passado Simples para contar uma narrativa coerente: "Last weekend, I had a wonderful adventure. I woke up early Saturday morning. The weather was beautiful and sunny. I decided to go hiking with my friends. We met at 8 AM at the trailhead. We walked for about three hours. The views were incredible. We saw birds, butterflies, and amazing plants. At lunchtime, we sat on a rock and ate sandwiches. After lunch, we continued hiking. At 3 PM, we reached the summit! The view from the top was breathtaking. We took many photos. We laughed and talked about how amazing the experience was. We descended the mountain slowly. By 6 PM, we were back at the car. We were tired but very happy. We decided to go for dinner at our favorite restaurant. The food was delicious. We talked about the hike and made plans for our next adventure. It was a perfect day."</p>
+
+<p>Veja como esta história flui? Cada sentença adiciona mais detalhe. Você usa uma mistura de ações principais (verbs regulares e irregulares em passado) e descrições (adjetivos como "beautiful", "incredible", "breathtaking"). Você também usa expressões de tempo que indicam sequência.</p>
+
+<blockquote class="news">
+<strong>Padrão de Contação de Histórias:</strong> As melhores histórias em inglês frequentemente começam com uma situação de contexto (tempo, lugar, quem), mostram uma série de eventos em ordem cronológica, e terminam com uma conclusão reflexiva sobre o significado ou sentimento da experiência.
+</strongquote>
+
+<h4>Practicando Histórias Pessoais no Passado</h4>
+<p>Agora é sua vez! Pense em um evento interessante da sua vida. Pode ser algo pequeno (um passeio interessante, um encontro com um amigo) ou algo grande (uma viagem, uma mudança importante, um momento memorável). Escreva uma história de pelo menos 150 palavras usando o Passado Simples. Use uma variedade de verbos regulares e irregulares. Inclua descrições e expressões de tempo. Depois leia em voz alta, gravando-se. Como soa? É fluido? Corrija qualquer coisa que pareça estranha.</p>
+
+<p>Continuando sua prática, faça perguntas sobre histórias de passado simples de outras pessoas. "What did you do last weekend?" (O que você fez no fim de semana passado?), "Where did you go for your last vacation?" (Aonde você foi nas suas últimas férias?), "Did you watch the game yesterday?" (Você assistiu o jogo ontem?). Isto treina sua capacidade de formular perguntas e também ouve histórias em primeira mão, o que melhora sua compreensão auditiva.`,
+    cards: [
+      {
+        q: 'Transforme para o passado: "I go to the beach. She does her homework. They see a movie."',
+        a: 'I went to the beach. She did her homework. They saw a movie. Lembre-se: "go/went", "do/did", "see/saw" são verbos irregulares.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Futuro Simples e Going To: Planos e Previsões',
+    dur: 25,
+    content: `<h3>Falando Sobre o Futuro: Planos, Promessas e Possibilidades</h3>
+<p>Agora que você consegue falar sobre o passado, vamos falar sobre o FUTURO! Há duas formas principais de expressar o futuro em inglês: "will" e "going to". Ambas são corretas e são usadas em contextos ligeiramente diferentes. Dominar ambas torna sua comunicação sobre planos e intenções muito mais natural e expressiva.</p>
+
+<h4>Will: O Futuro Simples</h4>
+<p>"Will" é a forma mais simples e comum de expressar futuro. A estrutura é: sujeito + "will" (ou a forma contraída "'ll") + verbo infinitivo. "I will go to the beach tomorrow" (Irei à praia amanhã), "She will study English this week" (Ela estudará inglês esta semana), "They will arrive at 3 PM" (Eles chegarão às 3 da tarde).</p>
+
+<p>Você também pode usar "will" para fazer promessas, dar garantias, ou fazer previsões simples. "I promise I will call you tonight" (Prometo que vou te ligar à noite), "I will help you with your homework" (Vou te ajudar com sua lição), "It will be a beautiful day" (Será um dia bonito), "The project will be successful" (O projeto será bem-sucedido).</p>
+
+<p>A forma contraída "'ll" é muito comum em conversa: "I'll go" (Vou ir), "You'll like it" (Você vai gostar), "She'll arrive soon" (Ela vai chegar em breve). Para negativa, você diz "will not" ou "won't" (não vou): "I won't be late" (Não vou atrasar), "She won't forget" (Ela não vai esquecer).</p>
+
+<blockquote class="tip">
+<strong>Quando Usar "Will":</strong> Use "will" para decisões repentinas, promessas, previsões gerais, oferecimento de ajuda, e afirmações sobre o futuro que você não planejou especificamente. Exemplo: Você está em uma loja e vê algo quebrado. Você pode dizer "I will pick it up" (Vou pegar isso).
+</blockquote>
+
+<h4>Going To: Planos e Intenções Claras</h4>
+<p>"Going to" (ou "gonna" em forma contraída muito informal) é usado quando você tem um PLANO claro ou uma INTENÇÃO específica. A estrutura é: sujeito + "am/is/are" (forma de "to be" no presente) + "going to" + verbo infinitivo. "I am going to study for my exam tomorrow" (Vou estudar para meu exame amanhã), "She is going to call her mother tonight" (Ela vai ligar para sua mãe à noite), "They are going to travel next month" (Eles vão viajar mês que vem).</p>
+
+<p>Use "going to" quando você tem um plano específico que você já decidiu fazer. "I'm going to the gym after work" (Vou à academia depois do trabalho - você já decidiu e já pode estar se preparando). Compare com: "I will go to the gym" (Vou à academia - é uma previsão geral que você pode mudar). A diferença é nuance, mas é importante para soar natural.</p>
+
+<p>Para perguntas com "going to": "Are you going to watch the game tonight?" (Você vai assistir o jogo à noite?), "Is she going to come to the party?" (Ela vai vir à festa?), "What are they going to do on the weekend?" (O que eles vão fazer no fim de semana?).</p>
+
+<blockquote class="example">
+<strong>Comparando Will e Going To:</strong>
+- "I will call you later." (Vou te ligar depois - não planejado, pode ser espontâneo)
+- "I'm going to call you at 8 PM." (Vou te ligar às 8 - já planejado, específico)
+- "It will be cold tomorrow." (Será frio amanhã - previsão geral)
+- "I'm going to wear a jacket." (Vou usar uma jaqueta - você decidiu por causa do frio)
+</blockquote>
+
+<h4>Previsões e Probabilidades no Futuro</h4>
+<p>Em inglês, você pode expressar diferentes graus de certeza sobre o futuro. "I will definitely go" (Definitivamente vou ir - 100% certo). "I think I will go" (Acho que vou ir - bastante provável). "I might go" (Posso ir - incerto). "I probably won't go" (Provavelmente não vou ir - improvável). Esta nuance torna sua comunicação muito mais precisa e natural.</p>
+
+<p>"Might" e "may" expressam possibilidade: "It might rain tomorrow" (Pode chover amanhã), "We may visit France next year" (Podemos visitar a França no próximo ano). "Could" também expressa possibilidade: "She could arrive early" (Ela pode chegar cedo). Todas essas formas são importantes para expressar incerteza genuína sobre eventos futuros.</p>
+
+<h4>Descrevendo Seus Planos Futuros</h4>
+<p>Agora pratique falando sobre seus planos futuros pessoais. "I'm going to study English every day this month because I want to improve my speaking skills. Next month, I will travel to São Paulo to visit my aunt. She is going to show me the city. We're going to eat at a traditional Brazilian restaurant. I'm also planning to visit some museums. Next year, I will finish my degree and I'm going to look for a job. I'm interested in the tech industry, so I will probably apply to companies in that field. Of course, I might change my mind about the specifics, but these are my general plans."</p>
+
+<p>Veja como você combina "going to" para planos específicos com "will" para predições gerais? Esta é a forma mais natural de falar sobre o futuro!</p>
+
+<blockquote class="news">
+<strong>Expressões Úteis de Tempo Futuro:</strong>
+- tomorrow (amanhã)
+- next week/month/year (próxima semana/mês/ano)
+- in two days (em dois dias)
+- this weekend (este fim de semana)
+- later today (mais tarde hoje)
+- in the future (no futuro)
+- eventually (eventualmente)
+</strongquote>
+
+<h4>Prática de Futuro com Perguntas e Respostas</h4>
+<p>Pergunte a si mesmo essas questões e responda completamente: "What are you going to do tomorrow?" (O que você vai fazer amanhã?), "What will you study next year?" (O que você vai estudar no próximo ano?), "Where do you think you'll be in 5 years?" (Aonde você acha que estará em 5 anos?), "What are you planning to do this weekend?" (O que você está planejando fazer este fim de semana?). Responda com sentences completas, não apenas palavras! Isto treina sua capacidade de construir narrativas sobre o futuro.`,
+    cards: [
+      {
+        q: 'Complete: "I ___ go to the gym tomorrow. I ___ study for my exam tonight."',
+        a: '"I\'m going to go to the gym tomorrow" (plano específico) e "I will study for my exam tonight" (promessa/intenção). Ou vice-versa, ambas são naturais dependendo do contexto!'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Tempo Perfeito (Present Perfect): Conectando Passado e Presente',
+    dur: 25,
+    content: `<h3>Present Perfect: A Ponte Entre Passado e Presente</h3>
+<p>O Present Perfect é um tempo verbal que pode parecer confuso no início, mas é absolutamente essencial para inglês autêntico. É usado para falar sobre experiências, eventos recentes, ou situações que começaram no passado mas continuam até agora. A estrutura é: sujeito + "have/has" + particípio passado do verbo.</p>
+
+<h4>Formação do Present Perfect</h4>
+<p>Para verbos regulares, o particípio passado é o mesmo que o passado simples (terminado em "-ed"). "I have worked" (Tenho trabalhado), "She has studied" (Ela tem estudado), "They have played" (Eles têm jogado). Para verbos irregulares, você precisa usar o terceiro form do verbo. Exemplos: "I have gone" (Tenho ido), "She has eaten" (Ela comeu), "They have seen" (Eles viram).</p>
+
+<p>A forma negativa é: sujeito + "have/has not" (ou "haven't/hasn't") + particípio passado. "I haven't finished" (Não tenho terminado), "She hasn't called" (Ela não ligou), "They haven't decided" (Eles não decidiram). Para perguntas: "Have you finished?" (Você terminou?), "Has she arrived?" (Ela chegou?), "Have they left?" (Eles saíram?).</p>
+
+<blockquote class="tip">
+<strong>Have vs. Has:</strong> Use "have" com "I", "you", "we", "they". Use "has" com "he", "she", "it". "I have been", "You have gone", mas "He has been", "She has gone", "It has changed".
+</blockquote>
+
+<h4>Experiências na Vida: "Have You Ever...?"</h4>
+<p>Uma das formas mais comuns de usar Present Perfect é fazer perguntas sobre experiências. "Have you ever traveled to Europe?" (Você já viajou para a Europa?), "Has she ever tried Japanese food?" (Ela já experimentou comida japonesa?), "Have they ever been to a concert?" (Eles já foram a um concerto?).</p>
+
+<p>Quando respondendo a perguntas de experiência, você pode oferecer mais detalhe: "Yes, I have. I traveled to France five years ago. It was wonderful." (Sim, viajei. Viajei para a França há cinco anos. Foi maravilhoso.). "No, I haven't, but I would love to sometime." (Não, ainda não, mas gostaria em algum momento.). "Yes, she has. She went to Japan last year and loved it." (Sim, ela foi para o Japão no ano passado e amou.)</p>
+
+<h4>Eventos Recentes e Relevância Presente</h4>
+<p>Use Present Perfect para eventos recentes que são relevantes AGORA. "I have lost my keys" (Perdi minhas chaves - e elas ainda estão perdidas agora!), "She has broken her arm" (Ela quebrou o braço - e ainda está quebrado/em recuperação). Compare com passado simples: "I lost my keys yesterday" (Perdi minhas chaves ontem - e encontrei depois). A diferença é se o evento está ainda afetando o presente.</p>
+
+<p>Você também usa Present Perfect quando algo começou no passado mas continua até agora. "I have lived in São Paulo for 10 years" (Tenho vivido em São Paulo por 10 anos - e ainda vivo lá agora). "She has been a teacher since 2015" (Ela é professora desde 2015 - e ainda é agora). "They have studied English for many years" (Eles estudam inglês há muitos anos - e continuam estudando).</p>
+
+<blockquote class="example">
+<strong>Exemplos de Present Perfect:</strong>
+- I have seen that movie three times. (Vi esse filme três vezes)
+- She has just arrived home. (Ela acabou de chegar em casa)
+- Have you ever broken a bone? (Você já quebrou um osso?)
+- We have been friends since high school. (Somos amigos desde o ensino médio)
+- They have never been to South America. (Eles nunca estiveram na América do Sul)
+</strongquote>
+
+<h4>Just, Already, Yet: Advérbios com Present Perfect</h4>
+<p>Estes advérbios são frequentemente usados com Present Perfect. "Just" significa "acabei de": "I have just finished my homework" (Acabei de terminar minha lição). "Already" significa "já": "She has already eaten lunch" (Ela já comeu almoço). "Yet" é usado em perguntas e negativas, significando "ainda": "Have you finished yet?" (Você já terminou?), "I haven't finished yet" (Ainda não terminei).</p>
+
+<p>Note a posição desses advérbios: "have/has" + advérbio + particípio passado. "I have just arrived", "She has already left", "They haven't finished yet".</p>
+
+<h4>Prática: Suas Experiências Pessoais</h4>
+<p>Faça uma lista de experiências interessantes que você já teve na vida. Exemplos: viagens, eventos importantes, descobertas, pessoas que conheceu, comidas que experimentou, esportes que praticou. Para cada uma, crie uma sentença usando Present Perfect. Depois expanda para histórias. "I have traveled to many countries. I have been to Portugal, Spain, and France. I have also been to Japan, which was incredible. I have never been to the United States, but I hope to go one day. I have seen many beautiful places and had amazing experiences."</p>
+
+<p>Agora, pratique respondendo a perguntas. Peça a um amigo ou escreva a si mesmo perguntas com "Have you ever...?" e responda completamente. "Have you ever learned a musical instrument?" → "Yes, I have! I learned guitar when I was 12. I studied for three years. I still play sometimes, though not as much as I would like to." (Sim! Aprendi violão quando tinha 12 anos. Estudei por três anos. Ainda toco às vezes, embora não tanto quanto gostaria.)</p>
+
+<blockquote class="news">
+<strong>Diferença Essencial Between Present Perfect e Past Simple:</strong>
+Past Simple: "I went to Brazil last year." (Viagem específica, completada no passado)
+Present Perfect: "I have been to Brazil three times." (Experiências na minha vida, relevância agora)
+Use Past Simple para eventos específicos e datas. Use Present Perfect para experiências gerais e situações que continuam.
+</strongquote>`,
+    cards: [
+      {
+        q: 'Complete: "I ___ never ___ to Australia. Have you ___ bungee jumping?"',
+        a: '"I have never been to Australia. Have you ever done bungee jumping?" Use o verbo "have/has + particípio passado" para Present Perfect.'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Estruturas de Opinião: "I Think", "I Believe", "In My Opinion"',
+    dur: 30,
+    content: `<h3>Sua Voz Pessoal: Expressando Opiniões com Segurança</h3>
+<p>O que diferencia uma conversa superficial de uma conversa significativa? A capacidade de expressar opiniões pessoais genuínas com clareza e confiança! Até agora, você aprendeu estruturas para descrever fatos. Agora vamos aprender a navegar o mundo mais nuançado das opiniões, crenças, e julgamentos pessoais. Esta é uma habilidade social crucial.</p>
+
+<h4>As Estruturas Básicas de Opinião</h4>
+<p>"I think..." é a forma mais comum de expressar opinião. "I think that education is very important" (Acho que educação é muito importante). "I think she is a talented person" (Acho que ela é uma pessoa talentosa). "I think we should invest more in the environment" (Acho que devemos investir mais no meio ambiente). É simples, direto, e funciona em praticamente qualquer contexto.</p>
+
+<p>"In my opinion..." é uma forma mais formal e estruturada. "In my opinion, social media has both positive and negative effects" (Na minha opinião, as redes sociais têm efeitos positivos e negativos). "In my view..." funciona igualmente bem e é ligeiramente mais sofisticado. "In my view, this policy is unfair" (Na minha opinião, esta política é injusta). "From my perspective..." adiciona ainda mais formalidade e reflexão pessoal.</p>
+
+<p>"I believe..." é uma forma que expressa convicção mais profunda. "I believe that everyone deserves equal rights" (Acredito que todo mundo merece direitos iguais). "I firmly believe in the power of education" (Acredito firmemente no poder da educação). Quando você usa "believe", você está expressando uma convicção mais fundamental do que com "think".</p>
+
+<blockquote class="tip">
+<strong>Nuance de Significado:</strong>
+- "I think" = opinião geral
+- "I believe" = convicção pessoal mais forte
+- "In my opinion" = posição formal
+- "I suppose" = opinião menos certa (Acho que talvez...)
+- "I would say" = opinião oferecida cautelosamente
+</blockquote>
+
+<h4>Estruturas para Expressar Força de Opinião</h4>
+<p>Você pode modificar suas opiniões para expressar o quanto você tem certeza delas. "I absolutely think..." (Absolutamente acho), "I definitely believe..." (Definitivamente acredito), "I strongly feel..." (Sinto fortemente), "I truly believe..." (Realmente acredito). Estas formas expressam convicção forte.</p>
+
+<p>Para opinião menos certa: "I sort of think..." (Meio que acho), "I kind of believe..." (Meio que acredito), "I suppose..." (Suponho), "I imagine..." (Imagino), "I would say..." (Eu diria). Estas formas parecem mais reflexivas e menos dogmáticas, o que é frequentemente apreciado em conversas.</p>
+
+<h4>Discordância Respeitosa: "I See Your Point, But..."</h4>
+<p>Uma das habilidades mais importantes em conversação é discordar respeitosamente. Você não apenas quer concordar com tudo! Mas você precisa fazer isso de forma que não ofenda ou desrespeite a outra pessoa. Aqui estão estruturas poderosas:</p>
+
+<p>"I see your point, but I think..." (Vejo seu ponto, mas acho). "I understand what you're saying, however..." (Entendo o que você está dizendo, porém). "That's a good point, and I agree partially, but..." (É um bom ponto, e concordo em parte, mas). "I respect your opinion, but I have to disagree..." (Respeito sua opinião, mas tenho que discordar).</p>
+
+<p>Estas estruturas fazem duas coisas importante: (1) Reconhecem o ponto de vista da outra pessoa, validando-o, e (2) Então oferecem seu próprio ponto de vista diferente. Isto é MUITO mais efetivo do que simplesmente dizer "You're wrong" (Você está errado), que soa agressivo e desrespeitoso.</p>
+
+<blockquote class="example">
+<strong>Exemplo de Discordância Respeitosa:</strong>
+Cenário: Alguém diz "I think we should ban all social media."
+Resposta: "I understand your concerns about social media, and I agree that there are problems with how it's used. However, I think a complete ban isn't the right solution. I believe we should focus more on education and responsible use instead. What do you think about that approach?"
+(Entendo suas preocupações com redes sociais, e concordo que há problemas com como são usadas. Porém, acho que uma proibição total não é a solução certa. Acredito que devemos focar mais em educação e uso responsável. O que você acha dessa abordagem?)
+</strongquote>
+
+<h4>Opiniões Sobre Tópicos Comuns</h4>
+<p>Pratique formando opiniões sobre tópicos comuns em conversação. Exemplos: tecnologia, educação, meio ambiente, trabalho, viagens, saúde, relacionamentos, política, arte e cultura. Para cada tópico, crie 2-3 sentenças expressando uma opinião. Use diferentes estruturas.</p>
+
+<p>Sobre tecnologia: "I think technology has greatly improved our lives, but I also believe we should be mindful of screen time and its effects on our mental health. In my opinion, balance is key."</p>
+
+<p>Sobre educação: "I strongly believe that education is the foundation of a better society. In my view, governments should invest more in schools and teacher training. I suppose some people might disagree, but I'm convinced this is essential."</p>
+
+<p>Sobre meio ambiente: "I absolutely think climate change is the most important issue of our time. I feel that every individual has a responsibility to contribute to environmental protection. That said, I recognize that businesses also need to change their practices significantly."</p>
+
+<h4>Pedindo Opinião de Outros</h4>
+<p>Saber como pedir opinião é tão importante quanto saber oferecer a sua! "What do you think about...?" (O que você acha sobre...?), "What's your opinion on...?" (Qual é sua opinião sobre...?), "How do you feel about...?" (Como você se sente sobre...?), "Do you agree with...?" (Você concorda com...?). "What's your take on this situation?" (Qual é seu ponto de vista sobre esta situação?). "I'm curious what you think" (Estou curioso sobre o que você acha).</p>
+
+<p>Quando alguém pede sua opinião, aqui estão respostas naturais: "I haven't really thought about it, but I would say..." (Não tinha pensado muito nisso, mas diria), "That's a good question! I think..." (Ótima pergunta! Acho que), "I'm not sure, but my initial reaction is..." (Não tenho certeza, mas minha reação inicial é), "I have mixed feelings about it, to be honest" (Tenho sentimentos mistos sobre isso, para ser honesto).</p>
+
+<blockquote class="news">
+<strong>Verdade de Ouro em Conversação:</strong> As melhores conversas não são quando uma pessoa está sempre certa e a outra concorda. As melhores conversas são quando as pessoas têm perspectivas ligeiramente diferentes, exploram essas diferenças respeitosamente, e acabam aprendendo uma da outra. Isto é conversação genuína!
+</strongquote>
+
+<h4>Prática: Suas Opiniões Pessoais Documentadas</h4>
+<p>Escolha 5 tópicos que importam para você (pode ser educação, saúde, tecnologia, arte, política, seja o que quiser). Para cada uma, escreva 3-4 sentenças expressando sua opinião genuína usando diferentes estruturas de opinião. Depois pratique falando isso em voz alta. Você pode estar pensando "Por que preciso de opinião?" porque você vive isso internamente. Mas expressar opinião em voz alta em uma língua estrangeira desenvolve fluência de forma extraordinária!`,
+    cards: [
+      {
+        q: 'Complete de forma respeitosa: "I understand your point about climate change, ___ I think we need more innovative solutions."',
+        a: 'Respostas boas: "but", "however", "and I agree partially, but". Estruturas como "I see your point, but..." são profissionais e respeitosas.'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'Condicionais e Estruturas Hipotéticas: "If" Sentences',
+    dur: 30,
+    content: `<h3>If Sentences: Explorando Possibilidades e Consequências</h3>
+<p>As estruturas "If" (Se) são vitais para expressar condições, hipóteses, e cenários possíveis. Elas permitem você explorar "E se...?" em inglês. Existem três tipos principais de If sentences, cada um com seu próprio tempo verbal e propósito. Dominar estes abre seu pensamento criativo e sua capacidade de especular sobre realidades diferentes.</p>
+
+<h4>First Conditional: Situações Possíveis e Reais</h4>
+<p>O First Conditional é usado para situações que são POSSÍVEIS e PROVÁVEIS acontecer no futuro. A estrutura é: "If" + presente simples + "will" + infinitivo. "If you study hard, you will pass the exam" (Se você estudar muito, vai passar no exame). "If it rains tomorrow, we will stay home" (Se chover amanhã, vamos ficar em casa). "If she arrives early, I will be surprised" (Se ela chegar cedo, vou ficar surpreso).</p>
+
+<p>A parte com "if" expressa a CONDIÇÃO (o que tem que acontecer), e a parte com "will" expressa a CONSEQUÊNCIA (o que resultará). Você também pode inverter a ordem: "I will go to the party if you go with me" (Vou à festa se você for comigo). Ambas as ordens são naturais em inglês.</p>
+
+<p>O First Conditional é usado frequentemente para avisos, advertências, ou negociações. "If you don't sleep, you will be tired tomorrow" (Se não dormir, vai estar cansado amanhã). "If we work together, we will finish faster" (Se trabalharmos junto, terminaremos mais rápido). "You will get the job if you prepare well for the interview" (Você conseguirá o emprego se se preparar bem para a entrevista).</p>
+
+<blockquote class="tip">
+<strong>Estrutura Resumida:</strong>
+If + Presente Simples + Consequência (will + infinitivo)
+"If you don't water the plants, they will die." (Se não regar as plantas, vão morrer)
+</blockquote>
+
+<h4>Second Conditional: Situações Improváveis ou Imaginárias</h4>
+<p>O Second Conditional é usado para situações que são IMPROVÁVEIS, IMAGINARIAS, ou CONTRÁRIO AO FATO. A estrutura é: "If" + passado simples + "would" + infinitivo. "If I won the lottery, I would travel the world" (Se eu ganhasse na loteria, viajaria pelo mundo). "If you were president, what would you do?" (Se você fosse presidente, o que faria?). "If she spoke Portuguese, she could talk to my family" (Se ela falasse português, poderia conversar com minha família).</p>
+
+<p>Note que você usa passado simples na cláusula "if", mesmo que você está falando sobre futuro IMAGINÁRIO. Isto é porque você está falando sobre algo que é improvável, não real. "If I had a million dollars..." (Se eu tivesse um milhão de dólares...) - Você provavelmente não tem, então você usa passado imaginário.</p>
+
+<p>Você também pode usar "could" ou "might" em vez de "would" para expressar diferentes nuances. "If I were taller, I could play basketball professionally" (Se eu fosse mais alto, poderia jogar basquete profissionalmente). "If you studied medicine, you might become a doctor" (Se você estudasse medicina, talvez se tornasse médico). "Could" expressa uma possibilidade natural, "might" expressa uma possibilidade mais incerta.</p>
+
+<blockquote class="example">
+<strong>Exemplos de Second Conditional:</strong>
+- If I lived in Paris, I would visit museums every week. (Se eu morasse em Paris, visitaria museus toda semana)
+- If you had more time, would you exercise more? (Se você tivesse mais tempo, exercitaria mais?)
+- If she were in my situation, what would she do? (Se ela estivesse na minha situação, o que faria?)
+- If we were billionaires, we would donate to charity. (Se fossemos bilionários, doaríamos para caridade)
+</strongquote>
+
+<h4>Third Conditional: Situações do Passado Contrafactual</h4>
+<p>O Third Conditional é usado para situações que NÃO ACONTECERAM no passado, para especular sobre consequências alternativas. A estrutura é: "If" + passado perfeito (had + particípio) + "would have" + particípio. "If I had studied more, I would have passed the test" (Se eu tivesse estudado mais, teria passado no teste). "If she had called, I would have answered" (Se ela tivesse ligado, teria atendido). "If we had left earlier, we wouldn't have missed the train" (Se tivéssemos saído mais cedo, não teríamos perdido o trem).</p>
+
+<p>Este conditional é mais complexo porque envolve dois passados: o passado perfeito na condição e o "would have" na consequência. Mas é essencial para expressão autêntica porque permitir você explorar arrependimentos, hipóteses históricas, e reflexões sobre o passado.</p>
+
+<p>Exemplos mais complexos: "If I had known about the job opening earlier, I would have applied immediately" (Se soubesse sobre a vaga de emprego antes, teria me candidatado imediatamente). "If they hadn't invented the internet, our world would be completely different" (Se não tivessem inventado a internet, nosso mundo seria completamente diferente). "Would you have made the same decision if you had had more information?" (Você teria tomado a mesma decisão se tivesse tido mais informações?).</p>
+
+<blockquote class="news">
+<strong>Resumo dos Três Conditionals:</strong>
+- First (Provável Futuro): If + Presente + Will
+- Second (Improvável Presente): If + Passado + Would
+- Third (Passado Impossível): If + Passado Perfeito + Would Have
+</strongquote>
+
+<h4>Prática: Seus Próprios Cenários Condicionais</h4>
+<p>Agora pratique criando suas próprias if sentences para cada tipo. Para First Conditional, pense em duas coisas que podem acontecer amanhã. "If I wake up early, I will go for a run." "If my friend calls, I will invite her to coffee."</p>
+
+<p>Para Second Conditional, pense em cenários irreais que você gostaria que fossem verdade. "If I spoke five languages fluently, I would work for the United Nations." "If I were an artist, I would create beautiful paintings."</p>
+
+<p>Para Third Conditional, pense em decisões passadas e suas consequências alternativas. "If I hadn't moved to São Paulo, I would never have met my best friend." "If I had chosen a different career, my life would be completely different."</p>
+
+<p>Isto não é apenas exercício gramatical! Você está desenvolvendo capacidade de pensamento crítico e especulativo em uma língua estrangeira, o que é uma habilidade cognitiva genuína e poderosa.`,
+    cards: [
+      {
+        q: 'Complete: "If I ___ money, I ___ travel. If I ___ studied more, I ___ passed."',
+        a: '"If I had money, I would travel" (Second - improvável). "If I had studied more, I would have passed" (Third - passado). Note: "had money" (passado imaginário) para segunda pessoa condicional.'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Perguntas Avançadas e Estruturas de Informação Profunda',
+    dur: 30,
+    content: `<h3>Dominando Perguntas: A Arte de Curadoria de Conversação</h3>
+<p>Fazer perguntas boas é uma das habilidades mais subestimadas em qualquer linguagem. Quando você consegue fazer perguntas sofisticadas, abertas, e relevantes, você transformamente a qualidade de suas conversas. As pessoas adoram responder boas perguntas sobre si mesmas, e você ganha informação valiosa ao mesmo tempo. Vamos aprender várias estruturas de perguntas.</p>
+
+<h4>Perguntas Yes/No vs. Perguntas Abertas</h4>
+<p>Uma pergunta yes/no é fechada: "Do you like coffee?" (Você gosta de café?) - Resposta rápida: "Yes" ou "No". Uma pergunta aberta convida resposta extensa: "What do you think about coffee?" (O que você acha sobre café?) - Resposta pode ser um parágrafo!</p>
+
+<p>Perguntas abertas começam com: "What" (O quê), "How" (Como), "Why" (Por quê), "Where" (Aonde), "When" (Quando), "Who" (Quem). Exemplo: "What's your biggest dream?" (Qual é seu maior sonho?), "How do you spend your free time?" (Como você gasta seu tempo livre?), "Why did you choose this profession?" (Por que escolheu essa profissão?), "Where would you like to visit next?" (Aonde gostaria de visitar a seguir?), "When did you first fall in love?" (Quando se apaixonou pela primeira vez?), "Who has been the most influential person in your life?" (Quem foi a pessoa mais influenciadora em sua vida?).</p>
+
+<blockquote class="tip">
+<strong>Dica de Conversação:</strong> Se você quer uma conversa interessante, faça perguntas ABERTAS, não fechadas. Sim/não encerram a conversa. Perguntas abertas a expandem. Pesquisadores de conversação descobrirão que conversas melhores têm proporção de 70% perguntas abertas e 30% fechadas.
+</blockquote>
+
+<h4>Perguntas Sobre Preferências, Experiências, e Valores</h4>
+<p>Para conhecer alguém melhor, você quer fazer perguntas que revelam suas personalidades, valores, e experiências. "What's something you've always wanted to learn?" (O que você sempre quis aprender?), "Tell me about a moment that changed your perspective" (Conte-me sobre um momento que mudou sua perspectiva), "What do you value most in friendship?" (O que você valoriza mais em amizade?), "What's your biggest achievement so far?" (Qual foi seu maior feito até agora?), "What would you do if money wasn't a concern?" (O que faria se dinheiro não fosse preocupação?).</p>
+
+<p>Estas perguntas não apenas coletam informação, elas convidam introspection genuína. A resposta frequentemente revela muito sobre quem é a pessoa.</p>
+
+<h4>Estruturas de Pergunta Sofisticadas</h4>
+<p>"What do you mean by...?" (O que você quer dizer com...?) - Esta pergunta pede clarificação. "What do you mean by 'success'?" (O que você quer dizer com 'sucesso'?). Esta é frequentemente utilizada quando você quer aprofundar uma resposta vaga.</p>
+
+<p>"How come...?" é uma forma mais coloquial de "Why...?" (Como é que...?). "How come you decided to move?" (Como é que você decidiu se mudar?). Isto soa mais casual e amigável.</p>
+
+<p>"Would you mind...?" é uma forma muito educada de pedir algo. "Would you mind explaining that further?" (Você se importaria em explicar isso mais aprofundadamente?), "Would you mind sharing your experience?" (Você se importaria em compartilhar sua experiência?).</p>
+
+<p>"Could you elaborate on...?" pede que alguém expanda uma ideia. "Could you elaborate on your reasoning?" (Você poderia elaborar seu raciocínio?), "I'd love to hear more about that. Could you elaborate?" (Adoraria saber mais sobre isso. Você poderia elaborar?).</p>
+
+<blockquote class="example">
+<strong>Progressão de Perguntas em Uma Conversa Real:</strong>
+1. "What do you do for work?" (Pergunta básica, yes/no expandida)
+2. "How did you get into that field?" (Pergunta aberta sobre origem)
+3. "What do you like most about your job?" (Pergunta sobre preferência/valor)
+4. "Have you faced any major challenges?" (Pergunta sobre experiência)
+5. "How did you overcome them?" (Pergunta sobre resolvimento)
+6. "Where do you see your career going?" (Pergunta sobre futuro)
+7. "Would you mind sharing some advice you'd give to someone starting out?" (Pergunta sofisticada pedindo sabedoria compartilhada)
+
+Veja como a conversa flui de geral para específico, de fatos para sentimentos e valores?
+</strongquote>
+
+<h4>Evitando Perguntas Problemáticas</h4>
+<p>Há certos tipos de perguntas que, em culturas de língua inglesa, são consideradas intrusivas ou desconfortáveis. Não pergunte sobre idade, salário, relacionamento status (a menos que esteja muito próximo), ou questões de saúde pessoal muito cedo na amizade. Evite perguntas políticas muito fortes a não ser que você conheça bem a pessoa. Evite perguntas sobre aparência física que poderiam ser interpretadas como críticas: "Why are you so thin?" (Por que você é tão magro?) soa crítico. "Have you ever struggled with weight?" (Você já teve dificuldades com peso?) é ainda mais intrusivo.</p>
+
+<p>Em contextos profissionais, evite perguntas muito pessoais até que se estabeleça confiança. Mas em contextos sociais amigáveis, perguntas mais profundas sobre valores, sonhos, e experiências são geralmente bem-recebidas!</p>
+
+<h4>Respondendo a Perguntas Profundas</h4>
+<p>Quando alguém faz uma pergunta profunda, não apenas responda a superfície. Expanda sua resposta! "What's your biggest dream?" → "Well, I think my biggest dream is to write a novel. I've always loved storytelling, and I want to create a world and characters that resonate with people. I'm not sure when I'll have time to do it with my job, but I'm working on short stories in the meantime to develop my skills."</p>
+
+<p>Veja como esta resposta não apenas responde a pergunta, mas oferece contexto, raciocínio, e até obstáculos? Isto é conversação genuína!</p>
+
+<blockquote class="news">
+<strong>Verdade de Conversação Profunda:</strong> As conversas mais significativas acontecem quando AMBAS as pessoas estão fazendo perguntas genuínas E dando respostas completas e honestas. É um dança mútua de curiosidade e vulnerabilidade. Isto é raro e valioso!
+</strongquote>
+
+<h4>Prática: Uma Conversa Inteira de Perguntas</h4>
+<p>Imagine que você está conversando com alguém que você gostaria de conhecer melhor. Escreva 10 perguntas que você gostaria de fazer. Varie entre perguntas sobre presente, passado, futuro, preferências, valores, experiências. Para cada pergunta, também escreva uma possível resposta completa. Isto treina sua capacidade tanto de fazer perguntas quanto de responder autenticamente.`,
+    cards: [
+      {
+        q: 'Complete: "What do you ___ by ___? Could you ___ on that?"',
+        a: '"What do you mean by that? Could you elaborate on that?" Estas são formas sofisticadas de pedir clarificação e aprofundamento em uma conversa.'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Conectores de Sequência e Lógica: However, Furthermore, Nevertheless',
+    dur: 35,
+    content: `<h3>Conectores: A Gramática da Coerência Discursiva</h3>
+<p>Até agora você aprendeu a construir sentenças individuais. Mas uma conversa fluida não é apenas sentenças soltas—é um fluxo lógico de ideias conectadas. Os conectores (também chamados de linking words ou discourse markers) são as palavras que conectam ideias, oferecem contraste, adicionam exemplos, e criam estrutura discursiva. Dominar conectores transforma você de alguém que conhece inglês para alguém que FALA inglês fluentemente.</p>
+
+<h4>Conectores de Adição e Elaboração</h4>
+<p>"Moreover" ou "Furthermore" adicionam uma ideia relacionada. "Climate change is a serious threat to our planet. Furthermore, it affects economic systems globally" (Mudança climática é uma ameaça séria. Além disso, afeta sistemas econômicos globalmente). "In addition to this," (Além disso), "Besides," (Além disso), "What's more," (Ainda mais) também funcionam.</p>
+
+<p>"For example" ou "For instance" introduz exemplos. "Many countries are investing in renewable energy. For example, Denmark generates most of its electricity from wind" (Muitos países investem em energia renovável. Por exemplo, a Dinamarca gera a maioria de sua eletricidade de vento). "Such as" também funciona: "Countries such as Germany and Norway lead in renewable energy" (Países como Alemanha e Noruega lideram em energia renovável).</p>
+
+<p>"In particular" ou "Specifically" oferecem especificação. "Young people face many challenges today, particularly in finding stable employment" (Jovens enfrentam muitos desafios hoje, particularmente em encontrar emprego estável). "That is" ou "In other words" parafraseiam para clareza. "He is taciturn—in other words, he doesn't talk much" (Ele é taciturno—em outras palavras, não fala muito).</p>
+
+<blockquote class="tip">
+<strong>Progressão de Ideia:</strong> Ao organizar suas ideias com conectores de adição, você criando uma estrutura que soa lógica e bem pensada. Isto é particularmente importante em contextos profissionais ou acadêmicos.
+</blockquote>
+
+<h4>Conectores de Contraste e Concessão</h4>
+<p>"However" é o conector mais versátil do inglês. Expressa contraste direto. "The project was ambitious. However, it was completed on time and under budget" (O projeto foi ambicioso. Porém, foi completado no prazo e abaixo do orçamento). "Nevertheless" e "Yet" oferecem significado similar. "The weather was terrible, yet she maintained a positive attitude" (O tempo estava terrível, ainda assim ela manteve atitude positiva).</p>
+
+<p>"Although," "Even though," e "While" expressam concessão—você reconhece um ponto mas depois oferece um contraste. "Although she is very intelligent, she sometimes struggles with confidence" (Embora seja muito inteligente, às vezes tem dificuldade com confiança). "Whereas" faz comparação com contraste. "Whereas traditional education focuses on theory, practical training emphasizes hands-on experience" (Enquanto educação tradicional foca em teoria, treinamento prático enfatiza experiência prática).</p>
+
+<p>"On the other hand" introduz uma perspectiva oposta. "Working from home offers flexibility. On the other hand, it can blur the boundaries between work and personal life" (Trabalhar de casa oferece flexibilidade. Por outro lado, pode confundir limites entre trabalho e vida pessoal). "Conversely" é ainda mais formal. "Some people prefer mountains; conversely, others prefer beaches" (Algumas pessoas preferem montanhas; inversamente, outras preferem praias).</p>
+
+<blockquote class="example">
+<strong>Exemplos de Conectores em Texto Coerente:</strong>
+"Technology has revolutionized education. Moreover, it has made learning accessible to billions of people worldwide. For instance, online courses allow students in remote areas to access world-class instruction. However, technology also creates challenges, such as digital literacy gaps. Furthermore, excessive screen time can affect mental health. Nevertheless, I believe the benefits significantly outweigh the drawbacks. In particular, the democratization of knowledge is unprecedented."
+</strongquote>
+
+<h4>Conectores de Causa e Efeito</h4>
+<p>"Because" ou "Since" expressam causa. "I didn't go to the party because I was sick" (Não fui à festa porque estava doente). "As" tem significado similar mas é mais formal. "The program was cancelled as the organizer became ill" (O programa foi cancelado já que o organizador ficou doente).</p>
+
+<p>"Therefore," "Consequently," e "As a result" expressam efeito/resultado. "He studied extensively. Therefore, he passed the exam" (Ele estudou extensivamente. Portanto, passou no exame). "Hence" é mais formal ainda. "Interest rates increased; hence, borrowing became more expensive" (As taxas de juros aumentaram; daí, empréstimos se tornaram mais caros). "Due to" é preposição que expressa causa. "Due to bad weather, the flight was delayed" (Devido ao mau tempo, o voo foi atrasado).</p>
+
+<h4>Conectores Temporal e de Sequência</h4>
+<p>Para narrativas e instruções, você precisa de conectores temporais. "First," "Initially," "To begin with," iniciam uma sequência. "First, preheat the oven. Next, prepare the ingredients. Then, mix them together. Finally, bake for 30 minutes" (Primeiro, preaqueça o forno. A seguir, prepare os ingredientes. Depois, misture-os. Finalmente, asse por 30 minutos).</p>
+
+<p>"Later," "Subsequently," "Afterwards," e "Following this" conectam eventos em tempo. "I completed my degree. Subsequently, I moved abroad for work" (Completei meu diploma. Posteriormente, me mudei para o exterior para trabalho). "Meanwhile" ou "At the same time" mostram ações simultâneas. "I studied engineering, while my sister studied medicine" (Estudei engenharia, enquanto minha irmã estudava medicina).</p>
+
+<h4>Conectores de Conlusão e Síntese</h4>
+<p>"In conclusion," "In summary," ou "To sum up" sinalizam que você está terminando. "In conclusion, renewable energy is essential for our future" (Em conclusão, energia renovável é essencial para nosso futuro). "On balance," "Overall," e "All in all" oferecem síntese balanceada. "Overall, the event was a success despite some technical difficulties" (No geral, o evento foi sucesso apesar de algumas dificuldades técnicas).</p>
+
+<p>"Ultimately" expressa pensamento final fundamental. "Ultimately, what matters most is how we treat each other" (Fundamentalmente, o que importa mais é como nos tratamos). "In the final analysis," é ainda mais formal. "In the final analysis, education is the key to progress" (Na análise final, educação é a chave para progresso).</p>
+
+<blockquote class="news">
+<strong>Uso Avançado de Conectores:</strong> Falantes muito proficientes não apenas usam conectores—eles variam qual usam para manter interessante. Usar "However" três vezes em um parágrafo soa repetitivo. Use "Nevertheless", "Yet", "On the other hand", "Conversely" para variedade mantendo significado similar.
+</strongquote>
+
+<h4>Prática: Reescrevendo para Melhor Coerência</h4>
+<p>Pegue um texto que você escreveu anteriormente em seus estudos. Reescreva adicionando conectores estratégicos entre sentenças e parágrafos. Observe como o texto se torna mais fluido e coerente apenas pela adição de palavras de conexão!</p>
+
+<p>Exercício desafiador: Escolha um tópico que você tenha opinião forte (educação, tecnologia, ambiente). Escreva um parágrafo de 200 palavras expressando sua opinião. CUIDADO: Use pelo menos 8 conectores diferentes. Isto força você a pensar estruturadamente e expressar seu ponto com sofisticação.
+
+Exemplo de estrutura: "In my opinion, [main argument]. Moreover, [additional point]. Furthermore, [another support]. However, [acknowledge counterpoint]. Nevertheless, [return to main argument]. For example, [specific instance]. Ultimately, [conclusion]."
+
+Isto é como falantes nativos educados organizam argumentos!`,
+    cards: [
+      {
+        q: 'Complete: "Education is important. ___, technology has changed ___ it ___ delivered."',
+        a: '"Moreover/Furthermore, technology has changed how it is delivered." Ou "Nevertheless, technology has challenges too". Use conectores para mostrar relação entre ideias.'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Expressões Idiomáticas e Phrasal Verbs: Soando Mais Natural',
+    dur: 35,
+    content: `<h3>Idioms e Phrasal Verbs: O Segredo da Fluência Natural</h3>
+<p>Aqui está uma verdade incômoda: você pode conhecer toda a gramática inglesa perfeita, mas se não sabe expressões idiomáticas e phrasal verbs, você soará como alguém que está "traduzindo mentalmente" de sua língua nativa. Expressões idiomáticas são frases que não podem ser compreendidas literalmente—seu significado é cultural e aprendido. Phrasal verbs são combinações de verbo + preposição que criam significados completamente novos. Dominar estes é o que diferencia um falante funcional de um falante verdadeiramente fluente.</p>
+
+<h4>Expressões Idiomáticas Comuns e Seus Significados</h4>
+<p>"Break the ice" não significa quebrar gelo literalmente! Significa começar uma conversa em uma situação social estranha. "She told a joke to break the ice at the meeting" (Ela contou uma piada para quebrar o gelo na reunião). "Under the weather" significa estar um pouco doente. "I'm feeling a bit under the weather, so I might skip the gym today" (Estou me sentindo um pouco sob o tempo, então posso pular a academia hoje).</p>
+
+<p>"Hit the hay" significa ir para a cama e dormir (literalmente, "hay" é feno). "I'm exhausted, let's hit the hay" (Estou exausto, vamos dormir). "Piece of cake" significa algo muito fácil. "This exam will be a piece of cake for you" (Este exame será moleza para você). "It's raining cats and dogs" significa chuva muito pesada, não literalmente animais caindo! "Look out! It's raining cats and dogs" (Cuidado! Está chovendo muito pesado).</p>
+
+<p>"Call it a day" significa parar de trabalhar/atividade por hoje. "We've worked for 8 hours. Let's call it a day" (Trabalhamos por 8 horas. Vamos encerrar o dia). "Pull someone's leg" significa brincar/enganar alguém. "I'm just pulling your leg! I didn't really see a ghost" (Estou só brincando! Não vi de verdade um fantasma). "Get on someone's nerves" significa irritar. "His constant complaining gets on my nerves" (Suas reclamações constantes me irritam).</p>
+
+<blockquote class="tip">
+<strong>Aprendendo Idiomas:</strong> Não tente "aprender" idiomas por significa literal. Aprenda-os como unidades completas de significado. Quando você ouve "break the ice", você deveria pensar automaticamente "começar conversa" sem passar por "quebrar gelo literalmente". Flashcards funcionam bem aqui!
+</blockquote>
+
+<h4>Phrasal Verbs: Verbos + Preposições = Novos Significados</h4>
+<p>Um phrasal verb é um verbo combinado com uma preposição (ou sometimes múltiplas palavras) que cria um significado totalmente novo. "Look up" (procurar informação, frequentemente em um dicionário): "I'll look up the word in the dictionary" (Vou procurar a palavra no dicionário). "Look down on" (desrespeitar/depreciar): "She looks down on people who didn't go to university" (Ela desrespeita pessoas que não foram à universidade).</p>
+
+<p>"Get up" (acordar, levantar): "I get up at 6 AM" (Acordo às 6). "Get over" (se recuperar, superar): "It took months to get over the breakup" (Levou meses para superar o término). "Get along" (se dar bem): "My sister and I don't get along" (Minha irmã e eu não nos damos bem). "Get rid of" (se livrar de): "I need to get rid of these old clothes" (Preciso me livrar dessas roupas antigas).</p>
+
+<p>"Put up with" (tolerar): "I can't put up with this noise anymore!" (Não posso mais tolerar esse barulho!). "Put off" (adiar, atrasar): "Don't put off your homework!" (Não adie sua lição!). "Put on" (colocar): "I put on my coat before going out" (Coloco meu casaco antes de sair). "Give up" (desistir): "Don't give up on your dreams" (Não desista de seus sonhos).</p>
+
+<p>"Run into" (encontrar por acaso): "I ran into an old friend at the supermarket" (Encontrei um amigo antigo por acaso no supermercado). "Run out of" (ficar sem): "We ran out of milk" (Ficamos sem leite). "Run over" (atropelar, revisar rapidamente): "Did you run over the main points?" (Você revisou rapidamente os pontos principais?).</p>
+
+<blockquote class="example">
+<strong>Conversação com Phrasal Verbs:</strong>
+"Hey, did you finally break up with him?"
+"Yes, it was hard but I had to get over it. I'm trying to move on."
+"Good for you! Don't let him bring you down. Look forward to better things."
+"I'm trying. My friends have been helping me through it. I couldn't have made it without them."
+(Note como 4 phrasal verbs aparecem naturalmente em apenas 4 trocas!)
+</strongquote>
+
+<h4>Diferenciando Phrasal Verbs Separáveis e Inseparáveis</h4>
+<p>Alguns phrasal verbs são "separáveis"—você pode colocar um objeto no meio. "Put off" é separável: "I put off the meeting" ou "I put the meeting off". Ambas estão corretas! Mas alguns são inseparáveis—o objeto DEVE vir depois. "Get over" é inseparável: "I got over it" (correto), não "I got it over" (incorreto).</p>
+
+<p>Frequentemente, se o objeto é um pronome (me, you, him, her, it, us, them), você PRECISA separar o phrasal verb. "I put it off" (não "I put off it"), "I got over it" (não possível separação), "I look it up" (procuro no dicionário).</p>
+
+<h4>Mais Expressões Idiomáticas Essenciais</h4>
+<p>"Bring home the bacon" = ganhar dinheiro, contribuir financeiramente. "The main breadwinner brings home the bacon" (O principal ganhador de pão sustenta a família). "Come rain or shine" = não importa as circunstâncias. "I'll be there rain or shine" (Estarei lá aconteça o que acontecer). "Better late than never" = é melhor chegar tarde do que não chegar. "We finally finished the project. Better late than never!" (Finalmente terminamos. Mais vale tarde que nunca!).</p>
+
+<p>"Once in a blue moon" = muito raramente. "I eat fast food once in a blue moon" (Como fast food muito raramente). "Piece of cake" = muito fácil. "The first exam was a piece of cake" (O primeiro exame foi moleza). "Easier said than done" = é mais fácil falar que fazer. "Getting fit is easier said than done" (Ficar em forma é mais fácil de dizer que fazer). "At the end of the day" = finalmente, em conclusão. "At the end of the day, what matters is your health" (No final das contas, o que importa é sua saúde).</p>
+
+<h4>Prática: Seu Dicionário Pessoal de Idiomas</h4>
+<p>Comece um documento com 20 expressões idiomáticas e phrasal verbs que você aprendeu. Para cada um, escreva: (1) A expressão, (2) O significado literal vs. real, (3) Uma sentença de exemplo. Estude este documento por uma semana, 5 minutos por dia. Tente usá-lo em conversas reais. Você será surpreendido quanto natural e fluente você soará quando começar a usar expressões idiomáticas corretamente!</p>
+
+<p>Exercício de imersão: Asista a um vídeo de YouTube em inglês com legendas. Toda vez que você ouve uma expressão idiomática ou phrasal verb, pause, anote, e verifique o significado. Isto conecta o som, a forma visual, e o significado de uma forma muito poderosa. Seu cérebro aprendem melhor desta forma multimodal.</p>
+
+<blockquote class="news">
+<strong>A Verdade sobre Fluência:</strong> Os falantes verdadeiramente fluentes em inglês não pensam sobre phrasal verbs—eles saem naturalmente. Da mesma forma que você diz "tirar de letra" ou "dar um jeito" em português sem pensar literalmente nesses significados. Este é seu objetivo: usar expressões idiomáticas tão naturalmente quanto um falante nativo!
+</strongquote>`,
+    cards: [
+      {
+        q: 'O que significa "break the ice"? E "put something off"?',
+        a: '"Break the ice" = começar uma conversa/tornar situação menos estranha. "Put something off" = adiar/atrasar. Exemplos: "Let me tell a joke to break the ice" e "Don\'t put off your homework!"'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Fluência Conversacional: Técnicas de Fala Natural e Contínua',
+    dur: 35,
+    content: `<h3>Fluência Conversacional: Do Conhecimento para a Naturalidade</h3>
+<p>Você chegou a um ponto onde sabe MUITO inglês. Você conhece tempos verbais, estruturas sofisticadas, conectores avançados, idiomas, phrasal verbs. Mas há uma diferença entre "conhecer inglês" e "ser fluente em inglês". Fluência é a capacidade de falar continuamente, naturalmente, com ritmo e sem pausas desconfortáveis. Este módulo é sobre fazer a ponte final entre conhecimento gramatical e expressão genuinamente fluida.</p>
+
+<h4>O Poder da Prosódia: Ritmo, Entonação, e Ênfase</h4>
+<p>Inglês é uma língua de ritmo acentuado. Isto significa que algumas sílabas são pronunciadas mais forte e mais rápido, e outras mais fracas e rápido. "I WANT to LEARN English QUICKLY." (Acentos em WANT, LEARN, e QUICK). Compare com português que é mais "machine-gun"—mais sílabas recebem peso similar. Este padrão de ritmo é fundamental para soar inglês.</p>
+
+<p>Entonação também importa. Uma frase que termina em tom DECRESCENTE é uma afirmação: "I'm happy." Uma frase que termina em tom CRESCENTE é uma pergunta: "I'm happy?" A entonação também expressa emoção. Compare a diferença emocional entre "Really?" dito com incrédulo (tom alto, descendente) versus assustado (tom progressivamente mais alto).</p>
+
+<blockquote class="tip">
+<strong>Treino de Prosódia:</strong> Assista cenas curtas de filmes ou séries em inglês com legendas. Não traduza—apenas ESCUTE. Ouça o ritmo, a entonação, a velocidade. Depois tente IMITAR exatamente como o ator falou. Isto é chamado "shadowing" e é um das técnicas mais efetivas para ganhar prosódia nativa.
+</blockquote>
+
+<h4>Preenchimento de Silêncios: "Um", "Like", "You Know"</h4>
+<p>Falantes nativos NUNCA têm silêncios incômodos. Eles preenchem com "fillers"—palavras ou sons que compram tempo enquanto pensam. "Um" (que soa como "uh"), "like" (que significa "tipo"), "you know" (sabe), "I mean" (quer dizer), "basically" (basicamente), "actually" (na verdade), "sort of" (tipo). Em conversa casual: "Like, I was walking home yesterday, you know? And I, um, saw this crazy thing happen in the street."</p>
+
+<p>Isto pode parecer impreciso, mas é EXTREMAMENTE comum em falantes nativos. "I think, like, education is, um, really important, you know?" soa muito mais natural que "I think that education is really important." porque parece espontâneo e genuíno. Você não quer ABUSAR disso (não coloque "like" em cada palavra), mas usá-lo estrategicamente faz você parecer mais natural.</p>
+
+<h4>Self-Correction e Pensamento em Voz Alta</h4>
+<p>Falantes nativos frequentemente se corrigem enquanto falam: "I went to the store—actually, the mall—to buy a shirt." Isto é naturalmente e mostra pensamento em tempo real. Você pode fazer igual: "She's a great teacher. I mean, one of the best I've ever had." "I'm thinking about moving to...well, maybe Rio. It's cheaper than São Paulo."</p>
+
+<p>Pensar em voz alta é excelente para fluência porque permite você processar pensamentos enquanto fala, sem se sentir pressionado a ter resposta perfeita instantaneamente. "That's an interesting question. Let me think... I suppose... well, it depends on..." Este padrão soa muito mais genuíno que silêncio total enquanto você formula resposta mentalmente.</p>
+
+<h4>Estratégias de Compra de Tempo</h4>
+<p>Quando alguém faz pergunta para a qual você não tem resposta imediata, você pode ganhar tempo de várias formas. "That's a good question" (É uma boa pergunta), "I've never thought about that" (Nunca pensei nisso), "Give me a second to think about that" (Me dê um segundo para pensar), "Well, it depends" (Bem, depende), "That's tricky" (É complicado). Estas frases são tão comuns que ninguém as vê como "delay tactics"—elas são consideradas reflexão genuína!</p>
+
+<p>Você também pode fazer a pessoa elaborar enquanto você ganha tempo: "What exactly do you mean by that?" (O que você quer dizer por isso?) "Can you give me an example?" (Você pode dar um exemplo?) "Help me understand your perspective on this" (Me ajude a entender sua perspectiva). Enquanto eles estão falando, você pode pensar em sua resposta!</p>
+
+<blockquote class="example">
+<strong>Exemplo de Conversação Fluida Natural:</strong>
+A: "Do you think technology is making us happier?"
+B: "Um, that's a good question, actually. I think...well, it's complicated, you know? Like, technology has made communication easier, and that's great. But, I suppose, it's also made us more...anxious? Less present? I mean, everyone's always on their phones. But I wouldn't say it's technology's fault, exactly. More like, it's how we USE it, you know?"
+
+Veja como B não soa perfeito, mas SOA natural, reflexivo, e genuíno? Este é o objetivo!
+</strongquote>
+
+<h4>Prática de Fluxo Livre: Monólogos Timed</h4>
+<p>Aqui está um exercício extremamente efetivo para desenvolver fluência: pegue um tópico aleatório, coloque um cronômetro para 2 minutos, e FALE sobre esse tópico CONTINUAMENTE durante 2 minutos inteiros. Você não pode parar. Se você ficar sem o quê falar, você repete ou elabora o que disse. Você não pode usar português. Isto força você a pensar em tempo real e desenvolver fluência genuína.</p>
+
+<p>Tópicos para exercício: "My biggest dream", "A memorable trip I took", "Why I'm learning English", "My family", "A skill I'd like to develop", "What I did yesterday", "My ideal weekend", "Technology in my life". Comece com tópicos que você conhece bem (fácil), depois progra para tópicos mais desafiadores (opinião sobre política, filosofia, etc.).</p>
+
+<p>Grave-se! Depois escute. Onde você pausou? Onde você use "um"? Onde você se corrigiu? Observe seus próprios padrões. Depois pratique aquele tópico novamente, tentando ser MAIS fluido, com menos pausas. Você melhorará dramaticamente com apenas 5-10 dias de prática!</p>
+
+<h4>Conversação em Pares: A Prática Real</h4>
+<p>Finalmente, a melhor forma de ganhar fluência é falar com PESSOAS REAIS. Encontre um parceiro de troca de idiomas (language exchange partner) online ou presencialmente. Conversem por 30-60 minutos. Não se preocupe em ser perfeito. Apenas CONVERSE. Sobre seus dias, seus problemas, seus sonhos, seus interesses. Esta é conversação autêntica, e é onde fluência real se desenvolve.</p>
+
+<p>Se não conseguir um parceiro humano, use aplicativos como Tandem, ConversationExchange, ou até ChatGPT (embora um humano seja sempre melhor!). O importante é falar regularmente e engajar em conversação de verdade, não exercício mecânico.</p>
+
+<blockquote class="news">
+<strong>Verdade Final sobre Fluência:</strong> Fluência não significa perfeição. Significa capacidade de se comunicar continuamente, autenticamente, e de forma entendível. Um falante fluente comete erros gramaticais, hesita, se corrige, e usa fillers. O que os distingue é a capacidade de CONTINUAR SE COMUNICANDO apesar desses impasses. Este é o verdadeiro marcador de fluência!
+</strongquote>
+
+<h4>Consolidando Tudo: Você é Agora Intermediário Fluente</h4>
+<p>Parabéns! Você completou o curso intermediário. Você pode agora:
+<ul>
+<li>Falar sobre passado, presente, e futuro fluidamente</li>
+<li>Expressar opiniões nuançadas e discordar respeitosamente</li>
+<li>Usar conectores avançados para criar discurso coerente</li>
+<li>Entender e usar expressões idiomáticas e phrasal verbs</li>
+<li>Fazer perguntas sofisticadas que aprofundam conversação</li>
+<li>Falar continuamente com naturalidade e prosódia correta</li>
+</ul>
+
+Você não apenas aprendeu inglês—você desenvolveu a capacidade de pensar, argumentar, e se comunicar em uma nova língua. Isto é extraordinário! Continue praticando, continue conversando, continue crescendo. O próximo nível (avançado) o aguarda quando estiver pronto!`,
+    cards: [
+      {
+        q: 'Qual é o segredo de soar naturalmente fluente quando você não sabe a resposta imediata?',
+        a: 'Use fillers como "um", "well", "you know", ou "that\'s a good question". Ganhe tempo com perguntas de acompanhamento. Pense em voz alta. O silêncio incômodo é pior que hesitação com preenchimentos naturais.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
