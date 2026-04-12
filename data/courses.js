@@ -3326,6 +3326,26 @@ var MA_COURSES = [
     color: '#37474F',
     addedTs: 1776024789865,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/tb.jpg',
+    id: 'tb',
+    name: 'Teologia Bíblica do Gênesis ao Apocalipse',
+    desc: 'Curso completo para entender a mensagem central da Bíblia, conectando Antigo e Novo Testamento de forma lógica, profunda e prática.',
+    file: '01-teologia-biblica.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'TB_HENRY_2026_MASTER',
+    ak: 'tb_auth',
+    storagePrefix: 'tb_',
+    icon: '✝️',
+    color: '#8B0000',
+    free: true,
+    addedTs: 1776024795084,
+    active: true
   }
 ];
 var MA_CATS = [
