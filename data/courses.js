@@ -1970,6 +1970,25 @@ var MA_COURSES = [
     color: '#f57c00',
     addedTs: 1776024429472,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/wb.jpg',
+    id: 'wb',
+    name: 'Biografia de Warren Buffett',
+    desc: 'A história de um dos maiores investidores do mundo.',
+    file: '25-bio-warren-buffett.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'WB_HENRY_2026_MASTER',
+    ak: 'wb_auth',
+    storagePrefix: 'wb_',
+    icon: '👤',
+    color: '#2e7d32',
+    addedTs: 1776024433493,
+    active: true
   }
 ];
 var MA_CATS = [
