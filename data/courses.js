@@ -2597,6 +2597,25 @@ var MA_COURSES = [
     color: '#6c757d',
     addedTs: 1776024584976,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mp.jpg',
+    id: 'mp',
+    name: 'Medicina Preventiva',
+    desc: 'A importância da prevenção, exames regulares e hábitos saudáveis para evitar doenças.',
+    file: '08-medicina-preventiva.html',
+    cat: 'Saúde & Ciência',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'MP_HENRY_2026_MASTER',
+    ak: 'mp_auth',
+    storagePrefix: 'mp_',
+    icon: '🧬',
+    color: '#d62828',
+    addedTs: 1776024589824,
+    active: true
   }
 ];
 var MA_CATS = [
