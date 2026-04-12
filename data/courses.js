@@ -3287,6 +3287,26 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776024779851,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ii2vf.jpg',
+    id: 'ii2vf',
+    name: 'Inglês Intermediário para Fluência Real',
+    desc: 'Desenvolve estrutura, vocabulário e prática oral para quem já sabe o básico e quer começar a falar melhor.',
+    file: '12-ingles-intermediario.html',
+    cat: 'Inglês',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'II_HENRY_2026_MASTER',
+    ak: 'ii_auth',
+    storagePrefix: 'ii_',
+    icon: '🇺🇸',
+    color: '#388E3C',
+    free: true,
+    addedTs: 1776024784753,
+    active: true
   }
 ];
 var MA_CATS = [
