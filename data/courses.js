@@ -2483,6 +2483,25 @@ var MA_COURSES = [
     color: '#023e8a',
     addedTs: 1776024554873,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mz.jpg',
+    id: 'mz',
+    name: 'Biografia de Mark Zuckerberg',
+    desc: 'O criador do Facebook e sua influência na comunicação digital global.',
+    file: '26-bio-mark-zuckerberg.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'MZ_HENRY_2026_MASTER',
+    ak: 'mz_auth',
+    storagePrefix: 'mz_',
+    icon: '👤',
+    color: '#1877f2',
+    addedTs: 1776024558866,
+    active: true
   }
 ];
 var MA_CATS = [
