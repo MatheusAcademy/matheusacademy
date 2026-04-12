@@ -2065,6 +2065,25 @@ var MA_COURSES = [
     color: '#e65100',
     addedTs: 1776024449985,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/sw.jpg',
+    id: 'sw',
+    name: 'Biografia de Sam Walton',
+    desc: 'O fundador do Walmart e sua transformação do varejo mundial.',
+    file: '39-bio-sam-walton.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'SW_HENRY_2026_MASTER',
+    ak: 'sw_auth',
+    storagePrefix: 'sw_',
+    icon: '👤',
+    color: '#0071dc',
+    addedTs: 1776024454279,
+    active: true
   }
 ];
 var MA_CATS = [
