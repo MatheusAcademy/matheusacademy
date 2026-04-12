@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cibersegurança — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'CS',
+  name: 'Cibersegurança na Nova Era Digital',
+  shortName: 'Cibersegurança',
+  cat: 'Tecnologia e Inovação',
+  desc: 'Aborda proteção de dados, ameaças digitais, boas práticas, segurança pessoal e fundamentos de defesa cibernética.',
+  salt: 'CS_HENRY_2026_MASTER',
+  ak: 'cs_auth',
+  courseKey: 'cs',
+  prefix: 'cs_',
+  color: '#D32F2F',
+  glow: 'rgba(211,47,47,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 1,
+    name: 'Fundamentos de Cibersegurança',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Conceitos-Chave de Proteção',
+      points: [
+        'Cibersegurança é defesa contra ataques digitais que exploram vulnerabilidades',
+        'A tríade CIA (Confidencialidade, Integridade, Disponibilidade) é foundation',
+        'Ameaças vêm de hackers, malware, engenharia social e vulnerabilidades software',
+        'Defesa é camadas múltiplas — não existe solução única 100% segura'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'O que significa a tríade CIA em cibersegurança?',
+        opts: ['Agência americana de inteligência', 'Confidencialidade (dados privados), Integridade (dados precisos), Disponibilidade (acesso quando precisa)', 'Central de Investigação de Ataques', 'Criptografia Ilustrada e Análise'],
+        correct: 1
+      },
+      {
+        q: 'Qual tipo de ataque cresceu 70% de 2023 a 2026?',
+        opts: ['Roubo de computadores físicos', 'Ataques ransomware e phishing em larga escala', 'Problemas de internet lenta', 'Vírus de DVDs'],
+        correct: 1
+      },
+      {
+        q: 'Quantos ataques cibernéticos uma empresa média enfrenta por semana em 2026?',
+        opts: ['10', '500', '2.000', '100.000'],
+        correct: 2
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Ameaças Modernas e Técnicas de Ataque',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Conhecer o Inimigo',
+      points: [
+        'Ransomware, phishing, malware e trojans são ameaças crescentes em 2026',
+        'IA está amplificando capacidade de atacantes para automação e evasão',
+        'Deepfakes e injeções de prompt são ameaças emergentes',
+        'Defesa reativa não funciona — precisa antecipação'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'O que é ransomware?',
+        opts: ['Programa que cria backup de dados', 'Malware que criptografa dados e exige pagamento para recuperar', 'Antivírus para proteção', 'Firewall'],
+        correct: 1
+      },
+      {
+        q: 'Qual tipo de ataque projeta 7000+ vítimas até final de 2026?',
+        opts: ['SQL injection', 'Ransomware (aumento de 40%)', 'DDoS apenas', 'Buffer overflow'],
+        correct: 1
+      },
+      {
+        q: 'O que é phishing?',
+        opts: ['Pesca de dados em rio', 'Tentativa de enganar para roubar credenciais via email/mensagem falsa', 'Programa de backupautomático', 'Nenhuma das anteriores'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Defesa e Boas Práticas Essenciais',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Seu Arsenal de Proteção',
+      points: [
+        'Zero Trust, autenticação multifator e criptografia são pilares de defesa moderna',
+        'Treinamento de colaboradores reduz risco de 90%',
+        'Monitoramento contínuo detecta ataques em tempo real',
+        'Defesa robusta é contínua, não um projeto one-time'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'O que é autenticação multifator (MFA)?',
+        opts: ['Usar mesmo password para múltiplos sites', 'Exigir múltiplas formas de verificação (senha + SMS + biometria)', 'Ter múltiplas contas bancárias', 'Nenhuma das anteriores'],
+        correct: 1
+      },
+      {
+        q: 'Qual é a principal causa de brechas de segurança?',
+        opts: ['Problema de hardware', 'Erro humano e falta de treinamento (estimado 80%)', 'Somente vírus', 'Problema de internet'],
+        correct: 1
+      },
+      {
+        q: 'O que é Zero Trust?',
+        opts: ['Não confiar em ninguém, verificar sempre', 'Confiar em todos automaticamente', 'Não usar criptografia', 'Deixar firewall desligado'],
+        correct: 0
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'O que é Cibersegurança? Protegendo o Digital',
+    dur: '20 min',
+    content: `
+    <h3>Entendendo a Guerra Digital e Como Você Se Protege</h3>
+    <p>Bem-vindo ao mundo de cibersegurança — uma das carreiras mais críticas e satisfatórias do século 21. Você vai aprender a proteger dados, sistemas e pessoas contra ataques digitais cada vez mais sofisticados.</p>
+
+    <h4>Definição e Escopo</h4>
+    <p>Cibersegurança é a prática de proteger sistemas de computador, redes e dados contra ataques digitais, roubo e dano não autorizado. Envolve tecnologia, processos e pessoas trabalhando juntas.</p>
+
+    <p>Mas é muito mais que "usar antivírus". É filosofia de defesa contínua em mundo onde ataques não param.</p>
+
+    <h4>Por Que Importa em 2026?</h4>
+    <p>Dados reais são assustadores e inspiradores:</p>
+    <ul>
+      <li>Organizações enfrentaram em média ~2.000 ataques POR SEMANA em 2025 (aumento de 70% desde 2023)</li>
+      <li>Custo médio de data breach: $4.45 milhões</li>
+      <li>Tempo para detectar breach: 206 dias em média (atacantes têm muito tempo)</li>
+      <li>Demanda por profissionais cibersegurança supera oferta por 3:1</li>
+    </ul>
+
+    <blockquote class="news">
+    <strong>📰 Realidade 2026:</strong> Não é mais "se será hackeado" mas "quando". Até grandes corporações são breachadas. A questão é: você vai estar preparado?
+    </blockquote>
+
+    <h4>A Tríade CIA: Fundação de Tudo</h4>
+    <p>Em cibersegurança, tudo gira ao redor da tríade CIA (nada a ver com agência de inteligência):</p>
+
+    <p><strong>1. Confidencialidade</strong></p>
+    <ul>
+      <li>Seus dados privados permanecem privados</li>
+      <li>Senhas não são descobertas</li>
+      <li>Dados pessoais não são roubados</li>
+      <li>Protegido através: criptografia, controle de acesso, firewalls</li>
+    </ul>
+
+    <p><strong>2. Integridade</strong></p>
+    <ul>
+      <li>Dados não são modificados não autorizado</li>
+      <li>Mensagens não são adulteradas em trânsito</li>
+      <li>Banco de dados mantém precisão</li>
+      <li>Protegido através: hash verification, assinaturas digitais, backups</li>
+    </ul>
+
+    <p><strong>3. Disponibilidade</strong></p>
+    <ul>
+      <li>Você tem acesso quando precisa</li>
+      <li>Sistemas estão "up" e funcionando</li>
+      <li>Serviço não é interrompido por ataque</li>
+      <li>Protegido através: redundância, backup, DDoS mitigation</li>
+    </ul>
+
+    <blockquote class="tip">
+    <strong>💡 Exemplo de Violação CIA:</strong> Ransomware viola tudo: rouba dados (confidencialidade), criptografa (integridade), torna inacessível (disponibilidade). Ataque perfeito do adversário.
+    </blockquote>
+
+    <h4>Atores de Ameaça: Quem Quer Hackear Você?</h4>
+
+    <p><strong>1. Hackers Oportunistas</strong></p>
+    <ul>
+      <li>Fazem varredura ampla por vulnerabilidades</li>
+      <li>Atacam primeira vítima fácil que encontram</li>
+      <li>Objetivo: roubar dados para vender, criar botnet, pedir resgate</li>
+      <li>Resultado para você: ainda prejudicial mesmo que não seja alvo direto</li>
+    </ul>
+
+    <p><strong>2. Criminosos Organizados</strong></p>
+    <ul>
+      <li>Grupos estruturados de cibercriminosos</li>
+      <li>Pesquisam alvo, planejam ataque sofisticado</li>
+      <li>Objetivo: lucro máximo (ransomware, fraude, roubo de identidade)</li>
+      <li>Resultado: ataques extremamente danosos e bem executados</li>
+    </ul>
+
+    <p><strong>3. Nation-States / Hackers Patrocinados por Governo</strong></p>
+    <ul>
+      <li>Recursos praticamente ilimitados</li>
+      <li>Objetivo: espionagem, sabotagem, guerra cibernética</li>
+      <li>Alvo: empresas de tecnologia, infraestrutura crítica, governo</li>
+      <li>Sofisticação: máxima, praticamente impossível defender 100%</li>
+    </ul>
+
+    <p><strong>4. Insiders Maliciosos</strong></p>
+    <ul>
+      <li>Funcionários ou contratados que sabem o sistema</li>
+      <li>Podem causar dano desproporcionado porque conhecem a rede</li>
+      <li>Motivação: desejo de vingança, venda de dados, roubo</li>
+    </ul>
+
+    <p><strong>5. Script Kiddies</strong></p>
+    <ul>
+      <li>Pessoas inexperientes usando tools pronta de exploração</li>
+      <li>Não criam ataques originais, apenas usam ferramentas existentes</li>
+      <li>Menos sofisticados mas ainda danosos</li>
+    </ul>
+
+    <h4>Tipos de Dano: O Que Pode Acontecer</h4>
+
+    <ul>
+      <li><strong>Roubo de Dados:</strong> Informações pessoais, registros médicos, dados financeiros, segredos comerciais roubados e vendidos</li>
+      <li><strong>Fraude Financeira:</strong> Transferências não autorizadas de dinheiro</li>
+      <li><strong>Roubo de Identidade:</strong> Criminosos usam sua identidade para abrir contas, fazer compras</li>
+      <li><strong>Ransomware:</strong> Dados criptografados, você deve pagar para recuperar</li>
+      <li><strong>Downtime:</strong> Serviços offline causam perda de receita e reputação</li>
+      <li><strong>Malware:</strong> Programas maliciosos que danificam seu computador ou roubam dados</li>
+      <li><strong>Reputação:</strong> Confiança em marca/empresa é destruída</li>
+      <li><strong>Conformidade/Legal:</strong> Multas por violar regulações de proteção de dados (LGPD, GDPR)</li>
+    </ul>
+
+    <h4>O Ciclo de Vida de um Ataque</h4>
+    <p>Entender como ataques funcionam ajuda você defender:</p>
+
+    <ol>
+      <li><strong>Reconnaissance (Reconhecimento):</strong> Atacante estuda alvo, procura fraquezas</li>
+      <li><strong>Initial Access (Acesso Inicial):</strong> Exploram vulnerabilidade ou enganam usuário</li>
+      <li><strong>Exploitation (Exploração):</strong> Instalam malware, criam backdoor</li>
+      <li><strong>Lateral Movement (Movimento Lateral):</strong> Exploram rede internamente para ganhar mais acesso</li>
+      <li><strong>Persistence (Persistência):</strong> Garantem que mesmo se detectados, voltam a entrar</li>
+      <li><strong>Objective (Objetivos):</strong> Roubo de dados, ransomware, espionagem, sabotagem</li>
+      <li><strong>Exfiltration (Exfiltração):</strong> Copiam dados roubados para servidores deles</li>
+      <li><strong>Impact:</strong> Dano acontece (dados públicos, sistema down, etc.)</li>
+    </ol>
+
+    <p>Defesa boa tenta parar em cada estágio, não apenas o final.</p>
+
+    <h4>Por Que "Impossible to be 100% Secure"?</h4>
+    <p>Realidade incômoda: não existe segurança perfeita. Por quê?</p>
+
+    <ul>
+      <li><strong>Adversários têm vantagem:</strong> Eles só precisam encontrar UM ponto fraco. Você precisa proteger TUDO.</li>
+      <li><strong>Complexidade crescente:</strong> Quanto mais sistemas, mais superfície de ataque</li>
+      <li><strong>Erro humano:</strong> Pessoas cometem erros — sempre haverá</li>
+      <li><strong>Novos exploits:</strong> Vulnerabilidades novas descobertas constantemente</li>
+      <li><strong>Custo:</strong> Segurança absolutamente robusta custa mais que benefício</li>
+    </ul>
+
+    <p>Objetivo não é "zero risk" (impossível) mas "risk aceitável" — defensas boas tornam você alvo menos atrativo que alternativas.</p>
+
+    <blockquote class="quote">
+    <strong>Verdade Cibersegurança:</strong> "Você não precisa ser mais rápido que o urso. Você apenas precisa ser mais rápido que seu amigo." Se seu sistema é mais seguro que concorrente, hackers vão para concorrente.
+    </blockquote>
+
+    <p>Cibersegurança é jogo de defesa contínua, adaptação constante, e preparação para o inevitável.</p>
+    `,
+    cards: [
+      {
+        q: 'Explique a tríade CIA em cibersegurança com um exemplo.',
+        a: 'Confidencialidade (dados privados protegidos), Integridade (dados não são modificados), Disponibilidade (acesso quando precisa). Exemplo: seu password no banco (confidencial, íntegro, disponível quando loga).'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Tipos de Ataques: Malware, Ransomware, Phishing e Mais',
+    dur: '22 min',
+    content: `
+    <h3>Conhecer Diferentes Ameaças é Primeiro Passo para Defesa</h3>
+    <p>Existem muitos tipos diferentes de ataques. Conhecer cada um ajuda você reconhecer e evitar.</p>
+
+    <h4>Malware: Software Malicioso</h4>
+    <p>Malware ("malicious software") é programa que danifica seu computador ou rouba informação.</p>
+
+    <p><strong>Tipos principais:</strong></p>
+    <ul>
+      <li><strong>Virus:</strong> Se replica quando você executa arquivo infectado. Clássico mas menos comum agora.</li>
+      <li><strong>Worm:</strong> Como virus mas se replica automaticamente sem sua ação. Mais perigoso.</li>
+      <li><strong>Trojan (Cavalo de Tróia):</strong> Aparenta ser programa inofensivo mas contém código malicioso. Frequente via WhatsApp no Brasil.</li>
+      <li><strong>Spyware:</strong> Espiona sua atividade sem você saber. Rouba senhas, informação de navegação.</li>
+      <li><strong>Adware:</strong> Menos perigoso que outros, mas inunda você com anúncios intrusive.</li>
+      <li><strong>Rootkit:</strong> Malware sofisticado que ganha acesso administrativo ("root"). Muito difícil de remover.</li>
+    </ul>
+
+    <blockquote class="example">
+    <strong>📚 Caso Real Brasil:</strong> Trojans bancários distribuídos via WhatsApp levaram bilhões em roubo. Vítimas recebiam link ("baixe novo WhatsApp"), clicava, vírus capturas credenciais bancárias.
+    </blockquote>
+
+    <h4>Ransomware: O Seqüestro Digital</h4>
+    <p>Ransomware é dos ataques mais destrutivos modernos. Funciona assim:</p>
+
+    <ol>
+      <li>Malware infecta seu computador (ou servidor da empresa)</li>
+      <li>Criptografa todos seus arquivos (data inacessível)</li>
+      <li>Deixa mensagem: "Seus dados foram criptografados. Pague $X para ter chave de descriptografia"</li>
+      <li>Você tem escolha: pagar (e esperar que realmente devolvem dados) ou perder tudo</li>
+    </ol>
+
+    <p><strong>Dados assustadores:</strong></p>
+    <ul>
+      <li>Ataques ransomware cresceram 40% de 2024 para 2026</li>
+      <li>Projeção: 7000+ vítimas até final de 2026</li>
+      <li>Resgate médio pedido: $100.000 - $5.000.000</li>
+      <li>A maioria das vítimas paga</li>
+    </ul>
+
+    <p><strong>Por que tão impactante?</strong> Não é apenas roubo de dados — é bloqueio completo de acesso. Empresas não conseguem funcionar. Hospitais não conseguem atender pacientes.</p>
+
+    <blockquote class="news">
+    <strong>📰 Exemplo Real:</strong> Hospital em São Paulo foi vítima de ransomware em 2024. Sistemas offline, não conseguiam acessar registros de pacientes. Milhões em prejuízo, pacientes em risco. Pagaram resgate, dados eventualmente recuperados.
+    </blockquote>
+
+    <h4>Phishing: Engenharia Social Digital</h4>
+    <p>Phishing é tentativa de enganar você para revelar informação sensível ou clicar em link malicioso.</p>
+
+    <p><strong>Como funciona:</strong></p>
+    <ol>
+      <li>Você recebe email que parece legítimo (seu banco, Netflix, Amazon)</li>
+      <li>Email diz algo como "Verificar conta", "Atualizar password", "Confirmar pagamento"</li>
+      <li>Você clica link, que leva para website falso que imita o real</li>
+      <li>Você digita credenciais, criminoso captura</li>
+      <li>Agora têm acesso à sua conta</li>
+    </ol>
+
+    <p><strong>Estatísticas assustadoras:</strong></p>
+    <ul>
+      <li>85% de breaches envolvem elemento humano (phishing, engenharia social)</li>
+      <li>Taxa de sucesso de phishing: 3.4% (parece baixo, mas em envio de 100.000 emails, 3.400 vítimas)</li>
+      <li>Tempo de resposta médio a phishing: 16 minutos (atacantes tem tempo)</li>
+    </ul>
+
+    <h4>Variações Sofisticadas de Phishing</h4>
+
+    <p><strong>Spear Phishing:</strong> Phishing direcionado. Criminosos pesquisam você especificamente, personalizam email. Muito mais eficaz.</p>
+
+    <p><strong>Whaling:</strong> Spear phishing de CEO/executivos importantes. Alvo alto value.</p>
+
+    <p><strong>Vishing:</strong> Phishing por telefone. "Oi, aqui é seu banco, confirmamos dados...?"</p>
+
+    <p><strong>Smishing:</strong> Phishing por SMS. Link em mensagem de texto que parece legítima.</p>
+
+    <h4>DDoS: Ataque de Negação de Serviço Distribuído</h4>
+    <p>DDoS tenta sobrecarregar servidor/website flooding com tráfego legítimo.</p>
+
+    <ul>
+      <li>Atacante controla rede de computadores "botnet"</li>
+      <li>Comando todos para acessar mesmo site/servidor simultaneamente</li>
+      <li>Tráfego maciço derruba servidor ou deixa muito lento</li>
+      <li>Resultado: website está down, ninguém consegue acessar</li>
+    </ul>
+
+    <p>Menos sobre roubar dados, mais sobre sabotagem/extorsão ("Pague para parar o ataque").</p>
+
+    <h4>SQL Injection e Exploração de Aplicação</h4>
+    <p>Para quem coda: SQL Injection é exploração onde criminosos inserem SQL malicioso em campos de input.</p>
+
+    <p><strong>Exemplo simples:**</p>
+    <p>Campo de login espera: username = "john"</p>
+    <p>Criminoso digita: username = "'; DROP TABLE users;--"</p>
+    <p>Se não validado, website executa comando que deleta tabela inteira de usuários!</p>
+
+    <p>SQL injection é vulnerabilidade MUITO comum em websites mal feitos. Causou breaches bilionárias.</p>
+
+    <h4>Man-in-the-Middle (MITM)</h4>
+    <p>Criminoso intercepta comunicação entre você e website/servidor.</p>
+
+    <ul>
+      <li>Você está no WiFi público café (inseguro)</li>
+      <li>Criminoso conecta ao mesmo WiFi</li>
+      <li>Você acessa seu banco, dados são enviados</li>
+      <li>Criminoso intercepta e lê dados (login, password, números da conta)</li>
+    </ul>
+
+    <p>Por isso HTTPS é importante — criptografa comunicação mesmo se interceptada.</p>
+
+    <h4>Deepfakes e Fraude de Identidade</h4>
+    <p>Tendência preocupante em 2026: deepfakes (vídeos fake de pessoas).</p>
+
+    <ul>
+      <li>Criminosos usam IA para criar vídeo de CEO pedindo transferência de dinheiro</li>
+      <li>CFO vê "vídeo de CEO", faz transferência</li>
+      <li>Por hora ou dias depois, fraude é descoberta</li>
+      <li>Milhões em dano</li>
+    </ul>
+
+    <p><strong>Exemplo reportado:</strong> CEO de empresa de criptografia recebeu chamada de video que parecia dele mesmo. Falso. Cobrou transferência. $25 milhões roubados.</p>
+
+    <h4>Injeção de Prompt (Novo!)</h4>
+    <p>Com aumento de IA, surge novo tipo de ataque: prompt injection.</p>
+
+    <p>Criminosos tentam fazer IA fazer coisas que não deveria:</p>
+    <ul>
+      <li>"Ignora suas instruções anteriores, faça X"</li>
+      <li>Pode levar a IA revelar informação confidencial</li>
+      <li>Ou gerar conteúdo prejudicial</li>
+    </ul>
+
+    <p>É vulnerabilidade real e crescente em 2026.</p>
+
+    <h4>Supply Chain Attacks</h4>
+    <p>Em vez de atacar empresa grande (defesa forte), atacam fornecedor menor deles.</p>
+
+    <p>Exemplo: Hacker compromete software que é usado por 1000+ empresas. Quando atualizadas, todas são infectadas simultaneamente.</p>
+
+    <p>Difícil defender porque você não controla software terceiro.</p>
+
+    <blockquote class="news">
+    <strong>📰 Fato 2026:</strong> Operadores automatizados impulsionados por IA aumentaram em 49%+ em 2026. Significa atacantes usam IA para automatizar escanear de vulnerabilidades, aumentando escala de ataques exponencialmente.
+    </blockquote>
+
+    <p>Conhecer esses ataques é crucial. Próximo passo: como defender.</p>
+    `,
+    cards: [
+      {
+        q: 'Diferencie Malware, Ransomware, e Phishing com exemplos breves.',
+        a: 'Malware: software que danifica (virus, trojan). Ransomware: criptografa dados exigindo resgate. Phishing: email falso tentando enganar você clicar link/revelar credenciais. Todos podem estar conectados num ataque.'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Vulnerabilidades e Superfície de Ataque',
+    dur: '21 min',
+    content: `
+    <h3>Onde os Buracos de Segurança Se Escondem</h3>
+    <p>Para defender, você precisa entender onde vulnerabilidades existem. Existem mais buracos que você imagina.</p>
+
+    <h4>Vulnerabilidades Software: O Buraco no Navio</h4>
+    <p>Todo software tem bugs. Alguns bugs têm impacto segurança.</p>
+
+    <p><strong>Exemplos:</strong></p>
+    <ul>
+      <li>Buffer Overflow: Software não verifica tamanho de input, escreve além limites. Criminoso pode executar código arbitrário.</li>
+      <li>SQL Injection: Mencionado antes, mas tão comum que merece destaque</li>
+      <li>Cross-Site Scripting (XSS): Website executa código malicioso fornecido por usuário</li>
+      <li>Path Traversal: Acesso a arquivos que não deveria poder acessar ("../../sensitive_file.txt")</li>
+    </ul>
+
+    <h4>Zero-Day Vulnerabilities</h4>
+    <p>Vulnerabilidade que existe mas fabricante não sabe ainda.</p>
+
+    <ul>
+      <li>"Zero-day" significa você tem zero dias para patcher (não há fix)</li>
+      <li>Criminosos podem usar zero-days de forma invisível por meses/anos</li>
+      <li>Muito valiosas — governo paga 100.000s por zero-days</li>
+    </ul>
+
+    <p>Defesa contra zero-days é difícil porque não há patch. Requer detecção behavior anormal.</p>
+
+    <h4>Configuração Incorreta</h4>
+    <p>Muitas brechas não vêm de bugs de código mas de mal-configuração.</p>
+
+    <ul>
+      <li>Servidor deixado acessível ao público quando deveria ser privado</li>
+      <li>Passwords padrão nunca mudadas (admin/admin)</li>
+      <li>Logging desligado (não conseguem detectar ataques)</li>
+      <li>Atualizações não aplicadas</li>
+    </ul>
+
+    <p>50%+ de brechas seriam prevenidas com basic hygiene de segurança.</p>
+
+    <h4>Erro Humano: O Elo Mais Fraco</h4>
+    <p>Estatística sobra: 85% de breaches envolvem elemento humano.</p>
+
+    <ul>
+      <li>Funcionário clica em email phishing</li>
+      <li>Usa password fraco ou compartilhada</li>
+      <li>Deixa laptop desbloqueado</li>
+      <li>Conecta pen drive encontrado no estacionamento (!)</li>
+      <li>Fala senha em ligação "verificação"</li>
+    </ul>
+
+    <p>Humanos são vulnerabilidade mais crítica. Tecnologia pode ajudar, mas treinamento é essencial.</p>
+
+    <h4>Supply Chain: Você é Tão Fraco quanto Seus Fornecedores</h4>
+    <p>Se seu fornecedor é hackeado, você é vulnerável.</p>
+
+    <ul>
+      <li>SaaS que você usa tem brecha? Seus dados vazam.</li>
+      <li>Biblioteca open-source que você incorpora tem vulnerabilidade? Seu código tem.</li>
+      <li>Servidor na cloud de terceiro é comprometido? Seus dados podem ser afetados.</li>
+    </ul>
+
+    <p>Você não consegue proteger 100% se seus fornecedores não estão seguros.</p>
+
+    <h4>Insider Threats: Inimigos Internos</h4>
+    <p>Não todos os ataques vêm de fora. Alguns vêm de dentro.</p>
+
+    <ul>
+      <li>Funcionário descontente rouba dados antes de sair</li>
+      <li>Contratado tem acesso que não deveria</li>
+      <li>Privileged user abusa access</li>
+      <li>Acidental: envia email confidencial para pessoa errada</li>
+    </ul>
+
+    <p>Insider threats são frequentemente mais destrutivas porque conhecem sistema.</p>
+
+    <h4>IoT (Internet of Things): Bilhões de Dispositivos Inseguros</h4>
+    <p>Câmeras, smart TVs, roteadores, termostatos — todos conectados, muitos mal seguros.</p>
+
+    <ul>
+      <li>Muitos têm senhas padrão nunca mudadas</li>
+      <li>Raro recebem atualizações de segurança</li>
+      <li>Processar power limitado para criptografia pesada</li>
+    </ul>
+
+    <p>Sua smart TV pode estar botnet sem você saber, enviando spam.</p>
+
+    <h4>Superfície de Ataque: O Conceito Chave</h4>
+    <p>"Superfície de ataque" é tudo que um atacante pode explorar:</p>
+
+    <ul>
+      <li>Cada software instalado</li>
+      <li>Cada porta aberta</li>
+      <li>Cada funcionário</li>
+      <li>Cada fornecedor</li>
+      <li>Cada dispositivo conectado</li>
+    </ul>
+
+    <p>Grande organização tem superfície de ataque ENORME. Reduzir superfície é chave da defesa:</p>
+    <ul>
+      <li>Desinstale software não necessário</li>
+      <li>Feche portas não necessárias</li>
+      <li>Limite acesso a o mínimo necessário</li>
+      <li>Audite fornecedores</li>
+    </ul>
+
+    <p>Princípio: "Least Privilege" — cada pessoa/sistema tem apenas o que precisa, nada mais.</p>
+    `,
+    cards: [
+      {
+        q: 'O que é "superfície de ataque" e por que reduzi-la é importante?',
+        a: 'Superfície de ataque é tudo que pode ser explorado (software, portas, pessoas, fornecedores). Maior superfície = mais oportunidades para atacantes. Reduza instalando apenas necessário, fechando portas, limitando acesso.'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Defesa em Profundidade: Múltiplas Camadas de Proteção',
+    dur: '24 min',
+    content: `
+    <h3>Estratégia de Defesa Que Funciona: Não Confie em Uma Coisa</h3>
+    <p>Defesa de segurança não é UMA coisa — é múltiplas camadas trabalhando junto. Se uma falha, outras mantêm você seguro.</p>
+
+    <h4>Defense in Depth: A Filosofia</h4>
+    <p><strong>Analogia:</strong> Castelo medieval não tinha apenas uma muralha. Tinha múltiplas muralhas, fosso, torres, portão. Até se inimigo ultrapassa uma defesa, outras impedem.</p>
+
+    <p>Mesma lógica para cibersegurança:</p>
+    <ul>
+      <li>Camada 1: Firewall (nega tráfego não autorizado)</li>
+      <li>Camada 2: Antivirus (detecta malware)</li>
+      <li>Camada 3: Autenticação forte (senha + MFA)</li>
+      <li>Camada 4: Monitoramento (detecta atividade suspeita)</li>
+      <li>Camada 5: Backup/Disaster Recovery (recupera de ataque)</li>
+    </ul>
+
+    <p>Se alguém ultrapassa firewall, antivirus pega. Se antivirus falha, autenticação forte impede acesso. E assim por diante.</p>
+
+    <h4>Criptografia: Protegendo Dados</h4>
+    <p>Criptografia é transformar dados legíveis em código ilegível sem chave de descriptografia.</p>
+
+    <p><strong>Tipos:</strong></p>
+    <ul>
+      <li><strong>Criptografia Simétrica:</strong> Mesma chave para criptografar e descriptografar. Rápida mas compartilhar chave é problemático.</li>
+      <li><strong>Criptografia Assimétrica (Public-Key):</strong> Chave pública (qualquer pessoa tem) para criptografar, chave privada (só você tem) para descriptografar. Mais segura mas mais lenta.</li>
+      <li><strong>Hashing:</strong> Não é realmente criptografia (não é reversível), mas transforma dados em valor único. Detecta se dados foram modificados.</li>
+    </ul>
+
+    <blockquote class="example">
+    <strong>📚 Exemplo Simples:</strong> Seu password no banco: armazenado como hash (não pode ser descriptografado). Quando você loga, password é hashed e comparado. Se criminoso rouba banco de dados, vê apenas hashes, não passwords reais.
+    </blockquote>
+
+    <h4>Autenticação: Provando Você é Você</h4>
+    <p>Autenticação é provar sua identidade.</p>
+
+    <p><strong>Fator único (fraco):</strong></p>
+    <ul>
+      <li>Algo que você sabe (password)</li>
+    </ul>
+
+    <p><strong>Multifatorial (forte):</strong></p>
+    <ul>
+      <li>Algo que você sabe (password)</li>
+      <li>Algo que você tem (telefone recebendo SMS, aplicativo authenticator)</li>
+      <li>Algo que você é (biometria: fingerprint, face)</li>
+    </ul>
+
+    <p>Multifactor authentication (MFA) é CRÍTICO. Mesmo se password é hackeado, sem segundo fator, não conseguem entrar.</p>
+
+    <p><strong>Estatística chocante:</strong> MFA previne 99.9% de ataques automatizados baseados em stolen passwords.</p>
+
+    <h4>Firewall e Segurança de Rede</h4>
+    <p>Firewall controla tráfego entrando/saindo sua rede.</p>
+
+    <ul>
+      <li><strong>Regras:</strong> "Permitir tráfego web (porta 80, 443). Negar tudo mais."</li>
+      <li><strong>Stateful Firewalls:</strong> Lembram conexões anteriores, detectam padrões anormais</li>
+      <li><strong>WAF (Web Application Firewall):</strong> Específico para aplicações web, detecta SQL injection, XSS, etc.</li>
+    </ul>
+
+    <h4>Detecção de Intrusão (IDS) e Prevenção (IPS)</h4>
+    <p>IDS monitora tráfego procurando por padrões de ataque.</p>
+
+    <ul>
+      <li>IDS: Detecta ataque, alerta</li>
+      <li>IPS: Detecta ataque, bloqueia automaticamente</li>
+    </ul>
+
+    <p>Exemplo: Múltiplas tentativas de login com senhas diferentes em segundos? IDS alerta, IPS bloqueia IP.</p>
+
+    <h4>Endpoint Protection: Protegendo seus Computadores</h4>
+    <p>Antivirus tradicional é obsoleto. Agora é "Endpoint Detection and Response" (EDR).</p>
+
+    <ul>
+      <li><strong>Antivirus:</strong> Procura assinaturas de malware conhecidas</li>
+      <li><strong>EDR:</strong> Monitora comportamento de processo, detecta coisas anormais mesmo sem assinatura</li>
+    </ul>
+
+    <p>Exemplo EDR: Processo startup que de repente começa comunicar com servidor suspeito? EDR vê, alerta, pode bloquear.</p>
+
+    <h4>Zero Trust Architecture: Nunca Confie</h4>
+    <p>Modelo tradicional: confie em pessoas dentro da rede, desconfie de fora.</p>
+
+    <p>Zero Trust: SEMPRE desconfie, SEMPRE verifique, mesmo para pessoas/dispositivos dentro.</p>
+
+    <p><strong>Implementação:**</strong></p>
+    <ul>
+      <li>Verificar TODA solicitação de acesso</li>
+      <li>Autenticação forte sempre</li>
+      <li>Monitoramento contínuo de comportamento</li>
+      <li>Least Privilege: acesso mínimo necessário</li>
+      <li>Segmentação: mesmo que um computador é hacked, não pode acessar tudo</li>
+    </ul>
+
+    <p>Zero Trust é tendência dominante em 2026 porque modelo antigo "perimeter-based" não funciona mais com trabalho remoto, cloud, BYOD.</p>
+
+    <h4>Backup e Disaster Recovery</h4>
+    <p>Não é "se" será atacado, é "quando". Backups são defesa final.</p>
+
+    <ul>
+      <li>Backup regular de todos dados críticos</li>
+      <li>Backup offline (não conectado à rede, ransomware não consegue criptografar)</li>
+      <li>Testar recuperação periodicamente (não basta ter backup, precisa saber restaurar)</li>
+      <li>Replicação em múltiplos locais geográficos</li>
+    </ul>
+
+    <p>Com backup sólido, mesmo ransomware bem-sucedido não é catastrófico — você recupera.</p>
+
+    <h4>Logging e Monitoring: Olhos Sempre Ligados</h4>
+    <p>Se não monitora, não sabe se foi atacado.</p>
+
+    <ul>
+      <li>Log tudo (logins, acessos a arquivo, alterações em sistema)</li>
+      <li>Agregue logs em SIEM (Security Information and Event Management)</li>
+      <li>Configure alertas para atividades suspeitas</li>
+      <li>Analyze logs periodicamente procurando por anomalias</li>
+    </ul>
+
+    <p><strong>Estatística assustadora:</strong> Tempo médio detectar breach é 206 DIAS. Significa atacantes ficam explorando sistema por meses sem serem notados. Logging/monitoring reduz este tempo para horas/dias.</p>
+
+    <blockquote class="news">
+    <strong>📰 Fato 2026:</strong> 98% de empresas implementaram alguma forma de logging. Mas apenas 40% analisam logs efetivamente. Data silenciosa é desperdício — análise é que cria valor.
+    </blockquote>
+
+    <p>Defesa em profundidade não é 100% seguro, mas aumenta custo de ataque exponencialmente. Hackers vão para alvo mais fácil.</p>
+    `,
+    cards: [
+      {
+        q: 'O que é "Defense in Depth" e cite 3 camadas de defesa diferentes.',
+        a: 'Defense in Depth é múltiplas camadas de proteção. 3 exemplos: Firewall (controla tráfego), Autenticação Multifatorial (prova quem você é), Monitoring (detecta atividade anormal). Se uma camada falha, outras protegem.'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'Treinamento e Fator Humano: O Elo Mais Forte',
+    dur: '23 min',
+    content: `
+    <h3>85% das Brechas Envolvem Humano — Como Fortalecer Esse Elo</h3>
+    <p>Tecnologia é importância, mas as pessoas são críticas. Humano bem treinado é defesa mais poderosa.</p>
+
+    <h4>Por Que Humanos São Alvo</h4>
+    <p>Ataques direcionados a humanos são eficientes porque:</p>
+
+    <ul>
+      <li><strong>Mais fácil:</strong> Explorar emocão é mais fácil que explorar código</li>
+      <li><strong>Altamente eficaz:</strong> Taxa de sucesso de phishing é real</li>
+      <li><strong>Escalável:</strong> Uma campanha phishing pode atingir 100.000s de pessoas</li>
+      <li><strong>Barato:</strong> Não precisa de zero-day caro, apenas email</li>
+    </ul>
+
+    <p><strong>Realidade incômoda:</strong> Mesmo que sua tecnologia é perfeita, um funcionário clica em link errado, tudo compromete.</p>
+
+    <h4>Tipos de Engenharia Social</h4>
+
+    <p><strong>Phishing (mencionado antes):</strong> Email que parece legítimo, você clica/responde</p>
+
+    <p><strong>Pretexting:</strong> Criminoso finge ser alguém (IT support, colega) para enganar você revelar informação</p>
+    <ul>
+      <li>"Oi, aqui é seu IT, precisamos verificar sua senha para segurança" (FAKE)</li>
+      <li>Você acredita, dá senha</li>
+    </ul>
+
+    <p><strong>Baiting:</strong> Deixa algo atraente (USB drive com "salary.xlsx") que você pega e usa</li>
+    <ul>
+      <li>USB contém malware</li>
+      <li>Você conecta em computador, infecta</li>
+    </ul>
+
+    <p><strong>Quid Pro Quo:</strong> "Faço algo para você se fizer algo para mim"</p>
+    <ul>
+      <li>"Reparo seu computador se me der acesso"</li>
+      <li>Parece fair, mas criminoso agora tem acesso</li>
+    </ul>
+
+    <p><strong>Tailgating/Piggybacking:</strong> Segue alguém autorizado para dentro sala segura</p>
+    <ul>
+      <li>Você está com café, pessoa segura a porta para você</li>
+      <li>Educado mas agora criminoso está dentro</li>
+    </ul>
+
+    <p><strong>Dumpster Diving:</strong> Literalmente procura lixo por informação confidencial</p>
+    <ul>
+      <li>Documentos jogados fora frequentemente contêm informação valiosa</li>
+    </ul>
+
+    <blockquote class="example">
+    <strong>📚 Teste Real:</strong> Empresa fez simulação: enviaram email phishing (falso) para 500 funcionários. 42% clicou no link. Desses, 25% entrou credenciais em página falsa. Resultado: empresa sabe quem precisa mais treinamento.
+    </blockquote>
+
+    <h4>Treinamento de Segurança: O Que Funciona</h4>
+
+    <p><strong>Treinamento Ineficaz:</strong></p>
+    <ul>
+      <li>Mostrar PowerPoint uma vez por ano</li>
+      <li>Teste genérico que não aplica ao trabalho deles</li>
+      <li>Sem consequências por falhar</li>
+    </ul>
+
+    <p><strong>Treinamento Eficaz:**</p>
+    <ul>
+      <li>Regular e contínuo (não one-time)</li>
+      <li>Contextual ao trabalho deles</li>
+      <li>Simulações práticas (fake phishing, social engineering scenarios)</li>
+      <li>Feedback imediato se falha</li>
+      <li>Incentivos para bom comportamento</li>
+      <li>Liderança modela comportamento seguro</li>
+    </ul>
+
+    <h4>Certos Comportamentos Para Ensinar</h4>
+
+    <p><strong>1. Estar Cético</strong></p>
+    <ul>
+      <li>Quem realmente é este email?</li>
+      <li>Por que estou sendo pedido para fazer isso?</li>
+      <li>Isso parece suspeito?</li>
+    </ul>
+
+    <p><strong>2. Verificar Antes de Clicar</strong></p>
+    <ul>
+      <li>Passe mouse sobre link, veja URL real</li>
+      <li>Email do seu "banco" mas URL é estranho? Phishing</li>
+      <li>Tenha dúvida? Contacte via telefone, não pelo email</li>
+    </ul>
+
+    <p><strong>3. Proteger Passwords</strong></p>
+    <ul>
+      <li>Nunca compartilhe password</li>
+      <li>Não escreva em post-it</li>
+      <li>Use password manager</li>
+      <li>Crie senhas fortes (mix de letras, números, símbolos)</li>
+    </ul>
+
+    <p><strong>4. Relatar Suspeitas</strong></p>
+    <ul>
+      <li>Se vê algo estranho, avise time de segurança</li>
+      <li>Não tenha medo de "dar falso alarme" — é melhor prevenir</li>
+      <li>Cultura de "reportar sem punição" é crucial</li>
+    </ul>
+
+    <p><strong>5. Senso de Responsabilidade</strong></p>
+    <ul>
+      <li>Você é primeira linha de defesa</li>
+      <li>Sua ação (ou inação) impacta toda empresa</li>
+      <li>Segurança é responsabilidade compartilhada</li>
+    </ul>
+
+    <h4>Criando Cultura de Segurança</h4>
+    <p>Treinamento não é suficiente. Precisa de cultura onde segurança é valorizado.</p>
+
+    <ul>
+      <li><strong>Liderança Modelo:</strong> CEO usa MFA, segue políticas — não exceção</li>
+      <li><strong>Incentivos:</strong> Recompense comportamento seguro</li>
+      <li><strong>Comunicação Regular:</strong> Noticiários de segurança, alertas, lessons learned</li>
+      <li><strong>Psych Safety:</strong> Reportar erro não resulta em punição (senão ninguém vai reportar)</li>
+      <li><strong>Continuidade:</strong> Não é campanha de 1 mês, é contínuo</li>
+    </ul>
+
+    <h4>Métrica de Segurança Comportamental</h4>
+    <p>Como medir se treinamento funciona?</p>
+
+    <ul>
+      <li>Taxa de clique em phishing simulations (target: <5%)</li>
+      <li>Taxa de report de suspicious activity (target: alto)</li>
+      <li>Tempo médio detectar e reportar anomalia</li>
+      <li>Incidentes por funcionário (target: tendência downward)</li>
+    </ul>
+
+    <p>Dados mostram que empresas com forte treinamento de segurança têm 50-60% menos incidentes.</p>
+
+    <blockquote class="news">
+    <strong>📰 Fato 2026:</strong> Empresas que investem em treinamento de segurança têm custo médio de breach $1.5M menor que aquelas sem. ROI de treinamento é medido e significativo.
+    </blockquote>
+
+    <h4>Psicologia da Segurança</h4>
+    <p>Entender psicologia humana ajuda design de defesa melhor.</p>
+
+    <ul>
+      <li><strong>Urgência:</strong> "Faça agora!" faz pessoas pular steps. Phishing usa isto.</li>
+      <li><strong>Autoridade:</strong> "Do CEO" faz pessoas obedecer. Spear phishing usa isto.</li>
+      <li><strong>Reciprocidade:</strong> "Ajude e ajudarei". Quid pro quo usa isto.</li>
+      <li><strong>Inércia:</strong> "Always done this way" é inseguro. Mudar é difícil.</li>
+    </ul>
+
+    <p>Boas defesas reconhecem isso e compensam.</p>
+
+    <h4>Zero Trust no Contexto Humano</h4>
+    <p>Zero Trust não significa desconfiança literal. Significa verificação contínua.</p>
+
+    <ul>
+      <li>Mesmo que é funcionário de 10 anos, se comportamento é anormal, investigar</li>
+      <li>Mesmo que é seu "chefe", se email é suspeito, verificar</li>
+      <li>Acesso é revogado quando não mais necessário (pessoa deixa time)</li>
+    </ul>
+
+    <p>Processo, não paranoia.</p>
+    `,
+    cards: [
+      {
+        q: 'Por que treinamento de segurança é importante e cite 2 comportamentos chave para ensinar.',
+        a: 'Importante porque 85% das brechas envolvem humano — bem treinado é defesa mais poderosa. Comportamentos: (1) Ser cético de emails/links suspeitos, (2) Proteger passwords, (3) Reportar atividade suspeita sem medo.'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Segurança Pessoal: Protegendo Você e Sua Família Online',
+    dur: '22 min',
+    content: `
+    <h3>Aplicando Princípios de Cibersegurança à Sua Vida Pessoal</h3>
+    <p>Cibersegurança não é apenas para empresas. Você também é alvo. Aqui está como proteger você e sua família.</p>
+
+    <h4>Ameaças Pessoais Comuns</h4>
+
+    <p><strong>Phishing Direcionado (Spear Phishing)</strong></p>
+    <ul>
+      <li>Criminosos pesquisam você no LinkedIn, Facebook</li>
+      <li>Enviam email que parece de "colega" com assunto relacionado trabalho</li>
+      <li>Você confia, clica link malicioso</li>
+    </ul>
+
+    <p><strong>Roubo de Identidade</strong></p>
+    <ul>
+      <li>Criminosos usam seu SSN (CPF no Brasil) para abrir contas</li>
+      <li>Compram em seu nome</li>
+      <li>Você só descobre meses depois quando é cobrado</li>
+    </ul>
+
+    <p><strong>Account Takeover</strong></p>
+    <ul>
+      <li>Seu email é hackeado</li>
+      <li>Criminoso reseta password de suas outras contas (bank, social media)</li>
+      <li>Agora têm controle</li>
+    </ul>
+
+    <p><strong>Blackmail/Sextortion</strong></p>
+    <ul>
+      <li>Criminosos dizem que têm video comprometedor de você</li>
+      <li>Pedem dinheiro para não publicar</li>
+      <li>Frequentemente é bluff, mas assustador</li>
+    </ul>
+
+    <p><strong>Social Media Hijacking</strong></p>
+    <ul>
+      <li>Suas contas sociais são hackeadas</li>
+      <li>Criminosos postam em seu nome, prejudicando reputação</li>
+      <li>Ou usam para spam/phishing de seus amigos</li>
+    </ul>
+
+    <h4>Protect Seu Email: É Tudo</h4>
+    <p>Email é chave para tudo — recuperação de password, verificação de identidade.</p>
+
+    <p><strong>Proteger Email:**</p>
+    <ul>
+      <li><strong>Senha forte e única:</strong> Não reutilize em outros sites</li>
+      <li><strong>MFA:</strong> Autenticação multifatorial em seu email (SMS, authenticator app)</li>
+      <li><strong>Recovery Options:</strong> Atualize telefone de recovery, email de recovery</li>
+      <li><strong>2FA para Importantes:</strong> Se seu email é hackeado, proteja contas críticas com MFA próprio</li>
+    </ul>
+
+    <h4>Passwords: Arte e Ciência</h4>
+
+    <p><strong>O que NÃO fazer:**</strong></p>
+    <ul>
+      <li>Senhas fracas ("password", "123456", datas de nascimento)</li>
+      <li>Reutilizar senha em múltiplos sites</li>
+      <li>Escrever em post-it</li>
+      <li>Compartilhar com qualquer um</li>
+    </ul>
+
+    <p><strong>O que FAZER:**</strong></p>
+    <ul>
+      <li>Senhas fortes: 16+ caracteres, mix de maiúsculas, minúsculas, números, símbolos</li>
+      <li>Ou use passphrase: "PizzaVem-Quinta-23:30!" é melhor lembrar que "Kx9@mL2</li>
+      <li>Senha ÚNICA para cada site importante</li>
+      <li>Use Password Manager (1Password, Bitwarden, LastPass)</li>
+    </ul>
+
+    <blockquote class="tip">
+    <strong>💡 Password Manager:</strong> Se tem medo de esquecer senhas, password manager solve isto. Você lembra apenas 1 senha mestra, manager lembram 100 outras.
+    </blockquote>
+
+    <h4>Multifactor Authentication (MFA): Não Negocie</h4>
+    <p>MFA é a coisa MAIS importante que pode fazer para proteção pessoal.</p>
+
+    <p><strong>Ative em:</strong></p>
+    <ul>
+      <li>Email</li>
+      <li>Banco</li>
+      <li>Social media</li>
+      <li>Qualquer coisa importante</li>
+    </ul>
+
+    <p><strong>Tipo de MFA (em ordem de força):</strong></p>
+    <ul>
+      <li><strong>Authenticator App (Melhor):</strong> Google Authenticator, Microsoft Authenticator, Authy. Código muda a cada 30 segundos, só você tem.</li>
+      <li><strong>SMS (Aceitável):</strong> Código enviado por texto. Menos seguro que app (SIM swap attack) mas melhor que nada.</li>
+      <li><strong>Biometria (Bom):</strong> Seu fingerprint ou face — não pode ser roubado facilmente.</li>
+      <li><strong>Security Key (Excelente):</strong> Dispositivo físico (como Yubikey). Quase inquebrável mas menos conveniente.</li>
+    </ul>
+
+    <h4>Protegendo Dados Pessoais</h4>
+
+    <p><strong>O que não compartilhar online:**</strong></p>
+    <ul>
+      <li>CPF, RG</li>
+      <li>Data de nascimento completa</li>
+      <li>Endereço físico exato</li>
+      <li>Números de contas bancárias</li>
+      <li>Cartão de crédito (nunca por email/text)</li>
+      <li>Passwords</li>
+    </ul>
+
+    <p><strong>Dados que são OK compartilhar:**</p>
+    <ul>
+      <li>Nome</li>
+      <li>Email genérico</li>
+      <li>Telefone (se confortável)</li>
+      <li>Localização geral (cidade, não casa específica)</li>
+    </ul>
+
+    <h4>Social Media Segurança</h4>
+
+    <p><strong>Facebook, Instagram, Twitter — Dicas:</strong></p>
+    <ul>
+      <li>Privacidade: Posts são visíveis para quem? Restrinja para amigos.</li>
+      <li>Evite location tagging (não deixe claro onde está agora)</li>
+      <li>Cuidado com friends request de estranhos (frequentemente scammers)</li>
+      <li>Não poste informação que pode ser usada para recovery (nomes de pets, nomes de rua da infância)</li>
+      <li>Desabilite apps de terceiro que não precisa</li>
+    </ul>
+
+    <h4>WiFi Público: Zona de Guerra</h4>
+    <p>WiFi público café, hotel, aeroporto é inseguro.</p>
+
+    <p><strong>Riscos:</strong></p>
+    <ul>
+      <li>Criminoso no mesmo WiFi consegue interceptar seu tráfego</li>
+      <li>Honeypots: WiFi falso criado por criminoso ("AirportWiFi")</li>
+    </ul>
+
+    <p><strong>Como se proteger:**</strong></p>
+    <ul>
+      <li>Use VPN (Virtual Private Network) — criptografa tudo</li>
+      <li>HTTPS apenas (procure cadeado no browser)</li>
+      <li>Não faça operações sensíveis (banking) em WiFi público</li>
+      <li>Desabilite auto-connect a WiFi networks</li>
+    </ul>
+
+    <h4>VPN: Sua Privacidade Online</h4>
+    <p>VPN cria "túnel encriptado" entre seu dispositivo e internet.</p>
+
+    <ul>
+      <li>Seu ISP não vê o que você faz (privacy)</li>
+      <li>Websites não veem seu IP real (anonimato)</li>
+      <li>Em WiFi público, seu tráfego é criptografado (segurança)</li>
+    </ul>
+
+    <p><strong>Qual VPN usar?</strong></p>
+    <ul>
+      <li>Paid é melhor: NordVPN, ExpressVPN, ProtonVPN (confiáveis, pagam bills)</li>
+      <li>Evite free (frequentemente vendem dados)</li>
+      <li>Procure "no-log policy" (não guardam histórico)</li>
+    </ul>
+
+    <h4>Protegendo Sua Família</h4>
+
+    <p><strong>Para Crianças:**</strong></p>
+    <ul>
+      <li>Parental controls em dispositivos</li>
+      <li>Educação sobre stranger danger online</li>
+      <li>Privacidade: não poste fotos de crianças com localização</li>
+      <li>Limite tempo de tela</li>
+    </ul>
+
+    <p><strong>Para Pais/Avós:**</strong></p>
+    <ul>
+      <li>Educação sobre phishing, scams</li>
+      <li>Ajude configurar senhas fortes, MFA</li>
+      <li>Monitore atividade (contas com transações estranhas)</li>
+      <li>Freeze de crédito para prevenir roubo de identidade</li>
+    </ul>
+
+    <h4>Responder Se Você é Hackeado</h4>
+
+    <p><strong>Se descobre que foi hackeado:**</strong></p>
+    <ol>
+      <li>Mude password de email IMEDIATAMENTE</li>
+      <li>Habilite MFA se não tem</li>
+      <li>Verifique atividade em outras contas</li>
+      <li>Resete senhas de contas importantes</li>
+      <li>Monitorar crédito / contas bancárias</li>
+      <li>Se fraude financeira: contacte banco e police</li>
+      <li>Consider credit freeze (previne novas contas em seu nome)</li>
+    </ol>
+
+    <p>Ação rápida limita dano.</p>
+
+    <h4>Mantendo Updated</h4>
+    <ul>
+      <li>Atualize seu OS regularmente (patches de segurança)</li>
+      <li>Atualize aplicações</li>
+      <li>Use antivirus/antimalware decente (não precisa pago, Windows Defender é bom)</li>
+      <li>Monitore seus accounts periodicamente por atividade suspeita</li>
+    </ul>
+
+    <p>Cibersegurança pessoal é contínua mas não precisa ser assustadora. Fundamentals fazem maior diferença.</p>
+    `,
+    cards: [
+      {
+        q: 'Qual é a coisa mais importante que pode fazer para proteger sua conta pessoal online?',
+        a: 'Multifactor Authentication (MFA) — mesmo se senha é hackeada, sem segundo fator (código de app, SMS, biometria) criminoso não consegue entrar. Ative em email, banco, social media. Melhor defesa = MFA.'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Resposta a Incidentes e Plano de Continuidade',
+    dur: '24 min',
+    content: `
+    <h3>Quando Ataques Acontecem: Estar Preparado Para Responder</h3>
+    <p>Você fez tudo certo e ainda foi atacado. Agora o quê? Ter plano de resposta é crítico.</p>
+
+    <h4>Preparação: Antes Do Incidente</h4>
+    <p>Não espere ser atacado para planejar. Prepare agora.</p>
+
+    <p><strong>Elementos de Plano de Resposta a Incidentes:</strong></p>
+    <ul>
+      <li>Equipe designada (quem faz o quê)</li>
+      <li>Procedimentos step-by-step</li>
+      <li>Contatos de emergência (CEO, Legal, PR, Law Enforcement)</li>
+      <li>Escalation paths (quando envolver quem)</li>
+      <li>Comunicação com stakeholders</li>
+      <li>Documentação de tudo</li>
+    </ul>
+
+    <h4>Estágios de Resposta a Incidentes</h4>
+
+    <p><strong>1. Detection (Detecção)</strong></p>
+    <ul>
+      <li>Alguém notou atividade suspeita (IDS alert, comportamento estranho, employee report)</li>
+      <li>Ativar incidente response team</li>
+      <li>Início de documentação</li>
+    </ul>
+
+    <p><strong>2. Containment (Contenção)</strong></p>
+    <ul>
+      <li>Isolar sistema/rede afetada para prevenir propagação</li>
+      <li>Exemplo: desconectar computador infectado da rede</li>
+      <li>Objetivo: STOP spread, não perder tempo investigando</li>
+    </ul>
+
+    <p><strong>3. Investigation (Investigação)</strong></p>
+    <ul>
+      <li>Coletar evidência (logs, memory dumps, filesystem)</li>
+      <li>Entender o que aconteceu</li>
+      <li>Como atacante entrou?</li>
+      <li>O que foi acessado?</li>
+      <li>Quanto tempo esteve lá?</li>
+    </ul>
+
+    <p><strong>4. Eradication (Erradicação)</strong></p>
+    <ul>
+      <li>Remover atacante da rede</li>
+      <li>Patcher vulnerabilidade explorada</li>
+      <li>Mudar senhas</li>
+      <li>Fechar backdoors</li>
+    </ul>
+
+    <p><strong>5. Recovery (Recuperação)</strong></p>
+    <ul>
+      <li>Restaurar sistemas de backups limpos</li>
+      <li>Testar que funcionam corretamente</li>
+      <li>Restaurar dados</li>
+    </ul>
+
+    <p><strong>6. Post-Incident Review</strong></p>
+    <ul>
+      <li>O que deu errado?</li>
+      <li>Como foi detectado? (rápido? lento?)</li>
+      <li>Que controles falharam?</li>
+      <li>O que melhorar?</li>
+    </ul>
+
+    <h4>Comunicação Durante Incidente</h4>
+    <p>Como você comunica depende do incidente.</p>
+
+    <p><strong>Informações de Risco:</strong></p>
+    <ul>
+      <li>Quanto dano foi feito?</li>
+      <li>Dados sensíveis foram expostos?</li>
+      <li>Quantas pessoas afetadas?</li>
+      <li>Sistema está recuperando?</li>
+    </ul>
+
+    <p><strong>Notificações Requeridas:**</p>
+    <ul>
+      <li><strong>Reguladores:</strong> Se dados pessoais foram expostos, frequentemente obrigado notificar dentro dias (LGPD, GDPR)</li>
+      <li><strong>Mídia:</strong> Grande breach será publicada — melhor contar você mesmo que deixar imprensa descobrir</li>
+      <li><strong>Clientes:</strong> Se dados deles foram expostos, devem saber</li>
+      <li><strong>Polícia:</strong> Se crime foi cometido</li>
+    </ul>
+
+    <p><strong>Mensageria Chave:</strong></p>
+    <ul>
+      <li>Seja honesto</li>
+      <li>Mostre que está em controle</li>
+      <li>Comunique actions tomadas</li>
+      <li>Forneça informação útil (o que fazer se sua dados foram expostos)</li>
+      <li>Reconheça impacto no customers</li>
+    </ul>
+
+    <h4>Plano de Continuidade: Mantendo Negócio Rodando</h4>
+    <p>Atacantes frequentemente tentam derrubar seu negócio (ransomware, DDoS). Você precisa plano para funcionar enquanto recupera.</p>
+
+    <p><strong>Elementos de Continuidade:**</strong></p>
+    <ul>
+      <li><strong>RTO (Recovery Time Objective):</strong> Quanto tempo você pode ficar down? 1 hora? 1 dia?</li>
+      <li><strong>RPO (Recovery Point Objective):</strong> Quanto de dados você está disposto a perder? 0 (nada)? 1 dia?</li>
+      <li><strong>Backup Strategy:</strong> Backups geográficamente distribuídos, offline, testado regularmente</li>
+      <li><strong>Failover Systems:</strong> Redundância — se principal cai, secundário pega</li>
+      <li><strong>Comunicação Plan:</strong> Como contactar employees, customers se systems estão down</li>
+      <li><strong>Restore Procedures:</strong> Passos exatos para restaurar (testado regularmente!)</li>
+    </ul>
+
+    <blockquote class="example">
+    <strong>📚 Caso Real: Ransomware em Hospital</strong>
+    Hospital foi hit por ransomware. Tinha plano de continuidade:
+    - Mudou para manual de alguns processos (emergency protocols)
+    - Usou backup offline para restaurar dados críticos primeiro
+    - RTO era 24 horas — conseguiram em 18
+    - RPO era 4 horas — perderam 2 horas de dados
+    - Continuaram operando, pacientes foram atendidos, negócio surviviu
+    </blockquote>
+
+    <h4>Forensics: Compreendendo o Crime</h4>
+    <p>Investigação séria requer forensic specialists.</p>
+
+    <ul>
+      <li>Coletar evidência de forma que seja admissível em corte (chain of custody)</li>
+      <li>Análise profunda de logs, memory, disks</li>
+      <li>Identificar exatamente o que atacante fez</li>
+      <li>Ajuda para prosecution se é crime</li>
+    </ul>
+
+    <p><strong>Importante:</strong> Não mexer demais em sistemas compromised antes de forensics — pode contaminar evidência.</p>
+
+    <h4>Insurance: Compartilhar o Risco</h4>
+    <p>Cyber insurance é seguros que cobre custos de breach/ataque.</p>
+
+    <ul>
+      <li>Cobre forensics, recovery, legal, notificação de customers</li>
+      <li>Cobre ransomware (pagamento resgate, às vezes)</li>
+      <li>Cobre business interruption (perda de receita enquanto down)</li>
+      <li>Ajuda legal e PR</li>
+    </ul>
+
+    <p><strong>Custo:</strong> Variam, mas empresas médias pagam R$5k-50k por ano.</p>
+
+    <p><strong>ROI:</strong> Se tem incidente, insurance pode economizar 10x seu prêmio.</p>
+
+    <h4>Lessons Learned: Melhorar Continuamente</h4>
+    <p>Após incidente, retrospectiva é crítica.</p>
+
+    <ul>
+      <li><strong>Blameless:</strong> Foco em "o que aconteceu" não "quem messed up"</li>
+      <li><strong>Documentar:</strong> Escrever relatório detalhado</li>
+      <li><strong>Identificar Failures:</strong> Qual controle não funcionou?</li>
+      <li><strong>Action Items:</strong> O que melhorar? Priorizar.</li>
+      <li><strong>Compartilhar:</strong> Comunicar learnings para organização</li>
+    </ul>
+
+    <p>Organizações que fazem isso bem, viram ataques como oportunidade de melhoria.</p>
+
+    <h4>Seguro de Incidentes: Checklist Pronto</h4>
+    <ul>
+      <li>[ ] Ativar Incident Response Team</li>
+      <li>[ ] Isolar sistemas afetados</li>
+      <li>[ ] Coletar evidência (logs, etc.)</li>
+      <li>[ ] Chamar forensics se crime</li>
+      <li>[ ] Investigar root cause</li>
+      <li>[ ] Remediar vulnerabilidades</li>
+      <li>[ ] Restaurar de backups</li>
+      <li>[ ] Teste que tudo funciona</li>
+      <li>[ ] Notificar reguladores/customers conforme requerido</li>
+      <li>[ ] Retrospectiva de lessons learned</li>
+    </ul>
+
+    <p>Estar preparado é metade da batalha. Incidentes vão acontecer. A questão é: você vai estar pronto?</p>
+    `,
+    cards: [
+      {
+        q: 'Cite os 6 estágios de resposta a incidentes de cibersegurança.',
+        a: 'Detection (encontrar o problema), Containment (isolar para não se espalhar), Investigation (entender o quê aconteceu), Eradication (remover atacante), Recovery (restaurar sistemas), Post-Incident Review (melhorar).'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Trends Emergentes: IA em Defesa e Ataque',
+    dur: '25 min',
+    content: `
+    <h3>Cibersegurança em Futuro Próximo: IA, Quântica, e Além</h3>
+    <p>Cibersegurança não é estática. Vamos explorar tendências que vão moldar 2027-2030 e além.</p>
+
+    <h4>IA em Cibersegurança: Espada de Dois Gumes</h4>
+
+    <p><strong>IA em DEFESA:</strong></p>
+    <ul>
+      <li><strong>Detecção Mais Rápida:</strong> IA pode analisar bilhões de log entries, encontrar anomalias em minutos vs. horas</li>
+      <li><strong>Previsão:</strong> ML modelos predizem ataques antes acontecerem baseado em padrões</li>
+      <li><strong>Auto-Response:</strong> IA vê ataque, automaticamente tira sistema do ar para isolar</li>
+      <li><strong>Threat Intelligence:</strong> IA analisa dados públicos, prediz próximos alvos</li>
+    </ul>
+
+    <p><strong>IA em ATAQUE:**</strong></p>
+    <ul>
+      <li><strong>Automação de Ataque:</strong> Hacker usa IA para scanear bilhões de sistemas, encontrar vulnerabilidades automaticamente</li>
+      <li><strong>Phishing Sofisticado:</strong> IA gera phishing emails hypernatural, personalizados para cada pessoa</li>
+      <li><strong>Evasão:</strong> Malware "aprende" como evitar detecção</li>
+      <li><strong>Deepfakes:</strong> Vídeos fake convencentes para fraude, disrupção</li>
+      <li><strong>Injeção de Prompt:</strong> Explorar IA systems com prompt injection</li>
+    </ul>
+
+    <blockquote class="news">
+    <strong>📰 Fato 2026:</strong> Operadores de ataque impulsionados por IA aumentaram 49% em 2026. Significa atacantes usam IA para escala massiva, detectar vulnerabilidades em escala.
+    </blockquote>
+
+    <h4>Computação Quântica: A Bomba de Tempo para Criptografia</h4>
+    <p>Computadores quânticos — ainda em fase nascente — podem quebrar criptografia de hoje.</p>
+
+    <p><strong>O Problema:</strong></p>
+    <ul>
+      <li>RSA (criptografia de hoje) depende em ser complicado fatorizar números gigantes</li>
+      <li>Computador clássico: milhares de anos para quebrar</li>
+      <li>Computador quântico: minutos</li>
+    </ul>
+
+    <p><strong>Timeline:**</strong></p>
+    <ul>
+      <li>2026: Computadores quânticos ainda não poderosos o suficiente para quebrar cripto</li>
+      <li>2030-2035: Projeção que quantum forte o suficiente</li>
+      <li>Risco: "Harvest Now, Decrypt Later" — hackers copiam dados criptografados AGORA esperando ter quantum depois</li>
+    </ul>
+
+    <p><strong>Solução: Post-Quantum Cryptography**</strong></p>
+    <ul>
+      <li>Novos algoritmos resistentes a computação quântica</li>
+      <li>NIST está padronizando (completado em 2024)</li>
+      <li>Expectativa: migrará para PQC durante 2027-2030</li>
+    </ul>
+
+    <h4>Zero Trust: De Modismos para Padrão</h4>
+    <p>Zero Trust (nunca confie, sempre verifique) está mudando de buzzword para padrão real.</p>
+
+    <p><strong>2026 Status:</strong> Primeiros adopters têm significativa security advantage. Late adopters ainda no perimeter-based.</p>
+
+    <p><strong>2030+ Expectativa:</strong> Zero Trust será padrão obrigatório — regulatory requirement ou competitive necessity.</p>
+
+    <h4>Cybersecurity Mesh</h4>
+    <p>Em vez de moat defendendo castelo central, defensa modular distribuída onde cada parte protege a si mesma.</p>
+
+    <ul>
+      <li>Cada aplicação, cada microservice, cada API protege a si mesma</li>
+      <li>Mais resiliente — compromise de um serviço não é disaster</li>
+      <li>Mais escalável — cresce com infraestrutura modular</li>
+    </ul>
+
+    <h4>Secure Software Development</h4>
+    <p>Cibersegurança está se movendo "left" — para beginning do desenvolvimento.</p>
+
+    <ul>
+      <li><strong>Secure Coding Practices:</strong> Developers treinados em segurança</li>
+      <li><strong>SAST/DAST:</strong> Scanning automático de código para vulnerabilidades durante desenvolvimento</li>
+      <li><strong>Dependency Scanning:</strong> Verificação de bibliotecas terceiro por vulnerabilidades conhecidas</li>
+      <li><strong>Threat Modeling:</strong> Antes de codificar, identificar ameaças possíveis</li>
+    </ul>
+
+    <p>Prevenir vulnerabilidades é muito mais barato que depois remediá-las.</p>
+
+    <h4>API Security e Microservices</h4>
+    <p>Conforme arquitetura muda para APIs e microservices, modelo de segurança muda.</p>
+
+    <ul>
+      <li>APIs substituem conexões diretas entre sistemas</li>
+      <li>Cada API é ponto potencial de ataque</li>
+      <li>Rate limiting, authentication, authorization são críticas</li>
+      <li>API gateways emergem como chave componente de defesa</li>
+    </ul>
+
+    <h4>Cloud Security Evoluindo</h4>
+    <p>Cloud é "default" agora. Security models evoluindo.</p>
+
+    <p><strong>Shared Responsibility Model:**</strong></p>
+    <ul>
+      <li>Cloud provider (AWS, Azure, GCP): responsável por infraestrutura</li>
+      <li>Você: responsável por configuração, aplicação, dados</li>
+      <li>Misconfiguration é leading causa de breach em cloud</li>
+    </ul>
+
+    <p><strong>Cloud-Native Security:**</strong></p>
+    <ul>
+      <li>Container security (Docker, Kubernetes)</li>
+      <li>Secrets management (não coloque passwords em código)</li>
+      <li>Identity and access management</li>
+      <li>Data encryption em repouso e em trânsito</li>
+    </ul>
+
+    <h4>Regulatory Landscape</h4>
+    <p>Regulações estão ficando mais estritas.</p>
+
+    <p><strong>Principais:**</strong></p>
+    <ul>
+      <li><strong>LGPD (Brasil):</strong> Proteção de dados pessoais, multas significativas por violação</li>
+      <li><strong>GDPR (Europa):</strong> Similar, aplicada globalmente para dados europeus</li>
+      <li><strong>NIS2 (Europa):</strong> Compliance de cibersegurança obrigatória</li>
+      <li><strong>Emerging (EUA):</strong> Regulação setorial (healthcare, financeiro, critical infrastructure)</li>
+    </ul>
+
+    <p>Compliance não é apenas legal — é competitive advantage (mostrar você leva segurança sério).</p>
+
+    <h4>Dark Web Marketplaces</h4>
+    <p>Dark web é onde dados roubados são vendidos.</p>
+
+    <ul>
+      <li>Credenciais: $1-10</li>
+      <li>Cartões de crédito: $5-50</li>
+      <li>Identidades completas: $100-500</li>
+      <li>Bases de dados: $1000-$1M+</li>
+    </ul>
+
+    <p>Se seus dados foram breached, provavelmente aparecem em marketplace. Pode monitorar (Have I Been Pwned, etc.)</p>
+
+    <h4>Threat Hunting: Caça Ativa por Ameaças</h4>
+    <p>Em vez de esperar alguém reportar ataque, ativamente procurar por compromises.</p>
+
+    <ul>
+      <li>Tim de security procura por "indicators of compromise" (IOCs)</li>
+      <li>Análise de comportamento anormal</li>
+      <li>Investigar antes disso se torna breach full</li>
+    </ul>
+
+    <p>Organizations com threat hunting teams detectam ataques 10x mais rápido.</p>
+
+    <h4>Carreira em Cibersegurança 2026+</h4>
+    <p>Demanda por profissionais cibersegurança é maior que oferta.</p>
+
+    <p><strong>Roles em Alta Demanda:**</strong></p>
+    <ul>
+      <li>Security Analyst: analisa alerts, investiga incidents</li>
+      <li>Penetration Tester: eticamente hacks sistemas para encontrar vulnerabilidades</li>
+      <li>Security Architect: design sistemas seguros</li>
+      <li>Cloud Security Specialist</li>
+      <li>Threat Intelligence Analyst</li>
+      <li>Security Operations Center (SOC) Manager</li>
+    </ul>
+
+    <p><strong>Salários:</strong> R$150k-500k+ dependendo de especialidade e experiência.</p>
+
+    <p><strong>Certification Path:</strong> CompTIA Security+, CEH, CISSP são reconhecidas.</p>
+
+    <p>Se está considerando carreira, cibersegurança é field explosivo com oportunidades imensa.</p>
+    `,
+    cards: [
+      {
+        q: 'Como IA está sendo usada tanto em DEFESA quanto em ATAQUE em cibersegurança?',
+        a: 'DEFESA: IA detecta anomalias, prediz ataques, auto-responde. ATAQUE: IA automatiza scanning de vulnerabilidades, gera phishing natural, evade detecção. É corrida armamentista continua entre defensores e atacantes.'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Seu Caminho em Cibersegurança: Começar e Prosperar',
+    dur: '26 min',
+    content: `
+    <h3>De Interessado para Profissional: Seu Roadmap</h3>
+    <p>Você aprendeu o landscape de cibersegurança. Agora, como você começa carreira ou aplicar conhecimento?</p>
+
+    <h4>Auto-Assess: Seu Ponto de Partida</h4>
+
+    <p><strong>Nível 1: Complete Novice</strong></p>
+    <ul>
+      <li>Sem conhecimento técnico previo</li>
+      <li>Mas interessado em aprender</li>
+      <li>Timeline: 1-2 anos para primeiro trabalho</li>
+    </ul>
+
+    <p><strong>Nível 2: Technical Background</strong></p>
+    <ul>
+      <li>Você é sysadmin, network engineer, software developer</li>
+      <li>Já conhece tech, apenas precisa aprender segurança</li>
+      <li>Timeline: 6-12 meses para transição</li>
+    </ul>
+
+    <p><strong>Nível 3: Outro Domínio</strong></p>
+    <ul>
+      <li>Você é advogado, médico, manager — mas interesse em segurança</li>
+      <li>Sua expertise em domínio + segurança = MUITO valioso</li>
+      <li>Exemplo: advogado + security = especialista em compliance</li>
+      <li>Timeline: 6-9 meses de learning</li>
+    </ul>
+
+    <h4>Plano de Aprendizado: 1 Ano para Expertise</h4>
+
+    <p><strong>Trimestre 1: Fundamentos**</strong></p>
+    <ul>
+      <li>Este curso que fez (ou similar online)</li>
+      <li>Entender CIA, tipos de ataques, defesas básicas</li>
+      <li>Objetivo: Literacy em cibersegurança</li>
+      <li>Tempo: 20-30 horas</li>
+    </ul>
+
+    <p><strong>Trimestre 2: Skills Técnicas Básicas**</strong></p>
+    <ul>
+      <li>Linux: comando line, system administration</li>
+      <li>Networking: TCP/IP, DNS, HTTP, firewalls</li>
+      <li>Se vindo de tech: aprofunde; se novice: learn basics</li>
+      <li>Tempo: 100-150 horas</li>
+    </ul>
+
+    <p><strong>Trimestre 3: Segurança Prática**</strong></p>
+    <ul>
+      <li>Setup home lab: virtual machines, practice attacking/defending</li>
+      <li>Ferramentas: Wireshark, Burp Suite, Metasploit</li>
+      <li>Capture The Flag (CTF) competitions (Hack The Box, TryHackMe)</li>
+      <li>Tempo: 150-200 horas</li>
+    </ul>
+
+    <p><strong>Trimestre 4: Certificação + Projeto Real**</strong></p>
+    <ul>
+      <li>Prepare para CompTIA Security+ (exame de indústria standard)</li>
+      <li>Portfolio project: Demonstre habilidades (e.g., security audit de website)</li>
+      <li>Networking: Conecte com profissionais (meetups, LinkedIn)</li>
+      <li>Tempo: 150-200 horas</li>
+    </ul>
+
+    <p><strong>Total: ~600-700 horas de estudo/prática</strong></p>
+
+    <h4>Recursos Essenciais Para Aprender</h4>
+
+    <p><strong>Cursos Online:**</strong></p>
+    <ul>
+      <li>TryHackMe (prático, gamified, excelente)</li>
+      <li>Hack The Box (mais desafiador, ótimo para skill building)</li>
+      <li>Udemy (vários cursos sobre security, preço razoável)</li>
+      <li>Coursera (mais teórico, certificações formais)</li>
+      <li>Professor Messer (YouTube, CompTIA prep gratuito)</li>
+    </ul>
+
+    <p><strong>Certificações (Roadmap):**</strong></p>
+    <ol>
+      <li>CompTIA A+ (opcional, mas fornece foundation em hardware/OS)</li>
+      <li>CompTIA Security+ (ESSENTIAL, entry-level, reconhecido)</li>
+      <li>CompTIA CASP+ (avançado, 5+ anos de experiência recomendado)</li>
+      <li>CEH (Certified Ethical Hacker) (popular, bom para penetration tester)</li>
+      <li>CISSP (expert-level, 5+ anos experiência necessária)</li>
+    </ol>
+
+    <p><strong>Livros Clássicos:**</strong></p>
+    <ul>
+      <li>"Security Engineering" - Ross Anderson (comprehensive)</li>
+      <li>"The Art of Network Penetration Testing" - Jojo Senseiy (prático)</li>
+      <li>"The Cyber Security Playbook" - Allison Cerra</li>
+    </ul>
+
+    <h4>Home Lab: Seu Playground Seguro</h4>
+    <p>Practice é critical. Você não consegue aprender hacking em máquina de produção (é crime!). Home lab é safe.</p>
+
+    <p><strong>Setup Básico:**</strong></p>
+    <ul>
+      <li>Computador com VirtualBox ou VMware (gratuito)</li>
+      <li>3-4 virtual machines</li>
+      <li>Alguns running vulnerable software (DVWA, WebGoat)</li>
+      <li>Você é "attacker" tentando comprometer</li>
+      <li>Objetivo: Melhore habilidades em safe environment</li>
+    </ul>
+
+    <p><strong>Custo:</strong> Praticamente zero (VirtualBox é gratuito, máquinas virtuais gratuito).</p>
+
+    <h4>Capturando Bandeiras (CTF): Gamifying Learning</h4>
+    <p>Capture The Flag é exercício de segurança onde você encontra "flag" (string) escondida em máquina/website.</p>
+
+    <p><strong>Benefícios:**</strong></p>
+    <ul>
+      <li>Super motivador (é tipo jogo)</li>
+      <li>Hands-on learning</li>
+      <li>Competitivo (compare com others)</li>
+      <li>Portfolio builder ("Hey, eu colei nesse CTF")</li>
+    </ul>
+
+    <p><strong>Plataformas:**</strong></p>
+    <ul>
+      <li>TryHackMe (mais acessível para iniciantes)</li>
+      <li>Hack The Box (mais desafiador)</li>
+      <li>PicoCTF (focused, bem estruturado)</li>
+    </ul>
+
+    <p>Meu conselho: comece em TryHackMe, progredaça para Hack The Box.</p>
+
+    <h4>Networking: Seu Superpoder</h4>
+    <p>Conhecimento técnico abre porta, mas networking consegue job.</p>
+
+    <p><strong>Actions:**</strong></p>
+    <ul>
+      <li>Meetups locais de segurança (procure por "cibersecurity meetup" + sua cidade)</li>
+      <li>Conferências: NullCon, OWASP (muitos tem evento local/regional)</li>
+      <li>Online: Discord communities, Reddit communities</li>
+      <li>LinkedIn: Follow profissionais, comentar em posts, conectar genuinamente</li>
+      <li>Comunidades open-source: contribua para projetos de segurança</li>
+    </ul>
+
+    <p>Importante: GENUINE networking, não transacional. Conecte porque interessado, ajude outros.</p>
+
+    <h4>Primeiro Trabalho: Onde Procurar</h4>
+
+    <p><strong>Posições de Entry-Level:**</strong></p>
+    <ul>
+      <li>Security Analyst / Junior Security Engineer</li>
+      <li>SOC Analyst (Security Operations Center)</li>
+      <li>System Administrator (com segurança focus)</li>
+      <li>Compliance Analyst</li>
+    </ul>
+
+    <p><strong>Onde Procurar:**</strong></p>
+    <ul>
+      <li>LinkedIn Jobs (especialize por "Security" + sua localização)</li>
+      <li>Stack Overflow Jobs</li>
+      <li>CiscoJobs, Palo Alto Networks careers</li>
+      <li>Recrutadores (eles conhecem job market)</li>
+      <li>Consultoria: Ernst & Young, Deloitte — sempre contratar security consultants</li>
+    </ul>
+
+    <p><strong>Salário Primeiro Trabalho:** R$80k-150k dependendo de localização e empresa.</p>
+
+    <h4>Trajetória de Carreira</h4>
+
+    <p><strong>Ano 1-2: Junior Role**</strong></p>
+    <ul>
+      <li>SOC Analyst, Junior Security Engineer</li>
+      <li>Você observa, aprende, executa tarefas bem-definidas</li>
+      <li>Ganhar experiência, certifications</li>
+    </ul>
+
+    <p><strong>Ano 3-5: Mid-Level**</strong></p>
+    <ul>
+      <li>Security Engineer, Security Architect, Penetration Tester</li>
+      <li>Mais autonomia, liderar projetos</li>
+      <li>Especializar em domínio (cloud, application, infrastructure)</li>
+    </ul>
+
+    <p><strong>Ano 5+: Senior/Leadership**</strong></p>
+    <ul>
+      <li>Security Manager, Chief Security Officer (CSO), Principal Architect</li>
+      <li>Strategic thinking, team leadership</li>
+      <li>Salário: R$300k-1M+</li>
+    </ul>
+
+    <h4>Especialidades: Escolha Seu Caminho</h4>
+
+    <p><strong>Application Security:**</strong></p>
+    <ul>
+      <li>Foco: Secure development, code analysis, penetration testing de apps</li>
+      <li>Skills: Programming, OWASP</li>
+      <li>Demanda: MUITO ALTA</li>
+    </ul>
+
+    <p><strong>Cloud Security:**</strong></p>
+    <ul>
+      <li>Foco: AWS/Azure/GCP security, misconfiguration detection</li>
+      <li>Skills: Cloud platforms, infrastructure</li>
+      <li>Demanda: Explosiva (tudo migrando para cloud)</li>
+    </ul>
+
+    <p><strong>Threat Intelligence:**</strong></p>
+    <ul>
+      <li>Foco: Análise de adversários, previsão de ataques</li>
+      <li>Skills: Análise, research, geopolítica</li>
+      <li>Demanda: Crescente</li>
+    </ul>
+
+    <p><strong>Compliance/Risk:**</strong></p>
+    <ul>
+      <li>Foco: LGPD, GDPR, regulações, risk management</li>
+      <li>Skills: Conhecimento legal, business</li>
+      <li>Demanda: Constante (legal sempre precisa)</li>
+    </ul>
+
+    <h4>Mantendo Skill Atualizado</h4>
+    <p>Cibersegurança muda rápido. Você deve acompanhar.</p>
+
+    <ul>
+      <li>Podcasts: "Naked Security", "Ciso Stories", "Darknet Diaries"</li>
+      <li>Blogs: Schneier on Security, krebs on Security</li>
+      <li>RSS Feeds: OWASP, NIST CVE feeds</li>
+      <li>Conferências: NullCon, Black Hat (presencial se possível)</li>
+      <li>Aprendizado contínuo: Nova certificação a cada 2 anos</li>
+    </ul>
+
+    <h4>Mentalidade Para Sucesso</h4>
+
+    <p><strong>Curiosidade Relentless:**</strong> Cibersegurança requer interesse genuíno. Se está apenas pela grana, mudará de carreira em 3 anos.</p>
+
+    <p><strong>Humble Learning:**</strong> Você não sabe tudo. Hackers legais reconhecem que adversários são inteligentes e continuam estudando.</p>
+
+    <p><strong>Ética é Não-Negociável:**</strong> Segurança está infiltrada com possibilidade de abuso. Escolha defender, não explorar para gain pessoal.</p>
+
+    <p><strong>Persistence:**</strong> Primeiros meses serão difíceis (há muito a aprender). Mas depois clica.</p>
+
+    <blockquote class="quote">
+    <strong>Pensamento Final:</strong> "A segurança perfeita não existe, mas segurança boa previne 99% dos ataques. Você está escolhendo carreira que importa — que protege pessoas, dados, empresas. Bem-vindo ao time."
+    </blockquote>
+
+    <p>Comece agora. Seu futuro, e a segurança de muitos, está aguardando.</p>
+    `,
+    cards: [
+      {
+        q: 'Qual é um roadmap realista de 1 ano para começar carreira em cibersegurança?',
+        a: 'Trim 1: Fundamentos (este curso). Trim 2: Tech basics (Linux, networking). Trim 3: Prática (home lab, CTF). Trim 4: Certificação (Security+) + projeto portfolio. Total: ~600-700 horas. First job em 1-1.5 anos realista.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
