@@ -2578,6 +2578,25 @@ var MA_COURSES = [
     color: '#1b4332',
     addedTs: 1776024579805,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/su.jpg',
+    id: 'su',
+    name: 'Sobrevivencialismo Urbano',
+    desc: 'Estratégias para lidar com imprevistos e crises em ambientes urbanos.',
+    file: '16-sobrevivencialismo-urbano.html',
+    cat: 'Segurança & Sobrevivência',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'SU_HENRY_2026_MASTER',
+    ak: 'su_auth',
+    storagePrefix: 'su_',
+    icon: '🔐',
+    color: '#6c757d',
+    addedTs: 1776024584976,
+    active: true
   }
 ];
 var MA_CATS = [
