@@ -2141,6 +2141,25 @@ var MA_COURSES = [
     color: '#0086ff',
     addedTs: 1776024466909,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/sj.jpg',
+    id: 'sj',
+    name: 'Biografia de Steve Jobs',
+    desc: 'A vida do cofundador da Apple, seus fracassos e retorno triunfal.',
+    file: '24-bio-steve-jobs.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'SJ_HENRY_2026_MASTER',
+    ak: 'sj_auth',
+    storagePrefix: 'sj_',
+    icon: '👤',
+    color: '#555555',
+    addedTs: 1776024470908,
+    active: true
   }
 ];
 var MA_CATS = [
