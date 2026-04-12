@@ -2274,6 +2274,25 @@ var MA_COURSES = [
     color: '#1a237e',
     addedTs: 1776024499809,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ao.jpg',
+    id: 'ao',
+    name: 'Biografia de Amancio Ortega',
+    desc: 'O criador da Zara e sua revolução no varejo de moda mundial.',
+    file: '33-bio-amancio-ortega.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'AO_HENRY_2026_MASTER',
+    ak: 'ao_auth',
+    storagePrefix: 'ao_',
+    icon: '👤',
+    color: '#000000',
+    addedTs: 1776024504866,
+    active: true
   }
 ];
 var MA_CATS = [
