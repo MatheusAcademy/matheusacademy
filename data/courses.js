@@ -2635,6 +2635,25 @@ var MA_COURSES = [
     color: '#e63946',
     addedTs: 1776024594961,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ne.jpg',
+    id: 'ne',
+    name: 'Nutrição Esportiva',
+    desc: 'Alimentação para desempenho, recuperação muscular e composição corporal.',
+    file: '15-nutricao-esportiva.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'NE_HENRY_2026_MASTER',
+    ak: 'ne_auth',
+    storagePrefix: 'ne_',
+    icon: '🏆',
+    color: '#2ec4b6',
+    addedTs: 1776024599974,
+    active: true
   }
 ];
 var MA_CATS = [
