@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inglês para Viagens e Situações Reais — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'IV',
+  name: 'Inglês para Viagens e Situações Reais',
+  shortName: 'Inglês Viagens',
+  cat: 'Inglês',
+  desc: 'Ensina inglês prático para aeroporto, hotel, restaurante, compras, emergências e interações comuns em viagens.',
+  salt: 'IV_HENRY_2026_MASTER',
+  ak: 'iv_auth',
+  courseKey: 'iv',
+  prefix: 'iv_',
+  color: '#F57C00',
+  glow: 'rgba(245,124,0,.35)',
+  free: true,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'iv_mod1',
+    name: 'No Aeroporto: Check-in, Segurança, Embarque',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Resumo do Módulo 1: Começando Sua Jornada',
+      points: [
+        'O aeroporto é seu primeiro contato com inglês em viagem—dominar frases-chave reduz stress enormemente',
+        'Funcionários de aeroporto entendem que muitas pessoas não falam inglês fluente; eles são geralmente pacientes',
+        'Documentação clara (passaporte, passagens) frequentemente reduz necessidade de comunicação verbal',
+        'Conhecer processo esperado do aeroporto aumenta sua confiança dramaticamente'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como você pergunta onde fica o gate?',
+        opts: ['Where is gate number?', 'Where is the gate?', 'Where is gate 42?', 'A, B, ou C são corretos'],
+        correct: 3
+      },
+      {
+        q: 'O que significa "boarding"?',
+        opts: ['Desembarque', 'Embarque/processo de entrar no avião', 'Compra de passagem', 'Segurança'],
+        correct: 1
+      },
+      {
+        q: 'Complete: "I\'m checking ___ one bag and carrying ___ my backpack."',
+        opts: ['in/with', 'in/on', 'on/in', 'with/in'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'iv_mod2',
+    name: 'Hospedagem: Hotel, Reserva, Problemas e Mudanças',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Resumo do Módulo 2: Seu Refúgio Confortável',
+      points: [
+        'Comunicação clara com hotel é essencial para garantir conforto e resolver problemas rapidamente',
+        'Frases para check-in, solicitações especiais, e reclamações são altamente padronizadas e previsíveis',
+        'Funcionários de hotel são treinados para lidar com hospedeiros internacionais e geralmente falam inglês claramente',
+        'Saber como solicitar mudanças ou resolver problemas empodera você a ter experiência positiva'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como você pede para trocar de quarto?',
+        opts: ['I want another room', 'Can I change room?', 'I\'d like to change rooms', 'I need different room'],
+        correct: 2
+      },
+      {
+        q: 'O que significa "front desk"?',
+        opts: ['Recepção do hotel', 'Seu quarto na frente', 'Entrada do hotel', 'Serviço de quarto'],
+        correct: 0
+      },
+      {
+        q: 'Complete: "Does the room have ___? Is there ___ in the bathroom?"',
+        opts: ['wifi/a hairdryer', 'a wifi/an hairdryer', 'wifis/hairdryers', 'any wifi/a hairdryer'],
+        correct: 0
+      }
+    ]
+  },
+  {
+    id: 'iv_mod3',
+    name: 'Restaurante e Comida: Pedir, Preferências, Alergias, Reclamações',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Resumo do Módulo 3: Desfrutando Culinária Local',
+      points: [
+        'Pedir comida é um dos momentos mais prazerosos de viagem; dominar frases torna experiência ainda melhor',
+        'Comunicar alergias e restrições alimentares é questão de segurança—nunca tenha medo de ser específico',
+        'Entender menu e pedir como local é pequeno luxo que torna viagem mais autêntica',
+        'Saber como expressar satisfação ou insatisfação permite resolver problemas ou elogiar bons serviços'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como você comunica uma alergia a amendoim?',
+        opts: ['I don\'t like peanuts', 'I\'m allergic to peanuts', 'Peanuts make me sick', 'No peanuts for me'],
+        correct: 1
+      },
+      {
+        q: 'O que "medium rare" significa em relação a carne?',
+        opts: ['Bem passada', 'Ponto médio, levemente rosada', 'Mal passada', 'Queimada'],
+        correct: 1
+      },
+      {
+        q: 'Complete: "Can I have this ___ on the ___? Is the fish ___?"',
+        opts: ['without/side/fresh', 'with/page/cooked', 'to/plate/good', 'on/way/done'],
+        correct: 0
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'No Check-in: Passagem, Bagagem, Questões de Documentação',
+    dur: 30,
+    content: `<h3>Seu Primeiro Passo: Chegando no Aeroporto com Confiança</h3>
+<p>Seu voo está chegando! Você está nervoso—não apenas por causa do voo, mas porque precisa navegar tudo em inglês. Respire. Este módulo vai te preparar perfeitamente. O check-in é geralmente a parte mais estressante de viagem em idioma estrangeiro, mas é também muito padronizado. Funcionários fazem mesmas perguntas centenas de vezes por dia. Eles ENTENDEM falantes não-nativos. Vamos tornar isto fácil.</p>
+
+<h4>Antes de Chegar: Prepare-se</h4>
+<p>Você já deve ter sua passagem aérea. Se é digital (no seu telefone), abra-a. Se é impressa, coloque em lugar acessível. Você também precisa de identificação (passaporte). Coloque em bolso onde consegue acessar rapidamente. Se tem bagagem a despachar, certifique-se de que pesa menos que limite (geralmente 23kg/50lbs para bagagem despachada).</p>
+
+<h4>Chegando no Aeroporto</h4>
+<p>Procure sinais para "Departures" (Saídas/Partidas). Se seu voo está internacionalmente, pode haver "International Departures". Chegue no aeroporto com tempo suficiente—geralmente 2-3 horas para voos internacionais, 1-2 horas para domésticos. Se você quer reduzir stress, chegue ainda mais cedo.</p>
+
+<p>Procure seu terminal/airline. Os painéis mostram voos, terminais, horários. Procure seu voo. Se não consegue encontrar, pergunte: "Excuse me, where is the check-in for [airline name]?" (Desculpe, onde fica o check-in da [companhia aérea]?). Um funcionário apontará na direção certa.</p>
+
+<blockquote class="tip">
+<strong>Dica Prática:</strong> Tenha seu passaporte e passagem prontos antes de chegar no balcão. Quando é sua vez, você pode simplesmente colocá-los na balança. Isto demonstra que é viajante experiente e acelera o processo.
+</strongquote>
+
+<h4>No Balcão de Check-in</h4>
+<p>Um funcionário eventualmente dirá: "Good morning! Where are you traveling today?" (Bom dia! Aonde você está viajando hoje?) ou "Can I see your passport and ticket?" (Posso ver seu passaporte e passagem?). Você diz seu destino e passa documentos.</p>
+
+<p>Agora o funcionário fará perguntas padrão. Possivelmente dirá: "Did you pack your bags yourself?" (Você fez as malas sozinho?). Você responde "Yes" ou "No". "Has anyone given you anything to carry on the plane?" (Alguém lhe deu algo para carregar no avião?). Você responde "No". Estas perguntas de segurança. Responda honestamente e brevemente.</p>
+
+<p>Se tem bagagem a despachar, o funcionário dirá: "I need to check your baggage" ou "Please place your bag on the scale" (Por favor, coloque sua bagagem na balança). Coloque ali. Se pesa demais, funcionário pode pedir para remover itens ou cobrar taxa de excesso. Nesses casos, dirá algo como "Your bag is overweight. There will be an additional fee of $50" (Sua bagagem está acima do peso. Haverá uma taxa adicional de $50).</p>
+
+<h4>Bagagem de Mão</h4>
+<p>Além da bagagem despachada (que vai embaixo do avião), você pode levar "carry-on baggage" (bagagem de mão) e "personal item" (item pessoal—bolsa, mochila pequena). Funcionário pode não pesar isto, ou pode pedir para verificar que entra no compartimento de medida. Simplesmente coloque lá. Se cabe, está bem.</p>
+
+<p>IMPORTANTE: Certos itens NÃO são permitidos em bagagem de mão: facas, tesouras, líquidos (exceto pequenas quantidades em container especial "100ml bottles in a clear plastic bag"), etc. Se você tem dúvidas, procure no website da companhia aérea antes de viajar.</p>
+
+<h4>Tarifas Especiais</h4>
+<p>Se tem necessidades especiais (mãe com bebê, você em cadeira de rodas, músico com instrumento), diga: "I'm traveling with a baby/I use a wheelchair/I have a musical instrument. Do I need to arrange anything special?" (Estou viajando com bebê/Uso cadeira de rodas/Tenho instrumento musical. Preciso de algo especial?). Funcionário informará sobre assistência disponível ou arranjos necessários.</p>
+
+<blockquote class="example">
+<strong>Diálogo Completo de Check-in:</strong>
+Funcionário: "Good morning! Destination?"
+Você: "London, please."
+Funcionário: "Passport and ticket, please."
+Você: [Entrega documentos]
+Funcionário: "Checking any baggage?"
+Você: "Yes, one bag."
+Funcionário: "Did you pack it yourself?"
+Você: "Yes, I did."
+Funcionário: "Has anyone put anything in your bag without your knowledge?"
+Você: "No, no one."
+Funcionário: [Coloca bagagem na balança] "Okay, that's fine. Here's your boarding pass. Gate number is on your pass. Boarding is at 11:15. Have a good flight!"
+Você: "Thank you!"
+</strongquote>
+
+<h4>Se Algo Dá Errado</h4>
+<p>E se seu voo está atrasado? Funcionário pode dizer "Your flight is delayed. New boarding time is 12:45" (Seu voo está atrasado. Novo horário é 12:45). Você pergunta: "Where should I wait?" (Aonde devo esperar?). Resposta provavelmente é "Near your gate" ou "In the lounge" (perto de seu gate ou na sala de espera).</p>
+
+<p>Se perdeu sua bagagem, você diz: "I've lost my baggage. Can you help?" (Perdi minha bagagem. Você pode ajudar?). Vá ao balcão de "Baggage Services" ou "Lost Baggage". Eles ajudarão.</p>
+
+<p>Se passagem foi recusada (raro, mas possível), funcionário dirá algo como "I'm sorry, but we don't have a record of your reservation." (Desculpe, mas não temos registro de sua reserva). ANTES de chegar ao aeroporto, sempre confirme reserva no website. Se houver problema, você sabe antes e tem tempo de resolver.</p>
+
+<h4>Prática: Simulando Check-in</h4>
+<p>Peça a alguém para simular o funcionário. Você pratica respostas às perguntas padrão. Depois inverta papéis. Isto treina respostas automáticas para que quando for verdade, você esteja calmo e seguro.</p>
+
+<p>Vocabulário Essencial para Lembrar:
+- Boarding pass (cartão de embarque)
+- Gate (portão)
+- Baggage (bagagem)
+- Checked baggage (bagagem despachada)
+- Carry-on (bagagem de mão)
+- Departure (partida/saída)
+- Destination (destino)
+- Passport (passaporte)
+- Ticket (passagem)</p>`,
+    cards: [
+      {
+        q: 'O que você diz se sua bagagem pesa demais?',
+        a: 'Você não precisa dizer nada—o funcionário vai dizer "Your baggage is overweight." Se quer evitar taxa, você pode remover itens e colocá-los na sua bagagem de mão.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Segurança e Portaria: Documentos, Perguntas, Boarding',
+    dur: 30,
+    content: `<h3>Passando Pela Segurança: Relativamente Simples com Preparação</h3>
+<p>Você passou check-in. Agora vem segurança. Tenha seu boarding pass e passaporte prontos novamente. Você vai passar por detector de metais e scanner de raio-X. Funcionários dirão coisas simples. Tudo isso é muito padronizado. Vamos conhecer exatamente o quê esperar.</p>
+
+<h4>Fila de Segurança</h4>
+<p>Você vê uma fila com sinais "Security Checkpoint" ou "Customs". Junte-se à fila apropriada (se há fila para cidadãos vs. não-cidadãos, escolha a sua). Tenha documentos visíveis. Prepare-se para remover certos itens.</p>
+
+<h4>O Que Remover</h4>
+<p>Ao se aproximar do X-ray, remova: sapatos, cinto, jaqueta, eletrônicos grandes (laptop, tablets). Se usar pacemaker ou tiver metal implantado, diga: "I have a pacemaker. I cannot go through the metal detector" (Tenho marca-passo. Não posso passar pelo detector de metais). Você será submetido a busca manual à parte.</p>
+
+<p>Sapatos, pentes, moedas, qualquer coisa de metal nas bolsas—coloque em bandeja para raio-X. Não é crime esquecer; funcionário dirá "Sir/ma'am, please remove your shoes" (Senhor/Srª, por favor remova os sapatos). Faça conforme dito.</p>
+
+<h4>Passando Por Scanner</h4>
+<p>Você caminhará através detector de metais. Se passar sem problemas, continue. Se alarme toca, funcionário pode pedir: "Can I do a pat-down?" (Posso fazer uma revista?). Você concorda simplesmente dizendo "Yes". O funcionário fará busca rápida por razões de segurança. Não é desconfortável. Isto é procedimento padrão.</p>
+
+<blockquote class="tip">
+<strong>Se Desconfortável Com Pat-Down:</strong> Se for mulher e prefere que mulher faça revistoria, diga "Female officer, please" (Oficial mulher, por favor). Isto é direito seu e será honrado.
+</strongquote>
+
+<h4>Colhendo Seus Itens</h4>
+<p>Seus itens sairão do outro lado do X-ray. Colha-os. Recoloque sapatos, cinto, jaqueta. Reorganize sua bagagem. Se deixou algo no X-ray acidentalmente, funcionário gritará ou você verá em volta. Não fique constrangido—simplesmente volte e pegue.</p>
+
+<h4>Mostra de Documentos</h4>
+<p>Um funcionário pode pedir: "Boarding pass and passport, please" (Cartão de embarque e passaporte, por favor). Você mostra. Eles verificam visualmente contra você (certifiquem-se de que você é a pessoa na foto). Pode fazer pergunta: "Where are you traveling?" (Aonde você está viajando?). Você diz seu destino. Geralmente é tudo. Você segue em frente.</p>
+
+<h4>Se Há Problemas Com Documentos</h4>
+<p>Raro, mas possível: seu passaporte está vencido ou há problema. Funcionário dirá: "I'm sorry, but your passport is expired. You cannot board without a valid passport" (Desculpe, seu passaporte está vencido. Você não consegue embarcar sem passaporte válido). Isto é problema GRANDE que exigirá você deixar fila, entrar em contato com sua embaixada, etc. SEMPRE verificar passaporte antes de viajar!</p>
+
+<h4>Procurando Seu Gate</h4>
+<p>Após segurança, procure seu gate. Painéis mostram voos e gates. Se não consegue encontrar, pergunte: "Excuse me, where is gate 47?" (Desculpe, onde fica gate 47?). Funcionário apontará. Gates podem mudar, então sempre verifique painel antes de embarcar.</p>
+
+<h4>Na Área de Espera (Gate Area)</h4>
+<p>Você espera perto de seu gate. Funcionários farão anúncios sobre delays ou mudanças. Se entende anúncio e quer confirmação, aborde funcionário: "Excuse me, what did they announce? Was there a delay?" (Desculpe, o que anunciaram? Houve atraso?). Funcionário repetirá em conversação, que é geralmente mais clara que anúncio alto.</p>
+
+<h4>Boarding: Subindo no Avião</h4>
+<p>Uma hora ou duas antes do voo, anúncio dirá "We're now boarding flight [number]" (Estamos embarcando voo [número]). Eles chamam por grupos. "First, we're boarding first class and frequent flyers" ou "We're boarding all passengers through row 20" (Primeiramente, embarcamos primeira classe e passageiros frequentes, ou Embarcamos todos passageiros até fileira 20). Você espera até seu grupo ser chamado.</p>
+
+<p>Quando chamam seu grupo, você se aproxima do funcionário no gate. Ele/ela diz: "Boarding pass, please" (Cartão de embarque, por favor). Você entrega. Eles verificam, escanneiam, e dão de volta. Você segue pela passarela/corredor em direção ao avião. Você está dentro! Parabéns!</p>
+
+<h4>Encontrando Seu Assento</h4>
+<p>Na entrada do avião, aeromoça/aeromoço diz "Welcome aboard! Seat number?" ou você vê seu número de assento no cartão. Se não entende, você pergunta: "Excuse me, which way is seat 12C?" (Desculpe, para qual lado fica assento 12C?). Aeromoça aponta. Você encontra. Você se senta.</p>
+
+<p>Tudo isto é muito simples. A parte mais estressante é não entender anúncios, mas são geralmente em inglês claro e repetidos (e geralmente também em outras línguas). Você consegue isto!</p>
+
+<blockquote class="example">
+<strong>Frases Úteis Compiladas Para Segurança/Gate:</strong>
+- "I need assistance" (Preciso de assistência)
+- "Where is the bathroom?" (Aonde fica o banheiro?)
+- "Is my flight on time?" (Meu voo está no horário?)
+- "What is the delay?" (Qual é o atraso?)
+- "Gate change?" (O gate mudou?)
+- "I don't understand the announcement" (Não entendi o anúncio)
+</strongquote>`,
+    cards: [
+      {
+        q: 'O que você faz se alarme toca quando passa pelo detector de metais?',
+        a: 'Funcionário pode fazer pat-down (revista). Você concorda. Se metálico é o problema, remova o item e passe novamente. É procedimento padrão e seguro.'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'No Avião: Comodidades, Solicitações, Emergências Menores',
+    dur: 30,
+    content: `<h3>Confortável a 10.000 Metros: Navegando a Experiência do Avião</h3>
+<p>Você está a bordo! Agora vem a parte relativamente fácil. Você senta. Aeromoça/aeromoço trará bebidas, lanches, ou refeição (dependendo do voo). Você pode precisar solicitar algo. Se há problema (você sente mal, algo está quebrado), você levanta mão ou chama. Vamos cobrir tudo.</p>
+
+<h4>Decolagem</h4>
+<p>Após você se asentar, aeromoça faz demonstração de segurança. Eles mostram exits (saídas), cintos de segurança, máscaras de oxigênio. É importante! Preste atenção. Se tiver perguntas durante anúncio de segurança, você pode levantar mão após demonstração. Aeromoças esperam perguntas.</p>
+
+<p>Cintos de segurança: você insere o clique no seu cinto. Puxe cinto para aperta. Solte empurrando a fivela. Aeromoça verificará que todos têm cintos presos. Simplesmente aperte seu cinto quando ela passar.</p>
+
+<p>Quando avião decola, sente-se normalmente. Você pode estar nervoso, mas está seguro. Decolagem leva alguns minutos. Depois aviação sobe a altitude de cruzeiro.</p>
+
+<h4>Solicitando Bebidas e Comida</h4>
+<p>Após decolagem, aeromoça/aeromoço passará com carrinho de bebidas. Dirão: "Can I get you something to drink?" ou "What can I get you?" (Posso pegar algo para você beber? / O que posso pegar para você?). Você diz: "Water, please" ou "Orange juice" ou "Coffee" (Água, por favor / Suco de laranja / Café). Se voo é longo, dirão: "Dinner is coming soon. Would you like chicken or fish?" (Jantar está chegando. Você quer frango ou peixe?). Você escolhe um.</p>
+
+<p>Se não tem fome, você diz "No, thank you" ou "I'll pass" (Não, obrigado / Vou passar). Aeromoça não se sente ofendida. Ist é comum.</p>
+
+<blockquote class="tip">
+<strong>Dica Prática de Hidratação:</strong> Sempre pegue água se oferecido. Aviões desidratam você. Pedir água múltiplas vezes durante voo é totalmente aceitável. Aeromoças esperam isto.
+</strongquote>
+
+<h4>Solicitando Assistência</h4>
+<p>Se precisa algo enquanto voa, levante a mão ou pressione botão de chamada perto de sua poltrona (geralmente um botão com símbol de sino). Aeromoça virá. Você diz: "Can I have some water?" ou "Where is the bathroom?" ou "I don't feel well" (Posso ter água? / Aonde fica o banheiro? / Não estou me sentindo bem). Aeromoça ajudará.</p>
+
+<p>Banheiros (toilets, restrooms) estão geralmente na frente ou traseira do avião. Procure sinais ou simplesmente caminhe. Eles são pequenos mas funcionam. Simplesmente vire a fechadura de "vacant" (vazio) para "occupied" (ocupado) quando dentro. Estão em aviões há décadas; você consegue!</p>
+
+<h4>Se Não Se Sente Bem</h4>
+<p>Às vezes altitude causa leve desconforto, náusea, ou dor. Isto é normal e passa. Levante mão e aeromoça virá. Diga: "I don't feel well. Can I have a ginger ale or water?" ou "I think I need to lie down. Is there extra space?" (Não estou bem. Posso ter ginger ale ou água? / Acho que preciso me deitar. Tem espaço extra?). Aeromoça pode oferecer embrulho vomitivo ("just in case" / "só em caso"), água, ou compressa fria. Geralmente ajuda.</p>
+
+<p>Se é realmente sério (dor no peito, dificuldade respirar), levante a mão IMEDIATAMENTE e diga: "I'm in serious pain" ou "I cannot breathe" (Estou em dor séria / Não consigo respirar). Aeromoça alertará piloto. Pode haver desvio para aeroporto mais próximo. Isto é proteger você. Nunca ignore sintomas sérios.</p>
+
+<h4>Entretenimento e Conforto</h4>
+<p>Voos longos frequentemente têm telas nos assentos com filmes, música, jogos. Procure controle remoto na sua poltrona ou bandeja. Pressione botões para navegar. Em inglês, menu dirá coisas como "Movies" (Filmes), "Music" (Música), "Games" (Jogos). Você escolhe. Isto passa tempo!</p>
+
+<p>Cobertores e travesseiros: geralmente oferecidos em voos de longa duração. Se oferecido, você diz "Yes, please" (Sim, por favor). Faça-se confortável. Durma se puder. O tempo passa mais rápido!</p>
+
+<h4>Aterrissagem</h4>
+<p>Aproximadamente uma hora antes de aterrissagem, aeromoça pode anunciar: "We'll be landing in approximately 45 minutes. Please return to your seats and fasten your seatbelts" (Aterrissaremos em aproximadamente 45 minutos. Por favor retorne ao seu assento e prenda o cinto de segurança). Você faz. Aterrissagem é um pouco mais agitada que decolagem mas geralmente breve. Lembre-se que você está seguro. Aviões aterrisam milhões de vezes com sucesso.</p>
+
+<p>Quando avião toca solo, passageiros às vezes aplaudem (isto é costume em alguns países). Você pode aplaudir também! Então tudo desacelera e você desembarca através portão.</p>
+
+<h4>Desembarque</h4>
+<p>Aeromoça/aeromoço dirá: "Thank you for flying with us! We hope you enjoyed the flight. Have a great day!" (Obrigado por voar conosco! Esperamos que tenha desfrutado do voo. Tenha um ótimo dia!). Você responde: "Thank you! You too!" ou simplesmente "Thank you!" (Obrigado! Você também! / Obrigado!).</p>
+
+<p>Você levanta, colhe sua bagagem de mão, e sai pela porta da frente para terminal. Você fez! Seu voo está completo. Agora vem a aventura real—conhecer seu destino!</p>
+
+<blockquote class="example">
+<strong>Diálogo Rápido de Avião:</strong>
+Aeromoça: "Can I get you anything to drink?"
+Você: "Water, please."
+Aeromoça: "Ice?"
+Você: "No, just room temperature. Thank you."
+[Mais tarde]
+Você: [Levanta mão]
+Aeromoça: "Yes?"
+Você: "Where is the bathroom?"
+Aeromoça: "Back there, on the left" [aponta]
+Você: "Thank you"
+</strongquote>`,
+    cards: [
+      {
+        q: 'O que você faz se sente-se mal durante voo?',
+        a: 'Levante a mão/pressione botão de chamada. Diga "I don\'t feel well" e descreva sintomas (nausea, dor, etc.). Aeromoça ajudará com água, ar fresco, ou compressa. Se é sério (dor no peito, dificuldade respirar), diga imediatamente "I\'m in serious pain" ou "I cannot breathe".'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Chegada e Imigração: Declarações, Documentos, Perguntas Padrão',
+    dur: 35,
+    content: `<h3>Sua Chegada: Navegando Imigração e Alfândega</h3>
+<p>Você desembarcou! Mas antes de sair do aeroporto, precisa passar imigração e potencialmente alfândega. Isto pode parecer assustador, mas é muito procedimento padrão. Funcionários fazem as mesmas perguntas centenas de vezes. Você vai estar bem!</p>
+
+<h4>Fila de Imigração</h4>
+<p>Você vê sinais para "Immigration" ou "Passport Control". Há geralmente duas filas: "Citizens" (cidadãos do país) e "Non-Citizens" ou "Visitors" (visitantes/não-cidadãos). Escolha fila apropriada para seu status. Como brasileiro visitando outro país, você estará em fila de visitantes.</p>
+
+<p>Fila pode ser longa. Tenha paciência. Você chegará eventualmente. Tenha seu passaporte pronto junto com cartão de chegada se fornecido (alguns países fornecem, outros não).</p>
+
+<h4>No Balcão de Imigração</h4>
+<p>Um funcionário dirá: "Passport, please" (Passaporte, por favor). Você entrega. Eles abrem, verificam sua foto versus você (certifiquem-se de que é você). Dirão: "What's the purpose of your visit?" (Qual é o propósito de sua visita?). Você diz: "Tourism" ou "Business" ou "Visit family" (Turismo / Negócio / Visitar família).</p>
+
+<p>Próxima pergunta frequentemente é: "How long will you be staying?" (Quanto tempo vai ficar?). Você diz: "One week" ou "10 days" ou "Two weeks" (Uma semana / 10 dias / Duas semanas). Se seu visto permite, eles carimbam seu passaporte e dizem: "Enjoy your stay! Welcome!" (Aproveite sua estadia! Bem-vindo!). Você segue em frente.</p>
+
+<h4>Perguntas Mais Aprofundadas (Possível)</h4>
+<p>Em alguns casos, funcionário de imigração pode fazer perguntas mais específicas: "Where are you staying?" (Aonde você está ficando?). Você responde: "At the Grand Hotel in downtown" (No Grand Hotel no centro). "Do you have a return ticket?" (Tem passagem de retorno?). Você diz: "Yes" ou mostra no telefone/e-mail.</p>
+
+<p>"Are you traveling alone?" (Está viajando sozinho?). Se sim: "Yes, alone." Se não: "No, with [family/friends]" e eles podem estar em fila atrás). "Do you have a job in your country?" (Tem emprego em seu país?). Você diz algo simples como "Yes, I'm a teacher" ou "Yes, I work in marketing" (Sim, sou professor / Sim, trabalho em marketing). Isto demonstra que você tem motivo para retornar.</p>
+
+<blockquote class="tip">
+<strong>Sinceridade é Crítica:</strong> NUNCA minta a funcionário de imigração. Se pergunta onde fica e você diz um hotel mas na verdade vai para casa de amigo, isto pode ser visto como desonestidade. Responda honestamente. Simples está bem. Funcionários entendem turismo.
+</strongquote>
+
+<h4>Alfândega</h4>
+<p>Após imigração, você chega em área de alfândega. Geralmente há dois caminhos: "Nothing to Declare" (Nada a Declarar) e "Goods to Declare" (Bens a Declarar). Se trouxe só roupa pessoal e eletrônicos pessoais, você segue "Nothing to Declare". Se trouxe álcool, cigarros, ou quantidade grande de presentes/bens, pode precisar declarar.</p>
+
+<p>Funcionário de alfândega pode parar você: "Do you have anything to declare?" (Tem algo a declarar?). Você diz: "No, just personal items" (Não, só itens pessoais). Se tem algo a declarar, você diz: "Yes, I have a bottle of wine" ou "I have gifts" (Sim, tenho uma garrafa de vinho / Tenho presentes). Eles podem revistar ou deixar passar. Depende de regras do país.</p>
+
+<h4>Colhendo Bagagem</h4>
+<p>Após alfândega, procure "Baggage Claim" (Coleta de Bagagem). Painéis mostram voos. Procure o seu. Você verá esteira de bagagem. Sua mala provavelmente está lá. Pegue-a. Se sua bagagem não aparece, vá ao balcão "Lost Baggage" (Bagagem Perdida). Descreva bagagem. Eles ajudam a localizá-la.</p>
+
+<h4>Deixando Aeroporto</h4>
+<p>Procure saída principal ou sinais para "Exit" ou "Ground Transportation". Você está deixando área aeroporto. Você conseguiu! Bem-vindo ao seu destino!</p>
+
+<blockquote class="example">
+<strong>Diálogo Imigração Completo:</strong>
+Funcionário: "Passport, please."
+Você: [Entrega passaporte]
+Funcionário: "Purpose of your visit?"
+Você: "Tourism."
+Funcionário: "How long?"
+Você: "Two weeks."
+Funcionário: "Where are you staying?"
+Você: "Rio de Janeiro. With friends."
+Funcionário: [Carimba] "Enjoy your stay!"
+Você: "Thank you!"
+</strongquote>`,
+    cards: [
+      {
+        q: 'O que você diz quando imigração pergunta "What\'s the purpose of your visit?"',
+        a: 'Respostas comuns: "Tourism" (Turismo), "Business" (Negócio), "Visiting family" (Visitando família), "Vacation" (Férias). Seja honesto e simples.'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'No Hotel: Reserva, Check-in, Solicitações, Problemas Comuns',
+    dur: 35,
+    content: `<h3>Seu Lar Longe de Casa: Navegando Hospedagem</h3>
+<p>Você saiu do aeroporto. Agora você precisa chegar ao hotel e se instalar. O hotel é seu refúgio durante viagem. Funcionários de hotel entendem viajantes internacionais. Eles falam inglês claramente. Vamos cobrir check-in, solicitações, e como lidar com problemas.</p>
+
+<h4>Chegando no Hotel</h4>
+<p>Taxi/Uber o deixou na entrada. Procure portaria (pessoas que carregam bagagem) ou simplesmente caminhe para lobby. Procure balcão de "Front Desk" ou "Reception" (Recepção). Funcionário dirá: "Welcome! How can I help you?" ou "Checking in?" (Bem-vindo! Como posso ajudar? / Fazer check-in?). Você diz: "I have a reservation under [seu nome]" (Tenho uma reserva sob [seu nome]).</p>
+
+<p>Se você fez reserva online, eles procuram seu nome na computador. Se tem confirmação (email, referência), você pode mostra. Se tudo está bem, dirão: "Great! I have you in room 412 for three nights. Here's your key" (Ótimo! Tenho você no quarto 412 por três noites. Aqui está sua chave). Você pega chave/cartão-chave.</p>
+
+<h4>Perguntas Padrão de Check-in</h4>
+<p>Funcionário pode perguntar: "How many in your party?" (Quantas pessoas no grupo?). Você diz número. "Will you need help with your bags?" (Vai precisar ajuda com as malas?). Se você diz "Yes", porteiro levará bagagem para quarto. Se diz "No", você a carrega.</p>
+
+<p>"Any special requests?" (Algum solicitação especial?). Se você tem, diga: "I'd prefer a high floor" ou "I need a room without smoking" ou "I have an allergy, so please don't use air freshener" (Prefiro andar alto / Preciso quarto sem fumar / Tenho alergia, então por favor não use ar refrescante). Eles anotam.</p>
+
+<blockquote class="tip">
+<strong>Dica de Timing de Check-in:</strong> Check-in padrão é 3 PM (15h). Se você chega antes, pode pedir "Early check-in" (Check-in antecipado). Pode estar disponível por taxa extra ou gratuito se há quartos disponíveis. Nunca custa perguntar educadamente!
+</strongquote>
+
+<h4>Conhecendo Seu Quarto</h4>
+<p>Você entra em quarto. Funcionalidades que deve procurar: cama, banheiro, ar condicionado, aquecimento, TV, telefone, WiFi. Tudo funciona? Testando simples antes de sair front desk é bom.</p>
+
+<p>Se algo não está funcionando (chuveiro não tem água quente, TV não liga, ar condicionado quebrado), você vai imediatamente ao front desk e diz: "The shower has no hot water" ou "The TV doesn't work" ou "The air conditioner is broken" (O chuveiro não tem água quente / A TV não funciona / O ar condicionado está quebrado). Eles virão verificar ou mudarão você de quarto. NÃO sofra em silêncio!</p>
+
+<h4>Serviços do Hotel</h4>
+<p>Maioria dos hotéis oferece serviços. Procure folder no quarto ou ligue para front desk. Serviços comuns: "Room service" (Serviço de quarto - eles trazem comida/bebida), "Housekeeping" (Limpeza), "Concierge" (Concierge - ajuda com reservas, recomendações), "Business center" (Centro de negócio - computador, impressora), "Laundry service" (Serviço de lavanderia).</p>
+
+<p>Para room service, você liga número listado ou pressiona botão. Você diz: "I'd like to order room service. Can I see a menu?" (Gostaria de pedir room service. Posso ver o menu?). Eles enviam menu ou você pode ver na TV. Você escolhe comida e diz seu número de quarto. Comida chega em 30 minutos a 1 hora.</p>
+
+<h4>WiFi</h4>
+<p>Quase todos os hotéis modernos têm WiFi. Procure rede (nome do hotel) na lista de WiFi seu telefone. Conecte. Você será solicitado para senha (geralmente está no folder do quarto ou você pergunta ao front desk). Dirão: "Password is [password]" ou "It's the WiFi card in your room" (A senha é [senha] / É o cartão WiFi em seu quarto).</p>
+
+<h4>Check-out</h4>
+<p>Última manhã, você deixa quarto. Verifique closet, banheiro, embaixo da cama para coisas deixadas para trás. Colect todas suas posses. Você pode deixar bagagem na front desk e explorar cidade ainda, ou fazer check-out completo. Dirija-se ao front desk.</p>
+
+<p>Funcionário dirá: "Checking out today?" (Fazendo check-out hoje?). Você diz: "Yes, I'm leaving now" ou "Yes, but I need to store my bags for a few hours" (Sim, estou partindo agora / Sim, mas preciso guardar minhas malas por algumas horas). Eles processam check-out, cobram qualquer serviço adicional (room service, launderia), e você paga. Você pode dar gorjeta se desejado ("Thank you for your help" + alguns dólares/euros).</p>
+
+<h4>Fazendo Reserva Antes de Viagem</h4>
+<p>Você deve fazer reserva online antes de viajar. Sites como Booking.com, Hotels.com, Expedia. Você procura por cidade e datas. Você vê disponibilidade e preços. Você escolhe hotel. Geralmente você fornece email e número de cartão de crédito. Você recebe confirmação. Imprima ou salve no telefone. Leve à recepção ou mostre quando chegar.</p>
+
+<p>Se você precisa CANCELAR, procure política de cancelamento. Alguns hotéis permitem cancelamento gratuito até X dias antes de chegada. Outros não reembolso. Sempre leia antes de reservar!</p>
+
+<blockquote class="example">
+<strong>Diálogo Completo Check-in/Out:</strong>
+
+CHECK-IN:
+Front Desk: "Good afternoon. Welcome!"
+Você: "Hi, I have a reservation under Silva."
+Front Desk: "Let me look that up. Yes, I have you for three nights, room 412. Here's your key."
+Você: "Thank you. Is WiFi included?"
+Front Desk: "Yes, password is on the card. Enjoy your stay!"
+
+CHECK-OUT:
+Você: "I'm checking out today."
+Front Desk: "Absolutely. Your bill is $300. Will that be cash or card?"
+Você: "Card, please." [Entrega cartão]
+Front Desk: "Thank you! Have a safe trip home!"
+</strongquote>`,
+    cards: [
+      {
+        q: 'O que você diz se o ar condicionado no quarto está quebrado?',
+        a: '"The air conditioner doesn\'t work" ou "The AC is broken." Você vai imediatamente à recepção e eles virão consertar ou trocarão seu quarto. Não sofra em silêncio!'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Restaurante Essencial: Pedir Comida, Alergias, Insatisfação, Pagamento',
+    dur: 35,
+    content: `<h3>Desfrutando Culinária: Restaurante com Confiança</h3>
+<p>Você está em novo país! Comida local é parte essencial da experiência. Você quer comer bem, mas também se sentir seguro. Se tem alergias, precisa comunicar claramente. Se comida não é boa, você precisa saber como lidar. Vamos cobrir tudo sobre experiência de restaurante.</p>
+
+<h4>Escolhendo Restaurante</h4>
+<p>Você procura restaurante. Você pode perguntar ao hotel: "Can you recommend a good restaurant nearby?" ou "What's a typical restaurant in this area?" (Pode recomendar bom restaurante próximo? / Qual é restaurante típico nesta área?). Concierge pode recomendar. Você também pode procurar no Google Maps ou TripAdvisor. Procure avaliações altas, comida que parece boa, preço que te interessa.</p>
+
+<p>Se quer tentar comida local tradicional, pergunte: "What's a traditional dish here?" (Qual é prato tradicional aqui?). Hotel pode recomendar. Isto é melhor jeito de vivenciar cultura culinária local!</p>
+
+<h4>Chegando e Sendo Sentado</h4>
+<p>Você entra no restaurante. Aí você espera. Hostess/anfitrião dirá: "Table for how many?" (Mesa para quantas pessoas?). Você diz número: "Two, please" ou "For one, please" (Dois, por favor / Para um, por favor). Hostess leva você à mesa. Você senta.</p>
+
+<p>Se é ocupado e não há mesas, dirão: "We have a 45-minute wait" (Há espera de 45 minutos). Você pode esperar ou procurar outro restaurante.</p>
+
+<h4>Menu e Compreensão</h4>
+<p>Garçom/garçonete dirá: "Can I start you with something to drink?" (Posso começar com algo para beber?). Você diz: "Water, please" ou "A coffee" ou "Wine list, please" (Água, por favor / Um café / Lista de vinho, por favor).</p>
+
+<p>Então eles trazem menu. Menu lista pratos. Seções típicas: "Appetizers" (Entradas), "Main Courses" ou "Entrées" (Pratos principais), "Sides" (Acompanhamentos), "Desserts" (Sobremesas), "Beverages" (Bebidas).</p>
+
+<p>Você procura por algo que entende. Se não entende um prato, você levanta a mão e pergunta: "Excuse me, what is [name of dish]? What's in it?" (Desculpe, o que é [prato]? O que tem dentro?). Garçom explicará ingredientes. Você ouve. Se entende, você diz "Okay, thank you" (Ok, obrigado) e continua decidindo.</p>
+
+<blockquote class="tip">
+<strong>Dica Linguistic de Leitura de Menu:</strong> Olhe pelos ingredientes principais em nome. "Salmon" = salmão. "Steak" = bife. "Chicken" = frango. "Pasta" = massa. Se você reconhecer ingrediente principal, presto sabe tipo básico de prato.
+</strongquote>
+
+<h4>Alergia e Restrições Alimentares - CRÍTICO</h4>
+<p>SE VOCÊ TEM ALERGIA, VOCÊ PRECISA COMUNICAR CLARAMENTE. Isto não é "preferência"—é questão de saúde e segurança. Quando garçom vem para pedir seu pedido, você diz primeiro: "I have a peanut allergy. Can I eat [dish name]?" ou "I'm vegetarian. Does [dish name] have meat?" (Tenho alergia a amendoim. Posso comer [prato]? / Sou vegetariano. [Prato] tem carne?).</p>
+
+<p>Garçom provavelmente dirá: "Let me check with the kitchen" (Deixe-me checar com cozinha). Eles voltarão em poucos minutos com resposta. Leve isto a sério. Se há dúvida, pergunte novamente: "Are you sure there's no peanut in it?" (Tem certeza que não há amendoim?). Melhor parecer paranóico que ter reação alérgica!</p>
+
+<h4>Pedindo Comida</h4>
+<p>Você decidiu. Garçom pergunta: "Are you ready to order?" (Está pronto para pedir?). Você diz: "I'd like the salmon with vegetables" ou "Can I have the chicken dish?" (Gostaria de salmão com vegetais / Posso ter o frango?). Se não tem certeza como assado, você pergunta: "How would you recommend the steak? How is it cooked?" (Como você recomenda o bife? Como é cozido?). Garçom diz: "Medium rare is popular" (Ponto médio é popular). Você diz: "Medium rare, then" (Ponto médio, então).</p>
+
+<p>Você também pede acompanhamentos: "With fries or rice?" (Com batata frita ou arroz?). Você escolhe. "Anything else?" (Mais algo?). Você pode pedir sobremesa depois ou dizer "Not now, thank you" (Não agora, obrigado).</p>
+
+<h4>Comida Chega</h4>
+<p>Garçom traz comida. Diz: "Salmon for you?" ou "Careful, the plate is hot!" (Salmão para você? / Cuidado, o prato está quente!). Você verifica se é o que pediu. Geralmente é. Garçom diz: "Enjoy!" (Aproveite!).</p>
+
+<p>Você come. Se está bom, grande! Se algo está errado (comida fria, errado prato, alimento cru quando deveria cozido), você levanta mão ou chama garçom: "Excuse me, this chicken is undercooked. Can you take it back?" (Desculpe, este frango está malcozido. Pode levar de volta?). Garçom levará e volta com prato correto em alguns minutos.</p>
+
+<blockquote class="example">
+<strong>Diálogo Completo de Restaurante:</strong>
+
+Hostess: "Table for how many?"
+Você: "One, please."
+[Você é levado à mesa]
+Garçom: "Can I start you with something to drink?"
+Você: "Water and a coffee, please."
+[Garçom volta]
+Garçom: "What can I get for you?"
+Você: "I have a shellfish allergy. Is the fish in the salmon safe?"
+Garçom: "Yes, salmon is fine. No shellfish. The salmon is prepared with butter and herbs."
+Você: "Perfect. I'll have the salmon with roasted vegetables, please."
+Garçom: "And how would you like it cooked?"
+Você: "Medium, please."
+Garçom: "Great. Be back in 15 minutes."
+[Comida chega]
+Garçom: "Salmon for you!"
+Você: "Thank you!"
+[Você come. É delicioso!]
+</strongquote>
+
+<h4>Pagamento</h4>
+<p>Quando termina comer, você levanta mão ou chama garçom: "Check, please" ou "Can I get the bill?" (Conta, por favor / Posso pegar a conta?). Garçom traz papel com total. Você olha. Frequentemente conta NÃO inclui gorjeta. Nos EUA, você deve dar 15-20% gorjeta. Outros países podem ter expectativas diferentes. Se não sabe, você pergunta: "Is gratuity included?" (A gorjeta está incluída?). Se não, você adiciona. Você pode pagar com dinheiro (você tinha procurado câmbio) ou cartão de crédito. Você diz: "Card, please" (Cartão, por favor) ou "I'll pay in cash" (Vou pagar em dinheiro).</p>
+
+<p>Se pagando com cartão, garçom traz terminal. Você insere cartão. Pode ser solicitado para PIN. Você digita. Você aprova. Você assina ou aprova digitalmente. Você pega cartão de volta. Você sai.</p>
+
+<h4>Reclamações</h4>
+<p>Se comida foi ruim ou serviço foi péssimo, você pode deixar feedback. Quando pagando, você pode dizer: "The food was cold" ou "The service was slow" (A comida estava fria / O serviço foi lento). Gerente pode oferecer desconto ou novo prato. Se quer deixar review negativo, você pode na Internet depois. Isto ajuda outros viajantes e restaurante a melhorar.</p>
+
+<p>Mas lembre-se: simples crítica durante visita é OK. Ser rude não é. Garçons trabalham muito. Se foi apenas lentidão em noite ocupada, seja gentil. Se foi negligência genuína, fale educadamente com gerente.</p>`,
+    cards: [
+      {
+        q: 'Como você comunica uma alergia alimentar? E se comida não está cozida corretamente?',
+        a: 'Diga CLARAMENTE: "I have a [alergia] allergy" ANTES de pedir. Se comida está errada, levante a mão e diga "This is undercooked/cold/wrong dish" educadamente. Garçom levará de volta sem problema.'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Compras e Navegação: Lojas, Preços, Mercados, Negociação',
+    dur: 40,
+    content: `<h3>Comprando e Explorando: Mercados e Lojas com Confiança</h3>
+<p>Você quer trazer souvenirs. Você precisa comprar coisas. Você quer explorar mercados locais. Compras em país estrangeiro pode parecer assustador, mas é na verdade muito divertido com confiança linguística certa. Vamos cobrir navegação de lojas, preços, mercados, e negociação quando apropriado.</p>
+
+<h4>Procurando Lojas</h4>
+<p>Você quer comprar algo específico. Procure no mapa ou pergunta: "Where can I find a bookstore?" ou "Is there a souvenir shop nearby?" (Aonde posso encontrar livraria? / Tem loja de souvenirs próxima?). Pessoas ajudarão apontando ou dando direções.</p>
+
+<p>Lojas geralmente têm horários de operação listados. Procure por "Open" (Aberto) ou horário listado na porta. Se porta está fechada mesmo que pareça loja, espere um pouco ou voltará mais tarde.</p>
+
+<h4>Dentro da Loja</h4>
+<p>Você entra. Vendedor/vendedora pode cumprimentar: "Hi, welcome! Can I help you find something?" (Oi, bem-vindo! Posso ajudar em encontrar algo?). Você pode dizer: "I'm just looking, thanks" (Estou só olhando, obrigado) ou "I'm looking for [item]" (Estou procurando [item]). Vendedor pode mostrar-lhe. Você procura ao redor. Se quer algo específico e não consegue encontrar, você pergunta: "Do you have this in red?" ou "Do you have a size larger?" (Tem isto em vermelho? / Tem tamanho maior?).</p>
+
+<blockquote class="tip">
+<strong>Etiqueta de Loja:</strong> Não é rude tocar em itens (exceto em lojas muito sofisticadas). Você pode verificar qualidade, sentir material, provar tamanho. Mas não danifique itens. Lojas entendem que você quer conhecer o que está comprando.
+</strongquote>
+
+<h4>Preço e Negociação</h4>
+<p>Você procura preço. Pode haver tag com preço ou código de barras. Se não consegue encontrar, você pergunta: "How much is this?" (Quanto custa isto?). Vendedor diz preço: "It's $15" ou "That's €20" ($15 / €20). Você decide se quer comprar.</p>
+
+<p>Em lojas normais, preço é fixo. Você não negocia em Target ou Walmart. Mas em mercados de rua (especialmente em alguns países asiáticos ou middle eastern), NEGOCIAÇÃO é comum e esperada. Vendedor dirá preço alto. Você pode dizer: "That's too much. Can you do [número menor]?" (É muito caro. Pode fazer [número menor]?). Você e vendedor negociam até acordo. É brinquedo cultural! Mas sempre respeite o vendedor.</p>
+
+<p>IMPORTANTE: Se não quer comprar, não negocie. Negociação significa você quer seriamente comprar a preço acordado.</p>
+
+<h4>Mercados</h4>
+<p>Muitas cidades têm mercados locais. Procure por "Market", "Farmers Market", "Flea Market", "Night Market", etc. Mercados podem estar ao ar livre com muitas barracas ou cobertas. Você caminha de barraca para barraca, vê o que vendem, pergunta preço se interessado.</p>
+
+<p>Mercados são ótimos para: comida fresca (frutas, vegetais, peixe), souvenirs locais, roupas, etc. SEMPRE procure por limpeza e qualidade. Comida deve parecer fresca. Itens não devem estar danificados. Preços são frequentemente menores que lojas, especialmente se negocia.</p>
+
+<h4>Checkout</h4>
+<p>Você decidiu comprar. Você se aproxima do caixa com item(ns). Caixa diz: "That'll be $20, please" (Será $20, por favor). Você paga com dinheiro ou cartão. Se dinheiro, você dá dinheiro, caixa dá troco. Se cartão, você insere/toca como em restaurante. Você recebe recibo. Feito!</p>
+
+<h4>Trocas e Devoluções</h4>
+<p>E se compra item e não gosta? Em lojas maiores, há política de devolução. Você pergunta quando compra: "What's your return policy?" (Qual é sua política de devolução?). Caixa dirá algo como "30 days with receipt" (30 dias com recibo) ou "No returns" (Sem devoluções).</p>
+
+<p>Se você precisa retornar, você volta dentro de período permitido com recibo. Você diz: "I'd like to return this" (Gostaria de devolver isto). Caixa verifica item (se não está danificado, não usado), e processa devolução. Geralmente reembolsam seu dinheiro ou trocam por outro item.</p>
+
+<h4>Bargain/Pechinchas</h4>
+<p>Lojas frequentemente têm sales (promoções). Procure por sinais que dizem "Sale!" ou "50% OFF!" (Venda! / 50% de desconto!). Se quer saber se tem desconto, você pergunta: "Is this on sale?" ou "Do you have any discounts?" (Isto está à venda? / Tem descontos?). Vendedor dirá.</p>
+
+<h4>Shopping em Países Diferentes</h4>
+<p>Moedas são diferentes! Procure taxa de câmbio antes de comprar. Alguns países permitem você pagar em dólares americanos ou euros, mas taxa será pior que moeda local. Sempre que possível, pague em moeda local. Se usar cartão de crédito, seu banco fará conversão e geralmente taxa é melhor que manual.</p>
+
+<blockquote class="example">
+<strong>Diálogo Negociação em Mercado:</strong>
+
+Vendedor: "Good morning! Looking for a beautiful scarf?"
+Você: "How much for this one?"
+Vendedor: "For you, 50 dollars!"
+Você: "50? That's quite high. What about 30?"
+Vendedor: "30 is too low, my friend. This is high quality. How about 40?"
+Você: "35?"
+Vendedor: "You're tough! Okay, 35 for you."
+Você: "Thank you! Perfect."
+[Você paga, ele embrulha, você sai feliz]
+</strongquote>
+
+<h4>Tomar Cuidado com Golpes</h4>
+<p>Infelizmente, turistas são às vezes alvo de golpes. Procure por: lojas que parecem legitimamente limpas e organizadas, vendedores que parecem honestos, moedas/notas de verdade (não falsas). Se preço é MUITO baixo demais para real, provavelmente é falsificado. Se você sente desconfortável, saia. Há outras lojas. Segurança pessoal é prioridade.</p>
+
+<p>Se você não confia em lugar, pergunte no hotel: "Is this shop trustworthy?" (Essa loja é confiável?). Hotel pode avisar sobre áreas a evitar.</p>`,
+    cards: [
+      {
+        q: 'Como você negocia preço em mercado? O que significa quando você pergunta "What\'s your return policy?"',
+        a: 'Negociação: Vendedor diz preço, você oferece menor, vocês negociam até acordo. Use "That\'s too high. Can you do [preço]?" Return policy = quanto tempo para devolver item não desejado se não aberto/danificado.'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Transporte: Táxi, Transporte Público, Direções, Mapas',
+    dur: 40,
+    content: `<h3>Navegando Cidades: Transporte com Confiança</h3>
+<p>Você precisa se mover pela cidade. Você quer visitar atrações. Você precisa voltar ao hotel. Você pode pegar táxi, usar transporte público (ônibus, metrô), ou até andar. Vamos cobrir tudo sobre navigação de cidade, pedir direções, usar mapas, e negociar táxis.</p>
+
+<h4>Pedir Direções</h4>
+<p>Você quer ir a lugar específico. Você pergunta: "How do I get to the Eiffel Tower?" ou "Where is the museum?" ou "Can you give me directions to the train station?" (Como chego à Torre Eiffel? / Aonde fica museu? / Pode me dar direções à estação?). Pessoa responde com direções: "Turn right at the corner, go straight for two blocks, then turn left" (Vire à direita na esquina, siga reto por dois quarteirões, depois vire à esquerda).</p>
+
+<p>Se não entende, você pergunta: "Can you repeat that, more slowly?" ou "Can you show me on a map?" (Pode repetir mais lentamente? / Pode me mostrar em mapa?). Pessoa frequentemente apontará em mapa seu telefone ou desenha no ar.</p>
+
+<blockquote class="tip">
+<strong>Dica Prática:</strong> Antes de sair hotel, pergunte ao concierge para "Write down the address" (Escrever endereço) de atrações que quer visitar. Se você ficar perdido, pode mostrar endereço para táxista ou pessoa ajudando. Isto é muito mais fácil que tentar descrever verbalmente!
+</strongquote>
+
+<h4>Usando Google Maps</h4>
+<p>Seu telefone tem Google Maps (ou Apple Maps). Abra app. Procure destino. App mostra múltiplas rotas (carro, ônibus, pé, bicicleta). Você escolhe rota. App dá "turn-by-turn directions" (direções passo a passo). Você segue fone de ouvido. É muito mais fácil que pedir direções!"</p>
+
+<p>Google Maps também mostra: horários de ônibus, preço de táxi estimado, distância e tempo de viagem. Isto ajuda a planejar seu dia.</p>
+
+<h4>Táxi</h4>
+<p>Você pode pegar táxi parado na rua (procure por "taxi" sign ou cor de táxi comum no país) ou pedir via app (Uber, Lyft, Grab). Se pegando táxi de rua, você levanta mão. Táxi para. Você entra e diz ao motorista: "To the Plaza Hotel, please" (Para Plaza Hotel, por favor) ou mostra endereço no seu telefone.</p>
+
+<p>Motorista pode pergunta: "Do you know how to get there?" (Você sabe como chegar?) ou simplesmente dirige. Ele/ela sabe cidade melhor que você. Confie. Se você está nervoso sobre direção errada, você pode discretamente comparar em seu Google Maps para verificar.</p>
+
+<p>Quando chega: "Stop here, please" (Pare aqui, por favor). Motorista para. Você pergunta: "How much?" (Quanto custa?). Motorista diz preço. Você paga com dinheiro ou cartão. Se dá dinheiro, você pode deixar gorjeta pequena (10-15%) ou dizer "Keep the change" (Fique com o troco). Você sai. Feito!</p>
+
+<h4>Transporte Público: Ônibus</h4>
+<p>Ônibus é barato e legal! Procure para parada de ônibus. Sinais mostram quais ônibus passam onde. Você espera seu ônibus. Quando chega, você entra. Você paga motorista (geralmente moeda exata ou cartão de transporte) ou você já tem pass. Se não tem ideia de como pagar, você pergunta: "How do I pay?" (Como eu pago?). Motorista explicará.</p>
+
+<p>Você senta ou fica em pé. Quando seu destino chega, você levanta. Você aperta botão (geralmente próximo seu assento) ou diz: "Stop here, please!" (Pare aqui, por favor!). Ônibus para na próxima parada. Você sai.</p>
+
+<p>Procure mapa de rotas de ônibus na parada ou pedir: "Which bus goes to the museum?" (Qual ônibus vai ao museu?). Pessoa ajudará.</p>
+
+<h4>Transporte Público: Metrô/Trem</h4>
+<p>Metrô é mais rápido que ônibus. Procure estação. Procure sua linha (cores em mapas de metrô). Compre passagem em ticket machine ou balcão: "One ticket to Central Station, please" (Uma passagem para Central Station, por favor). Você recebe bilhete.</p>
+
+<p>Você passa bilhete por torniquete. Você entra na plataforma. Você aguarda trem. Quando chega com seu destino, você entra. Você segura barra ou senta. Quando chega seu destino, você sai.</p>
+
+<h4>Aluguel de Carro</h4>
+<p>Se você quer dirigir, você pode alugar carro. Procure "Car rental" online ou na cidade. Você mostra licença de motorista internacional (leve com você) ou carteira normal (dependendo do país). Você reserva carro, paga, você conduz. CUIDADO: Direções podem ser lado oposto que Brasil! Na Inglaterra, você dirige no lado esquerdo. Na Austrália também. Muitos países são à direita como Brasil.</p>
+
+<p>Se você sente desconfortável dirigindo em lado oposto, não recomendo. Transporte público é seguro, fácil, e menos estressante!</p>
+
+<blockquote class="example">
+<strong>Diálogo Completo com Táxista:</strong>
+
+Você: [Levanta mão, táxi para]
+Você: "Hi! To the Louvre, please." [Mostra endereço no telefone]
+Motorista: "Sure, Louvre. I know it well."
+[Você dirige em silêncio, observando cena da janela]
+Você: [Quando chega] "Okay, this is good. How much do I owe?"
+Motorista: "That's 15 euros."
+Você: [Dá €20] "Keep the change. Thank you!"
+Motorista: "Thank you! Enjoy the Louvre!"
+</strongquote>
+
+<h4>Perdido? Peça Ajuda!</h4>
+<p>Se você está perdido, NÃO tenha medo de pedir ajuda! Pessoas são geralmente amigas com viajantes. Aborde pessoa educadamente: "Excuse me, I'm trying to get to [place]. Can you help me?" (Desculpe, estou tentando ir a [lugar]. Pode ajudar?). Pessoa ajudará com direções ou simplesmente andará com você se for na mesma direção!</p>
+
+<p>Se está realmente perdido, vá para estação de polícia ou procure policial. Eles podem ajudar. Isto é trabalho deles auxiliar turistas.</p>`,
+    cards: [
+      {
+        q: 'Como você pede para parar um ônibus ou táxi? E como pergunta "How much?" para táxi?',
+        a: 'Ônibus: Aperte botão de parada ou diga "Stop here!" Táxi: Diga "Stop here, please!" Depois: "How much?" Motorista diz preço, você paga com dinheiro ou cartão.'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Emergências e Situações Imprevistas: Ajuda Médica, Policial, Perda de Documentos',
+    dur: 40,
+    content: `<h3>Preparado para o Inesperado: Emergências com Confiança</h3>
+<p>Ninguém quer pensar em emergências durante férias. Mas é bom estar preparado. Se você fica doente, perde passaporte, ou encontra crime, você precisa saber como pedir ajuda em inglês. Vamos cobrir saúde, documentação, segurança, e como manter-se seguro.</p>
+
+<h4>Se Você Fica Doente</h4>
+<p>Você não se sente bem. Procura por farmácia: "Where is the pharmacy?" (Aonde fica farmácia?). Você entra. Você descreve sintomas: "I have a headache and fever" ou "My stomach hurts" ou "I'm nauseated" (Tenho dor de cabeça e febre / Meu estômago dói / Estou nauseado). Farmacêutico pode recomendar remédio. Você compra. Você volta hotel, você repousa.</p>
+
+<p>Se mais sério: você tem dor intensa, você não consegue ficar de pé, você tem dificuldade respirar—você precisa de hospital/médico. Procure: "Where is the hospital?" ou "I need a doctor" (Aonde fica hospital? / Preciso de médico). Ligue para hotel front desk: "I'm not feeling well. Can you call an ambulance?" (Não estou me sentindo bem. Pode chamar ambulância?). Hotel ajudará.</p>
+
+<blockquote class="tip">
+<strong>Sempre Tenha Seguro de Viagem:</strong> Antes de viajar, compre seguro de viagem que cubra emergências médicas. Se você precisa hospital no estrangeiro, será MUITO caro. Seguro cobre. Nunca viaje sem ele!
+</strongquote>
+
+<h4>Se Você Perde Passaporte</h4>
+<p>Você percebe passaporte está faltando. Primeiro: procure em seu quarto thoroughly. Vocé pode tê-lo deixado na mesa de cabeceira. Se realmente perdido: vá para sua embaixada ou consulado (país de origem). Google "Brazilian Embassy in [city]". Vá lá. Você diz: "I lost my passport. I need to replace it" (Perdi meu passaporte. Preciso substitui-lo). Eles ajudarão a providenciar passaporte emergencial.</p>
+
+<p>Você precisa foto de identidade, prova de nacionalidade (certidão), e fee. Processa geralmente leva alguns dias. Até lá, você pode viajar com passaporte emergencial.</p>
+
+<p>DICA: Sempre deixe cópia de seu passaporte em local seguro (em email para si mesmo, em nuvem). Se perdido, você tem prova de informação quando vai à embaixada.</p>
+
+<h4>Se Você é Vítima de Crime</h4>
+<p>Você foi roubado ou algo foi feito a você. Primeiro, saia de lugar perigoso se possível. Procure por polícia: "Where is the police station?" (Aonde fica delegacia?). Vá lá. Você diz: "I was robbed" ou "I was attacked" (Fui roubado / Fui atacado). Policial pegará depoimento. Você descreve o quê aconteceu. Eles preenchem relatório. Você pega cópia.</p>
+
+<p>Se foi roubo de passaporte/documentos: você vai para embaixada após relato policial. Embaixada pedirá relatório policial.</p>
+
+<p>Se foi furto de cartão de crédito: você liga seu banco IMEDIATAMENTE: "My credit card was stolen. Please cancel it" (Meu cartão de crédito foi roubado. Por favor cancele). Banco cancela, e você pede cartão substituição.</p>
+
+<h4>Números de Emergência</h4>
+<p>Procure antes de viajar! Diferentes países têm diferentes números:
+- EUA: 911 (todos os tipos de emergência)
+- Reino Unido: 999 (ambulância, polícia, bombeiros)
+- Europa: 112 (emergência universal)
+- Austrália: 000
+
+Tenha nota dos números em seu telefone. Se você precisa: "I need police!" ou "I need an ambulance!" (Preciso de polícia! / Preciso de ambulância!). Operador responde em inglês e envia ajuda.</p>
+
+<blockquote class="example">
+<strong>Conversa de Emergência - Roubo:</strong>
+
+Você: [Vai à delegacia] "Good morning. I need help. I was robbed."
+Policial: "When and where did this happen?"
+Você: "About an hour ago, near the market. Someone took my wallet."
+Policial: "Can you describe the person?"
+Você: "Tall, wearing a red jacket. I didn't get a good look."
+Policial: "Okay, let me file a report. Do you want a copy?"
+Você: "Yes, please. I need it for insurance."
+[Policial provides report]
+</strongquote>
+
+<h4>Segurança Geral</h4>
+<p>Como você permanece seguro em primeiro lugar?
+<ul>
+<li>Não deixe objetos de valor visíveis (não leve ouro, jóias caras)</li>
+<li>Não coloque carteira em bolso traseiro</li>
+<li>Procure por áreas perigosas—pergunte no hotel quais ruas evitar</li>
+<li>Não saia sozinho muito tarde à noite em áreas desconhecidas</li>
+<li>Mantenha cópias de documentos importantes em casa e nuvem</li>
+<li>Deixe itinerário com alguém em casa para caso de emergência</li>
+<li>Se sente desconfortável, saia de situação—seu instinto é válioso</li>
+</ul>
+</p>
+
+<h4>Contatando Casa</h4>
+<p>Emergência em casa? Você precisa contatar família. Use WhatsApp, FaceTime, Skype (ligações online gratuitas). Se precisa chamar telefone de verdade, vá para "International phone center" ou internet café. Você paga para fazer chamada. Você diz: "I need to make an international call to Brazil" (Preciso fazer chamada internacional para Brasil). Eles ajudam.</p>
+
+<h4>Embaixada e Consulado</h4>
+<p>Se você em sério apurado, sua embaixada pode ajudar. Embaixada (capital) ou consulado (outras cidades) é representação de seu país. Se você perde todos documentos, você foi preso injustamente, você tem emergência familiar—embaixada ajuda cidadãos. Procure: "Brazilian Embassy in [city]" e vá lá.</p>
+
+<h4>Mantendo Calma</h4>
+<p>Emergências são assustadoras. Mas lembre-se: você consegue comunicar em inglês. Você pode pedir ajuda. Pessoas são frequentemente empáticas a turistas em apurado. Você não está sozinho. Governos e instituições estão ali para ajudar. Simplesmente diga o que precisa: "I need help" (Preciso de ajuda). As pessoas ajudarão.</p>
+
+<p>Você fez isto! Você viajou, se comunicou em inglês, completou uma aventura. Você é bravo!</p>
+
+<blockquote class="news">
+<strong>Verdade Final de Viagem:</strong> A melhor parte de viajar é conexão humana. Mesmo com diferenças linguísticas, pessoas são fundamentalmente bondosas. Quando você pede ajuda com humildade e respeito, as pessoas frequentemente vão muito além para ajudar. Isto é beleza de viagem!
+</strongquote>`,
+    cards: [
+      {
+        q: 'Se você fica doente enquanto viaja, quais são seus passos primeiro?',
+        a: 'Procure por farmácia para sintomas leves. Peça "I have [symptoma]" e farmacêutico recomenda remédio. Se sério: "I need a hospital" ou peça hotel "Can you call an ambulance?" Sempre tenha seguro de viagem!'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
