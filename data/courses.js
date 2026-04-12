@@ -2825,6 +2825,25 @@ var MA_COURSES = [
     color: '#2E7D32',
     addedTs: 1776024646951,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cq.jpg',
+    id: 'cq',
+    name: 'Computação Quântica para Inovadores',
+    desc: 'Introdução acessível a uma das tecnologias mais promissoras do futuro, explicando conceitos, potencial e desafios.',
+    file: '30-computacao-quantica.html',
+    cat: 'Tecnologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CQ_HENRY_2026_MASTER',
+    ak: 'cq_auth',
+    storagePrefix: 'cq_',
+    icon: '💻',
+    color: '#00BFA5',
+    addedTs: 1776024652026,
+    active: true
   }
 ];
 var MA_CATS = [
