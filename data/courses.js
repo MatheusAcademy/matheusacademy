@@ -2350,6 +2350,25 @@ var MA_COURSES = [
     color: '#4285f4',
     addedTs: 1776024519823,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pcer.jpg',
+    id: 'pcer',
+    name: 'Preparação para Crises',
+    desc: 'Planejamento, organização e resposta a emergências e momentos críticos.',
+    file: '19-preparacao-crises.html',
+    cat: 'Segurança & Sobrevivência',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'PC_HENRY_2026_MASTER',
+    ak: 'pc_auth',
+    storagePrefix: 'pc_',
+    icon: '🔐',
+    color: '#bc4749',
+    addedTs: 1776024525000,
+    active: true
   }
 ];
 var MA_CATS = [
