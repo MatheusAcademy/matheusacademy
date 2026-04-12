@@ -2046,6 +2046,25 @@ var MA_COURSES = [
     color: '#d32f2f',
     addedTs: 1776024445693,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ad.jpg',
+    id: 'ad',
+    name: 'Biografia de Abílio Diniz',
+    desc: 'Um dos nomes mais influentes do varejo brasileiro, marcado por resiliência.',
+    file: '49-bio-abilio-diniz.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'AD_HENRY_2026_MASTER',
+    ak: 'ad_auth',
+    storagePrefix: 'ad_',
+    icon: '👤',
+    color: '#e65100',
+    addedTs: 1776024449985,
+    active: true
   }
 ];
 var MA_CATS = [
