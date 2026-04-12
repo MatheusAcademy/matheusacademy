@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Produtividade Inteligente e Gestão do Tempo — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'PD',
+  name: 'Produtividade Inteligente e Gestão do Tempo',
+  shortName: 'Produtividade',
+  cat: 'Alta Performance',
+  desc: 'Curso voltado para organização, prioridades, foco, eliminação de desperdícios e execução eficiente.',
+  salt: 'PD_HENRY_2026_MASTER',
+  ak: 'pd_auth',
+  courseKey: 'pd',
+  prefix: 'pd_',
+  color: '#2E7D32',
+  glow: 'rgba(46,125,50,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'mod1',
+    name: 'Fundamentos: Além da Gestão de Tempo',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Resumo: Fundamentos Além da Gestão de Tempo',
+      points: [
+        'Produtividade verdadeira não é fazer mais coisas; é fazer as CERTAS coisas com excelência.',
+        'Tempo é recurso finito que não conseguimos criar mais. Priorização é habilidade de escolher o que importa.',
+        'Energia e atenção são recursos ainda mais valiosos que tempo; protegê-los é fundamental.',
+        'Sistemas de produtividade funcionam apenas quando alinhados com seus valores e ritmo natural.'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual é a diferença fundamental entre ser produtivo e estar ocupado?',
+        opts: ['Não há diferença', 'Ocupado é fazer muitas coisas; produtivo é fazer as CERTAS coisas com resultado', 'Ocupado é melhor', 'Não importa qual'],
+        correct: 1
+      },
+      {
+        q: 'Por que energia é mais valiosa que tempo?',
+        opts: ['Não é', 'Porque pode-se trabalhar mais tempo com baixa energia e gerar pouco; trabalho focado gera muito mais', 'Tempo não importa', 'Energia é ilimitada'],
+        correct: 1
+      },
+      {
+        q: 'Como saber se sistema de produtividade funciona para você?',
+        opts: ['Quanto mais complicado melhor', 'Quando está alinhado com seus valores e você consegue manter consistência', 'Aplicativos caros funcionam melhor', 'Não há como saber'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'mod2',
+    name: 'Priorização Estratégica e Eliminação',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Resumo: Priorização Estratégica e Eliminação',
+      points: [
+        'Princípio de Pareto (80/20): 20% das ações geram 80% dos resultados; concentre aí.',
+        'Matriz de Importância-Urgência (Eisenhower) permite diferenciar quadrantes e agir estrategicamente.',
+        'Dizer "não" é tão importante quanto dizer "sim"; cada sim a coisa errada é não a coisa certa.',
+        'Eliminação de tarefas é muitas vezes mais valiosa que otimização; verifique se realmente precisa.'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'O que é o princípio de Pareto na produtividade?',
+        opts: ['20% das pessoas fazem 80% do trabalho', '20% das ações geram 80% dos resultados', 'Todos contribuem igualmente', 'Não existe esse princípio'],
+        correct: 1
+      },
+      {
+        q: 'Como a Matriz de Eisenhower ajuda na priorização?',
+        opts: ['Não ajuda', 'Diferencia tarefas por importância e urgência, permitindo focar no que realmente importa', 'Apenas sobre timing', 'Para procrastinação'],
+        correct: 1
+      },
+      {
+        q: 'Por que dizer "não" é forma de produtividade?',
+        opts: ['Porque cada "não" permite dizer "sim" às coisas que realmente importam', 'Porque rejeição é boa', 'Porque ninguém gosta de você', 'Não é forma de produtividade'],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'mod3',
+    name: 'Sistemas, Rotinas e Automação',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Resumo: Sistemas, Rotinas e Automação',
+      points: [
+        'Hábitos bem-desenhados executam automaticamente, liberando energia para decisões estratégicas.',
+        'Automação de tarefas repetitivas multiplica tempo disponível para trabalho de alto valor.',
+        'Sistema de capturing (capturar ideias) organiza pensamentos caóticos em ação clara.',
+        'Revisão semanal assegura alinhamento contínuo entre atividades diárias e objetivos estratégicos.'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como hábitos bem-desenhados aumentam produtividade?',
+        opts: ['Não aumentam', 'Executam automaticamente, liberando energia cognitiva para trabalho estratégico', 'Apenas tomam tempo', 'Reduzem criatividade'],
+        correct: 1
+      },
+      {
+        q: 'Qual é o impacto da automação de tarefas repetitivas?',
+        opts: ['Nenhum', 'Multiplica tempo disponível para trabalho de alto valor', 'Torna você preguiçoso', 'Importante apenas para grandes empresas'],
+        correct: 1
+      },
+      {
+        q: 'Por que revisão semanal é crítica?',
+        opts: ['Desnecessária', 'Assegura alinhamento contínuo entre atividades e objetivos estratégicos', 'Apenas para iniciantes', 'Perda de tempo'],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'Redefindo Produtividade: Qualidade Sobre Quantidade',
+    dur: 22,
+    content: `<h3>O Mito da Produtividade: Mais Não É Melhor</h3>
+
+<p>Sociedade nos ensina que produtividade é fazer mais. Mais tarefas. Mais horas. Mais projetos. Mais resultados. Mais, mais, mais. Resultado? Pessoas exaustas fazendo 100 coisas e nenhuma delas bem. Pessoas ocupadas 24/7 mas que não progridem em nada que importa. Isso não é produtividade. É ilusão de produtividade.</p>
+
+<p>Produtividade verdadeira é fazer as CERTAS coisas com excelência. Não é quantidade. É qualidade e alinhamento. Uma pessoa que completa 3 projetos excelentes que geram resultado mensurável é mais produtiva que pessoa que completa 30 tarefas mediocres que ninguém lembra.</p>
+
+<p>Diferença é conceitual. Maioria das pessoas otimiza "fazer mais rápido". Pessoas excelentes otimizam "fazer o que importa". A segunda abordagem exige clareza sobre o que realmente importa. E essa clareza é rara.</p>
+
+<h4>O Custo Real de "Estar Ocupado"</h4>
+
+<p>Estar ocupado é vício. Porque parece produtivo. Você está sempre fazendo algo. Emails respondidos, reuniões completas, tarefas checkadas. Você sai do dia cansado. Certamente foi produtivo, certo?</p>
+
+<p>Mas espera. Em qual projeto estratégico você avançou? Qual iniciativa importante você moveu? Qual meta você alcançou? Frequentemente a resposta é nenhuma. Você estava ocupado mas não produtivo.</p>
+
+<p>Por quê? Porque estar ocupado significa você está reagindo a demandas alheias. Email chega, você responde. Reunião é agendada, você vai. Tarefa urgente aparece, você faz. Você passa todo dia em reatividade. Nenhum espaço para trabalho estratégico.</p>
+
+<p>O custo? Sua carreira fica estagnada. Você trabalha duro mas não avança. Porque ninguém que importa vê seu trabalho estratégico. Eles apenas veem você ocupado respondendo emails e indo a reuniões.</p>
+
+<blockquote class="quote">Estar ocupado é fácil. Ser produtivo é difícil porque requer dizer "não" a muitas coisas para focar nas poucas que importam.</blockquote>
+
+<h4>Os Três Pilares da Produtividade Genuína</h4>
+
+<p><strong>Pilar 1: Clareza Sobre o Que Importa</strong> - Você sabe seus 3 grandes objetivos para próximos 90 dias? Sabe que 20% das suas ações geram 80% dos resultados? Se não sabe, você está operando no escuro, esperando aleatoriedade.</p>
+
+<p>Clareza exige você parar de correr e perguntar a si mesmo: "se continuasse dessa forma ao final do ano, estaria feliz? Teria progredido no que realmente importa?" Muitas vezes a resposta é não. Isso dói. Mas dor dessa honestidade é preço que pagamos para depois mudar direção.</p>
+
+<p><strong>Pilar 2: Proteção de Tempo e Energia Para Que Importa</strong> - Uma vez você sabe o que importa, você protege tempo para isso ferozmente. Você não deixa que reuniões ou emails tomem tempo que deveria ser para trabalho estratégico. Você comunica: "dessas 9-11am estou focando em projeto X, não disponível".</p>
+
+<p>Proteção de tempo é não luxo. É requisito. Porque se você não protege, alguém vai tomar. Seu chefe com reuniões. Seu cliente com urgências. Seu email com notificações. Proteção ativa é essencial.</p>
+
+<p><strong>Pilar 3: Execução Consistente No que Importa</strong> - Clareza e proteção são inúteis sem execução. Você precisa realmente fazer o trabalho. E fazer consistentemente, não apenas quando motivado. Sistemas e hábitos que garantem execução são investimento crítico.</p>
+
+<h4>Redefinindo "Sucesso" Em Produtividade</h4>
+
+<p>Métrica errada: quantas coisas você completou. Métrica certa: qual foi o impacto de suas ações. Uma completou 50 tarefas pequenas. Outra completou 3 projetos transformadores. Qual foi mais produtiva?</p>
+
+<p>Isto requer você medir diferente. Não "quantas tarefas hoje". Mas "progresso em meus 3 objetivos principais" e "que impacto tive". Essa mudança de métrica muda tudo.</p>
+
+<p>Porque quando você mede impacto, você naturalmente se foca no que importa. Você não quer completar 100 emails. Você quer impacto claro. Uma conversa bem-feita com cliente é melhor que 50 emails.\p>
+
+<h4>O Custo de Multitarefa</h4>
+
+<p>Mito perigoso: você consegue fazer múltiplas coisas simultaneamente e manter qualidade. Falso. Seu cérebro não multitarefa bem. Ele task-switches. E cada switch custa tempo e clareza. Estudos mostram que multitarefa reduz eficiência em 40%.</p>
+
+<p>Pessoa que dedica 90 minutos focados em tarefa A é mais produtiva que pessoa que passa 2 horas alternando entre A, B, C, D. Porque primeira sai de foco com peça completa e excelente. Segunda sai com fragmentos de todas.</p>
+
+<p>Portanto, monofoco é superpotência. Você escolhe uma coisa. Você foca completamente. Você termina com qualidade. Depois, próxima coisa. Simples mas raro.</p>
+
+<blockquote class="tip">Produtividade genuína é resultado de três coisas: (1) clareza sobre o que importa (2) proteção de tempo e energia para isso (3) execução consistente. Sem qualquer uma, você fica preso em ocupação sem progresso.</blockquote>`,
+    cards: [
+      {
+        q: 'Qual é a diferença entre estar ocupado e ser produtivo?',
+        a: 'Ocupado é fazer muitas coisas (reativas); produtivo é fazer as CERTAS coisas (estratégicas) com resultado mensurável.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Mapeando Seu Tempo: Onde Realmente Vai',
+    dur: 20,
+    content: `<h3>O Primeiro Passo: Entender Sua Realidade Atual</h3>
+
+<p>Muitas pessoas vivem na ilusão sobre onde seu tempo vai. Eles acham que trabalham em trabalho estratégico. Mas quando rastreiam, descobrem que 70% da semana é reuniões, emails, e tarefas reativas. A lacuna entre percepção e realidade é enorme.</p>
+
+<p>Não conseguir melhorar o que não consegue medir. Portanto primeiro passo é rastrear honestamente onde seu tempo vai. Isso requer uma semana ou duas de tracking. Parece chato, mas é exatamente chato que revela a verdade.</p>
+
+<h4>Categoria de Tempo: Os Tipos de Atividades</h4>
+
+<p>Nem todo tempo é criado igual. Você pode categorizar suas atividades:</p>
+
+<p><strong>Tempo Estratégico:</strong> Trabalho que avança seus objetivos principais. Aquele projeto que você foi contratado para fazer excelentemente. Aquela iniciativa que vai transformar seu negócio. Esse tempo é ouro puro. A maioria das pessoas tem menos de 10 horas disso por semana.</p>
+
+<p><strong>Tempo Operacional:</strong> Trabalho necessário para manter as luzes acesas. Reuniões, emails, manutenção. É necessário mas não estratégico. Maioria das pessoas passa 50%+ de tempo aqui.</p>
+
+<p><strong>Tempo Reativo:</strong> Crises, interruções, solicitações urgentes não planejadas. Idealmente você minimiza isto. Mas se seu sistema não está bem, 30%+ do tempo vai aqui.</p>
+
+<p><strong>Tempo de Desenvolvimento:</strong> Aprendizado, mentoria, crescimento de skills. Essencial para longo prazo mas fácil de sacrificar por urgência. Ideal é 5-10% do tempo. Maioria das pessoas faz menos de 2%.</p>
+
+<h4>O Exercício de Rastreamento Honesto</h4>
+
+<p>Próximas 3 dias, rastreie cada bloco de tempo. Sem perfeccionismo. Apenas: "de 9-10am fiz reunião, 10-10:30 respondi emails, 10:30-12 trabalhei em relatório". Categorize cada bloco.</p>
+
+<p>Ao final de 3 dias, calcule percentagens. "De 30 horas trabalhadas, 8 foram estratégicas (27%), 15 operacionais (50%), 5 reativas (17%), 2 desenvolvimento (6%)". Aí você vê realidade.</p>
+
+<p>Frequentemente o que descobre é chocante. "Achei que passava 50% do tempo em trabalho estratégico. Na verdade são 27%." Esse choque é importante. Porque sem choque, você não muda.</p>
+
+<blockquote class="example">Consultant descobre que apenas 4 horas semanais é gasto em trabalho estratégico (pesquisa, análise, recomendações). 20 horas são reuniões, emails, chamadas administrativas. Ela fica chocada. Ela percebe que seu trabalho excelente é sendo sufocado por tarefas que poderiam ser automatizadas ou delegadas.</blockquote>
+
+<h4>O Princípio de Pareto (80/20) em Ação</h4>
+
+<p>Vilfredo Pareto descobriu que 80% dos resultados vêm de 20% das ações. Seu trabalho provavelmente segue padrão similar. 20% do que você faz gera 80% do seu valor.</p>
+
+<p>Pergunta crítica: você sabe qual é esse 20%? Para vendedor, pode ser prospecção. Para escritor, pode ser escrita. Para gerente, pode ser desenvolvimento de pessoas. O que é para você?</p>
+
+<p>Uma vez você identifica seu 20%, você foca. Você não apenas reduz 80% das atividades. Você as elimina, delega, ou automatiza. Porque tempo que você libera tem enorme ROI quando reinvestido em seu 20%.</p>
+
+<h4>Criando Sua Mapa Pessoal de Tempo Ideal</h4>
+
+<p>Baseado em seus objetivos e natureza de seu trabalho, qual seria distribuição IDEAL de seu tempo? Não realista ainda. Ideal.</p>
+
+<p>Exemplo: Empreendedor idealiza: "40% desenvolvimento de produto (estratégico), 20% vendas (estratégico), 15% operações (operacional), 15% aprendizado e rede (desenvolvimento), 10% contingência".</p>
+
+<p>Agora compare sua realidade com ideal. Lacunas são oportunidades. "Estou em 27% estratégico mas deveria estar em 60%. Estou em 50% operacional quando deveria estar em 15%. Claramente, preciso delegar e automatizar." Essa clareza é poderosa.</p>
+
+<p>Feito isso, você pode começar a iterar. Semana próxima, você deliberadamente reduz reuniões desnecessárias. Você delega algumas tarefas operacionais. Você mede novamente. "Agora estou em 35% estratégico". Progresso. Próxima semana, outro ajuste.</p>
+
+<h4>O Jogo de Alcançar Seu Ideal</h4>
+
+<p>Alcançar mapa ideal não acontece de noite. Leva semanas ou meses. Porque cada mudança encontra resistência. Você tenta cancelar reunião, pessoa reclama. Você tenta delegar tarefa, sua primeira versão é ruim.</p>
+
+<p>Mas se você está consistente em sua intenção de mudar distribuição, você consegue. Cada semana você ganha mais 5-10% de tempo estratégico. E cada ponto percentual em tempo estratégico multiplica seu impacto exponencialmente.</p>
+
+<blockquote class="tip">Você não consegue mudar o que não mede. Primeiro, rastreie honestamente. Depois, compare com ideal. Depois, ajuste incrementalmente. Prática, consistência, paciência.</blockquote>`,
+    cards: [
+      {
+        q: 'O que é o princípio de Pareto (80/20)?',
+        a: '80% dos resultados vêm de 20% das ações. Identificar e focar nesse 20% multiplica sua produtividade.'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Energia e Atenção: Recursos Mais Valiosos Que Tempo',
+    dur: 21,
+    content: `<h3>O Tesouro Escondido: Sua Atenção e Energia</h3>
+
+<p>Você tem 24 horas diárias. Ponto. Não consegue criar mais. Mas você consegue ter dias onde trabalhou 6 horas e gerou mais que dias onde trabalhou 12 horas. Por quê? Porque energia e atenção variam drasticamente baseado em contexto.</p>
+
+<p>Sua atenção e energia são recursos MAIS valiosos que tempo. E você pode cultivá-los. Pessoa que aprendeu gerenciar sua atenção e energia consegue fazer em 4 horas focadas o que outras fazem em 10 horas fragmentadas.</p>
+
+<h4>Os Ciclos de Energia</h4>
+
+<p>Seu corpo não opera uniformemente ao longo do dia. Tem ciclos de energia—picos e vales. De manhã cedo você frequentemente tem energia máxima (cortisol natural e foco máximo). Ao meio-dia cai. À tarde volta um pouco. Noite, cai novamente (para maioria das pessoas).</p>
+
+<p>Ciclos são individuais. Você precisa conhecer seu ciclo. Você é pássaro madrugador que pensa melhor 6-8am? Ou coruja noturna que só funciona bem depois de 19h? Você tem queda de energia nas 14-15h?\p>
+
+<p>Conhecer seu ciclo é essencial porque permite você alinha trabalho exigente a picos de energia. Trabalho estratégico durante pico. Tarefas administrativas durante vale. Resultado: mesma quantidade de tempo, muito mais resultado.</p>
+
+<h4>A Sequência Perfeita do Dia</h4>
+
+<p>Estruture seu dia em blocos</p>
+
+<p><strong>Bloco 1 (Pico de Energia):</strong> Trabalho estratégico exigindo máximo foco e criatividade. Se seu pico é 6-8am, faça aqui. Se é 10am-12pm, aqui. Proteja esse bloco ferozmente. Nenhuma reunião. Nenhum email. Apenas trabalho.</p>
+
+<p><strong>Bloco 2 (Energia Média):</strong> Trabalho que ainda exige atenção mas é menos exigente. Talvez apresentação, ou análise, ou comunicação importante.</p>
+
+<p><strong>Bloco 3 (Vale de Energia):</strong> Tarefas administrativas, emails, reuniões. Porque sua atenção está baixa de qualquer forma, não desperdça seu pico nelas.</p>
+
+<p><strong>Pausa e Recuperação:</strong> Almoço nutritivo, exercício, ou descanso genuíno. NÃO checando emails ou redes sociais. Recuperação genuína recarrega seu sistema para segunda metade do dia.</p>
+
+<p><strong>Bloco 4 (Segundo Pico):</strong> Frequentemente você tem segundo pico de energia na tarde (17-19h). Se usa bem, adiciona horas de produtividade genuína.</p>
+
+<p><strong>Bloco 5 (Final do Dia):</strong> Tarefas leves, planning para amanhã, closing.</p>
+
+<h4>Atenção Como Recurso Finito</h4>
+
+<p>Força de vontade é como bateria que se carrega durante sono e se drena ao longo do dia conforme você toma decisões, resiste tentações, mantém foco. Quanto mais decisões você toma, mais se drena. Isso é por que você tem menos disciplina às 18h que às 8am.</p>
+
+<p>Portanto, minimizar decisões desnecessárias é crítico. Você vê sucesso usar routines (mesma roupa, mesmo café da manhã, mesmo horário de exercício). Por quê? Porque não estão usando atenção em decisões triviais. Atenção está reservada para decisões que importam.</p>
+
+<p>Apps e notificações atacam sua atenção constantemente. Cada notificação reduz sua atenção disponível. Portanto, silenciar telefone, fechar abas desnecessárias, bloquear sites distratores—isso não é obsessivo. É proteção de asset mais valioso.</p>
+
+<blockquote class="example">Empreendedor descobre que sua energia pico é 7-11am. Ele move seu trabalho estratégico para esse horário. Reuniões ele agenda para depois do almoço. Emails ele bloqueia para 16h. Resultado: em mesmo 8 horas trabalhadas, sua produtividade estratégica dobra porque trabalho acontece quando cérebro dele está otimizado. Simples alinhamento, impacto exponencial.</blockquote>
+
+<h4>Protegendo Sua Atenção da Economia de Distração</h4>
+
+<p>Redes sociais, apps de notificação, news feeds—toda essa economia de "engagement gratuito" tem custo real: sua atenção. Companhias gastam bilhões para capturar sua atenção. Porque atenção é poder.</p>
+
+<p>Você precisa proteger sua atenção como protegeria segredo comercial. Rejeite notificações de tudo excepto urgências verdadeiras (pessoas que você ama, seu trabalho crítico). Programe tempos específicos para emails e redes sociais. Fora desses tempos, não toca.</p>
+
+<p>Essa proteção ativa parece extrema. Mas é diferença entre pessoas que controlam atenção delas (e portanto sua vida) versus pessoas cuja atenção é controlada (e portanto vida é controlada).</p>
+
+<h4>A Fórmula: Tempo × Energia × Atenção = Resultado</h4>
+
+<p>Você pode ter 8 horas (tempo) mas se energia é 30% e atenção é 20%, seu resultado é 8 × 0.3 × 0.2 = 0.48 horas úteis. Versus outra pessoa que tem 6 horas, energia 90%, atenção 95%, resultado é 6 × 0.9 × 0.95 = 5.13 horas úteis.</p>
+
+<p>Pessoa segunda é 10x mais produtiva com menos tempo. Como? Porque ela otimiza energia e atenção além de apenas tempo. Essa é maestria real de produtividade.</p>`,
+    cards: [
+      {
+        q: 'Por que energia e atenção são mais valiosas que tempo?',
+        a: 'Porque 8 horas de baixa energia/atenção gera menos que 4 horas de alta energia/atenção. Qualidade importa mais que quantidade.'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Matriz de Eisenhower: Priorização Estratégica Que Funciona',
+    dur: 23,
+    content: `<h3>Diferenciando o Que Importa do Que Parece Importar</h3>
+
+<p>Dwight Eisenhower, Presidente dos EUA e Comandante Supremo dos Aliados em WWII, precisava tomar decisões que afetavam milhões diariamente. Como ele priorizava? Ele desenvolveu matriz simples mas profunda: Importância vs Urgência.</p>
+
+<p>A maioria das pessoas vive no caos de urgência. Email urgente chega e eles respondem. Cliente grita e eles correm. Deadline apertado e eles sacrificam tudo. Resultado? Eles passam vida inteira em reatividade nunca avançando no que realmente importa.</p>
+
+<p>Matriz de Eisenhower oferece clareza. Não todas atividades são criadas iguais. Algumas são urgentes E importantes. Outras são urgentes mas triviais. Outras são importantes mas não urgentes. Outras são ni urgentes ni importantes.</p>
+
+<h4>Os Quatro Quadrantes</h4>
+
+<p><strong>Quadrante 1 (Urgente & Importante): FAÇA AGORA</strong>
+Crises, prazos finais, problemas críticos. Você PRECISA fazer esses. Pressão é alta. Exemplos: Apresentação hoje, cliente furioso, erro crítico descoberto.
+
+Aqui está armadilha: quadrante 1 costuma tomar muito tempo. E porque quadrante 1 é visível (está gritando), pessoas acham que estão sendo produtivas. Mas se você passa 60% do tempo em quadrante 1, significa seu sistema está quebrado. Você está apagando incêndios ao invés de evitar incêndios.</p>
+
+<p><strong>Quadrante 2 (Importante & NÃO Urgente): AGENDE REGULARMENTE</strong>
+Aqui é onde ouro está. Planejamento estratégico, desenvolvimento de skills, construção de relacionamentos, pesquisa, inovação. Nada está queimando. Mas fazer isso agora previne incêndios depois.
+
+Quadrante 2 é onde diferença entre excelência e mediocridade é feita. Pessoa que investe em quadrante 2 regularmente sai de quadrante 1. Pessoa que ignora quadrante 2 cada vez mais tempo em quadrante 1.
+
+Desafio? Quadrante 2 nunca grita. Portanto, pessoas negligenciam. Você precisa disciplina para agendar quadrante 2 e protegê-lo.</p>
+
+<p><strong>Quadrante 3 (Urgente & NÃO Importante): DELEGUE OU MINIMIZE</strong>
+Interruções, reuniões improdutivas, comunicações que outros pedem. Parecem urgentes (alguém quer agora) mas não são importantes para seus objetivos.
+
+Armadilha? Você confunde "urgente para outro" com "importante para você". Seu colega quer resposta agora. Cliente grita. Boss agenda reunião. Tudo isso é quadrante 3 se não é alinhado com seus objetivos.
+
+Estratégia: delegue ou negocie. "Posso responder amanhã? Vai trabalhar?" Na maioria das vezes, a urgência era ilusória. Ou, bloqueie tempo específico para quadrante 3 (talvez 10-11am todos os dias) ao invés de ser interrompido constantemente.</p>
+
+<p><strong>Quadrante 4 (NÃO Urgente & NÃO Importante): ELIMINE</strong>
+Distrações puras. Redes sociais, notícias, tarefas ocupadas que não importam. Tempo gasto aqui é tempo perdido da perspectiva de qualquer objetivo.
+
+Estratégia simples: elimine. Não faça. Ponto. Se é difícil eliminar (porque gosta), limite a tempo específico. "Redes sociais: 20 minutos ao final do dia, pronto".</p>
+
+<h4>Sua Realidade Atual: Que Quadrante Você Vive?</h4>
+
+<p>Faça exercício: próximas 3 dias, categorize cada atividade. "Esta atividade é urgente E importante? Ou urgente mas não importante? Ou importante mas não urgente?" Após 3 dias, calcule percentagens.</p>
+
+<p>Maioria das pessoas está em distribuição errada. Talvez: 50% quadrante 1, 10% quadrante 2, 30% quadrante 3, 10% quadrante 4. Ideal seria: 10-15% quadrante 1, 50-60% quadrante 2, 15-20% quadrante 3, 10-15% quadrante 4 (apenas coisas que você ama e que te recarregam).</p>
+
+<blockquote class="example">Executivo descobre que 60% de seu tempo é quadrante 1 (apagando incêndios). 5% é quadrante 2 (estratégia). 30% é quadrante 3 (reuniões improdutivas). Ele fica chocado. Ele percebe que porque sempre está em crise, nunca tem tempo para planejamento que evitaria crises. Ciclo vicioso.</blockquote>
+
+<h4>Mudando De Distribuição</h4>
+
+<p>Não consegue mudar de noite. Mas pode iterar. Primeiro, elimine quadrante 4. Libera tempo imediatamente. Segundo, delegue ou negocie quadrante 3. Mais tempo liberado. Terceiro, proteja tempo para quadrante 2. Agende como reunião com você mesmo: "terça 9-11am é desenvolvimento de estratégia. Indisponível".</p>
+
+<p>Com tempo para quadrante 2, você começa a prevenir crises. Seu quadrante 1 reduz. Seu tempo em quadrante 2 aumenta. Seu sistema fica menos reativo, mais estratégico.</p>
+
+<p>Pessoas que conseguem manter 50%+ em quadrante 2 saem de reatividade crônica. Elas são mais estratégicas, menos estressadas, mais impactfull.</p>
+
+<blockquote class="tip">Urgência é inimigo de importância. Se você deixar urgência dirigir sua vida, nunca vai tempo para o que realmente importa. Proteção ativa de quadrante 2 é diferença entre vida reativa e vida intencional.</blockquote>`,
+    cards: [
+      {
+        q: 'Qual é a diferença entre Quadrante 2 e Quadrante 1 na matriz de Eisenhower?',
+        a: 'Q1 é urgente E importante (crises); Q2 é importante mas NÃO urgente (estratégia). Q2 é onde maestria é construída.'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'O Poder do "Não": Dicção Estratégica',
+    dur: 22,
+    content: `<h3>Dizer Não: O Gatilho Mais Poderoso da Produtividade</h3>
+
+<p>Steve Jobs famosamente disse: "Focando é dizer não". Warren Buffett diz: "A diferença entre bem-sucedido e muito bem-sucedido é disciplina de dizer não a quase tudo". Ambos compreenderam verdade fundamental: cada sim a coisa errada é não a coisa certa.</p>
+
+<p>Maioria das pessoas diz sim por padrão. Porque não é desconfortável socialmente. Porque querem agradar. Porque sentem culpa. Resultado? Lista de compromissos é infinita. Energia está dispersa. Nada recebe atenção genuína.</p>
+
+<p>Pessoa que aprende dizer não estrategicamente tem superpotência. Porque "não" libera tempo, energia, e atenção para seus valores e objetivos. "Não" é a palavra mais produtiva que existe.</p>
+
+<h4>Tipos de "Não" Que Você Precisa Dominar</h4>
+
+<p><strong>Não Preventivo:</strong> Você recusa comprometimento mesmo antes de ser solicitado. "Não estou aceitando novos projetos enquanto termino estratégia atual". Preventivo é melhor que reativo porque para o problema na fonte.</p>
+
+<p><strong>Não Negociado:</strong> Alguém solicita mas você consegue modificar. "Não consigo fazer aquilo, mas posso fazer isto". Você oferece alternativa que serve melhor sem destruir relacionamento.</p>
+
+<p><strong>Não Claro:</strong> Você recusa honestamente. "Não consigo assumir isso agora". Simples, direto, sem desculpas ou culpa. Frequentemente é respeitado porque é claro.</p>
+
+<p><strong>Não Compassivo:</strong> Você recusa mas com empatia. "Entendo que é importante, mas não é prioridade minha agora". Você reconhece importância para outro mesmo que recusa.</p>
+
+<h4>Como Dizer Não Sem Alienar</h4>
+
+<p>Armadilha comum: pessoas pensam que dizer não destruirá relacionamento ou carreira. Às vezes. Mas frequentemente, oposto é verdade. Quando você consistentemente entrega excelência nas coisas que você aceitou, seu "não" é respeitado.</p>
+
+<p>Fórmula: "Obrigado pela confiança de me solicitar. Não consigo fazer isso bem agora porque estou focado em X. Você poderia tentar Y para isso?" Você honra que foram solicitá-lo. Explica claro o porquê do não. Oferece alternativa.</p>
+
+<p>Ou simpler: "Não estou a capacidade disponível para isso. Quando estiver, você é primeira pessoa que contacto". Direto, honesto, não é rude.</p>
+
+<p>O que NÃO fazer: "Ah, vou tentar encontrar tempo" (mentira, cria expectativa falsa). "Não consigo porque estou tão ocupado" (passa responsabilidade para outra pessoa como problema seu). "Talvez depois" (é sim disfarçado que você não vai cumprir).</p>
+
+<blockquote class="example">Consultora recebe solicitação para conselho board. Ela adora conselho mas já está em dois. Seu "não" claro: "Obrigada pelo convite. Já tenho dois boards e quero dar minha melhor atenção. Em 18 meses, quando tiro de um, contacto você". Board director respeita a clareza. E sim, em 18 meses, ela o contacta.</blockquote>
+
+<h4>Os Três Testes Antes de Dizer Sim</h4>
+
+<p><strong>Teste 1: É Alinhado Com Meus Objetivos Principais?</strong> Se resposta é não, você provavelmente deveria dizer não. Exceções: relacionamentos críticos ou desenvolvimento pessoal genuíno. Mas maioria das coisas que pedemos não passa nesse teste.</p>
+
+<p><strong>Teste 2: Se Eu Disser Sim a Isto, O Que Estou Dizendo Não?</strong> Porque tempo é finito. Esse novo projeto significa você diz não a descanso? A desenvolvimento? A família? Quanto custa esse sim em coisas que importam?</p>
+
+<p><strong>Teste 3: Consigo Entregar Excelência?</strong> Se você aceita mas não consegue fazer bem, melhor ter dito não. Falhar em comprometimento é pior que ter recusado. Se você não consegue dar 80%+ de atenção, recuse.</p>
+
+<h4>O Sim Estratégico</h4>
+
+<p>Isso não significa dizer não a tudo. Significa ser seletivo com seus sins. Você diz sim aos projetos que crescem você. Sim aos relacionamentos que importam. Sim ao desenvolvimento que alinha com seus objetivos.</p>
+
+<p>Um líder excepcional pode ter lista de compromissos menor que gerente medíocre. Porque seu sim é raro. Quando líder diz sim a algo, é porque realmente importa. Resultado? Compromissos são feitos de forma excelente. Reputação sobe. Próximas oportunidades são ainda melhores.</p>
+
+<p>Circulo virtuoso: menos compromissos → mais atenção por compromisso → melhor execução → melhor reputação → melhores oportunidades.</p>
+
+<blockquote class="tip">A pessoa que diz não a 100 coisas mas sim a 5 coisas boas é mais bem-sucedida que pessoa que diz sim a 50 coisas. Sucesso é por subtração, não adição.</blockquote>`,
+    cards: [
+      {
+        q: 'Como você testa se deve dizer sim ou não a solicitação?',
+        a: 'Três testes: (1) Alinha com meus objetivos? (2) O que deixo de fazer? (3) Consigo excelência? Se algum é não, recuse.'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Eliminação vs Otimização: O Segredo do Tempo Ilimitado',
+    dur: 24,
+    content: `<h3>Remover Tarefas é Mais Valioso Que Otimizá-las</h3>
+
+<p>A maioria das pessoas tenta otimizar tarefas que fariam melhor simplesmente eliminando. Eles perguntam "como consigo fazer email 10% mais rápido" enquanto poderiam perguntar "preciso responder email em absoluto?". Primeira pergunta melhor você em 10%. Segunda pergunta pode liberar horas.</p>
+
+<p>Eliminação é arte rara porque requer coragem de questionar status quo. Nós acreditamos que porque sempre fizemos algo, precisamos continuar. Mas frequentemente tarefas perpetuam a si mesmas sem razão real.</p>
+
+<h4>A Auditoria Brutal: Questionando Tudo</h4>
+
+<p>Exercise: próxima semana, liste TODAS as atividades que você faz. Não categorize ainda. Apenas lista completa. Reuniões, emails, relatórios, check-ins, projetos, tarefas, qualquer coisa que você faz.</p>
+
+<p>Depois, para cada atividade, pergunta honestamente: "Se eu nunca fizesse isso de novo, qual seria impacto?" Se resposta é "nenhum" ou "pequeno", candidata a eliminação.</p>
+
+<p>Exemplos de candidatas frequentes: Relatórios que ninguém lê. Reuniões que poderiam ser emails. Check-ins desnecessários. Tarefas administrativas que poderiam ser automatizadas. Comunicações que não agrega valor.</p>
+
+<p>Você provavelmente descobre que 20-30% de seu tempo é gasto em atividades que literalmente ninguém sentiria falta se você parou. Esse é seu ouro.</p>
+
+<blockquote class="example">Gerente de projeto descobre que passa 5 horas semanais em "status meeting" onde apenas relata progresso que já foi comunicado por email. Reunião persiste porque "sempre foi feito assim". Ele para a reunião. Ninguém reclama. Libera 5 horas semanais. Em 12 meses, isso é 260 horas—o suficiente para projeto transformador. Tudo porque teve coragem de questionar status quo.</blockquote>
+
+<h4>Tarefas que Crescem Sozinhas</h4>
+
+<p>Fenômeno interessante: tarefas tendem crescer para preencher tempo disponível (Lei de Parkinson). Você agendar reunião de 1 hora, ela toma 1 hora. Você agendar de 30 minutos, ela toma 30 minutos.</p>
+
+<p>Aplicação prática: tarefas que você acha que precisam de X tempo, tente com 50% de X. Frequentemente você descobre que elas podem ser feitas no tempo reduzido. Email que você acha que precisa 30 minutos pode ser feito em 15. Relatório que precisa 2 dias pode ser feito em 1.</p>
+
+<p>Não é porque você trabalha mais rápido. É porque você elimina redundância, fica direto ao ponto, e não adora sobre-acabamento.</p>
+
+<h4>Delegação Como Forma de Eliminação</h4>
+
+<p>Você não necessariamente precisa fazer cada tarefa você. Pode delegar. Delegação libera você da tarefa AND desenvolve outra pessoa. Ganha dupla.</p>
+
+<p>Armadilha: "Mais rápido eu faço do que ensino alguém". Verdade para uma execução. Mas se essa tarefa recorre, tempo ensinado é pago anos.</p>
+
+<p>Estratégia: delegue tarefas que são 80% de sua capacidade de alguém. Alguém é desafiado o suficiente para crescer mas capacitado o suficiente para ter sucesso. Você libera tempo. Alguém desenvolve skill. Win-win.</p>
+
+<h4>Automação: Faça Máquinas Trabalharem</h4>
+
+<p>Na era digital, tantas tarefas podem ser automatizadas. Templates de email, fluxos de aprovação, scraping de dados, scheduling automático. Se atividade é repetitiva e bem-definida, máquina consegue fazer.</p>
+
+<p>Investimento em automação (seja software ou scripting) frequentemente paga em semanas. Você gasta 4 horas configurando automação. Sistema economiza 2 horas semanais. Em 2 semanas, payoff. Depois, apenas lucro.</p>
+
+<p>Exemplos simples: Zapier conecta apps para fluxos automáticos. Templates de email para respostas repetitivas. Scripts para processamento de dados. Calendly para scheduling sem ir e vir de emails. Cada uma dessas salva horas.</p>
+
+<h4>A Matriz de Eliminação</h4>
+
+<p><strong>Alto Valor, Alta Frequência: OTIMIZE</strong>
+Essas tarefas importam e ocorrem frequentemente. Vale investir em otimizar.
+
+<strong>Alto Valor, Baixa Frequência: NÃO OTIMIZE</strong>
+Vale fazer bem mas não custa otimizar mais.
+
+<strong>Baixo Valor, Alta Frequência: AUTOMATE OU DELEGATE</strong>
+Essas tarefas roubam tempo. Objetivo é remover você delas.
+
+<strong>Baixo Valor, Baixa Frequência: ELIMINE</strong>
+Sem hesitação, elimine.</p>
+
+<blockquote class="tip">Libertar-se de tarefas de baixo valor não é preguiça. É estratégia. É reconhecer que seu tempo é finito e precioso. E deve ser investido em coisas que você é único em fazer e que gera resultado.</blockquote>`,
+    cards: [
+      {
+        q: 'Por que eliminação é frequentemente mais valiosa que otimização?',
+        a: 'Porque otimizar tarefa de baixo valor em 10% salva minutos. Eliminar tarefa de baixo valor salva horas. Impacto é exponencialmente maior.'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Sistemas de Capturing: Do Caos Mental À Ação Clara',
+    dur: 20,
+    content: `<h3>Organizando o Caos da Sua Mente</h3>
+
+<p>Sua mente é péssima em lembrar tarefas. Evolução nos deu mente para PENSAR, não para lembrar infinitas tarefas. Quando você carrega lista infinita de coisas a fazer em sua cabeça, você drena energia cognitiva. Você fica ansioso porque acha que vai esquecer algo. Você tem dificuldade focando porque mente quer pular para próxima coisa.</p>
+
+<p>Solução: sistema de capturing. Você captura TUDO que vem à mente (tarefas, ideias, preocupações) para um repositório externo. Cérebro libera. Agora seu cérebro consegue focar.</p>
+
+<p>Isso parece simples. Mas é revolucionário. Pessoas que implementam capturing reportam redução dramática de ansiedade, melhoria em foco, e sensação de controle.</p>
+
+<h4>Os Três Tipos de Capturing</h4>
+
+<p><strong>Inbox de Tarefas:</strong> Qualquer coisa que precisa ser feita. "Chamar dentista", "Escrever relatório", "Responder email de João". Tudo vai para inbox. Você não tenta organizar ainda. Apenas captura. Depois, em revisão semanal, você organiza em listas e agendas.</p>
+
+<p><strong>Inbox de Ideias:</strong> Ideias que vêm à mente. "Nova estratégia de marketing", "Presente para Maria", "Livro para ler". Não é tarefa imediata. Mas é coisa que você não quer esquecer. Captura.</p>
+
+<p><strong>Inbox de Preocupações:</strong> Ansiedades, medos, coisas pesando. "Preocupado com performance review", "Chateado com João". Capturando, você externaliza. Frequentemente, apenas externalizando você se sente melhor porque não está carregando sozinho.</p>
+
+<h4>Ferramentas de Capturing (Simples é Melhor)</h4>
+
+<p>Você NÃO precisa de app sofisticado. Simples funciona melhor.</p>
+
+<p><strong>Papel e Caneta:</strong> Caderno pequeno. Sempre com você. Quando pensamento vem, você captura. Depois de noite, você transcreve para sistema digital. Simples, eficaz, zero distração.</p>
+
+<p><strong>App de Notas:</strong> Apple Notes, Google Keep, Evernote. Rápido para capturar em telefone.</p>
+
+<p><strong>Gravador de Voz:</strong> Às vezes você está dirigindo ou caminhando. Gravar ideia é mais fácil que escrever. Depois transcreve.</p>
+
+<p>Sistema ideal é múltiplos capturadores (papel quando é possível, app quando não) que fluem para um repositório central na revisão semanal.</p>
+
+<blockquote class="example">Designer frequentemente tem ideias boas que depois esquece porque estava ocupado. Ela começa a carregar caderno pequeno. Quando ideia vem, ela captura em 30 segundos. Depois na revisão semanal, ela transcreve para documento de ideias. Nada é perdido. Energia é preservada porque não está tentando lembrar. Semestre depois, ela tem 100+ ideias capturadas—algumas triviais, algumas transformadoras.</blockquote>
+
+<h4>A Revisão Semanal: Transformando Captura Em Ação</h4>
+
+<p>Capturing sem revisão é inútil. Você captura mas nada acontece. Ideias viram papel que se perde. Tarefas ficar em inbox para sempre.</p>
+
+<p>Cada semana (domingo à noite é popular), você abre tudo que capturou. Você categoriza: "qual é verdadeira tarefa? Qual é ideia que vou explorar? Qual é preocupação que agora consigo processar?"</p>
+
+<p>Tarefas você entra em seu sistema de tarefas (Todoist, Notion, ou simples papel). Você prioriza: qual é crítica? Qual para este mês? Qual para depois?</p>
+
+<p>Ideias você analisa. Qual é ouro? Qual você explora? Qual é ruído?</p>
+
+<p>Preocupações você processa emocionalmente: "posso fazer algo? Se sim, qual é ação? Se não, como solto?"</p>
+
+<p>Revisão semanal completa leva 45-90 minutos. Depois, você sai da semana com sistema claro, mente vazia, e foco direto.</p>
+
+<h4>Inbox Zero vs Inbox Sensível</h4>
+
+<p>Mito: você precisa manter inbox de email em zero. Isso é obsessivo e drena tempo. Você consegue funcionar perfeitamente com inbox de 100+ emails.</p>
+
+<p>Que importa: você consegue encontrar o que precisa e não sente apreensão. Se 500 emails causam ansiedade, organize (arquivo, pasta, labels). Agora sistema funciona para você.</p>
+
+<p>Mesmo com tarefas. Inbox de 50 tarefas não é problema se você consegue ver quais são prioritárias. Use sistema de scoring: estrela para crítica, sem estrela para depois. Agora você consegue focar.</p>
+
+<blockquote class="tip">Capturing é psicológica tanto quanto produtiva. Externalizar reduz ansiedade. Ter sistema organizado dá sensação de controle. Esses benefícios mentais são tão valiosos quanto libertação de tempo.</blockquote>`,
+    cards: [
+      {
+        q: 'Qual é o propósito de um sistema de capturing?',
+        a: 'Externalizar tudo que vem à mente (tarefas, ideias, preocupações) para liberar mente. Cérebro consegue focar quando não está carregando lista infinita.'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Batch Work: Agrupando Tarefas Similares Para Fluxo',
+    dur: 21,
+    content: `<h3>Eficiência Através de Agrupamento Inteligente</h3>
+
+<p>Multitarefa é assassino de produtividade. Cada vez que você muda de tarefa, seu cérebro demora minutos para entrar em foco novo. Pesquisa mostra que task-switching reduz eficiência em 40%.</p>
+
+<p>Solução: batch work. Você agrupa tarefas similares e faz todas de uma vez. Todos os emails juntos. Todas as chamadas juntas. Todo o trabalho criativo junto. Você entra em fluxo. Mente fica em contexto. Eficiência sobe.</p>
+
+<h4>Exemplos de Batch Work</h4>
+
+<p><strong>Email Batching:</strong> Ao invés de responder emails constantemente, você bloqueia 3 períodos (9-9:30am, 13-13:30, 17-17:30) para emails. Fora desses horários, email está fechado. Você entra em modo email, você fica em modo, você sai. Não é alternância constante.</p>
+
+<p>Resultado: você consegue processar todos seus emails em 1.5 horas total ao invés de perder o dia inteiro em fragmentos. Eficiência sobe. Foco aumenta.</p>
+
+<p><strong>Calling Batching:</strong> Você precisa fazer 10 chamadas. Ao invés de espalhar ao longo da semana, você bloqueia terça 14-16h e faz todas de uma vez. Mente fica em "chamada mode". Você consegue fazer 10 em 2 horas. Se espalhado, pode levar 5-6 horas (setup, transição, recuperação).</p>
+
+<p><strong>Admin Batching:</strong> Todas as tarefas administrativas (relatórios, notas, data entry) em um bloco. Sexta 15-17h é "admin block". Você entra, você foca, você sai. Resto da semana, zero admin interruptions.</p>
+
+<p><strong>Deep Work Batching:</strong> Trabalho criativo/estratégico que exige máximo foco em blocos dedicados. Segunda-quinta 9-12h é deep work. Você está lá, mente fresca, nenhuma distração. Você entra em fluxo. Você sai com obra valiosa.</p>
+
+<blockquote class="example">Copywriter implementa batch: segunda e quarta 8-12h é escrita. Terça é revisão/edição. Quinta é admin/comunicação. Pessoalmente sentia fragmentado, sempre interrompido. Depois batching, ela descobriu que 4 horas focadas de escrita gera mais que 8 horas fragmentadas. Sua saída de qualidade dobrou. Estresse diminuiu. Porque mente conseguia focar.</blockquote>
+
+<h4>Como Implementar Batch Work</h4>
+
+<p><strong>Passo 1: Identifique Categorias de Tarefas</strong> - O que você faz regularmente? Email, chamadas, reuniões, escrita, análise, etc.</p>
+
+<p><strong>Passo 2: Agrupar Similares</strong> - Todas as tarefas de um tipo junto.</p>
+
+<p><strong>Passo 3: Agendar Blocos</strong> - Cada categoria tem blocos fixos na sua semana. "Email: 9-9:30am (diariamente)", "Chamadas: 14-16h (terça/quinta)", "Deep work: 9-12h (segunda-quinta)".</p>
+
+<p><strong>Passo 4: Proteger Blocos</strong> - Esses blocos são calendar events não-negociáveis. Você não agenda reunião durante deep work. Você não responde email durante admin block.</p>
+
+<p><strong>Passo 5: Revisar e Ajustar</strong> - Após 2 semanas, você vê o que funciona. Talvez email precisa de 3 blocos, não 1. Talvez admin block é muito longo. Ajuste.</p>
+
+<h4>O Lado Psicológico do Batching</h4>
+
+<p>Além de eficiência, batching oferece psicológico benefit. Quando você sabe que responde emails entre 9-9:30am, você consegue ignorar emails resto do dia sem culpa. Você tem sistema. Você está sendo responsável.</p>
+
+<p>Pessoa que faz batch work frequentemente reporta: "finalmente sinto controle sobre meu dia. Não estou sendo controlado por interruções". Essa sensação de agência é invaluável para saúde mental e motivação.</p>
+
+<h4>Armadilhas Comuns</h4>
+
+<p><strong>Bloco Muito Longo:</strong> "Email block" de 2 horas é demais. Você fica entediado. Mente vaga. Mantenha blocos entre 30-90 minutos.</p>
+
+<p><strong>Bloco Muito Curto:</strong> 15 minutos para 20 emails não funciona. Mantenha realista.</p>
+
+<p><strong>Não Proteger:</strong> Se não protege blocos, eles desaparecem. Você precisa dizer "não" a reuniões durante deep work block. Precisa comunicar: "não estou disponível nesse horário".</p>
+
+<p><strong>Tentar Tudo De Uma Vez:</strong> Comece com uma ou duas categorias. Depois expanda. Não mude 100% do seu sistema simultaneamente.</p>
+
+<blockquote class="tip">Batch work é das práticas mais simples de implementar e mais impactfull em eficiência. Pessoas que o fazem ganham meses de produtividade anualmente. Tudo porque agruparam trabalho similares.</blockquote>`,
+    cards: [
+      {
+        q: 'Por que batch work aumenta produtividade mais que otimizar tarefas individuais?',
+        a: 'Porque reduz task-switching overhead. Mente fica em contexto. Eficiência sobe dramaticamente comparado a fragmentação.'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Revisão Semanal: O Ritual Que Mantém Sistema Vivo',
+    dur: 20,
+    content: `<h3>O Hábito Que Mais Importa Para Produtividade Sustentada</h3>
+
+<p>Você pode ter sistema de produtividade mais elaborado. Mas se não revisa regularmente, sistema fica obsoleto. Tarefas se acumulam. Prioridades não se claras. Você desliza de volta para reatividade.</p>
+
+<p>Revisão semanal é ritual que mantém sistema vivo. É quando você pausa, você reflete, você reajusta. É onde sistema se torna vivo ao invés de apenas uma estrutura morta.</p>
+
+<p>Pessoas que fazem revisão semanal consistentemente reportam: "sinto como se tenho controle. Semanas são intencionais. Eu não estou deriva". Sem revisão, mesma pessoa diz: "semanas passam em caos. Nunca sou intencional".</p>
+
+<h4>O Que É Uma Revisão Semanal?</h4>
+
+<p>É 45-90 minutos dedicados cada semana (tipicamente domingo à noite ou segunda-feira de manhã) onde você:</p>
+
+<p><strong>1. Captura e Esvazia (15 min):</strong> Tudo que capturou durante semana (tarefas, ideias, preocupações) vem do inbox para sistema apropriado. Papel vai para digital. Anotações fragmentadas são organizadas. Inbox vai para zero ou bem-organizado.</p>
+
+<p><strong>2. Reflete Sobre Semana Passada (15 min):</strong> Qual foi seu progresso? Quais foram vitórias (pequenas e grandes)? O que não funcionou? Por quê? Qual foi seu padrão? Isso não é julgamento. É observação honesta que permite aprender.</p>
+
+<p><strong>3. Analisa Progresso Contra Metas (15 min):</strong> Você estava no caminho certo para seus objetivos trimestrais? Se não, o quê está impedindo? Você precisa ajustar estratégia? Você precisa mais tempo? Você precisa ajuda?</p>
+
+<p><strong>4. Planeja Semana Seguinte (30-45 min):</strong> Baseado em seus objetivos, o que precisa acontecer ESTA semana para estar no caminho? Quais são seus 3 prioridades? Você mapeia blocos de tempo. Você protege deep work. Você agenda tarefas críticas.</p>
+
+<h4>O Roteiro de Uma Revisão Semanal Prática</h4>
+
+<p><strong>Bloco 1: Limpeza (15-20 min)</strong>
+- Abra seu inbox de tarefas. Vá por cada item.
+- Está ainda relevante? Sim: move para list apropriada (essa semana, este mês, depois).
+- Não está relevante? Delete.
+- Há tarefas acionáveis mas não data? Assigne deadlines.
+
+<strong>Bloco 2: Processamento (10-15 min)</strong>
+- Suas ideias capturadas: qual é ouro? Qual é ruído?
+- Suas preocupações: qual precisa ação? Qual precisa apenas soltar?
+- Suas conversas: há seguimentos que você capturou?
+
+<strong>Bloco 3: Reflexão (10-15 min)</strong>
+- Como foi semana? (Positivo primeiro: vitórias?)"
+- Qual foi seu nível de stress?
+- Qual foi seu progresso em objetivos principais?
+- Se não avançou, por quê?
+
+<strong>Bloco 4: Planejamento (30-45 min)</strong>
+- Seus OKRs para trimestre: qual é ritmo necessário?
+- Esta semana, qual é seu 3 prioridades?
+- Qual é seus time blocks?
+- Qual é potencial gargalos?
+- Você está na capacidade de entrega?
+
+<blockquote class="example">Manager implementou revisão semanal. Primeira semana, ela descobriu que estava 40% de seu tempo era em quadrante 3 (urgente mas não importante). Reuniões improdutivas. Ela cancelou metade delas. Segunda semana, refez. Agora descobriu padrão: terça tinha 5 reuniões consecutivas. Resultado: dia era perda total. Ela reescalonado. Agora terça tem 2 reuniões no início, depois deep work. Mudanças pequenas, revisão semanal as identificou e ajustou.</blockquote>
+
+<h4>Tornando Revisão Semanal um Hábito</h4>
+
+<p><strong>1. Agende em Calendário:</strong> Domingo 19h ou segunda 8am. Não é "quando tiver tempo". É appointment fixo que você não cancela.</p>
+
+<p><strong>2. Mesmo Local:</strong> Sempre mesma cafeteria, mesma mesa de casa, mesma sala. Ambiente associado com ritual.</p>
+
+<p><strong>3. Rituais Menores:</strong> Café favorito, música relaxante, telefone silenciado. Pequenas coisas que sinalizam ao cérebro "é tempo de reflexão".</p>
+
+<p><strong>4. Comece Pequeno:</strong> Primeiras semanas, 30 minutos. Depois expanda quando se torna natural.</p>
+
+<p><strong>5. Accountability:</strong> Se possível, alguém mais faz revisão mesma hora. Vocês podem comparar notas ao final. Torna-se mais fácil quando alguém está fazendo contigo.</p>
+
+<h4>O Retorno da Revisão Semanal</h4>
+
+<p>Uma revisão semanal custa 1 hora. Ao longo de ano, são 52 horas. Essas 52 horas geram ROI massivo. Porque você não fica perdido. Porque você identifica gargalos rápido. Porque você ajusta rápido. Porque sua semana é intencionalmente planejada.</p>
+
+<p>Pessoas que descontinuam revisão semanal frequentemente percebem 2-3 semanas depois: "por que sinto que estou derives novamente?" Porque sem estrutura, sem reflexão, você volta para reatividade automática.</p>
+
+<p>Com revisão semanal consistente? Sua vida é intencionalmente vivida. Semanas constroem em direção dos meses. Meses constroem em direção dos anos. Antes que sinta, você completou transformação.</p>
+
+<blockquote class="tip">Revisão semanal não é luxo. É investimento mínimo de tempo que oferece máximo retorno. É diferença entre vida que você projeta e vida que acontece para você.</blockquote>`,
+    cards: [
+      {
+        q: 'Qual é o impacto de fazer revisão semanal consistentemente?',
+        a: 'Você identifica gargalos rapidamente, ajusta estratégia, alinha com objetivos. Semanas são intencionais ao invés de reativas. Progresso acelera.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
