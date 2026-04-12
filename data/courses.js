@@ -2255,6 +2255,25 @@ var MA_COURSES = [
     color: '#76b900',
     addedTs: 1776024494844,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cs.jpg',
+    id: 'cs',
+    name: 'Biografia de Carlos Slim',
+    desc: 'Um dos maiores bilionários da América Latina em telecomunicações.',
+    file: '47-bio-carlos-slim.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'CS_HENRY_2026_MASTER',
+    ak: 'cs_auth',
+    storagePrefix: 'cs_',
+    icon: '👤',
+    color: '#1a237e',
+    addedTs: 1776024499809,
+    active: true
   }
 ];
 var MA_CATS = [
