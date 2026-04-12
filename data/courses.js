@@ -3016,6 +3016,26 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776024700142,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pn.jpg',
+    id: 'pn',
+    name: 'Panorama do Novo Testamento',
+    desc: 'Explora os Evangelhos, Atos, Cartas e Apocalipse, mostrando o desenvolvimento da igreja e da mensagem de Cristo.',
+    file: '05-panorama-nt.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'PN_HENRY_2026_MASTER',
+    ak: 'pn_auth',
+    storagePrefix: 'pn_',
+    icon: '✝️',
+    color: '#0D47A1',
+    free: true,
+    addedTs: 1776024706103,
+    active: true
   }
 ];
 var MA_CATS = [
