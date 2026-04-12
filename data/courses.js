@@ -3208,6 +3208,26 @@ var MA_COURSES = [
     color: '#6A1B9A',
     addedTs: 1776024757140,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/hb2vr.jpg',
+    id: 'hb2vr',
+    name: 'Hermenêutica Bíblica na Prática',
+    desc: 'Ensina como interpretar corretamente a Bíblia, evitando erros comuns e aprendendo princípios sólidos de leitura, contexto e aplicação.',
+    file: '02-hermeneutica-biblica.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'HB_HENRY_2026_MASTER',
+    ak: 'hb_auth',
+    storagePrefix: 'hb_',
+    icon: '✝️',
+    color: '#4A148C',
+    free: true,
+    addedTs: 1776024763217,
+    active: true
   }
 ];
 var MA_CATS = [
