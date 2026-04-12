@@ -3151,6 +3151,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776024739233,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cd.jpg',
+    id: 'cd',
+    name: 'Ciência de Dados para Decisão Inteligente',
+    desc: 'Curso para quem quer entender dados, métricas, análises e como transformar informação em decisão estratégica.',
+    file: '24-ciencia-dados.html',
+    cat: 'Tecnologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CD_HENRY_2026_MASTER',
+    ak: 'cd_auth',
+    storagePrefix: 'cd_',
+    icon: '💻',
+    color: '#00796B',
+    addedTs: 1776024745089,
+    active: true
   }
 ];
 var MA_CATS = [
