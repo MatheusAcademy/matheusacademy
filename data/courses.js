@@ -3228,6 +3228,26 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776024763217,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pa.jpg',
+    id: 'pa',
+    name: 'Panorama do Antigo Testamento',
+    desc: 'Apresenta os principais livros, personagens, alianças, profecias e eventos que estruturam o Antigo Testamento.',
+    file: '04-panorama-at.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'PA_HENRY_2026_MASTER',
+    ak: 'pa_auth',
+    storagePrefix: 'pa_',
+    icon: '✝️',
+    color: '#BF360C',
+    free: true,
+    addedTs: 1776024769258,
+    active: true
   }
 ];
 var MA_CATS = [
