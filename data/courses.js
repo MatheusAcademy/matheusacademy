@@ -1951,6 +1951,25 @@ var MA_COURSES = [
     color: '#ffd600',
     addedTs: 1776024425467,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/fa.jpg',
+    id: 'fa',
+    name: 'Biografia de Flávio Augusto da Silva',
+    desc: 'O empresário brasileiro que saiu do zero e fundou a Wise Up.',
+    file: '30-bio-flavio-augusto.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'FA_HENRY_2026_MASTER',
+    ak: 'fa_auth',
+    storagePrefix: 'fa_',
+    icon: '👤',
+    color: '#f57c00',
+    addedTs: 1776024429472,
+    active: true
   }
 ];
 var MA_CATS = [
