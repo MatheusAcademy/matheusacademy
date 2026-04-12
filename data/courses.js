@@ -2369,6 +2369,25 @@ var MA_COURSES = [
     color: '#bc4749',
     addedTs: 1776024525000,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mb.jpg',
+    id: 'mb',
+    name: 'Biografia de Michael Bloomberg',
+    desc: 'O empresário que uniu negócios, mídia e finanças com a Bloomberg.',
+    file: '46-bio-michael-bloomberg.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'MB_HENRY_2026_MASTER',
+    ak: 'mb_auth',
+    storagePrefix: 'mb_',
+    icon: '👤',
+    color: '#2800d7',
+    addedTs: 1776024529791,
+    active: true
   }
 ];
 var MA_CATS = [
