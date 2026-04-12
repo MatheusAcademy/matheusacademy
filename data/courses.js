@@ -2806,6 +2806,25 @@ var MA_COURSES = [
     color: '#558B2F',
     addedTs: 1776024642034,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/pd.jpg',
+    id: 'pd',
+    name: 'Produtividade Inteligente e Gestão do Tempo',
+    desc: 'Curso voltado para organização, prioridades, foco, eliminação de desperdícios e execução eficiente.',
+    file: '33-produtividade.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'PD_HENRY_2026_MASTER',
+    ak: 'pd_auth',
+    storagePrefix: 'pd_',
+    icon: '🏆',
+    color: '#2E7D32',
+    addedTs: 1776024646951,
+    active: true
   }
 ];
 var MA_CATS = [
