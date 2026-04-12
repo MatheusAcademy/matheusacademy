@@ -2901,6 +2901,25 @@ var MA_COURSES = [
     color: '#FF6F00',
     addedTs: 1776024668266,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cn.jpg',
+    id: 'cn',
+    name: 'Computação em Nuvem na Prática',
+    desc: 'Explica como funcionam cloud computing, armazenamento, escalabilidade, serviços digitais e infraestrutura moderna.',
+    file: '25-computacao-nuvem.html',
+    cat: 'Tecnologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CN_HENRY_2026_MASTER',
+    ak: 'cn_auth',
+    storagePrefix: 'cn_',
+    icon: '💻',
+    color: '#1565C0',
+    addedTs: 1776024673797,
+    active: true
   }
 ];
 var MA_CATS = [
