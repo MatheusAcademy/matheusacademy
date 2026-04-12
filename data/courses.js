@@ -3074,6 +3074,25 @@ var MA_COURSES = [
     color: '#00695C',
     addedTs: 1776024717245,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ai.jpg',
+    id: 'ai',
+    name: 'Inteligência Artificial do Presente ao Futuro',
+    desc: 'Curso introdutório e estratégico sobre IA, aplicações atuais, impactos no trabalho e tendências para os próximos anos.',
+    file: '21-inteligencia-artificial.html',
+    cat: 'Tecnologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'AI_HENRY_2026_MASTER',
+    ak: 'ai_auth',
+    storagePrefix: 'ai_',
+    icon: '💻',
+    color: '#0277BD',
+    addedTs: 1776024723027,
+    active: true
   }
 ];
 var MA_CATS = [
