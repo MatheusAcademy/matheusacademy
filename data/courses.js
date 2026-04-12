@@ -3365,6 +3365,26 @@ var MA_COURSES = [
     color: '#1565C0',
     addedTs: 1776024800785,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ia.jpg',
+    id: 'ia',
+    name: 'Inglês Avançado para Comunicação Natural',
+    desc: 'Curso voltado para refinamento da fala, escuta, vocabulário avançado e expressão mais natural e confiante.',
+    file: '13-ingles-avancado.html',
+    cat: 'Inglês',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IA_HENRY_2026_MASTER',
+    ak: 'ia_auth',
+    storagePrefix: 'ia_',
+    icon: '🇺🇸',
+    color: '#7B1FA2',
+    free: true,
+    addedTs: 1776024805961,
+    active: true
   }
 ];
 var MA_CATS = [
