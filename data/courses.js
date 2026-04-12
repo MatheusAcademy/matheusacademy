@@ -2445,6 +2445,25 @@ var MA_COURSES = [
     color: '#cc0000',
     addedTs: 1776024544813,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/jl.jpg',
+    id: 'jl',
+    name: 'Biografia de Jorge Paulo Lemann',
+    desc: 'Um dos empresários mais influentes do Brasil com atuação global.',
+    file: '31-bio-jorge-paulo-lemann.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'JL_HENRY_2026_MASTER',
+    ak: 'jl_auth',
+    storagePrefix: 'jl_',
+    icon: '👤',
+    color: '#1565c0',
+    addedTs: 1776024549794,
+    active: true
   }
 ];
 var MA_CATS = [
