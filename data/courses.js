@@ -3131,6 +3131,26 @@ var MA_COURSES = [
     color: '#2E7D32',
     addedTs: 1776024733122,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/eb2v.jpg',
+    id: 'eb2v',
+    name: 'Exegese Bíblica para Iniciantes e Líderes',
+    desc: 'Formação voltada para quem deseja aprofundar a análise do texto bíblico, estudando contexto histórico, literário e significado original.',
+    file: '03-exegese-biblica.html',
+    cat: 'Bíblia / Teologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'EB_HENRY_2026_MASTER',
+    ak: 'eb_auth',
+    storagePrefix: 'eb_',
+    icon: '✝️',
+    color: '#1B5E20',
+    free: true,
+    addedTs: 1776024739233,
+    active: true
   }
 ];
 var MA_CATS = [
