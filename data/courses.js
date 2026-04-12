@@ -2217,6 +2217,25 @@ var MA_COURSES = [
     color: '#0051ba',
     addedTs: 1776024484823,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/sb.jpg',
+    id: 'sb',
+    name: 'Biografia de Sergey Brin',
+    desc: 'O cofundador do Google e seu papel na construção de um império digital.',
+    file: '28-bio-sergey-brin.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'SB_HENRY_2026_MASTER',
+    ak: 'sb_auth',
+    storagePrefix: 'sb_',
+    icon: '👤',
+    color: '#ea4335',
+    addedTs: 1776024489781,
+    active: true
   }
 ];
 var MA_CATS = [
