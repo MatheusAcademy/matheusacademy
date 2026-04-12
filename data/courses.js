@@ -2502,6 +2502,25 @@ var MA_COURSES = [
     color: '#1877f2',
     addedTs: 1776024558866,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/lg.jpg',
+    id: 'lg',
+    name: 'Longevidade: Viver Mais e Melhor',
+    desc: 'Hábitos, prevenção e qualidade de vida para envelhecer com disposição e equilíbrio.',
+    file: '10-longevidade.html',
+    cat: 'Saúde & Ciência',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'LG_HENRY_2026_MASTER',
+    ak: 'lg_auth',
+    storagePrefix: 'lg_',
+    icon: '🧬',
+    color: '#06d6a0',
+    addedTs: 1776024563983,
+    active: true
   }
 ];
 var MA_CATS = [
