@@ -2863,6 +2863,25 @@ var MA_COURSES = [
     color: '#F9A825',
     addedTs: 1776024657091,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/vvfe.jpg',
+    id: 'vvfe',
+    name: 'Realidade Virtual, Aumentada e Imersão',
+    desc: 'Mostra como VR e AR impactam educação, jogos, indústria, marketing e experiências digitais do futuro.',
+    file: '29-realidade-virtual.html',
+    cat: 'Tecnologia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'RV_HENRY_2026_MASTER',
+    ak: 'rv_auth',
+    storagePrefix: 'rv_',
+    icon: '💻',
+    color: '#6200EA',
+    addedTs: 1776024662982,
+    active: true
   }
 ];
 var MA_CATS = [
