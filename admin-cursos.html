@@ -7021,7 +7021,7 @@ async function diagCapaRunOCR() {
         }
       }
 
-      if (bestMatch.score >= 0.2) {
+      if (bestMatch.score >= 0.51) {
         item.matchedId = bestMatch.id;
         item.matchedName = bestMatch.name;
         item.score = bestMatch.score;
@@ -7094,7 +7094,7 @@ function diagCapaRender(byId) {
         html += '<div style="' + border + ';border-radius:8px;padding:6px;width:140px;cursor:pointer;text-align:center;transition:all .2s;' + (isChosen ? 'background:rgba(34,197,94,.06)' : 'background:var(--sf);opacity:.6') + '" onclick="diagCapaChooseDupe(\'' + escH(dupId) + '\',' + idx + ')">';
         html += '<img src="' + it.dataUrl + '" style="width:100%;height:80px;object-fit:cover;border-radius:4px;margin-bottom:4px">';
         html += '<div style="font-size:9px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escH(it.origName) + '</div>';
-        html += '<div style="font-size:9px;color:' + (it.score > 0.6 ? '#86efac' : '#fde047') + '">' + Math.round(it.score * 100) + '% match</div>';
+        html += '<div style="font-size:9px;color:' + (it.score > 0.51 ? '#86efac' : '#fca5a5') + '">' + Math.round(it.score * 100) + '% match' + (it.score <= 0.51 ? ' ⛔' : ' ✅') + '</div>';
         if (isChosen) html += '<div style="font-size:9px;color:#22c55e;font-weight:700;margin-top:2px">✅ Selecionada</div>';
         html += '</div>';
       });
@@ -7119,7 +7119,7 @@ function diagCapaRender(byId) {
     if (it.status === 'matched') {
       html += '<div style="font-size:10px;color:#86efac;font-weight:700;margin-bottom:2px">' + escH(it.matchedId) + '</div>';
       html += '<div style="font-size:9px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + escH(it.matchedName) + '">' + escH(it.matchedName) + '</div>';
-      html += '<div style="font-size:9px;color:' + (it.score > 0.6 ? '#86efac' : '#fde047') + '">' + Math.round(it.score * 100) + '% match</div>';
+      html += '<div style="font-size:9px;color:' + (it.score > 0.51 ? '#86efac' : '#fca5a5') + '">' + Math.round(it.score * 100) + '% match' + (it.score <= 0.51 ? ' ⛔ bloqueada' : ' ✅ aprovada') + '</div>';
       if (it.status === 'ok') html += '<div style="font-size:9px;color:#22c55e;font-weight:700;margin-top:2px">✅ SUBIDA</div>';
     } else if (it.status === 'sem_match') {
       html += '<div style="font-size:10px;color:#fca5a5;font-weight:700">❌ Sem match</div>';
@@ -7172,10 +7172,11 @@ async function diagCapaPublicar() {
   var cfg = g();
   if (!cfg.t) { alert('Configure o token GitHub primeiro.'); return; }
 
-  var items = _diagCapaItems.filter(function(it) { return it.status === 'matched' && it.chosen && it.matchedId; });
-  if (!items.length) { alert('Nenhuma capa pronta para subir.'); return; }
+  var items = _diagCapaItems.filter(function(it) { return it.status === 'matched' && it.chosen && it.matchedId && it.score >= 0.51; });
+  var rejeitadas = _diagCapaItems.filter(function(it) { return it.status === 'matched' && it.chosen && it.matchedId && it.score < 0.51; });
+  if (!items.length) { alert('Nenhuma capa aprovada para subir. Apenas capas com match acima de 51% podem ser publicadas.' + (rejeitadas.length ? '\n\n' + rejeitadas.length + ' capa(s) bloqueadas por match insuficiente.' : '')); return; }
 
-  if (!confirm('Confirma o upload de ' + items.length + ' capa(s) faltante(s)?')) return;
+  if (!confirm('Confirma o upload de ' + items.length + ' capa(s) aprovadas (match >51%)?' + (rejeitadas.length ? '\n\n⚠️ ' + rejeitadas.length + ' capa(s) com match <=51% serao ignoradas.' : ''))) return;
 
   var btn = el('diag-capa-pub');
   if (btn) btn.disabled = true;
@@ -7383,7 +7384,7 @@ async function capasRunOCR() {
       // Auto-match com o melhor curso
       if (item.ocrText && courseList.length) {
         var best = _findBestMatch(item.ocrText, courseList);
-        if (best.score >= 0.25) { // Threshold minimo de 25%
+        if (best.score >= 0.51) { // Threshold minimo de 51%
           item.newId = best.id;
           item.matchedName = best.name;
           item.confidence = Math.round(best.score * 100);
@@ -7546,10 +7547,10 @@ function capaLoteRenderGrid() {
       borderColor = 'rgba(34,197,94,.6)'; bgColor = 'rgba(34,197,94,.04)';
     } else if (isDupeUnresolved) {
       borderColor = 'rgba(167,139,250,.5)'; bgColor = 'rgba(167,139,250,.04)';
-    } else if (hasMatch && isValid && item.confidence >= 50) {
+    } else if (hasMatch && isValid && item.confidence > 51) {
       borderColor = 'rgba(34,197,94,.5)'; bgColor = 'rgba(34,197,94,.03)';
-    } else if (hasMatch && item.confidence >= 25) {
-      borderColor = 'rgba(245,158,11,.5)'; bgColor = 'rgba(245,158,11,.03)';
+    } else if (hasMatch && item.confidence > 0 && item.confidence <= 51) {
+      borderColor = 'rgba(239,68,68,.5)'; bgColor = 'rgba(239,68,68,.03)';
     } else {
       borderColor = 'rgba(239,68,68,.4)'; bgColor = 'rgba(239,68,68,.03)';
     }
@@ -7557,7 +7558,7 @@ function capaLoteRenderGrid() {
     // Confidence badge
     var confBadge = '';
     if (hasMatch) {
-      var confColor = item.confidence >= 70 ? '#86efac' : item.confidence >= 40 ? '#fcd34d' : '#fca5a5';
+      var confColor = item.confidence > 51 ? '#86efac' : '#fca5a5';
       confBadge = '<div style="position:absolute;top:4px;left:4px;background:rgba(0,0,0,.7);color:' + confColor + ';font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px">'
         + item.confidence + '% match</div>';
     }
@@ -7567,6 +7568,7 @@ function capaLoteRenderGrid() {
     if (item.status === 'ok') statusBadge = '<div style="position:absolute;top:4px;right:4px;background:#22c55e;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px">SUBIDO</div>';
     else if (item.status === 'erro') statusBadge = '<div style="position:absolute;top:4px;right:4px;background:#ef4444;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;cursor:help" title="' + escH(item.errorMsg || 'Erro desconhecido') + '">ERRO</div>';
     else if (isDupeUnresolved) statusBadge = '<div style="position:absolute;top:4px;right:4px;background:#7c3aed;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px">DUPLICATA</div>';
+    else if (hasMatch && item.confidence > 0 && item.confidence <= 51) statusBadge = '<div style="position:absolute;top:4px;right:4px;background:#ef4444;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px" title="Match abaixo de 51% — nao sera publicada">BLOQUEADA</div>';
 
     // OCR text preview (truncado)
     var ocrPreview = item.ocrText
@@ -7577,8 +7579,10 @@ function capaLoteRenderGrid() {
     var matchInfo = '';
     if (isDupeUnresolved) {
       matchInfo = '<div style="font-size:10px;color:#c4b5fd;font-weight:700;margin-top:4px">Escolha acima qual capa usar</div>';
+    } else if (hasMatch && item.confidence > 0 && item.confidence <= 51) {
+      matchInfo = '<div style="font-size:10px;color:#fca5a5;font-weight:700;margin-top:4px">⛔ Match ' + item.confidence + '% — minimo 51% para aprovar</div>';
     } else if (hasMatch && isValid) {
-      matchInfo = '<div style="font-size:10px;color:#86efac;font-weight:700;margin-top:4px">Sincronizado: ' + escH(item.matchedName.substring(0, 35)) + '</div>';
+      matchInfo = '<div style="font-size:10px;color:#86efac;font-weight:700;margin-top:4px">✅ Aprovado: ' + escH(item.matchedName.substring(0, 35)) + '</div>';
     } else if (item.newId && !isValid) {
       matchInfo = '<div style="font-size:10px;color:#fcd34d;font-weight:700;margin-top:4px">ID nao encontrado — edite</div>';
     } else if (!item.newId) {
@@ -7673,7 +7677,7 @@ function capasAutoMatch() {
     // 3. Se tem OCR text, usar fuzzy
     if (item.ocrText && courseList.length) {
       var best = _findBestMatch(item.ocrText, courseList);
-      if (best.score >= 0.25) {
+      if (best.score >= 0.51) {
         item.newId = best.id;
         item.matchedName = best.name;
         item.confidence = Math.round(best.score * 100);
@@ -7699,8 +7703,9 @@ async function capaLotePublicar() {
   var cfg = g();
   if (!cfg.t) { alert('Configure e teste o token GitHub primeiro.'); return; }
 
-  var items = _capaLoteItems.filter(function(it) { return it.newId && it.status !== 'ok' && it.status !== 'descartada'; });
-  if (!items.length) { alert('Nenhuma capa com ID definido para subir.'); return; }
+  var items = _capaLoteItems.filter(function(it) { return it.newId && it.status !== 'ok' && it.status !== 'descartada' && (it.confidence > 51 || it.confidence === 100); });
+  var rejeitadas = _capaLoteItems.filter(function(it) { return it.newId && it.status !== 'ok' && it.status !== 'descartada' && it.confidence > 0 && it.confidence <= 51 && it.confidence !== 100; });
+  if (!items.length) { alert('Nenhuma capa aprovada para subir. Apenas capas com match acima de 51% podem ser publicadas.' + (rejeitadas.length ? '\n\n' + rejeitadas.length + ' capa(s) foram bloqueadas por match insuficiente (<=51%).' : '')); return; }
 
   // Validar IDs
   for (var i = 0; i < items.length; i++) {
@@ -7711,8 +7716,8 @@ async function capaLotePublicar() {
   }
 
   // Confirmacao final
-  var matchedAuto = items.filter(function(it) { return it.confidence > 0 && it.confidence < 100; }).length;
-  var matchedManual = items.filter(function(it) { return it.confidence === 100 || it.confidence === 0; }).length;
+  var matchedAuto = items.filter(function(it) { return it.confidence > 51 && it.confidence < 100; }).length;
+  var matchedManual = items.filter(function(it) { return it.confidence === 100; }).length;
   if (!confirm('Confirma o upload de ' + items.length + ' capas?\n\n'
     + (matchedAuto ? matchedAuto + ' sincronizadas por OCR\n' : '')
     + (matchedManual ? matchedManual + ' definidas manualmente\n' : '')
