@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cristologia — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'CR',
+  name: 'Cristologia: Jesus do Texto à Doutrina',
+  shortName: 'Cristologia',
+  cat: 'Bíblia e Teologia',
+  desc: 'Estudo aprofundado sobre a pessoa, missão, natureza e obra de Jesus Cristo nas Escrituras e na tradição cristã.',
+  salt: 'CR_HENRY_2026_MASTER',
+  ak: 'cr_auth',
+  courseKey: 'cr',
+  prefix: 'cr_',
+  color: '#AD1457',
+  glow: 'rgba(173,20,87,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'cr_mod1',
+    name: 'A Pessoa de Cristo: Deus Encarnado',
+    free: true,
+    topics: [1, 2, 3],
+    summary: {
+      title: 'Resumo do Módulo 1',
+      points: [
+        'Jesus Cristo é verdadeiramente Deus Filho, segunda pessoa da Trindade, desde a eternidade',
+        'Incarnação significa que Deus Filho tornou-Se plenamente humano em Jesus, mantendo Sua divindade',
+        'A natureza dual de Cristo (divina e humana) é confirmada pelas Escrituras e é essencial para redenção',
+        'As reivindicações de Jesus sobre Sua própria divindade foram claras e levaram à crucifixão'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Por que é importante que Jesus seja verdadeiramente Deus além de meramente um "bom homem"?',
+        opts: [
+          'Não importa realmente; Jesus como filósofo é suficiente',
+          'Somente Deus pode ofertar sacrifice aceitável a Deus; somente divindade pode redimir humanidade',
+          'Para impressionar as pessoas com poder',
+          'Para evitar responsabilidade moral'
+        ],
+        correct: 1
+      },
+      {
+        q: 'O que significa que Jesus é "Deus encarnado" (Deus em forma humana)?',
+        opts: [
+          'Que Deus deixou de ser divino enquanto Jesus viveu',
+          'Que Deus Filho se tornou plenamente humano enquanto mantinha Sua divindade completa',
+          'Que Jesus era apenas fantasma ou aparição',
+          'Que Jesus era filho literal de Deus e Maria'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Como os líderes judeus responderam às reivindicações de Jesus sobre Sua divindade?',
+        opts: [
+          'Aceitaram facilmente e o fizeram rei',
+          'O ignoraram completamente',
+          'Consideraram-no blasfemador e condenaram-o à morte',
+          'Tornaram-no escriba'
+        ],
+        correct: 2
+      }
+    ]
+  },
+  {
+    id: 'cr_mod2',
+    name: 'A Missão de Cristo: Redentor e Libertador',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Resumo do Módulo 2',
+      points: [
+        'Cristo veio ao mundo com missão específica — salvar o perdido, redimir humanidade do pecado',
+        'Sua morte foi sacrifice propositado e voluntário, não meramente morte de mártir',
+        'Ressurreição de Cristo provou Sua divindade, poder sobre morte, e oferece fundação para ressurreição de crentes',
+        'Cristo continua operando como Intercessor e Sumo Sacerdote para aqueles que nele creem'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Por que Jesus referia-se a si mesmo como "Filho do Homem" além de outras designações?',
+        opts: [
+          'Porque foi meramente humano',
+          'Para enfatizar Sua humanidade e também para aludir à visão messiânica de Daniel',
+          'Porque negava Sua divindade',
+          'Porque não era importante'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Qual é a importância redentora específica da morte corporal de Jesus conforme as Escrituras?',
+        opts: [
+          'Não foi importante; apenas símbolos espirituais importam',
+          'Somente por morte corporal a penalidade do pecado (morte) foi paga; somente sacrifice real poderia resgatar',
+          'Morte é apenas metáfora para mudar de perspectiva',
+          'Não salva ninguém; é meramente inspiração moral'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Por que a ressurreição corporal de Cristo é central para fé cristã?',
+        opts: [
+          'Prove que morte não é real',
+          'Confirma divindade de Cristo, vence morte, oferece esperança de ressurreição para crentes',
+          'Não é importante; fé espiritual é suficiente',
+          'Apenas para mostrar que era possível sair de túmulo'
+        ],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'cr_mod3',
+    name: 'Cristo em Antigas Escrituras e Tradição Cristã',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Resumo do Módulo 3',
+      points: [
+        'Cristo é o cumprimento de profecias messiânicas do Antigo Testamento — tipos e promessas apontam para Ele',
+        'Primeiros cristãos reconheceram Cristo como Senhor e Deus, praticando adoração que era exclusiva a Deus',
+        'Concílios ecumênicos da Igreja primitiva articularam doutrina cristológica contra heresias',
+        'Implicação prática: Cristo é centro de história, redenção, e esperança eterna do cristão'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Qual profecia messiânica do Antigo Testamento é mais notável em seu cumprimento em Jesus?',
+        opts: [
+          'Nenhuma profecia realmente se cumpriu',
+          'Nascimento em Belém, descendência de Judá, morte por perfuração, divisão de vestes — detalhe notável demais para invenção',
+          'Profecia é apenas ficção religiosa',
+          'Qualquer profecia é igualmente provável'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Como a primeira Igreja respondeu ao status de Cristo em relação a práticas de adoração?',
+        opts: [
+          'Nunca o adoraram; apenas o respeitavam',
+          'O adoravam como Deus, oferecendo orações e sacrifício espiritual a Ele',
+          'Mantinham-no separado de Deus em sistema binitário',
+          'Não tinha opinião sobre adoração'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Por que concílios ecumênicos como Niceia foram necessários para Igreja primitiva?',
+        opts: [
+          'Apenas para exercer poder político',
+          'Para articular e defender doutrina ortodoxa contra heresias que negavam divindade ou humanidade de Cristo',
+          'Para criar novas doutrinas não baseadas em Escritura',
+          'Para eliminar discípulos autênticos'
+        ],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 1,
+    name: 'Jesus Cristo: Deus Filho Encarnado',
+    dur: '31 min',
+    content: `<h3>Fundo Histórico e Contexto</h3>
+<p>Para compreender Jesus, você deve entender Seu contexto histórico. Jesus nasceu durante reinado de Herodes, o Grande, em uma Judéia sob domínio romano. Havia expectativa messiânica fervidamente viva — o povo judeu aguardava Messias que libertaria Israel. Havia várias interpretações: alguns esperavam guerreiro político que restauraria reino davidico; outros esperavam transformação espiritual e cósmica. Todos compartilhavam expectativa que Messias resolveria problemas fundamentais do mundo.</p>
+<p>Dentro deste contexto, Jesus veio pregando "o reino de Deus está próximo" (Marcos 1:15). Seus ensinamentos eram revolucionários porque não eram meramente morais (embora fossem) — eram declarações sobre Sua própria identidade e natureza. Os líderes religiososs rápido perceberam que Jesus não era meramente reformador ou profeta. Reivindicava ser Deus Himself.</p>
+
+<h3>Reivindicações Explícitas de Divindade</h3>
+<p>Jesus fez afirmações extraordinárias sobre Si mesmo. João 8:58 registra: "Antes que Abraão fosse, Eu sou." "Eu sou" é o nome revelado a Moisés — o nome divino de Êxodo 3:14. Jesus não apenas dizia que existia antes de Abraão. Reivindicava o nome de Deus. Os judeus compreenderam isto como blasfêmia (verso 59: "apedrejaram a Jesus").</p>
+<p>Em João 10:33, os judeus tentam apedrejar Jesus "porque tu, sendo homem, te fazes a ti mesmo Deus." Jesus não corrige esta compreensão. Ao contrário, continuou afirmando Sua divindade. João 10:30 registra: "Eu e o Pai somos um." Novamente, os judeus compreenderam isto como reivindicação de divindade.</p>
+<p>Em Mateus 26:63-66, o sumo sacerdote pergunta: "Dize-nos se tu és o Cristo, o Filho do Deus vivo." Jesus respondeu: "Tu o disse; digo-vos porém que depois vereis o Filho do Homem assentado à destra do poder de Deus, e vindo nas nuvens do céu." O sumo sacerdote rasga suas vestes e declara: "Ele blasfemou." Este é fundamento da condenação de Jesus — blasfêmia (reivindicação de divindade).</p>
+
+<h3>Evidência das Escrituras de Divindade Eterna</h3>
+<p>A divindade de Cristo não começa com a encarnação. João 1:1-3 estabelece que Cristo — "o Verbo" — era desde eternidade: "No princípio era o Verbo, e o Verbo estava com Deus, e o Verbo era Deus... Por ele foram criadas todas as coisas." Cristo não apenas é divino durante Sua vida terrena. É eternamente Deus Filho.</p>
+<p>Colossenses 1:15-17 oferece descrição similar: "O qual é a imagem do Deus invisível, o primogênito de toda criação; porque nele foram criadas todas as coisas que há nos céus e na terra... tudo foi criado por ele e para ele." Isto não apenas afirma divindade. Afirma que toda a criação existe através de Cristo e para Cristo. A ontologia cristã é centrada em Cristo — Ele é sustentador de todas as coisas (Hebreus 1:3).</p>
+<p>Além disto, Jesus aceitou adoração — algo que qualquer verdadeiro servo de Deus recusaria (Atos 14:13-15, Apocalipse 22:8-9). Ao longo dos evangelhos, Jesus permite e até incita adoração. Isto é atestado de que Jesus era compreendido pelos discípulos como digno de adoração que pertence apenas a Deus.</p>
+
+<h3>A Encarnação: Deus se Tornando Humano</h3>
+<p>A encarnação — a vinda de Deus Filho em forma de carne humana — é evento cósmico de suprema importância. 1 Timóteo 3:16 declara: "Aquele que foi manifestado em carne, foi justificado em espírito, visto dos anjos, pregado entre as nações, crido no mundo, e recebido acima na glória." A encarnação foi real, histórica, e transformadora.</p>
+<p>Mas por que Deus tornou-Se humano? A resposta é redenção. Deus não podia redimir humanidade de longe. Tinha que entrar na situação humana completamente, conhecer seu sofrimento, experimentar suas tentações, pagar a penalidade do pecado humano. Hebreus 2:14-15 explica: "Portanto, visto que os filhos são participantes de carne e sangue, também ele participou dos mesmos, para, pela morte, destruir aquele que tinha o poder da morte, isto é, o diabo, e livrar todos os que, pelo temor da morte, estavam sujeitos à escravidão a vida toda."</p>
+
+<h3>Verdadeiramente Deus, Verdadeiramente Humano</h3>
+<p>A doutrina ortodoxa de Calcedônia (451 d.C.) afirmou que Jesus é "verdadeiramente Deus e verdadeiramente homem." Isto significa que Jesus não é parte divino, parte humano. Não é Deus fingindo ser humano. Não é humano elevado à divindade. É plenamente Deus e plenamente humano — duas naturezas unidas em uma pessoa.</p>
+<p>A implicação é que Jesus experimentou verdadeira humanidade. Tinha fome (Mateus 4:2), sede (João 4:7), cansaço (João 4:6), dor (na cruz), morte. Não era imune ao sofrimento. Experimentava emoções — compaixão (Mateus 9:36), ira justa (Marcos 3:5), lamento (João 11:35). Mas ao mesmo tempo, era verdadeiramente divino — conhecia os pensamentos das pessoas (Mateus 9:4), realizava milagres (multiplicação de pão), aceitava adoração.</p>
+
+<h3>A Natureza Dual: Unidade Sem Confusão</h3>
+<p>Teologia cristã ortododoxa afirma que as duas naturezas de Cristo são verdadeiras e distintas, mas unidas de maneira que não há confusão ou separação. A natureza divina permanece divina; a natureza humana permanece humana. Não há "quarta coisa" resultante de mistura. É verdadeira unidade de duas naturezas genuínas em uma pessoa genuína — Jesus Cristo.</p>
+<p>Isto é misterium profundum — mistério que a mente finita não pode completamente compreender. Mas é verdade que a Bíblia afirma repetidamente. Cristo é "Deus comigo" (Mateus 1:23). Ele é supremo, mas também solidário conosco em humanidade. Isto é núcleo de evangelho cristão — Deus em carne, penetrando, encarregado redimindo humanidade caída de dentro de condição humana.</p>`,
+    cards: [
+      {
+        q: 'O que significa que Jesus é "verdadeiramente Deus e verdadeiramente humano", e por que ambas as naturezas são necessárias para redenção?',
+        a: 'Jesus é plenamente divino (eternamente Deus Filho, digno de adoração) e plenamente humano (sofreu tentação, morte real). Ambas são necessárias: divindade oferece poder redentor; humanidade oferece solidariedade e pagamento aceitável da penalidade do pecado humano.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Os Nomes e Títulos de Cristo',
+    dur: '28 min',
+    content: `<h3>Jesus: Seu Nome Pessoal</h3>
+<p>Seu nome é Jesus — em grego "Iesous" (Ἰησοῦς), transliteração de hebraico "Yeshua" (יְשׁוּעַ), que significa "Salvação de Deus" ou "Deus salva." Não é nome acidental. Mateus 1:21 registra que Maria "dará à luz um filho, e lhe porás o nome de Jesus, porque ele salvará o seu povo dos pecados deles." O nome em si carrega missão — salvação.</p>
+<p>Embora "Jesus" seja Seu nome pessoal e é por este que o conhecemos pessoalmente, a Bíblia oferece muitos títulos que revelam aspectos diferentes de Sua identidade e obra. Estes títulos não são meramente honrarias. Cada revela aspectos do caráter e missão de Cristo.</p>
+
+<h3>Cristo: O Ungido</h3>
+<p>"Cristo" é título, não sobrenome. Vem do grego "Christos" (Χριστός), que traduz hebraico "Messiah" (משִׁיח) — "o Ungido." No contexto do Antigo Testamento, reis e sacerdotes eram ungidos — ungüento derramado sobre eles como sinal de eleição divina e capacitação. "O Cristo" significa "O Ungido de Deus" — aquele especialmente escolhido e capacitado para missão redentora.</p>
+<p>Para o povo judeu, expectativa messiânica era de um "Ungido" que viria do Deus. Jesus é a consumação — Ele é o Cristo, o Ungido, a esperança messiânica de séculos. Enquanto muitos judeus esperavam um messias político, Jesus era messias espiritual — não apenas libertaria Israel, mas toda humanidade da escravidão ao pecado e à morte.</p>
+
+<h3>Filho de Deus: Divindade Revelada</h3>
+<p>"Filho de Deus" é título que reclama divindade. Não significa filho no sentido biológico literal. Em hebraico e grego, "filho de" frequentemente significa "que tem natureza/caráter de." "Filho de Deus" significa que Jesus tem natureza e caráter de Deus — Ele é divino. Quando Jesus reivindicava ser "Filho de Deus," os judeus compreendiam isto como reivindicação de igualdade com Deus (João 5:18).</p>
+<p>Isto é confirmado ao longo do Novo Testamento. Romanos 1:4 afirma que Jesus foi "declarado Filho de Deus com poder, segundo o espírito de santidade, pela ressurreição dos mortos." A ressurreição foi prova formal e pública de divindade de Cristo. João 20:31 resume o propósito dos evangelhos: "Estes porém foram escritos para que creiais que Jesus é o Cristo, o Filho de Deus, e para que, crendo, tenhais vida em seu nome."</p>
+
+<h3>Senhor: Autoridade Suprema</h3>
+<p>"Senhor" é título que expressa autoridade e soberania. No contexto cristão, quando alguém afirma "Jesus é Senhor," está expressando que Jesus tem autoridade suprema sobre sua vida. Romanos 10:9 afirma que confissão de fé é: "se confessares com tua boca que Jesus é Senhor, e creres em teu coração que Deus o ressuscitou dos mortos, serás salvo."</p>
+<p>Chamar Jesus de "Senhor" tinha implicação revolucionária no mundo antigo. O Senhor (imperador romano) era Domitian, e os cristãos que recusavam chamar Domitiano de "Senhor" mas sim chamavam Jesus de "Senhor" foram perseguidos. Isto era política radical — subordinação a Cristo antes de imperador. Que significância! Jesus é Senhor supremo, digno de obediência total, acima de toda autoridade terrena.</p>
+
+<h3>Filho do Homem: Messias Sofridor</h3>
+<p>"Filho do Homem" é título que Jesus frequentemente usava para Si mesmo — sobre 80 vezes nos evangelhos. Vem da visão profética de Daniel 7:13-14 de uma figura messiânica. Mas Jesus moldou o título com ensinamento sobre sofrimento. Marcos 8:31 registra: "Começou então a ensinar-lhes que importava que o Filho do Homem sofresse muitas coisas... e que fosse morto e que três dias depois ressuscitasse."</p>
+<p>Este era conceito novo. Os judeus não esperavam messias sofredor. Esperavam libertador guerreiro. Mas Jesus ensinou que Seu missão envolvia sofrimento — Filho do Homem que "não veio para ser servido, mas para servir, e para dar a sua vida em resgate de muitos" (Marcos 10:45). O título "Filho do Homem" conecta Jesus com humanidade — Ele é nossa representante celestial, o Homem Verdadeiro que realizou o que primeira humanidade falhou em realizar.</p>
+
+<h3>Cordeiro de Deus: Sacrifício Redentor</h3>
+<p>João o Batista apresenta Jesus como "Cordeiro de Deus, que tira o pecado do mundo" (João 1:29). Este título carrega toda história do sacrifício no Antigo Testamento. No sistema sacrificial levítico, cordeiros eram oferecidos pelos pecados do povo. Mas estes sacrifícios eram repetidos porque nunca era suficiente. Cristo é o Cordeiro definitivo — Seu sacrifice uma vez por todas remove o pecado do mundo.</p>
+<p>Isto é articulado em Hebreus 9:25-28: "Nem para muitas vezes oferecer-se a si mesmo, como o sumo sacerdote entra cada ano no santuário com sangue alheio... Mas agora uma vez na consumação dos séculos, por um sacrifice de si mesmo, aboliu o pecado. E, como aos homens está ordenado morreren uma só vez, vindo depois o juízo, assim também Cristo, oferecendo-se uma só vez para levar os pecados de muitos."</p>
+
+<h3>Verbo (Logos): Deus Criador</h3>
+<p>João 1:1 designa Jesus como "o Verbo" — em grego "Logos" (Λόγος). Esta era termo rico carregado de significância tanto em filosofia grega (conceito de Logos como razão cósmica) quanto em pensamento hebraico (Palavra de Deus criadora). Ao chamar Jesus de Logos, João está fazendo afirmação máxima de divindade e centralidade cósmica.</p>
+<p>O Logos não é meramente a divindade abstrata de Deus. É pessoa dinâmica, criativa, através de quem Deus criou e sustém universo. João 1:3 afirma: "Por ele foram criadas todas as coisas... E sem ele nada do que foi feito se fez." Cristo não é criação menor ou semi-deus. Ele é o Logos — a razão, intenção, e poder criativo de Deus encarnado em forma humana.</p>
+
+<h3>Implicações: Quem Jesus Realmente É</h3>
+<p>Estes nomes e títulos juntos revelam que Jesus é muito mais do que homem bom, profeta respeitável, ou reformador moral. É Deus Himself encarnado, o Ungido profetizado, o Senhor da criação, o sacrifice definitivo, a razão cósmica de tudo. Ele merece não apenas respeito. Merece adoração, devoção total, obediência suprema.</p>
+<p>Quando você compreende quem Jesus realmente é — não apenas como ideia teológica, mas como realidade profunda — muda tudo. Sua vida adquire sentido em contexto da glória de Cristo. Suas prioridades se rearanjar em torno do conhecimento de Christ. Sua esperança é fundamentada em promessas de Cristo. Sua identidade é definida por posição em Cristo. Esta é revolução que toda criação cristã verdadeira deve trazer — transformação completamente baseada em revelação de quem Jesus é.</p>`,
+    cards: [
+      {
+        q: 'Como os diversos títulos de Jesus (Cristo, Filho de Deus, Senhor, Cordeiro de Deus, Logos) revelam diferentes aspectos de Sua identidade e obra?',
+        a: 'Cristo = Ungido para redenção; Filho de Deus = divindade; Senhor = autoridade suprema; Cordeiro = sacrifício pelo pecado; Filho do Homem = representante da humanidade; Logos = razão criativa cósmica de Deus. Juntos revelam que Jesus é Deus incarnado, criador, redentor, e supremo senhor.'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'A Vida e Ministério de Jesus: Milagres e Ensinamentos',
+    dur: '30 min',
+    content: `<h3>Estrutura Geral da Vida Terrena de Jesus</h3>
+<p>Os evangelhos oferecem narrativa de vida de Jesus — nascimento em Belém, infância em Nazaré, batismo por João Batista no Rio Jordão com idade cerca de 30 anos, ministério público de aproximadamente 3 anos, crucifixão, ressurreição, e ascensão. Enquanto há muito que não sabemos sobre Sua vida (os evangelhos não oferecem informação contínua), há suficiente revelação para compreender Seu caráter, Seus valores, e Sua missão.</p>
+<p>Seu ministério começou com batismo, durante o qual "desceu sobre ele o Espírito Santo em forma corporal, como uma pomba; e ouviu-se uma voz do céu, que disse: Tu és meu filho bem-amado; em ti me comprazo" (Lucas 3:22). Este foi momento solene de confirmação pública de identidade de Jesus como Filho de Deus e preparação para Seu ministério. Imediatamente após, foi para o deserto onde foi tentado (Mateus 4), emergindo victorioso com poder para testemunho.</p>
+
+<h3>Os Milagres: Sinais de Poder Divino</h3>
+<p>Os milagres de Jesus não eram meramente displays de poder. Eram sinais — ações simbólicas que revelavam quem Ele era e adiantavam o reino vindouro. Os evangelhos registram aproximadamente 35-40 milagres distintos (dependendo se certos relatos são repetições). Estes incluem curas físicas (cego recuperando visão, paralítico sendo levantado), exorcismos (libertação de demônios), milagres naturais (caminhada sobre água, multiplicação de pão), e ressurreições (Lázaro, filha de Jairo, viúva de Naim).</p>
+<p>Os milagres serviam múltiplos propósitos. Demonstravam compaixão de Jesus — Ele tinha preocupação genuína pelos sofredores. Validavam Suas reivindicações de autoridade — somente Deus ou aquele enviado por Deus poderia fazer essas coisas. Ofereciam prefigurações do reino — um mundo onde luto, doença e morte são finalmente eliminados. Produziam fé — muitos crentes em Jesus começaram com testemunho de milagre.</p>
+
+<h3>Os Ensinamentos: O Sermão da Montanha</h3>
+<p>Os ensinamentos de Jesus foram únicos — não apenas em conteúdo, mas em autoridade com que foram proferidos. Mateus 7:28-29 relata: "E aconteceu que, acabando Jesus este discurso, as multidões se maravilharam da sua doutrina, porque lhes ensinava como tendo autoridade, e não como os escribas." Seus ensinamentos não eram teóricos. Eram proferidos com autoridade que indicava conhecimento direto de vontade de Deus.</p>
+<p>O Sermão da Montanha (Mateus 5-7) é sinopse de ensinamentos de Jesus. Começa com as Bem-aventuranças — descrição de pessoas abençoadas por Deus. Depois oferece revisão radical da lei judaica, não apenas em comportamento exterior mas em intenção do coração. "Ouvistes que foi dito aos antigos: Não matarás... Mas eu vos digo que todo aquele que se irar contra seu irmão, será réu de juízo" (Mateus 5:21-22). Jesus vai além de proibição de ato — confronta atitude interior que produz ato.</p>
+<p>O ensinamento mais famoso é a Oração do Senhor, o Pai Nosso (Mateus 6:9-13), que oferece modelo de oração. Também há ensinamentos sobre julgamento, perdão, riqueza, cuidado de Deus, e o reino. Através de parábolas (histórias que comunicam verdade espiritual por analogia), Jesus ensinou sobre natureza do reino de Deus. A parábola do Semeador, a parábola do Filho Pródigo, a parábola dos Talentos — cada uma revelava aspecto do reino.</p>
+
+<h3>O Amor e a Compaixão: Essência da Missão de Jesus</h3>
+<p>Através de milagres e ensinamentos, emoção fundamental que permeia ministério de Jesus é amor. Lucas descreve: "Jesus saía, e vendo a uma grande multidão, teve compaixão dela" (Lucas 9:11). A palavra grega para compaixão, "splagchnizomai" (σπλαγχνίζομαι), significava literalmente ser movido nas entranhas — era amor profundo, visceral, que impelia ação.</p>
+<p>Este amor era caracteristicamente inclusivo. Jesus comia com pecadores e cobradores de impostos — algo inaceitável para líderes religiosos. Quando executores traziam mulher adúltera para apedrejar, Jesus oferecia misericórdia: "Nem eu te condeno; vai-te, e não peques mais" (João 8:11). Aceitava crianças quando discípulos queriam afastá-las (Mateus 19:14). Curava no Sábado, apesar de observância de Sábado ser cerimônia central — porque amor pelo necessitado transcende legalismo. Este era Jesus — não apenas ensino correto, mas prática de amor radical.</p>
+
+<h3>Confrontação com Autoridade Religiosa</h3>
+<p>Enquanto Jesus foi amado por muitos, foi severamente oposto pelos líderes religiosos — escribas, fariseus, saduceus, sumo sacerdote. Por quê? Parcialmente porque Sua liberdade em relação a tradições judaicas ofendia. Mas mais fundamentalmente porque Suas reivindicações de ser Messias e Filho de Deus eram blasfêmia em seus ouvidos. Além disso, Sua ética — ênfase em coração genuíno mais que observância de lei — expôs hipocrisia deles.</p>
+<p>O conflito escalou. Líderes religiosos conspiram contra Jesus (Marcos 12:13 relata que tentaram apanhá-lo em Suas palavras). Acusaram-o de blasfêmia, de trabalhar com demônios, de ser Samaritano possuído. Mas nenhuma acusação de falsidade poderia colar — Jesus enfrentou cada acusação com refutação lógica ou resposta superior. No final, os únicos que podiam fazer aceitar condenação de Jesus era falta de verdade em uma base de verdade absoluta — a acusação de blasfêmia diante de uma população que poderia ser manipulada.</p>
+
+<h3>Significação Total: O Ministério Como Revelação</h3>
+<p>O ministério terrestre de Jesus nos três anos pode ser descrito como revelação progressiva. Começou com obra poderosa. Progrediu em conflito crescente. Alcançou seu ponto culminante na morte. Mas através de todo isso, Jesus estava revelando amor de Deus, autoridade de Deus, e plano redentor de Deus. Cada milagre dizia: "Deus se preocupa e pode ajudar." Cada ensinamento dizia: "Deus deseja transformação moral interna." Cada confrontação dizia: "Deus confronta hipocrisia e ama verdade."</p>
+<p>Os milagres e ensinamentos não são separados em alcance. Juntos, formam revelação integrada de quem Jesus é — o Deus encarnado que ama Sua criação e ativamente trabalha para redenção dela. Este é Jesus do evangelho — não apenas fatos históricos, mas pessoa dinâmica, amorosa, transformadora que continua falando através de Palavra escrita às gerações subsequentes de crentes.</p>`,
+    cards: [
+      {
+        q: 'Como os milagres de Jesus serviram como "sinais" de quem Ele era além de meramente demonstrates de poder sobrenatural?',
+        a: 'Milagres revelaram compaixão genuína de Jesus, validaram Sua autoridade como Filho de Deus, ofereceram prefigurações do reino futuro sem doença ou morte, e produziam fé. Cada milagre comunicava verdade espiritual sobre poder de Deus e Seu desejo de resgatar os sofredores.'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'A Paixão de Cristo: Morte com Propósito Redentor',
+    dur: '32 min',
+    content: `<h3>Caminho Para a Cruz: Predições de Jesus</h3>
+<p>Jesus não foi vítima surpreendente de circunstâncias. Ele previa Sua morte e a apresentava como parte necessária de Seu propósito. Mateus 16:21 registra: "Desde então começou Jesus a mostrar aos seus discípulos que lhe convinha ir a Jerusalém, e sofrer muita coisa dos anciãos, e dos príncipes dos sacerdotes, e dos escribas, e ser morto, e ressuscitar no terceiro dia." Jesus não apenas foi para Jerusalém — foi deliberadamente, sabendo que morte O aguardava.</p>
+<p>Os discípulos não compreenderam. Pedro protestou: "Senhor, isso não te acontecerá" (Mateus 16:22). Mas Jesus respondeu severamente, indicando que este era elemento central de Seu missão. A última refeição que compartilhou com discípulos, a Última Ceia, foi construída em torno de simbolismo de Sua morte iminente. "Isto é o meu corpo, que é dado por vós" — Cristo oferecendo-se a si mesmo como sacrifice.</p>
+
+<h3>O Significado da Cruz em Teologia Cristã</h3>
+<p>A morte de Cristo na cruz não é meramente evento trágico ou morte de mártir injusto. Tem significação redentora profunda. Vários modelos teológicos explicam como a morte de Cristo nos salva. O modelo de "satisfação" (desenvolvido por Anselmo) argumenta que Cristo satisfaz a justiça de Deus — mediante sacrifice de Si mesmo, faz reparação adequada pelo pecado. O modelo de "resgate" argumenta que Cristo paga preço (Seu próprio sangue) para libertar humanidade da escravidão ao pecado.</p>
+<p>O modelo de "exemplo moral" (frequentemente associado com Abelardo) argumenta que morte de Cristo é demonstração do amor supremo que inspira resposta de amor. Há também modelo de "vitória cósmica" — Cristo vence Satanás e poder da morte. E há modelo de "reconciliação" — morte de Cristo restaura relação entre Deus e humanidade. A Bíblia usa toda estas linguagens (e mais) para descrever redemptive work de Cristo, sugerindo que cada modelo captura aspecto real.</p>
+
+<h3>Crueldade e Injustiça: O Sofrimento de Cristo</h3>
+<p>A crucifixão era morte horrível — reserved para criminosos mais desonrosos e escravos. Os evangelhos não entram em detalhe gráfico (como história secular), mas há indicações da ferocidade. O flagelo prévio à crucifixão era conhecidamente brutal. A crucifixão si mesma — cravos através de nervos, suspensão do corpo, morte lenta por asfixia ou choque — era agonia extrema.</p>
+<p>Mateus 27:46 registra: "Meu Deus, meu Deus, por que me desamparaste?" Estas palavras de desespero aparente aludem ao Salmo 22, um salmo de lamento que também contém promessas de redenção. O desamparo aparente (mas verdadeiro) que Cristo experimentou era separação de presença imediata do Pai — conseqüência de carregar o peso do pecado humano. Como Paulo coloca: "Aquele que não conheceu pecado, o fez pecado por nós; para que nele fêssemos feitos justiça de Deus" (2 Coríntios 5:21).</p>
+
+<h3>A Ressurreição: Vindicação e Vitória</h3>
+<p>Depois de morte, havia enterro. Os discípulos estavam em desespero. Sua esperança — que Jesus era Messias — parecia destruída. Mas no terceiro dia, algo extraordinário ocorreu — Cristo ressuscitou dentre os mortos. Os evangelhos relatam múltiplas aparições. Ele apareceu a Maria Madalena, aos discípulos, a Tiago, a Paulo. Afirmações de ressurreição enchem o Novo Testamento.</p>
+<p>A ressurreição não foi ressurreição espiritual meramente ou continuação da influência de Jesus. Foi ressurreição corporal — Seu corpo foi transformado, glorificado, mas permaneceu corpóreo. Lucas 24:42-43 relata que Jesus "comeu um bocado de peixe assado perante eles" para demonstrar realidade corporal. Mas também Seu corpo era transformado — Ele aparecia de portas fechadas (João 20:19), às vezes não era reconhecido imediatamente (João 20:14-15).</p>
+<p>A ressurreição teve significação múltipla. Validou as reivindicações de Jesus — se Ele não era verdadeiramente Filho de Deus, morte seria o fim. Mas Deus ressuscitou-O, confirmando formalmente Sua identidade. Venceu o poder da morte — não apenas para Cristo, mas para todos que nele creem (1 Coríntios 15:54-57). Ofereceu base para esperança futura — como Cristo ressuscitou, assim aqueles em Cristo ressuscitarão também (1 Tessalonicenses 4:14).</p>
+
+<h3>O Significado Contínuo da Morte e Ressurreição Para Cristãos</h3>
+<p>A morte e ressurreição de Cristo não é meramente evento histórico distante. É realidade presente que transforma vidas continuamente. Romanos 6:3-11 explica que quando você é batizado em Cristo, você é batizado em Sua morte e ressurreição. Sua morte torna-se sua morte — você morre ao poder do pecado. Sua ressurreição torna-se sua ressurreição — você é levantado para vida nova.</p>
+<p>Isto significa que você não está mais sob condenação (Romanos 8:1). Significa que você pode vencer tentação porque a morte não tem poder (1 Coríntios 15:57). Significa que você tem esperança de vida eterna porque ressurreição é garantida para você também. A cruz não é apenas passado. É poder presente que trabalha em você, transformando-o de pecador condenado em filho redimido de Deus.</p>`,
+    cards: [
+      {
+        q: 'Como a morte e ressurreição de Cristo funcionam juntas como eventos redentores integrados, e qual é o significado contínuo destes eventos para cristãos hoje?',
+        a: 'Morte de Cristo paga a penalidade do pecado através de sacrifice substitutório. Ressurreição prova divindade de Cristo, vence poder da morte, oferece fundação para ressurreição futura de crentes. Juntas, são poder presente que morte/ressuscita o crente — morre ao pecado, levanta à vida nova em Cristo.'
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: 'O Ofício de Cristo: Profeta, Sacerdote e Rei',
+    dur: '29 min',
+    content: `<h3>O Tríplice Ofício: Estrutura de Compreensão</h3>
+<p>A tradição cristã compreende a obra de Cristo em termos de três ofícios — Profeta, Sacerdote e Rei. Esta estrutura vem de identificação destes três papéis no Antigo Testamento como tipos de Cristo. Ele é Profeta que anuncia a vontade de Deus, Sacerdote que oferece sacrifice e intercede por povo, Rei que reina com justiça e autoridade. Cada ofício é realizado plenamente apenas em Cristo.</p>
+
+<h3>Cristo como Profeta: Palavra de Deus</h3>
+<p>Os profetas no Antigo Testamento eram aqueles através de quem Deus falava. "Assim diz o Senhor..." era frase padrão. Deuteronômio 18:15 promete que Deus levantará Profeta como Moisés — implicação é que seria Profeta supremo que falaria com autoridade final. Hebreus 1:1-2 afirma que Deus "falou muitas vezes e de muitas maneiras aos nossos pais por meio dos profetas, mas nestes últimos dias falou-nos por meio de seu Filho."</p>
+<p>Cristo é o Profeta — não meramente um profeta entre muitos, mas Profeta final e supremo. Sua palavra é palavra de Deus. Quando Jesus diz "Eu vos digo," está expressando autoridade que transcende profetas anteriores. Mateus 7:28-29 relata que quando Jesus terminou o Sermão da Montanha, "as multidões se maravilharam da sua doutrina, porque lhes ensinava como tendo autoridade, e não como os escribas." Como Profeta, Cristo revela verdade final de Deus.</p>
+
+<h3>Cristo como Sacerdote: Intercessor e Sacrifício</h3>
+<p>Um sacerdote no Antigo Testamento tinha duas funções principais: oferecer sacrifício ao Deus em favor do povo, e interceder pela povo diante de Deus. O sumo sacerdote era o maior entre sacerdotes. Hebreus apresenta a compreensão mais clara de Jesus como Sacerdote. Hebreus 4:14-15 declara: "Temos um grande sumo sacerdote, Jesus, o Filho de Deus... Porque não temos um sumo sacerdote que não possa compadecer-se com as nossas fraquezas, mas foi em tudo tentado como nós, mas sem pecado."</p>
+<p>Cristo é Sacerdote supremo porque ofereceu o sacrifice supremo — a Si mesmo. Hebreus 7:26-27 expressa: "E convinha que tivéssemos um tal sumo sacerdote, santo, inocente, imaculado, separado dos pecadores... Ele não necessita... oferecer sacrifícios cada dia, como esses sumo sacerdotes, primeiro por seus próprios pecados, e depois pelos do povo; porque isso fez uma só vez, oferecendo-se a si mesmo." O sacrifice de Cristo é definitivo, eficaz para sempre.</p>
+<p>Além disso, Cristo continua funcionando como Sacerdote em intercessão. Hebreus 7:25 afirma: "Portanto, pode também salvar completamente aos que por ele se chegam para Deus, vivendo sempre para interceder por eles." Agora à destra do Pai, Cristo intercede continuamente por Seus — representa nossos interesses diante de Deus, apresenta nossas orações, promove nossa causa.</p>
+
+<h3>Cristo como Rei: Reinante e Juiz</h3>
+<p>O Antigo Testamento frequentemente menciona o Rei de Israel como figura messiânica. 2 Samuel 7:12-13 promete um Rei cuja descendência e reino seriam eternos. Mateus abre seu evangelho com genealogia que conecta Jesus a Davi, estabelecendo Suas credenciais como Rei prometido. Mas o reino de Cristo é espiritual, não político — "Meu reino não é deste mundo" (João 18:36).</p>
+<p>Como Rei, Cristo reina agora espiritualmente — em corações de crentes, na Igreja, no cosmos (mesmo se isso não é plenamente reconhecido ainda). Colossenses 1:13 afirma que Deus "nos resgatou do domínio da escuridão e nos transportou para o reino do seu Filho querido." Os crentes vivem agora sob reinado de Cristo. Mas há também dimensão futura — Cristo retornará para reinar gloriosamente, julgando todas as nações (Mateus 25:31-46).</p>
+
+<h3>Integração dos Ofícios: Plenitude de Obra Redentora</h3>
+<p>Os três ofícios trabalham juntos. Como Profeta, Cristo revela a verdade final — a verdade de quem Deus é e como Deus redime. Como Sacerdote, Cristo oferece sacrifice e intercede — removendo obstáculo do pecado e orando por Seu povo. Como Rei, Cristo reina e julga — exercitando autoridade para proteger Seu povo e punir rebelião.</p>
+<p>Nenhum ofício sozinho seria suficiente. Se Cristo fosse apenas Profeta, poderíamos conhecer a verdade mas ainda estaríamos condenados. Se fosse apenas Sacerdote, o sacrifice seria oferecido mas não temos autoridade que execute. Se fosse apenas Rei, teríamos poder mas talvez não compreenderíamos vontade de Deus ou nos sentiríamos irrevogavelmente separados.</p>
+<p>Mas em Cristo, todos os três ofícios convergem. Ele é Profeta que nos diz verdade, Sacerdote que nos salva pelo sacrifice e intercede por nós, Rei que reina e nos protege. Esta integração múltipla de ofícios é o que torna redenção em Cristo completa e eficaz. Ele é adequado para toda necessidade — para nossa ignorância (Profeta), nossa culpa (Sacerdote), nossa impotência (Rei).</p>`,
+    cards: [
+      {
+        q: 'Como os três ofícios de Cristo (Profeta, Sacerdote, Rei) trabalham juntos para realizar redenção completa, e por que nenhum ofício sozinho seria suficiente?',
+        a: 'Como Profeta, Cristo revela verdade de Deus; como Sacerdote, oferece sacrifice e intercede; como Rei, exerce autoridade para reinar e julgar. Nenhum sozinho é suficiente: profecia sem sacrifice deixaria culpa; sacrifice sem profecia deixaria ignorância; ambos sem reinado deixaria impotência. Juntos, cobrem todas as necessidades.'
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: 'O Evangelho de Cristo: Mensagem de Libertação',
+    dur: '27 min',
+    content: `<h3>O Evangelho em Sua Essência Mais Simples</h3>
+<p>O evangelho é notícia de que Deus ofereceu salvação através de Cristo. Não é teoria teológica complexa (embora tenha profundidade teológica). É oferta pessoal, relacional de perdão e vida eterna. 1 Coríntios 15:1-4 oferece resumo: "Irmãos, venho lembrar-vos o evangelho que vos preguei... que Cristo morreu pelos nossos pecados, segundo as Escrituras, foi sepultado, e ressuscitou ao terceiro dia, segundo as Escrituras."</p>
+<p>Há quatro componentes: (1) Cristo morreu — verdadeiro evento histórico, verdadeiro sacrifice. (2) Pelos nossos pecados — morte de Cristo foi por nós, em nosso lugar. (3) Foi sepultado — morte foi real, completa. (4) Ressuscitou — morte não foi final; Cristo foi vindicado por Deus Pai.</p>
+
+<h3>O Evangelho Oferecido Livremente: Graça Sem Merecimento</h3>
+<p>Um aspecto revolucionário do evangelho é que é oferecido gratuitamente. Você não ganha salvação. Você a recebe. Efésios 2:8-9 é claro: "Porque pela graça sois salvos, mediante a fé; e isto não vem de vós, é dom de Deus; não vem das obras, para que ninguém se glorie." Isto distingue o cristianismo de religiões que enfatizam que você deve "fazer bastante" para alcançar salvação.</p>
+<p>O evangelho não é meritocracia divina onde Deus recompensa bem-comportados e castiga maus. É graça — favor imerecido oferecido por Deus. Você não mereceu ser salvo. Você merecia julgamento. Mas Deus, em misericórdia, ofereceu sacrifício de Cristo como substitute para você — Ele tomou o que você merecia (morte, separação de Deus) de modo que você pudesse receber o que Cristo merecia (vida, comunhão com Deus).</p>
+
+<h3>Recebendo o Evangelho: Fé e Arrependimento</h3>
+<p>Como você responde ao evangelho? Pela fé. Mas fé não é meramente conhecimento mental. É confiança pessoal — entrega a Christ como Senhor e Salvador. Romanos 10:9-10 explica: "Se com tua boca confessares ao Senhor Jesus, e em teu coração creres que Deus o ressuscitou dos mortos, será salvo; porque com o coração se crê para a justiça, e com a boca se faz confissão para a salvação."</p>
+<p>Entrega também implica arrependimento — não apenas estar descontente com pecado, mas vontade de afastar-se dele, virar de sua influência. 2 Pedro 3:9 afirma que Deus "não quer que ninguém pereça, senão que todos venham a arrepender-se." Arrependimento é mudança de mente, de direção. Você deixa sua auto-soberania e submete-se à soberania de Deus.</p>
+
+<h3>O Evangelho Proclamado: Mensagem Apostólica</h3>
+<p>Os apóstolos entenderam a comissão de pregação do evangelho como tarefa urgente. Atos 4:2 relata que líderes religiosos observavam que apóstolos "ensinavam ao povo e anunciavam em Jesus a ressurreição dos mortos." Apesar de ameaçadas, perseguição, prisão, discípulos não cessaram de pregar (Atos 4:18-20: "Não há lugar para pedir para que não faleis ou ensineis em nome de Jesus.").p>
+<p>Por quê essa urgência? Porque compreendiam que eternidade estava em jogo. Aqueles que creem recebem vida eterna. Aqueles que recusam enfrentam morte eterna. 2 Coríntios 5:11 registra compreensão de Paulo: "Sabendo, pois, o temor do Senhor, persuadimos os homens." O conhecimento de julgamento vindouro produzia urgência em evangelismo.</p>
+
+<h3>Barreiras ao Evangelho: Rejeição e Ceticismo</h3>
+<p>O evangelho não é universalmente recebido. Muitos o rejeitam. Por quê? Paulo oferece perspectiva em 1 Coríntios 1:18: "Porque a palavra da cruz é loucura para os que se perdem; mas para nós, que nos salvamos, é poder de Deus." O evangelho parece tolo para aqueles que confiam em sabedoria humana ou lógica racional sozinhas. Não é fácil aceitar que Deus became humano, morreu, ressuscitou. Não é fácil submeter sua vida ao controle de outro — até Deus.</p>
+<p>Além disso, há barreiras práticas. Aceitar evangelho significa submissão, mudança de vida, possível perseguição. Nem todos estão dispostos a pagar o preço. Há também barreiras intelectuais — pessoas questionam se evangelho é verdadeiro historicamente, se Deus existe, se milagres são possíveis. Estes são questões legítimas que requerem resposta (ver cursos de Apologética).</p>
+
+<h3>A Vida de Evangelho: Transformação Contínua</h3>
+<p>Receber evangelho não é evento único depois do qual vida permanece igual. É beginning de transformação contínua. 2 Coríntios 5:17 afirma: "Portanto, se alguém está em Cristo, é nova criatura; as coisas antigas já passaram; eis que tudo se fez novo." Você é novo — remade, redirecionado, restaurado em propósito. Mas transformação é processo — você cresce, aprende, é moldado cada dia para semelhança de Cristo.</p>
+<p>O evangelho não é apenas para salvação pessoal (embora seja isso também). Tem implicações sociais — você é comissionado de Cristo para "ir" e "fazer discípulos" (Mateus 28:19-20). O evangelho não é escapismo de mundo. É empowerment para viver radicamente, para servir com amor, para testemunhar corajosamente. Sua vida completa — trabalho, relacionamentos, recreação, tudo — deve ser saturado com realidade de que foi redimido pelo sangue de Cristo e agora é propriedade de Deus.</p>`,
+    cards: [
+      {
+        q: 'Como o evangelho oferecido em Cristo diferencia-se fundamentalmente de religiões baseadas em mérito ou realização pessoal?',
+        a: 'Evangelho é graça — favor imerecido oferecido livremente porque Cristo pagou a penalidade. Você não ganha salvação por comportamento; você a recebe pela fé em sacrifice de Cristo. Isso contrasta com sistemas de mérito onde você deve "fazer bastante" para alcançar aprovação divina.'
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Cristologia Escriturística vs. Heresias Históricas',
+    dur: '28 min',
+    content: `<h3>A Importância de Doutrina Correta Sobre Cristo</h3>
+<p>Desde o início da era apostólica, houve tentativas de distorcer a verdade sobre Cristo. O Novo Testamento já advertiu contra falsas compreensões. 1 João 4:1-3 exorta: "Queridos amigos, não creiam em todo e qualquer espírito, mas testem os espíritos para ver se são de Deus, porque muitos falsos profetas têm saído pelo mundo. Assim é como reconhecem o Espírito de Deus: Todo espírito que confessa que Jesus Cristo veio em corpo é de Deus; mas todo espírito que não confessa Jesus não é de Deus." Doutrina correta sobre Cristo não é intelectualismo ocioso — é assunto de vida espiritual.</p>
+
+<h3>Docetismo: Cristo Apenas Aparentemente Humano</h3>
+<p>Uma das primeiras heresias era Docetismo (do grego "dokeo" = "parecer"), que afirmava que Cristo apenas parecia ser humano. Ele era totalmente divino, mas a aparência de humanidade era ilusão. O problema: se Cristo não era verdadeiramente humano, então Sua morte não foi verdadeira, e portanto não pode ser sacrifice redentor genuíno. Além disso, nega a realidade da Encarnação — Deus realmente entrou em condição humana.</p>
+
+<h3>Arianismo: Cristo Criatura Divina, Não Plenamente Deus</h3>
+<p>Arianismo (nomeado por Ário, um presbítero de Alexandria no século IV) ensinava que Cristo era a criatura mais elevada de Deus, mas criatura não obstante — "houve um tempo quando Ele não era." Isto afirma que Cristo é subordinado ao Pai em um grau que diminui Sua divindade. O problema: se Cristo é criatura, não importa quão elevada, então não é verdadeiramente digno de adoração que ele recebe no Novo Testamento. Além disso, nega divindade igual de Cristo ao Pai.</p>
+<p>O Concílio de Niceia (325 d.C.) foi convocado principalmente para refutar Arianismo. O concílio afirmou que Cristo é "consubstancial" (homoousion) com o Pai — da mesma substância, verdadeiramente divino, co-eterno. Isto tornou-se base do Credo de Niceia que ainda é recitado em muitas igrejas.</p>
+
+<h3>Nestorianismo: Cristo Como Duas Pessoas</h3>
+<p>Nestório (patriarca de Constantinopla no século V) ensinava que havia separação entre a pessoa divina e a pessoa humana em Cristo — duas naturezas tão completamente separadas que havia efetivamente duas pessoas. Isto criava problema: qual pessoa morreu? Qual foi glorificada? Se eram separadas, como era Cristo um redentor unificado?</p>
+<p>O Concílio de Éfeso (431 d.C.) condenou Nestorianismo, afirmando que em Cristo havia uma pessoa (não duas) em duas naturezas genuínas (não uma). Maria é theotokos — "portadora de Deus" — porque ela deu à luz a pessoa do Filho de Deus, embora em Sua forma humana.</p>
+
+<h3>Monoteletismo: Cristo Com Vontade Divina Apenas</h3>
+<p>Monoteletismo (monos = um; thele = vontade) ensinava que Cristo tinha apenas uma vontade — Sua vontade divina. Isto negava a realidade de Sua humanidade genuína, que teria incluído vontade genuinamente humana. O problema: se Cristo tinha apenas vontade divina, como enfrentou verdadeiramente a tentação? No Getsêmani, se Sua vontade humana desejava evitar a cruz, isto mostraria conflito genuíno — mas Monoteletismo nega possibilidade de tal conflito.</p>
+
+<h3>Docetismo Moderno: Cristo Apenas Símbolo ou Mito</h3>
+<p>Heresias antigas foram principalmente vencidas pela ortodoxia, mas emergem novamente em formas modernas. Alguns críticos bíblicos modernos afirmam que Cristo é meramente construção mítica de Igreja primitiva, não pessoa histórica real. Isto é forma moderna de Docetismo — Cristo é meramente ideia, símbolo, narrativa, não ser histórico real.</p>
+<p>O problema é que isso contradiz evidência histórica. Mesmo fontes seculares (Tácito, Plínio, Josefo) confirmam existência histórica de Jesus e primitiva adoração dele. Além disso, qualquer explicação histórica da origem do cristianismo deve explicar por que discípulos ficaram convencidos pela morte de seu mestre que ressuscitou — isto requer acontecimento histórico real, não apenas crença mítica.</p>
+
+<h3>Compreensão Ortodoxa: Unidade Dinâmica Integrada</h3>
+<p>A compreensão ortodoxa, confirmada pelos Concílios de Niceia (325), Constantinopla (381), e Calcedônia (451), é que Cristo é: (1) Uma pessoa (não duas). (2) Verdadeiramente divino — co-eterno e consubstancial com Pai. (3) Verdadeiramente humano — assumindo corpo e alma humanas genuínas. (4) Duas naturezas unidas sem confusão, sem separação, sem mudança. (5) Dignidade de adoração como Deus.</p>
+<p>Esta compreensão protege verdade essencial: Jesus é Deus incarnado que sofreu e morreu por humanidade. Não é ideia abstrata. É realidade histórica. Não é metade-Deus, metade-humano. É plenamente ambos. E é unificado — uma pessoa com duas naturezas completas, operando integradas sem conflito interno ou separação.</p>`,
+    cards: [
+      {
+        q: 'Como as heresias cristológicas históricas (Docetismo, Arianismo, Nestorianismo) comprometeram a redenção, e qual é a importância da compreensão ortodoxa?',
+        a: 'Docetismo: se Cristo era apenas aparentemente humano, Sua morte não era verdadeira. Arianismo: se Cristo era criatura, não era digno de adoração. Nestorianismo: se era duas pessoas, unidade redentora era impossível. Ortodoxia afirma: uma pessoa verdadeiramente divina e humana — fundação necessária para redenção genuína.'
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Cristo na Tradição Pentecostal e Assembleia de Deus',
+    dur: '26 min',
+    content: `<h3>Ênfase Pentecostal: Cristo Pelo Espírito Santo</h3>
+<p>A tradição pentecostal tem compreensão particular de Cristologia que enfatiza operação contínua de Cristo através do Espírito Santo hoje. Não é rejeitamento da compreensão clássica de Christ (verdadeiramente Deus e humano, morrida redentora, ressurreição, etc.). É compreensão adicional de que Cristo continua operando presentemente e poderosamente através do Espírito.</p>
+<p>Assembleia de Deus (Assembleias de Deus) foi fundada nos primeiros dias da tradição Pentecostal (1914 nos EUA), e afirma compromisso com "fé que uma vez foi dada aos santos" (Jude 3). Sua declaração de fé afirma crença em Cristo como Filho de Deus, morte redentora, ressurreição corporal, e divindade completa. Mas pentecostalismo acrescenta ênfase de que poder de Cristo — milagres, libertação, transformação — continua operando através do Espírito Santo nos dias de hoje.</p>
+
+<h3>Cristo Como Batizador no Espírito Santo</h3>
+<p>Um ensinamento distintivamente pentecostal é que Cristo é aquele que batiza crentes no Espírito Santo. João o Batista predisse: "Eu vos batizo com água... mas aquele que vem após mim... vos batizará com o Espírito Santo e com fogo" (Mateus 3:11). Jesus confirmou esta promessa: "João batizou com água, mas vós sereis batizados com o Espírito Santo" (Atos 1:5).</p>
+<p>Para pentecostais, o batismo no Espírito Santo é experiência pós-conversão de ser cheio de poder do Espírito. Frequentemente acompanhado por sinais como línguas, profecia, poder para testemunho. Esta é ênfase nas operações sobrenaturais contínuas de Cristo através do Espírito — não confinadas ao passado, mas vivas e operantes hoje.</p>
+
+<h3>Cristo Como Curador: Healing Powers Continuado</h3>
+<p>Pentecostalismo afirma que poder de cura de Cristo continua através do Espírito Santo hoje. Tiago 5:14-15 oferece instrução: "Está algum de vós doente? Chame os presbíteros da igreja, e orem por ele, ungindo-o com azeite em nome do Senhor; e a oração da fé salvará o doente, e o Senhor o levantará." Isto é esperança de cura divina para doentes.</p>
+<p>Isto não nega medicina moderna — muitos pentecostais usam médicos e medicina. Mas afirma que Cristo continua realizando milagres de cura através da fé, oração, e poder do Espírito. Histórias de curas milagrosas são comuns em congregações pentecostais, testificando ao poder contínuo de Cristo.</p>
+
+<h3>Cristo Operando Através de Dons Espirituais</h3>
+<p>Cristo opera através de dons do Espírito Santo distribuidatos ao corpo de Cristo. 1 Coríntios 12:4-11 lista dons — sabedoria, conhecimento, fé, cura, milagres, profecia, discernimento, línguas, interpretação. Pentecostalismo afirma que estes dons continuam operando hoje quando crentes estão cheios do Espírito Santo. Não são meramente para Igreja primitiva — são para toda a era da Igreja até o retorno de Cristo.</p>
+<p>Quando um crente cheio do Espírito ministra através desses dons — pregando com ousadia, profetizando palavras de Deus, orando por cura, falando em línguas — Cristo está operando através dele. Isto torna ministério cristão não meramente intelectual (embora inclua inteligência), mas sobrenaturalmente potente. É Cristo ministering através de Seu corpo.</p>
+
+<h3>Cristo Como Libertador: Poder Sobre Demônios e Escravidão</h3>
+<p>Pentecostalismo enfatiza poder de Cristo sobre Satanás e demônios. Colossenses 2:15 afirma que Cristo "despojou os poderes e potestades, e os exibiu abertamente em triunfo por meio da cruz." Cristo não apenas salvou do pecado. Venceu poder de mal. Através da cruz, desarmou as forças do mal.</p>
+<p>Isto significa que cristãos não estão indefesos contra tentação demoníaca ou opressão. Em nome de Jesus, demônios podem ser expulsos (Marcos 16:17). Escravidão ao pecado ou maus hábitos pode ser quebrada através de fé em Cristo. Libertação não é apenas de culpa de pecado, mas do poder dele. Cristo é libertador — não apenas oferecendo perdão, mas poder para superação e vitória.</p>
+
+<h3>Implicação Prática: Relacionamento Dinâmico Com Cristo Vivo</h3>
+<p>Para pentecostais, Cristo não é figura histórica meramente (embora a história seja verdadeira) ou conceito teológico apenas (embora seja verdade teológica). Cristo é Senhor vivo que fala, guia, capacita, cura, liberta, transforma AGORA. Ele não ficou em cruz ou ressurreição. Continuou para sempre, operando através de Seu Espírito.</p>
+<p>Isto transforma espiritualidade cristã de intelectual para experiencial, de teórica para prática, de passiva para envolvida. Você não apenas crê SOBRE Cristo. Você relaciona COM Cristo. Você fala com ele em oração. Ele fala com você através Sua Palavra e Espírito. Você vê Seu poder operando em vidas. Você experimenta Sua libertação pessoalmente. Este é Cristo da fé pentecostal — não somente criador histórico, mas Senhor vivo e operante.</p>`,
+    cards: [
+      {
+        q: 'Como a tradição pentecostal compreende a operação contínua de Cristo através do Espírito Santo, e como isto afeta a prática cristã prática?',
+        a: 'Pentecostalismo afirma que Cristo continua batizando no Espírito, curando os doentes, operando dons sobrenaturais, e libertando de demônios — NÃO apenas no passado, mas hoje. Isto torna fé menos intelectual e mais experiencial — você não apenas crê sobre Cristo, mas experiencia Seu poder vivo operando presentemente.'
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: 'A Centralidade de Cristo: Consumação de Tudo',
+    dur: '29 min',
+    content: `<h3>Cristo é o Centro de História</h3>
+<p>Cristologia apropriada reconhece que Cristo é centro e consumação de toda história. Colossenses 1:16-17 afirma: "Porque nele foram criadas todas as coisas que há nos céus e na terra... tudo foi criado por ele e para ele... e ele é antes de todas as coisas, e todas as coisas subsistem por ele." Toda criação — passada, presente, futura — foi criada para manifesta glória de Cristo e é sustentada por Seu poder.</p>
+<p>Isto significa que a história não é coleção de eventos casuais sem propósito. Tem narrativa — arco de começo (criação por Cristo) para meio (queda, redenção em Cristo) para fim (consumação em Cristo). Toda história converge em Cristo. Do ponto de vista cristão, história é cristocêntrica — centrada em pessoa e obra de Jesus Cristo.</p>
+
+<h3>Cristo Pré-Encarnado: Atuando Através do Antigo Testamento</h3>
+<p>Uma compreensão importante é que Cristo não é meramente figura do Novo Testamento. Ele estava ativo antes de Sua encarnação. O Antigo Testamento está repleto de tipos, símbolos, e profecias de Cristo. Melquisedeque, o cordeiro do Dia da Expiação, o servo sofredor de Isaías 53 — todos apontam para Cristo. 1 Coríntios 10:4 mesmo sugere que "Cristo" estava presente com Israel no deserto: "todos comeram um e o mesmo alimento espiritual; e todos beberam a mesma bebida espiritual, porque bebiam de rocha espiritual que os seguia; e essa rocha era Cristo."</p>
+<p>Jesus Himself argumentou que o Antigo Testamento testificava dele. João 5:39-40 registra: "Examinais as Escrituras, porque vós cuidais ter nelas a vida eterna, e são elas que testificam de mim... e não quereis vir para mim para que tenhais vida." O Cristo ressuscitado ensinou aos discípulos que "em todas as Escrituras... as coisas a seu respeito" (Lucas 24:27).</p>
+
+<h3>A Encarnação Como Evento Pivô da Cosmologia</h3>
+<p>A encarnação — Deus se tornando humano em Cristo — é o evento mais significativo da história. Tudo antes aponta para ele; tudo depois flui deste. Para o cristão, o ano (A.D. = "Anno Domini" = "Ano do Senhor") é dividido em torno da encarnação. A História mundial é dividida B.C. e A.D. — antes e depois do nascimento de Cristo.</p>
+<p>Por quê é tão significante? Porque é Deus entrando pessoalmente, intimamente na situação humana. Não Deus permanecendo distante; Deus vindo perto. Não Deus impondo lei da distância; Deus demonstrando amor na carne. Não Deus oferecendo escape; Deus oferecendo redenção. A encarnação muda tudo — nosso entendimento de Deus, nossa compreensão de humanidade, nossa esperança de salvação.</p>
+
+<h3>Cristo Como Consumação de Promessas e Profecia</h3>
+<p>Centenas de profecias do Antigo Testamento apontam para Cristo. Seu nascimento (Belém), Sua linhagem (descendência de Davi), Sua morte (perfuração de mãos e pés), Sua ressurreição, Sua ascensão — tudo foi profetizado. O detalhe é extraordinário. Mateus frequentemente nota: "isto aconteceu para que se cumprisse o que fora dito pelo profeta..." Profecia não é apenas informação. Vincula Cristo às intenções de Deus reveladas há séculos.</p>
+<p>Isto oferece confiança de que Cristo é realmente o Messias prometido — não pessoa casual que se autodenominou salvador, mas culminação de plano de Deus trabalhado através de história. De Abraão (promise de semente) ao rei David (promise de reino) aos profetas (promise de redentor) — tudo aponta para e encontra cumprimento em Cristo.</p>
+
+<h3>O Retorno de Cristo: Consumação Final</h3>
+<p>O história cristã não termina com morte, ressurreição e ascensão de Cristo. Continua com Sua segunda vinda. Cristo prometeu: "Vou preparar um lugar para você... e voltarei para levá-los para mim" (João 14:2-3). Quando Cristo retorna, haverá julgamento final, ressurreição dos mortos, criação de novos céus e terra. Toda história será consumada em Sua retorno.</p>
+<p>Isto significa que Cristo não é apenas salvador passado. É esperança futura. Quando você está sofrendo, pode olhar para frente para retorno de Cristo quando Ele eliminará todo sofrimento. Quando mundo parece injusto, pode confiar que Cristo retornará para julgar com justiça. Quando tudo parece sem propósito, pode saber que Cristo tem plano final e supremo.</p>
+
+<h3>Vivendo Com Cristo em Foco: Implicações Prácticas</h3>
+<p>Se Cristo é verdadeiramente centro de tudo — história, criação, redenção, futuro — então Cristo deve ser centro de sua vida. Não periférico. Não um interesse entre muitos. Central. Isto significa que suas decisões, prioridades, relacionamentos, trabalho — tudo — deve ser avaliado em luz de Cristo. "Que fazer que honraria a Cristo?" "Como posso servir ao reino de Cristo?" "Como isto me aproxima de ou afasta de Cristo?"</p>
+<p>Paulo expressa isto em Filipenses 3:8: "E na verdade considero tudo como perda, comparado com a excelência do conhecimento de Cristo Jesus, meu Senhor." Quando você conhece Cristo — quando Ele se torna realidade viva mais importante em sua vida — tudo mais passa a perspectiva correta. Você não procura fama (sem propósito comparado com glória de Cristo). Você não persegue riqueza (sem valor comparado com tesouro em Cristo). Você não busca auto-satisfação (sem alegria comparada com alegria em Cristo).</p>
+<p>Viver com Cristo como centralidade é vida mais profunda, significante, esperançosa. Não é negativismo ou escapismo. É realismo — você está vivendo em alinhamento com realidade mais fundamental de universo. Deus é verdadeiro. Cristo é Senhor. Eternidade é real. E sua vida nesta temporalidade encontra significado supremo quando vivida em serviço e adoração de Cristo.</p>`,
+    cards: [
+      {
+        q: 'Por que Cristo deve ser compreendido como o verdadeiro centro de toda história (passada, presente e futura), e como essa compreensão afeta a vida cristã prática?',
+        a: 'Cristo foi criador de tudo, está ativo através de história (Antigo Testamento até presente), é consumação final quando retorna. Tudo converge em Ele. Praticamente, significa que suas decisões, prioridades, e vida devem ser centradas em Cristo — não marginais, mas central — buscando sempre o que honra e serve a Ele.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
