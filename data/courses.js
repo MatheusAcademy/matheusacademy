@@ -2236,6 +2236,25 @@ var MA_COURSES = [
     color: '#ea4335',
     addedTs: 1776024489781,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/jh.jpg',
+    id: 'jh',
+    name: 'Biografia de Jensen Huang',
+    desc: 'O fundador da NVIDIA e sua importância na revolução da IA.',
+    file: '38-bio-jensen-huang.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'JH_HENRY_2026_MASTER',
+    ak: 'jh_auth',
+    storagePrefix: 'jh_',
+    icon: '👤',
+    color: '#76b900',
+    addedTs: 1776024494844,
+    active: true
   }
 ];
 var MA_CATS = [
