@@ -2407,6 +2407,25 @@ var MA_COURSES = [
     color: '#00a4ef',
     addedTs: 1776024534792,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ba.jpg',
+    id: 'ba',
+    name: 'Biografia de Bernard Arnault',
+    desc: 'O líder da LVMH e um dos maiores grupos de luxo do mundo.',
+    file: '32-bio-bernard-arnault.html',
+    cat: 'Biografias',
+    modules: 1,
+    topics: 3,
+    hours: 1,
+    quizzes: 3,
+    salt: 'BA_HENRY_2026_MASTER',
+    ak: 'ba_auth',
+    storagePrefix: 'ba_',
+    icon: '👤',
+    color: '#8d6e63',
+    addedTs: 1776024539831,
+    active: true
   }
 ];
 var MA_CATS = [
