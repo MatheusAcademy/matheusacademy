@@ -887,24 +887,24 @@ var MA_COURSES = [
     addedTs: 1775831018588,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/pi.jpg',
     id: 'pi',
-    name: 'Preparação Completa para IELTS',
-    desc: 'Reading, listening, speaking e writing com estratégia de prova e treino por habilidade.',
+    name: 'Preparação IELTS',
+    desc: 'Prepare-se estrategicamente para o IELTS: estratégias de leitura/audição, redação com estrutura, speaking fluente',
     file: '19-preparacao-ielts.html',
-    cat: 'Inglês',
+    cat: 'Idiomas',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'PI_HENRY_2026_MASTER',
+    salt: 'pi_HENRY_2026_MASTER',
     ak: 'pi_auth',
     storagePrefix: 'pi_',
-    icon: '🇺🇸',
+    icon: '🎓',
     color: '#880E4F',
     free: true,
-    addedTs: 1776284574863,
+    addedTs: 1776289928807,
     active: true
   },
   {
