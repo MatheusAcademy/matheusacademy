@@ -3131,24 +3131,24 @@ var MA_COURSES = [
     addedTs: 1776284520660,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/io.jpg',
     id: 'io',
-    name: 'Internet das Coisas e Casas Inteligentes',
-    desc: 'Sensores, dispositivos conectados, automação residencial e cidades inteligentes.',
+    name: 'IoT e Casas Inteligentes',
+    desc: 'Explore o universo da Internet das Coisas: Arduino, ESP32, MQTT, Home Assistant e protocolos. Crie casas inteligentes e sistemas IoT profissionais.',
     file: '27-iot-casas-inteligentes.html',
     cat: 'Tecnologia',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'IO_HENRY_2026_MASTER',
+    salt: 'PREFIX_HENRY_2026_MASTER',
     ak: 'io_auth',
     storagePrefix: 'io_',
     icon: '💻',
     color: '#2E7D32',
     free: true,
-    addedTs: 1776284535750,
+    addedTs: 1776289892430,
     active: true
   },
   {
