@@ -1538,23 +1538,24 @@ var MA_COURSES = [
     addedTs: 1775832762741,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/hb.jpg',
     id: 'hb',
-    name: 'História do Brasil Completa',
-    desc: 'Curso amplo sobre formação do Brasil, colônia, império, república, crises, transformações sociais e cenário contemporâneo.',
-    file: '25-historia-brasil.html',
-    cat: 'História',
+    name: 'Hermenêutica Bíblica na Prática',
+    desc: 'Ensina como interpretar corretamente a Bíblia com princípios sólidos de leitura e aplicação.',
+    file: '02-hermeneutica-biblica.html',
+    cat: 'Bíblia / Teologia',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'HB_HENRY_2026_MASTER',
     ak: 'hb_auth',
     storagePrefix: 'hb_',
-    icon: '📜',
-    color: '#009b3a',
-    addedTs: 1775832765228,
+    icon: '✝️',
+    color: '#4A148C',
+    free: true,
+    addedTs: 1776284671600,
     active: true
   },
   {
