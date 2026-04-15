@@ -2893,24 +2893,24 @@ var MA_COURSES = [
     addedTs: 1776024662982,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/an.jpg',
     id: 'an',
-    name: 'Automação Digital e No-Code com IA',
-    desc: 'Como automatizar tarefas e processos usando plataformas simples e IA.',
+    name: 'Automação No-Code',
+    desc: 'Domine as principais plataformas de automação sem código: Zapier, Make, n8n, Bubble e Airtable. Crie fluxos de trabalho inteligentes e eficientes.',
     file: '26-automacao-nocode.html',
     cat: 'Tecnologia',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'AN_HENRY_2026_MASTER',
+    salt: 'PREFIX_HENRY_2026_MASTER',
     ak: 'an_auth',
     storagePrefix: 'an_',
     icon: '💻',
     color: '#FF6F00',
     free: true,
-    addedTs: 1776284540641,
+    addedTs: 1776289816530,
     active: true
   },
     {
