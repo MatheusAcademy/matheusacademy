@@ -1729,23 +1729,24 @@ var MA_COURSES = [
     addedTs: 1775832789967,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/eb.jpg',
     id: 'eb',
-    name: 'Eleições no Brasil: Marketing Político, Campanhas, Redes Sociais, Fake News e Cenário 2026',
-    desc: 'Entenda como funcionam as campanhas eleitorais, a construção de imagem pública, o marketing político, a influência das redes sociais, a guerra de narrativa e os possíveis cenários eleitorais no Brasil.',
-    file: 'eleicoes-brasil.html',
-    cat: 'Política Brasileira',
+    name: 'Exegese Bíblica para Iniciantes e Líderes',
+    desc: 'Formação para aprofundar a análise do texto bíblico com contexto histórico e significado original.',
+    file: '03-exegese-biblica.html',
+    cat: 'Bíblia / Teologia',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'EB_HENRY_2026_MASTER',
     ak: 'eb_auth',
     storagePrefix: 'eb_',
-    icon: '📰',
-    color: '#d62828',
-    addedTs: 1775832792728,
+    icon: '✝️',
+    color: '#1B5E20',
+    free: true,
+    addedTs: 1776284665798,
     active: true
   },
   {
