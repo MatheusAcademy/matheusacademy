@@ -4,24 +4,323 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ciência de Dados — Matheus Academy</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="shared/course.css">
 </head>
 <body>
 <script>
-var COURSE = {id:'CD',name:'Ciência de Dados para Decisão Inteligente',shortName:'Ciência de Dados',cat:'Tecnologia e Inovação',desc:'Entender dados, métricas, análises e transformar informação em decisão estratégica.',salt:'CD_HENRY_2026_MASTER',ak:'cd_auth',courseKey:'cd',prefix:'cd_',color:'#00796B',glow:'rgba(0,121,107,.35)',free:true,freeModules:1,modules:3,topics:9,hours:3,quizzes:9};
+var COURSE = {
+  id: 'CD',
+  name: 'Ciência de Dados',
+  shortName: 'Data Sci',
+  cat: 'Tecnologia e Inovação',
+  desc: 'Analise dados com Python, pandas, estatística, visualização. Construa dashboards, modelos preditivos, derive insights. Data-driven decision making.',
+  salt: 'PREFIX_HENRY_2026_MASTER',
+  ak: 'cd_auth',
+  courseKey: 'ciencia-dados',
+  prefix: 'cd_',
+  color: '#00796B',
+  glow: 0.35,
+  free: true,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
 var MODS = [
-  {id:'cd_mod1',name:'Fundamentos de Dados',free:true,topics:[1,2,3],summary:{title:'Resumo do Módulo 1: Fundamentos de Dados',points:['Dados são o novo ouro, mas precisam de tratamento correto','Big Data inclui volume, velocidade e variedade','Estatística descritiva resume dados, inferencial prediz padrões','Limpeza e preparação de dados é 80% do trabalho real']},quizFinal:[{q:'O que define os 3 Vs do Big Data?',opts:['Velocidade, Verdade, Variedade','Volume, Velocidade, Variedade','Variação, Validação, Visualização','Não existe'],correct:1},{q:'Qual é a diferença entre estatística descritiva e inferencial?',opts:['Descritiva é para empresas, inferencial é para universidades','Descritiva resume dados, inferencial faz previsões','Não há diferença real','Inferencial é mais importante'],correct:1},{q:'Qual é o maior desafio em projetos de dados?',opts:['Falta de computador potente','Qualidade ruim e quantidade insuficiente de dados','Matemática muito difícil','Data scientists muito caros'],correct:1}]},
-  {id:'cd_mod2',name:'Análise e Visualização de Dados',free:false,topics:[4,5,6],summary:{title:'Resumo do Módulo 2: Análise e Visualização de Dados',points:['Análise exploratória descobre padrões antes de modelagem','Visualização transforma números em insights visuais compreensíveis','Correlação não implica causalidade, cuidado com conclusões erradas','Dashboards e relatórios comunicam insights a stakeholders']},quizFinal:[{q:'O que é EDA (Exploratory Data Analysis)?',opts:['Exame Detalhado de Algoritmos','Exploração de padrões antes de modelagem profunda','Educação em Data Analytics','Nenhum desses'],correct:1},{q:'Por que visualização de dados é crítica?',opts:['Parece bonito','O cérebro processa imagens 60 mil vezes mais rápido que texto','Usa menos memória','Estatisticamente prova tudo'],correct:1},{q:'Correlação 0.9 entre duas variáveis significa o quê?',opts:['Causa garantida','Forte relação, mas não causalidade','Sem relação','Erro estatístico'],correct:1}]},
-  {id:'cd_mod3',name:'Modelos Preditivos e Decisões',free:false,topics:[7,8,9],summary:{title:'Resumo do Módulo 3: Modelos Preditivos e Decisões',points:['Machine Learning permite prever futuros baseado em padrões passados','Métricas de desempenho indicam qualidade do modelo','Validação cruzada previne overfitting e garante generalização','Inteligência de negócio transforma dados em ação estratégica']},quizFinal:[{q:'Para que serve validação cruzada em modelos?',opts:['Validar que está correto','Garantir que modelo generaliza e não memoriza dados','Treinar mais rápido','Não tem propósito real'],correct:1},{q:'O que é overfitting em machine learning?',opts:['Usar muitos features','Modelo memoriza treino mas falha em novos dados','Usar algoritmo muito antigo','Não é um problema real'],correct:1},{q:'Qual métrica é mais importante: precisão ou recall?',opts:['Precisão sempre','Recall sempre','Depende do problema','São a mesma coisa'],correct:2}]}
-];
-var TOPICS = [
-  {id:1,name:'O que é Ciência de Dados',dur:'16 min',content:`<h3>Transformando Dados em Conhecimento Poderoso</h3><p>Bem-vindo ao fascinante mundo de Ciência de Dados! Estou absolutamente animado em compartilhar esse universo onde números viram decisões, padrões viram estratégia, e conhecimento viram poder!</p><p>Ciência de Dados é uma disciplina que combina estatística, programação, domínio de negócios e intuição para extrair conhecimento valioso de dados. Não é apenas análise — é transformação! Um mestre de Ciência de Dados pega dados brutos, confusos, incompletos e transforma em insights claros que mudam decisões.</p><p>Pense nisso: toda vez que você compra algo no e-commerce, um algoritmo aprendeu. Quando Netflix recomenda um filme, Ciência de Dados trabalhou. Quando um banco aprova seu crédito em segundos, análise de dados decidiu. Quando campanha de marketing atinge exatamente seu público, ciência de dados foi precisa!</p><p>Os dados são o "ouro" da era moderna — mas ouro bruto é feio e não vale nada. Precisa ser refinado! Cientista de dados é o refinador. Pega dados caóticos e transforma em puro ouro: conhecimento acionável.</p><p>Ciência de Dados inclui várias fases: 1) Definição do problema (o que realmente queremos descobrir?), 2) Coleta de dados (aonde achamos dados relevantes?), 3) Limpeza (remover ruído, tratar valores faltando), 4) Exploração (padrões interessantes?), 5) Modelagem (qual modelo prevê melhor?), 6) Validação (será que funciona em dados reais?), 7) Comunicação (como explicar isso ao chefe?).</p><p>Profissionais em Ciência de Dados ganham extremamente bem. Um Data Scientist sênior em São Paulo, 2025, pode ganhar 150-250 mil reais por ano. Em Silicon Valley? Facilmente 200-400 mil dólares anuais! Por quê? Porque dados bem analisados podem gerar bilhões em valor.</p><p>Mas aqui está o segredo: 80% do trabalho em Ciência de Dados é "data wrangling" — limpeza e preparação de dados. Ninguém fala da parte chata, mas é a realidade. Encontrar dados com problemas, valores faltando, formatos errados, duplicatas — tudo precisa ser consertado antes de qualquer análise interessante.</p><p>Ferramentas populares de Ciência de Dados em 2025-2026 incluem: Python (linguagem padrão), SQL (consultas em banco de dados), Pandas (manipulação de dados), scikit-learn (machine learning), TensorFlow/PyTorch (deep learning), Tableau/Power BI (visualização), Jupyter Notebooks (ambiente interativo).</p><p>Um termo importante é "Big Data" — lidar com volumes enormes de dados. Terabytes, petabytes. Dados que não cabem em um computador comum. Para Big Data, você usa ferramentas como Hadoop, Spark, e cloud computing (AWS, Google Cloud, Azure).</p><p>Dados podem ser estruturados (tabelas, números) ou não-estruturados (imagens, vídeos, textos). Estruturado é mais fácil de analisar. Não-estruturado requer técnicas especiais como Deep Learning e NLP (processamento de linguagem natural).</p><p>A verdade é: em 2026, dados é vantagem competitiva. Empresas que usam bem seus dados derrotam as que não usam. Por isso, demanda por Data Scientists, Data Analysts e especialistas em dados é absolutamente explosiva. Se você aprende isso bem, futuro é seu!</p>`,cards:[{q:'Qual é o objetivo final de Ciência de Dados?',a:'Transformar dados brutos em insights acionáveis que orientem decisões estratégicas de negócio.'}]},
-  {id:2,name:'Estatística, Dados e Big Data',dur:'18 min',content:`<h3>Os Números por Trás: Estatística e Big Data</h3><p>Para entender Ciência de Dados profundamente, precisa dominar estatística. Mas não se preocupe — não vamos para equações complexas. Vamos à intuição!</p><p>Estatística DESCRITIVA resume dados: média, mediana, desvio padrão. Se você tem notas de 100 alunos, média 7.5 é descritiva — resume tudo em um número. Estatística INFERENCIAL usa amostra para concluir sobre população. Pesquisa com 1000 pessoas prevê eleição para 200 milhões. Inferência!</p><p>Distribuição normal (curva de sino) é fundamental. Muitos fenômenos naturais seguem distribuição normal: altura de pessoas, QI, notas de testes. Outliers (valores extremos) são importantes — podem indicar erro ou algo realmente anômalo!</p><p>Correlação mede relação entre variáveis. Correlação de 0.9 entre "horas estudadas" e "nota na prova"? Forte correlação positiva — mais estudo, melhor nota. Mas aqui vem a lição crucial: CORRELAÇÃO NÃO IMPLICA CAUSALIDADE! Vendas de sorvete correlacionam com nados em piscina, mas sorvete não causa nados — calor causa ambos!</p><p>Esse erro é comum até em relatórios profissionais. Analista vê correlação, assume causa, toma decisão errada. Cuidado!</p><p>BIG DATA é caracterizado pelos "3 Vs": Volume (quantidade gigantesca), Velocidade (dados chegam rapidamente, precisa processar em tempo real), Variedade (diferentes tipos, estruturas, fontes). Um quarto V foi adicionado: Veracity (confiabilidade, qualidade).</p><p>Exemplos de Big Data: streaming de vídeo (YouTube processa 500 horas de vídeo por minuto!), dados de IoT (sensores em carros, casas, cidades), redes sociais (Twitter tem 500 milhões de tweets por dia), transações bancárias (bilhões por dia).</p><p>Para processar Big Data, você precisa arquitetura distribuída. Conceitos como MapReduce, Hadoop, Spark permitem dividir trabalho entre múltiplos computadores. Um único computador nunca processaria todos os tweets do Twitter em tempo útil. Mas se dividir entre 1000 máquinas, fica fácil!</p><p>Cloud computing revolucionou Big Data. Ao invés de comprar servidores (capital upfront, manutenção), você aluga computação (pagando por uso). AWS, Google Cloud, Azure oferem infraestrutura escalável. Precisa processar 1 petabyte? Contrata 10000 máquinas por uma hora, processa, desliga. Custo marginal!</p><p>Data Lakes são repositórios que armazenam dados brutos de múltiplas fontes. Diferente de Data Warehouse que é estruturado, Data Lake é como um "pântano controlado" — tudo vai lá, depois você extrai o que precisa. Padrão moderno em empresas grandes!</p><p>A qualidade de dados é crítica. Garbage in, garbage out! Se seus dados têm valores faltando (missing values), duplicatas, formatos inconsistentes, análise será errada. Por isso, engenheiros de dados gastam semanas limpando dados antes de cientista de dados começar análise real.</p><p>Um conceito importante é "Sampling" — você não pode analisar 1 bilhão de registros em tempo razoável. Então você pega amostra representativa de 1 milhão (0.1%) e analisa. Se amostra for aleatória e grande, resultados generalizam para população inteira. Estatística permite isso!</p><p>Por fim, há ferramentas impressionantes em 2025-2026 para trabalhar com dados: DuckDB (SQL super rápido), Polars (Pandas mas 10x mais rápido), Ray (computação distribuída), Delta Lake (data lake com confiabilidade). Mundo de dados evolui incrivelmente rápido!</p>`,cards:[{q:'Por que é importante não confundir correlação com causalidade?',a:'Duas variáveis podem estar correlacionadas mas uma não causa a outra — um terceiro fator pode estar causando ambas, levando a decisões erradas.'}]},
-  {id:3,name:'Coleta, Limpeza e Preparação de Dados',dur:'17 min',content:`<h3>O Trabalho Invisível: Preparando Dados para Análise</h3><p>Aqui vem a verdade que ninguém gosta de falar: 80-90% do tempo em um projeto de dados é gasto em coleta, limpeza e preparação. Ninguém acha isso emocionante! Mas é absolutamente crítico. Dados ruins geram análises ruins e decisões piores.</p><p>COLETA DE DADOS é a primeira etapa. Aonde vêm dados? Podem ser de: bancos de dados da empresa (mais comuns), APIs (integrações com serviços externos), crawling de websites, sensores IoT, pesquisas, logs de aplicações, etc.</p><p>Problema: dados de múltiplas fontes têm formatos diferentes. Um banco de dados usa data como "2026-04-15", outro usa "15/04/2026". Um arquivo de vendas tem números com vírgula (1.000,50), outro com ponto (1000.50). Normalizar é essencial!</p><p>QUALIDADE DE DADOS é crítica. Problemas comuns: Valores Faltando (Missing Values) — onde cliente deixou campo em branco, sensor falhou. Como tratar? Pode remover registros, preencher com média/mediana, usar algoritmos sofisticados. Depende! Duplicatas — mesmo cliente aparece 2 vezes. Remove uma. Outliers — valores extremos. Alguns são erros (altura de 500m), outros são reais (pessoa muito rica).</p><p>Inconsistência — país escrito como "Brasil", "BRASIL", "BRA". Precisa padronizar! Erros de digitação — email "joao@gmai.com" (faltou l) de "gmail.com". Pode usar técnicas de fuzzy matching para detectar. Dados desatualizados — você usa base de dados que tem clientes de 2020, mas são 2026!</p><p>TRANSFORMAÇÃO DE DADOS é onde magia acontece. Você pega dados brutos e transforma em formato útil. Exemplos: Engenharia de Features — cria novas variáveis. Se tem "data de nascimento", cria "idade". Se tem "salário" e "nível de educação", cria "salário por ano de educação". Features inteligentes melhoram modelos drasticamente!</p><p>Normalização e Scaling — transforma variáveis para mesma escala. Se tem altura (150-200 cm) e peso (50-120 kg), escalas são diferentes. Alguns algoritmos precisam de escalas similares. Normaliza ambas para 0-1 ou -1 a 1.</p><p>Encoding de Categóricas — variáveis categóricas (cores, países, sexo) não são números. Como você processa "Vermelho" em um algoritmo? Pode usar one-hot encoding: "Vermelho" vira [1,0,0], "Azul" vira [0,1,0], "Verde" vira [0,0,1]. Agora algoritmo entende!</p><p>Remoção de Outliers — valores muito extremos podem deslocar análise. Se maioria ganha 5-10 mil reais, mas um milionário está no dataset, pode distorcer. Pode remover, pode usar técnicas robustas que os ignoram.</p><p>Amostragem — se dataset é gigantesco (1 bilhão de registros), não consegue analisar tudo. Pega amostra aleatória estratificada de 1 milhão (mantendo proporções de categorias). Análise fica 1000x mais rápida!</p><p>Balanceamento — em problemas de classificação, classes podem ser desbalanceadas. 95% de transações são legítimas, 5% são fraude. Se modelo aprende apenas a dizer "tudo é legítimo", acerta 95% mas falha no que importa! Técnicas como SMOTE (Synthetic Minority Oversampling) criam dados sintéticos da classe minoritária.</p><p>Validação de Dados — após preparar, você valida. Verificações: existem valores faltando ainda? Duplicatas? Formatos estão corretos? Ranges fazem sentido? É como verificação de qualidade na fábrica!</p><p>Em Python, você usa principalmente: Pandas (manipulação de dados em dataframes), NumPy (operações numéricas), Scikit-learn (transformação e modelagem). Workflow típico: load dados com Pandas → explore com NumPy → limpa e transforma com Pandas → modelo com Scikit-learn.</p><p>Um último conselho: documente seu processo! Quando remove outliers, registra quantos e por quê. Quando preenche valores faltando com média, deixa nota. Seu eu futuro (e outros analistas) vão agradecer!</p>`,cards:[{q:'Por que limpeza e preparação de dados leva 80% do tempo em projetos?',a:'Dados do mundo real têm qualidade ruim, formatos inconsistentes, valores faltando, duplicatas, erros — tudo precisa ser tratado antes da análise real.'}]},
-  {id:4,name:'Análise Exploratória e Visualização',dur:'16 min',content:`<h3>Descobrindo Padrões: EDA e Visualização</h3><p>Dados estão prontos! Agora vem a diversão: Análise Exploratória de Dados (EDA). O objetivo? Descobrir padrões, anomalias, relationships antes de qualquer modelagem.</p><p>EDA é processo investigativo. Você não começa com hipótese — explora! Que variáveis têm distribuição normal? Existem outliers óbvios? Quais variáveis correlacionam? Há missingness pattern (valores faltando de forma não aleatória)? Esses insights guiam análise futura.</p><p>Ferramentas de EDA: Pandas describe() (estatísticas: média, mediana, desvio padrão, quartis), Seaborn (visualização estatística), Plotly (gráficos interativos), Pandas Profiling (gera relatório EDA automático!).</p><p>Distribuição é conceito chave. Histogramas mostram: valores estão distribuídos simetricamente? Há skew (cauda longa à esquerda ou direita)? É bimodal (dois picos)? Distribuição normal é comum, mas muitos dados reais não são normais. Entender distribuição guida qual transformação usar.</p><p>Boxplots mostram mediana, quartis, outliers de forma visual. Se tem muitos pontos acima do bigode superior, são outliers — investigar!</p><p>Scatter plots mostram relação entre duas variáveis. Pontos em linha diagonal? Correlação forte! Nuvem aleatória? Sem relação. Padrão curvo? Relação não-linear!</p><p>Heatmaps de correlação mostram: quais variáveis correlacionam? Cor mais quente = mais forte. Investigar correlações altas (>0.8) — podem ser redundantes ou ter causalidade.</p><p>Visualização é comunicação! Gráfico bem feito vale 1000 palavras de estatísticas. CEOs entendem gráfico em 3 segundos, tabela de números? Perdem a paciência! Por isso, visualização é skill crítica!</p><p>Boas práticas em visualização: Escolha tipo certo (barras para categorias, linha para tempo, scatter para relação), use cores com propósito (não 10 cores aleatórias), rotule eixos claramente, inclua título e legenda, evite "chart junk" (decorações sem propósito).</p><p>Exemplos de visualização impactante: Antes e depois (lado a lado mostra mudança), funis (mostra progressão e onde pessoas caem), treemaps (hierarquia de dados), área empilhada (composição ao longo do tempo).</p><p>Storytelling com dados é arte. Você não mostra TUDO. Mostra a história! "Churn aumentou 10% porque clientes enterprise saem 3 meses após onboarding. Vamos investigar fricção no processo de onboarding." Narrativa! Impacto!</p><p>Ferramentas modernas: Tableau, Power BI, Looker criam dashboards interativos. Usuários exploram dados clicando. BI evolved: não apenas relatórios estáticos, mas exploração dinâmica!</p>`,cards:[{q:'Qual é o objetivo de Análise Exploratória de Dados (EDA)?',a:'Descobrir padrões, correlações, anomalias e distribuições nos dados ANTES de modelagem para guiar análise subsequente.'}]},
-  {id:5,name:'Machine Learning para Previsão',dur:'18 min',content:`<h3>Prevendo o Futuro: Machine Learning em Ação</h3><p>Com dados limpos e explorados, agora vem o emocionante: prever futuro com Machine Learning! Você treina modelo com dados históricos, modelo aprende padrões, depois prevê dados novos.</p><p>Fluxo de ML é: 1) Preparar dados (treino, validação, teste), 2) Escolher algoritmo, 3) Treinar, 4) Avaliar (quão bem funciona?), 5) Tunar hyperparameters, 6) Deploy em produção.</p><p>Dados devem ser divididos: Treino (60-70% — modelo aprende aqui), Validação (10-15% — ajusta hyperparameters), Teste (10-15% — avalia desempenho final NÃO visto pelo modelo). Nunca treina com dados de teste — seria cheating!</p><p>Algoritmos populares: Regressão Linear (prediz valor contínuo como preço), Logística (classifica: sim/não, A/B/C), Random Forest (ensemble de árvores, robusto), Gradient Boosting (XGBoost, LightGBM — estado-da-arte), SVM (máquinas de vetor suporte, bom para classificação), Neural Nets (redes neurais para dados complexos).</p><p>Escolher algoritmo? Não existe "melhor" — depende! Dados simples? Regressão linear é rápida, interpretável. Dados complexos e caóticos? Gradient Boosting. Imagens? CNN. Textos? Transformers. Experiência guia!</p><p>Treinamento é otimização matemática. Modelo começa com pesos aleatórios, faz previsão ruim, calcula erro (loss), ajusta pesos para reduzir erro. Repetição até convergência (erro mínimo). Algoritmo de otimização mais comum: Gradient Descent (pequenos passos na direção que reduz erro).</p><p>Hyperparameters são configurações que você escolhe (não são aprendidas). Exemplo: Learning Rate (tamanho do passo em gradient descent) — muito alto, overshoot; muito baixo, converge lentamente. Tuning é arte — grid search, random search, Bayesian optimization ajudam!</p><p>Overfitting é problema clássico. Modelo memoriza dados de treino, acerta 99% em treino, mas falha em dados novos! Sinais: gap gigantesco entre accuracy de treino vs. validação. Soluções: regularização (penaliza modelo complexo), early stopping (para treinamento antes de overfit), mais dados, dropout (neural nets).</p><p>Métricas de desempenho: Classificação usa Accuracy (percentual correto), Precision (de positivos preditos, quantos eram corretos), Recall (de positivos reais, quantos achamos), F1 (harmônica de precision/recall). Regressão usa MAE (erro médio absoluto), RMSE (raiz do erro quadrático médio), R² (variância explicada).</p><p>Qual métrica importa? Depende do problema! Detectar câncer: Recall é crítico (não perder caso real), Precision menos. Email spam: Precision é crítico (não mandar email legítimo para spam), Recall menos. Business priority define métrica!</p><p>Desafio: classe desbalanceada. 1% fraude, 99% normal. Modelo que sempre diz "não é fraude" acerta 99%! Mas falha no objetivo. Solução: Threshold tuning, SMOTE, weighted loss, usar métrica diferente (Recall de fraude).</p><p>Interpretabilidade importa em produção! Se modelo nega seu empréstimo, você quer saber por quê! SHAP values, LIME explicam quais features mais influenciaram previsão. Caixa branca vs. caixa preta!</p>`,cards:[{q:'Como overfitting prejudica desempenho de modelos ML?',a:'Modelo memoriza dados de treino em vez de aprender padrões, causando 99% accuracy em treino mas desempenho ruim em dados novos.'}]},
-  {id:6,name:'Métricas, ROI e Decisões Comerciais',dur:'16 min',content:`<h3>Do Modelo para Negócio: KPIs e ROI</h3><p>Um modelo que acerta 95% é incrível... se importa para negócio! Se acerta predição de "que cliente vai clicar em anúncio" mas decisão leva a pior ROI que alternativa simples, modelo é inútil. Conexão com negócio é CRÍTICA!</p><p>KPIs (Key Performance Indicators) traduzem métricas técnicas em linguagem de negócio. Ao invés de "RMSE = 0.12", fale "Em média, preço previsto desvia 12% do preço real". Ou melhor, "A+ ou B model aumenta receita em 2.5% vs. baseline?"</p><p>ROI (Return on Investment) é métricas final. Projeto custa 100k em salários + infraestrutura. Gera economia de 500k em automação? ROI = (500-100)/100 = 400%. Excelente! Projeto custa 100k, gera 80k? ROI negativo — não vale.</p><p>Baseline é importante! Seu modelo super sofisticado acerta 90%. Mas modelo simples (sempre chutar a classe mais comum) também acerta 90% se dados são 90% desbalanceados! Baseline prova que modelo agregou valor real.</p><p>A/B testing valida impacto real. Você tem novo modelo? Teste com 10% de usuários, mantenha 90% com modelo antigo. Compare: modelo novo converteu melhor? Retenção melhor? ROI melhor? Se sim, roll out! Se não, volta ao antigo. Científico!</p><p>Tipos de testes: Control (baseline), Treatment (seu modelo novo), Statistical Significance (P < 0.05 significa é "real" resultado, não apenas sorte). Tamanho de amostra importa! Efeito muito pequeno precisa de amostra gigantesca para detectar (3+ semanas A/B test).</p><p>Métrica é obsessão em tech. Qualquer decisão (design novo, feature, modelo) é testada. Aumenta metrica primary? Roll out. Diminui? Revert. Cultura de dados!</p><p>Apresentando insights: Exec não quer matemática. Quer: "Action X aumenta metric Y em Z%". Simples! Com número grande (% aumento ou economia em reais). Contexto (por que importa?). Recomendação (o que fazer?).</p><p>Exemplo perfeito: "Clientes que completam onboarding em <5 minutos têm 2x retention em 30 dias. Recomendação: Simplificar fluxo de onboarding (pode gerar +50% retention, ~2 milhões/ano economizados)." — ISSO é comunicação de dados!</p><p>Pitfalls: Olhar para muitas métricas, uma vai estar "boa" por acaso (múltiplo testing problem — diga 20 moedas, uma sai 4 caras seguidas, é sorte!). Solução: Pre-register métrica primary, análise secundário, correção Bonferroni em testes múltiplos.</p><p>Outro pitfall: Simpson's Paradox — tendência reverte quando dados são subgrouped. Exemplo: Medicamento A é melhor globalmente, mas piora para cada subgrupo! Sempre examine dados estratificados por categorias importantes.</p>`,cards:[{q:'Por que ROI é mais importante que acurácia técnica de modelo?',a:'ROI conecta desempenho técnico a impacto em negócio — modelo 99% accuracy que não gera receita vale menos que modelo 85% que economiza milhões.'}]}
+  {
+    id: 'cd_mod1',
+    name: 'Python para Análise de Dados: Fundamentos',
+    free: true,
+    topics: [
+      {
+        id: 1,
+        name: 'Ecossistema Python: NumPy e Pandas',
+        dur: '20 min',
+        content: `
+        <h3>Python: Linguagem de Facto em Ciência de Dados</h3>
+        <p>Python domina data science não por ser "mais rápido" que C++ ou "mais elegante" que R, mas porque tem ecossistema coeso e comunidade massiva. NumPy para operações numéricas, Pandas para manipulação de dados, Scikit-Learn para ML, Matplotlib/Seaborn para visualização. Tudo integra naturalmente.</p>
+
+        <h4>NumPy: Arrays e Operações Vetorizadas</h4>
+        <p>NumPy é fundação de data science em Python. Fornece ndarray: array multi-dimensional homogêneo (todos elementos mesmo tipo). Diferente de listas Python que são heterogêneas (podem misturar tipos).</p>
+
+        <p><strong>Por que NumPy é tão rápido?</strong> Implementado em C, dados contíguos em memória, operações vetorizadas (SIMD). Operação que levaria 1 segundo em loop Python explícito leva milissegundos em NumPy.</p>
+
+        <p><strong>Operações Essenciais:</strong></p>
+        <ul>
+          <li><strong>Criação:</strong> np.array(), np.zeros(), np.ones(), np.arange(), np.linspace(), np.random.randn()</li>
+          <li><strong>Indexação e Slicing:</strong> arr[0], arr[1:5], arr[:, 2] (todas dimensões), arr[arr > 5] (boolean indexing)</li>
+          <li><strong>Broadcasting:</strong> Operações entre arrays de shapes diferentes é automaticamente alinhado. arr (3x4) + arr (4,) trata segundo como (1x4) e broadcast.</li>
+          <li><strong>Operações Matemáticas:</strong> np.sum(), np.mean(), np.std(), np.dot(), np.linalg.inv(), np.fft.fft()</li>
+          <li><strong>Reshape e Transpose:</strong> Mudar dimensionalidade sem copiar dados. arr.reshape(-1) flattens, arr.T transpõe.</li>
+        </ul>
+
+        <blockquote class="example">
+          <strong>📌 Exemplo:</strong> Normalizar matriz 1000x1000 de valores. Python puro com loops: 2 segundos. NumPy: 5 milissegundos. 400x mais rápido!
+        </blockquote>
+
+        <h4>Pandas: DataFrames e Manipulação de Dados</h4>
+        <p>Pandas é "SQL para Python". Estrutura de dados chave é DataFrame: tabela com rows e columns, como spreadsheet ou SQL table, mas muito mais poderoso.</p>
+
+        <p><strong>Criação:</strong> De lista de dicts, NumPy array, arquivo CSV/Excel, SQL query.</p>
+
+        <p><strong>Operações Essenciais:</strong></p>
+        <ul>
+          <li><strong>Seleção:</strong> df['coluna'], df[['col1', 'col2']], df.loc[índice], df.iloc[posição], df[df['idade'] > 30]</li>
+          <li><strong>Agregação:</strong> df.groupby('categoria').sum(), df.groupby(['cat1', 'cat2']).mean(), .agg({'col': ['sum', 'mean']})</li>
+          <li><strong>Merge:</strong> pd.merge(df1, df2, on='chave') similar a SQL join</li>
+          <li><strong>Pivot:</strong> df.pivot_table(values='venda', index='região', columns='produto', aggfunc='sum') pivota dados</li>
+          <li><strong>Handling Missing:</strong> df.fillna(), df.dropna(), df.interpolate()</li>
+          <li><strong>Apply:</strong> df['coluna'].apply(função_custom) aplica função a cada elemento</li>
+          <li><strong>String Operations:</strong> df['texto'].str.upper(), .str.contains(), .str.split()</li>
+        </ul>
+
+        <p><strong>Performance Tips:</strong></p>
+        <ul>
+          <li>Use .loc[]/. iloc[] em vez de loops. Vetorização é sempre melhor.</li>
+          <li>Categorias reduzem memória: df['cat'].astype('category'). Útil se coluna tem poucos valores únicos.</li>
+          <li>Chunks: se arquivo gigante, ler em pedaços. pd.read_csv(file, chunksize=10000)</li>
+          <li>Índices: bem-escolhidos índices aceleram lookup. df.set_index('chave')</li>
+        </ul>
+
+        <h4>Exploração e Limpeza de Dados</h4>
+        <p><strong>EDA (Exploratory Data Analysis):</strong> Primeiros passos ao receber dataset novo.</p>
+
+        <ul>
+          <li>df.shape: dimensões</li>
+          <li>df.info(): tipos de coluna, missing values</li>
+          <li>df.describe(): estatísticas (mean, std, min, max, quartis)</li>
+          <li>df.isnull().sum(): contar missing values por coluna</li>
+          <li>df.duplicated().sum(): linhas duplicadas</li>
+          <li>df['coluna'].value_counts(): frequência de valores categoriais</li>
+          <li>df.corr(): matriz de correlação</li>
+        </ul>
+
+        <p><strong>Limpeza Comum:</strong> Duplicatas removidas, tipos convertidos, valores faltantes imputados ou removidos, outliers tratados, dados de formatos inconsistentes normalizados.</p>
+
+        <blockquote class="tip">
+          <strong>💡 Regra 80/20:</strong> 80% do tempo em data science é coleta e limpeza. 20% é "ciência" (modelagem). Aceite isso e seja eficiente em limpeza.
+        </blockquote>
+
+        <h4>Salvando e Carregando Dados</h4>
+        <ul>
+          <li><strong>CSV:</strong> df.to_csv('file.csv'), pd.read_csv('file.csv'). Simples, universal, lento para gigabytes.</li>
+          <li><strong>Parquet:</strong> df.to_parquet('file.parquet'), pd.read_parquet(). Compressão, typed columns, mais rápido.</li>
+          <li><strong>Excel:</strong> df.to_excel('file.xlsx'), pd.read_excel(). Útil para stakeholders, lento, limite de linhas.</li>
+          <li><strong>HDF5:</strong> df.to_hdf5('file.h5'), pd.read_hdf5(). Para dados muito grandes, suporta subsets sem ler tudo.</li>
+          <li><strong>SQL:</strong> df.to_sql('tabela', engine), pd.read_sql_query(query, engine). Integra com DB.</li>
+        </ul>
+
+        <p>Neste tópico, você dominou ferramentas fundamentais. Dados limpos e bem estruturados são insumo para toda análise posterior!</p>
+        `,
+        cards: [
+          { q: "Por que NumPy é muito mais rápido que Python puro para operações numéricas?", a: "Implementado em C, dados contíguos em memória, operações vetorizadas (SIMD). Avoid Python loops, use NumPy broadcasting." },
+          { q: "Qual é a diferença entre .loc[] e .iloc[]?", a: ".loc[] é label-based (indexa por nome). .iloc[] é position-based (indexa por número de linha)." },
+          { q: "Como você exploraria rapidamente um dataset novo desconhecido?", a: "df.shape, df.info(), df.describe(), df.isnull().sum(), df.duplicated().sum(), value_counts(), correlação." }
+        ]
+      },
+      {
+        id: 2,
+        name: 'Estatística para Data Science',
+        dur: '22 min',
+        content: `
+        <h3>Estatística: Língua da Incerteza</h3>
+        <p>Data science é aplicação de estatística em escala. Entender distribuições, testes hipóteses, confiança é essencial. Sem estatística, você apenas vê padrões aleatórios nos dados.</p>
+
+        <h4>Conceitos Fundamentais</h4>
+        <p><strong>População vs Amostra:</strong> População é universo completo (ex: todos brasileiros). Amostra é subset que coletamos (ex: 1000 respondentes de survey). Estatística estima parâmetros populacionais a partir de amostras.</p>
+
+        <p><strong>Distribuição Normal:</strong> Distribuição em forma de sino. Muitos fenômenos naturais seguem aproximadamente normal (altura, peso, QI). Definida por média (μ) e desvio padrão (σ). 68% de dados dentro 1σ da média, 95% dentro 2σ, 99.7% dentro 3σ.</p>
+
+        <p><strong>Outras Distribuições Importantes:</strong> Binomial (sucessos em n tentativas), Poisson (eventos raros), Exponencial (tempo entre eventos), Uniforme (igual probabilidade).</p>
+
+        <p><strong>Correlação e Causação:</strong> Correlação mede associação linear entre variáveis. Correlação ≠ causação! Exemplo: sorvete consumido vs afogamentos correlacionam (ambos por causa de verão), mas sorvete não causa afogamento.</p>
+
+        <h4>Testes de Hipótese</h4>
+        <p>Decisão estatística baseada em dados. Estrutura formal:</p>
+
+        <ul>
+          <li><strong>H0 (Null Hypothesis):</strong> Afirmação padrão. Exemplo: "Moeda é justa (probabilidade cabeça = 0.5)"</li>
+          <li><strong>H1 (Alternative Hypothesis):</strong> Afirmação que testamos. Exemplo: "Moeda é viesada (probabilidade cabeça ≠ 0.5)"</li>
+          <li><strong>p-value:</strong> Probabilidade de observar dados tão extremos quanto observado se H0 fosse verdadeira. Se p < 0.05, rejeitamos H0 (nível de significância = 5%).</li>
+          <li><strong>Type I Error (False Positive):</strong> Rejeitamos H0 quando era verdadeira. Probabilidade = α (significance level).</li>
+          <li><strong>Type II Error (False Negative):</strong> Não rejeitamos H0 quando era falsa. Probabilidade = β. Power = 1 - β.</li>
+        </ul>
+
+        <p><strong>Testes Comuns:</strong></p>
+        <ul>
+          <li><strong>T-test:</strong> Compara médias de dois grupos. One-sample (média população), two-sample (duas amostras), paired (antes/depois).</li>
+          <li><strong>Chi-Squared Test:</strong> Testa associação entre variáveis categóricas.</li>
+          <li><strong>ANOVA:</strong> Compara médias de 3+ grupos. F-test.</li>
+          <li><strong>Correlation Test:</strong> Testa se correlação é significativa (não apenas acaso).</li>
+        </ul>
+
+        <blockquote class="example">
+          <strong>📌 Exemplo:</strong> Novo medicamento vs placebo. H0: "Medicamento não funciona (mesma média de melhoria)". Experimento: 100 pessoas com medicamento, 100 com placebo. Medicamento: média melhoria 5 pontos, placebo: 3 pontos. P-value = 0.001 < 0.05. Rejeitamos H0. Medicamento é significativamente melhor que placebo!
+        </blockquote>
+
+        <h4>Intervalos de Confiança</h4>
+        <p>Em vez de dar estimativa puntual (ex: "média é 100"), intervalos de confiança dão faixa. "95% confiança, média está entre 95-105". Expressa incerteza.</p>
+
+        <p><strong>Interpretação Correta:</strong> "Se repetíssemos experimento múltiplas vezes, em 95% delas o intervalo calculado conteria o parâmetro real." NÃO é "95% chance que parâmetro está neste intervalo específico" — o parâmetro é fixo!</p>
+
+        <h4>Viés e Variância</h4>
+        <p><strong>Viés:</strong> Erro sistemático. Balança descalibrada sempre mede 2kg a mais.</p>
+
+        <p><strong>Variância:</strong> Erro aleatório. Medições flutuam ao redor do valor verdadeiro.</p>
+
+        <p><strong>Trade-off:</strong> Modelos simples (ex: regressão linear) tem viés alto, variância baixa. Modelos complexos (ex: deep NN) tem viés baixo, variância alta. Equilíbrio é arte.</p>
+
+        <h4>Regressão e Correlação</h4>
+        <p><strong>Coeficiente de Correlação (Pearson):</strong> -1 (correlação negativa perfeita) a +1 (positiva perfeita), 0 = sem relação linear.</p>
+
+        <p><strong>R² (Coeficiente de Determinação):</strong> Proporção de variância em Y explicada por X. R² = 0.8 significa 80% da variação em Y é explicada pelo modelo.</p>
+
+        <p><strong>Regressão Linear:</strong> y = mx + b. Encontra m e b que minimizam erro quadrado. Interpretável: "para cada aumento de 1 em X, Y aumenta em m".</p>
+
+        <blockquote class="tip">
+          <strong>💡 Insights:</strong> Estatística não oferece certeza — oferece quantificação de incerteza. "Significância estatística" ≠ "significância prática". P-value 0.04 com tamanho de efeito tiny é estatisticamente significativo mas praticamente irrelevante.
+        </blockquote>
+
+        <p>Neste tópico, você pensa como estatístico: com ceticismo, rigor, quantificação de incerteza!</p>
+        `,
+        cards: [
+          { q: "O que é p-value e como interpretar?", a: "Probabilidade de observar dados tão extremos se H0 fosse verdadeira. Se p < 0.05, rejeitamos H0. Menor p-value = evidência mais forte contra H0." },
+          { q: "Qual é a diferença entre correlação e causação?", a: "Correlação mede associação linear. Causação requer manipulação experimental. Correlação pode ser spurious (terceira variável causa ambas)." },
+          { q: "O que é intervalo de confiança 95%?", a: "Se repetíssemos experimento múltiplas vezes, em 95% delas o intervalo calculado conteria parâmetro real. Expressa incerteza em estimativa." }
+        ]
+      },
+      {
+        id: 3,
+        name: 'Visualização de Dados com Matplotlib e Seaborn',
+        dur: '18 min',
+        content: `
+        <h3>Visualizar para Entender</h3>
+        <p>"Uma imagem vale mil palavras." Visualizações eficazes revelam padrões, outliers, distribuições que números brutos ocultam. Mesmo analista experiente perde insights em tabela de 100 colunas. Gráfico bem-feito mostra tudo em segundos.</p>
+
+        <h4>Matplotlib: Fundação de Plotagem em Python</h4>
+        <p>Matplotlib é biblioteca low-level, muito flexível. Você controla cada pixel. Sintaxe baseada em MATLAB (familiar a cientistas).</p>
+
+        <p><strong>Elementos Básicos:</strong> Figure (janela), Axes (área de plotagem), Artists (elementos desenhados: linha, ponto, texto).</p>
+
+        <p><strong>Tipos de Gráficos:</strong></p>
+        <ul>
+          <li><strong>Line Plot:</strong> Visualiza série temporal ou relação contínua. Ideal para trends.</li>
+          <li><strong>Scatter Plot:</strong> Mostra relação entre duas variáveis numéricas. Tamanho/cor de pontos pode representar terceira variável.</li>
+          <li><strong>Histogram:</strong> Distribuição de variável única. Mostra frequência em bins.</li>
+          <li><strong>Box Plot:</strong> Resumo de distribuição: mediana, quartis, outliers. Perfeito para comparar distribuições entre grupos.</li>
+          <li><strong>Bar Chart:</strong> Categoria vs valor numérico. Fácil para comparação entre grupos.</li>
+          <li><strong>Heatmap:</strong> Matriz de cores representando valores. Reveladora para correlação entre variáveis.</li>
+        </ul>
+
+        <h4>Seaborn: Matplotlib Beautificado</h4>
+        <p>Seaborn construído sobre Matplotlib, oferece defaults bonitos e funções de alto-nível para análise estatística visual.</p>
+
+        <p><strong>Vantagens:</strong> Código mais conciso, estética automática, integração com Pandas DataFrames, funções especializadas (violinplot, stripplot, lmplot).</p>
+
+        <p><strong>Funções Poderosas:</strong></p>
+        <ul>
+          <li><strong>Heatmap:</strong> snp.heatmap(corr_matrix) visualiza correlação.</li>
+          <li><strong>Relplot:</strong> Scatter com subplots por categoria. snp.relplot(data=df, x='X', y='Y', hue='categoria')</li>
+          <li><strong>Catplot:</strong> Box/violin por categoria. snp.catplot(data=df, x='categoria', y='valor')</li>
+          <li><strong>Pairplot:</strong> Todas relações entre features. snp.pairplot(df) cria matrix de scatter plots.</li>
+        </ul>
+
+        <h4>Princípios de Visualização Efetiva</h4>
+        <p><strong>1. Clareza:</strong> Observador deve entender gráfico em 5 segundos. Títulos, labels, legend claros e legíveis.</p>
+
+        <p><strong>2. Honestidade:</strong> Não distorça dados. Eixos Y começando em valor não-zero podem exagerar diferenças. Cor malcomendada pode sugerir padrão falso.</p>
+
+        <p><strong>3. Escolha do Gráfico Certo:</strong> Histograma para distribuição, scatter para relação, bar chart para comparação categorias, linha para série temporal. Errar em escolha prejudica comunicação.</p>
+
+        <p><strong>4. Proporção Dados-Tinta:</strong> Maximizar razão de dados mostrados vs tinta usada (no jargão, "data-ink ratio"). Gridlines desnecessárias, cores vibrantes que distraem são ruim.</p>
+
+        <p><strong>5. Acessibilidade:</strong> Não confie em cor para diferenciar (5-8% homens daltônicos). Use padrão + cor. Fontes legíveis (não <8pt), alto contraste.</p>
+
+        <h4>Dashboard e Visualizações Interativas</h4>
+        <p><strong>Plotly:</strong> Biblioteca Python que cria gráficos interativos (hover mostra valor, zoom/pan, legend clickable). Excelente para dashboards.</p>
+
+        <p><strong>Streamlit:</strong> Framework que transforma script Python em webapp interativa com mínimo de código. Ideal para demos, dashboards, aplicações data-driven.</p>
+
+        <p><strong>Power BI / Tableau:</strong> Ferramentas não-código para dashboards corporativos. Conectam a múltiplas fontes de dados, permitem usuários explorar sem coding.</p>
+
+        <blockquote class="example">
+          <strong>📌 Exemplo de Visualização Ruim vs Boa:</strong><br>
+          Ruim: Tabela com 50 linhas e 20 colunas de números. Ninguém consegue parsear.<br>
+          Bom: Heatmap das mesmas 50x20 dados com escala de cores. Padrões saltam aos olhos. Outliers óbvios. Correlações visíveis.
+        </blockquote>
+
+        <p>Neste tópico, você comunicaria insights graficamente, uma habilidade crítica em data science!</p>
+        `,
+        cards: [
+          { q: "Qual gráfico escolher para mostrar distribuição de vendas por região?", a: "Bar chart. Categorias (regiões) no eixo X, valores (vendas) no eixo Y. Fácil comparação entre regiões." },
+          { q: "Como o Seaborn melhora sobre Matplotlib puro?", a: "Defaults estéticos automáticos, funções estatísticas embutidas, código mais conciso, integração com Pandas DataFrames." },
+          { q: "Por que correlação matrix visualizada como heatmap é poderosa?", a: "Patterns de correlação visualmente óbvios. Cores quentes = correlação positiva, frias = negativa. Outliers salientes." }
+        ]
+      }
+    ],
+    summary: {
+      title: 'Fundação Data Science: Tools e Teoria',
+      points: [
+        'NumPy e Pandas são ferramentas indispensáveis: NumPy para operações numéricas vetorizadas, Pandas para manipulação de dados tabulares',
+        'Estatística quantifica incerteza: testes de hipótese, intervalos confiança, viés-variância trade-off',
+        'Visualização revela padrões em dados: escolher gráfico correto, honestidade em representação, acessibilidade',
+        'Data science é 80% coleta/limpeza, 20% análise. Invest tempo em EDA (Exploratory Data Analysis)',
+        '80% das habilidades em data science são Python + SQL + estatística básica + visualização'
+      ]
+    },
+    quizFinal: [
+      { q: "Por que pandas é considerado 'SQL para Python'?", opts: ["Não tem relação", "Oferece operações tipo-SQL: select, filter, groupby, join, pivot em DataFrames", "Apenas para web", "É obsoleto"], correct: 1 },
+      { q: "Qual é a diferença entre Type I e Type II error em testes hipótese?", opts: ["Nenhuma", "Type I: falso positivo (rejeitar H0 verdadeira). Type II: falso negativo (não rejeitar H0 falsa)", "Apenas em estatística teórica", "Ambos são iguais"], correct: 1 },
+      { q: "Quando uma visualização é considerada efetiva?", opts: ["Quando tem muitas cores", "Quando é entendida rapidamente, é honesta, escolheu gráfico apropriado, maximiza proporção dados-tinta", "Apenas tabelas são efetivas", "Visualização é sempre enganosa"], correct: 1 }
+    ]
+  },
+
+  {
+    id: 'cd_mod2',
+    name: 'Machine Learning Aplicado e Previsão',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Modelos Preditivos em Produção',
+      points: [
+        'Pipeline de ML: preprocessamento → feature engineering → seleção modelo → hyperparameter tuning → validação cruzada',
+        'Scikit-Learn oferece implementação de dezenas de algoritmos com API uniforme',
+        'Validação apropriada: nunca treinar/testar com mesmos dados, usar validação cruzada k-fold',
+        'Desempenho real importa mais que scores de treino. Sempre teste em dados holdout',
+        'Deployment de modelos requer versionamento, monitoring, retraining automático'
+      ]
+    },
+    quizFinal: [
+      { q: "Por que nunca deve-se treinar e testar modelo com mesmos dados?", opts: ["Não há problema", "Causa overfitting: modelo memoriza dados treino, score é otimista, falha em dados novos", "Apenas restrição teórica", "Computacionalmente ineficiente"], correct: 1 },
+      { q: "O que é validação cruzada k-fold e por que é melhor que train/test simples?", opts: ["Perda de tempo", "Divide dados em k folds, treina k modelos, testa em fold deixado fora. Melhor uso de dados, estima variância de performance", "Apenas para papers acadêmicos", "Sempre piora generalização"], correct: 1 },
+      { q: "Qual é o principal desafio ao colocar modelo ML em produção?", opts: ["Treinar modelo", "Data drift: padrões em produção divergem de treino, performance degrada. Requer monitoramento e retraining", "Python vs R", "Documentação"], correct: 1 }
+    ]
+  },
+
+  {
+    id: 'cd_mod3',
+    name: 'Big Data, Distribuição e Carreira em Data Science',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Escala Industrial e Progressão de Carreira',
+      points: [
+        'Big data exige ferramentas distribuídas: Spark, Hadoop, datalakes (AWS S3, Azure Data Lake)',
+        'SQL é skill crítica em data science. Maioria do tempo em produção é SQL, não Python/ML',
+        'Data Engineer vs Data Scientist: DE cria pipelines, DS analisa e modela. Carreiras distintas',
+        'Soft skills (comunicação, curiosidade, storytelling) frequentemente mais valiosos que tecnicismo puro',
+        '2026: expectativa é 1.3M novos jobs data science globalmente. Demand > supply'
+      ]
+    },
+    quizFinal: [
+      { q: "Qual é a diferença entre Data Engineer e Data Scientist?", opts: ["Não há diferença", "Data Engineer constrói pipelines e infraestrutura. Data Scientist analisa dados e cria modelos. Skilled de dados diferentes", "Termos intercambiáveis", "Data Scientist é obsoleto"], correct: 1 },
+      { q: "Por que SQL é mais crítico que Python em muitos trabalhos data science?", opts: ["Não é verdade", "Maioria do tempo em produção passa extraindo/transformando dados com SQL antes de qualquer ML", "Python é sempre mais importante", "SQL é para database admins"], correct: 1 },
+      { q: "O que é data drift e por que degrada performance de modelos?", opts: ["Apenas conceito teórico", "Padrões em dados de produção divergem do treino. Modelo treinado em distribuição antiga falha em nova", "Beneficia modelos", "Não existe problema real"], correct: 1 }
+    ]
+  }
 ];
 </script>
 <script src="shared/course-engine.js"></script>
