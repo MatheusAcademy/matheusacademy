@@ -3430,11 +3430,11 @@ var MA_COURSES = [
     addedTs: 1776284617854,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ac.jpg',
     id: 'ac',
-    name: 'Apologética Cristã e Defesa da Fé',
-    desc: 'Respostas bíblicas e racionais sobre fé, existência de Deus e críticas ao cristianismo.',
+    name: 'Apologética Cristã',
+    desc: 'Defesa racional da fé cristã em um mundo pluralista e cético',
     file: '06-apologetica-crista.html',
     cat: 'Bíblia / Teologia',
     modules: 3,
@@ -3447,7 +3447,7 @@ var MA_COURSES = [
     icon: '✝️',
     color: '#C62828',
     free: true,
-    addedTs: 1776284648152,
+    addedTs: 1776289901877,
     active: true
   },
       {
