@@ -1538,11 +1538,11 @@ var MA_COURSES = [
     addedTs: 1775832762741,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/hb.jpg',
     id: 'hb',
     name: 'Hermenêutica Bíblica na Prática',
-    desc: 'Ensina como interpretar corretamente a Bíblia com princípios sólidos de leitura e aplicação.',
+    desc: 'Como interpretar corretamente a Bíblia com princípios sólidos e metodologia confiável.',
     file: '02-hermeneutica-biblica.html',
     cat: 'Bíblia / Teologia',
     modules: 3,
@@ -1555,7 +1555,7 @@ var MA_COURSES = [
     icon: '✝️',
     color: '#4A148C',
     free: true,
-    addedTs: 1776284671600,
+    addedTs: 1776289978598,
     active: true
   },
   {
