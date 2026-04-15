@@ -2987,11 +2987,11 @@ var MA_COURSES = [
     addedTs: 1776024690011,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ic.jpg',
     id: 'ic',
     name: 'Inglês para Conversação com Confiança',
-    desc: 'Curso focado em speaking, respostas rápidas, diálogos naturais e perda do medo de falar inglês.',
+    desc: 'Speaking, respostas rápidas, diálogos naturais e perda do medo de falar inglês.',
     file: '18-ingles-conversacao.html',
     cat: 'Inglês',
     modules: 3,
@@ -3003,7 +3003,8 @@ var MA_COURSES = [
     storagePrefix: 'ic_',
     icon: '🇺🇸',
     color: '#E65100',
-    addedTs: 1776024694959,
+    free: true,
+    addedTs: 1776284580179,
     active: true
   },
   {
