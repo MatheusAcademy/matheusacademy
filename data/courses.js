@@ -2263,24 +2263,24 @@ var MA_COURSES = [
     addedTs: 1776024494844,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/cs.jpg',
     id: 'cs',
-    name: 'Cibersegurança na Nova Era Digital',
-    desc: 'Proteção de dados, ameaças digitais, boas práticas e fundamentos de defesa cibernética.',
+    name: 'Cibersegurança',
+    desc: 'Domina defensiva cibernética: ataques comuns, criptografia, OWASP, pentesting, LGPD. Proteja sistemas contra ameaças reais. Aprenda ofensiva ética.',
     file: '23-ciberseguranca.html',
     cat: 'Tecnologia',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'CS_HENRY_2026_MASTER',
+    salt: 'PREFIX_HENRY_2026_MASTER',
     ak: 'cs_auth',
     storagePrefix: 'cs_',
     icon: '💻',
     color: '#D32F2F',
     free: true,
-    addedTs: 1776284555512,
+    addedTs: 1776289910639,
     active: true
   },
   {
