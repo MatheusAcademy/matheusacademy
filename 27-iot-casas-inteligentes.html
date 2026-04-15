@@ -3,28 +3,904 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Internet das Coisas e Casas Inteligentes — Matheus Academy</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<title>IoT e Casas Inteligentes — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="shared/course.css">
 </head>
 <body>
 <script>
-var COURSE = {id:'IO',name:'Internet das Coisas e Casas Inteligentes',shortName:'IoT',cat:'Tecnologia e Inovação',desc:'Sensores, dispositivos conectados, automação residencial e cidades inteligentes.',salt:'IO_HENRY_2026_MASTER',ak:'io_auth',courseKey:'io',prefix:'io_',color:'#2E7D32',glow:'rgba(46,125,50,.35)',free:true,freeModules:1,modules:3,topics:9,hours:3,quizzes:9};
+var COURSE = {
+  id:'IO',
+  name:'IoT e Casas Inteligentes',
+  shortName:'io',
+  cat:'Tecnologia e Inovação',
+  desc:'Explore o universo da Internet das Coisas: Arduino, ESP32, MQTT, Home Assistant e protocolos. Crie casas inteligentes e sistemas IoT profissionais.',
+  salt:'PREFIX_HENRY_2026_MASTER',
+  ak:'io_auth',
+  courseKey:'iot-casas-inteligentes',
+  prefix:'io_',
+  color:'#2E7D32',
+  glow:0.35,
+  free:true,
+  freeModules:1,
+  modules:3,
+  topics:9,
+  hours:3,
+  quizzes:9
+};
 var MODS = [
-  {id:'io_mod1',name:'Fundamentos de IoT e Sensores',free:true,topics:[1,2,3],summary:{title:'Resumo do Módulo 1: Conceitos de IoT',points:['IoT conecta bilhões de dispositivos físicos à internet gerando dados contínuos','Sensores são olhos e ouvidos digitais capturando temperatura, movimento, luz, umidade','Conectividade varia entre WiFi, Bluetooth, 5G e protocolos especializados como LoRaWAN','Dados de sensores habilitam decisões inteligentes em tempo real e automação adaptativa']},quizFinal:[{q:'O que significa IoT?',opts:['Internet of Things - redes de objetos físicos conectados e inteligentes','Internet Optional Technology - tecnologia opcionalmente conectada','Input Output Tools - ferramentas de entrada e saída de dados','International Online Technology - tecnologia online internacional'],correct:0},{q:'Qual é a função primária de um sensor?',opts:['Transmitir dados via satélite','Capturar informações do ambiente físico e conversor para dados digitais','Armazenar dados em nuvem','Fazer cálculos matemáticos avançados'],correct:1},{q:'Qual protocolo é ideal para IoT com baixo consumo de bateria?',opts:['WiFi padrão','5G comercial','LoRaWAN e Bluetooth Low Energy','Fibra óptica'],correct:2}]},
-  {id:'io_mod2',name:'Casas Inteligentes: Automação Residencial',free:false,topics:[4,5,6],summary:{title:'Resumo do Módulo 2: Smart Homes',points:['Casas inteligentes integram iluminação, climatização, segurança e eletrodomésticos','Plataformas como Amazon Alexa, Google Home e Apple HomeKit centralizam controle','Economia de energia pode alcançar 30% com automação de climatização e iluminação','Segurança aumenta com câmeras inteligentes, travas e sistemas de monitoramento 24/7']},quizFinal:[{q:'Qual é o principal benefício de uma casa inteligente?',opts:['Aumentar contas de internet','Automação, segurança e eficiência energética','Compatibilidade com apenas um dispositivo','Acesso exclusivo a aplicativos proprietários'],correct:1},{q:'O Amazon Alexa é principalmente:',opts:['Um eletrodoméstico obrigatório','Um hub central para controlar dispositivos inteligentes','Um sistema apenas de entretenimento','Uma câmera de vigilância'],correct:1},{q:'Como a automação residencial economiza energia?',opts:['Desligando a luz do vizinho','Ajustando iluminação e climatização conforme presença e preferência','Eliminando energia renovável','Forçando congelador mais frio'],correct:1}]},
-  {id:'io_mod3',name:'Cidades Inteligentes e Aplicações Futuras',free:false,topics:[7,8,9],summary:{title:'Resumo do Módulo 3: Smart Cities',points:['Cidades inteligentes usam sensores em ruas, tráfego e serviços públicos para otimizar operações','Aplicações incluem gerenciamento de tráfego, iluminação pública adaptativa e saúde pública','Desafios incluem padronização, privacidade de dados e investimento inicial elevado','Futuro inclui cidades mais sustentáveis, seguras e responsivas às necessidades dos cidadãos']},quizFinal:[{q:'Uma cidade inteligente foca principalmente em:',opts:['Aumentar população exponencialmente','Otimizar recursos e serviços públicos usando dados de sensores','Proibir tecnologia antiga','Vender dados dos cidadãos'],correct:1},{q:'Qual é um exemplo de aplicação em cidades inteligentes?',opts:['Carros aéreos em todos os tamanhos','Semáforos adaptativos que ajustam fluxo de tráfego em tempo real','Eliminação completa de carros','Proibição de internet pública'],correct:1},{q:'Qual é um desafio significativo de cidades inteligentes?',opts:['São fáceis demais de construir','Privacidade de dados e segurança cibernética dos sistemas conectados','Não há desafios, tudo é perfeito','Custo zero de implementação'],correct:1}]}
-];
-var TOPICS = [
-  {id:1,name:'O que é Internet das Coisas (IoT)?',dur:'15 min',content:`<h3>Bem-vindo ao Mundo da Internet das Coisas</h3><p>Imagine um mundo onde seus objetos falam uns com os outros. Sua geladeira sabe que está faltando leite e faz o pedido ao supermercado. Suas plantas informam quando precisam de água. Seu despertador detecta que você dormiu bem e avisa ao seu café da manhã ficar pronto. Isso não é ficção científica—é IoT, e está acontecendo AGORA.</p><p>Internet das Coisas, ou IoT (Internet of Things), é a revolução onde objetos físicos cotidianos ganham capacidades digitais e se conectam à internet. Não são mais apenas objetos passivos. São inteligentes, responsivos, e comunicativos. Pense em cada objeto como tendo um mini-computador e acesso à internet.</p><p>Os números são impressionantes. Estima-se que em 2024 há mais de 15 bilhões de dispositivos IoT conectados globalmente. Em 2030, serão 25 bilhões. Cada segundo, sensores geram terabytes de dados do mundo físico. Essa avalanche de dados cria oportunidades incríveis de entender e otimizar como vivemos.</p><p>Como funciona? Simples: um sensor detecta algo (temperatura, movimento, luz, som), converte em dados digitais, transmite via internet para um servidor (nuvem), que processa a informação e pode tomar ação automática ou alertar uma pessoa. Esse ciclo sensor-comunicação-processamento-ação é o coração de IoT.</p><p>A beleza é a aplicação universal. Na agricultura, sensores em solo medem umidade e nutrientes, otimizando irrigação e reduzindo desperdício de água em 40%. Em hospitais, pulseiras conectadas monitoram pacientes continuamente, alertando médicos em tempo real sobre anomalias. Em fábricas, máquinas reportam manutenção preventiva antes de quebrar, eliminando paradas custosas.</p><p>IoT muda a relação entre humanos e máquinas. Antes, você tinha que checkar a máquina regularmente. Agora, a máquina avisa quando precisa de atenção. Isso libera humanos para trabalho criativo enquanto máquinas cuidam de monitoramento repetitivo. É uma parceria simbiótica que transforma produtividade.</p><p>E está acessível! Você não precisa ser Elon Musk para usar IoT. Qualquer pessoa pode comprar sensores baratos, conectá-los, e começar a coletar dados. Preços caíram 80% em 5 anos. Arduino (placa programável de prototipagem) custa R$50. Sensores individuais custam centavos. Nuvem para processar dados é gratuita para começar. Democracia total.</p>`,cards:[{q:'O que é Internet das Coisas (IoT)?',a:'Rede de objetos físicos equipados com sensores e conectividade que coletam, compartilham e processam dados via internet.'}]},
-  {id:2,name:'Sensores: Os Olhos e Ouvidos Digitais',dur:'15 min',content:`<h3>Sensores: Transformando o Mundo Físico em Dados</h3><p>Se IoT é a revolução, sensores são os soldados na linha de frente. Um sensor é um dispositivo que detecta mudanças no ambiente físico e as converte em sinais digitais que computadores entendem. São a interface entre mundo físico e mundo digital.</p><p>Tipos de sensores são diversos e especializados. Sensor de temperatura detecta calor e frio. Sensor de movimento (PIR) identifica presença de pessoas. Sensor de luz (LDR) mede iluminação ambiental. Sensor de umidade detecta teor de água no ar. Sensor de gás detecta vazamentos. Sensor de distância usa ultrassom para medir proximidade. Cada um tem uma missão.</p><p>Exemplos práticos de aplicação: um sensor de temperatura em uma geladeira monitora continuamente. Se temperatura sobe acima do ideal, gera um alerta ao dono. Uma fábrica de chocolate usa sensores de temperatura em cada etapa: se uma câmara esfriar demais, chocolate fica frágil; se aquecer demais, derrete. Sensores garantem qualidade constante.</p><p>Precisão é importante. Um sensor barato pode ter margem de erro de 2 graus em temperatura. Para aplicações críticas, você precisa de sensor premium com erro de 0.1 graus. O preço varia: sensor barato custa R$5, sensor premium custa R$500. Escolher certo sensor para certo trabalho é ciência e arte simultaneamente.</p><p>Sensores consomem energia. Um sensor conectado 24/7 pode drenar bateria rapidamente. Tecnologia de sensores evoluiu para Low Energy Bluetooth e LoRaWAN—protocolos que permitem sensores rodarem meses ou anos com uma bateria só. Isso revolucionou aplicações onde mudar bateria é impraticável (sensores em prédios históricos, sensores em florestas remotas).</p><p>Processamento de sinal é onde magia acontece. Um sensor gera 1000 leituras por segundo. Enviar tudo para nuvem desperdça largura de banda e energia. Edge computing filtra dados no próprio sensor, enviando apenas o significativo. Um sensor de movimento envia dados apenas quando movimento é detectado. Um sensor de temperatura envia apenas mudanças maiores que 1 grau.</p><p>Fusão de dados é poderosa. Um sensor sozinho é informação. Múltiplos sensores juntos criam inteligência. Uma planta com sensor de luz, umidade e temperatura permitem determinar sua saúde com 90% de precisão. Médicos usam fusão de sensores (batimento cardíaco, oxigenação, temperatura) para diagnóstico preciso. Fusão eleva IoT de interessante para transformador.</p>`,cards:[{q:'Qual é a função primária de um sensor em IoT?',a:'Detectar mudanças no ambiente físico e convertê-las em sinais digitais que podem ser processados por computadores.'}]},
-  {id:3,name:'Conectividade e Protocolos de Comunicação',dur:'15 min',content:`<h3>Como Dispositivos IoT Conversam: Protocolos e Conectividade</h3><p>Um sensor sozinho é inútil. Ele precisa comunicar dados para um lugar. Escolher como comunicar é decisão crítica em qualquer projeto IoT. Diferentes aplicações precisam diferentes protocolos.</p><p>WiFi é familiar. Quase toda casa tem roteador WiFi. Dispositivos IoT podem usar WiFi para conectar à internet diretamente. Vantagens: rápido, confiável, amplo. Desvantagens: consome bateria rapidamente (horas a dias), requer sinal forte. Ideal para dispositivos plugados na tomada como smart speakers ou câmeras.</p><p>Bluetooth é diferente. Usa menos energia que WiFi e alcança até 100 metros em versão clássica. Bluetooth Low Energy alcança 200 metros com consumo mínimo. Um smartwatch funciona meses com bateria usando Bluetooth com celular. Desvantagens: velocidade é lenta, alcance é limitado. Ideal para wearables e dispositivos próximos.</p><p>5G é futuro dos smartphones, mas também IoT. Velocidade é 100x mais rápida que 4G. Latência é mínima (vital para aplicações críticas). Desvantagens: consumo de energia é elevado, infraestrutura ainda em expansão. Ideal para aplicações de alta velocidade como veículos autônomos e cirurgia remota.</p><p>LoRaWAN é especial. É protocolo de longo alcance com baixo consumo. Um sensor LoRaWAN pode transmitir dados 10km em zona rural, usando bateria por ANOS. Vanguarda de IoT rural e industrial. Desvantagens: velocidade é lenta (kbps), tecnologia menos consolidada que WiFi.</p><p>NB-IoT e LTE-M são novos protocolos celulares otimizados para IoT. Usam redes de celular existentes (4G/5G) mas com otimizações para economia de energia e custo. Excelentes para dispositivos que precisam celular mas não velocidade alta. Rastreadores de carga, medidores inteligentes, sensores ambientais.</p><p>Escolher protocolo é como escolher estrada. WiFi é rodovia rápida (ideal pra volume alto). Bluetooth é estrada local (ideal pra curta distância). LoRaWAN é trilha rural (ideal pra longa distância com poucos dados). 5G é hyperloop futurista (ideal pra crítica em tempo real). Cada aplicação tem protocolo ótimo. Engenheiro de IoT domina essa escolha.</p>`,cards:[{q:'Qual protocolo de IoT é ideal para dispositivos com bateria de longa duração em grandes distâncias?',a:'LoRaWAN, que oferece longo alcance (10km+) com consumo mínimo de energia, permitindo operação por anos com uma bateria.'}]},
-  {id:4,name:'Smart Homes: Automação que Simplifica a Vida',dur:'15 min',content:`<h3>Casa Inteligente: Seu Lar do Futuro Hoje</h3><p>Acordar no escuro? Não mais. Seu smart alarm detecta que você acordou e ilumina quarto gradualmente com luz natural. Chegar em casa? Porta se abre automaticamente. Casa se aquece/esfria até temperatura preferida. TV liga no seu show favorito. Tudo acontece automáticamente porque casa SABE que você chegou e LEMBRA suas preferências.</p><p>Casas inteligentes começam com um hub central. Amazon Alexa é dominante globalmente. Google Home é alternativa poderosa. Apple HomeKit oferece privacidade superior. Esses hubs funcionam como cérebro central: recebem comandos de voz, executam automações, integram múltiplos dispositivos de fabricantes diferentes em ecossistema coeso.</p><p>Iluminação inteligente é primeira automação que vale a pena. Smart bulbs custam R$50-100 cada. Você coloca em lâmpadas existentes. Via aplicativo ou voz, controla intensidade e cor. Automação: lights se desligam automaticamente quando cômodo fica vazio, acendem suavemente ao anoitecer, mudam cor conforme hora do dia (luz azulada de manhã, avermelhada à noite) para respeitar circadiano.</p><p>Climatização inteligente economiza dinheiro real. Termostato inteligente como Nest aprende seus hábitos. Se você sempre sai segunda de manhã, aquecedor se desliga automaticamente segunda. Se volta sexta, aquece antes de você chegar. Resultado: economia de 15-20% em contas de energia. Para quem paga R$500/mês em clima, isso é R$100 économizados todo mês. Em 6 meses, termostato já pagou por si mesmo.</p><p>Segurança inteligente é crucial. Câmeras com IA detectam intrusos versus entrega (reduzindo alarmes falsos). Travas inteligentes permitem acesso remoto—você esqueceu chaves? Abra porta do celular de qualquer lugar. Cônjuge chegando com mantimentos? Abre porta sem tocar nada. Histórico de quem entrou e saiu quando fica registrado na nuvem. Segurança aumenta 300%.</p><p>Eletrodomésticos inteligentes fecham o loop. Geladeira avisa falta de itens. Máquina de lavar notifica quando ciclo termina. Forno aquece enquanto você vem para casa. Torneira ajusta temperatura automaticamente. Casa inteira conversa entre si criando experiência fluida onde tudo funciona juntos.</p><p>Privacidade é consideração séria. Google Home e Alexa coletam dados de voz. Apple HomeKit processa tudo localmente (nuvem é apenas opcional). Escolha reflete seus valores. Sempre use rede WiFi segura, senhas fortes, e desative recursos desnecessários. Privacidade em smart home é possível com escolhas conscientes.</p>`,cards:[{q:'Qual é o principal benefício econômico de um termostato inteligente?',a:'Economizar 15-20% em contas de energia através de aprendizado de hábitos e ajuste automático de temperatura conforme presença.'}]},
-  {id:5,name:'Aplicações Práticas de Casas Inteligentes',dur:'15 min',content:`<h3>Transformando Sua Casa: Guia Prático de Implementação</h3><p>Quer começar com casa inteligente mas está assustado? Ótima notícia: é muito mais simples e acessível do que imagina. Começamos pequeno e expandimos conforme aprende.</p><p>Passo 1 é escolher hub. Amazon Alexa é mais acessível (Echo Dot custa R$100). Google Home oferece melhor integração com Google Services. Apple HomeKit é mais caro mas mais seguro. Escolha baseada no seu ecossistema. A maioria começa com Alexa porque custo-benefício é ótimo.</p><p>Passo 2 é iluminação. Compre uma smart bulb (Positivo, Philips Hue, Intelbras) por R$50-80. Enrosque em lâmpada existente. Conecte ao app do fabricante. Depois conecte ao seu hub. Agora você controla por voz: 'Alexa, diminui luz em 50%'. Simples demais.</p><p>Passo 3 é automação. No app, configure regra: 'Quando sol se põe, acenda todas as luzes em 70%'. Outra: 'Quando sair de casa (via celular), desligue todas as luzes'. Automações mudam comportamento drasticamente. Casa funciona sem você tocar em nada.</p><p>Passo 4 é segurança. Câmera inteligente (Positivo, TP-Link) custa R$150-300. Montada na entrada, registra tudo. Via celular, você vê quem toca a campainha de qualquer lugar do mundo. Trava inteligente (R$400-800) automatiza acesso. Combinação de câmera + trava + sensor de movimento cria segurança robusta.</p><p>Passo 5 é climatização. Termostato inteligente é investimento maior (R$800-1500) mas retorna em economia. Se seu ar custa R$500/mês, economizar 15% é R$75/mês. Paga termostato em 15 meses, então é puro ganho.</p><p>Custo inicial para casa básica: hub (R$100) + 5 bulbs (R$300) + câmera (R$200) + trava (R$500) = R$1100 total. Comparado com remodelação tradicional, é nada. E você expande gradualmente conforme aprende.</p><p>Dica importante: não automatize tudo! Comece com 2-3 automações que realmente melhoram vida. Adicione mais conforme sinta confortável. Casa super automatizada que você não entende não é casa inteligente, é casa confusa. Simplicidade é elegância.</p>`,cards:[{q:'Qual é o primeiro dispositivo recomendado para começar com casa inteligente?',a:'Um hub central como Amazon Echo ou Google Home, que funciona como cérebro para conectar e controlar outros dispositivos.'}]},
-  {id:6,name:'Privacidade, Segurança e Desafios em Smart Homes',dur:'15 min',content:`<h3>O Lado Escuro das Casas Inteligentes: Privacidade e Segurança</h3><p>Casas inteligentes são maravilhosas, mas não isentas de desafios. Amazon coleta dados de voz. Google analisa seus padrões. Hackers às vezes conseguem acesso a câmeras. Privacidade em casa inteligente é batalha contínua.</p><p>Dados de voz são controversos. Quando você fala 'Alexa', Amazon grava e armazena sua voz em servidores. Teoricamente apenas para melhorar reconhecimento. Praticamente, essa informação é valiosa para publicidade direcionada. Se você pede Alexa para tocar 'cancer research songs', Amazon sabe que você procura sobre câncer e pode vender essa informação a seguradoras. Assustador? Talvez. Real? Sim.</p><p>Solução? Use Apple HomeKit que processa tudo localmente na sua rede, não em nuvem Amazon/Google. Outra opção: desative histórico de voz regularmente (ambas plataformas permitem). Use wake-words falsas ocasionalmente para confundir: 'Alexa, busque receita para roubo de dados.' Amazon não sabe se é real ou teste.</p><p>Segurança de rede é crítica. Se sua WiFi é protegida só por 'senha123', hacker conecta, acessa câmeras, vê sua casa. Solução? Use senha WiFi forte (20+ caracteres, misturando letras/números/símbolos). Atualize firmware de roteador regularmente. Use rede 5GHz se possível (menos penetrável que 2.4GHz). Alguns hubs permitem rede guest separada para visitantes.</p><p>Senhas de conta são primeiros alvos. 'Admin123' se quebra em segundos. Use senhas únicas por dispositivo. Melhor: use gerenciador de senhas como Bitwarden que gera senhas aleatórias fortes. Autenticação de dois fatores (2FA) adiciona camada: mesmo que senha seja quebrada, invasor precisa código do seu telefone.</p><p>Compatibilidade é desafio. Alexa funciona com +100k dispositivos, Google Home com +10k, HomeKit com <1k. Isso cria fragmentação. Se você compra 50% devices que funcionam com Alexa e 50% que funcionam com Google, alguns devices não conversam entre si. Solução? Declare lealdade a um ecossistema e escolha devices compatíveis.</p><p>Obsolência é problema futuro. Computadores e smartphones recebem updates de software. Muitos smart home devices param de receber updates após 2-3 anos. Se tecnologia fica desatualizada, segurança piora (novos exploits não são patchados). Escolha marcas que historicamente suportam dispositivos longo tempo (Apple, Google, Amazon vs marcas chinesas menores).</p>`,cards:[{q:'Qual é uma preocupação importante de privacidade em casas inteligentes com Alexa?',a:'Coleta de dados de voz que podem ser usados para análise de padrões e publicidade direcionada além da função assistente.'}]},
-  {id:7,name:'Cidades Inteligentes: Transformação Urbana',dur:'15 min',content:`<h3>Smart Cities: Quando Cidades Ganham Inteligência</h3><p>Casas inteligentes são début. Cidades inteligentes são orquestra sinfônica. Imagina uma cidade onde tráfego flui otimamente, poluição é monitorada em tempo real, iluminação pública se ajusta conforme necessidade, e emergências são respondidas segundos após ocorrer. Bem-vindo ao futuro das cidades.</p><p>Cidades inteligentes usam sensores massivamente. Uma cidade moderna tem 100k+ sensores: em ruas monitorando tráfego, em semáforos ajustando fluxo, em estações metrô rastreando superlotação, em parques monitorando qualidade do ar, em prédios públicos medindo consumo de energia. Essa rede de sensores é sistema nervoso da cidade.</p><p>Gerenciamento de tráfego é caso de uso primário. Trânsito custa bilhões globalmente em tempo perdido. Semáforos inteligentes que analisam fluxo em tempo real e ajustam timing reduzem congestionamento em 20-30%. Uma cidade como São Paulo ganharia 50 milhões de horas produtivas por ano com semáforos inteligentes. Isso é transformador.</p><p>Iluminação pública inteligente economiza energia massivamente. Ruas em cidades têm 100k+ lâmpadas acesas toda noite. Iluminação tradicional usa mesma intensidade sempre. Iluminação inteligente ajusta conforme necessidade: rua vazia? Luz em 30%. Carro chegando? Sobe para 100%. Poluição luminosa diminui, economia de energia é 50%+.</p><p>Qualidade do ar é monitorada continuamente. Sensores de particulado, NOx, SOx mapeiam em tempo real. Quando poluição sobe acima de limite saudável, alertas são emitidos. Pessoas com asma recebem notificação para evitar rua X em hora Y. Trânsito é redirecionado para rotas menos poluídas. Saúde pública melhora.</p><p>Segurança pública é transformada. Câmeras com IA detectam atividades suspeitas (pessoas em altura estranha, comportamento anormal). Polícia responde rapidamente. Estacionamentos desnecessários são flagged, oferecendo vagas livres em tempo real. Poluição sonora é monitorada (buzina excessiva, som alto em madrugada).</p><p>Água é gerida inteligentemente. Vazamentos em tubulação causam bilhões em desperdício. Sensores detectam variações de pressão indicando vazamento, permitindo reparação minutos após ocorrer. Consumo é monitorado por quadra urbana. Educação publica, campanhas, e até multas incentivam economia. Consumo de água diminui 15-25%.</p><p>Desafios existem. Privacidade é questão—câmeras em toda rua é vigilância? Padronização é complexa—diferentes cidades usam diferentes sistemas incompatíveis. Custo de implementação é alto (bilhões por cidade). Cibersegurança é crítica—se hackers controlam semáforos de uma cidade, caos é instantâneo.</p>`,cards:[{q:'Qual é o impacto principal de semáforos inteligentes em cidades?',a:'Redução de congestionamento de 20-30% através de ajuste dinâmico de fluxo baseado em dados em tempo real.'}]},
-  {id:8,name:'Aplicações Avançadas: Saúde, Agricultura e Indústria',dur:'15 min',content:`<h3>IoT Transformando Setores: Casos Revolucionários</h3><p>IoT não é apenas sobre conveniência pessoal. A verdadeira revolução ocorre quando aplicada a saúde, agricultura e manufatura onde stakes são altos e impacto é medido em vidas salvas ou alimentos cultivados.</p><p>Na saúde, IoT é revolucionário. Pulseiras rastreiam batimento cardíaco, oxigenação, temperara continuamente. Pacientes com condições crônicas (diabetes, hipertensão) transmitem dados automaticamente para médicos. Anomalias disparam alertas em minutos, não em semanas. Vida útil aumenta quando doenças são detectadas early.</p><p>Implantes inteligentes monitoram e medicam. Pacemakers já fazem isso desde anos. Próxima geração: nanopartículas ingeríveis transmitem imagens de dentro do trato digestivo. Biosensores detectam biomarcadores de câncer antes que tumor seja detectável por ultrassom. Science fiction? Prototipagem está acontecendo agora.</p><p>Agricultura de precisão alimenta 8 bilhões de pessoas. IoT permite farming inteligente. Sensores de solo em cada metro quadrado medem umidade, nutrientes, pH. Sistema rega apenas onde necessário, economizando 50% de água. Sensores de praga alertam antes de infestação explodir. Drones de IA detectam plantas doentes antes de infectar colheita inteira.</p><p>Produtividade agrícola dispara. Pequeno agricultor que implementa IoT aumenta colheita em 30-40% usando mesma terra. Desperdício de fertilizante cai 60%. Água economizada é reutilizada para outras plantações. Economicamente, pequeno agricultor gera R$5000+ mês adicional vendendo mesma área. Impacto na vida é profundo.</p><p>Manufatura é transformada por Industry 4.0 (IoT em fábricas). Máquinas reportam status em tempo real. Se uma máquina está operando sub-otimalmente, sistema nota e alerta técnico. Manutenção preventiva reduz downtime de horas para minutos. Defeitos são detectados na linha de produção, não após venda ao cliente.</p><p>Eficiência fabril melhora 25-40% com IoT. Uma fábrica que produz 1000 unidades/dia com IoT produz 1300. Qualidade melhora porque menos defeitos passam. Trabalhadores apreciam porque máquinas interagem com sistemas de segurança, alertando perigos iminentes (temperatura excessiva, espaço insuficiente) antes de acidente.</p><p>Supply chain é revolucionado. Cada produto tem sensor rastreando localização e condições. Alimento refrigerado deixa de ser refrigerado durante transporte? Sensor alerta. Produto cai e sofre impacto? Sensor registra e qualidade é questionada. Transparência total da origem ao destino muda percepção de qualidade e valor.</p>`,cards:[{q:'Como IoT na agricultura melhora produtividade?',a:'Através de sensores de solo que otimizam irrigação, detecção de pragas, e análise de saúde de plantas, aumentando colheita até 40%.'}]},
-  {id:9,name:'Implementando IoT: Do Conceito ao Protótipo Funcional',dur:'15 min',content:`<h3>Construindo Seu Primeiro Projeto IoT: Guia Prático</h3><p>Teoria é ótima, mas prática é melhor. Vamos guiar você através da criação de seu primeiro projeto IoT real que funciona e entrega valor.</p><p>Escolha um problema real que você quer resolver. Não comece com 'vou fazer casa inteligente completa'. Comece pequeno: 'Quero monitorar temperatura de meu freezer e ser alertado se descongelar'. Simples, específico, valioso. Esse é projeto perfeito para começar.</p><p>Componentes necessários (custo total: ~R$200): Arduino ou Raspberry Pi (R$50-100, cérebro do projeto), sensor de temperatura (R$20), módulo WiFi ou Bluetooth (R$30), power supply (R$20), fios e outros (R$30). Barato demais para não tomar a chance.</p><p>Passo 1: Assembla hardware. Conecte sensor ao Arduino. Conecte módulo WiFi. Arduino lê dados do sensor a cada segundo e transmite para nuvem (Firebase, Amazon IoT Core, ou até servidor caseiro). Isso toma 2-3 horas para iniciante.</p><p>Passo 2: Programação. Arduino se programa em linguagem C (simplificada). Código básico: 'leia sensor, se temperatura abaixo de -18, envie alerta por email'. Não é complexo. Tutorial YouTube passo-a-passo facilita. 1-2 horas de programação.</p><p>Passo 3: Teste. Deixe rodar por uma semana observando. Ele funciona? Dados são acurados? Alertas aparecem? Refina conforme necessário. Iteração é normal e esperada.</p><p>Passo 4: Expanda. Quando primeiro projeto funciona, você ganha confiança. Adicione segundo sensor. Expanda para monitorar múltiplas temperaturas. Depois, integre com Alexa permitindo voz. Depois, adicione câmera. Cada expansão é pequena e gerenciável.</p><p>Recursos de aprendizado: Arduino.cc tem documentação excelente. Tutorials em YouTube são abundantes. Reddit r/arduino é comunidade amigável. Courses em Udemy custam R$30-50 com centenas de projetos passo-a-passo.</p><p>Mentalidade correta é crucial. Seu primeiro projeto não será perfeito. Terá bugs. Terá frustrações. Mas quando aquele alerta chega no seu telefone indicando seu freezer descongelou, satisfação é incomparável. Você criou inteligência. Você é agora maker.</p><p>Próximos projetos podem ser: sistema de rega automático baseado em umidade do solo, monitores de qualidade de ar em seu quarto, rastreador de consumo de energia da casa, sistema de segurança com alertas de movimento. Mundo é sua criatividade.</p>`,cards:[{q:'Qual é o primeiro projeto IoT ideal para um iniciante?',a:'Um projeto simples e específico como monitorar temperatura de freezer com alerta, que ensina conceitos sem ser esmagadoramente complexo.'}]}
+  {
+    id:'io_mod1',
+    name:'Fundamentos de IoT e Eletrônica Básica',
+    free:true,
+    topics:[
+      {
+        id:1,
+        name:'O que é Internet das Coisas (IoT)?',
+        dur:'15 min',
+        content:`
+<h3>IoT: Conectando o Mundo Físico ao Digital</h3>
+<p>Internet das Coisas (IoT) é a interconexão de dispositivos físicos — sensores, atuadores, microcontroladores — através da internet. Diferente de computadores e smartphones, esses "things" são especializados, low-power e dedicados a tarefas específicas.</p>
+
+<h4>De que Falamos Quando Dizemos IoT?</h4>
+<ul>
+<li><strong>Sensor:</strong> Dispositivo que mede algo (temperatura, umidade, movimento, luz)</li>
+<li><strong>Atuador:</strong> Dispositivo que realiza ação (liga lâmpada, abre porta, liga motor)</li>
+<li><strong>Microcontrolador:</strong> "Cérebro" que processa dados e toma decisões (Arduino, ESP32)</li>
+<li><strong>Gateway:</strong> Bridge entre dispositivos IoT e internet (Wi-Fi router, Zigbee hub)</li>
+<li><strong>Cloud:</strong> Servidor remoto que armazena e analisa dados</li>
+</ul>
+
+<h4>Números que Impressionam</h4>
+<blockquote class="news">
+<strong>📊 Mercado Global IoT (2026):</strong>
+<br>• 16+ bilhões de dispositivos IoT conectados
+<br>• Mercado avaliado em $600+ bilhões
+<br>• Crescimento anual: 18-20%
+<br>• Aplicações: Smart Home, Indústria 4.0, Cidades Inteligentes, Agro-Tech
+</blockquote>
+
+<h4>Pilares Técnicos de um Sistema IoT</h4>
+<p><strong>1. Comunicação:</strong> Como os dispositivos falam uns com os outros?</p>
+<ul>
+<li>Wi-Fi: Alcance longo, alta banda, consome muita energia</li>
+<li>Bluetooth/BLE: Curto alcance, baixa energia, peer-to-peer</li>
+<li>Zigbee: Redes mesh, muito eficiente, padrão aberto</li>
+<li>LoRaWAN: Longo alcance, muito baixa energia (até 10 anos de bateria)</li>
+<li>NB-IoT/LTE-M: Celular otimizado para IoT</li>
+</ul>
+
+<p><strong>2. Processamento:</strong> Processamento local (edge) vs nuvem (cloud)?</p>
+<ul>
+<li>Edge: Rápido, funciona offline, usa menos banda (Ex: decisão se temperatura > 30°C)</li>
+<li>Cloud: Análise complexa, machine learning, histórico longo (Ex: padrões de consumo)</li>
+</ul>
+
+<p><strong>3. Armazenamento:</strong> Onde guardar bilhões de dados de sensores?</p>
+<ul>
+<li>Time-series Database: Otimizado para séries temporais (InfluxDB, Prometheus)</li>
+<li>SQL Tradicional: Dados estruturados</li>
+<li>NoSQL: Dados não-estruturados, escala horizontal</li>
+</ul>
+
+<h4>Por Que IoT é Diferente de Software Tradicional</h4>
+<p>IoT é <strong>embedded systems</strong> + <strong>cloud computing</strong>. Desafios únicos:</p>
+<ul>
+<li><strong>Restrições de Hardware:</strong> Processador lento, pouca RAM, bateria limitada</li>
+<li><strong>Conectividade Instável:</strong> WiFi cai, sinal celular fraco</li>
+<li><strong>Segurança Crítica:</strong> Dispositivo hacked pode controlar porta/fechadura</li>
+<li><strong>Escalabilidade:</strong> Milhões de dispositivos simultâneos</li>
+<li><strong>Manutenção Remota:</strong> Não pode enviar técnico para cada dispositivo</li>
+</ul>
+
+<p>Esses desafios tornaram IoT um campo fascinante para engenheiros e makers.</p>
+        `,
+        cards:[
+          {q:"O que é IoT?",a:"Interconexão de dispositivos físicos (sensores, atuadores, microcontroladores) através da internet"},
+          {q:"Cite 3 protocolos de comunicação IoT",a:"Wi-Fi, Bluetooth/BLE, Zigbee, LoRaWAN, NB-IoT/LTE-M"},
+          {q:"Qual é a vantagem de processamento Edge?",a:"Decisões rápidas, funciona offline, usa menos banda"}
+        ]
+      },
+      {
+        id:2,
+        name:'Arduino e ESP32: Microcontroladores Populares',
+        dur:'20 min',
+        content:`
+<h3>Arduino e ESP32: O Coração de Seus Projetos IoT</h3>
+<p>Se IoT é uma orquestra, Arduino e ESP32 são os violinistas. Esses microcontroladores são a base de 95% dos projetos IoT. Vamos aprender suas diferenças, capacidades e quando usar cada um.</p>
+
+<h4>Arduino: O Clássico</h4>
+<p>Arduino surgiu em 2005 e revolucionou prototipagem eletrônica. É uma plataforma open-source com hardware simples e programação amigável (C/C++).</p>
+<ul>
+<li><strong>Variantes Populares:</strong> Arduino Uno, Arduino Nano, Arduino Mega</li>
+<li><strong>Processador:</strong> Atmega328p (Uno) - 8-bit, 16 MHz, 2KB RAM</li>
+<li><strong>Conectividade:</strong> Uno não tem Wi-Fi (precisa de shield)</li>
+<li><strong>Preço:</strong> R$50-150</li>
+<li><strong>Melhor Para:</strong> Projetos simples, educação, prototipagem rápida</li>
+</ul>
+
+<h4>ESP32: O Guerreiro Moderno</h4>
+<p>ESP32 (Espressif) é a evolução natural de Arduino. Lançado em 2016, mudou o jogo.</p>
+<ul>
+<li><strong>Processador:</strong> Dual-core 32-bit, 240 MHz, 520KB RAM</li>
+<li><strong>Conectividade:</strong> Wi-Fi 802.11 b/g/n + Bluetooth/BLE integrado</li>
+<li><strong>Periféricos:</strong> ADC, SPI, I2C, UART, PWM, capacitor tátil</li>
+<li><strong>Preço:</strong> R$30-80</li>
+<li><strong>Melhor Para:</strong> Casas inteligentes, aplicações em produção, IoT com conectividade</li>
+</ul>
+
+<h4>Comparação Lado a Lado</h4>
+<blockquote class="tip">
+<strong>📊 Arduino Uno vs ESP32:</strong>
+<br>
+<br>Processador: 8-bit, 16 MHz vs 32-bit, 240 MHz (15x mais rápido)
+<br>RAM: 2KB vs 520KB (260x mais)
+<br>Conectividade: USB/Serial vs Wi-Fi + BLE
+<br>Preço: R$120 vs R$50
+<br>Consumo: ~100mA vs ~80mA (ESP32 é mais eficiente!)
+<br>Ecossistema: Arduino IDE vs Arduino IDE (compatível) ou PlatformIO
+</blockquote>
+
+<h4>Começar com Arduino</h4>
+<p>O Uno é perfeito para aprender eletrônica:</p>
+<blockquote class="example">
+<strong>💡 Projeto 1: LED Piscante</strong>
+<br><code>void setup() { pinMode(13, OUTPUT); }
+<br>void loop() {
+<br>  digitalWrite(13, HIGH);
+<br>  delay(1000);
+<br>  digitalWrite(13, LOW);
+<br>  delay(1000);
+<br>}</code>
+<br>
+<br>Isso liga/desliga o LED a cada segundo. Parece simples, mas é a base de tudo!
+</blockquote>
+
+<h4>Começar com ESP32 (O Próximo Passo)</h4>
+<p>ESP32 adiciona capacidade de conectar à internet:</p>
+<blockquote class="example">
+<strong>🌐 Projeto 2: Leitura de Sensor + WiFi</strong>
+<br>
+<br>1. Sensor de temperatura DS18B20 conectado a GPIO
+<br>2. Código: lê temperatura a cada 10 segundos
+<br>3. Envia HTTP POST para servidor: {"temp": 23.5}
+<br>4. Visualizar em dashboard web
+<br>
+<br>Total de código: ~50 linhas. Poder incrível!
+</blockquote>
+
+<h4>Qual Escolher?</h4>
+<p><strong>Escolha Arduino Uno se:</strong> Aprendendo eletrônica, prototipo simples, não precisa Wi-Fi</p>
+<p><strong>Escolha ESP32 se:</strong> Produção, precisa conectividade, quer futuro-proof, quer melhor performance</p>
+
+<p>Minha recomendação: comece com Arduino Uno para entender eletrônica, depois pule para ESP32 para projetos reais.</p>
+        `,
+        cards:[
+          {q:"Qual é a diferença principal entre Arduino e ESP32?",a:"ESP32 tem dual-core 32-bit com Wi-Fi + BLE integrado, enquanto Uno é 8-bit sem conectividade"},
+          {q:"Quanto RAM tem um ESP32?",a:"520KB (260x mais que Arduino Uno que tem 2KB)"},
+          {q:"Qual microcontrolador usar para casa inteligente em produção?",a:"ESP32, por ter Wi-Fi integrado, melhor performance e custo menor"}
+        ]
+      },
+      {
+        id:3,
+        name:'MQTT: O Protocolo que Conecta Bilhões de Sensores',
+        dur:'20 min',
+        content:`
+<h3>MQTT: Pub/Sub para IoT</h3>
+<p>Se você quer conectar múltiplos dispositivos IoT, MQTT é o protocolo mais popular no mercado. É leve, eficiente e elegante. Mais de 80% de projetos IoT usam MQTT.</p>
+
+<h4>Por Que MQTT é Tão Popular?</h4>
+<ul>
+<li><strong>Leve:</strong> Overhead mínimo, funciona com conexões lentas/instáveis</li>
+<li><strong>Pub/Sub:</strong> Desacoplamento elegante entre dispositivos</li>
+<li><strong>QoS Garantido:</strong> Entrega confiável de mensagens</li>
+<li><strong>Last Will:</strong> Detecta quando dispositivo cai</li>
+<li><strong>Livre:</strong> Protocolo aberto, sem royalties</li>
+</ul>
+
+<h4>Arquitetura Pub/Sub</h4>
+<p>MQTT usa modelo "publish/subscribe" centralizado em um broker:</p>
+<blockquote class="example">
+<strong>📡 Fluxo Básico:</strong>
+<br>
+<br>Sensor de temperatura (Publisher):
+<br>  mqtt.publish("casa/sala/temperatura", "23.5")
+<br>
+<br>App Mobile (Subscriber):
+<br>  mqtt.subscribe("casa/sala/temperatura")
+<br>  → Recebe: 23.5
+<br>
+<br>Lâmpada (Subscriber):
+<br>  mqtt.subscribe("casa/sala/luz/comando")
+<br>  → Recebe: {"estado": "on", "brilho": 80}
+</blockquote>
+
+<h4>Tópicos MQTT (Topics)</h4>
+<p>Tópicos são caminhos hierárquicos que organizam mensagens:</p>
+<ul>
+<li><code>casa/sala/temperatura</code> — um sensor específico</li>
+<li><code>casa/cozinha/temperatura</code> — outro sensor</li>
+<li><code>casa/+/temperatura</code> — todos os cômodos (wildcard +)</li>
+<li><code>casa/#</code> — tudo na casa (wildcard #)</li>
+</ul>
+
+<p>Essa organização hierárquica permite escalabilidade para milhões de tópicos.</p>
+
+<h4>Níveis de QoS (Quality of Service)</h4>
+<p>MQTT oferece 3 níveis de confiabilidade:</p>
+<ul>
+<li><strong>QoS 0:</strong> "At most once" — rápido, pode perder mensagem (sensor temperatura ok)</li>
+<li><strong>QoS 1:</strong> "At least once" — padrão, pode receber duplicada</li>
+<li><strong>QoS 2:</strong> "Exactly once" — garantido, mais overhead (transações críticas)</li>
+</ul>
+
+<h4>Implementação Prática com ESP32</h4>
+<blockquote class="example">
+<strong>💻 Código Mínimo de Pub MQTT:</strong>
+<br><code>#include &lt;WiFi.h&gt;
+<br>#include &lt;PubSubClient.h&gt;
+<br>
+<br>WiFiClient espClient;
+<br>PubSubClient client(espClient);
+<br>
+<br>void setup() {
+<br>  WiFi.begin("SSID", "password");
+<br>  client.setServer("mqtt.broker.com", 1883);
+<br>  client.connect("ESP32-Sensor");
+<br>}
+<br>
+<br>void loop() {
+<br>  float temp = readTemperature();
+<br>  client.publish("casa/sala/temperatura", "23.5");
+<br>  delay(10000);
+<br>}</code>
+</blockquote>
+
+<h4>Brokers MQTT Populares</h4>
+<ul>
+<li><strong>Mosquitto:</strong> Open-source, popular, pode rodar no Raspberry Pi</li>
+<li><strong>Home Assistant:</strong> Built-in MQTT, integração automática</li>
+<li><strong>AWS IoT Core:</strong> Enterprise, escalável, pago</li>
+<li><strong>HiveMQ:</strong> Cloud gerenciado, confiável</li>
+<li><strong>Eclipse Paho:</strong> Implementação de referência</li>
+</ul>
+
+<p>Para começar, Mosquitto em um Raspberry Pi é perfeito. Depois escala para cloud.</p>
+        `,
+        cards:[
+          {q:"O que é MQTT?",a:"Protocolo leve de pub/sub para IoT, usado em 80% dos projetos para conectar dispositivos"},
+          {q:"Qual é a diferença entre wildcard + e #?",a:"+ substitui um nível (casa/+/temperatura), # substitui múltiplos níveis (casa/#)"},
+          {q:"Quando usar QoS 2 vs QoS 0?",a:"QoS 2 para dados críticos (transações), QoS 0 para dados não-críticos (sensor temperatura)"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Fundamentos e Tecnologias Base',
+      points:[
+        'IoT conecta sensores, atuadores, microcontroladores via internet com desafios únicos',
+        'ESP32 é a escolha moderna para produção (Wi-Fi, BLE, 30x mais rápido que Arduino)',
+        'MQTT é protocolo dominante (80% de projetos) por ser leve, pub/sub elegante e confiável',
+        'Arquitetura IoT repousa em comunicação, processamento (edge vs cloud) e armazenamento eficiente'
+      ]
+    },
+    quizFinal:[
+      {q:"Qual é o desafio mais crítico em IoT?",opts:["Falta de sensores baratos","Restrições de hardware e conectividade instável","Linguagem de programação","Falta de cloud"],correct:1},
+      {q:"ESP32 vs Arduino Uno: qual é 260x mais rápido?",opts:["RAM de ESP32","Processador de Uno","Conectividade","Preço"],correct:0},
+      {q:"MQTT usa qual padrão de comunicação?",opts:["Request/Response","Publish/Subscribe","Cliente/Servidor","Master/Slave"],correct:1}
+    ]
+  },
+  {
+    id:'io_mod2',
+    name:'Home Assistant, Alexa e Automação de Casas Inteligentes',
+    free:false,
+    topics:[
+      {
+        id:4,
+        name:'Home Assistant: O Cérebro da Casa Inteligente',
+        dur:'20 min',
+        content:`
+<h3>Home Assistant: Unificação de Todos os Dispositivos</h3>
+<p>Home Assistant é a plataforma open-source que une todos seus dispositivos IoT em um sistema único. Philips Hue, Sonos, Nest, MyQ, Zwaveconectados ao mesmo lugar. Executando localmente em Raspberry Pi, você tem controle total.</p>
+
+<h4>Por Que Home Assistant Venceu</h4>
+<ul>
+<li><strong>Local-First:</strong> Funciona offline, nenhum dado vai para cloud (se preferir)</li>
+<li><strong>Agnóstico de Marca:</strong> Integra TODOS os dispositivos (suporta 1000+ integrações)</li>
+<li><strong>Gratuito e Open-Source:</strong> Nenhuma taxa mensal</li>
+<li><strong>Automação Poderosa:</strong> Lógica condicional complexa com YAML simples</li>
+<li><strong>Interface Bonita:</strong> Dashboard customizável via interface visual</li>
+</ul>
+
+<h4>Arquitetura Home Assistant</h4>
+<blockquote class="tip">
+<strong>🏠 Stack Típico:</strong>
+<br>
+<br>Dispositivos (Philips Hue, termostato, câmera):
+<br>  ↓ (Zigbee, Z-Wave, WiFi, HTTP)
+<br>Home Assistant (Raspberry Pi):
+<br>  → Core (lógica de automação)
+<br>  → Integrações (comunicam com dispositivos)
+<br>  → Automations (regras: se X, então Y)
+<br>  → History (banco de dados, gráficos)
+<br>  ↑
+<br>Interface Web + Mobile App (iOS/Android)
+</blockquote>
+
+<h4>Instalação Mínima</h4>
+<ul>
+<li>Raspberry Pi 4 (R$300) + cartão SD 64GB</li>
+<li>Home Assistant OS (imagem pré-instalada)</li>
+<li>Hub Zigbee ou Z-Wave (para dispositivos sem Wi-Fi)</li>
+<li>Total: ~R$500 para sistema completo</li>
+</ul>
+
+<h4>Automação Prática</h4>
+<p>Home Assistant torna fácil criar automações complexas:</p>
+<blockquote class="example">
+<strong>🏡 Automação: Iluminação Inteligente</strong>
+<br>
+<br>trigger:
+<br>  platform: sun
+<br>  event: sunset
+<br>
+<br>action:
+<br>  service: light.turn_on
+<br>  target:
+<br>    entity_id: light.sala
+<br>  data:
+<br>    brightness: 200
+<br>    color_temp: 3000
+<br>
+<br>Efeito: Quando o sol se põe, sala fica iluminada em branco quente a 200 de brilho.
+</blockquote>
+
+<h4>Integrações Populares</h4>
+<ul>
+<li><strong>Iluminação:</strong> Philips Hue, LIFX, Tasmota, Zigbee/Z-Wave</li>
+<li><strong>Climatização:</strong> Nest, Ecobee, Honeywell, Daikin</li>
+<li><strong>Segurança:</strong> Wyze, Ring, Logitech, Arlo</li>
+<li><strong>Energia:</strong> Shelly, TP-Link Kasa, Tuya</li>
+<li><strong>Assistentes:</strong> Alexa, Google Home, Siri</li>
+</ul>
+
+<h4>Dashboard Customizado</h4>
+<p>A interface visual permite criar dashboards personalizados em minutos:</p>
+<ul>
+<li>Arrastar/soltar widgets (cards)</li>
+<li>Grupos lógicos (cômodos, tipos de dispositivos)</li>
+<li>Gráficos de consumo histórico</li>
+<li>Botões para ações (ligar luz, aumentar temperatura)</li>
+<li>Cenas (presets como "Cinema Mode" ou "Boa Noite")</li>
+</ul>
+
+<p>Home Assistant é o software que transforma uma coleção de dispositivos em um sistema verdadeiro.</p>
+        `,
+        cards:[
+          {q:"O que é Home Assistant?",a:"Plataforma open-source local que unifica dispositivos IoT de diferentes marcas com automação poderosa"},
+          {q:"Qual é a vantagem de rodar Home Assistant localmente?",a:"Funciona offline, sem dados na cloud, controle total, sem taxa mensal"},
+          {q:"Qual é a instalação mínima recomendada?",a:"Raspberry Pi 4 + Home Assistant OS + Hub Zigbee ou Z-Wave (total ~R$500)"}
+        ]
+      },
+      {
+        id:5,
+        name:'Alexa e Inteligência com Voz',
+        dur:'18 min',
+        content:`
+<h3>Alexa: O Assistente Que Controla a Casa</h3>
+<p>Amazon Alexa transformou como interagimos com nossas casas. "Alexa, liga a sala" é mais natural que buscar app no smartphone. Vamos aprender como integrar Alexa com seus dispositivos.</p>
+
+<h4>Alexa: Tecnologia por Trás</h4>
+<ul>
+<li><strong>Natural Language Processing (NLP):</strong> Entender intenção do comando</li>
+<li><strong>Reconhecimento de Voz:</strong> "Alexa" é detectado localmente, depois enviado para AWS</li>
+<li><strong>Skills:</strong> "Apps" para Alexa (Spotify, Netflix, pizzaria local)</li>
+<li><strong>Smart Home:</strong> Integração com dispositivos (luzes, fechaduras, termostatos)</li>
+</ul>
+
+<h4>Dispositivos Alexa (Hardware)</h4>
+<ul>
+<li><strong>Echo Dot:</strong> R$150, compacto, ótimo custo-benefício</li>
+<li><strong>Echo Show:</strong> R$400, tela de 5", controle visual</li>
+<li><strong>Echo Hub:</strong> R$150, suporta Zigbee sem preciso de hub separado</li>
+<li><strong>Alexa em Smartphone:</strong> Gratuito, funciona como dispositivo</li>
+</ul>
+
+<h4>Ecossistema de Compatibilidade</h4>
+<p>Alexa é compatível com centenas de marcas:</p>
+<ul>
+<li><strong>Iluminação:</strong> Philips Hue, LIFX, Tasmota via Home Assistant</li>
+<li><strong>Climatização:</strong> Nest, Ecobee, Daikin via skill</li>
+<li><strong>Segurança:</strong> Wyze, Ring, August</li>
+<li><strong>Speakers:</strong> Sonos, JBL, Bose</li>
+<li><strong>Rotinas:</strong> Coordenar múltiplos dispositivos em sequência</li>
+</ul>
+
+<h4>Skills Customizadas</h4>
+<p>Desenvolvedores podem criar skills (aplicações) para Alexa:</p>
+<blockquote class="example">
+<strong>🎤 Exemplo: Skill de Assistente de Casa</strong>
+<br>
+<br>User: "Alexa, qual é a temperatura da casa?"
+<br>
+<br>Skill:
+<br>1. Parse intent: GetTemperature
+<br>2. Query Home Assistant API
+<br>3. Return: "A temperatura da sala é 22 graus"
+<br>
+<br>Implementado em Node.js ou Python via AWS Lambda
+</blockquote>
+
+<h4>Privacidade com Alexa</h4>
+<blockquote class="tip">
+<strong>🔒 Considerações de Privacidade:</strong>
+<br>• Alexa envia áudio para AWS (sempre que detecta "Alexa")
+<br>• Amazon pode armazenar histórico de comando
+<br>• Usuário pode deletar histórico por data/semana
+<br>• Desligar microfone fisicamente (botão no dispositivo)
+<br>• Alternativa: Usar Home Assistant local + assistant local (Rhasspy)
+</blockquote>
+
+<h4>Inteligência Artificial em Casa</h4>
+<p>Alexa usa machine learning para:</p>
+<ul>
+<li>Aprender padrões de uso (quando você geralmente acorda, liga TV)</li>
+<li>Sugerir automações ("Você liga a sala toda noite às 7pm, quer que seja automático?")</li>
+<li>Reconhecer vozes diferentes (perfil familiar)</li>
+<li>Traduzir em tempo real</li>
+</ul>
+
+<p>O futuro é assistentes de voz que entendem contexto e antecipam necessidades.</p>
+        `,
+        cards:[
+          {q:"O que é uma Skill de Alexa?",a:"Aplicação (app) para Alexa que estende funcionalidades, como Spotify, Netflix ou assistente customizado"},
+          {q:"Qual dispositivo Alexa tem suporte nativo a Zigbee?",a:"Echo Hub (sem necessidade de hub separado)"},
+          {q:"Como Alexa processa comando de voz?",a:"Detecta 'Alexa' localmente, envia áudio para AWS, processa NLP, retorna resposta"}
+        ]
+      },
+      {
+        id:6,
+        name:'Protocolos IoT: Zigbee, Z-Wave e Comparação',
+        dur:'18 min',
+        content:`
+<h3>Protocolos Wireless Sem Fio: Zigbee vs Z-Wave vs WiFi</h3>
+<p>Comunicação é o coração de IoT. Cada protocolo tem força em cenários diferentes. Vamos comparar os mais importantes.</p>
+
+<h4>Zigbee: O Padrão Aberto</h4>
+<ul>
+<li><strong>Frequência:</strong> 2.4 GHz (mesma do WiFi, Bluetooth)</li>
+<li><strong>Alcance:</strong> 10-100m com repetidores (mesh)</li>
+<li><strong>Consumo:</strong> 10-100 mA, bateria dura meses/anos</li>
+<li><strong>Taxa:</strong> 20-250 kbps (lento, ok para sensores)</li>
+<li><strong>Topologia:</strong> Mesh (cada dispositivo é repetidor)</li>
+<li><strong>Ecossistema:</strong> Philips Hue, LIFX, Xiaomi, Innr, etc.</li>
+<li><strong>Preço Dispositivos:</strong> R$50-200</li>
+</ul>
+
+<p><strong>Quando Usar Zigbee:</strong> Sensores, luzes, tomadas (não precisa banda alta)</p>
+
+<h4>Z-Wave: O Competidor</h4>
+<ul>
+<li><strong>Frequência:</strong> 868 MHz (Europa) ou 915 MHz (EUA)</li>
+<li><strong>Alcance:</strong> 30-100m, mesh</li>
+<li><strong>Consumo:</strong> Similar a Zigbee</li>
+<li><strong>Taxa:</strong> 10-100 kbps</li>
+<li><strong>Proprietário:</strong> Mas aberto para fabricantes licenciados</li>
+<li><strong>Ecossistema:</strong> Aeotec, Dresden, Fibaro, Zooz</li>
+<li><strong>Preço Dispositivos:</strong> R$100-300 (mais caro)</li>
+</ul>
+
+<p><strong>Quando Usar Z-Wave:</strong> Integrações profissionais, instalações enterprise, segurança residencial</p>
+
+<h4>WiFi e Bluetooth</h4>
+<p><strong>WiFi (802.11):</strong> Banda alta, alcance bom, consome muita bateria. Bom para câmeras, speakers, displays.</p>
+<p><strong>Bluetooth Low Energy (BLE):</strong> Curto alcance (10-50m), super eficiente. Bom para wearables, acessórios pessoais.</p>
+
+<h4>Comparação Lado a Lado</h4>
+<blockquote class="tip">
+<strong>📊 Protocolos IoT Resumidos:</strong>
+<br>
+<br>Zigbee: Mesh aberto, 2.4GHz, eficiente, barato → Luzes, sensores, tomadas
+<br>Z-Wave: Mesh fechado, 868/915MHz, profissional → Segurança, instalações
+<br>WiFi: Banda alta, alcance bom → Câmeras, speakers, smartphones
+<br>Bluetooth: Ultra-curto alcance, super eficiente → Wearables, acessórios
+<br>LoRaWAN: Alcance extremo (10km), bateria por anos → Agricultura, leitura de medidores
+</blockquote>
+
+<h4>Hubs e Converores</h4>
+<p>Um único dispositivo pode suportar múltiplos protocolos:</p>
+<ul>
+<li><strong>Home Assistant:</strong> Com adaptadores USB, suporta Zigbee + Z-Wave</li>
+<li><strong>Philips Hue Bridge:</strong> Zigbee nativo</li>
+<li><strong>Aeotec Zstick:</strong> Hub Z-Wave portátil</li>
+<li><strong>Echo Hub:</strong> Suporta Zigbee sem hub separado</li>
+</ul>
+
+<h4>O Futuro: Matter</h4>
+<p>Matter é novo padrão que busca unificar tudo (lançamento 2023):</p>
+<ul>
+<li>Suportado por Apple, Google, Amazon, Zigbee Alliance</li>
+<li>Usa Thread (802.15.4, similar a Zigbee)</li>
+<li>Compatibilidade entre ecossistemas</li>
+<li>Expectativa: Matter será padrão daqui 3-5 anos</li>
+</ul>
+
+<p>Para novos projetos, considere dispositivos com suporte a Matter.</p>
+        `,
+        cards:[
+          {q:"Qual é a diferença de frequência entre Zigbee e Z-Wave?",a:"Zigbee usa 2.4GHz (mesma do WiFi), Z-Wave usa 868MHz (Europa) ou 915MHz (EUA)"},
+          {q:"Quando usar Zigbee vs Z-Wave?",a:"Zigbee para sensores/luzes (barato, mesh aberto), Z-Wave para segurança/profissional"},
+          {q:"O que é Matter?",a:"Novo padrão que unifica protocolos, suportado por Apple/Google/Amazon, futuro do IoT"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Home Assistant, Alexa e Protocolos',
+      points:[
+        'Home Assistant é o hub local open-source que unifica 1000+ dispositivos de qualquer marca',
+        'Alexa adiciona controle por voz e AI, com 1000+ skills e compatibilidade ampla',
+        'Zigbee é protocolo dominante para sensores/luzes (mesh, eficiente, barato)',
+        'Z-Wave é alternativa para instalações profissionais (mais caro, mais confiável)',
+        'Matter é o novo padrão que virá para unificar todo o ecossistema'
+      ]
+    },
+    quizFinal:[
+      {q:"Home Assistant roda melhor em qual hardware?",opts:["PC desktop","Smartphone","Raspberry Pi","Cloud AWS"],correct:2},
+      {q:"Qual é a vantagem de usar Zigbee mesh?",opts:["Banda mais alta","Conectividade entre dispositivos (repetidores)","Custos menores","Segurança melhorada"],correct:1},
+      {q:"O que é Matter?",opts:["Propriedade de Amazon","Novo padrão unificado","Integração com Alexa","Protocolo Zigbee antigo"],correct:1}
+    ]
+  },
+  {
+    id:'io_mod3',
+    name:'Projetos Avançados e Implementação de Casa Inteligente Completa',
+    free:false,
+    topics:[
+      {
+        id:7,
+        name:'Projeto: Sistema de Iluminação Inteligente Completo',
+        dur:'20 min',
+        content:`
+<h3>Do Conceito à Implementação: Iluminação Inteligente</h3>
+<p>Vamos construir um sistema de iluminação que demonstra todos os conceitos: hardware, protocolo, automação e controle por voz.</p>
+
+<h4>Requisitos do Projeto</h4>
+<ul>
+<li><strong>Controle Local:</strong> Funciona sem internet</li>
+<li><strong>Controle Remoto:</strong> App mobile quando fora de casa</li>
+<li><strong>Automação:</strong> Ligar ao anoitecer, desligar na madrugada</li>
+<li><strong>Cenas:</strong> "Assistir filme", "Trabalhar", "Boa noite"</li>
+<li><strong>Controle por Voz:</strong> Alexa ou Google Home</li>
+<li><strong>Economia:</strong> Sensores de movimento para desligar automático</li>
+</ul>
+
+<h4>Componentes Hardware</h4>
+<blockquote class="example">
+<strong>🛒 Lista de Compras (2 cômodos):</strong>
+<br>
+<br>• 4x Lâmpadas Inteligentes Zigbee (Philips Hue ou Innr): R$400
+<br>• Hub Zigbee (Hue Bridge ou IKEA Tradfri): R$150
+<br>• 2x Sensores de Movimento Zigbee: R$100
+<br>• 2x Sensores de Luz/Luminosidade: R$80
+<br>• Home Assistant (Raspberry Pi 4): R$300
+<br>• Alexa Echo Dot: R$150
+<br>
+<br>Total: ~R$1.180 para sistema completo
+</blockquote>
+
+<h4>Arquitetura do Sistema</h4>
+<blockquote class="tip">
+<strong>🏗️ Fluxo Completo:</strong>
+<br>
+<br>Lâmpadas Inteligentes (Zigbee)
+<br>  ↓
+<br>Hub Zigbee
+<br>  ↓
+<br>Home Assistant (Orquestra tudo)
+<br>  → Automações (se noite, ligar)
+<br>  → App Mobile (usuário ligado fora)
+<br>  → Alexa (controle voz)
+<br>  ↓
+<br>Banco de Dados (histórico, gráficos)
+</blockquote>
+
+<h4>Implementação em Home Assistant</h4>
+<p><strong>Passo 1:</strong> Configurar Zigbee</p>
+<ul>
+<li>Comprar adaptador USB Zigbee (SONOFF ZBDongle-E: R$50)</li>
+<li>Conectar ao Raspberry Pi</li>
+<li>Home Assistant detecta automaticamente</li>
+<li>Adicionar lâmpadas (Hue, Innr) ao painel</li>
+</ul>
+
+<p><strong>Passo 2:</strong> Criar Automações</p>
+<blockquote class="example">
+<strong>📝 Automação 1: Ligar ao Anoitecer</strong>
+<br>
+<br>trigger:
+<br>  platform: sun
+<br>  event: sunset
+<br>  offset: "-00:30"  # 30 min antes
+<br>
+<br>condition:
+<br>  - condition: state
+<br>    entity_id: group.pessoas_em_casa
+<br>    state: 'on'
+<br>
+<br>action:
+<br>  service: light.turn_on
+<br>  target:
+<br>    entity_id: light.sala
+<br>  data:
+<br>    brightness: 150
+<br>    color_temp: 4000  # Branco neutro
+</blockquote>
+
+<p><strong>Passo 3:</strong> Criar Cenas</p>
+<ul>
+<li>"Assistir Filme": 10% brilho, vermelho tenue</li>
+<li>"Trabalhar": 100% brilho, branco frio (5500K)</li>
+<li>"Boa Noite": 0% (tudo desligado)</li>
+</ul>
+
+<p><strong>Passo 4:</strong> Integrar Alexa</p>
+<ul>
+<li>Home Assistant → Configurações → Nuvem</li>
+<li>Criar credenciais Nabu Casa ou webhook público</li>
+<li>Alexa App → Smart Home → Descobrir Dispositivos</li>
+<li>Testar: "Alexa, liga a sala"</li>
+</ul>
+
+<h4>Resultados Esperados</h4>
+<ul>
+<li><strong>Economia:</strong> Lâmpadas LED consomem 80% menos que incandescentes</li>
+<li><strong>Conforto:</strong> Iluminação ajusta ao horário e atividade</li>
+<li><strong>Segurança:</strong> Casa parece ocupada quando fora (luzes aleatórias)</li>
+<li><strong>Controle:</strong> Via app, voz ou automático — sua escolha</li>
+</ul>
+
+<p>Este projeto é o ponto de partida para expandir para temperatura, segurança, energia — todo o ecossistema de casa inteligente.</p>
+        `,
+        cards:[
+          {q:"Qual é a vantagem de usar Zigbee para iluminação?",a:"Protocolo mesh eficiente em bateria, compatível com lâmpadas baratas, controle local"},
+          {q:"Cite 3 automações úteis de iluminação",a:"Ligar ao anoitecer, desligar na madrugada, ativar com sensor de movimento"},
+          {q:"Como integrar Alexa com Home Assistant?",a:"Home Assistant cloud settings, criar credenciais Nabu Casa, Alexa app descobrir dispositivos"}
+        ]
+      },
+      {
+        id:8,
+        name:'Projeto: Monitoramento de Energia em Tempo Real',
+        dur:'20 min',
+        content:`
+<h3>Economizando Energia com Visibilidade Real</h3>
+<p>Você não pode gerenciar o que não mede. Um sistema de monitoramento de consumo mostra exatamente onde a energia vai e onde economizar.</p>
+
+<h4>Arquitetura do Projeto</h4>
+<ul>
+<li><strong>Tomadas Inteligentes:</strong> Medem consumo de cada aparelho</li>
+<li><strong>Medidor Smart:</strong> Consumo total da casa</li>
+<li><strong>ESP32 + Sensor de Corrente:</strong> Para equipamentos specificos (ar condicionado)</li>
+<li><strong>Dashboard:</strong> Visualizar consumo em tempo real</li>
+<li><strong>Alertas:</strong> Notificação se consumo anormal</li>
+</ul>
+
+<h4>Componentes</h4>
+<blockquote class="example">
+<strong>🔌 Hardware (5 Tomadas Inteligentes):</strong>
+<br>
+<br>• 5x Tomadas Inteligentes Zigbee (Tuya/Innr/Sonoff): R$200-300
+<br>• 1x Medidor Smart Bifásico: R$500-800 (instalação profissional)
+<br>• ESP32 + Sensor de Corrente SCT-013-30: R$150
+<br>• Servidor InfluxDB (pode rodar no Raspberry): Gratuito
+<br>
+<br>Total: ~R$900-1200 com medidor profissional
+<br>Total básico (sem medidor): ~R$300
+</blockquote>
+
+<h4>Implementação Básica com Tomadas</h4>
+<p><strong>Passo 1:</strong> Instalar tomadas inteligentes em aparelhos-chave</p>
+<ul>
+<li>Geladeira</li>
+<li>Ar condicionado</li>
+<li>Máquina de lavar</li>
+<li>Micro-ondas</li>
+<li>TV/Home Theater</li>
+</ul>
+
+<p><strong>Passo 2:</strong> Home Assistant lê dados em tempo real</p>
+<blockquote class="example">
+<strong>📊 Sensor em Home Assistant:</strong>
+<br>
+<br>sensor:
+<br>  - platform: mqtt
+<br>    name: "Consumo Geladeira"
+<br>    state_topic: "casa/cozinha/geladeira/power"
+<br>    unit_of_measurement: "W"
+</blockquote>
+
+<p><strong>Passo 3:</strong> Armazenar em InfluxDB (time-series database)</p>
+<ul>
+<li>Home Assistant integra nativo</li>
+<li>Grava cada leitura com timestamp</li>
+<li>Permite histórico de semanas/meses</li>
+</ul>
+
+<p><strong>Passo 4:</strong> Dashboard Grafana</p>
+<ul>
+<li>Visualizar consumo por hora/dia/mês</li>
+<li>Comparar com mês anterior</li>
+<li>Identificar picos anormais</li>
+</ul>
+
+<h4>Implementação Avançada: Sensor de Corrente</h4>
+<p>Para maior precisão, use sensor de corrente com ESP32:</p>
+<blockquote class="example">
+<strong>💡 Circuito:</strong>
+<br>
+<br>Cabo Principal 220V → Sensor SCT-013-30 → Burden Resistor → ESP32 ADC
+<br>
+<br>Código (Arduino):
+<br>int reading = analogRead(A0);  // Lê corrente
+<br>float current = map(reading, 0, 4095, 0, 30);  // Converte para Amperes
+<br>float power = current * 220;  // 220V no Brasil
+<br>mqtt.publish("house/power", power);
+</blockquote>
+
+<h4>Insights e Economia Real</h4>
+<blockquote class="tip">
+<strong>💰 Dados Típicos (Casa de 4 pessoas):</strong>
+<br>
+<br>Consumo Médio: 200-300 kWh/mês = R$50-75/mês
+<br>
+<br>Com Monitoramento e Automação:
+<br>• Desligar TV em standby: -10%
+<br>• Ar condicionado inteligente: -20%
+<br>• Aquecedor com timer: -15%
+<br>• Total economizado: ~R$30-45/mês = R$360-540/ano
+<br>
+<br>Sistema paga por si em 2-3 anos!
+</blockquote>
+
+<h4>Automações de Economia</h4>
+<ul>
+<li>Desligar tudo em standby à noite</li>
+<li>Ar condicionado reduz 1°C se ausente</li>
+<li>Alerta se geladeira consome anormal (possível falha)</li>
+<li>Agendador: máquina de lavar em horário de tarifa reduzida</li>
+</ul>
+
+<p>Monitoramento não é sobre ser chato com economia. É sobre dados. Dados libertam você para escolhas inteligentes.</p>
+        `,
+        cards:[
+          {q:"Qual é a vantagem de monitorar energia em tempo real?",a:"Identifica aparelhos com consumo anormal, permite economizar com dados, ROI em 2-3 anos"},
+          {q:"Qual banco de dados é melhor para série temporal de consumo?",a:"InfluxDB (otimizado para séries temporais) ou Prometheus"},
+          {q:"Quanto uma casa típica economiza com monitoramento?",a:"R$30-45/mês (360-540/ano) com automações simples"}
+        ]
+      },
+      {
+        id:9,
+        name:'Segurança, Privacidade e Manutenção de Sistemas IoT',
+        dur:'20 min',
+        content:`
+<h3>Segurança: O Aspecto Crítico de IoT</h3>
+<p>Um dispositivo IoT hackeado não só rouba dados — pode controlar sua porta, câmera ou termostato. Segurança é obrigatória, não opcional.</p>
+
+<h4>Vetor de Ataque Comum</h4>
+<ul>
+<li><strong>Senha Fraca:</strong> Padrão "admin/admin" nunca muda</li>
+<li><strong>Firmware Antigo:</strong> Código com vulnerabilidades conhecidas</li>
+<li><strong>Man-in-the-Middle:</strong> WiFi não criptografado</li>
+<li><strong>IoT Botnet:</strong> Seu dispositivo faz DDoS sem você saber</li>
+<li><strong>Cloud Hack:</strong> Servidor do fabricante é comprometido</li>
+</ul>
+
+<h4>Proteção Essencial</h4>
+<p><strong>1. Network Segmentation</strong></p>
+<ul>
+<li>WiFi separada para IoT (router suporta múltiplas redes)</li>
+<li>IoT NÃO pode acessar computador pessoal, telefone, NAS</li>
+<li>Apenas Home Assistant comunica entre redes</li>
+</ul>
+
+<p><strong>2. Firewall e Roteador</strong></p>
+<ul>
+<li>Roteador bom (Asus, Ubiquiti, Netgear) ~R$200-400</li>
+<li>Desabilitar UPnP (permite IoT abrir portas sem sua permissão)</li>
+<li>Firewall inbound bloqueado por padrão</li>
+</ul>
+
+<p><strong>3. Home Assistant Local Primeiro</strong></p>
+<blockquote class="tip">
+<strong>🔒 Arquitetura Segura:</strong>
+<br>
+<br>Casa (WiFi privada, sem acesso externo):
+<br>  IoT → Home Assistant (local, HTTP)
+<br>
+<br>Você fora de casa:
+<br>  App Mobile → Cloudflare Tunnel ou Nabu Casa → Home Assistant
+<br>
+<br>Não exporte puertos diretamente! Use proxy seguro.
+</blockquote>
+
+<p><strong>4. Senhas e Credenciais</strong></p>
+<ul>
+<li>Gerenciador de senhas (Bitwarden, 1Password)</li>
+<li>Senha única para cada dispositivo</li>
+<li>Trocar padrão de fábrica IMEDIATAMENTE</li>
+<li>Não reutilize senhas entre IoT e contas críticas</li>
+</ul>
+
+<h4>Atualizações e Manutenção</h4>
+<p><strong>Firmware Updates:</strong> Crítico fazer regularmente</p>
+<ul>
+<li>Ativar auto-update se disponível</li>
+<li>Se não, checar mensalmente site do fabricante</li>
+<li>Home Assistant: atualiza facilmente, role back possível</li>
+</ul>
+
+<p><strong>Monitoramento de Segurança:</strong></p>
+<ul>
+<li>Home Assistant logs: procurar tentativas de login falhadas</li>
+<li>Alertas se dispositivo offline (possível roubo/hacking)</li>
+<li>Revisar devices conectados ao router mensalmente</li>
+</ul>
+
+<h4>Privacidade de Dados</h4>
+<blockquote class="example">
+<strong>🔐 Considerações:</strong>
+<br>
+<br>• Home Assistant Local: seus dados nunca deixam casa (ideal)
+<br>• Nuvem do Fabricante: Amazon sabe que você liga TV às 7am
+<br>• Gravação de Alexa: Amazon salva áudio mesmo após desligar
+<br>• Câmeras: criptografia end-to-end é padrão? Verifique!
+<br>
+<br>Sempre verifique política de privacidade antes de comprar.
+</blockquote>
+
+<h4>Boas Práticas de Produção</h4>
+<ul>
+<li><strong>Backup Regular:</strong> Exportar configuração Home Assistant semanal</li>
+<li><strong>Redundância:</strong> Se hub falha, alguns dispositivos continuam funcionando?</li>
+<li><strong>Documentação:</strong> Listar todos devices, passwords (criptografadas), logs</li>
+<li><strong>Monitoramento:</strong> Alertas se Home Assistant cai</li>
+<li><strong>Plano de Recuperação:</strong> Se tudo falha, qual é plano?</li>
+</ul>
+
+<h4>Tendência: "Trustless" IoT</h4>
+<p>Futuro de IoT é mais seguro:</p>
+<ul>
+<li>Matter com criptografia automática</li>
+<li>Open standards (não proprietários da Amazon)</li>
+<li>End-to-end encryption padrão</li>
+<li>Dados locais por padrão (cloud é opcional)</li>
+</ul>
+
+<blockquote class="quote">
+"A melhor segurança IoT é a que você não precisa pensar — é automática, aberta, auditável."
+</blockquote>
+
+<p>Segurança não é chato — é liberdade. Saber que sua casa é segura é paz de mente.</p>
+        `,
+        cards:[
+          {q:"Qual é o vetor de ataque mais comum em IoT?",a:"Senha padrão fraca (admin/admin) que nunca é mudada"},
+          {q:"Como proteger Home Assistant contra acesso externo?",a:"Usar Cloudflare Tunnel ou Nabu Casa (proxy seguro), não exportar portas diretos"},
+          {q:"Qual é a melhor arquitetura de rede para IoT seguro?",a:"WiFi separada para IoT (sem acesso a computador/telefone), apenas Home Assistant entre redes"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Projetos Reais e Segurança',
+      points:[
+        'Projeto iluminação: sistema Zigbee + Home Assistant + Alexa custa ~R$1.180 e escala infinitamente',
+        'Monitoramento de energia economiza R$30-45/mês com ROI em 2-3 anos via dados reais',
+        'Segurança é crítica: rede separada, firewall, senhas únicas, atualizações regulares',
+        'Privacidade: prefira local-first (Home Assistant) em vez de nuvem do fabricante'
+      ]
+    },
+    quizFinal:[
+      {q:"Quanto custa um sistema básico de iluminação inteligente (2 cômodos)?",opts:["R$400","R$800","R$1.180","R$2.000"],correct:2},
+      {q:"Como economizar em conta de energia com monitoramento?",opts:["Comprar lâmpadas caras","Dados reais permitem otimizações automáticas","Desligar tudo","Nenhuma destas"],correct:1},
+      {q:"Qual é o melhor jeito de manter Home Assistant seguro externamente?",opts:["Port forward direto","Cloudflare Tunnel ou Nabu Casa","Colocar em cloud pública","Não usar externamente"],correct:1}
+    ]
+  }
 ];
 </script>
 <script src="shared/course-engine.js"></script>
