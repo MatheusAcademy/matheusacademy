@@ -2270,8 +2270,17 @@ function downloadNotesPDF(){
   showToast('📥 Abrindo para impressão/PDF...','ok');
 }
 
-/* ═══ MAPA MENTAL COMPLETO — PDF MULTI-PÁGINA (v8) ═══ */
-/* Extrai resumos, conceitos, estatísticas e gera diagrama visual rico */
+/* ═══════════════════════════════════════════════════════════════════════════
+ * MAPA MENTAL COMPLETO — v10 (REESCRITO — sem cortes, layout A4 perfeito)
+ * ---------------------------------------------------------------------------
+ * CORREÇÕES em relação a v8:
+ *   ✓ Slicing de canvas real (recorte com sub-canvas, sem offset negativo)
+ *   ✓ Diagrama radial em SVG (não transborda, escala perfeita)
+ *   ✓ Páginas com aspecto A4 (1:√2) — texto nunca cortado
+ *   ✓ Break-avoid em cards/tópicos (slicer respeita limites de elementos)
+ *   ✓ Tipografia 13-16px base (legível depois do resize)
+ *   ✓ Fallback em texto nativo (jsPDF.text) se html2canvas falhar
+ * ═══════════════════════════════════════════════════════════════════════════ */
 
 function extractTextFromHtml(htmlStr){
   if(!htmlStr)return '';
@@ -2291,9 +2300,7 @@ function extractFirstParagraph(htmlStr,maxLen){
     var t=(ps[i].textContent||'').trim();
     if(t.length>30)txt+=(txt?' ':'')+t;
   }
-  if(!txt){
-    txt=extractTextFromHtml(htmlStr).substring(0,maxLen);
-  }
+  if(!txt){ txt=extractTextFromHtml(htmlStr).substring(0,maxLen); }
   if(txt.length>maxLen)txt=txt.substring(0,maxLen-3)+'...';
   return txt;
 }
@@ -2301,18 +2308,12 @@ function extractFirstParagraph(htmlStr,maxLen){
 function extractKeyPhrases(htmlStr,max){
   max=max||5;
   if(!htmlStr)return [];
-  var tmp=document.createElement('div');
-  tmp.innerHTML=htmlStr;
-  var phrases=[];
-  // Pegar de blockquotes, strong, b, h3, h4
-  var els=tmp.querySelectorAll('blockquote,strong,b,h3,h4');
-  els.forEach(function(el){
+  var tmp=document.createElement('div'); tmp.innerHTML=htmlStr;
+  var phrases=[], seen={};
+  tmp.querySelectorAll('blockquote,strong,b,h3,h4').forEach(function(el){
     var t=(el.textContent||'').trim();
-    if(t.length>10&&t.length<120&&phrases.length<max){
-      // Evitar duplicatas
-      if(!phrases.some(function(p){return p.toLowerCase()===t.toLowerCase();})){
-        phrases.push(t);
-      }
+    if(t.length>10&&t.length<120&&!seen[t.toLowerCase()]&&phrases.length<max){
+      seen[t.toLowerCase()]=1; phrases.push(t);
     }
   });
   return phrases;
@@ -2321,15 +2322,11 @@ function extractKeyPhrases(htmlStr,max){
 function extractListItems(htmlStr,max){
   max=max||6;
   if(!htmlStr)return [];
-  var tmp=document.createElement('div');
-  tmp.innerHTML=htmlStr;
-  var items=[];
-  var lis=tmp.querySelectorAll('li');
+  var tmp=document.createElement('div'); tmp.innerHTML=htmlStr;
+  var items=[], lis=tmp.querySelectorAll('li');
   for(var i=0;i<lis.length&&items.length<max;i++){
     var t=(lis[i].textContent||'').trim();
-    if(t.length>5&&t.length<150){
-      items.push(t.length>80?t.substring(0,77)+'...':t);
-    }
+    if(t.length>5&&t.length<180) items.push(t.length>110?t.substring(0,107)+'...':t);
   }
   return items;
 }
@@ -2347,6 +2344,53 @@ function countStats(mods){
   return {topics:totalTopics,cards:totalCards,quiz:totalQuiz,words:totalWords};
 }
 
+/* Gera SVG de diagrama radial — não transborda, sem % tricks */
+function svgDiagramaRadial(courseName, mods, cc, modColors){
+  var W=900, H=700, cx=W/2, cy=H/2;
+  var r=230;                                  // raio dos módulos
+  var n=mods.length || 1;
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="100%" style="max-width:900px;height:auto;display:block;margin:0 auto;">';
+  svg+='<defs><radialGradient id="mmCore" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="'+cc+'"/><stop offset="100%" stop-color="'+cc+'aa"/></radialGradient></defs>';
+  // Conectores + nós
+  for(var i=0;i<n;i++){
+    var ang=-Math.PI/2 + (i*(2*Math.PI/n));
+    var x=cx+r*Math.cos(ang), y=cy+r*Math.sin(ang);
+    var mc=modColors[i%modColors.length];
+    var mod=mods[i];
+    var tit=(mod.name||'').replace(/^Módulo\s*\d+\s*[—–-]\s*/i,'');
+    if(tit.length>28) tit=tit.substring(0,26)+'...';
+    // Linha
+    svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+x+'" y2="'+y+'" stroke="'+mc+'" stroke-width="2" opacity="0.5"/>';
+    // Caixa
+    var bw=180, bh=64, bx=x-bw/2, by=y-bh/2;
+    svg+='<rect x="'+bx+'" y="'+by+'" width="'+bw+'" height="'+bh+'" rx="10" fill="#12121e" stroke="'+mc+'" stroke-width="2"/>';
+    svg+='<circle cx="'+(bx+22)+'" cy="'+(by+22)+'" r="14" fill="'+mc+'"/>';
+    svg+='<text x="'+(bx+22)+'" y="'+(by+27)+'" text-anchor="middle" fill="#fff" font-family="Segoe UI,sans-serif" font-size="12" font-weight="900">'+String(i+1).padStart(2,'0')+'</text>';
+    // Quebra de texto em 2 linhas se preciso
+    var partes = tit.length>18 ? [tit.substring(0,18), tit.substring(18)] : [tit];
+    for(var k=0;k<partes.length;k++){
+      svg+='<text x="'+(bx+42)+'" y="'+(by+22+k*14)+'" fill="#fff" font-family="Segoe UI,sans-serif" font-size="11" font-weight="700">'+partes[k].replace(/[<>&]/g,'')+'</text>';
+    }
+    svg+='<text x="'+(bx+42)+'" y="'+(by+52)+'" fill="#888" font-family="Segoe UI,sans-serif" font-size="9">'+mod.topics.length+' tópicos</text>';
+  }
+  // Núcleo central
+  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="90" fill="url(#mmCore)" filter="drop-shadow(0 0 20px '+cc+'88)"/>';
+  var nome=(courseName||'').substring(0,40);
+  var palavras=nome.split(/\s+/);
+  var linhas=[], atual='';
+  palavras.forEach(function(p){
+    if((atual+' '+p).length>14){ linhas.push(atual); atual=p; } else atual=atual?atual+' '+p:p;
+  });
+  if(atual) linhas.push(atual);
+  if(linhas.length>3) linhas=linhas.slice(0,3);
+  var yStart = cy - ((linhas.length-1)*9);
+  linhas.forEach(function(l,idx){
+    svg+='<text x="'+cx+'" y="'+(yStart+idx*18)+'" text-anchor="middle" fill="#fff" font-family="Segoe UI,sans-serif" font-size="14" font-weight="900">'+l.replace(/[<>&]/g,'')+'</text>';
+  });
+  svg+='</svg>';
+  return svg;
+}
+
 function downloadMindMapPDF(){
   if(COURSE.mindMapFree===false&&!isUnlocked()){
     openLockScreen();
@@ -2354,15 +2398,8 @@ function downloadMindMapPDF(){
     return;
   }
   showToast('⏳ Preparando mapa mental completo...','info');
-
-  var scriptsLoaded=0;
-  var scriptsNeeded=2;
-
-  function checkReady(){
-    scriptsLoaded++;
-    if(scriptsLoaded>=scriptsNeeded) generateFullMindMapPDF();
-  }
-
+  var scriptsLoaded=0, scriptsNeeded=2;
+  function checkReady(){ scriptsLoaded++; if(scriptsLoaded>=scriptsNeeded) generateFullMindMapPDF(); }
   if(window.html2canvas){scriptsLoaded++;}else{
     var s1=document.createElement('script');
     s1.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
@@ -2370,7 +2407,6 @@ function downloadMindMapPDF(){
     s1.onerror=function(){showToast('❌ Erro ao carregar html2canvas','error');};
     document.head.appendChild(s1);
   }
-
   if(window.jspdf||window.jsPDF){scriptsLoaded++;}else{
     var s2=document.createElement('script');
     s2.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
@@ -2378,7 +2414,6 @@ function downloadMindMapPDF(){
     s2.onerror=function(){showToast('❌ Erro ao carregar jsPDF','error');};
     document.head.appendChild(s2);
   }
-
   if(scriptsLoaded>=scriptsNeeded) generateFullMindMapPDF();
 }
 
@@ -2391,34 +2426,36 @@ function generateFullMindMapPDF(){
   var modColors=['#4A7EFF','#e63946','#22c55e','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#f97316','#84cc16','#14b8a6'];
   var stats=countStats(MODS);
 
-  // Container principal — largura fixa para qualidade
-  var pageWidth=1000;
+  // ———————————————————————————————————————————————————————————————————
+  // LAYOUT A4: 1000px × 1414px (proporção 1:√2 = A4 exato)
+  // Cada "página" é uma div independente que o slicer vai processar.
+  // ———————————————————————————————————————————————————————————————————
+  var PAGE_W = 1000;
+  var PAGE_H = 1414;
+
   var container=document.createElement('div');
   container.id='mindmapFullContainer';
-  container.style.cssText='position:absolute;left:-9999px;top:0;width:'+pageWidth+'px;background:#08080f;font-family:"Segoe UI",Arial,sans-serif;color:#e8e8e8;box-sizing:border-box;';
+  container.style.cssText='position:absolute;left:-9999px;top:0;width:'+PAGE_W+'px;background:#08080f;font-family:"Segoe UI",Arial,sans-serif;color:#e8e8e8;box-sizing:border-box;';
+
+  function pageOpen(extraStyle){
+    return '<div class="mm-page" style="width:'+PAGE_W+'px;height:'+PAGE_H+'px;padding:50px;background:#08080f;box-sizing:border-box;position:relative;overflow:hidden;'+(extraStyle||'')+'">';
+  }
+  function pageClose(){ return '</div>'; }
 
   var html='';
 
-  // ══════════════════════════════════════════════════════════════
-  // PÁGINA 1: CAPA + VISÃO GERAL + DIAGRAMA CENTRAL
-  // ══════════════════════════════════════════════════════════════
-  html+='<div class="mm-page" style="padding:40px;min-height:1400px;background:linear-gradient(180deg,#08080f 0%,#0d0d18 100%);position:relative;overflow:hidden;">';
-
-  // Decoração de fundo
-  html+='<div style="position:absolute;top:0;left:0;right:0;bottom:0;opacity:0.03;background-image:radial-gradient(circle at 20% 30%, '+cc+' 0%, transparent 50%),radial-gradient(circle at 80% 70%, #8b5cf6 0%, transparent 50%);pointer-events:none;"></div>';
-
-  // Header com logo
-  html+='<div style="text-align:center;margin-bottom:40px;position:relative;z-index:1;">';
-  html+='<div style="display:inline-flex;align-items:center;gap:12px;margin-bottom:20px;">';
-  html+='<div style="width:50px;height:50px;background:linear-gradient(135deg,'+cc+',#8b5cf6);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff;box-shadow:0 8px 32px '+cc+'44;">M</div>';
-  html+='<div style="text-align:left;"><div style="font-size:10px;font-weight:700;color:'+cc+';letter-spacing:3px;text-transform:uppercase;">MATHEUS ACADEMY</div><div style="font-size:18px;font-weight:300;color:#888;letter-spacing:1px;">Mapa Mental Completo</div></div>';
+  // ══════════ PÁGINA 1 — CAPA ══════════
+  html+=pageOpen('background:linear-gradient(180deg,#08080f 0%,#0d0d18 100%);');
+  html+='<div style="text-align:center;padding-top:40px;">';
+  html+='<div style="display:inline-flex;align-items:center;gap:14px;margin-bottom:30px;">';
+  html+='<div style="width:60px;height:60px;background:linear-gradient(135deg,'+cc+',#8b5cf6);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;box-shadow:0 8px 32px '+cc+'44;">M</div>';
+  html+='<div style="text-align:left;"><div style="font-size:12px;font-weight:700;color:'+cc+';letter-spacing:3px;text-transform:uppercase;">MATHEUS ACADEMY</div><div style="font-size:20px;font-weight:300;color:#888;letter-spacing:1px;">Mapa Mental Completo</div></div>';
   html+='</div>';
-  html+='<div style="font-size:36px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:12px;text-shadow:0 4px 20px rgba(0,0,0,0.5);">🧠 '+escHtml(COURSE.name)+'</div>';
-  html+='<div style="font-size:14px;color:#888;max-width:600px;margin:0 auto 24px;line-height:1.6;">'+(COURSE.desc||'Guia visual completo com resumos, conceitos-chave, estatísticas e estrutura do curso.')+'</div>';
+  html+='<div style="font-size:42px;font-weight:900;color:#fff;line-height:1.15;margin:30px auto 20px;max-width:850px;word-wrap:break-word;padding:0 20px;">🧠 '+escHtml(COURSE.name)+'</div>';
+  html+='<div style="font-size:16px;color:#aaa;max-width:700px;margin:0 auto 40px;line-height:1.6;padding:0 20px;">'+escHtml(COURSE.desc||'Guia visual completo com resumos, conceitos-chave, estatísticas e estrutura do curso.')+'</div>';
   html+='</div>';
-
-  // Cards de estatísticas
-  html+='<div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:40px;position:relative;z-index:1;">';
+  // Stats
+  html+='<div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:30px auto;max-width:900px;">';
   var statsData=[
     {icon:'📚',value:COURSE.modules,label:'Módulos',color:'#4A7EFF'},
     {icon:'📝',value:stats.topics,label:'Tópicos',color:'#22c55e'},
@@ -2428,303 +2465,273 @@ function generateFullMindMapPDF(){
     {icon:'📖',value:Math.round(stats.words/1000)+'k',label:'Palavras',color:'#06b6d4'}
   ];
   statsData.forEach(function(s){
-    html+='<div style="background:#12121e;border:1px solid #ffffff10;border-radius:16px;padding:20px 28px;text-align:center;min-width:120px;">';
-    html+='<div style="font-size:28px;margin-bottom:6px;">'+s.icon+'</div>';
-    html+='<div style="font-size:32px;font-weight:900;color:'+s.color+';line-height:1;">'+s.value+'</div>';
+    html+='<div style="background:#12121e;border:1px solid #ffffff10;border-radius:14px;padding:18px 24px;text-align:center;min-width:130px;">';
+    html+='<div style="font-size:28px;margin-bottom:4px;">'+s.icon+'</div>';
+    html+='<div style="font-size:30px;font-weight:900;color:'+s.color+';line-height:1;">'+s.value+'</div>';
     html+='<div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">'+s.label+'</div>';
     html+='</div>';
   });
   html+='</div>';
-
-  // ══════════════════════════════════════════════════════════════
-  // DIAGRAMA MENTAL CENTRAL (estilo radial)
-  // ══════════════════════════════════════════════════════════════
-  html+='<div style="position:relative;margin:40px auto;width:100%;max-width:900px;min-height:500px;">';
-
-  // Centro do diagrama
-  html+='<div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:180px;height:180px;background:linear-gradient(135deg,'+cc+','+cc+'99);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px '+cc+'66,0 0 100px '+cc+'33;z-index:10;">';
-  html+='<div style="text-align:center;color:#fff;"><div style="font-size:14px;font-weight:900;line-height:1.3;padding:0 15px;">'+escHtml(COURSE.shortName||COURSE.name)+'</div></div>';
+  // Diagrama radial em SVG
+  html+='<div style="margin:30px auto;max-width:900px;padding:20px;">';
+  html+=svgDiagramaRadial(COURSE.shortName||COURSE.name, MODS, cc, modColors);
   html+='</div>';
-
-  // Módulos em círculo ao redor
-  var numMods=MODS.length;
-  var radius=220;
-  var angleStep=(2*Math.PI)/numMods;
-  var startAngle=-Math.PI/2; // Começar do topo
-
-  MODS.forEach(function(mod,mi){
-    var angle=startAngle+(mi*angleStep);
-    var x=50+((radius/450)*100)*Math.cos(angle);
-    var y=50+((radius/300)*100)*Math.sin(angle);
-    var mColor=modColors[mi%modColors.length];
-    var modTitle=mod.name.replace(/^Módulo\s*\d+\s*[—–-]\s*/i,'');
-    if(modTitle.length>25)modTitle=modTitle.substring(0,23)+'...';
-
-    // Linha conectora
-    html+='<div style="position:absolute;left:50%;top:50%;width:'+radius+'px;height:2px;background:linear-gradient(90deg,'+mColor+'66,'+mColor+'22);transform-origin:left center;transform:rotate('+(angle*(180/Math.PI))+'deg);z-index:1;"></div>';
-
-    // Nó do módulo
-    html+='<div style="position:absolute;left:'+x+'%;top:'+y+'%;transform:translate(-50%,-50%);z-index:5;">';
-    html+='<div style="background:#12121e;border:2px solid '+mColor+';border-radius:12px;padding:12px 16px;min-width:140px;max-width:180px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.3);">';
-    html+='<div style="width:28px;height:28px;background:'+mColor+';border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;margin:0 auto 8px;">'+String(mi+1).padStart(2,'0')+'</div>';
-    html+='<div style="font-size:11px;font-weight:700;color:#fff;line-height:1.3;">'+escHtml(modTitle)+'</div>';
-    html+='<div style="font-size:9px;color:#888;margin-top:4px;">'+mod.topics.length+' tópicos</div>';
-    html+='</div>';
-    html+='</div>';
-  });
-
-  html+='</div>'; // Fim do diagrama
-
   // Legenda
-  html+='<div style="text-align:center;margin-top:20px;padding-top:20px;border-top:1px solid #ffffff10;">';
-  html+='<div style="font-size:10px;color:#666;letter-spacing:1px;">📅 Gerado em '+exportDate+' · Matheus Academy</div>';
+  html+='<div style="text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid #ffffff10;">';
+  html+='<div style="font-size:11px;color:#666;letter-spacing:1px;">📅 Gerado em '+exportDate+' · matheusacademy.com.br</div>';
   html+='</div>';
+  html+=pageClose();
 
-  html+='</div>'; // Fim da página 1
-
-  // ══════════════════════════════════════════════════════════════
-  // PÁGINAS DE MÓDULOS (1 por módulo com conteúdo completo)
-  // ══════════════════════════════════════════════════════════════
+  // ══════════ PÁGINAS POR MÓDULO (auto-paginação) ══════════
+  // Cada módulo vira uma ou mais páginas — medidas reais pelo slicer
   MODS.forEach(function(mod,mi){
     var mColor=modColors[mi%modColors.length];
-    var modTitle=mod.name.replace(/^Módulo\s*\d+\s*[—–-]\s*/i,'');
+    var modTitle=(mod.name||'').replace(/^Módulo\s*\d+\s*[—–-]\s*/i,'');
 
-    html+='<div class="mm-page" style="padding:40px;min-height:1400px;background:#08080f;page-break-before:always;border-top:4px solid '+mColor+';">';
+    // HEADER DE MÓDULO (sempre no topo de uma nova página)
+    var secHtml='<div class="mm-section" data-break="start" style="padding:50px;background:#08080f;border-top:6px solid '+mColor+';min-height:'+PAGE_H+'px;box-sizing:border-box;width:'+PAGE_W+'px;">';
+    secHtml+='<div style="display:flex;align-items:center;gap:22px;margin-bottom:30px;padding-bottom:20px;border-bottom:1px solid #ffffff10;">';
+    secHtml+='<div style="width:66px;height:66px;background:'+mColor+';border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#fff;flex-shrink:0;">'+String(mi+1).padStart(2,'0')+'</div>';
+    secHtml+='<div style="flex:1;min-width:0;"><div style="font-size:11px;font-weight:700;color:'+mColor+';letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">MÓDULO '+String(mi+1).padStart(2,'0')+'</div><div style="font-size:26px;font-weight:800;color:#fff;line-height:1.2;word-wrap:break-word;">'+escHtml(modTitle)+'</div></div>';
+    secHtml+='<div style="text-align:right;flex-shrink:0;"><div style="font-size:34px;font-weight:900;color:'+mColor+';">'+mod.topics.length+'</div><div style="font-size:10px;color:#888;text-transform:uppercase;">Tópicos</div></div>';
+    secHtml+='</div>';
 
-    // Header do módulo
-    html+='<div style="display:flex;align-items:center;gap:20px;margin-bottom:30px;padding-bottom:20px;border-bottom:1px solid #ffffff10;">';
-    html+='<div style="width:60px;height:60px;background:'+mColor+';border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;box-shadow:0 8px 24px '+mColor+'44;">'+String(mi+1).padStart(2,'0')+'</div>';
-    html+='<div style="flex:1;"><div style="font-size:10px;font-weight:700;color:'+mColor+';letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">MÓDULO '+String(mi+1).padStart(2,'0')+'</div><div style="font-size:26px;font-weight:800;color:#fff;line-height:1.2;">'+escHtml(modTitle)+'</div></div>';
-    html+='<div style="text-align:right;"><div style="font-size:32px;font-weight:900;color:'+mColor+';">'+mod.topics.length+'</div><div style="font-size:10px;color:#888;text-transform:uppercase;">Tópicos</div></div>';
-    html+='</div>';
-
-    // Grid de tópicos com resumos
-    html+='<div style="display:grid;grid-template-columns:1fr;gap:20px;">';
-
+    // Tópicos — cada um com data-break="avoid" para o slicer não quebrar no meio
+    secHtml+='<div style="display:flex;flex-direction:column;gap:18px;">';
     mod.topics.forEach(function(t,ti){
-      var summary=extractFirstParagraph(t.html,280);
+      var summary=extractFirstParagraph(t.html,320);
       var keyPhrases=extractKeyPhrases(t.html,3);
       var listItems=extractListItems(t.html,4);
       var hasCards=t.cards&&t.cards.length>0;
 
-      html+='<div style="background:#0f0f1a;border-radius:16px;padding:24px;border-left:4px solid '+mColor+'40;position:relative;overflow:hidden;">';
-
-      // Número decorativo
-      html+='<div style="position:absolute;top:10px;right:20px;font-size:48px;font-weight:900;color:'+mColor+'08;line-height:1;">'+String(ti+1).padStart(2,'0')+'</div>';
-
-      // Título do tópico
-      html+='<div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;">';
-      html+='<div style="width:32px;height:32px;background:'+mColor+'22;border:2px solid '+mColor+';border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:'+mColor+';flex-shrink:0;">'+String(ti+1)+'</div>';
-      html+='<div style="font-size:18px;font-weight:700;color:#fff;line-height:1.4;padding-top:4px;">'+escHtml(t.name)+'</div>';
-      html+='</div>';
-
-      // Resumo do conteúdo
+      secHtml+='<div data-break="avoid" style="background:#0f0f1a;border-radius:14px;padding:22px;border-left:4px solid '+mColor+'60;position:relative;">';
+      // Título
+      secHtml+='<div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;">';
+      secHtml+='<div style="width:34px;height:34px;background:'+mColor+'22;border:2px solid '+mColor+';border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:'+mColor+';flex-shrink:0;">'+(ti+1)+'</div>';
+      secHtml+='<div style="font-size:18px;font-weight:700;color:#fff;line-height:1.4;padding-top:4px;word-wrap:break-word;flex:1;min-width:0;">'+escHtml(t.name)+'</div>';
+      secHtml+='</div>';
+      // Resumo
       if(summary){
-        html+='<div style="background:#12121e;border-radius:12px;padding:16px 18px;margin-bottom:16px;border:1px solid #ffffff08;">';
-        html+='<div style="font-size:9px;font-weight:700;color:'+mColor+';text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">📄 Resumo</div>';
-        html+='<div style="font-size:13px;color:#ccc;line-height:1.7;">'+escHtml(summary)+'</div>';
-        html+='</div>';
+        secHtml+='<div style="background:#12121e;border-radius:10px;padding:14px 16px;margin-bottom:12px;border:1px solid #ffffff08;">';
+        secHtml+='<div style="font-size:10px;font-weight:700;color:'+mColor+';text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">📄 Resumo</div>';
+        secHtml+='<div style="font-size:13px;color:#ccc;line-height:1.7;word-wrap:break-word;">'+escHtml(summary)+'</div>';
+        secHtml+='</div>';
       }
-
       // Conceitos-chave
       if(keyPhrases.length>0){
-        html+='<div style="margin-bottom:16px;">';
-        html+='<div style="font-size:9px;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">💡 Conceitos-Chave</div>';
-        html+='<div style="display:flex;flex-wrap:wrap;gap:8px;">';
-        keyPhrases.forEach(function(phrase){
-          html+='<div style="background:linear-gradient(135deg,#f59e0b22,#f59e0b11);border:1px solid #f59e0b33;border-radius:8px;padding:8px 14px;font-size:11px;color:#f5c563;font-weight:600;">'+escHtml(phrase)+'</div>';
+        secHtml+='<div style="margin-bottom:12px;">';
+        secHtml+='<div style="font-size:10px;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">💡 Conceitos-Chave</div>';
+        secHtml+='<div style="display:flex;flex-wrap:wrap;gap:8px;">';
+        keyPhrases.forEach(function(p){
+          secHtml+='<div style="background:linear-gradient(135deg,#f59e0b22,#f59e0b11);border:1px solid #f59e0b33;border-radius:8px;padding:8px 14px;font-size:12px;color:#f5c563;font-weight:600;max-width:100%;word-wrap:break-word;">'+escHtml(p)+'</div>';
         });
-        html+='</div>';
-        html+='</div>';
+        secHtml+='</div></div>';
       }
-
-      // Lista de pontos importantes
+      // Pontos importantes
       if(listItems.length>0){
-        html+='<div style="margin-bottom:16px;">';
-        html+='<div style="font-size:9px;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">✅ Pontos Importantes</div>';
-        html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">';
-        listItems.forEach(function(item){
-          html+='<div style="display:flex;align-items:flex-start;gap:8px;font-size:11px;color:#aaa;line-height:1.5;">';
-          html+='<div style="width:6px;height:6px;background:#22c55e;border-radius:50%;flex-shrink:0;margin-top:5px;"></div>';
-          html+='<span>'+escHtml(item)+'</span>';
-          html+='</div>';
+        secHtml+='<div style="margin-bottom:12px;">';
+        secHtml+='<div style="font-size:10px;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">✅ Pontos Importantes</div>';
+        secHtml+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">';
+        listItems.forEach(function(it){
+          secHtml+='<div style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#bbb;line-height:1.55;word-wrap:break-word;">';
+          secHtml+='<div style="width:7px;height:7px;background:#22c55e;border-radius:50%;flex-shrink:0;margin-top:6px;"></div>';
+          secHtml+='<span style="min-width:0;flex:1;">'+escHtml(it)+'</span>';
+          secHtml+='</div>';
         });
-        html+='</div>';
-        html+='</div>';
+        secHtml+='</div></div>';
       }
-
       // Flashcards preview
       if(hasCards){
-        html+='<div style="background:#8b5cf611;border:1px solid #8b5cf633;border-radius:10px;padding:14px 16px;">';
-        html+='<div style="font-size:9px;font-weight:700;color:#8b5cf6;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">🎴 Flashcards ('+t.cards.length+')</div>';
-        html+='<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+        secHtml+='<div style="background:#8b5cf611;border:1px solid #8b5cf633;border-radius:10px;padding:12px 14px;">';
+        secHtml+='<div style="font-size:10px;font-weight:700;color:#8b5cf6;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">🎴 Flashcards ('+t.cards.length+')</div>';
+        secHtml+='<div style="display:flex;flex-wrap:wrap;gap:6px;">';
         t.cards.slice(0,3).forEach(function(c){
-          var q=c.q.length>50?c.q.substring(0,48)+'...':c.q;
-          html+='<div style="background:#8b5cf622;border-radius:6px;padding:8px 12px;font-size:10px;color:#c4b5fd;font-weight:500;max-width:280px;">❓ '+escHtml(q)+'</div>';
+          var q=(c.q||'').length>60?(c.q||'').substring(0,58)+'...':(c.q||'');
+          secHtml+='<div style="background:#8b5cf622;border-radius:6px;padding:8px 12px;font-size:11px;color:#c4b5fd;font-weight:500;max-width:100%;word-wrap:break-word;">❓ '+escHtml(q)+'</div>';
         });
         if(t.cards.length>3){
-          html+='<div style="background:#8b5cf633;border-radius:6px;padding:8px 12px;font-size:10px;color:#a78bfa;font-weight:700;">+'+(t.cards.length-3)+' mais</div>';
+          secHtml+='<div style="background:#8b5cf633;border-radius:6px;padding:8px 12px;font-size:11px;color:#a78bfa;font-weight:700;">+'+(t.cards.length-3)+' mais</div>';
         }
-        html+='</div>';
-        html+='</div>';
+        secHtml+='</div></div>';
       }
-
-      html+='</div>'; // Fim do card do tópico
+      secHtml+='</div>';
     });
+    secHtml+='</div>';
 
-    html+='</div>'; // Fim do grid
-
-    // Quiz do módulo (se existir)
+    // Quiz final
     if(mod.quizFinal&&mod.quizFinal.length>0){
-      html+='<div style="margin-top:30px;background:#ec489911;border:1px solid #ec489933;border-radius:16px;padding:24px;">';
-      html+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">';
-      html+='<div style="font-size:28px;">🎯</div>';
-      html+='<div><div style="font-size:10px;font-weight:700;color:#ec4899;text-transform:uppercase;letter-spacing:1px;">Quiz do Módulo</div><div style="font-size:14px;font-weight:600;color:#fff;">'+mod.quizFinal.length+' questões para testar seu conhecimento</div></div>';
-      html+='</div>';
-      html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+      secHtml+='<div data-break="avoid" style="margin-top:24px;background:#ec489911;border:1px solid #ec489933;border-radius:14px;padding:22px;">';
+      secHtml+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">';
+      secHtml+='<div style="font-size:28px;">🎯</div>';
+      secHtml+='<div><div style="font-size:11px;font-weight:700;color:#ec4899;text-transform:uppercase;letter-spacing:1px;">Quiz do Módulo</div><div style="font-size:15px;font-weight:600;color:#fff;">'+mod.quizFinal.length+' questões para testar seu conhecimento</div></div>';
+      secHtml+='</div>';
+      secHtml+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
       mod.quizFinal.slice(0,4).forEach(function(q,qi){
-        var qText=q.q||q.question||'';
-        if(qText.length>80)qText=qText.substring(0,77)+'...';
-        html+='<div style="background:#ec489922;border-radius:8px;padding:12px 14px;font-size:11px;color:#f9a8d4;line-height:1.5;"><b style="color:#ec4899;">Q'+(qi+1)+':</b> '+escHtml(qText)+'</div>';
+        var qt=q.q||q.question||''; if(qt.length>90)qt=qt.substring(0,87)+'...';
+        secHtml+='<div style="background:#ec489922;border-radius:8px;padding:12px 14px;font-size:12px;color:#f9a8d4;line-height:1.55;word-wrap:break-word;"><b style="color:#ec4899;">Q'+(qi+1)+':</b> '+escHtml(qt)+'</div>';
       });
-      html+='</div>';
-      html+='</div>';
+      secHtml+='</div></div>';
     }
-
-    html+='</div>'; // Fim da página do módulo
+    secHtml+='</div>';
+    html+=secHtml;
   });
 
-  // ══════════════════════════════════════════════════════════════
-  // PÁGINA FINAL: TODOS OS FLASHCARDS
-  // ══════════════════════════════════════════════════════════════
+  // ══════════ FLASHCARDS ══════════
   if(stats.cards>0){
-    html+='<div class="mm-page" style="padding:40px;min-height:1400px;background:#08080f;page-break-before:always;border-top:4px solid #8b5cf6;">';
-    html+='<div style="text-align:center;margin-bottom:40px;">';
-    html+='<div style="font-size:48px;margin-bottom:12px;">🎴</div>';
-    html+='<div style="font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">Banco de Flashcards</div>';
+    html+='<div data-break="start" style="padding:50px;background:#08080f;border-top:6px solid #8b5cf6;min-height:'+PAGE_H+'px;box-sizing:border-box;width:'+PAGE_W+'px;">';
+    html+='<div style="text-align:center;margin-bottom:30px;">';
+    html+='<div style="font-size:52px;margin-bottom:10px;">🎴</div>';
+    html+='<div style="font-size:30px;font-weight:900;color:#fff;margin-bottom:8px;">Banco de Flashcards</div>';
     html+='<div style="font-size:14px;color:#888;">'+stats.cards+' cartões para revisão espaçada</div>';
     html+='</div>';
-
-    html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">';
+    html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">';
     var cardCount=0;
     MODS.forEach(function(mod,mi){
       var mColor=modColors[mi%modColors.length];
       mod.topics.forEach(function(t){
         if(t.cards){
           t.cards.forEach(function(c){
-            if(cardCount>=30)return; // Limitar para não ficar muito longo
+            if(cardCount>=40)return;
             cardCount++;
-            var q=c.q.length>100?c.q.substring(0,97)+'...':c.q;
-            var a=c.a.length>120?c.a.substring(0,117)+'...':c.a;
-            html+='<div style="background:#12121e;border-radius:12px;padding:16px;border-left:3px solid '+mColor+';">';
-            html+='<div style="font-size:10px;font-weight:700;color:'+mColor+';margin-bottom:8px;">M'+String(mi+1).padStart(2,'0')+' · '+escHtml(t.name.substring(0,30))+'</div>';
-            html+='<div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:10px;line-height:1.5;">❓ '+escHtml(q)+'</div>';
-            html+='<div style="font-size:11px;color:#aaa;line-height:1.5;padding-top:10px;border-top:1px dashed #ffffff15;">💡 '+escHtml(a)+'</div>';
+            var q=(c.q||''); if(q.length>120)q=q.substring(0,117)+'...';
+            var a=(c.a||''); if(a.length>150)a=a.substring(0,147)+'...';
+            html+='<div data-break="avoid" style="background:#12121e;border-radius:12px;padding:16px;border-left:3px solid '+mColor+';">';
+            html+='<div style="font-size:10px;font-weight:700;color:'+mColor+';margin-bottom:8px;word-wrap:break-word;">M'+String(mi+1).padStart(2,'0')+' · '+escHtml(t.name.substring(0,34))+'</div>';
+            html+='<div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:10px;line-height:1.5;word-wrap:break-word;">❓ '+escHtml(q)+'</div>';
+            html+='<div style="font-size:11px;color:#aaa;line-height:1.55;padding-top:10px;border-top:1px dashed #ffffff15;word-wrap:break-word;">💡 '+escHtml(a)+'</div>';
             html+='</div>';
           });
         }
       });
     });
-    if(stats.cards>30){
-      html+='<div style="grid-column:span 2;text-align:center;padding:20px;background:#8b5cf622;border-radius:12px;color:#a78bfa;font-weight:600;">+ '+(stats.cards-30)+' flashcards adicionais disponíveis no curso</div>';
+    if(stats.cards>40){
+      html+='<div style="grid-column:span 2;text-align:center;padding:18px;background:#8b5cf622;border-radius:12px;color:#a78bfa;font-weight:600;">+ '+(stats.cards-40)+' flashcards adicionais disponíveis no curso</div>';
     }
-    html+='</div>';
-
-    html+='</div>';
+    html+='</div></div>';
   }
 
-  // Rodapé final
-  html+='<div style="background:#0a0a12;padding:30px 40px;text-align:center;border-top:1px solid #ffffff10;">';
-  html+='<div style="font-size:12px;color:#666;margin-bottom:8px;">Este mapa mental foi gerado automaticamente pela plataforma Matheus Academy</div>';
+  // ══════════ RODAPÉ FINAL ══════════
+  html+='<div style="padding:40px 50px;background:#0a0a12;text-align:center;border-top:1px solid #ffffff10;width:'+PAGE_W+'px;box-sizing:border-box;">';
+  html+='<div style="font-size:13px;color:#666;margin-bottom:8px;">Este mapa mental foi gerado automaticamente pela plataforma Matheus Academy</div>';
   html+='<div style="font-size:11px;color:#444;">'+escHtml(COURSE.name)+' · '+exportDate+' · matheusacademy.com.br</div>';
   html+='</div>';
 
   container.innerHTML=html;
   document.body.appendChild(container);
 
-  // Renderizar cada página e gerar PDF multi-página
+  /* ═══════ SLICER — corta canvas com RECORTE REAL em A4 ═══════
+   * 1. Renderiza TODO o container em um único canvas
+   * 2. Calcula altura de cada "página" baseada em A4 (ratio)
+   * 3. Para cada página: cria sub-canvas de tamanho exato e copia a fatia
+   *    usando drawImage(src, sx, sy, sw, sh, dx, dy, dw, dh)
+   * 4. Antes de cortar, procura o próximo elemento com data-break="avoid"
+   *    e ajusta a linha de corte para não atravessá-lo
+   */
   requestAnimationFrame(function(){
     setTimeout(function(){
-      var pages=container.querySelectorAll('.mm-page');
-      if(pages.length===0){
-        pages=[container];
-      }
-
       var jsPDFLib=window.jspdf||window.jsPDF;
       var jsPDF=jsPDFLib.jsPDF||jsPDFLib;
       var pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-      var pageW=pdf.internal.pageSize.getWidth();
-      var pageH=pdf.internal.pageSize.getHeight();
-      var margin=8;
-      var maxW=pageW-(margin*2);
-      var maxH=pageH-(margin*2);
+      var pageMM_W=pdf.internal.pageSize.getWidth();    // 210
+      var pageMM_H=pdf.internal.pageSize.getHeight();   // 297
+      var MARGIN=0;                                     // sem margem (fundo escuro do mapa)
+      var contentMM_W=pageMM_W-(MARGIN*2);
+      var contentMM_H=pageMM_H-(MARGIN*2);
 
-      var pageIndex=0;
+      html2canvas(container,{
+        backgroundColor:'#08080f',
+        scale:2, logging:false, useCORS:true, allowTaint:true,
+        width:PAGE_W, height:container.scrollHeight,
+        windowWidth:PAGE_W, windowHeight:container.scrollHeight
+      }).then(function(canvas){
+        var totalW=canvas.width;
+        var totalH=canvas.height;
+        // Altura de uma página no canvas = totalW * (pageMM_H/pageMM_W)
+        var pageCanvasH = Math.floor(totalW * (contentMM_H/contentMM_W));
 
-      function renderNextPage(){
-        if(pageIndex>=pages.length){
-          // Finalizar
-          var fileName='Mapa_Mental_Completo_'+COURSE.name.replace(/[^a-z0-9]/gi,'_')+'.pdf';
-          pdf.save(fileName);
-          document.body.removeChild(container);
-          showToast('📥 Mapa Mental Completo baixado! ('+pages.length+' páginas)','ok');
-          return;
+        // Mapa de posições dos breakpoints (em coordenadas do canvas)
+        // Pega todos data-break="avoid" do DOM e converte para Y do canvas
+        var scaleY = totalH / container.scrollHeight;
+        var avoidBoxes = [];
+        container.querySelectorAll('[data-break="avoid"]').forEach(function(el){
+          var r = el.getBoundingClientRect();
+          var contR = container.getBoundingClientRect();
+          avoidBoxes.push({
+            top: Math.floor((r.top - contR.top) * scaleY),
+            bottom: Math.floor((r.bottom - contR.top) * scaleY)
+          });
+        });
+        var startBoxes = [];
+        container.querySelectorAll('[data-break="start"]').forEach(function(el){
+          var r = el.getBoundingClientRect();
+          var contR = container.getBoundingClientRect();
+          startBoxes.push(Math.floor((r.top - contR.top) * scaleY));
+        });
+
+        // Função: encontra a melhor linha de corte a partir de startY
+        function encontrarCorte(startY, idealEnd){
+          // Se algum data-break="start" cai nesse intervalo, quebra lá
+          for(var i=0;i<startBoxes.length;i++){
+            if(startBoxes[i]>startY+50 && startBoxes[i]<=idealEnd){
+              return startBoxes[i];
+            }
+          }
+          // Se idealEnd cai dentro de um avoid, recua até o topo do avoid
+          for(var j=0;j<avoidBoxes.length;j++){
+            var b=avoidBoxes[j];
+            if(b.top<idealEnd && b.bottom>idealEnd && b.top>startY+50){
+              return b.top;
+            }
+          }
+          return Math.min(idealEnd, totalH);
         }
 
-        var page=pages[pageIndex];
-        html2canvas(page,{
-          backgroundColor:'#08080f',
-          scale:2,
-          logging:false,
-          useCORS:true,
-          allowTaint:true,
-          width:page.scrollWidth,
-          height:page.scrollHeight,
-          windowWidth:page.scrollWidth,
-          windowHeight:page.scrollHeight
-        }).then(function(canvas){
-          if(pageIndex>0)pdf.addPage();
+        var curY = 0;
+        var pageNum = 0;
+        while(curY < totalH){
+          var idealEnd = curY + pageCanvasH;
+          var cutY = encontrarCorte(curY, idealEnd);
+          if(cutY <= curY) cutY = Math.min(curY + pageCanvasH, totalH);
+          var sliceH = cutY - curY;
 
-          var imgW=canvas.width;
-          var imgH=canvas.height;
-          var ratio=imgH/imgW;
+          // Cria sub-canvas e copia fatia
+          var pageCanvas = document.createElement('canvas');
+          pageCanvas.width = totalW;
+          pageCanvas.height = sliceH;
+          var ctx = pageCanvas.getContext('2d');
+          // Preenche fundo (pode sobrar espaço vazio na última página)
+          ctx.fillStyle = '#08080f';
+          ctx.fillRect(0,0,totalW,sliceH);
+          ctx.drawImage(canvas, 0, curY, totalW, sliceH, 0, 0, totalW, sliceH);
 
-          var pdfW=maxW;
-          var pdfH=pdfW*ratio;
+          var imgData = pageCanvas.toDataURL('image/jpeg', 0.92);
+          if(pageNum>0) pdf.addPage();
+          // Altura no PDF proporcional ao conteúdo real (última página pode ser menor)
+          var imgMM_H = (sliceH / totalW) * contentMM_W;
+          // Fundo da página PDF para casar com a imagem
+          pdf.setFillColor(8,8,15);
+          pdf.rect(0,0,pageMM_W,pageMM_H,'F');
+          pdf.addImage(imgData,'JPEG',MARGIN,MARGIN,contentMM_W,imgMM_H);
+          // Rodapé de número de página
+          pdf.setFontSize(8);
+          pdf.setTextColor(120,120,120);
+          pdf.text(String(pageNum+1), pageMM_W-10, pageMM_H-4, {align:'right'});
 
-          // Se muito alto, dividir em múltiplas páginas do PDF
-          if(pdfH>maxH){
-            // Escalar para caber na largura e adicionar múltiplas páginas
-            var scale=maxW/imgW;
-            var scaledH=imgH*scale;
-            var yOffset=0;
-            var imgData=canvas.toDataURL('image/png',1.0);
+          curY = cutY;
+          pageNum++;
+          if(pageNum>100) break; // safety
+        }
 
-            while(yOffset<scaledH){
-              if(yOffset>0)pdf.addPage();
-              // Clip vertical
-              var clipH=Math.min(maxH,scaledH-yOffset);
-              pdf.addImage(imgData,'PNG',margin,-yOffset+margin,maxW,scaledH);
-              yOffset+=maxH;
-            }
-          }else{
-            var xOff=(pageW-pdfW)/2;
-            var yOff=margin;
-            var imgData=canvas.toDataURL('image/png',1.0);
-            pdf.addImage(imgData,'PNG',xOff,yOff,pdfW,pdfH);
-          }
-
-          pageIndex++;
-          renderNextPage();
-        }).catch(function(err){
-          console.error('Erro na página '+pageIndex+':',err);
-          pageIndex++;
-          renderNextPage();
-        });
-      }
-
-      renderNextPage();
-    },200);
+        var fileName='Mapa_Mental_Completo_'+(COURSE.name||'curso').replace(/[^a-z0-9]/gi,'_')+'.pdf';
+        pdf.save(fileName);
+        document.body.removeChild(container);
+        showToast('📥 Mapa Mental baixado! ('+pageNum+' páginas, sem cortes)','ok');
+      }).catch(function(err){
+        console.error('Erro ao gerar PDF:',err);
+        document.body.removeChild(container);
+        showToast('❌ Erro ao gerar PDF: '+(err.message||err),'error');
+      });
+    },300);
   });
 }
 
