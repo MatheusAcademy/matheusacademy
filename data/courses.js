@@ -1001,23 +1001,24 @@ var MA_COURSES = [
     addedTs: 1775831040170,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ap.jpg',
     id: 'ap',
-    name: 'Mentalidade de Alta Performance para a Vida Real',
-    desc: 'Curso sobre clareza mental, energia, organização pessoal, metas e comportamento estratégico para viver com mais direção.',
-    file: '04-alta-performance.html',
-    cat: 'Desenvolvimento',
+    name: 'Aconselhamento Pastoral com Base Bíblica',
+    desc: 'Cuidado espiritual, escuta e aconselhamento à luz da Bíblia em situações reais.',
+    file: '10-aconselhamento-pastoral.html',
+    cat: 'Bíblia / Teologia',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'AP_HENRY_2026_MASTER',
     ak: 'ap_auth',
     storagePrefix: 'ap_',
-    icon: '🚀',
-    color: '#ff6700',
-    addedTs: 1775831042752,
+    icon: '✝️',
+    color: '#00695C',
+    free: true,
+    addedTs: 1776284623811,
     active: true
   },
   {
