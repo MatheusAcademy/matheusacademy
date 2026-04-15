@@ -829,11 +829,11 @@ var MA_COURSES = [
     addedTs: 1775831005243,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/cr.jpg',
     id: 'cr',
-    name: 'Cristologia: Jesus do Texto à Doutrina',
-    desc: 'Estudo sobre a pessoa, missão, natureza e obra de Jesus Cristo nas Escrituras.',
+    name: 'Cristologia',
+    desc: 'Estudo profundo da pessoa e obra de Jesus Cristo como Filho de Deus',
     file: '09-cristologia.html',
     cat: 'Bíblia / Teologia',
     modules: 3,
@@ -846,7 +846,7 @@ var MA_COURSES = [
     icon: '✝️',
     color: '#AD1457',
     free: true,
-    addedTs: 1776284629786,
+    addedTs: 1776289835343,
     active: true
   },
   {
