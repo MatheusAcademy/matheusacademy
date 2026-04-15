@@ -3170,24 +3170,24 @@ var MA_COURSES = [
     addedTs: 1776024739233,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/cd.jpg',
     id: 'cd',
-    name: 'Ciência de Dados para Decisão Inteligente',
-    desc: 'Entender dados, métricas, análises e transformar informação em decisão estratégica.',
+    name: 'Ciência de Dados',
+    desc: 'Analise dados com Python, pandas, estatística, visualização. Construa dashboards, modelos preditivos, derive insights. Data-driven decision making.',
     file: '24-ciencia-dados.html',
     cat: 'Tecnologia',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'CD_HENRY_2026_MASTER',
+    salt: 'PREFIX_HENRY_2026_MASTER',
     ak: 'cd_auth',
     storagePrefix: 'cd_',
     icon: '💻',
     color: '#00796B',
     free: true,
-    addedTs: 1776284550838,
+    addedTs: 1776289883416,
     active: true
   },
   {
