@@ -2887,11 +2887,11 @@ var MA_COURSES = [
     addedTs: 1776024662982,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/an.jpg',
     id: 'an',
     name: 'Automação Digital e No-Code com IA',
-    desc: 'Mostra como automatizar tarefas, fluxos e processos usando plataformas simples e recursos de inteligência artificial.',
+    desc: 'Como automatizar tarefas e processos usando plataformas simples e IA.',
     file: '26-automacao-nocode.html',
     cat: 'Tecnologia',
     modules: 3,
@@ -2903,7 +2903,8 @@ var MA_COURSES = [
     storagePrefix: 'an_',
     icon: '💻',
     color: '#FF6F00',
-    addedTs: 1776024668266,
+    free: true,
+    addedTs: 1776284540641,
     active: true
   },
   {
