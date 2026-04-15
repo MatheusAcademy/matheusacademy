@@ -3324,11 +3324,11 @@ var MA_COURSES = [
     addedTs: 1776024784753,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/be.jpg',
     id: 'be',
     name: 'Business English para Reuniões e E-mails',
-    desc: 'Curso específico para ambiente corporativo, com inglês para reuniões, apresentações, negociações e e-mails profissionais.',
+    desc: 'Inglês para ambiente corporativo: reuniões, apresentações, negociações e e-mails profissionais.',
     file: '16-business-english.html',
     cat: 'Inglês',
     modules: 3,
@@ -3340,7 +3340,8 @@ var MA_COURSES = [
     storagePrefix: 'be_',
     icon: '🇺🇸',
     color: '#37474F',
-    addedTs: 1776024789865,
+    free: true,
+    addedTs: 1776284590145,
     active: true
   },
   {
