@@ -3384,11 +3384,11 @@ var MA_COURSES = [
     addedTs: 1776024800785,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ia.jpg',
     id: 'ia',
     name: 'Inglês Avançado para Comunicação Natural',
-    desc: 'Curso voltado para refinamento da fala, escuta, vocabulário avançado e expressão mais natural e confiante.',
+    desc: 'Refinamento da fala, escuta, vocabulário avançado e expressão natural e confiante.',
     file: '13-ingles-avancado.html',
     cat: 'Inglês',
     modules: 3,
@@ -3401,7 +3401,7 @@ var MA_COURSES = [
     icon: '🇺🇸',
     color: '#7B1FA2',
     free: true,
-    addedTs: 1776024805961,
+    addedTs: 1776284606045,
     active: true
   },
   {
