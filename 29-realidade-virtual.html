@@ -3,28 +3,1088 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Realidade Virtual, Aumentada e Imersão — Matheus Academy</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<title>Realidade Virtual e Aumentada — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="shared/course.css">
 </head>
 <body>
 <script>
-var COURSE = {id:'RV',name:'Realidade Virtual, Aumentada e Imersão',shortName:'VR e AR',cat:'Tecnologia e Inovação',desc:'VR e AR impactando educação, jogos, indústria e experiências digitais.',salt:'RV_HENRY_2026_MASTER',ak:'rv_auth',courseKey:'rv',prefix:'rv_',color:'#6200EA',glow:'rgba(98,0,234,.35)',free:true,freeModules:1,modules:3,topics:9,hours:3,quizzes:9};
+var COURSE = {
+  id:'RV',
+  name:'Realidade Virtual e Aumentada',
+  shortName:'rv',
+  cat:'Tecnologia e Inovação',
+  desc:'Domine VR/AR: Oculus, Meta Quest, Unity, WebXR, Apple Vision. Crie experiências imersivas e aplicações para metaverso.',
+  salt:'PREFIX_HENRY_2026_MASTER',
+  ak:'rv_auth',
+  courseKey:'realidade-virtual-aumentada',
+  prefix:'rv_',
+  color:'#6200EA',
+  glow:0.35,
+  free:true,
+  freeModules:1,
+  modules:3,
+  topics:9,
+  hours:3,
+  quizzes:9
+};
 var MODS = [
-  {id:'rv_mod1',name:'Fundamentos de VR e AR',free:true,topics:[1,2,3],summary:{title:'Resumo do Módulo 1: Conceitos Base',points:['VR cria ambiente totalmente imersivo onde usuário esquece realidade física','AR sobrepõe elementos digitais na realidade, enriquecendo perceção sem substituição','Diferença crítica: VR substitui mundo, AR aumenta mundo','Tecnologia converge em metaverso onde real e digital coexistem']},quizFinal:[{q:'Qual é a diferença entre VR e AR?',opts:['Não há diferença, são sinônimos','VR substitui realidade, AR adiciona à realidade','VR é mais novo que AR','VR é menos imersivo que AR'],correct:1},{q:'O que torna VR imersivo?',opts:['Alta resolução da tela','Estímulo sensorial completo bloqueando mundo externo','Apenas som 3D','Apenas rastreamento de movimento'],correct:1},{q:'Qual aplicação de AR já é mainstream?',opts:['Filtros de selfie em redes sociais','Apenas em laboratórios','Apenas em aplicações militares','Não existe aplicação mainstream ainda'],correct:0}]},
-  {id:'rv_mod2',name:'Tecnologias e Hardware de VR/AR',free:false,topics:[4,5,6],summary:{title:'Resumo do Módulo 2: Tecnologia',points:['Headsets VR rastreiam movimento cabeça em 6 graus de liberdade','Eye tracking permite interação natural baseada em onde você olha','Haptics fornecem feedback tátil criando sensação de toque digital','Processamento em tempo real de gráficos 3D é desafio computacional principal']},quizFinal:[{q:'O que é 6 DOF em headsets VR?',opts:['Seis Dólares de Oscilação','6 Degrees of Freedom - rastreamento de posição e rotação em 3D','6 Digital Output Formats','Seis Displays Ópticos Focados'],correct:1},{q:'Como eye tracking muda experiência de VR?',opts:['Não muda nada','Permite interação natural baseada em olhar, sem controllers','Apenas para jogos comerciais','Reduz performance gráfica'],correct:1},{q:'O que são haptics em VR?',opts:['Imagens de alta qualidade','Feedback tátil que simula toque e força','Sistema de som envolvente','Luzes LED coloridas'],correct:1}]},
-  {id:'rv_mod3',name:'Aplicações e Futuro Imersivo',free:false,topics:[7,8,9],summary:{title:'Resumo do Módulo 3: Aplicações',points:['Educação em VR permite aprender dissecando corpo humano, visitando história viva','Indústria usa VR para treinamento seguro de procedimentos arriscados','Saúde usa VR para terapia de fobias e reabilitação','Metaverso é visão convergente onde VR/AR integram vida digital e física']},quizFinal:[{q:'Como VR beneficia educação?',opts:['Substitui livros apenas','Permite experiência imersiva de conceitos abstratos','Aumenta custo educacional','Reduz engagement estudantil'],correct:1},{q:'Qual é aplicação de VR em saúde?',opts:['Diagnóstico direto de doenças','Terapia de fobias, exposição simulada, reabilitação física','Substituição completa de médicos','Apenas para entretenimento'],correct:1},{q:'O que é metaverso?',opts:['Um jogo específico','Integração de VR/AR em espaço compartilhado persistente','Apenas ficção científica','Um app de rede social'],correct:1}]}
-];
-var TOPICS = [
-  {id:1,name:'O que é Realidade Virtual?',dur:'15 min',content:`<h3>Realidade Virtual: Mundo Inteiro em Seus Olhos</h3><p>Realidade Virtual (VR) é transformação completa: você coloca headset e desaparece do mundo físico. Em segundos, você está em Marte, ou em fundo oceano, ou dentro do corpo humano. Mente acredita. Corpo responde. É imersão total.</p><p>VR funciona enganando olhos e cérebro. Cada olho vê imagem ligeiramente diferente (como na vida real, seus dois olhos veem perspectivas ligeiramente diferentes). Headset mostra imagens diferentes para cada olho em 90+ frames por segundo. Cérebro processa e percebe como profundidade 3D. É ilusão perfeita.</p><p>Histórico é fascinante. Primeiros protótipos surgiram anos 1960s em laboratórios de pesquisa. Mas tecnologia era cara e qualidade era terrível. VR ficou adormecida décadas. Ressurgimento começou anos 2010s quando smartphones poderosos e displays pequenos de alta resolução tornaram VR viável. Meta (Facebook) e Sony puseram dinheiro massivo. Agora VR é mercado de bilhões.</p><p>Efeito psicológico é profundo. Quando você está em VR, seu instinto de sobrevivência ativa. Se você está em simulação de queda de prédio, seu coração bate rápido mesmo sabendo é ilusão. Se você está em simulação de apresentação pública, você fica nervoso apesar de ninguém estar observando. Cérebro não distingue completamente real de simulado.</p><p>Imersão é o segredo. Imersão perfeita requer: (1) Campo visual amplo (não apenas pequena tela à frente), (2) Rastreamento de movimento para que quando você move cabeça, imagem acompanha, (3) Taxa de refresh alta para não causar tontura (90Hz mínimo), (4) Latência baixa entre movimento e resposta visual. Todas essas necessidades levaram a hardware especializado.</p><p>Diferença VR versus 3D em TV: 3D em TV é passivo e limitado. Você tem visão de duas câmeras fixas. Em VR, você é câmera. Você move cabeça, perspectiva muda. Você pode andar pela cena. Você é protagonista ativo, não espectador passivo. Essa diferença faz VR ordens de magnitude mais imersivo.</p><p>Casos de uso emergem continuamente. Arquitetos andam através de prédios não-construídos em VR. Cirurgiões praticam procedimentos complexas em pacientes virtuais. Militares treinam para combate em ambiente simulado. Terapeutas tratam PTSD expondo pacientes a trauma em ambiente controlado. Educadores ensinam história com alunos dentro de eventos históricos. Possibilidades são infinitas.</p>`,cards:[{q:'O que torna VR verdadeiramente imersivo?',a:'Combinação de campo visual amplo, rastreamento de movimento, taxa de refresh alta e latência baixa que fazem cérebro acreditar na ilusão.'}]},
-  {id:2,name:'Realidade Aumentada: Aumentando Seu Mundo',dur:'15 min',content:`<h3>Realidade Aumentada: Sobrepondo Realidade</h3><p>Realidade Aumentada (AR) é diferente de VR. Ao invés de substitui realidade, AR enriquece realidade sobrepondo elementos digitais. Você vê mundo real, mas com anotações digitais, objetos virtuais, informações adicionais. É mundo real++.</p><p>Pokémon GO foi explosão de AR mainstream. Você abre app no smartphone, aponta câmera ao seu redor. Pokémons aparecem em locais reais. Você caça Pokémons em parque de verdade. Isso é AR: mundo real com criaturas virtuais sobreposas. Fenômeno cultural global demonstrou que pessoas amam AR.</p><p>AR em smartphones é acessível. Você não precisa de headset especializado. Câmera do telefone, processamento de imagem sofisticado, e aplicativo são suficientes. Apple ARKit e Google ARCore são frameworks que permitem desenvolvedores criar experiências AR com facilidade.</p><p>Aplicações práticas de AR são múltiplas. Varejo: você procura sofá em loja, abre app, vê múltiplas cores/estilos sobreposas em sua sala. Você decide qual se adequa melhor. Compra aquele. Zero desperdício. Design: você projeto qualquer coisa (móvel, roupas, joia), sobrepõe em seu corpo/casa em tempo real. Educação: você abre livro de biologia, sobrepõe órgãos 3D interativos, você toca neles, aprende estrutura. Mágico.</p><p>Diferença crítica de perspectiva: VR é fuga. AR é aumentação. Você quer sair de trabalho e esquecer problemas? VR. Você quer melhorar seu trabalho atual? AR. Ambas são poderosas, mas para fins diferentes.</p><p>Desafios de AR são técnicos. Compreensão de ambiente em tempo real é complexo. Aplicativo precisa detectar planos (piso, parede, mesa) para saber onde colocar objetos virtuais. Precisa entender iluminação para que objeto virtual se ilumine coerentemente com ambiente. Precisa ser rápido para não mostrar lag visível. Essas tarefas de IA ocorrem bilhões de vezes por segundo em seu smartphone.</p><p>Futuro de AR é headsets especializados. Google Glass foi cedo demais e fracassou. Agora Apple Vision Pro e concorrentes estão redefinindo o que AR em headset pode fazer. Imagem virtual é sobreposa sobre mundo real capturado por cameras, criando experiência fluida entre realidade e digital.</p>`,cards:[{q:'Como AR se diferencia de VR?',a:'AR sobrepõe elementos digitais sobre realidade mantendo você conectado ao ambiente, enquanto VR substitui completamente a realidade.'}]},
-  {id:3,name:'Diferenças, Convergência e Espectro Imersivo',dur:'15 min',content:`<h3>VR vs AR vs MR: O Espectro Completo</h3><p>VR e AR são extremos de um espectro. No centro existe Mixed Reality (MR) que mescla ambas. Entender esse espectro é crucial para aproveitar cada tecnologia.</p><p>Espectro corre assim: realidade pura (mundo físico sem nada digital) → AR (mundo real + elementos digitais) → MR (real e digital coexistem e interagem) → VR (mundo puramente digital). Cada ponto no espectro é válido para diferentes aplicações.</p><p>AR é realidade com anotações. Você vê mundo real, aplicativo sobrepõe informações: esse prédio foi construído 1800, teve dois incêndios, atualmente tem 500 pessoas. Você caminha e AR continua mostrando contexto. É navegação cognitiva.</p><p>MR é onde objetos digitais interagem com objetos reais. Você desenha objeto 3D virtual em sua mesa. Você pode andar ao redor dele (perspectiva muda). Você pode pegar nele (mão real interage com objeto virtual, visto através de headset). Objeto virtual reage como se fosse real (cai se você soltar, colide com coisas reais). É fusão genuína.</p><p>VR é imersão total. Mundo inteiro é digital. Você não vê nada real (a menos que escolha renderizar câmera do mundo real como wallpaper, o que estraga imersão). Você é completamente em outro lugar.</p><p>Convergência está acontecendo. Headsets modernos (Vision Pro, Meta Quest 3) começam oferecendo ambos: você pode alternar entre VR puro ou AR ou qualquer coisa no meio. Sistema é único, software muda o comportamento. Isso é futurístico.</p><p>Qual escolher? Se quer editar filme que está criando, MR/AR é ideal: você vê mundo real ao mesmo tempo que edita elementos virtuais. Se quer treinar cirurgia de órgão específico em isolamento total, VR é melhor. Se quer informações sobre mundo à sua volta enquanto caminha, AR é perfeito.</p><p>Tecnologia está convergindo com neurotecnologia. Futura: você pensa e interface responde. Você pensa 'mova esse objeto virtual para a esquerda', objeto se move. Interface lê sinais neurais. Ficção agora, probabilidade em 5-10 anos. Aí sim, imersão será transcendental.</p>`,cards:[{q:'O que é Mixed Reality e como se diferencia de VR e AR?',a:'MR mescla objetos digitais e reais que podem interagir, enquanto VR é puramente digital e AR sobrepõe digital sobre realidade sem interação.'}]},
-  {id:4,name:'Hardware de VR: Headsets e Controladores',dur:'15 min',content:`<h3>Tecnologia VR: Da Óptica ao Rastreamento</h3><p>VR é apenas tanto quanto hardware permite. Headset ruim cria experiência ruim. Headset ótimo cria experiência transcendental. Vamos entender tecnologia por trás.</p><p>Display é coração. Cada olho vê display separado com resolução alta (2K por olho é padrão moderno). Taxa de refresh é crítica: 90Hz mínimo, 120Hz é melhor, 144Hz é ideal. Se refresh cai abaixo 80Hz, usuário sente "motion sickness" (tontura). Isso é porque latência entre movimento cabeça e atualização visual fica notável, criando conflito entre instinto de equilíbrio (inner ear) e visual.</p><p>Lentes são sofisticadas. Simplesmente colocar tela perto do rosto causa visão de peixe (distorção). Lentes especiais (Fresnel lenses ou aspheric) corrigem aberração, expandem campo visual, e criam foco correto. Ajuste inter-pupilar é importante: se seu espaçamento entre olhos é diferente do padrão, você vê borrado. Headsets ajustáveis resolvem.</p><p>Rastreamento é mágica. Sensores dentro headset (acelerômetros, giroscópios, magnetômetros) rastreiam movimento cabeça. Câmeras infravermelhas externas rastreiam posição absoluta. Sistema combina dados criando rastreamento perfeito de 6 graus de liberdade (6DOF). Você move cabeça em qualquer direção, câmera acompanha.</p><p>Eye tracking é inovação recente. Câmeras infravermelhas rastreiam movimento dos olhos. Isso permite: (1) interação por olhar (você olha botão, ele é ativado), (2) foveated rendering (renderizar alta qualidade onde olho está focado, baixa qualidade na periferia, economizando processamento), (3) presença social (avatares copiam seus movimentos oculares). Profundo.</p><p>Controladores são interfaces. Meta Quest usa controladores com toques (touch), botões, sticks analógicos. Você segura como videogame. Hand tracking é alternativa (câmera rasteia mãos nuas, você gesticula). Hand tracking é mais intuitivo mas menos preciso. Maioria de usuários prefere controladores por confiabilidade.</p><p>Haptics são feedback tátil. Vibração em controlador simula sensação de atirar uma arma ou bater em objeto. Pesquisa avança com bodysuits hápticos inteiros, gloves especializados que realmente simulam textura. Futuro: você sente diferença entre madeira e metal tocando em objeto virtual.</p><p>Plataformas principais: Meta Quest é mais acessível (R$3000-5000). PlayStation VR é para gamers console. HTC Vive é para entusiastas. Valve Index é para PC gaming pesado. Apple Vision Pro é para prospero com R$20000+. Escolha depende budget e caso de uso.</p>`,cards:[{q:'Por que taxa de refresh acima de 90Hz é importante em VR?',a:'Porque abaixo disso, latência entre movimento cabeça e renderização fica notável causando motion sickness e quebra de imersão.'}]},
-  {id:5,name:'Processamento Gráfico e IA em Tempo Real',dur:'15 min',content:`<h3>Poder Computacional: Renderizando Mundos em Tempo Real</h3><p>VR exige mais do computador que qualquer outra aplicação. Você precisa renderizar 90+ imagens por segundo, cada uma com qualidade altíssima, para dois olhos. GPU (unidade gráfica) precisa ser beast.</p><p>Desafio é profundidade. Videogame tradicional renderiza para uma câmera. VR renderiza para duas câmeras que se movem constantemente. Quando você move cabeça, perspectiva de todo objeto no mundo muda. Cálculos geométricos são onerosos. Jogos VR recentes usem 100 bilhões de operações matemáticas por segundo. Seu desktop provavelmente não é suficiente.</p><p>Solução: PC potentes (R$5000+) com GPUs top-tier (RTX 4090). Ou: plataformas dedicadas como Meta Quest que tem chip especializado que otimiza para VR. Trade-off: PC permite gráficos incríveis, Quest é mais acessível mas menos impressionante graficamente.</p><p>Foveated rendering é otimização inteligente. Você não vê alta resolução em periferia (seu olho não processa bem lá). Renderizar periférico em baixa qualidade economiza 50% do processamento com quase nenhum impacto perceptível. IA detecta onde olho está focado, renderiza alta qualidade lá, baixa em periferia. Resultado: melhor performance, gráficos comparáveis.</p><p>Ray tracing é técnica que simula realismo físico de luz. Raios de luz são rastreados enquanto ricocheteiam ao redor cena. Reflexões, sombras, iluminação indireta tudo é realista. Custa computação massiva. VR ainda luta com ray tracing em tempo real (não-VR gaming consegue melhor). Futuro: ray tracing será standard em VR.</p><p>IA generativa muda jogo. Ao invés de artistas modelarem cada detalhe manualmente, IA gera texturas, objetos, até mundos inteiros proceduralmente. Descrição em texto é convertida em ambiente 3D. Isso revoluciona produção, reduzindo tempo e custo drasticamente.</p><p>Streaming de VR é fronteira. Renderizar localmente é caro. E se servidor remoto renderiza, transmite video ao seu headset? Latência é desafio (internet precisa ser ~10ms latência para não queimem imersão). Com 5G, cloud VR é viável. Você carrega headset barato, servidor poderoso no datacenter faz trabalho pesado. Imagem retorna comprimida. Trade-off: depende de internet, não é local.</p>`,cards:[{q:'O que é foveated rendering e por que é importante?',a:'Técnica que renderiza alta qualidade onde seu olho está focado e baixa qualidade na periferia, economizando 50% processamento.'}]},
-  {id:6,name:'Desafios e Limitações Atuais',dur:'15 min',content:`<h3>Realidade não é Perfeita: Desafios de VR Hoje</h3><p>VR é incrível mas longe de perfeito. Desafios técnicos, sociais e fisiológicos precisam ser resolvidos.</p><p>Motion sickness é problema real. Alguns usuários (20-30%) experimentam tontura ao usar VR. Causa é desconexão: seus olhos veem movimento, seu inner ear (equilíbrio) não sente movimento. Conflito causa desconforto. Melhorias: taxa de refresh mais alta, latência mais baixa, movimento mais suave. Mas problema persiste para alguns.</p><p>Social aspect é questionável. VR é imersivo, mas solitário. Se amigo está em VR ao seu lado, você não interage (ele está imerso em mundo diferente). Multiplayer VR existe, mas ainda é caro. Futuro: multiplayer VR em metaverso compartilhado. Presente: mais solitário que comparilhado.</p><p>Custo é barreira. Headset decente custa R$3000-20000. Computador para rodar VR custa R$5000+. Total investimento é alto. Barreira de entrada afasta maioria de população. Necessário democratização de preço.</p><p>Conforto físico importa. Headset pesa 500-600g. Usar 30 minutos é ok, usar 2 horas causa dor no pescoço e fadiga. Controladores causam fadiga nas mãos. Futuro: interface neural que não requer controllers. Presente: ainda fisicamente cansativo.</p><p>Campo visual ainda é limitado. Humanos veem 180-200 graus (perifericamente). VR tópico mostra 90-110 graus. Menos que realidade. Isso quebra imersão porque você sente como se estivesse usando óculos de esqui. Tecnologias de display maiores/curvadas estão saindo, mas seguem caras.</p><p>Isolamento social é preocupação. Se muita gente passa horas em VR escapando realidade, qual é o impacto social? Adicção é possível. Pesquisa ainda é jovem, mas sinaliza bandeiras vermelhas. Moderação é aconselhada, especialmente para crianças.</p><p>Segurança é tema. Você em VR não vê mundo real. Se alguém corre na sala, você não vê. Colisão é possível. Soluções: zonas de VR dedicadas, guardians virtuais que alertam se você se aproxima limite físico, sensores de movimento externo.</p>`,cards:[{q:'Qual é uma limitação fisiológica significativa de VR?',a:'Motion sickness causada por desconexão entre visão e equilíbrio, afetando 20-30% de usuários, especialmente em sessões longas.'}]},
-  {id:7,name:'VR na Educação: Transformando Aprendizado',dur:'15 min',content:`<h3>Educação em VR: Aprender Vivendo</h3><p>VR promete revolucionar educação. Ao invés de memorizar fatos de livro, alunos vivem experiências imersivas. Anatomia? Você disseca corpo humano em 3D interativo. História? Você presencia eventos históricos. Química? Você experimenta reações moleculares. Aprendizado ativo supera passivo ordens de magnitude.</p><p>Caso de uso: aprender história. Em VR, você está em 1969 em Kennedy Center enquanto homem primeiro pisa na lua. Você vê reação pessoas ao vivo. Você entende contexto emocional que livro nunca transmite. Você nunca esquece. Comparar com ler capítulo de livro: completamente diferente engajamento.</p><p>Aprender anatomia: estudante de medicina disseca cadáver virtual. Pode remover órgãos um por um, rotacionar, ver de todas perspectivas. Pode destruir algo sem consciência (é virtual). Pode repetir quanto quiser. Comparar com cadáver real: real é limitado (um exemplar, nem sempre saudável, ética de uso), VR é ilimitado.</p><p>Treinamento prático: pilotos aprendem em simulador VR. Eles praticam decolagem, pouso, situações emergência em ambiente controlado. Quando colocam em avião real, sistema é familiar. Risco é mitigado. Custo é muito menor que treinamento em avião real.</p><p>Engajamento é impactado. Alunos em VR têm 275% maior retenção de informação vs aula tradicional (estudo). Porque? Imersão, movimento físico, interação ativa. Cérebro aprende melhor quando é multissensorial.</p><p>Desvantagens existem. VR custa caro (R$100 por aluno para acesso). Nem toda escola pode investir. Professores precisam treinar novo modo de ensinar. Currículo precisa ser redesenhado. Transição é lenta.</p><p>Sociabilidade é menor. Em VR, aluno é isolado do colega. Aprendizado social (discutindo com colegas) é prejudicado. Futuro: multiuser VR onde múltiplos alunos estão na mesma experiência imersiva, podem interagir. Aí sim, VR é educação completa.</p>`,cards:[{q:'Como VR melhora retenção de informação em educação?',a:'Porque aprendizado imersivo e interativo é multissensorial, levando a retenção 275% maior comparado com aula tradicional.'}]},
-  {id:8,name:'VR na Indústria: Treinamento e Segurança',dur:'15 min',content:`<h3>VR Industrial: Treinando Sem Risco</h3><p>Indústria usa VR para treinamento arriscado. Soldador precisa treinar. Fazer ao vivo é perigoso (queimaduras, incêndios). Em VR, treina ilimitadamente, erros não custam nada. Transição para realidade é tranquila porque reflexos foram desenvolvidos.</p><p>Casos específicos: marinha treina marinhos em simuladores VR de navios danificados. Eles praticam combate a incêndio, evacuação, reparos. Quando colocados em navio real, comportamento é automático. Vida é salva porque treinamento foi eficaz.</p><p>Engenheiros de petróleo treinam em plataformas offshore virtuais. Procedimentos complexas são ensaiadas. Erros são corrigidos sem consequência. Quando procedimento real, segurança é maximizada.</p><p>Psicólogos tratam PTSD usando VR exposure therapy. Veterano com trauma de guerra entra em simulação segura de combate. Exposure controlada reduz resposta de medo (processo chamado desensibilização). Taxas de sucesso são altas.</p><p>Cirurgiões praticam procedimentos complexas em pacientes virtuais antes de operar em reais. Replicação de simulador é tão boa que primeiros minutos cirurgia real sentem idênticos. Confiança e competência aumentam, complicações diminuem.</p><p>ROI (Return on Investment) é claro. Treinamento VR custa 60-70% menos que treinamento traditional. Retenção é 4x melhor. Acidentes diminuem 30-50% após treinamento VR. Para indústria, é win-win.</p><p>Futuro: manutenção remota guiada por IA. Técnico em local remoto vê através de câmera em capacete técnico local. IA sobrepõe instruções em realidade (AR). Técnico local executa, expert remoto guia. Complexidade é resolvida sem viagem cara.</p>`,cards:[{q:'Como VR treina para situações perigosas?',a:'Permitindo prática ilimitada em ambiente seguro onde erros não resultam em consequência, desenvolvendo reflexos sem risco físico.'}]},
-  {id:9,name:'Metaverso: O Futuro Imersivo Convergente',dur:'15 min',content:`<h3>Metaverso: Quando VR Torna-se Vida</h3><p>Metaverso é visão de futuro onde mundo digital e físico coexistem fluidamente. Você passa tempo em ambos. Economia, relações, identidade transcendem barreira digital/físico. É profundo.</p><p>Visão popular (Mark Zuckerberg) é VR onde você cria avatar, interage com outros em mundo persistente. Você trabalha, estuda, socializa, investe em metaverso. Terra no metaverso é propriedade real com valor. Você construi experiências e monetiza. É Segunda Vida on steroids.</p><p>Aplicações práticas estão emergindo. Reuniões de negócio em metaverso são mais imersivas que Zoom. Você sente presença do outro (avatar é próximo, você sente como pessoa real está ali). Negociações são mais eficazes porque linguagem corporal é transmitida. Viagens internacionais diminuem (economia de CO2).</p><p>Educação global: professor em São Paulo leciona para alunos em Tóquio, Nova York, Mumbai. Todos em sala de aula virtual idêntica. Alunos veem professor e colegas como avatares. Colaboração é real-time. Experiência é quase idêntica a sala presencial, mas global instantaneamente. Democratiza educação.</p><p>Socialização isolada é mitigada. Personas que são isoladas socialmente (fobia social, deficiência física, localização remota) podem socializar em metaverso com liberdade. Não são julgados por aparência física. Conexões humanas transcendem limitações.</p><p>Desafios são imensos. Privacidade em metaverso é questionável (corp rastreia movimentos, compra comportamentos). Toxicidade online é amplificada (avatar pode fazer qualquer coisa sem consequência). Dependência é risco (pessoas preferem VR ao realidade). Padronização é necessária (quantos metaversos existirão? Quantos standards?).</p><p>Timeline realista: próxima década verá adopção massiva. Crianças nascidas 2025+ crescem com metaverso como normalidade. Trabalho remoto em metaverso é padrão 2035. Identidades digitais são tão valiosas quanto identidades físicas 2040. Converência completa: realidade e digital são indistinguíveis 2050.</p><p>Preparar-se agora: aprenda criar em ferramentas como Unreal Engine, Unity. Aprenda sobre economia metaverso. Comece a pensar como mundo digital é extensão natural de vida. Futuro é imersivo. Melhor estar preparado.</p>`,cards:[{q:'O que é metaverso e qual seu potencial transformador?',a:'Integração de mundo virtual e físico onde você vive, trabalha e investe simultaneamente em ambos, transcendendo barreira digital/realidade.'}]}
+  {
+    id:'rv_mod1',
+    name:'Fundamentos de VR/AR e Tecnologia Imersiva',
+    free:true,
+    topics:[
+      {
+        id:1,
+        name:'O que é Realidade Virtual (VR)?',
+        dur:'15 min',
+        content:`
+<h3>Realidade Virtual: Escapar Completamente do Mundo Real</h3>
+<p>Realidade Virtual (VR) substitui completamente o ambiente visual e auditivo. Você entra em mundo digital 100%. Diferente de AR (que sobrepõe), VR é imersão total.</p>
+
+<h4>Como VR Funciona: A Física</h4>
+<ul>
+<li><strong>Visão Estéreo:</strong> Duas imagens ligeiramente diferentes (uma para cada olho) criam profundidade 3D</li>
+<li><strong>Head Tracking:</strong> Sensores rastreiam movimento da cabeça (acelerador, giroscópio)</li>
+<li><strong>Refresh Rate:</strong> 90-120 fps (muito rápido para não causar enjoo)</li>
+<li><strong>Motion-to-Photon:</strong> Latência < 20ms entre movimento da cabeça e atualização visual</li>
+<li><strong>Controllers:</strong> Rastreamento de mão/bastão para interação</li>
+</ul>
+
+<blockquote class="tip">
+<strong>👓 Anatomia de um Headset VR:</strong>
+<br>
+<br>Display OLED/LCD: 2-4K por olho
+<br>Lentes: Grande campo de visão (90-110 graus)
+<br>Sensores: IMU (acelerador, giroscópio, magnetômetro)
+<br>Processador: Snapdragon 888+ ou equivalente
+<br>Memória: 8-12GB RAM
+<br>Armazenamento: 128-256GB
+</blockquote>
+
+<h4>Headsets VR Populares (2026)</h4>
+<ul>
+<li><strong>Meta Quest 3:</strong> R$2.500-3.500, hybrid (VR+AR), melhor custo-benefício</li>
+<li><strong>Apple Vision Pro:</strong> R$15.000+, tela Micro OLED, mais bonito</li>
+<li><strong>PlayStation VR2:</strong> R$3.500, PC/PlayStation, rastreamento excelente</li>
+<li><strong>Varjo XR4:</strong> R$20.000+, enterprise, realismo visual insano</li>
+<li><strong>HTC Vive Focus 3:</strong> R$5.000+, enterprise, mercado corporativo</li>
+</ul>
+
+<h4>Tipos de Experiências VR</h4>
+<p><strong>1. Gaming</strong></p>
+<ul>
+<li>Beat Saber (ritmo)</li>
+<li>Half-Life: Alyx (FPS imersivo)</li>
+<li>Resident Evil 4 (horror total)</li>
+</ul>
+
+<p><strong>2. Social/Metaverse</strong></p>
+<ul>
+<li>Horizon Worlds (Facebook/Meta)</li>
+<li>VRChat (comunidade open)</li>
+<li>Roblox (user-generated)</li>
+</ul>
+
+<p><strong>3. Educação</strong></p>
+<ul>
+<li>Simulações médicas (cirurgia prática)</li>
+<li>Treinamento industrial (máquinas perigosas)</li>
+<li>Museus virtuais (Louvre, British Museum)</li>
+</ul>
+
+<p><strong>4. Fitness</strong></p>
+<ul>
+<li>Supernatural (yoga, cardio, boxe)</li>
+<li>FitXR (dança)</li>
+</ul>
+
+<h4>O Problema do VR Sickness</h4>
+<p>Movimento na tela sem movimento do corpo = enjoo (motion sickness).</p>
+<blockquote class="example">
+<strong>🤢 Causa de VR Sickness:</strong>
+<br>
+<br>Olho vê movimento para frente
+<br>Vestíbulo (ouvido interno) não sente movimento
+<br>Desconexão → cérebro fica confuso → enjoo
+<br>
+<br>Solução: Reduzir latência, usar teleport (não movimento suave), treinar tolerância
+</blockquote>
+
+<h4>Mercado VR Global</h4>
+<blockquote class="news">
+<strong>📊 Números VR (2026):</strong>
+<br>
+<br>Headsets vendidos: ~15 milhões/ano
+<br>Mercado VR: $20+ bilhões
+<br>Crescimento anual: 15-20%
+<br>Adoção: ~2-3% população global
+<br>
+<br>Crescendo rápido, mas ainda niche. Mainstream é 2028-2030.
+</blockquote>
+
+<p>VR é tão imersiva que muda percepção de realidade. Usuários relatam flashbacks 48h depois — impacto psicológico é real.</p>
+        `,
+        cards:[
+          {q:"O que diferencia VR de AR?",a:"VR substitui completamente o ambiente (100% virtual), AR sobrepõe elementos digitais no mundo real"},
+          {q:"Qual é a latência máxima aceitável em VR?",a:"< 20ms entre movimento da cabeça e atualização visual (evita enjoo)"},
+          {q:"Cite 3 headsets VR populares em 2026",a:"Meta Quest 3, Apple Vision Pro, PlayStation VR2"}
+        ]
+      },
+      {
+        id:2,
+        name:'Realidade Aumentada (AR): Realidade Sobreposta',
+        dur:'20 min',
+        content:`
+<h3>Realidade Aumentada: O Mundo Melhorado</h3>
+<p>AR sobrepõe elementos digitais no mundo real. Menos imersivo que VR, mais prático. Você vê realidade + camada digital. Seu telefone provavelmente já tem AR (Pokémon Go, Instagram filters).</p>
+
+<h4>Tipos de AR</h4>
+<p><strong>1. Marker-Based AR</strong></p>
+<ul>
+<li>Precisa de marcador visual (QR code, imagem)</li>
+<li>Câmera detecta marcador → sobrepõe conteúdo</li>
+<li>Exemplo: IKEA app (vê móvel na sua sala antes de comprar)</li>
+</ul>
+
+<p><strong>2. Markerless AR</strong></p>
+<ul>
+<li>Usa GPS, acelerador, câmera para posicionar</li>
+<li>Exemplo: Google Maps mostr setas de navegação em tempo real</li>
+<li>Mais desafiador, mas mais prático</li>
+</ul>
+
+<p><strong>3. Cloud-Based AR</strong></p>
+<ul>
+<li>Processa na nuvem, retorna resultado para dispositivo</li>
+<li>Exemplo: Google Lens (fotografe algo, identifica)</li>
+<li>Requer boa conexão internet</li>
+</ul>
+
+<h4>Hardware AR Disponível</h4>
+<ul>
+<li><strong>Smartphone:</strong> iOS ARKit (Apple), Google ARCore (Android) — 100% adoção</li>
+<li><strong>Smartglasses:</strong> Apple Vision Pro, Meta Ray-Bans, Nreal Light</li>
+<li><strong>Tablets:</strong> iPad com ARKit</li>
+<li><strong>AR Headsets:</strong> Microsoft HoloLens 2 (enterprise, R$15k)</li>
+</ul>
+
+<h4>Aplicações AR Práticas</h4>
+<p><strong>E-commerce</strong></p>
+<ul>
+<li>IKEA: Ver móvel 3D em sua sala antes de comprar</li>
+<li>Nike: Experimentar tênis virtuais</li>
+<li>Sephora: Simular maquiagem</li>
+<li>Conversão: +40% com AR vs sem</li>
+</ul>
+
+<p><strong>Navegação</strong></p>
+<blockquote class="example">
+<strong>🗺️ Google Maps AR Navigation:</strong>
+<br>
+<br>Aponte telefone na rua
+<br>Vê setas de navegação em tempo real (no mundo real)
+<br>Sem precisar olhar para tela, vê direto na rua
+<br>
+<br>Impacto: Pedestres não colidem, menos acidentes
+</blockquote>
+
+<p><strong>Educação</strong></p>
+<ul>
+<li>Anatomia 3D (dissecção virtual)</li>
+<li>Planetário no seu quarto</li>
+<li>Idiomas (vê palavras em objetos reais)</li>
+</ul>
+
+<p><strong>Indústria/Manutenção</strong></p>
+<ul>
+<li>Técnico vê instruções em tempo real no equipamento</li>
+<li>Remote assistance: Especialista desenha anotações que técnico vê</li>
+<li>Impacto: -70% tempo de reparo, -50% erros</li>
+</ul>
+
+<h4>Desafios AR</h4>
+<ul>
+<li><strong>Oclusão:</strong> Objeto digital atrás de real (difícil de detectar)</li>
+<li><strong>Iluminação:</strong> Sombra, brilho do objeto real complexo</li>
+<li><strong>Performance:</strong> Processing pesado drena bateria rápido</li>
+<li><strong>Privacy:</strong> Câmera sempre ligada, quem vê os dados?</li>
+</ul>
+
+<h4>AR é Mais Adoptável que VR</h4>
+<blockquote class="tip">
+<strong>📊 VR vs AR (2026):</strong>
+<br>
+<br>VR Adoção: ~2-3% população (hobbyista, gamer)
+<br>AR Adoção: ~50%+ (todos tem smartphone com ARKit)
+<br>
+<br>VR melhor para: Gaming, imersão, experiência
+<br>AR melhor para: Produtividade, prático, social aceitável
+<br>
+<br>Futuro: AR espera por hardware melhor (glasses leve), depois dispara
+</blockquote>
+
+<p>AR é mais próximo de mainstream. Apple Vision Pro com AR spatial é direção do futuro.</p>
+        `,
+        cards:[
+          {q:"O que é Marker-Based AR?",a:"AR que precisa de marcador visual (QR code, imagem) para sobrepor conteúdo digital"},
+          {q:"Qual é a vantagem de AR sobre VR no e-commerce?",a:"Conversão +40%, usuário vê produto em seu ambiente real, menos retorno"},
+          {q:"Qual hardware AR tem adoção 50%+?",a:"Smartphone (todos têm ARKit/ARCore)"}
+        ]
+      },
+      {
+        id:3,
+        name:'Unity: Engine para VR/AR',
+        dur:'20 min',
+        content:`
+<h3>Unity: Criando Mundos Imersivos</h3>
+<p>Unity é engine usado para 90% dos games VR/AR. C#, visual intuitive, deploy a múltiplas plataformas (Oculus, PlayStation VR, WebGL, mobile).</p>
+
+<h4>Setup Mínimo</h4>
+<ul>
+<li>Unity Hub + Unity Editor (versão 2022 LTS recomendada)</li>
+<li>XR Plugin Management (suporte VR/AR)</li>
+<li>OpenXR (padrão open para VR)</li>
+<li>Headset ou simulador</li>
+<li>Meta Quest 2/3 (~R$1.500-2.500 para desenvolvimento)</li>
+</ul>
+
+<h4>Conceitos Fundamentais</h4>
+<p><strong>1. Scene:</strong> Seu mundo (cena). Contém GameObjects, luzes, câmera.</p>
+<p><strong>2. GameObject:</strong> Objeto na scene (cubo, esfera, jogador, NPC).</p>
+<p><strong>3. Component:</strong> Comportamento de GameObject (física, rotação, som).</p>
+<p><strong>4. Script:</strong> Código C# que controla GameObject.</p>
+
+<blockquote class="example">
+<strong>🎮 Exemplo: Cubo Rotativo em VR</strong>
+<br>
+<br>1. Criar novo Scene
+<br>2. Adicionar Cube (GameObject)
+<br>3. Adicionar Script:
+<br>
+<br><code>
+using UnityEngine;
+<br>
+public class RotateCube : MonoBehaviour {
+<br>  void Update() {
+<br>    transform.Rotate(0, 100 * Time.deltaTime, 0);
+<br>  }
+<br>}
+</code>
+<br>
+<br>4. Buildar para Oculus Quest
+<br>5. Deploy no headset
+<br>6. Vê cubo girando na sua frente!
+</blockquote>
+
+<h4>Desenvolvimento VR/AR em Unity</h4>
+<p><strong>XR Rig:</strong> Representa jogador no VR (cabeça, mãos)</p>
+<ul>
+<li>Câmera (visão)</li>
+<li>Left/Right Hand Controllers (interação)</li>
+<li>Física integrada com realidade</li>
+</ul>
+
+<p><strong>Interação Básica:</strong></p>
+<blockquote class="example">
+<strong>👆 Pegar e Soltar Objeto:</strong>
+<br>
+<br>Script no objeto:
+<br>
+<br><code>
+void OnSelectEntered(SelectEnterEventArgs args) {
+<br>  // Pegou com mão
+<br>  GetComponent<Rigidbody>().isKinematic = true;
+<br>}
+<br>
+<br>void OnSelectExited(SelectExitEventArgs args) {
+<br>  // Soltou
+<br>  GetComponent<Rigidbody>().isKinematic = false;
+<br>}
+</code>
+</blockquote>
+
+<h4>Performance em VR é Crítica</h4>
+<p>VR precisa rodar a 90fps (vs 60fps em games normais). Exigências:</p>
+<ul>
+<li><strong>GPU:</strong> Renderizar 2x (visão estéreo) + effects = 4-6x mais caro</li>
+<li><strong>CPU:</strong> Rastreamento, física, IA rodando rapidamente</li>
+<li><strong>Latência:</strong> < 20ms entre movimento e renderização</li>
+</ul>
+
+<blockquote class="tip">
+<strong>⚡ Técnicas de Optimization:</strong>
+<br>
+<br>• Level of Detail (LOD): Modelos complexos longe, simples perto
+<br>• Occlusion Culling: Não renderizar objetos atrás de paredes
+<br>• Batching: Juntar múltiplas geometrias (reduz draw calls)
+<br>• Asynchronous Readback: Ler dados sem bloquear render
+<br>• Eye Tracking: Render detalhado apenas onde você olha (foveated rendering)
+<br>
+<br>Objetivo: 90fps+ com bateria durando 2-3h
+</blockquote>
+
+<h4>BuildPipeline para Plataformas</h4>
+<ul>
+<li><strong>Meta Quest:</strong> Build Android, deploy via ADB</li>
+<li><strong>PlayStation VR:</strong> Build para console, SDk específico</li>
+<li><strong>WebXR:</strong> Build para web, funciona em navegador</li>
+<li><strong>Mobile AR:</strong> Build para iOS/Android com ARKit/ARCore</li>
+</ul>
+
+<p>Unity é tão poderosa que a maioria dos headsets implementam suporte nativo. Aprender Unity = futuro prova.</p>
+        `,
+        cards:[
+          {q:"O que é um XR Rig em Unity?",a:"Representa jogador no VR com câmera (visão) e controllers (mãos) para interação"},
+          {q:"Qual é a frame rate mínima para VR confortável?",a:"90 fps (vs 60 fps em games normais) para evitar motion sickness"},
+          {q:"Qual técnica reduz draw calls e melhora performance?",a:"Batching (juntar múltiplas geometrias em uma única draw call)"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Fundamentos VR/AR e Unity',
+      points:[
+        'VR substitui 100% realidade (imersivo, 90fps, < 20ms latência para conforto)',
+        'AR sobrepõe digital em realidade (prático, em smartphone, 50%+ adoção)',
+        'Meta Quest 3 é melhor custo-benefício (~R$3k), Apple Vision Pro é futurista (~R$15k)',
+        'Unity é engine dominante (90% VR/AR) com suporte nativo a múltiplas plataformas'
+      ]
+    },
+    quizFinal:[
+      {q:"Qual é a principal causa de motion sickness em VR?",opts:["Movimento rápido da câmera","Desconexão olho (vê movimento) vs vestíbulo (não sente)","Muito verde nas cores","High latência é mínimo"],correct:1},
+      {q:"AR é mais adoptável que VR porque:",opts:["AR é mais barato","Smartphone tem ARKit/ARCore (50%+ adoção)","AR é mais imersivo","VR é muito pesado"],correct:1},
+      {q:"Performance crítica em VR precisa:",opts:["30 fps","60 fps","90+ fps","120 fps sempre"],correct:2}
+    ]
+  },
+  {
+    id:'rv_mod2',
+    name:'Desenvolvimento Avançado VR/AR e Metaverso',
+    free:false,
+    topics:[
+      {
+        id:4,
+        name:'WebXR: VR/AR na Web',
+        dur:'20 min',
+        content:`
+<h3>WebXR: Realidade na Web</h3>
+<p>WebXR permite criar experiências VR/AR diretamente no navegador. Sem instalação, sem download. Accesso via URL. Revolucionário para casual gaming e marketing.</p>
+
+<h4>O que é WebXR?</h4>
+<p>APIs JavaScript que acessam headset VR, controllers, sensores de AR — tudo no navegador.</p>
+<ul>
+<li>Suportado: Meta Quest, HTC Vive, PlayStation VR, alguns smartphones</li>
+<li>Compatibilidade: Chrome, Firefox, Safari (parcial)</li>
+<li>Uso: Gaming, educação, e-commerce, social</li>
+</ul>
+
+<h4>Stack Técnico WebXR</h4>
+<ul>
+<li><strong>Babylon.js:</strong> Engine web profissional, WebXR nativo excelente</li>
+<li><strong>Three.js:</strong> Outra engine web, mais comunidade</li>
+<li><strong>A-Frame:</strong> Abstração sobre Three.js, super simples</li>
+<li><strong>PlayCanvas:</strong> Cloud-based editor, deploy direto</li>
+</ul>
+
+<h4>Exemplo Simples com Babylon.js</h4>
+<blockquote class="example">
+<strong>💻 VR Scene em Babylon.js:</strong>
+<br>
+<br><code>
+const scene = new BABYLON.Scene(engine);
+<br>const xr = await scene.createDefaultXRExperienceAsync();
+<br>
+<br>// Criar cubo
+<br>const box = BABYLON.MeshBuilder.CreateBox("box", {}, scene);
+<br>box.position.z = 2;
+<br>
+<br>// Interação com mão
+<br>xr.pointerSelection.onPointerSelectObservable.add((event) => {
+<br>  box.rotate(BABYLON.Axis.Y, Math.PI / 4);
+<br>});
+<br>
+<br>// Enter VR
+<br>document.getElementById("enter-vr").onclick = () => xr.baseExperience.enterXRAsync();
+</code>
+<br>
+<br>Resultado: Cena VR com cubo interativo em 30 linhas!
+</blockquote>
+
+<h4>Casos de Uso WebXR</h4>
+<p><strong>E-commerce Virtual Showroom</strong></p>
+<ul>
+<li>Vestir roupa, testar móvel, ver carro em VR</li>
+<li>No navegador, sem app instalado</li>
+<li>Link compartilhado via email/social</li>
+</ul>
+
+<p><strong>Educação</strong></p>
+<ul>
+<li>Aula de anatomia: dissecção 3D em VR</li>
+<li>História: visitar ruínas de Pompeia</li>
+<li>Ciência: observar moléculas em 3D</li>
+</ul>
+
+<p><strong>Gaming Social</strong></p>
+<ul>
+<li>Multiplayer simples no navegador</li>
+<li>WebSocket para comunicação entre jogadores</li>
+<li>Casual, não hardcore</li>
+</ul>
+
+<h4>Desafios WebXR</h4>
+<ul>
+<li><strong>Performance:</strong> Web é mais lenta que nativo (Unity)</li>
+<li><strong>Compatibilidade:</strong> Nem todo headset suporta WebXR</li>
+<li><strong>Segurança:</strong> Acesso ao headset requer permissão explícita</li>
+<li><strong>Persistência:</strong> Dados em navegador são efêmeros</li>
+</ul>
+
+<h4>Futuro: WebXR é o Futuro</h4>
+<p>Razões:</p>
+<ul>
+<li>Sem instalação = acesso imediato</li>
+<li>Compatível com qualquer plataforma</li>
+<li>Atualizações automáticas</li>
+<li>Compartilhamento fácil (URL)</li>
+</ul>
+
+<blockquote class="tip">
+<strong>🚀 Predição (2028):</strong>
+<br>
+<br>50% de VR/AR casual será via WebXR
+<br>Gaming hardcore continua no Unity/Unreal
+<br>Metaverse social roda WebXR
+<br>Performance gap diminui com otimizações
+</blockquote>
+
+<p>Aprender WebXR agora posiciona você para próxima onda de experiências imersivas web.</p>
+        `,
+        cards:[
+          {q:"O que é WebXR?",a:"APIs JavaScript que acessam headset VR/AR no navegador, sem instalação"},
+          {q:"Qual é a vantagem de WebXR vs Unity/Unreal?",a:"Sem instalação, acesso via URL, compartilhamento fácil, atualizações automáticas"},
+          {q:"Qual engine web é recomendada para WebXR?",a:"Babylon.js (nativa WebXR excelente) ou Three.js (mais comunidade)"}
+        ]
+      },
+      {
+        id:5,
+        name:'Apple Vision Pro e Spatial Computing',
+        dur:'18 min',
+        content:`
+<h3>Apple Vision Pro: O Futuro Agora?</h3>
+<p>Apple Vision Pro (lançado 2023, ~R$15k) representa direção do futuro: AR como computador principal, não acessório. Spatial computing é termo que Apple usa.</p>
+
+<h4>Diferenças Vision Pro vs Quest 3</h4>
+<ul>
+<li><strong>Display:</strong> Micro OLED 4K vs LCD 1.8K (Vision Pro é 2x mais nítido)</li>
+<li><strong>Preço:</strong> R$15k vs R$2.5k (6x mais caro)</li>
+<li><strong>Foco:</strong> Produtividade (AR puro) vs Gaming (VR total)</li>
+<li><strong>Design:</strong> Óculos estilo vs headset pesado</li>
+<li><strong>Bateria:</strong> Externa (2h com cabo) vs integrada (2-3h)</li>
+</ul>
+
+<h4>Especificações Vision Pro</h4>
+<ul>
+<li><strong>Processador:</strong> Apple M2 + R1 (visão)</li>
+<li><strong>Tela:</strong> Micro OLED, ~4000ppi (impossível ver pixels)</li>
+<li><strong>Campo de Visão:</strong> 110°x96° (bom, não perfeito)</li>
+<li><strong>Eye Tracking:</strong> Rastreia olhos perfeitamente</li>
+<li><strong>Hand Tracking:</strong> Reconhece gestos de mão (sem controle físico)</li>
+<li><strong>Áudio:</strong> Spatial audio de 6 canais</li>
+</ul>
+
+<h4>visionOS: Sistema Operacional Espacial</h4>
+<p>Vision Pro roda visionOS (similar a iOS, mas 3D).</p>
+<blockquote class="example">
+<strong>🖥️ Workflow Vision Pro:</strong>
+<br>
+<br>1. Colocar headset
+<br>2. Ver seu quarto + apps flutuantes
+<br>3. Olhar para app (gaze), pinçar dedos (tap)
+<br>4. Arrastar windows, redimensionar, dispor espacialmente
+<br>5. FaceTime com outros usuários (seus avatares)
+<br>6. Trabalhar com múltiplas telas virtuais
+</blockquote>
+
+<h4>Aplicações Vision Pro</h4>
+<p><strong>Produtividade</strong></p>
+<ul>
+<li>8 telas virtuais ao mesmo tempo (vs 1-2 no Mac)</li>
+<li>Visita guiada em CAD (engenharia)</li>
+<li>Telepresença (reunião pareça real)</li>
+</ul>
+
+<p><strong>Media/Entertainment</strong></p>
+<ul>
+<li>Filmes em tela gigante</li>
+<li>Ambiente imersivo (em cinema, em floresta)</li>
+<li>Fotos 3D (câmera dupla captura)</li>
+</ul>
+
+<p><strong>Desporto</strong></p>
+<ul>
+<li>NBA+: Assistir jogo em 3D, seu quarto vira arena</li>
+<li>Treinar: Coach 3D guia seus movimentos</li>
+</ul>
+
+<h4>O Problema de Vision Pro</h4>
+<ul>
+<li><strong>Preço:</strong> R$15k é inacessível para maioria</li>
+<li><strong>Suor/Calor:</strong> Usá-lo por 2h é incômodo</li>
+<li><strong>Falta de Conteúdo:</strong> Poucos apps vs Quest ecosystem grande</li>
+<li><strong>Eye Strain:</strong> Tela próxima causa fadiga após horas</li>
+<li><strong>Bateria:</strong> 2h com cabo é impraticável</li>
+</ul>
+
+<h4>O Futuro de Spatial Computing</h4>
+<blockquote class="tip">
+<strong>🔮 Visão Apple 2028-2030:</strong>
+<br>
+<br>Preço cai para R$3-5k (acessível)
+<br>Integração com Mac/iPhone (seamless)
+<br>Bateria interna 6-8h
+<br>Design mais leve (como óculos normais)
+<br>Adoption: 5-10% de usuários Apple
+<br>
+<br>Vision Pro de hoje é iPhone 3G (primário). Muito bom, mas não mainstream ainda.
+</blockquote>
+
+<p>Apple está apostando que AR é computador do futuro. Se acertarem, Vision Pro é Gerações 1 de revolução.</p>
+        `,
+        cards:[
+          {q:"Qual é a principal diferença Vision Pro vs Quest 3?",a:"Vision Pro é AR puro (produtividade), Quest 3 é VR gaming; Vision Pro 2x mais nítido, 6x mais caro"},
+          {q:"Quanto tempo Vision Pro aguenta com bateria?",a:"2 horas com bateria externa conectada via cabo (limitação atual)"},
+          {q:"Qual é o maior desafio de Vision Pro para mainstream?",a:"Preço (R$15k), falta de conteúdo, design pesado para uso prolongado"}
+        ]
+      },
+      {
+        id:6,
+        name:'Metaverso: O Futuro Social Virtual',
+        dur:'18 min',
+        content:`
+<h3>Metaverso: Realidade Alternativa Persistente</h3>
+<p>Metaverso é universo virtual persistente onde você vive, trabalha, socializa com avatar. Nem totalmente realidade, nem totalmente jogo. Espaço digital paralelo.</p>
+
+<h4>Definição Precisa</h4>
+<p>Metaverso NÃO é:</p>
+<ul>
+<li>Apenas VR (pode ser 2D, mobile, web)</li>
+<li>Um único lugar (múltiplas "worlds" interoperáveis)</li>
+<li>Controlado por uma empresa (descentralizado idealmente)</li>
+</ul>
+
+<p>Metaverso É:</p>
+<ul>
+<li>Persistente (existe mesmo se você sai)</li>
+<li>Social (múltiplos usuários simultâneos)</li>
+<li>Economicamente viável (moeda, propriedade)</li>
+<li>Interoperável (avatar/itens movem entre worlds)</li>
+</ul>
+
+<h4>Exemplos Reais (Hoje)</h4>
+<p><strong>Roblox</strong></p>
+<ul>
+<li>300M+ usuários, maioria crianças</li>
+<li>User-generated experiences (qualquer um cria)</li>
+<li>Economia real: Robux convertido em dinheiro</li>
+<li>Mais como "sandbox multiplayer" que metaverso puro</li>
+</ul>
+
+<p><strong>Horizon Worlds (Meta)</strong></p>
+<ul>
+<li>Plataforma social VR owned by Meta</li>
+<li>Criar rooms, convites, avatares</li>
+<li>Luta: pouca adoção, ambiente meio vazio</li>
+<li>Meta já investiu $30B+ em metaverso (Reality Labs division)</li>
+</ul>
+
+<p><strong>Decentraland</strong></p>
+<ul>
+<li>Blockchain-based metaverso</li>
+<li>Propriedade de terra como NFT</li>
+<li>Economia MANA (token nativo)</li>
+<li>Mais experimental, menos mainstream</li>
+</ul>
+
+<p><strong>VRChat</strong></p>
+<ul>
+<li>Comunidade open, criador favorito</li>
+<li>Avatares customizáveis</li>
+<li>Sem economia nativa (usuários vendem itens fora-platform)</li>
+</ul>
+
+<h4>Economia Metaverso</h4>
+<blockquote class="example">
+<strong>💰 Exemplo Real: Venda de Terra em Decentraland</strong>
+<br>
+<br>2021 (Hype): Lote virtual vendido por $2.4M
+<br>2023 (Realidade): Mesmo lote oferecido por $500k (sem comprador)
+<br>
+<br>Bolha estouro, mas conceito permanece válido.
+</blockquote>
+
+<p><strong>Profissões Metaverso (hoje existentes):</strong></p>
+<ul>
+<li><strong>Avatar Designer:</strong> Cria avatares custom (R$500-5k por avatar)</li>
+<li><strong>Arquiteto Virtual:</strong> Desenha salas, eventos (Roblox, Decentraland)</li>
+<li><strong>Creator:</strong> Conteúdo em Roblox (alguns ganham R$100k+/ano)</li>
+<li><strong>Virtual Real Estate:</strong> Compra/vende propriedade virtual (arbitragem)</li>
+</ul>
+
+<h4>O Escéptico Case para Metaverso</h4>
+<blockquote class="quote">
+"Metaverso é hype until it isn't. Roblox (gaming social) é sucesso, Horizon Worlds é ghost town."
+</blockquote>
+
+<p>Realidade:</p>
+<ul>
+<li>User-generated metaverso (Roblox, Minecraft) funciona</li>
+<li>Empresa-controlled metaverso (Horizon) fracassa</li>
+<li>Gaming é porta de entrada (não produtividade)</li>
+<li>Adoption é lento, não explosivo</li>
+</ul>
+
+<h4>O Futuro Realista do Metaverso</h4>
+<blockquote class="tip">
+<strong>🔮 Previsão 2028-2030:</strong>
+<br>
+<br>Gaming metaverso cresce (Roblox +50% mais usuários)
+<br>Social metaverso (VRChat, Horizon) fica niche
+<br>Blockchain metaverso ainda experimental
+<br>Hybrid: jogos normais adicionam "social hub" em VR
+<br>
+<br>Mainstream adoção? 2030-2035, quando VR headset custa R$500.
+</blockquote>
+
+<p>Metaverso é real, mas não como hype prometeu. É evolução gradual de gaming social, não revolução de realidade.</p>
+        `,
+        cards:[
+          {q:"O que diferencia metaverso de game online?",a:"Metaverso é persistente (existe mesmo você offline), economia real, avatar permanente, interoperável"},
+          {q:"Qual metaverso é mais bem-sucedido hoje?",a:"Roblox (300M+ usuários) por ser user-generated; Horizon Worlds fracassa por ser empresa-controlled"},
+          {q:"Qual é profissão real em metaverso que paga bem?",a:"Avatar designer, arquiteto virtual, creator em Roblox (alguns ganham R$100k+/ano)"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: WebXR, Vision Pro e Metaverso',
+      points:[
+        'WebXR permite VR/AR no navegador sem instalação, compartilhamento via URL',
+        'Apple Vision Pro (R$15k) é futuro: spatial computing, Micro OLED, AR puro produtivo',
+        'Metaverso é gaming social persistente; Roblox sucesso, Horizon fracasso (empresa vs user-generated)',
+        'Profissões emergentes: avatar designer, arquiteto virtual, creator (R$100k+/ano possível)'
+      ]
+    },
+    quizFinal:[
+      {q:"WebXR é mais adoptável que Unity VR porque:",opts:["WebXR é mais bonito","Sem instalação, acesso via URL, atualizações automáticas","Unity é antigo","WebXR funciona em console"],correct:1},
+      {q:"Vision Pro funciona principalmente em qual modo?",opts:["VR puro","AR puro (ver seu quarto + aplicações)","Gaming","Educação"],correct:1},
+      {q:"Por que Roblox metaverso funciona mas Horizon Worlds não?",opts:["Preço","User-generated (Roblox) vs empresa-controlled (Horizon)","Melhor gráficos","Mais players no Horizon"],correct:1}
+    ]
+  },
+  {
+    id:'rv_mod3',
+    name:'Implementação Prática e Carreira em VR/AR',
+    free:false,
+    topics:[
+      {
+        id:7,
+        name:'Projeto: Game VR Completo em Unity',
+        dur:'20 min',
+        content:`
+<h3>Construindo Seu Primeiro Game VR</h3>
+<p>Vamos aprender por fazer. Construir um jogo VR simples em Unity mostra todos os conceitos: interação, física, feedback, otimização.</p>
+
+<h4>Conceito: Object Collection Game</h4>
+<p>Cena: Você em sala com objetos flutuando. Meta: Coletar objetos pegando com a mão, descartar aqueles que não precisa. Score baseado em acurácia.</p>
+
+<h4>Arquitetura do Projeto</h4>
+<blockquote class="example">
+<strong>📁 Estrutura:</strong>
+<br>
+<br>Assets/
+<br>  ├─ Prefabs/
+<br>  │  ├─ CollectibleObject.prefab
+<br>  │  └─ FloatingPlatform.prefab
+<br>  ├─ Scripts/
+<br>  │  ├─ GameManager.cs
+<br>  │  ├─ ObjectCollector.cs
+<br>  │  └─ ScoreUI.cs
+<br>  ├─ Models/ (3D meshes)
+<br>  ├─ Materials/ (texturas)
+<br>  └─ Scenes/
+<br>     └─ GameScene.unity
+</blockquote>
+
+<h4>Implementação Passo 1: Setup XR Rig</h4>
+<ul>
+<li>Criar novo Project, importar XR Plugin</li>
+<li>Adicionar XR Rig prefab (câmera + hands)</li>
+<li>Configurar hand tracking (Left/Right controllers)</li>
+<li>Testar no headset ou simulador</li>
+</ul>
+
+<h4>Implementação Passo 2: Collectible Object Script</h4>
+<blockquote class="example">
+<strong>💻 C# Script Simplificado:</strong>
+<br>
+<br><code>
+public class CollectibleObject : MonoBehaviour {
+<br>  public bool isCollected = false;
+<br>  private XRGrabInteractable grabInteractable;
+<br>
+<br>  void Start() {
+<br>    grabInteractable = GetComponent<XRGrabInteractable>();
+<br>    grabInteractable.selectEntered.AddListener(OnGrabbed);
+<br>  }
+<br>
+<br>  void OnGrabbed(SelectEnterEventArgs args) {
+<br>    isCollected = true;
+<br>    GameManager.instance.AddScore(10);
+<br>    Destroy(gameObject);  // sumir
+<br>  }
+<br>}
+</code>
+</blockquote>
+
+<h4>Implementação Passo 3: Game Manager</h4>
+<blockquote class="example">
+<strong>📋 Controlador Central:</strong>
+<br>
+<br><code>
+public class GameManager : MonoBehaviour {
+<br>  public static GameManager instance;
+<br>  private int score = 0;
+<br>
+<br>  void Awake() {
+<br>    if (instance == null) {
+<br>      instance = this;
+<br>    }
+<br>  }
+<br>
+<br>  public void AddScore(int points) {
+<br>    score += points;
+<br>    UpdateUI();
+<br>  }
+<br>
+<br>  public void GameOver() {
+<br>    Time.timeScale = 0;  // pause
+<br>    ShowGameOverUI();
+<br>  }
+<br>}
+</code>
+</blockquote>
+
+<h4>Implementação Passo 4: UI em Espaço 3D</h4>
+<p>UI em VR é diferente: não está em canto da tela, está flutuando no espaço.</p>
+<ul>
+<li>Canvas com renderMode "World Space"</li>
+<li>Score display 2m à frente do jogador</li>
+<li>Botões que você pode apontar e clicar com mão</li>
+</ul>
+
+<h4>Implementação Passo 5: Otimização para VR</h4>
+<p>Performance é vida em VR:</p>
+<ul>
+<li>Target 90fps (vs 60fps normais)</li>
+<li>Usar Level of Detail para objetos distantes</li>
+<li>Limite de objetos dinâmicos (máx 20 simultâneos)</li>
+<li>Shaders otimizados (evitar real-time shadows)</li>
+</ul>
+
+<blockquote class="tip">
+<strong>⚡ Checklist Performance VR:</strong>
+<br>
+<br>• Batching: 1-2 draw calls por frame (vs 50+)
+<br>• LOD ativa: modelo complexo perto, simples longe
+<br>• No shadow casters desnecessários
+<br>• Physics: sleep objects longe
+<br>• Profiler Unity: target < 11.1ms por frame (90fps)
+</blockquote>
+
+<h4>Build e Deploy</h4>
+<ul>
+<li>File → Build Settings</li>
+<li>Platform: Android (Meta Quest)</li>
+<li>Build type: Development (teste) ou Release (produção)</li>
+<li>Conectar headset via USB</li>
+<li>Deploy via ADB ou Unity Build</li>
+<li>5 minutos: seu game roda no headset!</li>
+</ul>
+
+<p>Construir VR é exatamente como game normal, mas com VR quirks (performance crítica, UI 3D, hand tracking). Prática leva a perfeição.</p>
+        `,
+        cards:[
+          {q:"Qual é frame rate obrigatório para VR confortável?",a:"90+ fps (vs 60 normais); exceeder ajuda (120fps é melhor)"},
+          {q:"Qual é a arquitetura mínima de um VR game?",a:"XR Rig + GameObjects + Scripts + UI 3D + Optimizações de Performance"},
+          {q:"Como otimizar draw calls em VR?",a:"Batching (juntar meshes), LOD (detalhe longe), evitar shadows desnecessários"}
+        ]
+      },
+      {
+        id:8,
+        name:'AR Mobile: App Prático em iPhone/Android',
+        dur:'20 min',
+        content:`
+<h3>Desenvolvendo App AR para Smartphone</h3>
+<p>AR mobile é mais acessível que VR (90% tem smartphone vs 2% tem headset). Vamos criar app AR simples com ARCore/ARKit.</p>
+
+<h4>Setup: ARCore vs ARKit</h4>
+<p><strong>ARKit (iOS/Apple):</strong></p>
+<ul>
+<li>Integrado ao iOS, nativo, melhor performance</li>
+<li>Suporta face tracking, objeto detection, body tracking</li>
+<li>Atualizações via iOS (sempre moderno)</li>
+</ul>
+
+<p><strong>ARCore (Android/Google):</strong></p>
+<ul>
+<li>Adicional, mas suportado por ~80% Android</li>
+<li>Funcionalidades similares a ARKit</li>
+<li>Mais fragmentação (variações de Android)</li>
+</ul>
+
+<p><strong>Para máxima compatibilidade: usar Unity com XR Plugin</strong></p>
+
+<h4>Projeto: Furniture Preview App</h4>
+<p>Usuário aponta câmera no quarto, clica, vê móvel 3D em tempo real. Pode rotacionar, mover, ver em seu espaço antes de comprar.</p>
+
+<blockquote class="example">
+<strong>📸 Fluxo:</strong>
+<br>
+<br>1. Usuário abre app
+<br>2. ARCore/ARKit detecta plano (chão, parede)
+<br>3. Usuário toca na tela
+<br>4. Modelo 3D aparece no local
+<br>5. Gestos: rotate (2 dedos), move (arrastar), scale (pinch)
+<br>6. Botão "Comprar" vai para loja
+</blockquote>
+
+<h4>Implementação em Unity</h4>
+<blockquote class="example">
+<strong>💻 Script AR Simplificado:</strong>
+<br>
+<br><code>
+public class ARFurnitureController : MonoBehaviour {
+<br>  public GameObject furniturePrefab;
+<br>  private GameObject placedObject;
+<br>  private ARRaycastManager raycastManager;
+<br>
+<br>  void Update() {
+<br>    if (Input.touchCount > 0) {
+<br>      Touch touch = Input.GetTouch(0);
+<br>      if (raycastManager.Raycast(touch.position,
+<br>          s_Hits, TrackableType.PlaneWithinPolygon)) {
+<br>
+<br>        Pose hitPose = s_Hits[0].pose;
+<br>        if (placedObject == null) {
+<br>          placedObject = Instantiate(furniturePrefab,
+<br>            hitPose.position, hitPose.rotation);
+<br>        }
+<br>      }
+<br>    }
+<br>  }
+<br>}
+</code>
+</blockquote>
+
+<h4>Face Filters (Snapchat, Instagram Style)</h4>
+<p>Usar ARKit face tracking para efeitos de rosto:</p>
+<ul>
+<li>Máscara 3D no rosto</li>
+<li>Animação baseado em expressão (abre boca → monstro abre boca)</li>
+<li>Efeitos cosméticos (maquiagem virtual)</li>
+</ul>
+
+<blockquote class="example">
+<strong>🎭 Face Filter em ARKit:</strong>
+<br>
+<br><code>
+if (faceAnchor != null) {
+<br>  // Faceanchor fornece: head rotation, eye blink, mouth openness
+<br>
+<br>  float mouthOpen = faceAnchor.blendShapes[ARBlendShapeLocation.MouthOpen];
+<br>
+<br>  if (mouthOpen > 0.5) {
+<br>    // User abre boca
+<br>    monsterMask.GetComponent<Animator>().SetBool("mouthOpen", true);
+<br>  }
+<br>}
+</code>
+</blockquote>
+
+<h4>Desafios AR Mobile</h4>
+<ul>
+<li><strong>Bateria:</strong> Câmera + GPU = drena bateria 2-3x rápido</li>
+<li><strong>Heat:</strong> Processamento pesado aquece telefone</li>
+<li><strong>Plano Detection:</strong> Demora 2-3 segundos para estabilizar</li>
+<li><strong>Lighting:</strong> Objeto 3D deve combinar iluminação real</li>
+</ul>
+
+<h4>Otimizações AR Mobile</h4>
+<ul>
+<li>LOD: Modelo 3D menos detalhado</li>
+<li>Resolução: Renderizar em 720p (vs 1080p)</li>
+<li>Frequency: Atualizar pose a cada 2 frames (vs 1)</li>
+<li>Shader: Custom shader otimizado (vs standard Unity)</li>
+</ul>
+
+<p>AR mobile é mais acessível que VR — ideal para começar carreira XR.</p>
+        `,
+        cards:[
+          {q:"Qual é a vantagem de ARKit vs ARCore?",a:"ARKit é nativo iOS (melhor performance), ARCore é adicional Android (mais fragmentação)"},
+          {q:"Qual é o desafio principal de AR mobile?",a:"Bateria (drena 2-3x rápido), heat (telefone aquece), plano detection (2-3seg de latência)"},
+          {q:"Como otimizar app AR mobile?",a:"LOD para modelos, rendererizar 720p vs 1080p, shader customizado, atualizar pose a cada 2 frames"}
+        ]
+      },
+      {
+        id:9,
+        name:'Carreira em VR/AR e Futuro Profissional',
+        dur:'20 min',
+        content:`
+<h3>Profissões do Futuro: VR/AR Developers</h3>
+<p>VR/AR é industria crescente com escassez crítica de talent. Oportunidades são enormes para quem aprende agora.</p>
+
+<h4>Roles Disponíveis (2026)</h4>
+<p><strong>VR Developer</strong></p>
+<ul>
+<li>Salário: $100-180k USD/ano (~R$500k-900k)</li>
+<li>Skill: Unity C#, XR, 3D math</li>
+<li>Empresas: Meta, Sony, HTC, Valve, startups</li>
+<li>Demanda: Alta (200+ jobs abertos agora)</li>
+</ul>
+
+<p><strong>AR Developer</strong></p>
+<ul>
+<li>Salário: $90-150k USD/ano</li>
+<li>Skill: ARKit/ARCore, mobile dev, UI/UX</li>
+<li>Empresas: Apple, Google, startups fashion/retail</li>
+<li>Demanda: Muito alta (500+ jobs)</li>
+</ul>
+
+<p><strong>XR Designer (3D/UX)</strong></p>
+<ul>
+<li>Salário: $80-140k USD/ano</li>
+<li>Skill: Blender/Maya, UX thinking, interaction design</li>
+<li>Empresas: Game studios, design firms, tech companies</li>
+<li>Demanda: Alta (precisa pessoas boas)</li>
+</ul>
+
+<p><strong>XR Architect/Technical Lead</strong></p>
+<ul>
+<li>Salário: $120-220k USD/ano</li>
+<li>Skill: 5+ anos experiência, performance expert, team lead</li>
+<li>Empresas: Meta, Apple, enterprise software</li>
+<li>Demanda: Critical (falta liderança)</li>
+</ul>
+
+<h4>Trilha de Carreira</h4>
+<blockquote class="tip">
+<strong>📈 Progressão Típica (3-5 anos):</strong>
+<br>
+<br>Year 1: Junior XR Dev (Unity, ARCore, R$200-300k)
+<br>Year 2-3: Mid-level (especialista em uma plataforma, R$400-600k)
+<br>Year 4-5: Senior (liderança técnica, multiplicador de força, R$800k+)
+<br>Year 5+: Staff/Principal (arquitetura, inovação, R$1M+)
+</blockquote>
+
+<h4>Habilidades Críticas (Ordem de Importância)</h4>
+<ol>
+<li><strong>Math + Physics:</strong> 3D transformations, quaternions, raycasts (70% do XR)</li>
+<li><strong>C# + Unity:</strong> Proficiente, boas práticas, debug</li>
+<li><strong>Performance:</strong> Profiler, optimization, GPU/CPU bottlenecks (VR-crítico)</li>
+<li><strong>3D Concepts:</strong> Entender meshes, materials, lighting</li>
+<li><strong>Game Design:</strong> Como fazer experiência boa (não técnico, mas importante)</li>
+<li><strong>Communication:</strong> Explicar conceitos complexos (subestimado)</li>
+</ol>
+
+<h4>Roadmap de Aprendizado (12-18 meses)</h4>
+<blockquote class="example">
+<strong>📚 Caminho ao Emprego VR:</strong>
+<br>
+<br><strong>Meses 0-3:</strong> Unity fundamentals, C#, 3D math
+<br>→ Projeto: Cubo rotativo com física
+<br>
+<br><strong>Meses 3-6:</strong> XR development, ARCore/ARKit
+<br>→ Projeto: App AR furniture preview (acima)
+<br>
+<br><strong>Meses 6-9:</strong> VR advanced, performance optimization
+<br>→ Projeto: VR game com 90fps+ garantido
+<br>
+<br><strong>Meses 9-12:</strong> Portfolio profissional + entrevistas
+<br>→ 3-5 projetos bem feitos no GitHub
+<br>→ Começar a aplicar para jobs
+<br>
+<br><strong>Months 12-18:</strong> Primeiro emprego, especialização
+<br>→ 2-3 ofertas realistas esperadas
+</blockquote>
+
+<h4>Oportunidades Especializadas</h4>
+<p><strong>VR Training/Simulation</strong></p>
+<ul>
+<li>Treinar pilotos, cirurgiões, militares</li>
+<li>Economia: 1 VR trainer = 10 instructores reais</li>
+<li>Salários: $120-200k (enterprise demand)</li>
+</ul>
+
+<p><strong>Metaverse Creator/Community Builder</strong></p>
+<ul>
+<li>Roblox developer (alguns ganham R$100k+/ano)</li>
+<li>Decentraland architect</li>
+<li>No código necessário, mais design + visão</li>
+</ul>
+
+<p><strong>WebXR Specialist</strong></p>
+<ul>
+<li>Babylon.js, Three.js expert</li>
+<li>Experiência web + VR/AR</li>
+<li>Emerging, high demand, R$150k+ potencial</li>
+</ul>
+
+<h4>Remote Work em VR/AR</h4>
+<p>Ótimas notícias: maioria de jobs VR/AR são 100% remote.</p>
+<ul>
+<li>Meta: Remoto, R$500-900k</li>
+<li>Startups: Remoto, salário variável mas oportunidade cria equity</li>
+<li>Freelance: $50-150/hora para consultorias</li>
+</ul>
+
+<h4>Investimento para Entrar</h4>
+<p>Custo mínimo:</p>
+<ul>
+<li>PC decent: R$3-5k (já tem?)</li>
+<li>Meta Quest 2/3: R$1.5-3k (necessário, reembolsável como "ferramenta")</li>
+<li>Cursos online: R$100-500</li>
+<li>Total: R$4-8k (se não tem PC)</li>
+</ul>
+
+<p>ROI é claro: primeiro job VR paga R$300k+ ao ano. Investimento se paga em 2-3 meses.</p>
+
+<h4>Motivação Final</h4>
+<blockquote class="quote">
+"VR/AR é ainda selvagem. Profissionais bons são escassos. Se você aprende agora, tem vantagem 5+ anos sobre a multidão. Futuro é construído por pioneiros."
+</blockquote>
+
+<p>Mercado de VR/AR está em explosão. Talento é gargalo. Você pode ser parte dessa revolução.</p>
+        `,
+        cards:[
+          {q:"Qual é salário de um VR Developer em 2026?",a:"$100-180k USD/ano (~R$500k-900k) com demanda alta"},
+          {q:"Quanto tempo para empregar em VR/AR?",a:"12-18 meses (3-6 mês fundamentals, 6-9 portfólio, 3-6 entrevistas)"},
+          {q:"Qual é o investimento mínimo para começar?",a:"PC ($3-5k se não tem) + Meta Quest ($1.5-3k) + cursos ($100-500) = $4-8k total"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Projetos e Carreira VR/AR',
+      points:[
+        'Game VR precisa 90fps, XR Rig, hand tracking, UI 3D, otimizações rigorosas',
+        'AR mobile é mais acessível: ARKit/ARCore, furniture preview popular case, bateria é desafio',
+        'Carreira VR/AR: $100-200k USD/ano, demanda alta, talent crítico escasso',
+        'Trilha: 3-6 mês fundamentos → 6-9 mês portfolio → 3-6 mês primeiro emprego'
+      ]
+    },
+    quizFinal:[
+      {q:"Qual é frame rate não-negociável em VR?",opts:["60fps","75fps","90+ fps","120fps sempre"],correct:2},
+      {q:"Salário VR Developer em 2026 é aproximadamente:",opts:["$50-80k","$100-180k","$200-300k","$400k+"],correct:1},
+      {q:"Tempo para empregar em VR/AR é:",opts:["3-6 meses","6-12 meses","12-18 meses","24+ meses"],correct:2}
+    ]
+  }
 ];
 </script>
 <script src="shared/course-engine.js"></script>
