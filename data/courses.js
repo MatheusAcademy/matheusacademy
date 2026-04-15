@@ -2913,24 +2913,24 @@ var MA_COURSES = [
     addedTs: 1776289816530,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/cn.jpg',
     id: 'cn',
-    name: 'Computação em Nuvem na Prática',
-    desc: 'Cloud computing, armazenamento, escalabilidade e infraestrutura moderna.',
+    name: 'Computação em Nuvem',
+    desc: 'Domine AWS, Azure, GCP. IaaS, PaaS, SaaS, containers, Kubernetes. Deploy escalável, serverless, microserviços. Infraestrutura moderna.',
     file: '25-computacao-nuvem.html',
     cat: 'Tecnologia',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'CN_HENRY_2026_MASTER',
+    salt: 'PREFIX_HENRY_2026_MASTER',
     ak: 'cn_auth',
     storagePrefix: 'cn_',
     icon: '💻',
     color: '#1565C0',
     free: true,
-    addedTs: 1776284545608,
+    addedTs: 1776289869089,
     active: true
   },
   {
