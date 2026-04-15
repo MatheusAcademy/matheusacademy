@@ -4,24 +4,342 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Computação em Nuvem — Matheus Academy</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="shared/course.css">
 </head>
 <body>
 <script>
-var COURSE = {id:'CN',name:'Computação em Nuvem na Prática',shortName:'Computação em Nuvem',cat:'Tecnologia e Inovação',desc:'Cloud computing, armazenamento, escalabilidade e infraestrutura moderna.',salt:'CN_HENRY_2026_MASTER',ak:'cn_auth',courseKey:'cn',prefix:'cn_',color:'#1565C0',glow:'rgba(21,101,192,.35)',free:true,freeModules:1,modules:3,topics:9,hours:3,quizzes:9};
+var COURSE = {
+  id: 'CN',
+  name: 'Computação em Nuvem',
+  shortName: 'Cloud',
+  cat: 'Tecnologia e Inovação',
+  desc: 'Domine AWS, Azure, GCP. IaaS, PaaS, SaaS, containers, Kubernetes. Deploy escalável, serverless, microserviços. Infraestrutura moderna.',
+  salt: 'PREFIX_HENRY_2026_MASTER',
+  ak: 'cn_auth',
+  courseKey: 'computacao-nuvem',
+  prefix: 'cn_',
+  color: '#1565C0',
+  glow: 0.35,
+  free: true,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
 var MODS = [
-  {id:'cn_mod1',name:'Fundamentos de Cloud Computing',free:true,topics:[1,2,3],summary:{title:'Resumo do Módulo 1: Fundamentos de Cloud Computing',points:['Cloud é computação sob demanda: pague apenas o que usa','IaaS, PaaS, SaaS são modelos diferentes de responsabilidade','Escalabilidade automática ajusta recursos conforme demanda','Distribuição global reduz latência e aumenta resiliência']},quizFinal:[{q:'O que significa "pagar conforme uso" em cloud?',opts:['Comprar licenças caras','Pagar apenas pelos recursos consumidos por hora/GB','Assinatura fixa mensal sempre','Não se paga nada'],correct:1},{q:'Qual é a diferença entre IaaS, PaaS e SaaS?',opts:['Não há diferença','IaaS = infraestrutura, PaaS = plataforma, SaaS = software pronto','SaaS é mais antigo','Nenhum é importante'],correct:1},{q:'O que permite escalabilidade automática em cloud?',opts:['Servidores inteligentes','Load balancers e orquestração de containers','Internet rápida','Nada, é só marketing'],correct:1}]},
-  {id:'cn_mod2',name:'Serviços e Provedores de Cloud',free:false,topics:[4,5,6],summary:{title:'Resumo do Módulo 2: Serviços e Provedores de Cloud',points:['AWS, Google Cloud, Azure dominam 80% do mercado','Bancos de dados na nuvem oferecem escalabilidade e confiabilidade','CDN e edge computing reduzem latência para usuários globais','Containerização com Docker revolucionou deployment de aplicações']},quizFinal:[{q:'Qual provedor tem maior market share em 2025-2026?',opts:['Google Cloud','AWS','Azure','Alibaba'],correct:1},{q:'O que é um container Docker?',opts:['Caixa para enviar código','Ambiente isolado com aplicação e dependências','Servidor virtual na nuvem','Nenhum desses'],correct:1},{q:'Por que CDN reduz latência?',opts:['Usa internet mais rápida','Copia conteúdo perto do usuário geograficamente','Comprime dados','Nenhuma razão real'],correct:1}]},
-  {id:'cn_mod3',name:'Arquitetura, Segurança e Otimização',free:false,topics:[7,8,9],summary:{title:'Resumo do Módulo 3: Arquitetura, Segurança e Otimização',points:['Microserviços substituem monolitos para melhor escalabilidade','Serverless elimina preocupação com servidores','Backup e disaster recovery garantem continuidade','Otimização de custos é prioridade contínua em operações']},quizFinal:[{q:'O que são Microserviços?',opts:['Serviços muito pequenos e lentos','Pequenas aplicações independentes que se comunicam','Antigo padrão de arquitetura','Não existem em cloud'],correct:1},{q:'O que é Serverless Computing?',opts:['Sem internet','Execute código sem gerenciar servidores','Não tem servidores de verdade','Apenas para pequenos projetos'],correct:1},{q:'Qual é o maior benefício de usar cloud para disaster recovery?',opts:['Garante que desastre não aconteça','Replicação automática e restore rápido em outro local','Não há benefício','É mais caro']},correct:1}]}
-];
-var TOPICS = [
-  {id:1,name:'O que é Cloud Computing',dur:'16 min',content:`<h3>Bem-vindo ao Futuro: Computação em Nuvem</h3><p>Olá! Estou extraordinariamente entusiasmado em começar este módulo que mudou o mundo inteiro: Computação em Nuvem! Se você ainda acha que tecnologia acontece em servidores embaixo da sua mesa, prepare-se para descobrir como 90% da internet moderna funciona.</p><p>Cloud Computing é o acesso sob demanda a recursos de computação — servidores, armazenamento, bancos de dados, software — entregues via internet. Você não compra, você aluga. Não gerencia, você paga e usa. É revolução!</p><p>Pense no Netflix. Você acha que Netflix tem servidores gigantescos em cada cidade? Não! Usa AWS (Amazon Web Services). Quando 200 milhões de pessoas estão assistindo simultaneamente, Netflix contrata mais computação da AWS. Quando pessoas dormem, reduz. Paga apenas pelo que usa. Economia: bilhões!</p><p>Antes de cloud (pré-2010), empresas compravam servidores caros. Dedicavam uma sala (data center). Contratavam pessoas para manutenção 24/7. Se demanda crescia, compravam mais servidores (meses de espera). Se demanda caía, servidores ficavam ociosos (dinheiro jogado fora). Era ineficiente!</p><p>Cloud mudou tudo com "elasticidade" — capacidade de crescer e diminuir automaticamente. Sua aplicação web recebe 1000 requisições por segundo? Cloud adiciona 10 servidores em 1 minuto. Demanda cai? Remove servidores. Você paga apenas pelos recursos usados, por hora ou até por segundo!</p><p>Modelos de cloud são três principais: IaaS (Infrastructure as a Service) — você aluga máquinas virtuais, storage, networking. Você gerencia SO, aplicações. Exemplo: EC2 da AWS. PaaS (Platform as a Service) — provedor fornece plataforma completa. Você apenas faz deploy de código. Exemplo: Heroku, Google App Engine. SaaS (Software as a Service) — software pronto na nuvem. Exemplo: Google Workspace, Microsoft 365, Salesforce.</p><p>IaaS é como alugar apartamento vazio — você traz tudo que precisa. PaaS é como alugar apartamento mobiliado — já tem o essencial, você apenas coloca suas coisas. SaaS é como hotel — tudo pronto, você usa!</p><p>Modelos de implementação: Nuvem Pública (AWS, Google Cloud, Azure — recursos compartilhados com outras empresas, mais barato), Nuvem Privada (servidores seu, apenas seu, mais caro mas seguro), Nuvem Híbrida (combina públicas e privadas).</p><p>Benefícios de cloud são imensos: Custo inicial zero (capital expenditure vira operational expenditure), escalabilidade automática, confiabilidade (múltiplas cópias em diferentes locais), performance (provedores têm infraestrutura otimizada), inovação (acesso a tecnologias de ponta sem investimento próprio), segurança (especialistas dedicados).</p><p>Em 2025-2026, a nuvem não é mais opcional — é mandatório. 90% de empresas usam pelo menos uma solução cloud. Startups nascem 100% na nuvem. O futuro de tecnologia é nuvem!</p><p>Provedores dominantes são: AWS (33% market share global, mais antigo e completo), Microsoft Azure (23%, integração com Windows/Office 360), Google Cloud (10%, força em dados e ML), e outros (Alibaba, Oracle Cloud, etc.).</p><p>Nota importante: AWS, Azure e Google Cloud cobram taxas bem pensadas. Você salva em infraestrutura, mas atenção: se não otimizar, conta pode explodir! Uma tabela com muitas operações no banco de dados pode custar milhares por mês. Por isso, engenheiros de cloud precisam ser eficientes!</p>`,cards:[{q:'Qual é a diferença fundamental entre comprar servidores e usar cloud?',a:'Cloud permite pagar apenas pelo que usa com escalabilidade automática, enquanto compra envolve custo fixo alto e rigidez de capacidade.'}]},
-  {id:2,name:'Serviços, Bancos de Dados e Armazenamento',dur:'18 min',content:`<h3>A Caixa de Ferramentas da Nuvem</h3><p>Cloud não é apenas "máquinas virtuais". É muito mais! Provedores oferecem centenas de serviços especializados. Você nem precisa fazer tudo — escolhe blocos pré-feitos!</p><p>COMPUTE (Processamento): Máquinas Virtuais (EC2 em AWS, Compute Engine em GCP, Virtual Machines em Azure) rodam SO e aplicações tradicionais. Containers (Docker) empacotam aplicações com dependências. Orquestração de containers (Kubernetes) gerencia múltiplos containers. Serverless/Functions (AWS Lambda, Google Cloud Functions) executam código sem gerenciar servidores — você escreve função, upload, e pronto!</p><p>ARMAZENAMENTO: Object Storage (S3 em AWS, Cloud Storage em GCP) armazena arquivos enormes (fotos, vídeos, logs) como "objetos". Escalável infinitamente. Block Storage (EBS em AWS) funciona como disco tradicional para máquinas virtuais. File Storage (EFS em AWS) é NFS na nuvem — múltiplas máquinas acessam compartilhado.</p><p>BANCOS DE DADOS: SQL tradicional (RDS em AWS roda MySQL, PostgreSQL, Oracle). NoSQL (DynamoDB em AWS, Firestore em GCP) para dados não-estruturados, escaláveis. Datawarehouses (Redshift em AWS, BigQuery em GCP) para analytics. Caches (ElastiCache, Memorystore) para performance ultra-rápida.</p><p>O grande diferencial é MANAGED SERVICES — você não gerencia! Provedor cuida de backups, patches, redundância, performance. Você apenas usa. Exemplo: RDS — você não toca no Linux, não instala MySQL, não faz backup. Apenas cria instância e usa. AWS faz resto!</p><p>NETWORKING: VPC (Virtual Private Cloud) cria rede isolada. Load Balancers distribuem tráfego entre servidores. DNS (Route 53 em AWS) traduz domínios em IPs. VPN permite conexão segura entre seu data center e nuvem. CDN (CloudFront em AWS, Cloud CDN em GCP) replica conteúdo globalmente para baixa latência.</p><p>CDN é genial! Imagine video no YouTube. Você em São Paulo faz request. Ao invés de vir do data center em Los Angeles (300ms latência), vem de um servidor em São Paulo da CDN (5ms). Tudo é transparente! CDN replica conteúdo automaticamente para edge locations próximas de usuários.</p><p>ANÁLISE E MACHINE LEARNING: Provedores oferecem data pipelines prontas (Google Cloud Dataflow), data lakes (AWS Lake Formation), e ML as a service (AWS SageMaker, Google Vertex AI) onde você não precisa ser especialista em ML — apenas dá dados e modelo é criado automaticamente!</p><p>SEGURANÇA: Firewalls, WAF (Web Application Firewall), DDoS Protection, Encryption (dados em repouso e em trânsito), Identity & Access Management (IAM) para controle fino de quem pode fazer o quê.</p><p>MONITORING E LOGGING: CloudWatch em AWS, Cloud Logging em GCP monitoram tudo — CPU, memória, disco, requisições. Alertas automáticos se algo fica errado. Você dorme tranquilo!</p><p>O desafio é VENDOR LOCK-IN — você constrói em AWS, código/arquitetura ficam específicos da AWS. Migrar para GCP é doloroso. Solução: usar abstração (Kubernetes é agnóstico, funciona em qualquer cloud), ou arquitetura multi-cloud (distribuir entre provedores).</p><p>CUSTO é tópico importantíssimo. Cloud parece barato (pague conforme usa), mas sem disciplina, explode! Uma máquina rodando 24/7 que poderia ficar 8 horas custa 3x mais. Um banco de dados oversized custa fortune. Otimização é contínua!</p><p>Reserved Instances (RI) e Savings Plans permitem comprometimento de 1-3 anos por 30-50% desconto. Spot Instances em AWS são máquinas ociosas do provedor vendidas com 90% desconto (risco: pode ser encerrada a qualquer momento). Use para workloads tolerantes a interrupção!</p>`,cards:[{q:'O que é um Managed Service e qual seu benefício?',a:'Serviço onde o provedor cuida de manutenção, backups e performance, você apenas usa — elimina overhead operacional.'}]},
-  {id:3,name:'Microserviços, Serverless e Otimização',dur:'17 min',content:`<h3>Arquitetura Moderna na Nuvem</h3><p>Conforme cloud evoluiu, padrões de arquitetura também evoluíram. Vamos explorar as estratégias que empresas modernas usam para máxima eficiência!</p><p>Historicamente, aplicações eram MONOLÍTICAS — uma aplicação gigante que faz tudo. Se parte precisava de atualização, toda aplicação era reimplementada. Problema: um bug em um pedaço derruba tudo. Um módulo precisa escalar (ex: payments)? Você escalava a aplicação inteira, desperdiçando recursos.</p><p>MICROSERVIÇOS revolucionou isso. Ao invés de uma aplicação gigante, múltiplas aplicações pequenas e independentes, cada uma responsável por uma função (Users Service, Payments Service, Orders Service). Se payments precisa escalar, escala apenas payments. Se há bug em orders, não afeta users.</p><p>Cada microserviço tem banco de dados próprio — "database per service". Evita acoplamento. Serviços se comunicam via APIs REST, gRPC ou message queues (RabbitMQ, Kafka).</p><p>Benefício: Time pequeno pode gerenciar um serviço. Escalabilidade granular. Resiliência (falha de um não derruba todos). Deployment independente — você faz deploy do Payments Service sem tocar em Order Service!</p><p>Desafio: Complexidade aumenta. Monitorar 100 microserviços é mais difícil que monitorar 1 monolito. Debugging é complicado (requisição passa por 5 serviços, onde erro?). Consistência de dados é desafio (cada um tem banco próprio).</p><p>CONTAINERS (Docker) são chave para microserviços. Docker empacota aplicação + dependências em imagem. Imagem é garantia: funciona em dev, funciona em produção, funciona em qualquer nuvem. Eliminam "funciona na minha máquina mas não no servidor"!</p><p>ORCHESTRAÇÃO de containers é gerenciamento de muitos containers. Kubernetes (k8s) é padrão de ouro. Você descreve quantas replicas de cada container quer rodar, Kubernetes garante isso. Serviço está lento? Kubernetes adiciona replicas. Servidor cai? Kubernetes move containers para outro. Tudo automático!</p><p>AWS oferece ECS (mais simples), GCP oferece GKE (Kubernetes gerenciado), Azure oferece AKS. Todas abstraem complexidade de gerenciar Kubernetes manualmente.</p><p>SERVERLESS (Functions-as-a-Service) elimina preocupação com servidores completamente. AWS Lambda: você faz upload de função Python/Node/Java/Go, define trigger (API request, evento de banco de dados, etc.), e pronto! Função executa quando precisa. Você não gerencia nada. Não precisa pensar em escalabilidade — Cloud cuida automaticamente.</p><p>Custo é baseado em execuções. Se função não é chamada, não custa nada. Perfeito para padrões event-driven, onde coisas acontecem raramente mas precisam responder rápido quando acontecem!</p><p>Limitação: "cold start" — primeira execução após período inativo pode ter latência (2-3 segundos enquanto Cloud aloca container). Para latências críticas (< 10ms), serverless não é ideal. Mas para maioria de casos, é revolucionário!</p><p>EVENT-DRIVEN architecture é padrão moderno. Ao invés de polling (verificar a cada segundo se algo mudou), coisas disparam eventos. Usuário compra produto → evento "order.created" → múltiplos serviços reagem (charge payment, update inventory, send confirmation email, etc.) — tudo automático em paralelo!</p><p>Message Queues (Kafka, RabbitMQ) são essenciais. Se serviço A envia mensagem para B mas B está fora, mensagem fica na fila até B voltar. Garante "at least once" delivery — ninguém perde trabalho!</p><p>OBSERVABILIDADE é crítico em arquitetura complexa. Three Pillars: Metrics (números — CPU, requisições por segundo), Logs (eventos — user logged in, error occurred), Traces (caminhos — requisição passou por services A → B → C). Ferramentas: Datadog, New Relic, Elastic Stack monitoram tudo.</p><p>OTIMIZAÇÃO DE CUSTOS é processo contínuo. Checklist: 1) Remove recursos não-usados (máquinas paradas custam), 2) Right-size (máquinas muito poderosas para carga atual), 3) Use spot instances (90% desconto!), 4) Auto-scaling (sobe/desce conforme demanda), 5) Use managed services (serverless é mais barato que EC2 para workloads variáveis).</p><p>Conclusão: Cloud moderno é combinação de microserviços, containers, orchestração (Kubernetes), serverless, event-driven architecture, e observabilidade. Dominar esses permite construir sistemas escaláveis, resilientes e econômicos que sustentam aplicações de bilhões de usuários!</p>`,cards:[{q:'Qual é a diferença entre arquitetura monolítica e microserviços?',a:'Monolítica é uma aplicação gigante que faz tudo; microserviços são serviços pequenos e independentes, escaláveis e mantíveis separadamente.'}]},
-  {id:4,name:'Docker, Containers e Kubernetes',dur:'16 min',content:`<h3>Containerização: A Revolução de Deployment</h3><p>Antes de containers, deployment era dor. "Funciona no meu laptop" mas falha no servidor de produção — dependências diferentes, versões diferentes, bibliotecas faltando. Pesadelo!</p><p>Docker resolveu isso com containers. Container é como máquina virtual leve — sistema operacional isolado, aplicação, todas as dependências encapsuladas. Imagem Docker é blueprint, container é instância rodando.</p><p>Imagem é construída em layers (camadas). Cada instrução no Dockerfile (arquivo de receita) cria camada. Base OS (Ubuntu), instala Python, instala dependencies, copia código. Resultado: imagem que pesa 500MB, roda em qualquer lugar (laptop, servidor, nuvem).</p><p>Dockerfile exemplo: "FROM ubuntu:20.04 / RUN apt install python3 / COPY app.py / CMD python app.py". Pronto! Imagem! Docker build → Docker run em qualquer máquina com Docker instalado.</p><p>Benefícios de containers: Portabilidade (rodar em dev, staging, produção idêntico), Isolamento (container não interfere em outro), Eficiência (lighter que VMs), Escalabilidade (subir 1000 containers em minutos), Reprodutibilidade (mesmo ambiente sempre).</p><p>Container registry (Docker Hub, ECR da AWS) armazena imagens. Você faz push de imagem, qualquer um faz pull e roda. Colaboração!</p><p>KUBERNETES é orquestrador de containers — gerencia centenas de containers automaticamente. Você descreve estado desejado ("quero 10 réplicas dessa app"), Kubernetes faz acontecer. App lenta? Kubernetes adiciona mais replicas. Servidor cai? Kubernetes move containers para outro servidor.</p><p>Pods em Kubernetes são unidades menores — um ou mais containers intimamente conectados. Você não gerencia containers, gerencia pods!</p><p>Services em Kubernetes expõem pods para tráfego. Há 10 replicas de sua app, mas qual usar? Service balanceia carga automaticamente. Um cliente conecta ao service, é roteado para pod menos ocupado.</p><p>Deployments descrevem aplicação. "Quero nginx:1.24, 5 replicas, update strategy rolling (substitui uma de cada vez)". Kubernetes garante.</p><p>ConfigMaps e Secrets armazenam configuração. ConfigMap para dados não-sensíveis (variáveis de ambiente), Secrets para senhas/tokens (armazenados encriptados).</p><p>StatefulSets para aplicações com estado (banco de dados, cache). Diferente de Stateless (web apps), StatefulSet garante identidade persistente — mesmo pod tem mesmo storage.</p><p>Helm é "package manager" de Kubernetes. Você não quer escrever YAML para deployments de zero. Helm charts encapsulam: Deployment, Service, ConfigMap, etc. Um comando: helm install WordPress, tudo é deployado!</p><p>Desafio: Kubernetes tem curva de aprendizado. Conceitos: namespaces, labels, selectors, ingress, network policies. Mas dominando, você consegue orquestrar aplicações complexas com facilidade!</p>`,cards:[{q:'Por que containers resolvem o problema "funciona na minha máquina"?',a:'Container encapsula aplicação + todas as dependências em imagem que roda identicamente em qualquer máquina com Docker, eliminando variabilidade de ambiente.'}]},
-  {id:5,name:'Segurança em Nuvem e Conformidade',dur:'17 min',content:`<h3>Guardando o Castelo: Segurança em Cloud</h3><p>Cloud oferece escalabilidade, mas com grande poder vem grande responsabilidade — sua segurança! Provedores cuidam de infraestrutura, você cuida de aplicação e dados.</p><p>Modelo de responsabilidade compartilhada (Shared Responsibility Model) é crítico entender. AWS cuida: infraestrutura física, rede, hipervisor. Você cuida: IAM (quem tem acesso), encriptação de dados, patches de aplicação, configuração segura.</p><p>IAM (Identity and Access Management) controla quem faz o quê. Princípio: menor privilégio! Desenvolvedor não precisa acessar dados sensíveis. Aplicação não precisa acessar secretos de outra app. Granular!</p><p>Roles em IAM definem permissões. "Developer" pode deployar código, acessar dev databases, NÃO pode acessar prod ou deletar recursos. "DevOps" pode tudo. "Auditor" apenas pode ler.</p><p>MFA (Multi-Factor Authentication) é OBRIGATÓRIO para contas cloud críticas! Se hackeado, senha roubada, conta ainda é segura com MFA. AWS root account deve ter MFA!</p><p>Encriptação em repouso (arquivos armazenados) e em trânsito (dados viajando) é essencial. Banco de dados deve usar encriptação KMS (Key Management Service). TLS/SSL para todas as conexões (HTTPS).</p><p>Key Management é desafio. Senhas de db, API keys, tokens — como guardar seguro? Soluções: AWS Secrets Manager, HashiCorp Vault, Google Secret Manager. Nunca hardcode secrets em código!</p><p>VPC (Virtual Private Cloud) isola sua infraestrutura. Você cria rede privada, subnets, security groups. Traffic só entra/sai conforme regras. Como firewall virtual!</p><p>Security Groups são firewalls em nível de instance. "Porta 443 (HTTPS) aceita de qualquer lugar, SSH apenas de meu IP, RDS port 5432 apenas de App security group". Granular!</p><p>Network ACLs (Access Control Lists) são layer adicional. "Bloqueie país inteiro para compliance". Estateful (conexão aprovada, response é permitida) ou stateless.</p><p>DDoS protection vem built-in (AWS Shield Standard), ou paga mais por DDoS mitigation avançado. Cloudflare, Akamai também oferecem.</p><p>Logging e Auditing: CloudTrail (AWS) registra TUDO — quem logou, que recursos foram acessados, que mudanças foram feitas. Essencial para compliance e debugging!</p><p>Conformidade é grande — HIPAA (healthcare), PCI-DSS (payment cards), GDPR (privacy EU), LGPD (privacy Brasil). Provedores ajudam mas você é responsável final! AWS oferece "compliance packages" documentação.</p><p>Penetration Testing: Você pode contratar profissionais para "atacar" sua nuvem. Encontram vulnerabilidades, você fixa, sistema fica mais seguro. Bem-vindo!</p>`,cards:[{q:'O que é Modelo de Responsabilidade Compartilhada em cloud?',a:'Provedor cuida de infraestrutura física e rede, você cuida de IAM, encriptação, patches de aplicação e configuração segura.'}]},
-  {id:6,name:'Otimização de Custos e Monitoramento',dur:'16 min',content:`<h3>Vigiando os Gastos: Custo e Performance na Nuvem</h3><p>Cloud é "pague conforme use" — beleza? Só se souber quanto está usando! Sem monitoramento, Bills podem explodir. Netflix encontrou bug que custava 10 milhões/mês sem saber! Monitoramento importa!</p><p>CloudWatch (AWS) ou Stackdriver (GCP) monitoram tudo: CPU, memória, disk, network, requests. Dashboards visuais mostram saúde em tempo real. Alertas avisam se alguma coisa está errada.</p><p>Métricas importantes: Cost (quanto custa), Latency (quão rápido), Availability (uptime %), Error Rate (% de falhas). SLA (Service Level Agreement) define: "99.99% uptime", "< 100ms latency". Você monitora para garantir!</p><p>Estimativas de custo antes de deploy ajudam! "EC2 t3.medium custa 0.0416 USD/hour, se roda 24/7 é 300 USD/mês por instância". AWS Pricing Calculator ajuda. Calcule antes, surpresa evitada!</p><p>Otimização tática: Reserved Instances (RI) — compra 1 ou 3 anos de EC2 com desconto 40-50%. Se workload é previsível, RI economiza muito! Spot Instances — máquinas ociosas do provedor com desconto 90%, risco: encerram sem aviso (use para non-critical workloads).</p><p>Rightsizing: Rodar t3.xlarge quando t3.small funciona? Downsizeie! Rodar 24/7 quando pico é 6-22h? Use auto-scaling, downsize à noite. Ganhos: 30-50% redução de custo!</p><p>Unused resources custam! EBS volumes não-attachados? Delete. Elastic IPs não-usadas? Release. Snapshots velhos? Remove. CloudTrail logs do 2023? Archive para S3 Glacier (99% mais barato).</p><p>Multi-region é caro! Replicar em 3 regiões é 3x o custo. Apenas replique o essencial (dados críticos), redirecione traffic para região closest (latência menor, custo menor).</p><p>Networking custa! Data transfer out de nuvem é caro (tipicamente 0.09 USD/GB). Keep data local, minimize egress. CDN (CloudFront) custa menos que transferência bruta.</p><p>Custo compartilhado é desafio. Qual time pagou esse servidor? "Show-back" (bill back aos times) alinha incentivos. Time vê custo, otimiza!</p><p>Reserved Capacity em bancos de dados ajuda também. RDS Reserved Instances, DynamoDB Provisioned Capacity têm descontos grandes.</p><p>Tendência: FinOps (Financial Operations) — disciplina de gerenciar custos cloud. Roles dedicados ("FinOps Lead") monitoram, otimizam, educam. Grandes orgs economizam 30-40% com FinOps!</p><p>Dica final: Automatize cleanup! Lambda diário que deleta recursos antigas, desliga instâncias idle à noite. Economia passiva!</p>`,cards:[{q:'Qual é a melhor estratégia para reduzir custos em cloud sem comprometer performance?',a:'Combinação de: Reserved Instances (1-3 anos desconto), rightsizing (máquinas certas), Auto-scaling (sobe/desce), e eliminar recursos não-usados.'}]}
+  {
+    id: 'cn_mod1',
+    name: 'Fundamentos de Cloud Computing: IaaS, PaaS, SaaS',
+    free: true,
+    topics: [
+      {
+        id: 1,
+        name: 'Modelos de Serviço em Nuvem',
+        dur: '18 min',
+        content: `
+        <h3>Computação em Nuvem: Transformação Digital</h3>
+        <p>Computação em nuvem mudou como empresas de todos tamanhos executam TI. Não precisa mais datacenters próprios, servidores físicos, eletricidade, cooling, suporte 24/7. Pay-as-you-go: pague apenas pelo que usa, escale com demanda. Três gigantes dominam: AWS (50%+ mercado), Microsoft Azure, Google Cloud Platform.</p>
+
+        <h4>IaaS (Infrastructure as a Service)</h4>
+        <p>Aluga infraestrutura em bruto: computadores (VMs), armazenamento (discos), rede. Você gerencia SO, runtime, aplicação. Provedor gerencia hardware físico, power, cooling, segurança física.</p>
+
+        <p><strong>Exemplos:</strong> AWS EC2 (máquinas virtuais), Azure VMs, Google Compute Engine.</p>
+
+        <p><strong>Caso de Uso:</strong> Aplicação web que precisa escalar. Nas primeiras horas você tem 10 requisições/seg, uso 1 servidor. Às 5 PM, pico: 100 req/seg, você provisiona 10 servidores automaticamente. À noite volta a 1 servidor. Paga apenas pelo tempo de uso. Data center próprio teria que comprar 10 servidores mesmo que uso máximo fosse raríssimo.</p>
+
+        <p><strong>Vantagens IaaS:</strong> Flexibilidade total, paga apenas pelo que usa, escala rápida, sem CAPEX (capital expenditure, buy hardware).</p>
+
+        <p><strong>Desvantagens:</strong> Mais responsabilidade (você gerencia updates, segurança SO, etc), mais complexo.</p>
+
+        <blockquote class="example">
+          <strong>📌 Exemplo:</strong> Startup de IA treina modelos em dados massivos. Precisa 1000 GPUs por 10 horas. Comprar: $10M investimento inicial, obsoleto em 2 anos. AWS: $5k por run. Espaço gasto zero (on-demand). Startup viável com nuvem.
+        </blockquote>
+
+        <h4>PaaS (Platform as a Service)</h4>
+        <p>Plataforma de desenvolvimento completa. Você escreve código, plataforma cuida do resto: deployment, escalação, banco dados, segurança. Menos controle que IaaS, menos trabalho.</p>
+
+        <p><strong>Exemplos:</strong> Heroku (deploy apps facilmente), Firebase (backend mobile), AWS Elastic Beanstalk, Google App Engine.</p>
+
+        <p><strong>Caso de Uso:</strong> Startup de 3 desenvolvedores quer lançar MVP rapidamente. Heroku: git push e app está em produção. Autoscaling automático. SSL certificado. Sem ops team. IaaS equivalente requereria 2+ engenheiros devops.</p>
+
+        <p><strong>Vantagens PaaS:</strong> Foca em código, não ops. Deploy rápido, escalação automática, managed databases, segurança.</p>
+
+        <p><strong>Desvantagens:</strong> Menos flexibilidade (preso ao stack da plataforma), pode ser mais caro em escala.</p>
+
+        <h4>SaaS (Software as a Service)</h4>
+        <p>Aplicação completa rodando na nuvem. Você apenas usa. Nada para instalar ou manter.</p>
+
+        <p><strong>Exemplos:</strong> Google Workspace (Gmail, Docs, Sheets), Salesforce (CRM), Slack (messaging), Notion (docs), Zoom (videoconferência).</p>
+
+        <p><strong>Vantagem:</strong> Acesso universal (qualquer dispositivo, qualquer lugar), sempre atualizado, suporte incluído, colaboração integrada.</p>
+
+        <p><strong>Desvantagem:</strong> Sem customização profunda, dados em servidor alheio (confiança requerida), possível vendor lock-in.</p>
+
+        <h4>Comparação: On-Premise vs Cloud</h4>
+        <p><strong>On-Premise (Tradicional):</strong> Você compra e gerencia tudo. Alto CAPEX inicial, flexibilidade total, latência potencialmente menor (dados próximos), conformidade regulatória total control.</p>
+
+        <p><strong>Cloud:</strong> Aluga infraestrutura/plataforma/software. Baixo CAPEX, OPEX flexível (pay-as-you-go), elasticidade automática, menos ops overhead.</p>
+
+        <p><strong>Hybrid Cloud:</strong> Mistura: dados sensíveis on-premise, workloads elásticos em cloud. Melhor dos dois mundos, mais complexo.</p>
+
+        <h4>Providers Principais</h4>
+        <p><strong>AWS (Amazon Web Services):</strong> Líder de mercado. Maior variedade de serviços (200+). EC2 (VMs), S3 (armazenamento), RDS (banco dados managed), Lambda (serverless), etc. Mais complexo, documentação excelente.</p>
+
+        <p><strong>Microsoft Azure:</strong> Força em integração com ecosystem Microsoft (Office, SQL Server, .NET). Forte em enterprise. Melhor para clientes já no ecosistema Microsoft.</p>
+
+        <p><strong>Google Cloud Platform (GCP):</strong> Força em dados (BigQuery, Dataflow) e IA/ML. Melhor interface user experience, preços competitivos. Terceiro maior, mas crescendo.</p>
+
+        <p><strong>Outros:</strong> IBM Cloud, Oracle Cloud, DigitalOcean (simplista), Linode (VPS simples).</p>
+
+        <h4>Custos em Nuvem</h4>
+        <p>Cloud é "OPEX não CAPEX": em vez de comprar servidor (CAPEX), você aluga por hora/mês (OPEX). Aparentemente barato, mas pode explodir:</p>
+
+        <ul>
+          <li><strong>Compute:</strong> Máquinas VM não usadas rodando. Sempre desligar.</li>
+          <li><strong>Storage:</strong> Backup antigo esquecido. Limpar dados desnecessários.</li>
+          <li><strong>Data Transfer:</strong> Transferência entre regiões é cara. Manter dados na mesma região.</li>
+          <li><strong>Databases:</strong> Queries ineficientes. Otimize índices.</li>
+          <li><strong>Managed Services:</strong> Parecem baratos por hora, mas rodando 24/7 acumula. Reserved instances/commitments economizam 50%+.</li>
+        </ul>
+
+        <blockquote class="tip">
+          <strong>💡 Dica:</strong> Sempre use cost calculators antes de provisionar. AWS Pricing Calculator, Azure Cost Calculator, GCP Pricing Calculator estimam gastos. Depois, ative cost alerts e audit mensal.
+        </blockquote>
+
+        <p>Neste segmento, você entende trade-offs de cada modelo. Próximo: aprofundamento em tecnologias específicas!</p>
+        `,
+        cards: [
+          { q: "Qual é a principal diferença entre IaaS, PaaS e SaaS?", a: "IaaS: você gerencia aplicação+runtime, provedor gerencia infra. PaaS: você gerencia código, provedor gerencia resto. SaaS: você apenas usa aplicação completa." },
+          { q: "Quando usar IaaS vs PaaS?", a: "IaaS: máxima flexibilidade, controle total, mais ops trabalho. PaaS: deploy rápido, menos ops, menos flexibilidade. Escolha conforme necessidade." },
+          { q: "Por que cloud é mais barato que on-premise para startups?", a: "Pay-as-you-go elimina CAPEX gigante. Escala automática economiza em picos. No CAPEX, seria necessário overprovisioning." }
+        ]
+      },
+      {
+        id: 2,
+        name: 'Containers, Docker e Orquestração',
+        dur: '20 min',
+        content: `
+        <h3>Containerização: Executáveis Portáveis</h3>
+        <p>Problema tradicional: "Funciona na minha máquina, mas não no servidor." Ambientes diferentes causam incompatibilidade. Solução: Docker containers empacotam aplicação + dependências + runtime em pacote executável. "Build once, run anywhere".</p>
+
+        <h4>Docker: Containerização em Escala</h4>
+        <p>Container é isolamento leve de processo. Diferente de máquina virtual (que virtualiza SO inteiro), container compartilha kernel do host, é muito mais rápido e leve.</p>
+
+        <p><strong>Conceitos:</strong></p>
+        <ul>
+          <li><strong>Image:</strong> Template executável. Contém código, dependências, ambiente. Imutável.</li>
+          <li><strong>Container:</strong> Instância em execução de uma image. Múltiplos containers podem rodar da mesma image.</li>
+          <li><strong>Dockerfile:</strong> Receita que descreve como construir image. Especifica base image (ex: python:3.11), instala dependências, copia código.</li>
+          <li><strong>Registry:</strong> Repositório de images. Docker Hub é público (milhões de images), você também pode ter privado (ECR na AWS, ACR na Azure).</li>
+        </ul>
+
+        <p><strong>Vantagens:</strong> Consistência entre dev/prod, deployment rápido (segundos), escalação horizontal trivial, isolamento de processos.</p>
+
+        <p><strong>Exemplo Dockerfile simples:</strong></p>
+        <blockquote class="example">
+          FROM python:3.11<br>
+          WORKDIR /app<br>
+          COPY requirements.txt .<br>
+          RUN pip install -r requirements.txt<br>
+          COPY . .<br>
+          CMD ["python", "app.py"]
+        </blockquote>
+
+        <p>Resultado: image que pode rodar em qualquer máquina com Docker, sem instalar Python manualmente.</p>
+
+        <h4>Kubernetes: Orquestração de Containers</h4>
+        <p>Docker resolve portabilidade. Kubernetes resolve orquestração: como gerenciar centenas/milhares de containers distribuídos em múltiplos nós (máquinas)? Autoscaling, load balancing, rolling updates, secret management.</p>
+
+        <p><strong>Componentes Kubernetes:</strong></p>
+        <ul>
+          <li><strong>Pod:</strong> Unidade mínima, wraps 1+ container. Geralmente 1 container por pod.</li>
+          <li><strong>Service:</strong> Rede estável para pod (IP pode mudar, service fornece DNS estável). Load balancer interno.</li>
+          <li><strong>Deployment:</strong> Descreve replicação desejada (ex: "sempre 3 replicas desta aplicação"). Kubernetes garante isso, reestartando se crashes.</li>
+          <li><strong>ConfigMap:</strong> Variáveis de ambiente, não secrets, para config não-sensível.</li>
+          <li><strong>Secret:</strong> Dados sensíveis (passwords, tokens, chaves). Encriptado em repouso.</li>
+          <li><strong>PersistentVolume:</strong> Storage que sobrevive a Pod crash/restart.</li>
+          <li><strong>Ingress:</strong> Roteamento HTTP externo para serviços internos. Um ponto de entrada.</li>
+        </ul>
+
+        <p><strong>YAML Deployment Exemplo:</strong> Você descreve desejo em YAML (declarativo). Kubernetes observa estado atual, toma ações para atingir desejo.</p>
+
+        <blockquote class="example">
+          <strong>📌 Cenário:</strong> Seu app recebe 10x mais tráfego subitamente. Kubernetes detecta CPU/memória alta, automaticamente scale up replicas de 3 para 30. Novo tráfego distribui. Depois, demanda cai, scale down para 3. Sem intervenção manual. Em on-premise, você estaria franticamente provisionando servidores!
+        </blockquote>
+
+        <h4>Managed Kubernetes Services</h4>
+        <p>Kubernetes é poderoso mas complexo. Providers oferecem versões managed: você fornece container, eles gerenciam cluster.</p>
+
+        <p><strong>AWS EKS:</strong> Elastic Kubernetes Service. AWS gerencia control plane, você gerencia worker nodes (ou deixa auto-scale).</p>
+
+        <p><strong>Azure AKS:</strong> Azure Kubernetes Service. Análogo ao EKS.</p>
+
+        <p><strong>Google GKE:</strong> Google Kubernetes Engine. Mais maduro, integração melhor com GCP.</p>
+
+        <p><strong>Alternativas:</strong> Docker Swarm (simpler, menos powerful), serverless/FaaS (ainda mais abstrato, Lambda/Cloud Functions/Cloud Run).</p>
+
+        <h4>Serverless/FaaS (Function as a Service)</h4>
+        <p>Abstração além de containers. Você fornece função (ex: Python function), plataforma escala/executa por você. Sem gerenciar infra, nem containers, nem Kubernetes.</p>
+
+        <p><strong>Exemplos:</strong> AWS Lambda, Google Cloud Functions, Azure Functions, Heroku Dynos.</p>
+
+        <p><strong>Caso de Uso:</strong> Microserviço simples que responde a evento (webhook, file upload, scheduled task). Lambda: pay per execution (milissegundos), escala automática instantaneamente, não precisa manter warm.</p>
+
+        <p><strong>Limitações:</strong> Timeout (Lambda = 15 min max), sem state local persistente (não pode guardar session em disk), cold start delay (primeiro invoke após inatividade é lento).</p>
+
+        <blockquote class="tip">
+          <strong>💡 Escolha:</strong> Monolith → Containers (Docker) → Orquestração (Kubernetes) → Serverless. Complexidade aumenta, mas elasticidade e custo optimization melhora. Escolha baseado em escala e complexidade.
+        </blockquote>
+
+        <p>Neste tópico, você dominou containerização moderna. Próximo: deployment patterns e ci/cd!</p>
+        `,
+        cards: [
+          { q: "Qual é a diferença entre container e máquina virtual?", a: "Máquina virtual virtualiza SO inteiro (gigabytes). Container compartilha kernel host, é leve (megabytes), inicia em milissegundos." },
+          { q: "Por que Dockerfile/Docker é revolucionário?", a: "Empacota code+dependências+runtime em imagem executável. 'Build once, run anywhere'. Resolve 'funciona em minha máquina' para sempre." },
+          { q: "O que Kubernetes resolve que Docker não?", a: "Docker resolve portabilidade. Kubernetes resolve orquestração: como escalar 1000 containers em 100 máquinas, com health checks, load balancing, updates automáticas." }
+        ]
+      },
+      {
+        id: 3,
+        name: 'AWS Essentials: Serviços Críticos',
+        dur: '22 min',
+        content: `
+        <h3>AWS: O Gigante de Cloud Computing</h3>
+        <p>AWS é líder absoluto com >50% market share. Oferece 200+ serviços. Impossível cobrir tudo, mas serviços "core" que 80% apps usam são poucos.</p>
+
+        <h4>Compute: EC2</h4>
+        <p><strong>EC2 (Elastic Compute Cloud):</strong> Máquinas virtuais on-demand. Você escolhe: tamanho (t2.micro = 512MB RAM até x2iedn = 4TB RAM), SO (Amazon Linux, Ubuntu, Windows), regiões.</p>
+
+        <p><strong>Instância Pricing:</strong> On-Demand (paga por hora, flexível), Reserved (comprometimento 1/3 anos = 50% desconto), Spot (oferta, até 90% desconto, pode ser interrompido).</p>
+
+        <p><strong>Auto Scaling Group:</strong> Escala automaticamente baseado em métrica (CPU > 70%, scale up; CPU < 30%, scale down). Define min/max instances.</p>
+
+        <h4>Storage: S3</h4>
+        <p><strong>S3 (Simple Storage Service):</strong> Armazenamento de objetos (blobs). Extremamente durável (99.999999999% = 11 nines), infinitamente escalável, barato.</p>
+
+        <p><strong>Casos de Uso:</strong> Backup, logs, static website (HTML/CSS/JS), data lake, imagens/vídeos, arquivos.</p>
+
+        <p><strong>Conceitos:</strong> Bucket (container de objetos, namespace único globalmente), Object (arquivo + metadata), Key (caminho/nome).</p>
+
+        <p><strong>Tiers de Storage:</strong> S3 Standard (rápido, caro), S3 Infrequent Access (buscado raro, mais barato), S3 Glacier (archive, muito barato, acesso lento), S3 Deep Archive (raro, muito barato).</p>
+
+        <p><strong>Versionamento:</strong> Manter histórico de versões de objetos. Proteção contra delete acidental.</p>
+
+        <p><strong>Lifecycle Policies:</strong> Automaticamente mover objetos entre tiers ou deletar após período. Exemplo: mover para Glacier após 30 dias, deletar após 1 ano.</p>
+
+        <h4>Database: RDS, DynamoDB</h4>
+        <p><strong>RDS (Relational Database Service):</strong> Databases relacionais managed. MySQL, PostgreSQL, MariaDB, Oracle, SQL Server. AWS cuida de backup, patching, replicação, failover.</p>
+
+        <p><strong>Vantagens RDS:</strong> Managed (sem ops overhead), Multi-AZ (replicação automática para disaster recovery), automated backups, security groups, encryption.</p>
+
+        <p><strong>DynamoDB:</strong> NoSQL key-value database. Totalmente managed, escala automaticamente, paga por throughput (read/write capacity units) ou on-demand.</p>
+
+        <p><strong>Quando RDS vs DynamoDB:</strong> RDS para dados estruturados, relações complexas, ACID. DynamoDB para dados sem schema, alta throughput, baixa latência, escalação automática simples.</p>
+
+        <h4>Networking: VPC, Security Groups</h4>
+        <p><strong>VPC (Virtual Private Cloud):</strong> Rede privada em AWS. Você define subnets, route tables, NAT gateways. Isolamento completo de outras contas AWS.</p>
+
+        <p><strong>Security Group:</strong> Firewall de instância. Você define inbound/outbound rules (porta, protocolo, CIDR source).</p>
+
+        <p><strong>Network ACL:</strong> Firewall de subnet (mais granular que Security Group).</p>
+
+        <h4>Serviços de Alto-Nível</h4>
+        <p><strong>Lambda:</strong> Serverless function execution. Pague por tempo execução (milissegundos). Escala automática instantaneamente. Ideal microserviços, webhooks, processamento eventos.</p>
+
+        <p><strong>API Gateway:</strong> Gerencia APIs REST/WebSocket. Autenticação, rate limiting, transformação, logging.</p>
+
+        <p><strong>CloudFront:</strong> CDN (Content Delivery Network) global. Cache conteúdo em datacenters ao redor do mundo. Reduz latência para usuários distantes.</p>
+
+        <p><strong>CloudWatch:</strong> Monitoring e logging. Coleta métricas de recursos, logs de aplicações, alertas baseado em threshold.</p>
+
+        <p><strong>IAM (Identity and Access Management):</strong> Controla quem acessa o quê. Usuários, roles, policies (permissões granulares). Princípio de least privilege: permita apenas o mínimo necessário.</p>
+
+        <h4>Best Practices AWS</h4>
+        <ul>
+          <li><strong>Multi-AZ:</strong> Sempre replique crítico em Availability Zones diferentes. Protege contra falha de datacenter.</li>
+          <li><strong>Least Privilege:</strong> IAM policy mais restrictivas possível. Não use root account para dia-a-dia.</li>
+          <li><strong>Infrastructure as Code:</strong> Use CloudFormation ou Terraform para descrever infra em YAML/HCL. Version control, reprodutibilidade.</li>
+          <li><strong>Monitoring:</strong> CloudWatch alertas. Não descubra problemas de usuários — saiba antes.</li>
+          <li><strong>Cost Optimization:</strong> Reserved instances, Spot instances, lifecycle policies, right-sizing. Audita mensalmente.</li>
+          <li><strong>Security:</strong> Encriptação (at rest + in transit), VPC isolation, security groups tight, updates frequentes.</li>
+        </ul>
+
+        <blockquote class="example">
+          <strong>📌 Arquitetura Típica:</strong> Usuários → CloudFront (CDN) → API Gateway → Lambda (serverless) → RDS (database) + S3 (media). CloudWatch monitora tudo, alertas se erros. Infrastructure as Code (Terraform) provê toda stack com comando único.
+        </blockquote>
+
+        <p>Neste tópico, você tem mapa de AWS. Próximo: colocando tudo em produção!</p>
+        `,
+        cards: [
+          { q: "Qual é o serviço AWS mais versatile para iniciantes aprender?", a: "EC2. Oferece máquinas virtuais simples, aprendes escalação, segurança, networking de verdade." },
+          { q: "Quando usar S3 vs EBS (block storage)?", a: "S3: objetos, backups, logs, website. EBS: discos de instância EC2, sistema de arquivos, banco dados." },
+          { q: "Por que IAM é crítico em AWS?", a: "Controla acesso. Usuario mal configurado com root privileges é vulnerabilidade gigante. Sempre aplique least privilege." }
+        ]
+      }
+    ],
+    summary: {
+      title: 'Cloud Computing Prático e Moderno',
+      points: [
+        'IaaS (EC2), PaaS (Heroku, Beanstalk), SaaS (Google Workspace) oferecem diferentes níveis abstração. Escolha conforme necessidade.',
+        'Containerização (Docker) soluciona portabilidade. Kubernetes orquestra milhares de containers automaticamente.',
+        'Serverless (Lambda, Cloud Functions) é abstração máxima: pay-per-execution, escala instantânea, sem ops.',
+        'AWS domina mercado (50%+ share) oferecendo 200+ serviços. Aprenda core: EC2, S3, RDS, Lambda, CloudFront.',
+        'Cloud infrastructure é code: IaC (Infrastructure as Code) em Terraform/CloudFormation torna stacks reprodutíveis e versionadas'
+      ]
+    },
+    quizFinal: [
+      { q: "Qual é a principal vantagem de cloud vs on-premise para startups?", opts: ["Nenhuma", "Pay-as-you-go elimina CAPEX gigante. Escala automática, elasticidade. Startups viáveis com budgets pequenos", "Cloud é sempre mais caro", "Apenas para big tech"], correct: 1 },
+      { q: "Por que Kubernetes é considerado standard para containers em produção?", opts: ["Apenas marketing", "Orquestração automática: scaling, health checks, rolling updates, multi-node management. Essencial em escala", "Docker é suficiente", "Muito complicado para usar"], correct: 1 },
+      { q: "Qual é a diferença entre Spot instances e On-Demand em AWS?", opts: ["Nenhuma", "Spot: até 90% desconto, pode ser interrompido. On-Demand: flexível, pode ser caro. Use Spot para workloads tolerante de interruption", "Spot é mais caro", "Spot é apenas para testes"], correct: 1 }
+    ]
+  },
+
+  {
+    id: 'cn_mod2',
+    name: 'CI/CD, Deployment e DevOps',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Automação de Entrega Contínua',
+      points: [
+        'CI/CD (Continuous Integration/Continuous Deployment) automatiza teste+build+deploy, reduz lead time, aumenta confiabilidade',
+        'Ferramentas: GitHub Actions, GitLab CI, Jenkins, CircleCI. Detectam problemas antes de produção',
+        'Blue-green deployment, canary releases permitem updates sem downtime',
+        'GitOps: Git é source of truth. Mudanças em Git automaticamente propagam ao cluster',
+        'Observability (monitoring, logging, tracing) essencial para manter estabilidade em produção'
+      ]
+    },
+    quizFinal: [
+      { q: "Qual é o objetivo de CI/CD pipeline?", opts: ["Apenas para big companies", "Automação de teste+build+deploy para feedback rápido, qualidade consistente, redução manual work", "Torna software mais complexo", "Apenas para DevOps teams"], correct: 1 },
+      { q: "O que é blue-green deployment e por que é valioso?", opts: ["Cores de ambiente", "Dois ambientes (blue=atual, green=novo). Switch instantâneo reduz downtime. Rollback trivial se problemas", "Apenas conceitual", "Não funciona na prática"], correct: 1 },
+      { q: "Por que logs centralizados são críticos em microserviços distribuídos?", opts: ["Não são importantes", "Rastreia requisição através múltiplos serviços, essencial para debugging e observability", "Local logs são suficientes", "Apenas para compliance"], correct: 1 }
+    ]
+  },
+
+  {
+    id: 'cn_mod3',
+    name: 'Arquitetura Moderna: Microserviços, Serverless e Futures',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Padrões de Arquitetura do Futuro',
+      points: [
+        'Monolith → Microserviços: decomposição em serviços independentes escáveis, deployáveis',
+        'Event-driven architecture desacopla componentes, permite escalação assíncrona',
+        'API-first design com contratos de API clara (OpenAPI/Swagger)',
+        'Infrastructure as Code torna stacks reprodutíveis, auditáveis, versionadas',
+        '2026: expectativa é hybrid cloud + edge computing para latência ultra-baixa'
+      ]
+    },
+    quizFinal: [
+      { q: "Quando migrar de monolith para microserviços?", opts: ["Sempre", "Quando monolith é bottleneck: diferentes componentes querem escalar independentemente, diferentes times querem deploy autonomamente", "Nunca", "Monolith é sempre melhor"], correct: 1 },
+      { q: "O que é event-driven architecture e por que desacopla?", opts: ["Apenas conceito acadêmico", "Componentes se comunicam via eventos assincronamente. Produtor não precisa conhecer consumidor. Desacoplamento natural", "Sempre pior que síncrono", "Apenas para streaming"], correct: 1 },
+      { q: "Por que Infrastructure as Code é crítico em ambiente cloud moderno?", opts: ["Apenas para grandes empresas", "Torna infra versionável, testável, reprodutível, auditável. Reduz manual errors dramaticamente", "Adiciona complexidade", "Não traz benefício real"], correct: 1 }
+    ]
+  }
 ];
 </script>
 <script src="shared/course-engine.js"></script>
