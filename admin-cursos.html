@@ -387,7 +387,7 @@ textarea{resize:vertical;min-height:54px}
     </button>
 
     <div style="text-align:center;margin-top:16px;font-size:10px;color:#2a3a52">
-      Matheus Academy · Admin v10 · Acesso monitorado
+      Matheus Academy · Admin v11 · Acesso monitorado
     </div>
   </div>
 
@@ -404,7 +404,7 @@ textarea{resize:vertical;min-height:54px}
 <header>
   <div class="logo">M</div>
   <div><h1>Matheus Academy <small>Admin</small></h1></div>
-  <div class="hbadge">⚙ v10</div>
+  <div class="hbadge">⚙ v11</div>
   <div class="hbadge" id="fb-badge" style="background:rgba(239,68,68,.15);color:#fca5a5;border-color:rgba(239,68,68,.3)">🔴 Firebase</div>
   <button class="btns" onclick="abrirBackup()" style="margin-left:8px;font-size:10px">💾 Backup</button>
   <button class="btns" onclick="abrirAudit()" style="margin-left:4px;font-size:10px">📋 Audit Log</button>
@@ -1627,6 +1627,30 @@ textarea{resize:vertical;min-height:54px}
         </div>
       </div>
 
+      <!-- MODO SUBSTITUIÇÃO -->
+      <div id="lote-subst-box" style="margin-bottom:18px;padding:16px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:12px">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px">
+            <div style="font-size:13px;font-weight:800;color:#fcd34d;display:flex;align-items:center;gap:6px">
+              🔄 Modo Substituição
+              <span id="lote-subst-badge" style="font-size:9px;padding:2px 8px;border-radius:12px;font-weight:700;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">DESLIGADO</span>
+            </div>
+            <div style="font-size:11px;color:var(--t2);margin-top:4px;line-height:1.5">
+              Quando ativo, cursos com <b>mesmo ID</b>, <b>mesmo título</b> ou <b>mesmo arquivo HTML</b> serão automaticamente <b>substituídos</b> no portal em vez de bloqueados como duplicados. Ideal para atualizar cursos existentes em massa.
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer">
+              <input type="checkbox" id="lote-subst-toggle" onchange="loteToggleSubstituir(this.checked)" style="opacity:0;width:0;height:0">
+              <span style="position:absolute;cursor:pointer;inset:0;background:var(--brd);transition:.3s;border-radius:28px"></span>
+              <span id="lote-subst-knob" style="position:absolute;height:22px;width:22px;left:3px;bottom:3px;background:#fff;transition:.3s;border-radius:50%"></span>
+            </label>
+            <span id="lote-subst-label" style="font-size:12px;font-weight:700;color:var(--t3)">OFF</span>
+          </div>
+        </div>
+        <div id="lote-subst-stats" style="display:none;margin-top:12px;padding:10px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:8px;font-size:11px;color:#86efac;line-height:1.6"></div>
+      </div>
+
       <!-- Dropzone multi-file -->
       <div id="lote-dz" style="border:2px dashed var(--brd);border-radius:12px;padding:36px 20px;text-align:center;cursor:pointer;transition:.2s;position:relative;margin-bottom:18px"
         ondragover="event.preventDefault();this.style.borderColor='var(--acc)';this.style.background='rgba(59,130,246,.04)'"
@@ -2045,7 +2069,8 @@ window.addEventListener('load', function() {
 // Lógica de inserção 100% testada — usa separador único "var MA_CATS"
 // v9: bug fix swTab (todas as 5 abas agora ativam corretamente)
 // ================================================================
-var _fc = null, _fn = null, _existIds = [], _coursesContent = '', _coursesSha = '';
+var _fc = null, _fn = null, _existIds = [], _existCourses = [], _coursesContent = '', _coursesSha = '';
+var _loteSubstituir = false; // Modo substituição: quando ativo, duplicados são SUBSTITUÍDOS em vez de bloqueados
 
 // CONFIG
 window.onload = function() {
@@ -2337,11 +2362,29 @@ async function loadCoursesData(){
   var fd=await res.json();
   _coursesSha=fd.sha;
   _coursesContent=b64d(fd.content);
-  // Extrair todos os IDs existentes
+  // Extrair todos os IDs existentes + nomes + arquivos para matching
   var ids=[];
+  _existCourses=[];
   var re=/id:\s*['"]([^'"]+)['"]/g, m;
   while((m=re.exec(_coursesContent))!==null){
     if(m[1]&&ids.indexOf(m[1])===-1) ids.push(m[1]);
+  }
+  // Extrair nomes e arquivos de cada curso para matching por título/arquivo
+  var blockRe=/\{[^{}]*id:\s*['"]([^'"]+)['"][^{}]*name:\s*['"]([^'"]+)['"][^{}]*file:\s*['"]([^'"]+)['"][^{}]*\}/g;
+  var bm;
+  while((bm=blockRe.exec(_coursesContent))!==null){
+    _existCourses.push({id:bm[1], name:bm[2], file:bm[3]});
+  }
+  // Fallback: se regex acima não pegou tudo, tentar extrair por blocos individuais
+  if(_existCourses.length < ids.length){
+    _existCourses=[];
+    ids.forEach(function(cid){
+      var nameRx=new RegExp("id:\\s*['\"]"+cid.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+"['\"][\\s\\S]*?name:\\s*['\"]([^'\"]+)['\"]");
+      var fileRx=new RegExp("id:\\s*['\"]"+cid.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+"['\"][\\s\\S]*?file:\\s*['\"]([^'\"]+)['\"]");
+      var nm=nameRx.exec(_coursesContent);
+      var fm=fileRx.exec(_coursesContent);
+      _existCourses.push({id:cid, name:nm?nm[1]:'', file:fm?fm[1]:''});
+    });
   }
   _existIds=ids;
   // Mostrar chips
@@ -5776,6 +5819,125 @@ function simularCrescimento(){
 
 var _loteItems = []; // [{file, content, meta, selected, status}]
 
+/* ══════════════════════════════════════════════════════════════
+   MODO SUBSTITUIÇÃO — reconhece cursos existentes e substitui
+   ══════════════════════════════════════════════════════════════ */
+
+function loteToggleSubstituir(on) {
+  _loteSubstituir = on;
+  var badge = el('lote-subst-badge');
+  var label = el('lote-subst-label');
+  var knob  = el('lote-subst-knob');
+  var box   = el('lote-subst-box');
+  if (on) {
+    badge.textContent = 'LIGADO';
+    badge.style.background = 'rgba(34,197,94,.15)';
+    badge.style.color = '#86efac';
+    badge.style.borderColor = 'rgba(34,197,94,.25)';
+    label.textContent = 'ON';
+    label.style.color = '#86efac';
+    knob.style.left = '27px';
+    knob.style.background = '#22c55e';
+    box.style.background = 'rgba(34,197,94,.06)';
+    box.style.borderColor = 'rgba(34,197,94,.25)';
+  } else {
+    badge.textContent = 'DESLIGADO';
+    badge.style.background = 'rgba(239,68,68,.15)';
+    badge.style.color = '#fca5a5';
+    badge.style.borderColor = 'rgba(239,68,68,.25)';
+    label.textContent = 'OFF';
+    label.style.color = 'var(--t3)';
+    knob.style.left = '3px';
+    knob.style.background = '#fff';
+    box.style.background = 'rgba(245,158,11,.06)';
+    box.style.borderColor = 'rgba(245,158,11,.2)';
+  }
+  // Recalcular duplicatas se já tem itens carregados
+  if (_loteItems.length) {
+    loteCheckDuplicates();
+    loteRenderTable();
+    loteRenderStatusPanel();
+  }
+}
+
+// Normaliza texto para matching: minúsculas, sem acentos, sem espaços extras
+function _normalizeMatch(s) {
+  return (s || '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, '')
+    .trim();
+}
+
+// Encontra curso existente por ID, título ou nome de arquivo
+function _findExistingCourse(meta) {
+  // 1. Match exato por ID
+  for (var i = 0; i < _existCourses.length; i++) {
+    if (_existCourses[i].id === meta.id) return _existCourses[i];
+  }
+  // 2. Match por nome de arquivo
+  for (var i = 0; i < _existCourses.length; i++) {
+    if (_existCourses[i].file && _existCourses[i].file === meta.file) return _existCourses[i];
+  }
+  // 3. Match por título (normalizado, fuzzy)
+  var normName = _normalizeMatch(meta.name);
+  if (normName.length < 3) return null;
+  for (var i = 0; i < _existCourses.length; i++) {
+    var existNorm = _normalizeMatch(_existCourses[i].name);
+    if (existNorm === normName) return _existCourses[i];
+    // Match parcial: se 80%+ dos caracteres batem
+    if (existNorm.length > 5 && normName.length > 5) {
+      var shorter = existNorm.length < normName.length ? existNorm : normName;
+      var longer  = existNorm.length < normName.length ? normName : existNorm;
+      if (longer.indexOf(shorter) !== -1) return _existCourses[i];
+    }
+  }
+  return null;
+}
+
+// Substitui um bloco de curso no courses.js pelo ID
+function replaceBlockInCourses(content, oldId, newBlock) {
+  // Encontra o bloco inteiro do curso com o oldId
+  // Padrão: bloco { ... id: 'oldId' ... } dentro do array
+  var escaped = oldId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Regex para encontrar o bloco completo: começa com { e termina com }
+  // O bloco está dentro de um array, então procuramos { ... id: 'xxx' ... }
+  var blockRe = new RegExp(
+    "(\\{[^{}]*id:\\s*['\"]" + escaped + "['\"][^{}]*\\})",
+    's'
+  );
+  var match = blockRe.exec(content);
+  if (match) {
+    return content.replace(match[1], newBlock);
+  }
+  // Fallback: tentar com regex mais flexível para blocos multi-linha
+  // Procura de '  {' até o próximo '  }' que contenha o ID
+  var lines = content.split('\n');
+  var startLine = -1, endLine = -1, depth = 0;
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    if (startLine === -1) {
+      // Procura uma linha com o ID do curso
+      var idCheck = new RegExp("id:\\s*['\"]" + escaped + "['\"]");
+      if (idCheck.test(line)) {
+        // Voltar para encontrar o início do bloco {
+        for (var j = i; j >= 0; j--) {
+          if (/^\s*\{/.test(lines[j])) { startLine = j; break; }
+        }
+        // Avançar para encontrar o fim do bloco }
+        for (var j = i; j < lines.length; j++) {
+          if (/^\s*\}/.test(lines[j])) { endLine = j; break; }
+        }
+        break;
+      }
+    }
+  }
+  if (startLine !== -1 && endLine !== -1) {
+    lines.splice(startLine, endLine - startLine + 1, newBlock);
+    return lines.join('\n');
+  }
+  return null; // Não encontrou
+}
+
 function loteHtmlDrop(e) {
   e.preventDefault();
   e.currentTarget.style.borderColor = 'var(--brd)';
@@ -5843,18 +6005,56 @@ function loteHtmlChosen(files) {
 
 function loteCheckDuplicates() {
   var seen = {};
+  var substCount = 0;
   _loteItems.forEach(function(item) {
-    // Duplicata com IDs ja no portal
-    if (_existIds.indexOf(item.meta.id) !== -1) {
-      item.status = 'duplicado';
-      item.selected = false;
+    // Limpar estado anterior de substituição
+    delete item._substituir;
+    delete item._matchedCourse;
+
+    if (_loteSubstituir) {
+      // MODO SUBSTITUIÇÃO: encontrar curso existente por ID, título ou arquivo
+      var existing = _findExistingCourse(item.meta);
+      if (existing) {
+        item._substituir = true;
+        item._matchedCourse = existing;
+        item.status = 'substituir';
+        item.selected = true;
+        // Garantir que o ID do item bata com o ID do curso existente
+        item.meta.id = existing.id;
+        substCount++;
+      } else {
+        // Não encontrou match — é um curso novo, manter como pendente
+        if (item.status === 'duplicado' || item.status === 'substituir') {
+          item.status = 'pendente';
+          item.selected = true;
+        }
+      }
+    } else {
+      // MODO NORMAL: bloquear duplicados
+      if (_existIds.indexOf(item.meta.id) !== -1) {
+        item.status = 'duplicado';
+        item.selected = false;
+      } else if (item.status === 'substituir') {
+        item.status = 'pendente';
+        item.selected = true;
+      }
     }
-    // Duplicata interna (mesmo ID em lote)
-    if (seen[item.meta.id]) {
+    // Duplicata interna (mesmo ID em lote) — sempre resolver
+    if (seen[item.meta.id] && !item._substituir) {
       item.meta.id = item.meta.id + (Math.random()*100|0);
     }
     seen[item.meta.id] = true;
   });
+  // Mostrar stats de substituição
+  var statsEl = el('lote-subst-stats');
+  if (_loteSubstituir && substCount > 0 && statsEl) {
+    statsEl.style.display = 'block';
+    var newCount = _loteItems.filter(function(it) { return !it._substituir && it.status !== 'duplicado'; }).length;
+    statsEl.innerHTML = '🔄 <b>' + substCount + '</b> curso(s) reconhecido(s) para substituição &nbsp;·&nbsp; 🆕 <b>' + newCount + '</b> curso(s) novo(s)'
+      + '<br><span style="color:var(--t2);font-size:10px">Os cursos marcados como "SUBSTITUIR" terão seu HTML e registro no courses.js atualizados</span>';
+  } else if (statsEl) {
+    statsEl.style.display = 'none';
+  }
 }
 
 function _loteRecalc(idx, mods) {
@@ -5886,16 +6086,24 @@ function loteRenderTable() {
     var isDup = item.status === 'duplicado';
     var isErro = item.status === 'erro';
     var isDesc = item.status === 'descartado';
-    var rowBg = isDup || isErro ? 'background:rgba(239,68,68,.06)' : (isDesc ? 'background:rgba(100,100,100,.06);opacity:.5' : (idx % 2 === 0 ? '' : 'background:rgba(255,255,255,.02)'));
-    var statusBadge = isDup
-      ? '<span style="color:#fca5a5;font-size:9px;font-weight:700">DUPLICADO</span>'
-      : (item.status === 'ok'
-        ? '<span style="color:#86efac;font-size:9px;font-weight:700">OK</span>'
-        : (isErro
-          ? '<span style="color:#fca5a5;font-size:9px;font-weight:700;cursor:help" title="' + escH((item.errorTipo || '') + ': ' + (item.errorMsg || '')) + '">⚠️ ERRO</span>'
-          : (isDesc
-            ? '<span style="color:var(--t3);font-size:9px">DESCARTADO</span>'
-            : '<span style="color:var(--t3);font-size:9px">Pendente</span>')));
+    var isSubst = item.status === 'substituir';
+    var rowBg = isSubst ? 'background:rgba(245,158,11,.06)'
+      : (isDup || isErro ? 'background:rgba(239,68,68,.06)'
+      : (isDesc ? 'background:rgba(100,100,100,.06);opacity:.5'
+      : (idx % 2 === 0 ? '' : 'background:rgba(255,255,255,.02)')));
+    var statusBadge = isSubst
+      ? '<span style="color:#fcd34d;font-size:9px;font-weight:700" title="Vai substituir: ' + escH((item._matchedCourse ? item._matchedCourse.id : '')) + '">🔄 SUBSTITUIR</span>'
+      : (isDup
+        ? '<span style="color:#fca5a5;font-size:9px;font-weight:700">DUPLICADO</span>'
+        : (item.status === 'ok'
+          ? '<span style="color:#86efac;font-size:9px;font-weight:700">OK</span>'
+          : (item.status === 'ok_subst'
+            ? '<span style="color:#fcd34d;font-size:9px;font-weight:700">✅ SUBSTITUÍDO</span>'
+            : (isErro
+              ? '<span style="color:#fca5a5;font-size:9px;font-weight:700;cursor:help" title="' + escH((item.errorTipo || '') + ': ' + (item.errorMsg || '')) + '">⚠️ ERRO</span>'
+              : (isDesc
+                ? '<span style="color:var(--t3);font-size:9px">DESCARTADO</span>'
+                : '<span style="color:var(--t3);font-size:9px">Pendente</span>')))));
 
     // Selecionar a categoria correta
     var catOpts = catOptions.replace(
@@ -5921,7 +6129,7 @@ function loteRenderTable() {
 
 function loteToggleAll(checked) {
   _loteItems.forEach(function(item, idx) {
-    if (item.status !== 'duplicado') item.selected = checked;
+    if (item.status !== 'duplicado' || _loteSubstituir) item.selected = checked;
   });
   loteRenderTable();
   el('lote-check-all').checked = checked;
@@ -5944,7 +6152,7 @@ async function lotePublicar() {
   var cfg = g();
   if (!cfg.t) { alert('Configure e teste o token GitHub primeiro.'); return; }
 
-  var selected = _loteItems.filter(function(it) { return it.selected && it.status !== 'ok'; });
+  var selected = _loteItems.filter(function(it) { return it.selected && it.status !== 'ok' && it.status !== 'ok_subst'; });
   if (!selected.length) { alert('Nenhum curso selecionado para publicar.'); return; }
 
   // Recarregar lista de IDs existentes do courses.js ANTES de validar
@@ -5965,6 +6173,7 @@ async function lotePublicar() {
   var bloqueados = 0;
   for (var i = 0; i < selected.length; i++) {
     var sid = selected[i].meta.id;
+    var isSubst = selected[i]._substituir && _loteSubstituir;
     if (!sid || !/^[a-z0-9]{1,8}$/.test(sid)) {
       selected[i].status = 'erro';
       selected[i].errorMsg = 'ID invalido: "' + sid + '". Use apenas letras minusculas e numeros (max 8 caracteres).';
@@ -5973,11 +6182,12 @@ async function lotePublicar() {
       bloqueados++;
       continue;
     }
-    if (_existIds.indexOf(sid) !== -1) {
+    // No modo substituição, IDs existentes são PERMITIDOS (é o objetivo!)
+    if (_existIds.indexOf(sid) !== -1 && !isSubst) {
       selected[i].status = 'erro';
       selected[i].errorMsg = 'ID "' + sid + '" ja existe no portal (courses.js). Nao pode ter dois cursos com o mesmo ID.';
       selected[i].errorTipo = 'id_duplicado_portal';
-      selected[i].errorAcao = 'Troque o ID deste curso para um valor unico. Ex: adicione um numero ao final (' + sid + '2) ou use outra abreviacao.';
+      selected[i].errorAcao = 'Troque o ID deste curso para um valor unico. Ex: adicione um numero ao final (' + sid + '2) ou use outra abreviacao. Ou ative o Modo Substituicao para atualizar o curso existente.';
       bloqueados++;
       continue;
     }
@@ -6006,18 +6216,35 @@ async function lotePublicar() {
     return;
   }
 
+  // Confirmar substituição se houver itens no modo substituir
+  var substItems = selected.filter(function(it) { return it._substituir; });
+  if (substItems.length > 0) {
+    var confirmMsg = '🔄 MODO SUBSTITUIÇÃO ATIVO\n\n'
+      + substItems.length + ' curso(s) serão SUBSTITUÍDOS no portal:\n\n';
+    substItems.forEach(function(it, i) {
+      if (i < 15) confirmMsg += '  • ' + it.meta.name + ' (id: ' + it.meta.id + ')\n';
+    });
+    if (substItems.length > 15) confirmMsg += '  ... e mais ' + (substItems.length - 15) + ' cursos\n';
+    var newItems = selected.filter(function(it) { return !it._substituir; });
+    if (newItems.length) confirmMsg += '\n+ ' + newItems.length + ' curso(s) NOVO(s) serão adicionados.\n';
+    confirmMsg += '\nOs HTMLs antigos serão sobrescritos e os registros no courses.js serão atualizados.\n\nContinuar?';
+    if (!confirm(confirmMsg)) return;
+  }
+
   var btn = el('lote-pub-btn');
   btn.disabled = true;
   el('lote-prog-wrap').style.display = 'block';
 
   var total = selected.length;
-  var okCount = 0, errCount = 0;
+  var okCount = 0, substOkCount = 0, errCount = 0;
 
   for (var j = 0; j < selected.length; j++) {
     var item = selected[j];
     var idx = _loteItems.indexOf(item);
+    var isSubst = item._substituir && _loteSubstituir;
 
-    el('lote-prog-label').textContent = 'Publicando ' + (j + 1) + ' de ' + total + ': ' + item.meta.name;
+    var actionLabel = isSubst ? 'Substituindo' : 'Publicando';
+    el('lote-prog-label').textContent = actionLabel + ' ' + (j + 1) + ' de ' + total + ': ' + item.meta.name;
     el('lote-prog-pct').textContent = (j + 1) + '/' + total;
     el('lote-prog-bar').style.width = (((j + 1) / total) * 100).toFixed(0) + '%';
 
@@ -6025,12 +6252,12 @@ async function lotePublicar() {
       // Delay entre items para evitar rate limit do GitHub (1s entre cada)
       if (j > 0) await _sleep(1000);
 
-      // 1. Upload do HTML com retry
+      // 1. Upload do HTML com retry (funciona igual para novo e substituição)
       var chk = await _ghFetchRetry('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/' + item.file.name, { headers: gh() }, 2);
       var exSha = null;
       if (chk.ok) { var cd = await chk.json(); exSha = cd.sha; }
 
-      var body = { message: 'upload lote: ' + item.file.name, content: b64e(item.content) };
+      var body = { message: (isSubst ? 'update lote: ' : 'upload lote: ') + item.file.name, content: b64e(item.content) };
       if (exSha) body.sha = exSha;
 
       var up = await _ghFetchRetry('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/' + item.file.name, {
@@ -6038,7 +6265,7 @@ async function lotePublicar() {
       }, 3);
       if (!up.ok) { var ue = ''; try { ue = (await up.json()).message; } catch(e){} throw new Error('Erro HTML ' + up.status + ': ' + ue); }
 
-      // 2. Registrar no courses.js
+      // 2. Registrar/Atualizar no courses.js
       item.meta.file = item.file.name;
       item.meta.addedTs = Date.now();
       item.meta.active = true;
@@ -6056,23 +6283,47 @@ async function lotePublicar() {
         var csContent = b64d(csFd.content);
         var csSha = csFd.sha;
 
-        // Checar se ID ja existe no conteudo atualizado
-        if (new RegExp("id:\\s*['\"]" + item.meta.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "['\"]").test(csContent)) {
-          throw new Error('ID "' + item.meta.id + '" ja existe no courses.js');
+        var block = buildBlock(item.meta);
+        var newContent;
+
+        if (isSubst) {
+          // === MODO SUBSTITUIÇÃO: substituir bloco existente ===
+          var existingId = item._matchedCourse ? item._matchedCourse.id : item.meta.id;
+          newContent = replaceBlockInCourses(csContent, existingId, block);
+          if (!newContent) {
+            // Fallback: se não conseguiu substituir, remover o antigo e inserir novo
+            console.log('[Substituição] Fallback: removendo bloco antigo de ' + existingId + ' e inserindo novo');
+            // Tenta remover o bloco antigo
+            var escaped = existingId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            var removeRe = new RegExp(",?\\s*\\{[^{}]*id:\\s*['\"]" + escaped + "['\"][^{}]*\\}", 's');
+            var cleaned = csContent.replace(removeRe, '');
+            // Limpar vírgula dupla ou vírgula antes de ]
+            cleaned = cleaned.replace(/,\s*,/g, ',').replace(/\[\s*,/, '[').replace(/,\s*\]/, '\n]');
+            newContent = insertSafe(cleaned, block);
+          }
+          if (!newContent) throw new Error('Falha ao substituir bloco do curso "' + existingId + '" no courses.js');
+        } else {
+          // === MODO NORMAL: inserir novo ===
+          // Checar se ID ja existe no conteudo atualizado
+          if (new RegExp("id:\\s*['\"]" + item.meta.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "['\"]").test(csContent)) {
+            throw new Error('ID "' + item.meta.id + '" ja existe no courses.js');
+          }
+          newContent = insertSafe(csContent, block);
+          if (!newContent) throw new Error('Ponto de insercao nao encontrado');
         }
 
-        var block = buildBlock(item.meta);
-        var newContent = insertSafe(csContent, block);
-        if (!newContent) throw new Error('Ponto de insercao nao encontrado');
+        var commitMsg = isSubst
+          ? "update(lote): substitui '" + item.meta.name + "'"
+          : "feat(lote): adiciona '" + item.meta.name + "'";
 
         var put = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/data/courses.js', {
           method: 'PUT', headers: gh(),
-          body: JSON.stringify({ message: "feat(lote): adiciona '" + item.meta.name + "'", content: b64e(newContent), sha: csSha })
+          body: JSON.stringify({ message: commitMsg, content: b64e(newContent), sha: csSha })
         });
 
         if (put.ok) {
           var putData = await put.json();
-          _existIds.push(item.meta.id);
+          if (!isSubst) _existIds.push(item.meta.id);
           _coursesContent = newContent;
           _coursesSha = (putData && putData.content && putData.content.sha) || csSha;
           csOk = true;
@@ -6089,9 +6340,11 @@ async function lotePublicar() {
       }
       if (!csOk) throw new Error('Falha persistente ao atualizar courses.js (conflito SHA)');
 
-      item.status = 'ok';
-      okCount++;
-      addAudit('📦 Lote: publicou "' + item.meta.name + '" (id:' + item.meta.id + ')');
+      item.status = isSubst ? 'ok_subst' : 'ok';
+      if (isSubst) substOkCount++; else okCount++;
+      addAudit(isSubst
+        ? '🔄 Lote: substituiu "' + item.meta.name + '" (id:' + item.meta.id + ')'
+        : '📦 Lote: publicou "' + item.meta.name + '" (id:' + item.meta.id + ')');
 
     } catch (err) {
       item.status = 'erro';
@@ -6099,7 +6352,10 @@ async function lotePublicar() {
       // Categorizar o erro e sugerir acao
       if (err.message.indexOf('ja existe no courses.js') !== -1) {
         item.errorTipo = 'id_duplicado_portal';
-        item.errorAcao = 'O HTML foi enviado ao GitHub, mas o ID ja esta registrado no courses.js. Troque o ID para um valor unico e reenvie.';
+        item.errorAcao = 'O HTML foi enviado ao GitHub, mas o ID ja esta registrado no courses.js. Ative o Modo Substituicao ou troque o ID.';
+      } else if (err.message.indexOf('Falha ao substituir') !== -1) {
+        item.errorTipo = 'substituicao_falha';
+        item.errorAcao = 'Nao foi possivel encontrar o bloco do curso no courses.js para substituir. Verifique se o courses.js esta no formato esperado.';
       } else if (err.message.indexOf('conflito SHA') !== -1 || err.message.indexOf('409') !== -1) {
         item.errorTipo = 'sha_conflict';
         item.errorAcao = 'Conflito no GitHub (muitas gravacoes simultaneas). Basta clicar em "Reenviar" que vai funcionar.';
@@ -6123,8 +6379,10 @@ async function lotePublicar() {
     var statusEl = el('lote-status-' + idx);
     if (statusEl) {
       statusEl.innerHTML = item.status === 'ok'
-        ? '<span style="color:#86efac;font-size:9px;font-weight:700">OK</span>'
-        : '<span style="color:#fca5a5;font-size:9px;font-weight:700;cursor:help" title="' + escH(item.errorMsg || '') + '">ERRO</span>';
+        ? '<span style="color:#86efac;font-size:9px;font-weight:700">✅ OK</span>'
+        : (item.status === 'ok_subst'
+          ? '<span style="color:#fcd34d;font-size:9px;font-weight:700">✅ SUBSTITUÍDO</span>'
+          : '<span style="color:#fca5a5;font-size:9px;font-weight:700;cursor:help" title="' + escH(item.errorMsg || '') + '">⚠️ ERRO</span>');
     }
   }
 
@@ -6132,15 +6390,23 @@ async function lotePublicar() {
   el('lote-prog-label').textContent = 'Concluido!';
   btn.disabled = false;
 
-  var summaryHtml = '<div style="color:#86efac;font-weight:700">Publicados com sucesso: ' + okCount + '</div>';
-  if (errCount) summaryHtml += '<div style="color:#fca5a5;font-weight:700;margin-top:4px">Erros: ' + errCount + '</div>';
+  var summaryHtml = '';
+  if (okCount) summaryHtml += '<div style="color:#86efac;font-weight:700">🆕 Novos publicados: ' + okCount + '</div>';
+  if (substOkCount) summaryHtml += '<div style="color:#fcd34d;font-weight:700;margin-top:4px">🔄 Substituídos com sucesso: ' + substOkCount + '</div>';
+  if (errCount) summaryHtml += '<div style="color:#fca5a5;font-weight:700;margin-top:4px">❌ Erros: ' + errCount + '</div>';
   summaryHtml += '<div style="margin-top:8px;color:var(--t3);font-size:11px">Total processados: ' + total + ' de ' + _loteItems.length + ' cursos</div>';
 
   el('lote-summary').style.display = 'block';
   el('lote-summary-content').innerHTML = summaryHtml;
 
-  if (okCount) {
-    showRes('lote-res', 'ok', okCount + ' curso(s) publicado(s) com sucesso!' + (errCount ? ' (' + errCount + ' erro(s) — veja abaixo)' : ''));
+  var totalOk = okCount + substOkCount;
+  if (totalOk) {
+    var msg = '';
+    if (okCount) msg += okCount + ' novo(s)';
+    if (substOkCount) msg += (msg ? ' + ' : '') + substOkCount + ' substituído(s)';
+    msg += ' com sucesso!';
+    if (errCount) msg += ' (' + errCount + ' erro(s) — veja abaixo)';
+    showRes('lote-res', 'ok', msg);
     loadList();
   } else {
     showRes('lote-res', 'er', 'Nenhum curso publicado. Veja os erros abaixo.');
@@ -6168,6 +6434,7 @@ function loteRenderErros() {
     'rate_limit': '🟣',
     'upload_html': '⚪',
     'courses_js_formato': '⚫',
+    'substituicao_falha': '🔄',
     'desconhecido': '❓'
   };
   var tipoLabels = {
@@ -6178,6 +6445,7 @@ function loteRenderErros() {
     'rate_limit': 'Rate limit do GitHub',
     'upload_html': 'Falha no upload HTML',
     'courses_js_formato': 'Formato courses.js',
+    'substituicao_falha': 'Falha na substituicao',
     'desconhecido': 'Erro desconhecido'
   };
 
@@ -6284,11 +6552,11 @@ async function loteReenviarItem(idx) {
     alert('ID invalido. Corrija antes de reenviar.');
     return;
   }
-  if (_existIds.indexOf(item.meta.id) !== -1) {
-    alert('ID "' + item.meta.id + '" ja existe no portal. Troque o ID primeiro.');
+  if (_existIds.indexOf(item.meta.id) !== -1 && !(_loteSubstituir && item._substituir)) {
+    alert('ID "' + item.meta.id + '" ja existe no portal. Troque o ID primeiro ou ative o Modo Substituicao.');
     return;
   }
-  item.status = 'pendente';
+  item.status = item._substituir && _loteSubstituir ? 'substituir' : 'pendente';
   item.selected = true;
   item.errorMsg = '';
   item.errorTipo = '';
