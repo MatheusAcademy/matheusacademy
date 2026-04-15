@@ -2827,11 +2827,11 @@ var MA_COURSES = [
     addedTs: 1776024646951,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/cq.jpg',
     id: 'cq',
     name: 'Computação Quântica para Inovadores',
-    desc: 'Introdução acessível a uma das tecnologias mais promissoras do futuro, explicando conceitos, potencial e desafios.',
+    desc: 'Introdução acessível à computação quântica: conceitos, potencial e desafios.',
     file: '30-computacao-quantica.html',
     cat: 'Tecnologia',
     modules: 3,
@@ -2843,7 +2843,8 @@ var MA_COURSES = [
     storagePrefix: 'cq_',
     icon: '💻',
     color: '#00BFA5',
-    addedTs: 1776024652026,
+    free: true,
+    addedTs: 1776284515689,
     active: true
   },
   {
