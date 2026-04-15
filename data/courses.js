@@ -3284,11 +3284,11 @@ var MA_COURSES = [
     addedTs: 1776284585172,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/it.jpg',
     id: 'it',
     name: 'Inglês para Trabalho e Entrevistas',
-    desc: 'Foco em currículo, entrevistas, comunicação profissional, reuniões básicas e vocabulário corporativo.',
+    desc: 'Foco em currículo, entrevistas, comunicação profissional e vocabulário corporativo.',
     file: '15-ingles-trabalho.html',
     cat: 'Inglês',
     modules: 3,
@@ -3301,7 +3301,7 @@ var MA_COURSES = [
     icon: '🇺🇸',
     color: '#455A64',
     free: true,
-    addedTs: 1776024779851,
+    addedTs: 1776284595176,
     active: true
   },
   {
