@@ -3200,11 +3200,11 @@ var MA_COURSES = [
     addedTs: 1776024751130,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ig.jpg',
     id: 'ig',
     name: 'IA Generativa e Prompt Engineering',
-    desc: 'Ensina a usar IA generativa de forma prática para criar textos, ideias, análises, automações e produtividade.',
+    desc: 'Como usar IA generativa para criar textos, ideias, análises e automações.',
     file: '22-ia-generativa.html',
     cat: 'Tecnologia',
     modules: 3,
@@ -3216,7 +3216,8 @@ var MA_COURSES = [
     storagePrefix: 'ig_',
     icon: '💻',
     color: '#6A1B9A',
-    addedTs: 1776024757140,
+    free: true,
+    addedTs: 1776284560231,
     active: true
   },
   {
