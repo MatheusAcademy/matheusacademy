@@ -1327,24 +1327,24 @@ var MA_COURSES = [
     addedTs: 1775832734509,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/rv.jpg',
     id: 'rv',
-    name: 'Realidade Virtual, Aumentada e Imersão',
-    desc: 'VR e AR impactando educação, jogos, indústria e experiências digitais.',
+    name: 'Realidade Virtual e Aumentada',
+    desc: 'Domine VR/AR: Oculus, Meta Quest, Unity, WebXR, Apple Vision. Crie experiências imersivas e aplicações para metaverso.',
     file: '29-realidade-virtual.html',
     cat: 'Tecnologia',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'RV_HENRY_2026_MASTER',
+    salt: 'PREFIX_HENRY_2026_MASTER',
     ak: 'rv_auth',
     storagePrefix: 'rv_',
     icon: '💻',
     color: '#6200EA',
     free: true,
-    addedTs: 1776284530487,
+    addedTs: 1776289855284,
     active: true
   },
   {
