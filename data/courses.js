@@ -1423,24 +1423,24 @@ var MA_COURSES = [
     addedTs: 1775832747770,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ie.jpg',
     id: 'ie',
-    name: 'Inteligência Emocional e Autocontrole',
-    desc: 'Gestão das emoções, equilíbrio sob pressão e respostas mais maduras.',
+    name: 'Inteligência Emocional',
+    desc: 'Desbloqueie o poder das emoções através de autoconhecimento profundo, regulação emocional e habilidades sociais estratégicas. Domine a inteligência que transforma relacionamentos e liderança.',
     file: '32-inteligencia-emocional.html',
     cat: 'Esportes & Alta Performance',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'IE_HENRY_2026_MASTER',
-    ak: 'ie_auth',
+    salt: 'salt_IE_HENRY_2026_MASTER',
+    ak: 'IE_auth',
     storagePrefix: 'ie_',
     icon: '🏆',
     color: '#1565C0',
     free: true,
-    addedTs: 1776284511270,
+    addedTs: 1776289905839,
     active: true
   },
   {
