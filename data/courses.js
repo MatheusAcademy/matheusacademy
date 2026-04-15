@@ -3118,11 +3118,11 @@ var MA_COURSES = [
     addedTs: 1776284520660,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/io.jpg',
     id: 'io',
     name: 'Internet das Coisas e Casas Inteligentes',
-    desc: 'Explora sensores, dispositivos conectados, automação residencial, cidades inteligentes e integração entre máquinas.',
+    desc: 'Sensores, dispositivos conectados, automação residencial e cidades inteligentes.',
     file: '27-iot-casas-inteligentes.html',
     cat: 'Tecnologia',
     modules: 3,
@@ -3134,7 +3134,8 @@ var MA_COURSES = [
     storagePrefix: 'io_',
     icon: '💻',
     color: '#2E7D32',
-    addedTs: 1776024733122,
+    free: true,
+    addedTs: 1776284535750,
     active: true
   },
   {
