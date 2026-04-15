@@ -3403,11 +3403,11 @@ var MA_COURSES = [
     addedTs: 1776284606045,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ib.jpg',
     id: 'ib',
     name: 'Inglês Básico do Zero à Conversação',
-    desc: 'Curso ideal para iniciantes absolutos, com foco em vocabulário essencial, frases do dia a dia, compreensão e fala.',
+    desc: 'Curso ideal para iniciantes absolutos, com foco em vocabulário essencial e frases do dia a dia.',
     file: '11-ingles-basico.html',
     cat: 'Inglês',
     modules: 3,
@@ -3420,7 +3420,7 @@ var MA_COURSES = [
     icon: '🇺🇸',
     color: '#1976D2',
     free: true,
-    addedTs: 1776024810730,
+    addedTs: 1776284617854,
     active: true
   },
   {
