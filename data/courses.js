@@ -2994,24 +2994,24 @@ var MA_COURSES = [
     addedTs: 1776024690011,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ic.jpg',
     id: 'ic',
-    name: 'Inglês para Conversação com Confiança',
-    desc: 'Speaking, respostas rápidas, diálogos naturais e perda do medo de falar inglês.',
+    name: 'Inglês — Conversação',
+    desc: 'Desenvolva fluência para conversas do dia a dia: small talk, opiniões, phrasal verbs e interações autênticas',
     file: '18-ingles-conversacao.html',
-    cat: 'Inglês',
+    cat: 'Idiomas',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'IC_HENRY_2026_MASTER',
+    salt: 'ic_HENRY_2026_MASTER',
     ak: 'ic_auth',
     storagePrefix: 'ic_',
-    icon: '🇺🇸',
+    icon: '🎓',
     color: '#E65100',
     free: true,
-    addedTs: 1776284580179,
+    addedTs: 1776289933476,
     active: true
   },
   {
