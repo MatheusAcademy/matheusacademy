@@ -752,23 +752,24 @@ var MA_COURSES = [
     addedTs: 1775830988380,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/mf.jpg',
     id: 'mf',
-    name: 'Como a Mente Funciona: Emoções, Memória e Decisão',
-    desc: 'Explica processos mentais fundamentais para entender por que as pessoas sentem, pensam e agem como agem.',
-    file: '12-como-mente-funciona.html',
-    cat: 'Psicologia',
+    name: 'Mentalidade Forte e Disciplina Diária',
+    desc: 'Consistência, força mental, compromisso pessoal e capacidade de agir mesmo sem motivação.',
+    file: '34-mentalidade-forte.html',
+    cat: 'Esportes & Alta Performance',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'MF_HENRY_2026_MASTER',
     ak: 'mf_auth',
     storagePrefix: 'mf_',
-    icon: '🧩',
-    color: '#4361ee',
-    addedTs: 1775830991257,
+    icon: '🏆',
+    color: '#4A148C',
+    free: true,
+    addedTs: 1776290009866,
     active: true
   },
   {
