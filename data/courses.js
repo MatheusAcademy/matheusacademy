@@ -2834,24 +2834,24 @@ var MA_COURSES = [
     addedTs: 1776024646951,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/cq.jpg',
     id: 'cq',
-    name: 'Computação Quântica para Inovadores',
-    desc: 'Introdução acessível à computação quântica: conceitos, potencial e desafios.',
+    name: 'Computação Quântica',
+    desc: 'Descubra a computação quântica: qubits, superposição, entrelaçamento, algoritmos. Aprenda Qiskit, IBM Quantum e construa programas quânticos.',
     file: '30-computacao-quantica.html',
     cat: 'Tecnologia',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'CQ_HENRY_2026_MASTER',
+    salt: 'PREFIX_HENRY_2026_MASTER',
     ak: 'cq_auth',
     storagePrefix: 'cq_',
     icon: '💻',
     color: '#00BFA5',
     free: true,
-    addedTs: 1776284515689,
+    addedTs: 1776289840473,
     active: true
   },
     {
