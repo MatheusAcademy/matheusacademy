@@ -20,13 +20,13 @@ var MA_COURSES = [
     addedTs: 1743264000000,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ii.jpg',
     id: 'ii',
-    name: 'Inglês Intermediário para Fluência Real',
-    desc: 'Estrutura, vocabulário e prática oral para quem já sabe o básico e quer falar melhor.',
+    name: 'Inglês Intermediário',
+    desc: 'Aprofunde seus conhecimentos com tempos verbais avançados, phrasal verbs, conversação e expressões idiomáticas.',
     file: '12-ingles-intermediario.html',
-    cat: 'Inglês',
+    cat: 'Idiomas',
     modules: 3,
     topics: 9,
     hours: 2,
@@ -34,10 +34,10 @@ var MA_COURSES = [
     salt: 'II_HENRY_2026_MASTER',
     ak: 'ii_auth',
     storagePrefix: 'ii_',
-    icon: '🇺🇸',
+    icon: '🎓',
     color: '#388E3C',
     free: true,
-    addedTs: 1776284612117,
+    addedTs: 1776289874203,
     active: true
   },
   {
