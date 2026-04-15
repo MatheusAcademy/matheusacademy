@@ -2847,11 +2847,11 @@ var MA_COURSES = [
     addedTs: 1776284515689,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/bw.jpg',
     id: 'bw',
     name: 'Blockchain, Web3 e o Futuro da Internet',
-    desc: 'Curso sobre descentralização, contratos inteligentes, identidade digital e novas estruturas da internet.',
+    desc: 'Descentralização, contratos inteligentes, identidade digital e novas estruturas da internet.',
     file: '28-blockchain-web3.html',
     cat: 'Tecnologia',
     modules: 3,
@@ -2863,7 +2863,8 @@ var MA_COURSES = [
     storagePrefix: 'bw_',
     icon: '💻',
     color: '#F9A825',
-    addedTs: 1776024657091,
+    free: true,
+    addedTs: 1776284525670,
     active: true
   },
   {
