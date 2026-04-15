@@ -4,24 +4,330 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cibersegurança — Matheus Academy</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="shared/course.css">
 </head>
 <body>
 <script>
-var COURSE = {id:'CS',name:'Cibersegurança na Nova Era Digital',shortName:'Cibersegurança',cat:'Tecnologia e Inovação',desc:'Proteção de dados, ameaças digitais, boas práticas e fundamentos de defesa cibernética.',salt:'CS_HENRY_2026_MASTER',ak:'cs_auth',courseKey:'cs',prefix:'cs_',color:'#D32F2F',glow:'rgba(211,47,47,.35)',free:true,freeModules:1,modules:3,topics:9,hours:3,quizzes:9};
+var COURSE = {
+  id: 'CS',
+  name: 'Cibersegurança',
+  shortName: 'CyberSec',
+  cat: 'Tecnologia e Inovação',
+  desc: 'Domina defensiva cibernética: ataques comuns, criptografia, OWASP, pentesting, LGPD. Proteja sistemas contra ameaças reais. Aprenda ofensiva ética.',
+  salt: 'PREFIX_HENRY_2026_MASTER',
+  ak: 'cs_auth',
+  courseKey: 'ciberseguranca',
+  prefix: 'cs_',
+  color: '#D32F2F',
+  glow: 0.35,
+  free: true,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 3,
+  quizzes: 9
+};
+
 var MODS = [
-  {id:'cs_mod1',name:'Fundamentos de Cibersegurança',free:true,topics:[1,2,3],summary:{title:'Resumo do Módulo 1: Fundamentos de Cibersegurança',points:['A tríade CIA (Confidencialidade, Integridade, Disponibilidade) define segurança','Ameaças exploram vulnerabilidades usando vetores de ataque','Defesa em profundidade significa múltiplas camadas de proteção','Conscientização humana é o elo mais importante na cadeia de segurança']},quizFinal:[{q:'O que a letra A de CIA em cibersegurança representa?',opts:['Ataque','Autenticação','Disponibilidade','Análise'],correct:2},{q:'Qual é a diferença entre ameaça, vulnerabilidade e risco?',opts:['Não há diferença','Ameaça é intencional, vulnerabilidade é fraqueza, risco é a combinação','São sinônimos','Ameaça é maior que risco'],correct:1},{q:'Qual é o maior vetor de ataque cibernético?',opts:['Vírus em USB','Phishing e engenharia social','Meteoritos','Raios'],correct:1}]},
-  {id:'cs_mod2',name:'Ameaças Digitais e Malware',free:false,topics:[4,5,6],summary:{title:'Resumo do Módulo 2: Ameaças Digitais e Malware',points:['Malware inclui vírus, trojans, worms, ransomware e spyware','Ransomware é uma indústria bilionária de extorsão digital','Zero-days são vulnerabilidades desconhecidas e impossíveis de defender','Ataques DDoS podem derrubar serviços online inteiros']},quizFinal:[{q:'O que é um trojan de cavalo?',opts:['Um vírus de animais','Software que pareça benéfico mas é malicioso','Uma técnica grega antiga','Não existe'],correct:1},{q:'Qual é a principal diferença entre worm e vírus?',opts:['Worm é mais antigo','Vírus precisa de host, worm se autorreplica','Não há diferença','Worm é um tipo de vírus'],correct:1},{q:'Qual é o maior impacto do ransomware em 2025-2026?',opts:['Corrupção de dados','Extorsão financeira e parada operacional','Espionagem','Nenhum impacto'],correct:1}]},
-  {id:'cs_mod3',name:'Proteção e Boas Práticas',free:false,topics:[7,8,9],summary:{title:'Resumo do Módulo 3: Proteção e Boas Práticas',points:['Autenticação multifator reduz drasticamente risco de comprometimento','Criptografia forte protege dados em repouso e em trânsito','Patches e updates são a defesa mais importante contra exploração','Segurança é um processo contínuo, não um produto único']},quizFinal:[{q:'Qual é o benefício principal da autenticação multifator?',opts:['Cria mais trabalho','Impede acesso mesmo se senha for roubada','Deixa mais lento','Não tem benefício real'],correct:1},{q:'O que significa HTTPS?',opts:['HTTP com S de "Seguro"','Protocolo super rápido','Não é real','HTTP normal']},correct:0},{q:'Qual é a melhor prática para senhas em 2026?',opts:['Usar 123456','Usar frases longas aleatórias em um gerenciador','Compartilhar com colegas','Usar o mesmo em todos os sites'],correct:1}]}
-];
-var TOPICS = [
-  {id:1,name:'O que é Cibersegurança',dur:'16 min',content:`<h3>Bem-vindo ao Mundo da Proteção Digital!</h3><p>Olá! Estou extremamente feliz em ter você neste curso crítico: Cibersegurança. Em um mundo onde praticamente tudo está conectado na internet, proteção de dados se tornou a habilidade mais importante que qualquer profissional pode ter.</p><p>Cibersegurança é a prática de proteger sistemas, redes e dados contra ataques digitais. Mas vamos ser claros: não é apenas sobre instalar antivírus. É uma disciplina complexa que abrange tecnologia, processos, pessoas e mentalidade. É sobre defesa estratégica em um ambiente onde ameaças nunca dormem.</p><p>Imaginemos um cenário real de 2025: uma empresa tem dados de 10 milhões de clientes. Um atacante consegue acessá-los. Os danos não são apenas técnicos — são legais, financeiros e de reputação. Multas LGPD podem chegar a bilhões. Confiança desaparece. A empresa pode falir. Por isso, cibersegurança é sério!</p><p>A base de toda segurança é a Tríade CIA: Confidencialidade, Integridade e Disponibilidade. Vamos decompor: Confidencialidade significa que dados secretos permanecem secretos. Seu email não deveria ser lido por estranhos. Integridade significa que dados não são alterados sem permissão — se você transfere 100 reais, não pode chegar como 1000. Disponibilidade significa que sistemas funcionam quando necessários — um website derrubado é um site inseguro.</p><p>Para um banco, todos os três são críticos! Confidencialidade protege dados financeiros. Integridade garante que transações sejam corretas. Disponibilidade garante que você consegue sacar dinheiro quando necessário. Comprometer qualquer um desses é um problema.</p><p>Agora vamos aos atores: Atacantes podem ser desde script kiddies (hackers iniciantes usando ferramentas prontas) até adversários estatais com bilhões de orçamento. Estado-Nação? Sim, existem! Países desenvolvem "ciberarmas" para espionar outros governos. Corporações contratam hackers para espionar concorrentes. Criminosos vendem dados roubados na dark web.</p><p>Motivações variam: dinheiro é a mais comum (roubo de dados financeiros, ransomware), mas também há espionagem (roubar segredos comerciais), sabotagem (derrubar concorrentes) e hacktivismo (hackers políticos com uma causa).</p><p>A boa notícia? Você pode se proteger! Não precisa ser um hacker. Precisa entender princípios, seguir boas práticas e estar atento. Será que seu email usa autenticação multifator? Sua senha é única e forte? Você verifica URLs antes de clicar? Essas são as defesas que realmente importam!</p><p>Cibersegurança é também um caminho de carreira fenomenal. Especialistas em segurança ganham bem, trabalho nunca falta (demanda global é gigantesca), e você ajuda empresas e pessoas a se protegerem. É heróico, de verdade!</p><p>Uma última coisa: segurança não é "100% de segurança". Não existe isso. O objetivo é mitigar riscos a um nível aceitável. Você aceita alguns riscos menores para manter produtividade. Mas riscos grandes demais, você esmaga com defesa em profundidade.</p>`,cards:[{q:'Qual é a tríade que fundamenta toda segurança?',a:'CIA: Confidencialidade (dados secretos permanecem secretos), Integridade (dados não são alterados) e Disponibilidade (sistemas funcionam quando necessário).'}]},
-  {id:2,name:'Ameaças, Vulnerabilidades e Risco',dur:'17 min',content:`<h3>O Triângulo Perigoso: Ameaças, Vulnerabilidades e Risco</h3><p>Para proteger, precisa entender. E para entender segurança, precisa dominar três conceitos-chave que muitas pessoas confundem: ameaça, vulnerabilidade e risco.</p><p>Uma AMEAÇA é qualquer coisa que possa causar dano. Um atacante querendo roubar sua senha é uma ameaça. Um malware procurando infectar computadores é uma ameaça. Uma tempestade solar emitindo radiação que afeta eletrônicos? Também é ameaça (cibersegurança inclui desastres naturais!).</p><p>Ameaças podem ser intencionais (humanas) ou não-intencionais (naturais). Um hacker é ameaça intencional. Um funcionário que acidentalmente envia dados confidenciais para o email errado é uma ameaça não-intencional. Ambas causam problemas!</p><p>Uma VULNERABILIDADE é uma fraqueza que pode ser explorada. Um software com bug é uma vulnerabilidade. Uma senha fraca é uma vulnerabilidade. Deixar uma porta destravada é uma vulnerabilidade. Vulnerabilidades por si só não causam dano — precisam de alguém para explorar.</p><p>Um atacante esperto procura por vulnerabilidades. Se seu sistema tem um bug de segurança e ninguém sabe, ainda é fraco. Se todos sabem, é ainda mais fraco! Por isso, quando empresas descobrem bugs, tentam consertar antes que fiquem públicas.</p><p>RISCO é a probabilidade de uma ameaça explorar uma vulnerabilidade e causar impacto. Risco = Ameaça × Vulnerabilidade × Impacto. Se há ameaçante querendo entrar (ameaça), você tem uma porta destrancada (vulnerabilidade), e seus joias estão visíveis (impacto), você tem alto risco. Se a porta está trancada, risco cai para zero mesmo com ameaçante presente!</p><p>Gerenciamento de risco é a arte de equilibrar segurança com produtividade. Você não pode trancar tudo a ponto de nada funcionar. Precisa tomar decisões inteligentes sobre quais riscos reduzir, quais aceitar e quais transferir (como comprando seguro).</p><p>Existe um conceito chamado "Superfície de Ataque" — é toda a área pela qual atacantes podem tentar entrar. Quanto maior a superfície, mais riscos. Um sistema com 100 portas abertas tem superfície maior que um com 10. Quanto menos "portas" (pontos de entrada), melhor!</p><p>Por isso, organizações praticam "Princípio do Menor Privilégio" — você recebe apenas as permissões necessárias para seu trabalho. Se você trabalha em vendas, não deveria acessar o código-fonte. Se é programador, não deveria acessar dados de clientes. Limita superfície de ataque!</p><p>Outro conceito crítico é "Defense in Depth" (Defesa em Profundidade) — não confie em uma única barreira. Camadas múltiplas! Um atacante pode burlar firewall, mas enfrenta autenticação multifator. Consegue passar disso, encontra criptografia. E por aí vai. Cada camada aumenta dificuldade exponencialmente.</p><p>Por último, há um conceito chamado "Risk Acceptance" — às vezes, custo de eliminar um risco é maior que o risco em si. Uma empresa pequena pode aceitar risco baixo de ataque sofisticado porque defesa seria cara demais. Decisão de negócio legítima!</p>`,cards:[{q:'Como risco, ameaça e vulnerabilidade se relacionam?',a:'Risco é quando uma ameaça (ator malicioso) encontra uma vulnerabilidade (fraqueza) para explorar, causando impacto real.'}]},
-  {id:3,name:'Princípios de Segurança e Defesa',dur:'18 min',content:`<h3>Os Princípios que Salvam Vidas Digitais</h3><p>Agora que entendemos as ameaças, vamos aos princípios que as profissionais de segurança usam para construir defesas. Esses princípios têm décadas de comprovação!</p><p>Primeiro, "SEGURANÇA POR DESIGN". Não é adicionar segurança depois. Desde o início, produtos são pensados com segurança em mente. Um software novo é desenvolvido pensando em ataques. Um prédio é construído com câmeras desde a fundação. Segurança é feature, não afterthought!</p><p>Segundo, "CONFIE MAS VERIFIQUE". Isso é espelhado do paradigma Zero Trust moderno. Nunca assuma que algo é seguro só porque parece estar. Verifique URLs antes de clicar. Confirme identidades antes de transferir dinheiro. Um email de "seu banco" pedindo senha? Absolutamente verificar com o banco antes!</p><p>Terceiro, "PRINCÍPIO DO MENOR PRIVILÉGIO". Mencionei antes, mas é tão importante que repito. Cada usuário, programa, processo recebe apenas permissões mínimas para fazer seu trabalho. Admin não precisa de permissão de admin para verificar email. Programador não precisa acessar banco de dados de produção para testar código.</p><p>Quarto, "REDUNDÂNCIA E BACKUP". A regra de ouro é "3-2-1": três cópias de dados importantes, em dois formatos diferentes, com uma cópia offline. Por quê? Se há ransomware que criptografa tudo, você pode restaurar do backup offline. Se um disco falha, você tem dois outros. Se um local queima, você tem cópias em outro lugar!</p><p>Quinto, "MONITORAMENTO CONTÍNUO". Segurança não é um evento — é vigilância perpétua. Empresas usam SIEM (Security Information and Event Management) para ver millions de eventos de segurança por dia. Tentativas de login falhadas, transferências incomuns, acessos fora do horário — tudo é monitorado.</p><p>Sexto, "INCIDENTE RESPONSE". Mesmo com melhor defesa, ataques acontecem. Por isso, organizações têm planos de resposta. Descobriu uma invasão? Há um playbook: 1) Isolar o sistema, 2) Coletar evidência, 3) Restaurar backups, 4) Aprender a lição. Preparação salva vidas!</p><p>Sétimo, "CRIPTOGRAFIA". É seu melhor amigo! Criptografia transforma dados legíveis em código ilegível sem a chave. Mesmo que um atacante roube seus dados, não consegue ler. HTTPS em websites, encriptação de disco, senhas hashed — tudo usa criptografia.</p><p>Oitavo, "PATCHES E UPDATES". Software tem bugs. Quando bugs têm implicações de segurança, empresas lançam patches. Ignorar updates é pedir para ser hackeado! Um site que não atualiza WordPress em meses? Será explorado. Atualizar regularmente é defesa crítica número um.</p><p>Nono, "AUTHENTICAÇÃO FORTE". Senhas de 6 caracteres são piada. Senhas devem ser longas, aleatórias, únicas por site. Melhor ainda: usar gerenciador de senhas (como Bitwarden, 1Password) que gera senhas de 20+ caracteres. E obrigatoriamente: autenticação multifator! Mesmo que senha seja roubada, 2FA protege você.</p><p>Por fim, "EDUCAÇÃO CONTÍNUA". O elo mais fraco em segurança é sempre humano. Funcionário que clica em email de phishing é porta de entrada. Por isso, treinamento é crítico! Empresas fazem simulados de phishing, educam sobre social engineering, criam uma cultura de segurança.</p><p>A verdade é que segurança é jornada, não destino. Ameaças evoluem constantemente. Você precisa evoluir também. Mas com esses princípios, você consegue se proteger bem!</p>`,cards:[{q:'Qual é o conceito de "Defense in Depth"?',a:'Usar múltiplas camadas de defesa para que um atacante que consegue burlar uma camada enfrente muitas outras, aumentando segurança exponencialmente.'}]},
-  {id:4,name:'Malware: Vírus, Trojans e Ransomware',dur:'16 min',content:`<h3>O Lado Escuro: Malware em Detalhes</h3><p>Malware é software malicioso — qualquer programa criado para causar dano. Categoria abrangente: vírus, trojans, worms, ransomware, spyware, adware. Vamos entender cada um!</p><p>VÍRUS é software que se replica infectando outros programas. Precisa de host (um programa) para existir. Quando você executa programa infectado, vírus se ativa, procura outros programas para infectar. Exemplo clássico: macro vírus em Word (infecta documento Word, se replica para outros docs). Atuais: menos comuns, substituídos por worms.</p><p>WORM é malware que se autorreplica sem precisar de host. Diferente de vírus, worm é independente. Se conecta à rede, encontra outras máquinas vulneráveis, copia a si mesmo para elas. Exemplo: Wannacry em 2017 — worm que explorou vulnerabilidade Windows, infectou 200.000 computadores em uma semana! Rapidez devastadora.</p><p>TROJAN é software que parece inofensivo (jogo, ferramenta útil) mas na verdade é malicioso. "Cavalo de Tróia" da mitologia — presente bonito que continha soldados. Computador: você baixa "liberador de RAM" que prometia melhorar performance, na verdade instala spyware. Usuário baixa porque confia em fonte (ou fonte foi comprometida).</p><p>SPYWARE é malware que espiona você. Rastreia: sites que visita, senhas que digita, dados que transfere, arquivos que acessa. Vende dados para terceiros ou usa para roubo de identidade. Keylogger (registra tudo que você digita) é tipo de spyware. Facebook advertente: spyware é invisível! Usuário não sabe que está infectado.</p><p>RANSOMWARE é o vilão moderno — criptografa seus arquivos e pede dinheiro para descriptografar. 2024-2026: indústria bilionária de extorsão! Empresas são atacadas, dados criptografados, criminosos cobram resgate (às vezes 1-50 milhões!). Pior: alguns criminosos copiam dados primeiro, então cobram pelo decryption E pelo silêncio (não publicar dados).</p><p>Como ransomware funciona: 1) Infecção (email, exploit de vulnerabilidade, RDP fraco), 2) Propagação (criptografa máquinas na rede), 3) Extorsão (mostra mensagem: "seus arquivos foram criptografados, pague X bitcoins em 48h ou dados são publicados"), 4) Impacto (empresa não consegue funcionar, perda de receita).</p><p>Defesa contra ransomware: Backups offline! Se tem backup que o ransomware não consegue acessar, você restaura sem pagar. Zero-day é problema (não há patch), mas maioria funciona com vulnerabilidades conhecidas. Updates ajudam! Monitoramento detecta comportamento suspeito (criptografia em massa = alerta!).</p><p>ADWARE é menos perigoso mas irritante — mostra publicidades indesejadas. Geralmente grátis em programas ou instala quando você baixa software questionável. Alguns adware também rastreiam (espiam), vendendo dados de comportamento.</p><p>Combinação é pior! Um trojan que instala spyware que configura ransomware. Camadas de infecção. Por isso, defesa em profundidade é crítica!</p><p>Distribuição: email (anexo malicioso), websites (drive-by download), P2P (torrent), USB (physical infection). Phishing é vetor comum — email que parece legítimo com anexo malicioso. "Seu pacote chegou! Clique aqui para rastrear" → clique → infectado!</p>`,cards:[{q:'Qual é a diferença entre vírus e worm?',a:'Vírus precisa de host (programa) para se replicar, enquanto worm é independente e se autorreplica explorando vulnerabilidades de rede.'}]},
-  {id:5,name:'Autenticação Multifator e Criptografia',dur:'17 min',content:`<h3>Suas Armas Defensivas: Autenticação e Criptografia</h3><p>Se há dois conceitos que salvarão sua vida digital, são esses: Autenticação Multifator e Criptografia forte. Sério, implemente ambas hoje!</p><p>AUTENTICAÇÃO MULTIFATOR (MFA/2FA) significa: para acessar conta, precisa de mais de uma coisa. Normalmente: Algo que você sabe (senha) + Algo que você tem (phone, chave de segurança) ou Algo que você é (biometria).</p><p>Tipos: SMS (código chega por texto — menos seguro, vulnerável a SIM swap), App Authenticator (código gerado em Google Authenticator, Authy), Push notification (aprovação em seu phone), Biometria (face, fingerprint), Hardware keys (YubiKey, Google Titan Key — mais seguro!).</p><p>Por que funciona? Mesmo que senha seja roubada, atacante ainda precisa do segundo fator. Email com MFA foi hackeado? Hacker não consegue acessar sem seu phone. Extraordinário simples, extraordinário eficaz!</p><p>Pesquisa mostra: MFA reduz risco de comprometimento em 99.9%. NOVENTA E NOVE PONTO NOVE PORCENTO! Diferença entre contas MFA hackeadas é rara vs. muito comum. Vale absolutamente o inconveniente de usar código extra.</p><p>CRIPTOGRAFIA transforma dados legíveis em ilegível sem chave. Dois tipos: Simétrica (mesma chave para encriptar e decriptar) e Assimétrica (chave pública para encriptar, chave privada para decriptar).</p><p>Simétrica é rápida mas precisa compartilhar chave (desafio!). Exemplo: AES-256 (used by NSA para dados secretos). Se você tem chave de 256 bits, tempo para quebrar bruteforce? 2 elevado a 256 = número gigantesco, mais tempo do que universo existe!</p><p>Assimétrica é mais lenta mas não precisa compartilhar chave privada. Você publica chave pública, qualquer um pode encriptar com ela, mas apenas você (com chave privada) consegue decriptar. Exemplo: RSA, ECDSA. Usado em: HTTPS (encriptar conexão), emails criptografados, assinaturas digitais.</p><p>HTTPS usa híbrido: handshake assimétrico (estabelece conexão segura), depois simétrico (dados encriptados com AES rápido). Melhor dos dois mundos!</p><p>End-to-End Encryption significa: dados encriptados saem seu device, passam pela internet encriptados, chegam ao destinatário decriptados apenas lá. Servidor intermediário não consegue ler! WhatsApp, Signal usam isso. Governo odeia (não consegue ler), usuários amam (privacidade total).</p><p>Criptografia de arquivo inteiro é importante! Se você armazena em nuvem, provider também armazena a chave? Pode acessar seus dados. Zero-knowledge encryption: apenas você tem chave, nem provider consegue ler. Exemplo: Tresorit, Sync.com (diferente de Dropbox, Google Drive, OneDrive que não oferecem zero-knowledge).</p><p>Hash é "fingerprint" criptográfico de dados. SHA-256 de texto sempre produz 64 caracteres hexadecimais. Qualquer mudança mínima no texto, hash totalmente diferente. Usado para: verificar integridade (arquivo não foi alterado?), armazenar senhas (nunca armazena senha, armazena hash!).</p><p>Senhas: NUNCA, NUNCA armazene em texto plano! Use hash com salt (valor aleatório adicionado antes de hashear). User1 e User2 mesma senha = hashes diferentes (salt diferente). Defensiva contra rainbow tables (pre-computed hashes de senhas comuns)!</p>`,cards:[{q:'Como Autenticação Multifator reduz risco de comprometimento?',a:'Mesmo com senha roubada, atacante ainda precisa do segundo fator (SMS, app, biometria, chave física) para acessar, reduzindo sucesso em 99.9%.'}]},
-  {id:6,name:'Segurança em Redes e Firewalls',dur:'17 min',content:`<h3>Defendendo a Fronteira: Segurança de Rede</h3><p>Sua máquina é uma fortaleza, mas está conectada em rede. Rede é a fronteira onde maior parte dos ataques acontece! Vamos defender!</p><p>FIREWALL é primeira linha de defesa. Software ou hardware que monitora tráfego de rede: quais dados entram, quais saem. Regras simples: "Bloqueie todo tráfego de fora EXCETO TCP porta 443 (HTTPS)". Computador dentro está protegido, de fora vê apenas máquina fechada!</p><p>Tipos de firewall: Stateless (cada pacote é analisado independente) vs. Stateful (mantém rastreamento de conexões — conexão aprovada, dados relacionados são permitidos). Stateful é mais inteligente! Você abre HTTPS para site, firewall rastreia, dados de volta são permitidos automaticamente.</p><p>NAT (Network Address Translation) é truque inteligente. Seu computador tem IP privado (192.168.1.100) invisível da internet. Router traduz: quando você acessa google.com, router envia requisição como se fosse dele (10.0.0.1, IP público), Google responde ao router, router envia de volta para você. Internet não vê seu IP privado! Proteção de privacidade + dificulta ataque direcionado.</p><p>VPN (Virtual Private Network) é essencial em WiFi público. Você em café WiFi livre? VPN encripta todo tráfego: café WiFi vê apenas dados encriptados, não consegue ler. Mesmo que alguém monitore rede, não vê senha ou dados. Bons VPNs: ProtonVPN, Mullvad, ExpressVPN (paga mas confiável).</p><p>DNS é serviço que traduz nomes em IPs (google.com → 142.250.185.46). Problema: DNS não é encriptado por padrão! Alguém na rede consegue ver quais sites você visita. Solução: DoH (DNS over HTTPS) ou DoT (DNS over TLS) encriptam DNS queries. Chrome, Firefox suportam DoH agora.</p><p>DDoS (Distributed Denial of Service) é ataque que tenta derrubar site. Milhares de máquinas infectadas (botnet) enviam requisições simultâneas. Servidor fica sobrecarregado, cai. Defesa: mitigation services (Cloudflare, Akamai) filtram tráfego legítimo de DDoS.</p><p>Intrusion Detection/Prevention (IDS/IPS) monitora rede para comportamento suspeito. Padrões conhecidos de ataque? Bloqueado! Pacotes grandes incomuns? Alerta! Sistemas avançados usam Machine Learning para detectar até ataques zero-day.</p><p>VLAN (Virtual LAN) segmenta rede. Dispositivos IoT (TV inteligente, câmera) em VLAN separada, sem acesso a arquivos pessoais. Se IoT é hackeado, dano é limitado!</p><p>Zero Trust Architecture é filosofia moderna. Antigo: firewall protege perímetro, dentro é confiável. Novo: NUNCA confie, sempre verifique! Mesmo usuário interno, mesmo dentro de rede, precisar de autenticação para acessar recursos. Cada requisição é validada. Se compromisso interno acontece, dano é limitado!</p><p>Segurança wireless é crítico. WiFi desprotegido é highway aberto! Use WPA3 (protocolo mais seguro), senha super forte, desative SSID broadcast (menor proteção mas esconde rede de scanners casuais).</p>`,cards:[{q:'Como funciona Firewall Stateful comparado ao Stateless?',a:'Stateful mantém rastreamento de conexões — uma conexão aprovada permite dados relacionados automaticamente, é mais inteligente.'}]}
+  {
+    id: 'cs_mod1',
+    name: 'Fundamentos de Ataques e Defesa Cibernética',
+    free: true,
+    topics: [
+      {
+        id: 1,
+        name: 'Ataques Comuns e Vetores de Exploração',
+        dur: '20 min',
+        content: `
+        <h3>Paisagem de Ameaças: Entender para Defender</h3>
+        <p>Cibersegurança é guerra assimétrica. Atacantes precisam encontrar uma fraqueza. Defensores precisam proteger tudo. Compreender vetores de ataque é fundação para defesa efetiva. Não é suficiente conhecer tecnologia — é essencial conhecer mente do adversário.</p>
+
+        <h4>Ataques ao Nível de Rede</h4>
+        <p><strong>DDoS (Distributed Denial of Service):</strong> Inunda servidor com tráfego de múltiplas fontes, renderizando indisponível. Amplificação: usar serviços NTP, DNS, SNMP para multiplicar carga com pouco investimento. Defesa: rate limiting, WAF (Web Application Firewall), CDN (Cloudflare, Akamai detecta padrões DDoS).</p>
+
+        <p><strong>Packet Sniffing:</strong> Interceptar tráfego não-criptografado (HTTP, FTP, SMTP plano) em rede compartilhada. Extrai senhas, tokens, dados sensíveis. Defesa: sempre HTTPS/TLS, SSH em vez de Telnet, VPN em redes públicas.</p>
+
+        <p><strong>Man-in-the-Middle (MITM):</strong> Atacante intercepta comunicação entre A e B, fingindo ser ambos. Exemplo: ARP spoofing em LAN, BGP hijacking na internet, SSL stripping (remove HTTPS). Defesa: HTTPS com verificação de certificado, autenticação mútua, DNSSEC.</p>
+
+        <p><strong>Port Scanning e Network Reconnaissance:</strong> Nmap, masscan identificam portas abertas, serviços rodando, SO. Primeiro passo de ataque. Defesa: firewalls bem configurados, apenas portas necessárias abertas, IDS (Intrusion Detection System).</p>
+
+        <h4>Ataques ao Nível de Aplicação (OWASP Top 10)</h4>
+        <p><strong>1. Injection Attacks:</strong> Inserir código malicioso em input esperado.</p>
+        <ul>
+          <li><strong>SQL Injection:</strong> Input malicioso em campo que alimenta query SQL. Exemplo: username = "' OR '1'='1" contorna autenticação. Defesa: prepared statements, validação rigorosa, principle of least privilege no DB.</li>
+          <li><strong>Command Injection:</strong> Executar comandos OS através de aplicação. Defesa: evitar shell interaction, usar APIs nativas, whitelist inputs.</li>
+          <li><strong>NoSQL Injection:</strong> Exploração análoga em MongoDB, CouchDB. Defesa: frameworks ORM, input validation.</li>
+        </ul>
+
+        <p><strong>2. Broken Authentication:</strong> Sessões mal gerenciadas, senhas fracas, credentials reutilizadas, sem 2FA. Defesa: MFA obrigatório, salted+hashed passwords (bcrypt, argon2, não MD5!), rate limiting login, secure session management.</p>
+
+        <p><strong>3. Sensitive Data Exposure:</strong> PII (Personally Identifiable Information) transmitida/armazenada sem proteção. Defesa: criptografia em trânsito (TLS) e em repouso (AES-256), mascaramento de dados (mostrar últimos 4 dígitos de CC), minimizar coleta.</p>
+
+        <p><strong>4. XML External Entity (XXE):</strong> Processar XML malicioso que referencia entidades externas, causando SSRF ou DoS. Defesa: desabilitar entity processing, usar parser seguro, validar XML.</p>
+
+        <p><strong>5. Broken Access Control:</strong> Usuário pode acessar recurso que não tem permissão (escalação de privilégio). Exemplo: /api/users/123 sem verificar se usuário atual é 123 ou admin. Defesa: verificar autorização em todo endpoint, RBAC/ABAC bem definidos, audit logs.</p>
+
+        <p><strong>6. Security Misconfiguration:</strong> Defaults inseguros, features não utilizadas ativadas, headers de segurança faltando, error messages verbosas que revelam stack trace. Defesa: hardening, CI/CD que valida configuração, scanning automático.</p>
+
+        <p><strong>7. Cross-Site Scripting (XSS):</strong> Injetar JavaScript em página que executa no browser de vítima, roubando cookies, tokens, redireccionando. Tipos: Stored (persistente no DB), Reflected (apenas no request), DOM-based. Defesa: sanitizar input, Content Security Policy (CSP), HttpOnly cookies.</p>
+
+        <p><strong>8. Insecure Deserialization:</strong> Desserializar dados untrusted pode executar código. Java, Python, PHP vulneráveis. Defesa: validar fonte de dados, usar formatos simples (JSON), implementar verificação de integridade.</p>
+
+        <p><strong>9. Using Components with Known Vulnerabilities:</strong> Dependências outdated com CVEs publicadas. Defesa: manter dependencies atualizadas, SBOM (Software Bill of Materials), scanning com snyk, dependency-check.</p>
+
+        <p><strong>10. Insufficient Logging & Monitoring:</strong> Sem logs, não detecta ataques em progresso. Sem alertas, breaches levam meses para descobrir. Defesa: logs detalhados (quem, o quê, quando, de onde), centralized logging (ELK, Splunk), alertas em padrões suspeitos.</p>
+
+        <blockquote class="example">
+          <strong>📌 Caso Real:</strong> Capital One 2019: 100 milhões de registros de clientes vazados por misconfiguration em WAF de AWS. Falta de segmentation, over-permissioning, sem MFA. Multa: $80 milhões. Defesa simples teria prevenido.
+        </blockquote>
+
+        <h4>Ataques Sociais (Engineering)</h4>
+        <p><strong>Phishing:</strong> Email fingindo legitimidade ("Clique para resetar senha") levando a site falso que captura credentials. Defesa: treinamento de usuários, DMARC/SPF/DKIM para validar senders, multi-factor authentication, email filtering.</p>
+
+        <p><strong>Pretexting:</strong> Enganar alguém com historia falsa para extrair informação. Exemplo: ligação fingindo ser suporte técnico. Defesa: políticas de verificação de identidade rigorosas, treinamento de staff.</p>
+
+        <p><strong>Baiting:</strong> Deixar USB infectado no estacionamento. Defesa: conscientização, disable USB ports em endpoints sensíveis, antivirus.</p>
+
+        <blockquote class="news">
+          <strong>📰 Estatística 2026:</strong> 90% de breaches envolvem algum nível de social engineering. Defesa técnica é importante, mas humana é fraca. Treinamento contínuo é essencial.
+        </blockquote>
+
+        <h4>Cadeia de Exploração Típica</h4>
+        <ol>
+          <li><strong>Reconhecimento:</strong> Nmap, OSINT (Google dorking, public records), emails coletados.</li>
+          <li><strong>Scanning:</strong> Identificar vulnerabilidades (Nessus, OpenVAS, Qualys).</li>
+          <li><strong>Enumeração:</strong> Detalhar serviços, versões, tecnologias usadas.</li>
+          <li><strong>Exploração:</strong> Usar vulnerability conhecida (Metasploit, exploits públicos).</li>
+          <li><strong>Privilegie Escalation:</strong> Elevar de www-data a root (kernel exploits, misconfiguration sudo).</li>
+          <li><strong>Lateral Movement:</strong> Acessar outros hosts na rede (pass-the-hash, credential stuffing).</li>
+          <li><strong>Data Exfiltration:</strong> Copiar dados sensíveis.</li>
+          <li><strong>Persistence:</strong> Instalar backdoor para acesso futuro mesmo se vuln for patchada.</li>
+        </ol>
+
+        <p>Compreender esta cadeia permite implementar defesas em cada etapa!</p>
+        `,
+        cards: [
+          { q: "O que diferencia vulnerabilidade de exploração?", a: "Vulnerabilidade: fraqueza no código/config. Exploração: técnica que explora a fraqueza. Uma vulnerabilidade sem exploração prática é menos crítica." },
+          { q: "Por que SQL Injection é tão perigosa?", a: "Permite que atacante reescreva query SQL, contornando autenticação, exfiltrando dados, deletando tabelas. Uma vulnerabilidade é cataclísmica." },
+          { q: "Qual é a defesa mais simples contra OWASP Top 10?", a: "Input validation rigorosa, prepared statements, principle of least privilege, MFA, criptografia, logging, atualizações de dependências." }
+        ]
+      },
+      {
+        id: 2,
+        name: 'Criptografia: Fundamentos Matemáticos',
+        dur: '22 min',
+        content: `
+        <h3>Criptografia: A Matemática da Privacidade</h3>
+        <p>Criptografia transforma texto legível em gibberish incompreensível sem chave. Não é segurança através da obscuridade — é segurança através de matemática intratável. Mesmo quantum computers não quebram criptografia bem implementada (por séculos).</p>
+
+        <h4>Criptografia Simétrica</h4>
+        <p>Remetente e destinatário compartilham mesma chave secreta. Rápida, simples, mas distribuição de chave é difícil.</p>
+
+        <p><strong>AES (Advanced Encryption Standard):</strong> Padrão de facto. 128, 192, ou 256 bits de chave. Criptografia de bloco: divide mensagem em blocos de 128 bits, criptografa cada um. Modos: ECB (inseguro, padrão visível), CBC (cada bloco depende do anterior, requer IV), CTR (converte em stream cipher, paralelizável), GCM (adiciona autenticação).</p>
+
+        <p><strong>Desafios:</strong> Distribuir chave secreta é espinha dorsal. Como transmitir chave sem que atacante intercepte? Solução: criptografia assimétrica ou protocolo Diffie-Hellman.</p>
+
+        <blockquote class="tip">
+          <strong>💡 Regra:</strong> Nunca implemente criptografia custom. Use bibliotecas testadas (libsodium, NaCl, cryptography.io). Um erro diminuto quebra tudo.
+        </blockquote>
+
+        <h4>Criptografia Assimétrica</h4>
+        <p>Dois pares de chaves: pública (compartilhada) e privada (secreta). Dados criptografados com chave pública só decriptam com privada. Permite comunicação segura sem compartilhar chave!</p>
+
+        <p><strong>RSA:</strong> Baseado em dificuldade de fatorar números grandes. Chaves de 2048+ bits (4096 é seguro). Lento: usado principalmente para criptografar chaves simétricas curtas, não dados gigantescos. Vulnerável a implementações fracas (padding inseguro: PKCS#1 v1.5), use OAEP.</p>
+
+        <p><strong>Elliptic Curve Cryptography (ECC):</strong> Chaves menores que RSA (256 bits ECC ≈ 3072 bits RSA em segurança). ECDSA para assinatura digital. Mais rápido, menos energia. Futuro de criptografia assimétrica.</p>
+
+        <p><strong>Diffie-Hellman / ECDH:</strong> Permite dois participantes concordarem em chave secreta compartilhada mesmo que atacante veja toda comunicação. Base de TLS handshake. Magic matemático.</p>
+
+        <h4>Hashing Criptográfico</h4>
+        <p>Função unidirecional: dados → hash fixo. Impossível reverter. Qualquer mudança mínima em input muda hash completamente (avalanche effect).</p>
+
+        <p><strong>SHA-256:</strong> Padrão recomendado. 256 bits output. Criptograficamente seguro (não há ataques conhecidos). Base de Bitcoin, TLS, assinatura digital.</p>
+
+        <p><strong>SHA-3 (Keccak):</strong> Novo padrão NIST (2015), mais seguro, mais eficiente. Ainda não ubíquo.</p>
+
+        <p><strong>Uso:</strong> Verificar integridade (dados não foram alterados), armazenar senhas (salted hash, não plain hash!), assinatura digital (hash é assinado, não dados inteiros).</p>
+
+        <p><strong>Erros Comuns:</strong> MD5/SHA1 são broken (colisões encontradas), nunca usar para senhas. SHA-256(password) é rápido demais para senhas (brute-force factível), use bcrypt/argon2 (derivação de chave dura).</p>
+
+        <h4>Assinatura Digital</h4>
+        <p>Remetente criptografa hash com sua chave privada. Destinatário descriptografa com chave pública remetente. Prova que remetente assinou (autenticidade) e dados não foram alterados (integridade). Não-repúdio: remetente não pode negar.</p>
+
+        <p>Usado em: certificados SSL/TLS, documentos legais, atualizações de software, blockchain.</p>
+
+        <h4>TLS (Transport Layer Security)</h4>
+        <p>Protocolo que securiza comunicação web. HTTPS = HTTP + TLS.</p>
+
+        <p><strong>Handshake TLS 1.3 (simplificado):</strong></p>
+        <ol>
+          <li>Cliente envia supported ciphers, TLS versão.</li>
+          <li>Servidor escolhe melhor, envia certificado contendo chave pública.</li>
+          <li>Ambos executam ECDH para concordar chave simétrica de sessão.</li>
+          <li>Todo tráfego posterior é criptografado com essa chave simétrica (rápido).</li>
+          <li>Server envia finished message assinada. Client verifica assinatura usando certificado.</li>
+        </ol>
+
+        <p><strong>Certificados:</strong> Arquivo contendo chave pública + identidade. Assinados por autoridade (CA: Certificate Authority). Browser confia em CAs raiz pré-instaladas. Sem assinatura de CA confiada = warning. Validade limitada (ex: 1 ano).</p>
+
+        <p><strong>Certificado Pinning:</strong> App fixa certificado específico esperado, não confia em qualquer CA. Reduz risk de CA comprometida.</p>
+
+        <blockquote class="example">
+          <strong>📌 Exemplo:</strong> Ao acessar seu banco (https://banco.com.br), browser verifica certificado do servidor. Certificado afirma "sou banco.com.br" e é assinado por AC Raiz Brasileira. Browser confia em AC Raiz porque está em sistema operacional. Tráfego é criptografado. Man-in-the-middle não consegue interceptar porque não tem chave privada da AC para falsificar certificado.
+        </blockquote>
+
+        <p>Neste tópico, você entende a matemática que protege internet. Próximo: implementação prática!</p>
+        `,
+        cards: [
+          { q: "Qual é a principal diferença entre criptografia simétrica e assimétrica?", a: "Simétrica: mesma chave para encriptar/decriptar, rápida mas difícil distribuir. Assimétrica: chave pública/privada, lenta mas resolve distribuição." },
+          { q: "Por que usar bcrypt/argon2 em vez de SHA-256 simples para senhas?", a: "Porque SHA-256 é rápido, brute-force viável. bcrypt/argon2 são lentos por design, com cost factor ajustável, tornando ataques impraticáveis." },
+          { q: "Como TLS protege contra man-in-the-middle?", a: "TLS criptografa com chave negociada que atacante não consegue derivar sem chave privada do servidor. Certificado autentica servidor." }
+        ]
+      },
+      {
+        id: 3,
+        name: 'LGPD e Conformidade Regulatória',
+        dur: '16 min',
+        content: `
+        <h3>LGPD: Lei Geral de Proteção de Dados Pessoais</h3>
+        <p>LGPD é lei brasileira (em vigor desde Aug 2020, com multas desde Aug 2021) que regulamenta processamento de dados pessoais. Análoga ao GDPR europeu. Falha em conformidade = multas severas (até 2% da receita) + danos morais + danos à reputação.</p>
+
+        <h4>Princípios Fundamentais da LGPD</h4>
+        <p><strong>Finalidade:</strong> Dados coletados apenas para fim específico informado. Não pode depois usar para outro fim sem consentimento novo.</p>
+
+        <p><strong>Necessidade:</strong> Coletar apenas dados necessários. Se não precisa CPF, não coleta. Minimização de dados.</p>
+
+        <p><strong>Transparência:</strong> Informar claramente como dados serão usados. Política de privacidade precisa ser legível, não legalês incompreensível.</p>
+
+        <p><strong>Segurança:</strong> Implementar medidas técnicas e organizacionais para proteger dados. Criptografia, access control, incident response.</p>
+
+        <p><strong>Consentimento:</strong> Baseado em consentimento livre, informado e revogável. Cookie banners não são consentimento — é consentimento prévio explícito (opt-in, não opt-out).</p>
+
+        <p><strong>Acesso e Portabilidade:</strong> Titular pode pedir cópia de seus dados. Empresa tem 15 dias para fornecer em formato estruturado, legível.</p>
+
+        <p><strong>Direito ao Esquecimento:</strong> Titular pode pedir exclusão de seus dados (com exceções: requisito legal, exercício de direito, interesse público).</p>
+
+        <h4>Papéis e Responsabilidades</h4>
+        <p><strong>Controlador:</strong> Entidade que determina fins e meios do processamento. Empresa principal responsável por conformidade.</p>
+
+        <p><strong>Operador:</strong> Processa dados em nome do controlador (ex: cloud provider, agência de marketing). Responsabilidade compartilhada.</p>
+
+        <p><strong>Encarregado de Dados (DPO):</strong> Ponto focal para conformidade, investigação de incidentes, privacidade por design.</p>
+
+        <h4>Direitos do Titular de Dados</h4>
+        <ul>
+          <li><strong>Confirmação de Processamento:</strong> Posso confirmar se meus dados estão sendo processados?</li>
+          <li><strong>Acesso:</strong> Quero cópia de meus dados.</li>
+          <li><strong>Correção:</strong> Dados estão incorretos, corrija.</li>
+          <li><strong>Eliminação (Direito ao Esquecimento):</strong> Apague meus dados.</li>
+          <li><strong>Portabilidade:</strong> Quero meus dados em formato estruturado.</li>
+          <li><strong>Oposição:</strong> Não concordo com esse processamento.</li>
+          <li><strong>Não Sofrer Decisão Automatizada:</strong> Decisão automatizada sem revisão humana (ex: recusa de empréstimo) pode ser contestada.</li>
+        </ul>
+
+        <h4>Obrigações Práticas das Empresas</h4>
+        <p><strong>Privacidade por Design:</strong> Desde início, considerar proteção de dados. Encriptação, minimização, acesso controlado. Não adicionar depois.</p>
+
+        <p><strong>Data Mapping:</strong> Documentar onde dados fluem. Quem acessa? Por quanto tempo? Onde armazenado?</p>
+
+        <p><strong>Avaliação de Impacto (DPIA):</strong> Para processamentos de alto risco (dados sensíveis, monitoramento em massa, etc), fazer avaliação formal de privacidade.</p>
+
+        <p><strong>Contrato com Operador:</strong> Se contratar cloud provider ou agência, contrato deve especificar responsabilidades de segurança de dados.</p>
+
+        <p><strong>Incidente Response:</strong> Plano de ação para data breach. Notificar ANPD em 72 horas de descoberta. Notificar titulares se risco alto.</p>
+
+        <p><strong>Registro de Processamento:</strong> Manter documentação de processamentos, fins, receptores, retenção.</p>
+
+        <blockquote class="news">
+          <strong>📰 Multas Reais 2024-2026:</strong> ANPD começou aplicar multas significativas. Instagram (~R$10 milhões por ads targeting menores), WhatsApp (~R$100 milhões por compartilhamento de dados), Uber (~R$7 milhões por falta de segurança). Conformidade agora é requisito, não opcional.
+        </blockquote>
+
+        <h4>Dados Sensíveis</h4>
+        <p>Categoria especial de dados que exigem proteção extra: origem racial, étnica, religião, filiação política, genética, saúde, biometria, dado de crianças. Processamento restrito apenas se necessário e com consentimento adicional.</p>
+
+        <h4>Implicações Técnicas de LGPD</h4>
+        <p><strong>Criptografia Obrigatória:</strong> Dados pessoais devem estar encriptados em repouso e em trânsito.</p>
+
+        <p><strong>Direito ao Esquecimento = Deletion Challenges:</strong> Como deletar dado de sistema de 10 anos com backups? Política de retenção clara é essencial.</p>
+
+        <p><strong>Portabilidade = Export API:</strong> Sistema precisa de endpoint que exporte dados em JSON/CSV estruturado.</p>
+
+        <p><strong>Audit Logs:</strong> Quem acessou dados pessoais, quando, por quê. Investigação de incidente requer rastreabilidade.</p>
+
+        <blockquote class="example">
+          <strong>📌 Cenário:</strong> Seu e-commerce coleta email de clientes. Está em conformidade? (1) Política privacidade clara? (2) Armazena encriptado? (3) Tem plano incident? (4) Permite opt-out? (5) Processa dentro LGPD? Falha em qualquer ponto = risco de multa.
+        </blockquote>
+
+        <p>LGPD não é apenas legal — é proteger confiança de clientes. Privacidade bem-feita é vantagem competitiva!</p>
+        `,
+        cards: [
+          { q: "Qual é a diferença entre controlador e operador de dados segundo LGPD?", a: "Controlador determina fins e meios, é responsável principal. Operador processa em nome do controlador (ex: cloud provider). Responsabilidade compartilhada." },
+          { q: "Qual é o prazo para responder a direito de acesso em LGPD?", a: "15 dias. Se complexo, pode estender por mais 15 dias." },
+          { q: "Quais são as obrigações técnicas de uma empresa para estar em conformidade LGPD?", a: "Criptografia dados sensíveis, minimização, privacidade por design, audit logs, incident response, contrato com operadores, data mapping, DPIA para processamentos sensíveis." }
+        ]
+      }
+    ],
+    summary: {
+      title: 'Defesa Cibernética Prática',
+      points: [
+        'OWASP Top 10 cobre vulnerabilidades mais críticas em aplicações web. SQL Injection, broken auth, sensitive data exposure, XSS ainda dominam breaches',
+        'Criptografia é matemática comprovada: AES (simétrica), RSA/ECC (assimétrica), SHA/bcrypt (hashing)',
+        'TLS securiza internet: handshake estabelece chave compartilhada, certificados autenticam servidores',
+        'LGPD brasileiro impõe conformidade legal e multas severas. Privacidade por design, consentimento explícito, direitos de titulares',
+        'Segurança é process contínuo: atacantes evoluem, defesas precisam evoluir, patching é contínuo'
+      ]
+    },
+    quizFinal: [
+      { q: "O que é SQL Injection e por que é critica?", opts: ["Erro de digitação", "Inserir SQL malicioso em input, contorna autenticação, exfiltra/deleta dados", "Problema de rede", "Apenas em versões antigas"], correct: 1 },
+      { q: "Qual é a diferença entre autenticação e autorização?", opts: ["Nenhuma diferença", "Autenticação verifica 'você é quem diz ser'. Autorização verifica 'você pode fazer isso?'", "Autorização é obsoleta", "Apenas para admin"], correct: 1 },
+      { q: "Por que criptografia assimétrica resolve problema de distribuição de chave?", opts: ["Não resolve nada", "Chave pública pode ser compartilhada abertamente, só chave privada é secreta. Elimina problema de distribuir chave secreta", "Simétrica é melhor", "Não há problema de distribuição"], correct: 1 }
+    ]
+  },
+
+  {
+    id: 'cs_mod2',
+    name: 'Pentesting Ético e Red Teaming',
+    free: false,
+    topics: [4, 5, 6],
+    summary: {
+      title: 'Ofensiva Ética: Encontre Vulnerabilidades Antes de Inimigos',
+      points: [
+        'Pentesting é ataque autorizado em seu próprio sistema ou cliente para descobrir vulnerabilidades',
+        'Fases: reconhecimento, scanning, enumeração, exploração, pós-exploração, reporting',
+        'Ferramentas: Nmap, Metasploit, Burp Suite, OWASP ZAP, Kali Linux',
+        'Red teaming simula adversário real, diferente de pentesting limitado. Visa mimetizar real attacker',
+        'Legalia: sempre ter permissão escrita, escopo claro, data de início/fim'
+      ]
+    },
+    quizFinal: [
+      { q: "Qual é a diferença entre pentesting e red teaming?", opts: ["Nenhuma", "Pentesting é ataque técnico limitado. Red teaming simula adversário real, mais criativo, sem limites técnicos", "Red teaming é antiquado", "Ambos são ilegais"], correct: 1 },
+      { q: "Por que sempre precisa de permissão escrita para pentesting?", opts: ["Não precisa", "Porque sem permissão é hacking criminoso, não ofensiva ética. Precisa de ROE claro e assinado", "Email verbal é suficiente", "Apenas para penetração profunda"], correct: 1 },
+      { q: "Qual ferramenta é mais útil para reconhecimento inicial em pentesting?", opts: ["Metasploit apenas", "Nmap (port scanning, OS fingerprinting) + OSINT (whois, shodan, google dorking)", "Qualquer ferramenta", "Não há ferramentas boas"], correct: 1 }
+    ]
+  },
+
+  {
+    id: 'cs_mod3',
+    name: 'Incident Response e Zero Trust',
+    free: false,
+    topics: [7, 8, 9],
+    summary: {
+      title: 'Responder a Ataques e Assumir Compromisso',
+      points: [
+        'Incident Response: plano formal para detectar, conter, erradicar, recuperar, aprender de breaches',
+        'SIEM (Security Information Event Management) centraliza logs de toda infraestrutura',
+        'Zero Trust: não confia em ninguém por padrão, mesmo tráfego interno. Verify everything',
+        'Threat Intelligence: conhecer inimigos, tactics, techniques, malware signatures',
+        '2026: ataques são inevitáveis, foco em reduzir impacto e tempo de resposta'
+      ]
+    },
+    quizFinal: [
+      { q: "O que é Zero Trust Security?", opts: ["Confiar em todos por padrão", "Nunca confiar por padrão. Verificar autenticação/autorização em toda comunicação, até interna. Assume compromisso sempre possível", "Conceito antigo", "Não é viável implementar"], correct: 1 },
+      { q: "Qual é o principal objetivo de Incident Response Plan?", opts: ["Ignorar incidentes", "Detectar rápido, conter dano, erradicar ameaça, recuperar, aprender para evitar futuro", "Apenas documentar", "Responsabilizar único culpado"], correct: 1 },
+      { q: "Por que SIEM é crítico em infraestrutura moderna?", opts: ["Não é importante", "Centraliza logs de múltiplas fontes, detecta padrões anormais automaticamente, facilitando investigação", "Apenas para compliance", "Substitui outras defesas"], correct: 1 }
+    ]
+  }
 ];
 </script>
 <script src="shared/course-engine.js"></script>
