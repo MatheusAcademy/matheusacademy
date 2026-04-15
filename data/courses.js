@@ -3082,11 +3082,11 @@ var MA_COURSES = [
     addedTs: 1776024717245,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ai.jpg',
     id: 'ai',
     name: 'Inteligência Artificial do Presente ao Futuro',
-    desc: 'Curso introdutório e estratégico sobre IA, aplicações atuais, impactos no trabalho e tendências para os próximos anos.',
+    desc: 'Curso introdutório sobre IA, aplicações atuais, impactos no trabalho e tendências futuras.',
     file: '21-inteligencia-artificial.html',
     cat: 'Tecnologia',
     modules: 3,
@@ -3098,7 +3098,8 @@ var MA_COURSES = [
     storagePrefix: 'ai_',
     icon: '💻',
     color: '#0277BD',
-    addedTs: 1776024723027,
+    free: true,
+    addedTs: 1776284564854,
     active: true
   },
     {
