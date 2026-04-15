@@ -2954,24 +2954,24 @@ var MA_COURSES = [
     addedTs: 1776024679069,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/in.jpg',
     id: 'in',
-    name: 'Inglês para Apresentações e Networking',
-    desc: 'Como se apresentar, participar de eventos, argumentar e criar conexões profissionais em inglês.',
+    name: 'Inglês para Apresentações',
+    desc: 'Domine apresentações impactantes em inglês: estrutura, transições, storytelling e engajamento de público',
     file: '20-ingles-apresentacoes.html',
-    cat: 'Inglês',
+    cat: 'Idiomas',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'IN_HENRY_2026_MASTER',
+    salt: 'in_HENRY_2026_MASTER',
     ak: 'in_auth',
     storagePrefix: 'in_',
-    icon: '🇺🇸',
+    icon: '🎓',
     color: '#311B92',
     free: true,
-    addedTs: 1776284569532,
+    addedTs: 1776289897305,
     active: true
   },
   {
