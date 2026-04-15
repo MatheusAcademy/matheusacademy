@@ -2779,23 +2779,24 @@ var MA_COURSES = [
     addedTs: 1776289887838,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/af.jpg',
     id: 'af',
-    name: 'Autoconfiança, Postura e Identidade Forte',
-    desc: 'Trabalha segurança pessoal, imagem, decisão, postura emocional e fortalecimento interno.',
+    name: 'Autoconfiança',
+    desc: 'Construa autoconfiança sólida através da autoeficácia, linguagem corporal poderosa e pequenas vitórias. Domine a psicologia comportamental de Bandura e transforme sua autoimagem.',
     file: '38-autoconfianca.html',
     cat: 'Esportes & Alta Performance',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'AF_HENRY_2026_MASTER',
+    salt: 'af_HENRY_2026_MASTER',
     ak: 'af_auth',
     storagePrefix: 'af_',
     icon: '🏆',
     color: '#AD1457',
-    addedTs: 1776024636090,
+    free: true,
+    addedTs: 1776289915216,
     active: true
   },
   {
