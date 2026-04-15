@@ -2818,11 +2818,11 @@ var MA_COURSES = [
     addedTs: 1776024642034,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/pd.jpg',
     id: 'pd',
     name: 'Produtividade Inteligente e Gestão do Tempo',
-    desc: 'Curso voltado para organização, prioridades, foco, eliminação de desperdícios e execução eficiente.',
+    desc: 'Organização, prioridades, foco, eliminação de desperdícios e execução eficiente.',
     file: '33-produtividade.html',
     cat: 'Esportes & Alta Performance',
     modules: 3,
@@ -2834,7 +2834,8 @@ var MA_COURSES = [
     storagePrefix: 'pd_',
     icon: '🏆',
     color: '#2E7D32',
-    addedTs: 1776024646951,
+    free: true,
+    addedTs: 1776290005053,
     active: true
   },
       {
