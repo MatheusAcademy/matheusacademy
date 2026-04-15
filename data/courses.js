@@ -3092,24 +3092,24 @@ var MA_COURSES = [
     addedTs: 1776024717245,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ai.jpg',
     id: 'ai',
-    name: 'Inteligência Artificial do Presente ao Futuro',
-    desc: 'Curso introdutório sobre IA, aplicações atuais, impactos no trabalho e tendências futuras.',
+    name: 'Inteligência Artificial',
+    desc: 'Domine os fundamentos de Machine Learning, Deep Learning e aplicações práticas de IA. Aprenda algoritmos, treine modelos e entenda como as máquinas aprendem.',
     file: '21-inteligencia-artificial.html',
     cat: 'Tecnologia',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'AI_HENRY_2026_MASTER',
+    salt: 'PREFIX_HENRY_2026_MASTER',
     ak: 'ai_auth',
     storagePrefix: 'ai_',
     icon: '💻',
     color: '#0277BD',
     free: true,
-    addedTs: 1776284564854,
+    addedTs: 1776289950565,
     active: true
   },
       {
