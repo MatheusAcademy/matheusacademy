@@ -2759,23 +2759,24 @@ var MA_COURSES = [
     addedTs: 1776289879074,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/lp35.jpg',
     id: 'lp35',
-    name: 'Liderança Pessoal e Tomada de Decisão',
-    desc: 'Mostra como assumir responsabilidade, decidir melhor, agir com clareza e conduzir a própria vida com direção.',
+    name: 'Liderança Pessoal',
+    desc: 'Domine a liderança pessoal através dos 7 Hábitos de Stephen Covey. Construa autogestão, defina visão clara, viva seus valores, e desenvolva integridade inquestionável.',
     file: '39-lideranca-pessoal.html',
     cat: 'Esportes & Alta Performance',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'LP_HENRY_2026_MASTER',
+    salt: 'lp_HENRY_2026_MASTER',
     ak: 'lp_auth',
     storagePrefix: 'lp_',
     icon: '🏆',
     color: '#00695C',
-    addedTs: 1776024630964,
+    free: true,
+    addedTs: 1776289887838,
     active: true
   },
   {
