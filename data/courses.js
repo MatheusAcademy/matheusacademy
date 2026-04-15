@@ -2907,11 +2907,11 @@ var MA_COURSES = [
     addedTs: 1776284540641,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/cn.jpg',
     id: 'cn',
     name: 'Computação em Nuvem na Prática',
-    desc: 'Explica como funcionam cloud computing, armazenamento, escalabilidade, serviços digitais e infraestrutura moderna.',
+    desc: 'Cloud computing, armazenamento, escalabilidade e infraestrutura moderna.',
     file: '25-computacao-nuvem.html',
     cat: 'Tecnologia',
     modules: 3,
@@ -2923,7 +2923,8 @@ var MA_COURSES = [
     storagePrefix: 'cn_',
     icon: '💻',
     color: '#1565C0',
-    addedTs: 1776024673797,
+    free: true,
+    addedTs: 1776284545608,
     active: true
   },
   {
