@@ -3368,11 +3368,11 @@ var MA_COURSES = [
     addedTs: 1776284677933,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ts.jpg',
     id: 'ts',
-    name: 'Teologia Sistemática Essencial',
-    desc: 'As grandes doutrinas cristãs: Deus, pecado, salvação, igreja, Espírito Santo, Cristo e eternidade.',
+    name: 'Teologia Sistemática',
+    desc: 'Exposição coerente de todas as doutrinas cristãs em seu inter-relacionamento',
     file: '08-teologia-sistematica.html',
     cat: 'Bíblia / Teologia',
     modules: 3,
@@ -3385,7 +3385,7 @@ var MA_COURSES = [
     icon: '✝️',
     color: '#1565C0',
     free: true,
-    addedTs: 1776284635952,
+    addedTs: 1776289850514,
     active: true
   },
       {
