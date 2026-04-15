@@ -1653,13 +1653,13 @@ var MA_COURSES = [
     addedTs: 1775832778905,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/iv.jpg',
     id: 'iv',
-    name: 'Inglês para Viagens e Situações Reais',
-    desc: 'Inglês prático para aeroporto, hotel, restaurante, compras e emergências.',
+    name: 'Inglês para Viagens',
+    desc: 'Aprenda inglês prático para viajar com confiança! Frases essenciais, negociação, emergências e cultura local.',
     file: '14-ingles-viagens.html',
-    cat: 'Inglês',
+    cat: 'Idiomas',
     modules: 3,
     topics: 9,
     hours: 2,
@@ -1667,10 +1667,10 @@ var MA_COURSES = [
     salt: 'IV_HENRY_2026_MASTER',
     ak: 'iv_auth',
     storagePrefix: 'iv_',
-    icon: '🇺🇸',
+    icon: '🎓',
     color: '#F57C00',
     free: true,
-    addedTs: 1776284599960,
+    addedTs: 1776289830321,
     active: true
   },
   {
