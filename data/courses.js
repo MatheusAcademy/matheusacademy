@@ -1651,13 +1651,13 @@ var MA_COURSES = [
     addedTs: 1775832778905,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/iv.jpg',
     id: 'iv',
-    name: 'Investimentos para Iniciantes',
-    desc: 'Aprenda os fundamentos para começar a investir, entender risco e retorno, conhecer os principais ativos e construir uma base sólida para tomar decisões financeiras mais inteligentes.',
-    file: 'investimentos-iniciantes.html',
-    cat: 'Finanças & Economia',
+    name: 'Inglês para Viagens e Situações Reais',
+    desc: 'Inglês prático para aeroporto, hotel, restaurante, compras e emergências.',
+    file: '14-ingles-viagens.html',
+    cat: 'Inglês',
     modules: 3,
     topics: 9,
     hours: 2,
@@ -1665,9 +1665,10 @@ var MA_COURSES = [
     salt: 'IV_HENRY_2026_MASTER',
     ak: 'iv_auth',
     storagePrefix: 'iv_',
-    icon: '💰',
-    color: '#588157',
-    addedTs: 1775832781951,
+    icon: '🇺🇸',
+    color: '#F57C00',
+    free: true,
+    addedTs: 1776284599960,
     active: true
   },
   {
