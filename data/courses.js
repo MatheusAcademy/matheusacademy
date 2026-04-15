@@ -829,23 +829,24 @@ var MA_COURSES = [
     addedTs: 1775831005243,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/cr.jpg',
     id: 'cr',
-    name: 'Comunicação no Relacionamento',
-    desc: 'Curso focado em diálogo, escuta, resolução de conflitos e construção de entendimento entre o casal.',
-    file: '40-comunicacao-relacionamento.html',
-    cat: 'Família & Relacionamentos',
+    name: 'Cristologia: Jesus do Texto à Doutrina',
+    desc: 'Estudo sobre a pessoa, missão, natureza e obra de Jesus Cristo nas Escrituras.',
+    file: '09-cristologia.html',
+    cat: 'Bíblia / Teologia',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'CR_HENRY_2026_MASTER',
     ak: 'cr_auth',
     storagePrefix: 'cr_',
-    icon: '👨‍👩‍👧‍👦',
-    color: '#f77f00',
-    addedTs: 1775831007594,
+    icon: '✝️',
+    color: '#AD1457',
+    free: true,
+    addedTs: 1776284629786,
     active: true
   },
   {
