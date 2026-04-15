@@ -3112,24 +3112,24 @@ var MA_COURSES = [
     addedTs: 1776284564854,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/hp.jpg',
     id: 'hp',
-    name: 'Alta Performance para Vida e Carreira',
-    desc: 'Foco, energia, execução, metas e construção de desempenho acima da média.',
+    name: 'Alta Performance',
+    desc: 'Desbloqueie seu potencial máximo através de neurociência aplicada, deep work estratégico e rotinas de atletas de elite. Aprenda os princípios científicos que separam os melhores do resto.',
     file: '31-alta-performance.html',
     cat: 'Esportes & Alta Performance',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'HP_HENRY_2026_MASTER',
-    ak: 'hp_auth',
+    salt: 'salt_HP_HENRY_2026_MASTER',
+    ak: 'HP_auth',
     storagePrefix: 'hp_',
     icon: '🏆',
     color: '#E65100',
     free: true,
-    addedTs: 1776284520660,
+    addedTs: 1776289944591,
     active: true
   },
       {
