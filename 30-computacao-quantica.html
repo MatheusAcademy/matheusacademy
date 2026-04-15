@@ -3,28 +3,1107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Computação Quântica para Inovadores — Matheus Academy</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<title>Computação Quântica — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="shared/course.css">
 </head>
 <body>
 <script>
-var COURSE = {id:'CQ',name:'Computação Quântica para Inovadores',shortName:'Computação Quântica',cat:'Tecnologia e Inovação',desc:'Introdução acessível à computação quântica: conceitos, potencial e desafios.',salt:'CQ_HENRY_2026_MASTER',ak:'cq_auth',courseKey:'cq',prefix:'cq_',color:'#00BFA5',glow:'rgba(0,191,165,.35)',free:true,freeModules:1,modules:3,topics:9,hours:3,quizzes:9};
+var COURSE = {
+  id:'CQ',
+  name:'Computação Quântica',
+  shortName:'cq',
+  cat:'Tecnologia e Inovação',
+  desc:'Descubra a computação quântica: qubits, superposição, entrelaçamento, algoritmos. Aprenda Qiskit, IBM Quantum e construa programas quânticos.',
+  salt:'PREFIX_HENRY_2026_MASTER',
+  ak:'cq_auth',
+  courseKey:'computacao-quantica',
+  prefix:'cq_',
+  color:'#00BFA5',
+  glow:0.35,
+  free:true,
+  freeModules:1,
+  modules:3,
+  topics:9,
+  hours:3,
+  quizzes:9
+};
 var MODS = [
-  {id:'cq_mod1',name:'Fundamentos da Mecânica Quântica e Computação',free:true,topics:[1,2,3],summary:{title:'Resumo do Módulo 1: Conceitos Fundamentais',points:['Mecânica quântica descreve comportamento da matéria em nível atômico com regras não-intuitivas','Qubits podem estar em superposição de 0 e 1 simultaneamente, diferente de bits clássicos','Emaranhamento permite qubits trabalharem em correlação perfeita independente distância','Computadores quânticos exploram essas propriedades para resolver certos problemas exponencialmente mais rápido']},quizFinal:[{q:'O que é um qubit?',opts:['Uma moeda de computador quântico','Unidade de informação quântica que pode ser 0, 1 ou ambos simultaneamente','Byte em português','Um tipo de CPU eletrônico'],correct:1},{q:'O que é superposição?',opts:['Posição superior de algo','Propriedade de estar em múltiplos estados simultaneamente até medição','Um tipo de Internet rápida','Apenas um conceito teórico sem aplicação prática'],correct:1},{q:'Qual propriedade torna computadores quânticos potencialmente poderosos?',opts:['Tamanho menor','Capacidade de explorar superposição e emaranhamento para processamento paralelo','Temperatura zero obrigatória','Apenas pode resolver problemas com números pares'],correct:1}]},
-  {id:'cq_mod2',name:'Algoritmos Quânticos e Aplicações',free:false,topics:[4,5,6],summary:{title:'Resumo do Módulo 2: Algoritmos',points:['Algoritmo de Shor quebra criptografia RSA exponencialmente mais rápido que computadores clássicos','Algoritmo de Grover busca em base de dados não-estruturada 4x mais rápido','Simulação quântica permite estudar moléculas e materiais que não podem ser simulados classicamente','Vantagem quântica existe apenas para problemas específicos, não todos os problemas']},quizFinal:[{q:'O que é algoritmo de Shor?',opts:['Algoritmo para pintura de quadros','Algoritmo que quebra criptografia RSA muito mais rápido','Algoritmo para processar imagens','Um método de compressão de dados'],correct:1},{q:'Qual problema o algoritmo de Grover resolve?',opts:['Busca ordenada de lista','Busca não-ordenada 4x mais rápido que método clássico','Apenas encontra números primos','Não resolve nenhum problema real'],correct:1},{q:'Onde computadores quânticos oferecem vantagem real?',opts:['Todos os problemas igualmente','Apenas problemas específicos como simulação molecular e otimização','Apenas para jogos','Ainda nenhum problema prático'],correct:1}]},
-  {id:'cq_mod3',name:'Desafios, Futuro e Era Quântica',free:false,topics:[7,8,9],summary:{title:'Resumo do Módulo 3: Realidade Prática',points:['Decoerência quântica é desafio técnico principal que destrói informação quântica','Escalabilidade é obstruída porque aumentar qubits exponencialmente aumenta erro','Computadores quânticos atuais são NISQ (ruidosos, intermediários, escala) com utilidade limitada','Próxima década verá progresso, verdadeira vantagem quântica prática em 10-15 anos']},quizFinal:[{q:'O que é decoerência quântica?',opts:['Aumento de volume','Colapso de superposição por interferência ambiental destruindo informação quântica','Um tipo de radiação','Apenas problema teórico não real'],correct:1},{q:'Qual é o estado atual de computadores quânticos?',opts:['Completamente maduros e usados em todos lugar','NISQ - ruidosos, intermediários, pequena escala, com potencial limitado hoje','Apenas ficção científica','Quebrados e sem progresso'],correct:1},{q:'Quando é esperada vantagem quântica prática significativa?',opts:['Nunca virá','Já foi atingida completamente','Próximos 10-15 anos em problemas específicos','Apenas em 200+ anos']},{correct:2}]}
-];
-var TOPICS = [
-  {id:1,name:'Mecânica Quântica: Mundo Peculiar do Muito Pequeno',dur:'15 min',content:`<h3>Bem-vindo ao Mundo Estranho da Mecânica Quântica</h3><p>Computação quântica é construída sobre mecânica quântica, ramo da física que descreve como mundo funciona em escala atômica. Aviso: é estranho. Muito estranho. Contra-intuitivo ao máximo. Mas é a realidade.</p><p>Realidade em escala normal (sua cozinha, seu carro) segue leis clássicas de Newton. Você joga bola, ela sai. Objeto está em um lugar ou outro. Tudo é determinístico. Você conhece posição e velocidade, você conhece futuro.</p><p>Realidade em escala quântica (átomos, elétrons, fótons) é diferente. Partículas agem estranho. Um elétron não tem posição definida até você medir. Ele existe em estado nebuloso chamado 'superposição'. Quando você mede, colapsa para um estado definido. É como realidade espera sua observação para decidir o que é.</p><p>Experimento clássico de dupla fenda demonstra. Você tem duas fendas. Você dispara elétrons. Se você não observa qual fenda, padrão de interferência sugere que elétron passa ambas fendas simultaneamente. Se você observa qual fenda, elétron passa apenas uma. Observação muda resultado! Consciência interfere em realidade? Físicos debatem interpretação, mas efeito é real.</p><p>Probabilidade governa. Você não pode saber exatamente onde elétron está, apenas probabilidade de estar em certa região. Equação de Schrödinger (equação fundamental de mecânica quântica) descreve como essa probabilidade evolui. Há muita matemática complexa, mas entender conceitual é suficiente aqui.</p><p>Incerteza é fundamental. Princípio da Incerteza de Heisenberg diz que você não pode conhecer simultaneamente posição e momentum (velocidade) com precisão infinita. Tradeoff existe. Quanto mais precisamente você conhece posição, menos precisamente você conhece velocidade. Isso não é limitação do instrumento, é limitação fundamental do universo.</p><p>Emaranhamento quântico é talvez mais peculiar. Dois elétrons podem ser emaranhados: seu spins são correlacionados perfeitamente mesmo se separados por bilhões de km. Medir um afeta instantaneamente o outro. Einstein chamou disso 'ação assustadora à distância'. Estranha? Sim. Testada experimentalmente? Sim. Funciona? Sim.</p>`,cards:[{q:'O que é superposição quântica?',a:'Propriedade de uma partícula quântica existir em múltiplos estados simultaneamente até ser observada/medida, quando colapsa em um estado.'}]},
-  {id:2,name:'Qubits: Unidades de Computação Quântica',dur:'15 min',content:`<h3>Qubits: Bits que Vivem em Múltiplos Universos</h3><p>Computador clássico usa bits: 0 ou 1. Uma sequência de bits representa informação. Qubit é análogo quântico. Qubit pode ser 0, 1, ou qualquer superposição de ambos.</p><p>Visualizar é difícil. Imagine moeda clássica: é cara ou coroa. Qubit é como moeda quântica girando no ar. Enquanto gira, é tanto cara quanto coroa simultaneamente. Quando você a pega (mede), é apenas cara ou coroa. Mas durante suspensão, ambas coexistem.</p><p>Potência está em escala. Um bit clássico representa um de dois estados. Dois bits representam um de quatro estados (00, 01, 10, 11). 300 bits representam um de 2^300 estados (número astronômico). Com qubits, dois qubits em superposição representam todos quatro estados simultaneamente. 300 qubits representam 2^300 estados simultaneamente. Essa é paralelismo quântico—o coração do poder quântico.</p><p>Medição é problema. Se você tem 300 qubits em superposição de 2^300 estados, quando você mede, colapsa para um estado único. Você obtém apenas um resultado, não 2^300 simultaneamente. Valor da computação quântica é que certos algoritmos amplificam probabilidade do resultado correto antes de medir. Você mede, colapse ocorre no estado correto 99% das vezes.</p><p>Como criar qubits? Várias abordagens: (1) Supercondutores (IBM, Google): circuitos especiais resfriados a -273°C comportam-se quanticamente. (2) Fotônicos: fótons isolados são qubits naturais. (3) Íons aprisionados: íons carregados capturados em campo eletromagnético. (4) Sistemas neutros: átomos em redes ópticas. Cada abordagem tem trade-offs.</p><p>Coerência é crítica. Qubits em superposição precisam manter coerência para computação funcionar. Mas ambiente interfere: vibração, calor, radiação. Interferência destrói superposição (decoerência). Qubits atuais perdem coerência em microsegundos. Computação deve ser rápida e dentro da janela de coerência.</p><p>Erro é onipresente. Diferente de computadores clássicos onde bit é claramente 0 ou 1, qubit pode sofrer erro silencioso. Decoerência pode flipped de 0 para 1 sem avisar. Detecção de erro quântico é possível mas complexa (requer múltiplos qubits para codificar um qubit lógico). Escalabilidade sofre.</p>`,cards:[{q:'Como qubits se diferem de bits clássicos?',a:'Qubits podem existir em superposição de 0 e 1 simultaneamente, enquanto bits são sempre definitivamente 0 ou 1.'}]},
-  {id:3,name:'Superposição e Emaranhamento: Propriedades Mágicas',dur:'15 min',content:`<h3>Superposição e Emaranhamento: Exploração Quântica</h3><p>Superposição e emaranhamento são duas propriedades que tornam computação quântica potencialmente revolucionária. Entender ambas é chave.</p><p>Superposição permite paralelismo massivo. N qubits em superposição representam 2^N estados simultaneamente. Quando você executa operação no estado superposto, operação é aplicada a todos 2^N estados parallelamente. Compare com computador clássico onde você processa um estado por vez. Para N grande (digamos, 300), vantagem é 2^300 vezes parallelismo. Nunca foi possível assim.</p><p>Emaranhamento permite correlação. Quando qubits são emaranhados, o estado de um afeta o estado do outro, não importa a distância. Se você mede qubit A e obtém 0, você sabe instantaneamente qubit B (se emaranhados corretamente) é 1. Isso permite algoritmos que exploram correlação entre qubits para extrair informação.</p><p>Algoritmo de Deutsch-Jozsa ilustra bem. Você tem função que mapeia n bits para um bit. Pergunta: a função sempre retorna o mesmo? Computador clássico precisa verificar 2^(n-1) + 1 inputs para ter certeza (até prova conclusiva). Computador quântico com algoritmo Deutsch-Jozsa responde em UMA chamada de função. Superposição e emaranhamento combinadas criam vantagem exponencial.</p><p>Interferência quântica é o truque. Dentro de algoritmo, qubits interferem construtivamente (amplificando respostas corretas) e destrutivamente (cancelando respostas erradas). Quando medição ocorre, você obtém resposta correta com probabilidade elevada. Essência de algoritmo quântico útil é orquestrar interferência para amplificar resposta desejada.</p><p>Decoerência é inimigo. Emaranhamento é frágil. Qualquer interferência do ambiente destrói emaranhamento. Temperatura, vibração, campos eletromagnéticos—tudo causa decoerência. É por isso computadores quânticos precisam isolamento extremo: refrigeração a -273°C, blindagem eletromagnética, câmaras de vácuo. Manutenção é pesada.</p><p>Vantagem quântica é condicional. Nem todo problema se beneficia. Problemas que se beneficiam: (1) Problemas de busca em espaços imensos, (2) Simulação de sistemas quânticos, (3) Otimização em paisagens complexas. Problemas que não: (1) Processamento de texto, (2) Compilação de código, (3) Navegação web. Computador quântico não substitui clássico, complementa para problemas específicos.</p>`,cards:[{q:'Como emaranhamento quântico cria vantagem computacional?',a:'Permite algoritmos explorarem correlação entre qubits para extrair informação de forma que seria impossível em computadores clássicos.'}]},
-  {id:4,name:'Algoritmo de Shor: Quebrando Criptografia',dur:'15 min',content:`<h3>Algoritmo de Shor: Ameaça Criptográfica Quântica</h3><p>Algoritmo de Shor é provavelmente algoritmo quântico mais importante descoberto. Ele quebra a criptografia que protege internet: RSA (Rivest-Shamir-Adleman).</p><p>RSA é baseado em dificuldade de fatoração de números grandes. Para quebrar criptografia RSA, você precisa fatorar número de 2048 bits (número com 617 dígitos). Computador clássico levaria milênios. Segurança da internet depende dessa dificuldade.</p><p>Algoritmo de Shor soluciona fatoração exponencialmente mais rápido. Computador quântico com ~2000 qubits poderia quebrar RSA-2048 em horas. Não milênios. HORAS. Isso é ameaça existencial a criptografia atual.</p><p>Como funciona? Algoritmo usa transformada discreta de Fourier quântica combinada com algoritmos clássicos. Exploração de superposição permite buscar período de função exponencialmente mais rápido. Uma vez período é encontrado, fatoração segue. Detalhes matemáticos são complexos, mas intuição: superposição permite busca em espaço exponencialmente maior.</p><p>Implicações são profundas. Se computador quântico de 2000 qubits for construído, toda criptografia RSA da internet fica comprometida. Bancos, governos, dados sensíveis—tudo acessível. Essa ameaça é conhecida como 'Q-Day': dia quando computador quântico é construído.</p><p>Defesa existe: criptografia pós-quântica. Algoritmos que não são quebráveis por computadores quânticos estão sendo padronizados. NIST selecionou algoritmos pós-quânticos a serem adotados globalmente. Transição já começou. Empresas que ainda usam RSA em 2030 sofrerão brecha.</p><p>Timeline é incerto. Google anunciou 'vantagem quântica' em 2019 com processador de 54 qubits. Mas foi vantagem limitada em problema não prático. Chegar em 2000 qubits logicamente corretos (não físicos) pode levar 10-20 anos ainda. Tecnologia está acelerando. Preparação é prudência.</p>`,cards:[{q:'O que o algoritmo de Shor consegue fazer?',a:'Quebrar criptografia RSA exponencialmente mais rápido que computadores clássicos, uma ameaça a toda criptografia atual.'}]},
-  {id:5,name:'Algoritmo de Grover e Busca Quântica',dur:'15 min',content:`<h3>Algoritmo de Grover: Busca Ampliada</h3><p>Se Shor é sobre quebra de criptografia, Grover é sobre busca. Algoritmo de Grover busca em base de dados não-ordenada 4 vezes mais rápido que o melhor algoritmo clássico possível. Parece pequeno perto de Shor, mas aplicações são vasta.</p><p>Configuração: você tem base de dados de N itens não-organizados. Você procura por item específico. Computador clássico precisa verificar em média N/2 itens (não há informação que reduz espaço busca). Grover faz isso em sqrt(N) iterações. Para base de dados de 1 bilhão itens, clássico = 500 milhões busca, Grover = 31623 buscas. Aceleração é 4x multiplicada, não exponencial como Shor, mas significante.</p><p>Exemplo prático: validação de senhas. Você tem senha de 256 bits. Computador clássico testando força bruta: 2^256 senhas potenciais. Computador quântico com Grover: sqrt(2^256) = 2^128 tentativos. Ainda imenso (2^128), mas é raiz quadrada de impossível (2^256). Segredo cryptográfico baseado em força bruta fica comprometida.</p><p>Outro exemplo: otimização. Você tem problema com N soluções potenciais. Você quer encontrar a melhor. Algoritmo clássico testa todas, O(N). Grover o reduz a O(sqrt(N)). Para problema de 1 bilhão soluções, 4 vezes mais rápido.</p><p>Amplificação de amplitude é truque central. Dentro de algoritmo, amplitude da solução correta é amplificada enquanto amplitudes das soluções erradas são diminuídas. Quando você mede no final, você obtém solução correta com probabilidade muito alta. Iterações múltiplas de amplificação aumentam confiabilidade.</p><p>Utilidade é mais geral que Shor. Shor só quebra números específicos. Grover é aplicável a muitos problemas de busca e otimização. Porém, aceleração é 'apenas' 4x, não exponencial. Para maioria de negócios, computador clássico 4x mais rápido é legal, não revolucionário.</p><p>Aplicações em otimização são onde Grover brilha. Problema de viajante (encontrar rota mais curta), problema de satisfazibilidade (encontrar valores que satisfazem restrições), problemas de agendamento. Tudo tem busca em espaço grande. Grover oferece aceleração quadrática sistemática.</p>`,cards:[{q:'Qual é a aceleração do algoritmo de Grover comparado com clássico?',a:'Aceleração quadrática: sqrt(N) iterações ao invés de N/2, o que equivale a 4x mais rápido para problemas de busca.'}]},
-  {id:6,name:'Simulação Quântica: O Primeiro Killer App?',dur:'15 min',content:`<h3>Simulação Quântica: Computador Quântico Descobre Medicamentos</h3><p>Talvez primeira aplicação prática genuína de computadores quânticos seja simulação quântica. Porque? Porque simular comportamento quântico em computador clássico é exponencialmente difícil.</p><p>Exemplo: molécula de nitrogênio (N2) tem muitos elétrons. Simular comportamento de todos os elétrons em computador clássico requer potência que não existe. Descrição exata requer 2^N estados para N elétrons. Para molécula média, N é centenas. Impossível simular classicamente.</p><p>Computador quântico oferece solução elegante. Você coloca N qubits (um por elétron). Sistema quântico naturalmente simula comportamento quântico de moléculas. Você pode consultar simulação para determinar propriedades: energias de estado, reatividade, etc.</p><p>Aplicação prática: design de medicamentos. Você quer desenhar molecula que se liga a proteína alvo. Propiedades de ligação dependem de comportamento quântico de elétrons. Simulação quântica permite descobrir medicamentos em meses ao invés de anos. Bilhões em custos de pesquisa são economizados.</p><p>Outro aplicação: materiais. Você quer material com condutividade superior. Propriedades emergem de comportamento quântico de elétrons na rede cristalina. Simulação quântica permite explorar espaço de designs gigante, encontrando materiais com propriedades desejadas. Baterias mais eficientes, supercondutores mais quentes—tudo possível via simulação quântica.</p><p>Terceira aplicação: catalisadores. Reação química depende de caminho energético de reação. Simulação quântica permite calcular caminho exato, descobrir melhores catalisadores que aceleram reação. Processo industrial mais eficiente, economia de energia e custo.</p><p>Timeline para utilidade: simulação de moléculas medianas (50-100 átomos) é esperada em 5-10 anos com 1000-5000 qubits. Esse é aplicativo real viável. Industria farmacêutica já está investindo em computadores quânticos. Primeira medicação descoberta via simulação quântica pode ser comercializada por 2030-2035.</p>`,cards:[{q:'Por que simulação quântica é aplicação viável de computadores quânticos?',a:'Porque simular comportamento quântico em computador clássico é exponencialmente difícil, mas computador quântico simula naturalmente via superposição.'}]},
-  {id:7,name:'Decoerência: O Maior Desafio',dur:'15 min',content:`<h3>Decoerência Quântica: Destruindo Sonhos Quânticos</h3><p>Se computadores quânticos são potentes, por que não temos supercomputadores quânticos em toda universidade? Porque: decoerência. É desafio técnico que torna construção de computador quântico praticamente impossível hoje.</p><p>Decoerência é o colapso não-intencional de superposição. Qubit está em superposição (ambos 0 e 1). Vibração do prédio, calor, fóton aleatório do ambiente—qualquer coisa interfere com qubit. Superposição é destruída. Qubit colapsa para 0 ou 1 aleatoriamente. Computação é arruinada.</p><p>Tempo de coerência é quanto tempo qubit mantém superposição sem ser perturbado. Qubits supercondutores: microsegundos (10^-6 segundos). Qubits de íons aprisionados: segundos. Qubits fotônicos: nanossegundos. Todos são curtos. Computação precisa ser completada dentro dessa janela.</p><p>Velocidade vs profundidade: você tem janela de coerência (digamos 100 microsegundos). Você precisa executar operação que requer 1 milhão de porta lógica. Cada porta lógica leva 10 nanosegundos. Total = 10 microsegundos. Você tem margem, mas pequena. Qualquer erro causa decoerência antes de terminar.</p><p>Escalabilidade é problemática. Um qubit é fácil manter coerente. 100 qubits? Difícil. 1000 qubits? Quase impossível. Porque mais qubits = mais superfície exposta a interferência. Taxa de erro cresce exponencialmente com número de qubits. Computador quântico de 1000 qubits pode ter 10% de erro por operação. Inútil para computação precisa.</p><p>Correção de erro quântico é solução. Você codifica um qubit lógico em múltiplos qubits físicos (redundância). Se um qubit físico sofre erro, outros detectam e corrigem. Problema: correção requer ainda mais qubits e operações. Para correção efetiva, você precisa ~1000 qubits físicos por qubit lógico. Escala horrível.</p><p>Pesquisa está atacando esse problema. Refrigeração mais eficiente, isolamento melhor, materiais mais estáveis. Melhorias estão acontecendo. Google reportou diminuir taxa de erro em 2x a cada 2 anos. Se tendência continua, computadores quânticos práticos estão em visão. Próximos 5-10 anos são críticos.</p>`,cards:[{q:'O que é decoerência quântica e por que é problema?',a:'Colapso não-intencional de superposição causado por interferência ambiental, destruindo informação quântica e arruinando computação.'}]},
-  {id:8,name:'NISQ Era: Computadores Quânticos Ruidosos de Hoje',dur:'15 min',content:`<h3>NISQ: Não é Perfeito, Mas é Progresso</h3><p>NISQ significa 'Noisy Intermediate-Scale Quantum'—computadores quânticos de hoje. Ruidosos (alta taxa de erro), intermediários (dezenas a centenas de qubits), escala intermediária (não grande escala). Mais poderosos que protótipos, menos que futuro ideal.</p><p>Estado do arte hoje (2024): IBM tem processador de 433 qubits. Google tem processador de 70 qubits (menor, mas de melhor qualidade). Photonic systems têm menos qubits mas melhor fidelidade. Nenhum é pronto para quebrar criptografia ou simular moléculas grandes.</p><p>Aplicações de NISQ são limitadas. Problemas com 40-50 qubits pueden ter vantagem quântica em problemas artificiais. Aplicações práticas ainda são distantes. Simulação de moléculas reais requer 1000+ qubits de qualidade alta. Otimização industrial requer 10000+ qubits. Estamos longe.</p><p>Hype é grande. Media reporta 'vantagem quântica' enquanto computador quântico bate melhor algoritmo clássico em problema criado artificialmente sem relevância prática. Verdadeira vantagem prática (problema real onde quântico é melhor) ainda é não demonstrada conclusivamente.</p><p>Por que investir agora? Porquê corrida é internacional. China investe bilhões. EUA investe bilhões. Europa investe bilhões. Quem chegar primeiro em vantagem prática ganha vantagem geopolítica. Além disso, pesquisa em quântica avança toda física. Descobertas podem impactar além de computação.</p><p>Startups emergiram. IonQ, Rigetti, D-Wave (adiabático qubits) competem com gigantes. Combinação de esforço está acelerando desenvolvimento. Progresso é real, mesmo se aplicação prática ainda é distante.</p><p>Próximas 3-5 anos serão críticas. Se progresso em redução de erro continua, vantagem prática em problemas de simulação quântica pode estar visível por 2027-2028. Se progresso estagna, hype deflaciona, financiamento diminui. Stakes são altos.</p>`,cards:[{q:'O que significa NISQ em computação quântica?',a:'Noisy Intermediate-Scale Quantum - computadores quânticos atuais com alta taxa de erro, escala intermediária (dezenas-centenas de qubits).'}]},
-  {id:9,name:'Preparando-se para Era Quântica: Carreira e Oportunidades',dur:'15 min',content:`<h3>Seu Futuro em Computação Quântica</h3><p>Computação quântica é campo emergente. Se você está aprendendo agora, você está no chão de entrada. Oportunidades são imensas.</p><p>Carreiras em quântica incluem: (1) Pesquisador em física quântica - trabalhe em universidades ou labs (IBM, Google, Microsoft) melhorando hardware. Requer PhD em física. Altamente recompensado, trabalho é fundamental. (2) Engenheiro de qubits - desenhe e construa qubits físicos. Híbrido de engenharia e física. (3) Pesquisador em algoritmos - desenhe algoritmos quânticos novos. Requer forte background em CS e matemática. (4) Quantum software developer - escreva código para computadores quânticos existentes. Mais acessível, mercado crescente.</p><p>Ferramentas para aprender: Qiskit (IBM) permite escrever algoritmos quânticos em Python. Cirq (Google) é alternativa. ProjectQ é framework geral. Todos são open source e gratuitos. Tutorial:com básico leva algumas horas.</p><p>Primeiro passo prático: visite IBM Quantum Experience (quantum-computing.ibm.com). Acesse computador quântico real na nuvem gratuitamente. Escreva simples algoritmo. Execute. Veja resultado. Você não computou nada revolucionário, mas você foi quântico developer por dia.</p><p>Segundo passo: aprenda Qiskit profundamente. YouTube tem tutoriais excelentes. Documentação IBM é clara. Construa algoritmos pequenos. Simule em software. Quando simples, execute em hardware IBM real. Iteração é chave.</p><p>Terceiro passo: especialize. Se fascina por algoritmos, aprofunde em teoria. Se fascina por hardware, aprenda física. Se fascina por aplicações, aprenda domínio específico (química, finanças, otimização).</p><p>Oportunidades de trabalho: empresas como IBM, Google, Microsoft, IonQ, Rigetti estão contratando. Universities estão começando a oferecer cursos. Startups quânticas estão levantando capital. Se você tem conhecimento, oportunidades existem.</p><p>Timing é ótimo. Câmara quântica ainda está aberta para entrada. Em 5 anos, quando aplicações práticas emergem, demanda explodirá. Aprender agora enquanto ainda obscuro, posiciona você como expert futuro. É oportunidade rara.</p>`,cards:[{q:'Qual é o primeiro passo prático para aprender computação quântica?',a:'Visitar IBM Quantum Experience, acessar computador quântico real na nuvem gratuitamente, e escrever seu primeiro algoritmo quântico em Qiskit.'}]}
+  {
+    id:'cq_mod1',
+    name:'Fundamentos de Computação Quântica',
+    free:true,
+    topics:[
+      {
+        id:1,
+        name:'Qubits: Bits Que São Dois Ao Mesmo Tempo',
+        dur:'15 min',
+        content:`
+<h3>O Qubit: Unidade Mágica de Computação Quântica</h3>
+<p>Computador clássico usa bits (0 ou 1). Computador quântico usa qubits (quantum bits), que podem ser 0 E 1 simultaneamente. Impossível? Bem-vindo à mecânica quântica.</p>
+
+<h4>Bit Clássico vs Qubit</h4>
+<ul>
+<li><strong>Bit:</strong> 0 ou 1. Determinístico. Binary.</li>
+<li><strong>Qubit:</strong> 0 e 1 ao mesmo tempo. Probabilístico. Superposição.</li>
+</ul>
+
+<blockquote class="example">
+<strong>💭 Pensamento:</strong>
+<br>
+<br>Bit = Moeda que caiu: cara ou coroa (1 ou 0)
+<br>Qubit = Moeda girando no ar: ainda não decidiu cara ou coroa (0 E 1)
+<br>
+<br>Quando você olha (mede), colapsa para cara ou coroa.
+<br>Até lá, é ambos.
+</blockquote>
+
+<h4>Superposição: O Truque Mágico</h4>
+<p>Um qubit em superposição pode ser 0 e 1 simultaneamente.</p>
+<ul>
+<li><strong>1 qubit:</strong> 2 estados simultâneos (0, 1)</li>
+<li><strong>2 qubits:</strong> 4 estados (00, 01, 10, 11) - tudo simultâneo</li>
+<li><strong>3 qubits:</strong> 8 estados simultâneos</li>
+<li><strong>n qubits:</strong> 2^n estados simultâneos</li>
+</ul>
+
+<blockquote class="tip">
+<strong>📊 Poder Exponencial:</strong>
+<br>
+<br>10 qubits = 1024 estados simultâneos
+<br>20 qubits = 1 milhão de estados simultâneos
+<br>300 qubits = mais estados que átomos no universo (10^90)
+<br>
+<br>Impossível representar classicamente. Aí está a magia!
+</blockquote>
+
+<h4>Estados Quânticos: Notação Bra-Ket</h4>
+<p>Física quântica usa notação |⟩ (ket):</p>
+<ul>
+<li>|0⟩ = qubit em estado 0</li>
+<li>|1⟩ = qubit em estado 1</li>
+<li>|+⟩ = superposição igual de 0 e 1 (50/50)</li>
+<li>|ψ⟩ = estado geral (qualquer combinação)</li>
+</ul>
+
+<blockquote class="example">
+<strong>📝 Estado de Superposição:</strong>
+<br>
+<br>|ψ⟩ = 0.7|0⟩ + 0.7|1⟩
+<br>
+<br>Interpretação: 70% chance de medir 0, 70% chance de medir 1
+<br>Nota: precisa que probabilidades somem a 1 (normalizado)
+</blockquote>
+
+<h4>Entrelaçamento: Dois Qubits Dançando Juntos</h4>
+<p>Entrelaçamento (entanglement) é quando qubits estão conectados: medir um afeta o outro instantaneamente.</p>
+<blockquote class="tip">
+<strong>🔗 Exemplo de Entrelaçamento:</strong>
+<br>
+<br>Bell State (estado maximamente entrelaçado):
+<br>|Ψ⟩ = (|00⟩ + |11⟩) / √2
+<br>
+<br>Interpretação:
+<br>50% chance de medir |00⟩ (ambos 0)
+<br>50% chance de medir |11⟩ (ambos 1)
+<br>
+<br>NUNCA você vê |01⟩ ou |10⟩!
+<br>Qubits estão correlated, mesmo separados por um parsec.
+<br>
+<br>Einstein chamou isso "ação fantasmagórica à distância".
+</blockquote>
+
+<h4>Medição: O Colapso Inevitável</h4>
+<p>Até você medir, qubit está em superposição. Quando mede, colapsa em 0 ou 1.</p>
+<ul>
+<li>Antes de medir: |ψ⟩ = 0.6|0⟩ + 0.8|1⟩</li>
+<li>Após medir: ou |0⟩ ou |1⟩ (perdeu superposição)</li>
+<li>Probabilidade: 36% (0.6²) e 64% (0.8²)</li>
+</ul>
+
+<p>Isso é feature, não bug. Medição é como explorar possibilidades em paralelo.</p>
+
+<h4>Porque Computadores Quânticos São Poderosos</h4>
+<p>Computador clássico processa bits sequencialmente. Quântico explora superposição:</p>
+
+<blockquote class="example">
+<strong>🚀 Exemplo: Buscar em Lista de 1M Items</strong>
+<br>
+<br>Clássico: 500k iterações em média (busca linear)
+<br>Quântico: √1M = 1k iterações (Algoritmo de Grover)
+<br>
+<br>Speedup: 500x!
+<br>
+<br>Para problemas maiores (NP-hard):
+<br>Clássico: bilhões de anos
+<br>Quântico: minutos (teórico)
+</blockquote>
+
+<p>Computação quântica não é 1000x mais rápida em TUDO. É exponencialmente mais rápida em problemas específicos: busca, fatoração, simulação quântica.</p>
+        `,
+        cards:[
+          {q:"O que é um qubit?",a:"Quantum bit que pode ser 0 e 1 simultaneamente (superposição), colapsando ao medir"},
+          {q:"Quantos estados 3 qubits representam simultaneamente?",a:"8 estados (2^3 = 8), todos em superposição até medição"},
+          {q:"O que é entrelaçamento quântico?",a:"Conexão entre qubits onde medir um afeta o outro instantaneamente"}
+        ]
+      },
+      {
+        id:2,
+        name:'Portas Quânticas: Lógica de Outro Universo',
+        dur:'20 min',
+        content:`
+<h3>Portas Quânticas: Operações em Qubits</h3>
+<p>Se qubits são bits mágicos, portas quânticas são operações mágicas. Elas manipulam estados de qubits preservando superposição.</p>
+
+<h4>Porta Pauli-X: O NOT Quântico</h4>
+<p>Inverte qubit: |0⟩ → |1⟩, |1⟩ → |0⟩</p>
+<blockquote class="example">
+<strong>🔄 Porta X:</strong>
+<br>
+<br>Entrada: |0⟩
+<br>Saída: |1⟩
+<br>
+<br>Entrada: 0.6|0⟩ + 0.8|1⟩ (superposição)
+<br>Saída: 0.6|1⟩ + 0.8|0⟩ (flip mantendo superposição!)
+</blockquote>
+
+<h4>Porta Hadamard: Criar Superposição</h4>
+<p>Cria superposição igual (50/50):</p>
+<ul>
+<li>|0⟩ → |+⟩ = (|0⟩ + |1⟩) / √2</li>
+<li>|1⟩ → |-⟩ = (|0⟩ - |1⟩) / √2</li>
+</ul>
+
+<blockquote class="tip">
+<strong>📊 Hadamard (H):</strong>
+<br>
+<br>Entrada: |0⟩ (estado definido)
+<br>H | Saída: |+⟩ (superposição 50/50)
+<br>H | H | Saída: |0⟩ (volta ao original!)
+<br>
+<br>Hadamard é reversível e fundamental.
+</blockquote>
+
+<h4>Porta CNOT: Entrelaçamento Controlado</h4>
+<p>CNOT (Controlled NOT) cria entrelaçamento entre dois qubits:</p>
+<ul>
+<li>Se qubit 1 = 1, inverte qubit 2</li>
+<li>Se qubit 1 = 0, qubit 2 fica igual</li>
+</ul>
+
+<blockquote class="example">
+<strong>🔗 Criar Bell State com CNOT:</strong>
+<br>
+<br>Entrada: |0⟩|0⟩
+<br>Depois H no primeiro: (|0⟩ + |1⟩) / √2 |0⟩
+<br>Depois CNOT: (|00⟩ + |11⟩) / √2 ← Bell State!
+<br>
+<br>Agora qubits estão entrelaçados.
+</blockquote>
+
+<h4>Porta Z e Fases</h4>
+<p>Z adiciona "fase" (rotação invisível). Não muda probabilidade, mas afeta interferência.</p>
+<ul>
+<li>|0⟩ → |0⟩ (inalterado)</li>
+<li>|1⟩ → -|1⟩ (muda fase)</li>
+</ul>
+
+<p>Fases parecem inúteis até você entender interferência: fases construtivas amplificam respostas, destrutivas cancelam.</p>
+
+<h4>Circuito Quântico: Visão Gráfica</h4>
+<blockquote class="example">
+<strong>📋 Exemplo: Criar Superposição e Medir</strong>
+<br>
+<br>q0: ─────────
+<br>     ┌───┐
+<br>q0:─┤ H ├─
+<br>     └─┬─┘
+<br>c0: ──■──
+<br>
+<br>Significado:
+<br>1. Linha q0 é qubit 0
+<br>2. Porta H cria superposição
+<br>3. Símbolo medição coloca resultado em bit clássico c0
+<br>4. Resultado é 0 ou 1 (50/50)
+</blockquote>
+
+<h4>Universalidade de Portas</h4>
+<p>Assim como portas clássicas (NOT, AND) permitem qualquer computação, portas quânticas (H, T, CNOT, etc) permitem qualquer algoritmo quântico.</p>
+<ul>
+<li>Set universal: H, T, CNOT (qualquer algoritmo possível)</li>
+<li>Profundidade: número de camadas de portas (quântico é rápido porque poucos camadas)</li>
+<li>Fidelidade: qualidade da porta (real hardware é ~99.9%, perfeito é 100%)</li>
+</ul>
+
+<blockquote class="quote">
+"Portas quânticas são operações reversíveis em superposição. Isso é a beleza e o desafio da computação quântica."
+</blockquote>
+
+<p>Cada porta adiciona latência (~1-100 nanosegundos), então circuitos curtos são críticos.</p>
+        `,
+        cards:[
+          {q:"O que a porta Hadamard faz?",a:"Cria superposição igual: |0⟩ → (|0⟩ + |1⟩)/√2, fundamental para QC"},
+          {q:"O que é uma porta CNOT?",a:"Controlled NOT, inverte qubit 2 se qubit 1 é 1, cria entrelaçamento"},
+          {q:"Por que fase importa em computação quântica?",a:"Fases criam interferência: construtiva amplifica respostas, destrutiva cancela"}
+        ]
+      },
+      {
+        id:3,
+        name:'Algoritmos Quânticos: Shor e Grover',
+        dur:'20 min',
+        content:`
+<h3>Algoritmos Quânticos: Velocidade Exponencial</h3>
+<p>Hardware é meio. Algoritmos são a graça. Dois algoritmos quânticos revolucionários: Shor (quebra criptografia) e Grover (busca rápida).</p>
+
+<h4>Algoritmo de Shor: Fatoração Exponencialmente Rápida</h4>
+<p>Problema: Fatorar número grande N = p × q</p>
+<ul>
+<li><strong>Clássico:</strong> N = 2048 bits → bilhões de anos</li>
+<li><strong>Quântico (Shor):</strong> N = 2048 bits → 1 dia</li>
+</ul>
+
+<p>Impacto: RSA 2048-bit é seguro hoje. Com Shor, inseguro em 10 anos quando QC estiver pronto.</p>
+
+<blockquote class="example">
+<strong>🔐 Por que Shor Funciona:</strong>
+<br>
+<br>1. Clássico: testa p = 2, 3, 5, 7, ... (sequencial, exponencial)
+<br>2. Shor: usa FFT quântica para encontrar período (paralelo com superposição)
+<br>3. Período → fatores → quebra!
+<br>
+<br>Speedup: polinômio → exponencial
+</blockquote>
+
+<h4>Algoritmo de Grover: Busca Quadrática</h4>
+<p>Problema: Encontrar x em lista desordenada de N items</p>
+<ul>
+<li><strong>Clássico:</strong> N/2 buscas em média</li>
+<li><strong>Grover:</strong> √N buscas</li>
+</ul>
+
+<p>Para N = 1M: √N = 1000 (vs 500k média clássica) = 500x mais rápido</p>
+
+<blockquote class="tip">
+<strong>🔍 Algoritmo de Grover Passo a Passo:</strong>
+<br>
+<br>1. Inicializar superposição igual de todos N items
+<br>2. Marcar item correto (aplicar -1 de fase)
+<br>3. Amplificar amplitude do item correto (interferência)
+<br>4. Repetir 2-3 uns ~√N vezes
+<br>5. Medir: colapsa para item correto!
+<br>
+<br>Amplitude amplification é núcleo da magia quântica.
+</blockquote>
+
+<h4>Aplicações Práticas</h4>
+<p><strong>Shor (Criptografia):</strong></p>
+<ul>
+<li>Quebra RSA, ECC, qualquer crypto baseada em hardness de fatoring</li>
+<li>Post-quantum crypto é defesa (NIST já padronizou alternativas)</li>
+<li>Deadline: 2030s quando QC tem 1000+ qubits estáveis</li>
+</ul>
+
+<p><strong>Grover (Otimização):</strong></p>
+<ul>
+<li>Buscar em banco de dados (medicina: diagnosticar doença)</li>
+<li>SAT solver (achar satisfação de fórmula booleana)</li>
+<li>Otimização discreta (melhor rota, schedule, etc)</li>
+</ul>
+
+<h4>Algoritmos Variacionais: QAOA e VQE</h4>
+<p>Algoritmos híbridos (quantum + clássico) que rodam bem em hardware atual:</p>
+<ul>
+<li><strong>VQE:</strong> Encontrar mínimo de função (química quântica)</li>
+<li><strong>QAOA:</strong> Resolver otimização combinatorial (travelling salesman, max-cut)</li>
+</ul>
+
+<blockquote class="example">
+<strong>⚗️ VQE para Química:</strong>
+<br>
+<br>Meta: Encontrar energia mais baixa de molécula
+<br>Clássico: simulação exata é impossível (exponencial)
+<br>VQE: usar QC para preparar ansatz, clássico otimiza parâmetros
+<br>
+<br>Resulta: computar propriedades de drogas/materiais em minutos
+</blockquote>
+
+<h4>Limite Fundamental: NISQ</h4>
+<p>NISQ = Noisy Intermediate-Scale Quantum (2020-2030)</p>
+<ul>
+<li>Qubits: 50-1000 (vs bilhões em clássico)</li>
+<li>Fidelidade: 99-99.9% (imperfeito, ruído)</li>
+<li>Coerência: 1-100 microsegundos (qubits "esquecem" rápido)</li>
+<li>Limitação: apenas ~100-1000 gates antes ruído dominar</li>
+</ul>
+
+<p>NISQ é era atual. Útil para problemas pequenos. Escalabilidade é desafio.</p>
+
+<blockquote class="quote">
+"A diferença entre 'quântica hype' e 'quântica realidade' é entender limitações NISQ. Somos ainda primeiros dias."
+</blockquote>
+
+<p>Algoritmos quânticos são área ativa de pesquisa. Novo algoritmo descoberto pode ser disruptivo.</p>
+        `,
+        cards:[
+          {q:"Qual é a vantagem do algoritmo de Shor?",a:"Fatorar número de 2048 bits em 1 dia (vs bilhões de anos classicamente), quebra RSA"},
+          {q:"Quantas buscas Grover precisa em lista de 1M items?",a:"√1M = 1000 (vs 500k clássico), speedup 500x"},
+          {q:"O que é NISQ?",a:"Noisy Intermediate-Scale Quantum (2020-2030): 50-1000 qubits, 99-99.9% fidelidade, ~100 gates antes ruído"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Qubits, Portas e Algoritmos',
+      points:[
+        'Qubit é superposição de 0 e 1, colapsando ao medir; n qubits = 2^n estados simultâneos',
+        'Portas quânticas (H, X, CNOT) manipulam superposição; CNOT cria entrelaçamento',
+        'Shor quebra criptografia em 1 dia (vs bilhões anos), Grover busca √N (vs N/2)',
+        'NISQ (2020-2030): 50-1000 qubits, ruído é desafio, ainda primeiros dias'
+      ]
+    },
+    quizFinal:[
+      {q:"10 qubits representam quantos estados simultâneos?",opts:["10","100","512","1024"],correct:3},
+      {q:"Porta Hadamard cria:",opts:["Entrelaçamento","Superposição igual","Fase","Medição"],correct:1},
+      {q:"Algoritmo Shor é ameaça a qual cripto?",opts:["SHA-256","RSA/ECC","AES","Nenhum ainda"],correct:1}
+    ]
+  },
+  {
+    id:'cq_mod2',
+    name:'Qiskit e IBM Quantum Cloud',
+    free:false,
+    topics:[
+      {
+        id:4,
+        name:'Qiskit: Framework Quântico Pythônico',
+        dur:'20 min',
+        content:`
+<h3>Qiskit: Sua Porta para Computação Quântica</h3>
+<p>Qiskit é framework Python da IBM para programação quântica. Acesso grátis a hardware quântico real via cloud. Ferramenta padrão da indústria.</p>
+
+<h4>Instalação e Setup</h4>
+<blockquote class="example">
+<strong>💻 Instalar Qiskit:</strong>
+<br>
+<br>pip install qiskit
+<br>pip install qiskit-ibm-runtime
+<br>pip install matplotlib
+<br>
+<br>Criar conta IBM: https://quantum-computing.ibm.com
+<br>Copiar API token
+<br>
+<br>Pronto! Acesso a hardware real (5-433 qubits dependendo fila)
+</blockquote>
+
+<h4>Hello World Quântico</h4>
+<blockquote class="example">
+<strong>🌍 Seu Primeiro Programa Quântico:</strong>
+<br>
+<br><code>
+from qiskit import QuantumCircuit, QuantumRegister
+<br>
+<br># Criar circuito com 1 qubit e 1 bit clássico
+<br>qc = QuantumCircuit(1, 1)
+<br>
+<br># Aplicar porta Hadamard (superposição)
+<br>qc.h(0)
+<br>
+<br># Medir qubit 0 para bit clássico 0
+<br>qc.measure(0, 0)
+<br>
+<br># Visualizar circuito
+<br>qc.draw()
+</code>
+<br>
+<br>Resultado: circuito que cria superposição e mede (50% 0, 50% 1)
+</blockquote>
+
+<h4>Estrutura de Qiskit</h4>
+<ul>
+<li><strong>QuantumCircuit:</strong> Seu circuito (gates, medições)</li>
+<li><strong>QuantumRegister:</strong> Qubits (nome + número)</li>
+<li><strong>ClassicalRegister:</strong> Bits clássicos para resultados</li>
+<li><strong>Aer Simulator:</strong> Simulador local (sem hardware)</li>
+<li><strong>IBMBackend:</strong> Hardware real via cloud</li>
+</ul>
+
+<h4>Exemplo: Criar Bell State (Entrelaçamento)</h4>
+<blockquote class="example">
+<strong>🔗 Circuito Bell em Qiskit:</strong>
+<br>
+<br><code>
+from qiskit import QuantumCircuit
+<br>
+<br>qc = QuantumCircuit(2, 2)  # 2 qubits, 2 bits clássicos
+<br>
+<br># Hadamard no primeiro qubit
+<br>qc.h(0)
+<br>
+<br># CNOT: controle q0, target q1
+<br>qc.cx(0, 1)
+<br>
+<br># Medir ambos
+<br>qc.measure([0, 1], [0, 1])
+<br>
+<br>print(qc)
+</code>
+<br>
+<br>Resultado: 50% 00, 50% 11 (nunca 01 ou 10)
+</blockquote>
+
+<h4>Rodar Simulação Local</h4>
+<blockquote class="example">
+<strong>⚙️ Executar no Simulador:</strong>
+<br>
+<br><code>
+from qiskit_aer import AerSimulator
+<br>from qiskit_ibm_runtime import QiskitRuntimeService
+<br>
+<br># Simulador local
+<br>simulator = AerSimulator()
+<br>job = simulator.run(qc, shots=1000)
+<br>result = job.result()
+<br>counts = result.get_counts()
+<br>
+<br>print(counts)  # {'00': 485, '11': 515} ← 50/50!
+</code>
+</blockquote>
+
+<h4>Rodar em Hardware Real</h4>
+<blockquote class="example">
+<strong>☁️ Hardware IBM Quantum:</strong>
+<br>
+<br><code>
+from qiskit_ibm_runtime import QiskitRuntimeService
+<br>
+<br>service = QiskitRuntimeService.save_account(
+<br>  channel="ibm_quantum",
+<br>  instance="ibm-q/open/main",
+<br>  token="YOUR_TOKEN"
+<br>)
+<br>
+<br>backend = service.least_busy()
+<br>job = backend.run(qc, shots=1024)
+<br>result = job.result()
+<br>
+<br># ~5-30 minutos espera (fila pública)
+<br>print(result.get_counts())
+</code>
+<br>
+<br>Nota: hardware real tem ruído. Resultados não perfeitamente 50/50.
+</blockquote>
+
+<h4>Otimização de Circuito</h4>
+<p>Circuitos quânticos devem ser curtos (ruído aumenta com gates).</p>
+<blockquote class="example">
+<strong>🔧 Otimizar Circuito:</strong>
+<br>
+<br><code>
+from qiskit.transpilers import optimize_level
+<br>
+<br>optimized = transpile(qc, backend, optimization_level=3)
+<br>
+<br>print(f"Original: {qc.depth()} gates")
+<br>print(f"Otimizado: {optimized.depth()} gates")
+</code>
+</blockquote>
+
+<h4>Qiskit Terra vs Runtime</h4>
+<ul>
+<li><strong>Terra:</strong> API básica, baixa latência, ideal desenvolvimento</li>
+<li><strong>Runtime:</strong> API avançada, execução otimizada, ideal produção</li>
+</ul>
+
+<p>Qiskit é padrão ouro. Aprenda Qiskit e você consegue qualquer QC (IonQ, Rigetti, etc).</p>
+        `,
+        cards:[
+          {q:"O que é Qiskit?",a:"Framework Python da IBM para computação quântica, acesso grátis a hardware real via cloud"},
+          {q:"Qual é a diferença entre Aer Simulator e IBM Backend?",a:"Aer é simulador local (perfeito), IBM Backend é hardware real (ruído, fila)"},
+          {q:"Como rodar programa quântico em hardware real?",a:"Salvar credenciais IBM, usar QiskitRuntimeService.least_busy(), esperar 5-30 min fila"}
+        ]
+      },
+      {
+        id:5,
+        name:'VQE e QAOA: Algoritmos Híbridos',
+        dur:'18 min',
+        content:`
+<h3>Algoritmos Variacionais: Quântico + Clássico</h3>
+<p>VQE (Variational Quantum Eigensolver) e QAOA (Quantum Approximate Optimization Algorithm) são híbridos: quântico prepara estados, clássico otimiza parâmetros.</p>
+
+<h4>VQE: Encontrar Mínimo de Função</h4>
+<p>Problema: Encontrar autovalor mínimo de Hamiltonian H (operador)</p>
+<blockquote class="example">
+<strong>⚗️ VQE para Molécula H2:</strong>
+<br>
+<br>1. Ansatz (chute inicial): parameterizado circuito quântico
+<br>2. Preparar estado |ψ(θ)⟩ (qubits)
+<br>3. Medir energia ⟨ψ(θ)|H|ψ(θ)⟩
+<br>4. Clássico otimiza θ (minimizar energia)
+<br>5. Repetir até convergência
+<br>
+<br>Resultado: energia de molécula H2 = -1.17 Hartree
+</blockquote>
+
+<h4>QAOA: Otimização Combinatorial</h4>
+<p>Problema: Maximizar função f(x) onde x é configuração binária</p>
+
+<blockquote class="example">
+<strong>🎯 QAOA para Max-Cut:</strong>
+<br>
+<br>Problema: Grafo com N nós, achar corte que maximiza arestas cortadas
+<br>
+<br>1. Preparar superposição todos os cortes possíveis
+<br>2. Aplicar problema Hamiltonian (fase baseado em objetivo)
+<br>3. Aplicar mixer Hamiltonian (explorar espaço)
+<br>4. Medir, avaliar, clássico otimiza parâmetros
+<br>5. Repetir
+<br>
+<br>Resultado: ~80% do ótimo (QAOA é "aproximativo", por design)
+</blockquote>
+
+<h4>VQE em Qiskit</h4>
+<blockquote class="example">
+<strong>💻 VQE para H2 Molecule:</strong>
+<br>
+<br><code>
+from qiskit_nature.second_q.drivers import PySCFDriver
+<br>from qiskit_algorithms import VQE
+<br>from qiskit.primitives import Sampler
+<br>from qiskit_algorithms.optimizers import COBYLA
+<br>
+<br>driver = PySCFDriver(atom="H 0 0 0; H 0 0 .735")
+<br>problem = driver.run()
+<br>
+<br>vqe = VQE(Sampler(), ansatz, COBYLA())
+<br>result = vqe.compute_minimum_eigenvalue(problem.hamiltonian)
+<br>
+<br>print(f"VQE energy: {result.eigenvalue.real:.4f}")
+</code>
+</blockquote>
+
+<h4>QAOA em Qiskit</h4>
+<blockquote class="example">
+<strong>🔧 QAOA para Max-Cut:</strong>
+<br>
+<br><code>
+from qiskit_algorithms import QAOA
+from qiskit.quantum_info import SparsePauliOp
+from qiskit_algorithms.optimizers import COBYLA
+<br>
+<br># Problema (max-cut em grafo com 3 nós)
+<br>H = SparsePauliOp.from_list([("ZZ", 1), ("ZI", 1), ("IZ", 1)])
+<br>
+<br>qaoa = QAOA(optimizer=COBYLA(), reps=2)
+<br>result = qaoa.compute_minimum_eigenvalue(H)
+<br>
+<br>print(f"Max-cut value: {result.eigenvalue.real:.4f}")
+</code>
+</blockquote>
+
+<h4>Convergência: O Desafio</h4>
+<p>Algoritmos variacionais dependem em otimização clássica:</p>
+<ul>
+<li><strong>Barren Plateaus:</strong> Gradiente desaparece em espaço de parâmetros (não consegue otimizar)</li>
+<li><strong>Local Minima:</strong> Ótimo local, não global</li>
+<li><strong>Ruído:</strong> Hardware impreciso faz otimização mais dura</li>
+</ul>
+
+<blockquote class="tip">
+<strong>⚠️ Realidade NISQ:</strong>
+<br>
+<br>VQE/QAOA funcionam em simulação (perfeita)
+<br>Hardware real é 10-100x pior devido ruído
+<br>Esperança: melhorias em fidelidade farão prático
+<br>
+<br>Pesquisa ativa em "error mitigation" para contornar
+</blockquote>
+
+<h4>Aplicações Realistas</h4>
+<p><strong>Medicina (Descoberta de Droga):</strong></p>
+<ul>
+<li>VQE: Simular molécula de droga, encontrar conformação mais estável</li>
+<li>Economia: computador clássico = impossível (exponencial), quântico = minutos</li>
+<li>ETA: 5-10 anos quando QC tem 1000+ qubits estáveis</li>
+</ul>
+
+<p><strong>Otimização (Supply Chain):</strong></p>
+<ul>
+<li>QAOA: Otimizar rota de entrega, alocação de recursos</li>
+<li>Expectativa: 10-20% melhoria vs clássico</li>
+<li>ETA: 2-3 anos (menos exigente que VQE)</li>
+</ul>
+
+<p>Variacionais são algoritmos mais realistas para NISQ. Esperar por algoritmos exponenciais (Shor) é esperar 2030s.</p>
+        `,
+        cards:[
+          {q:"O que é VQE?",a:"Variational Quantum Eigensolver: quântico prepara estado, clássico otimiza parâmetros para mínimo"},
+          {q:"Qual é a diferença VQE vs QAOA?",a:"VQE encontra mínimo exato, QAOA encontra aproximação ~80% do ótimo"},
+          {q:"Qual é o maior desafio de algoritmos variacionais?",a:"Barren plateaus (gradiente desaparece), ruído hardware, local minima"}
+        ]
+      },
+      {
+        id:6,
+        name:'Erro Quântico e Correção: O Caminho para Escala',
+        dur:'18 min',
+        content:`
+<h3>Correção de Erros Quânticos: Do Sonho à Realidade</h3>
+<p>QC tem erro ~0.1% por gate. Após 1000 gates, erro é 100%. Correção de erros é crítica para escalabilidade.</p>
+
+<h4>O Problema de Erro em QC</h4>
+<p>Diferente de clássico (bit flip é 0→1), erro quântico é sutil:</p>
+<ul>
+<li><strong>Bit Flip:</strong> |0⟩ → |1⟩ (raro)</li>
+<li><strong>Phase Flip:</strong> |+⟩ → |-⟩ (comum)</li>
+<li><strong>Decoherence:</strong> Qubit "esquece" estado (muito comum)</li>
+<li><strong>Gate Errors:</strong> Porta não exata (0.1-0.2% drift)</li>
+</ul>
+
+<h4>Surface Code: Código de Correção Mais Prático</h4>
+<p>Surface code é padrão para correção quântica em produção:</p>
+<ul>
+<li><strong>Princípio:</strong> Múltiplos qubits físicos → 1 qubit lógico robusto</li>
+<li><strong>Overhead:</strong> ~1000 qubits físicos → 1 qubit lógico (pessimista)</li>
+<li><strong>Threshold:</strong> Se erro físico < 1%, QEC funciona</li>
+</ul>
+
+<blockquote name="example">
+<strong>🛡️ Exemplo: 2D Surface Code</strong>
+<br>
+<br>Grade de qubits:
+<br>
+<br>X──X──X──X
+<br>│  │  │  │
+<br>Z──Z──Z──Z
+<br>│  │  │  │
+<br>X──X──X──X
+<br>
+<br>X e Z mede diferentes tipos de erro
+<br>Síndrome (padrão de erros) usado para reconstruir e corrigir
+</blockquote>
+
+<h4>Threshold e Path to Usability</h4>
+<blockquote class="tip">
+<strong>📈 Caminho para QC Robusto:</strong>
+<br>
+<br>2026 (NISQ): 0.1% erro, 1000 qubits, 10-100 gates máximo
+<br>2028-2030: 0.01% erro, 10k qubits, QEC começa
+<br>2032: 10 qubits lógicos, problemas reais solvíveis
+<br>2035: 100+ qubits lógicos, advantage prático
+<br>
+<br>Cada passo exige breakthroughs em hardware.
+</blockquote>
+
+<h4>Mitigação de Erros (Curto Prazo)</h4>
+<p>Enquanto aguarda QEC, usar técnicas de mitigação:</p>
+<ul>
+<li><strong>Zero-Noise Extrapolation:</strong> Executar múltiplas vezes com ruído variável</li>
+<li><strong>Probabilistic Error Cancellation:</strong> Inverter operação após erro</li>
+<li><strong>Dynamical Decoupling:</strong> Pulsos para lutar contra decoherence</li>
+</ul>
+
+<blockquote name="example">
+<strong>🔧 Zero-Noise Extrapolation em Qiskit:</strong>
+<br>
+<br><code>
+from qiskit_ibm_runtime.resilience import ZneOptions
+<br>
+<br>options = ZneOptions(noise_factor=2)  # Dobrar ruído
+<br>job = backend.run(qc, options=options, shots=1000)
+<br>
+<br># Executor rodará programa com ruído=1x, 2x, 4x, 8x
+<br># Extrapola para ruído=0 (nenhum erro)
+</code>
+</blockquote>
+
+<h4>Perspectiva Realista</h4>
+<blockquote class="quote">
+"Correção de erros quânticos é problema de engenharia, não física. Vai levar 10-20 anos de progresso incremental, não breakthrough."
+</blockquote>
+
+<p>Realidade:</p>
+<ul>
+<li>IBM, Google, IonQ investindo bilhões em reduzir erro (0.1% → 0.01%)</li>
+<li>Progress é real mas lento (2% melhoria/ano)</li>
+<li>Produção quantum é décadas, não 2-3 anos</li>
+</ul>
+
+<h4>Futuro (2035+)</h4>
+<p>Se QEC funciona como esperado:</p>
+<ul>
+<li>Problema RSA 2048 em horas (vs bilhões anos clássico)</li>
+<li>Simulação molecula perfeitamente (química revolucionada)</li>
+<li>Otimização combinatorial 100x+ mais rápida</li>
+</ul>
+
+<p>Mas por enquanto (NISQ), somos ainda exploradores do novo mundo.</p>
+        `,
+        cards:[
+          {q:"Qual é o erro típico em QC NISQ?",a:"~0.1% por gate, após 1000 gates erro é ~100%"},
+          {q:"O que é surface code?",a:"Código de correção quântica: 1000 qubits físicos → 1 qubit lógico robusto"},
+          {q:"Qual é threshold para correção funcionar?",a:"Erro físico deve ser < 1%, para QEC ser viável"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Qiskit, Algoritmos Variacionais e QEC',
+      points:[
+        'Qiskit é framework Python padrão, acesso grátis a hardware IBM via cloud',
+        'VQE/QAOA são algoritmos variacionais práticos para NISQ (quântico+clássico híbrido)',
+        'Surface code é mitigação de erros realista: 1000 físicos → 1 lógico',
+        'Produção quantum é 2030-2035, NISQ é era atual (exploração, não advantage)'
+      ]
+    },
+    quizFinal:[
+      {q:"Qiskit permite rodar em hardware real onde?",opts:["Apenas simulação","IBM cloud (acesso público)","Nvidia GPU","Próprio PC"],correct:1},
+      {q:"VQE usa qual padrão de otimização?",opts:["Gradiente automático","Clássico (COBYLA, Adam)","Quântico puro","Nenhum, determinístico"],correct:1},
+      {q:"Quanto tempo de correção quântico para produção?",opts:["1-2 anos","5-10 anos","2030-2035","Nunca"],correct:2}
+    ]
+  },
+  {
+    id:'cq_mod3',
+    name:'Aplicações, Carreira e Futuro de Computação Quântica',
+    free:false,
+    topics:[
+      {
+        id:7,
+        name:'Indústria Quântica: Intel, Google, IonQ',
+        dur:'20 min',
+        content:`
+<h3>Computação Quântica: Players Industriais</h3>
+<p>Computação quântica não é mais academia. Indústria está investindo bilhões. Veamos quem está fazer ovelha.</p>
+
+<h4>IBM Quantum</h4>
+<ul>
+<li><strong>Hardware:</strong> Superconducting qubits (spin), 5-433 qubits públicos</li>
+<li><strong>Estratégia:</strong> Aberto (cloud público), ecosystems (Qiskit)</li>
+<li><strong>Roadmap:</strong> 1000-qubit "Condor" (2023), 4000-qubit "Heron" (2024)</li>
+<li><strong>Foco:</strong> Finance, drug discovery, optimization</li>
+<li><strong>Custo:</strong> Gratuito até 1000 minutos/mês (público)</li>
+</ul>
+
+<h4>Google Quantum</h4>
+<ul>
+<li><strong>Hardware:</strong> Superconducting qubits, 53+ qubits</li>
+<li><strong>Reclamação:</strong> "Quantum Supremacy" (2019, 53 qubits bateu clássico em problema específico)</li>
+<li><strong>Estratégia:</strong> Fechado (pesquisa, não comercial ainda)</li>
+<li><strong>Foco:</strong> Pesquisa, algoritmos, error correction (Willow chip 2024)</li>
+</ul>
+
+<h4>IonQ</h4>
+<ul>
+<li><strong>Hardware:</strong> Trapped-ion qubits (diferentes de IBM/Google)</li>
+<li><strong>Vantagem:</strong> Qubits idênticos, melhor fidelidade (99.7%+ vs 99.5%)</li>
+<li><strong>Escalabilidade:</strong> Arquitetura mais escalável teoricamente</li>
+<li><strong>Cloud:</strong> Azure Quantum, AWS Braket (acesso)</li>
+<li><strong>Foco:</strong> Drug discovery, optimization</li>
+</ul>
+
+<h4>Outros Jogadores</h4>
+<ul>
+<li><strong>Rigetti:</strong> Hybrid (superconducting + classical), API Forest, focus startups</li>
+<li><strong>D-Wave:</strong> Quantum annealing (diferente, para otimização específica)</li>
+<li><strong>Microsoft (Azure Quantum):</strong> Topological qubits (teórico, 5+ anos ainda)</li>
+<li><strong>Atom Computing:</strong> Neutral atom qubits (escalabilidade prometida)</li>
+</ul>
+
+<h4>Comparação de Hardware</h4>
+<table>
+<tr><td><strong>Tecnologia</strong></td><td><strong>Qubits</strong></td><td><strong>Fidelidade</strong></td><td><strong>T2 (Coerência)</strong></td><td><strong>Vantagem</strong></td></tr>
+<tr><td>IBM Supercond</td><td>433 max</td><td>99.5%</td><td>100-200μs</td><td>Maduro, open</td></tr>
+<tr><td>Google Supercond</td><td>53+</td><td>99.5%</td><td>100-200μs</td><td>Pesquisa</td></tr>
+<tr><td>IonQ Trapped Ion</td><td>11 (escalável)</td><td>99.7%</td><td>1000+μs</td><td>Melhor qualidade</td></tr>
+<tr><td>D-Wave Annealing</td><td>5000+</td><td>N/A</td><td>N/A</td><td>Otimização especifica</td></tr>
+</table>
+
+<h4>Cloud Platforms para Acessar</h4>
+<ul>
+<li><strong>IBM Quantum:</strong> quantum-computing.ibm.com (livre)</li>
+<li><strong>AWS Braket:</strong> Acesso IonQ, Rigetti, D-Wave (pago)</li>
+<li><strong>Azure Quantum:</strong> Acesso IonQ, Rigetti, Quantinuum (pago)</li>
+<li><strong>Google Colab:</strong> Cirq simulator (livre)</li>
+</ul>
+
+<p>Qualquer um pode experimentar hoje. IBM é mais acessível (free tier grande).</p>
+        `,
+        cards:[
+          {q:"Qual empresa fez 'Quantum Supremacy'?",a:"Google (2019, 53 qubits em 200 segundos vs 10.000 anos clássico)"},
+          {q:"IonQ diferencia-se por qual tecnologia?",a:"Trapped-ion qubits com 99.7%+ fidelidade (vs 99.5% superconducting)"},
+          {q:"Qual é melhor plataforma cloud gratuita para começar?",a:"IBM Quantum (1000 minutos/mês free tier)"}
+        ]
+      },
+      {
+        id:8,
+        name:'Aplicações Práticas e Casos de Uso',
+        dur:'20 min',
+        content:`
+<h3>Onde Computação Quântica Criará Valor Real</h3>
+<p>Hype é grande, mas aplicações reais são específicas. Vamos ver onde quântica será transformadora.</p>
+
+<h4>Descoberta de Droga (Farmacêutica)</h4>
+<blockquote class="example">
+<strong>⚗️ Caso Real: Simulação de Molécula</strong>
+<br>
+<br>Meta: Encontrar binding affinity de droga com proteína (quanto bem se encaixa)
+<br>
+<br>Clássico: Simulação precisam conhecer ~10^100 configurações (impossível)
+<br>Quântico: VQE em 1000 qubits lógicos simula perfeitamente em minutos
+<br>
+<br>Impacto: Acelerar descoberta 1000x, economizar bilhões em R&D
+<br>ETA: 2032-2035 quando temos qubits lógicos
+</blockquote>
+
+<h4>Otimização Financeira</h4>
+<p>Portfolios, arbitragem, detecção de fraude:</p>
+<ul>
+<li><strong>Portfolio Optimization:</strong> Encontrar melhor alocação de ativos</li>
+<li><strong>Quântico:</strong> Testar 2^n portfolios simultâneos (superposição)</li>
+<li><strong>Clássico:</strong> Testar sequencialmente (exponencial)</li>
+<li><strong>Ganho esperado:</strong> 10-100x mais rápido para portfolios complexos</li>
+</ul>
+
+<blockquote class="tip">
+<strong>💰 Timeline Realista:</strong>
+<br>
+<br>2026-2028: Experimentos (papers, provas de conceito)
+<br>2028-2030: Pilotos em produção (QAOA com <100 qubits)
+<br>2030-2032: Rollout parcial (some portfolios)
+<br>2032+: Mainstream se quantum supremacy mantém
+</blockquote>
+
+<h4>Machine Learning Quântico (QML)</h4>
+<p>Usar QC para acelerar ML:</p>
+<ul>
+<li><strong>Quantum Classifiers:</strong> Treinar modelo mais rápido (teórico)</li>
+<li><strong>Quantum Feature Mapping:</strong> Mapear dados em espaço quântico (dimensionalidade)</li>
+<li><strong>Esperanza:</strong> Quadratic speedup em alguns casos</li>
+</ul>
+
+<blockquote name="example">
+<strong>🤖 Quantum Kernel SVM:</strong>
+<br>
+<br>SVM clássico: calcula kernel K(x,y) = ⟨x,y⟩ (produto interno)
+<br>Quantum: usa circuito quântico para computar K(x,y) rapidamente
+<br>
+<br>Benefício: Para problemas high-dimensional, quântico é exponencialmente mais rápido
+<br>
+<br>Realidade NISQ: ainda não demonstrado em prática (ruído é problema)
+</blockquote>
+
+<h4>Criptografia e Segurança</h4>
+<p><strong>Quantum Key Distribution (QKD):</strong></p>
+<ul>
+<li>Usar propriedades quânticas para detectar eavesdropping</li>
+<li>Segurança garantida por física (não matemática)</li>
+<li>Implementações reais existem (China, EU testando)</li>
+<li>ETA: Mainstream 2030+</li>
+</ul>
+
+<p><strong>Post-Quantum Cryptography:</strong></p>
+<ul>
+<li>Substituto para RSA que é resistente a Shor</li>
+<li>NIST padronizou (2022): lattice-based, hash-based</li>
+<li>Transição esperado 2025-2030</li>
+</ul>
+
+<h4>Simulação Quântica</h4>
+<p>Simular outros sistemas quânticos (não clássico possível):</p>
+<ul>
+<li><strong>Materiais:</strong> Supercondutores, propriedades magnéticas</li>
+<li><strong>Catalisadores:</strong> Química de nitrogênio fixation</li>
+<li><strong>Bateria:</strong> Eletroquímica para EV batteries</li>
+</ul>
+
+<blockquote name="example">
+<strong>🔬 Simulação de Catalisador Nitrogenase:</strong>
+<br>
+<br>Processo Haber-Bosch (fixar N2 em NH3) usa 2% energia global
+<br>
+<br>Quântico simula mecanismo perfeito
+<br>Descobre catalisador mais eficiente
+<br>Resultado: -50% energia global? (especulativo, mas possível)
+</blockquote>
+
+<h4>Timeline Realista de Aplicações</h4>
+<blockquote class="tip">
+<strong>📅 Quando Quantum Importa:</strong>
+<br>
+<br>2026-2028: Pesquisa, benchmarking, poucos casos especiais
+<br>2028-2032: Pilotos em produção, advantage em nichos
+<br>2032-2035: Mainstream em finance, drug discovery, materiais
+<br>2035+: Impacto transformador (se QEC funciona como planejado)
+</blockquote>
+
+<p>Não espere quantum computador pessoal. Será especializada (data center, cloud service).</p>
+        `,
+        cards:[
+          {q:"Qual setor tem melhor caso de uso para quantum?",a:"Farmacêutica (VQE simula molécula exponencialmente melhor que clássico)"},
+          {q:"Quantum Machine Learning espera quanto de speedup?",a:"Teórico: quadratic (√N), prático: ainda não demonstrado em NISQ"},
+          {q:"Quando quantum será mainstream em produção?",a:"2032-2035 se QEC funciona como esperado, antes apenas pesquisa/pilotos"}
+        ]
+      },
+      {
+        id:9,
+        name:'Carreira e Futuro de Computação Quântica',
+        dur:'20 min',
+        content:`
+<h3>Computação Quântica como Carreira</h3>
+<p>Quântica é campo emergente. Talent é escasso. Oportunidades são enormes para quem entra agora.</p>
+
+<h4>Roles Disponíveis</h4>
+<p><strong>Quantum Engineer</strong></p>
+<ul>
+<li>Salário: $120-200k USD/ano (~R$600k-1M)</li>
+<li>Skill: Physics + EE + Python, Qiskit/Cirq</li>
+<li>Empresas: IBM, Google, IonQ, startups</li>
+<li>Demanda: Alta (100+ jobs abertos agora)</li>
+</ul>
+
+<p><strong>Quantum Algorithm Designer</strong></p>
+<ul>
+<li>Salário: $150-250k USD/ano (research heavy)</li>
+<li>Skill: Matemática avançada, algoritmos, simulação</li>
+<li>Empresas: IBM Research, Google Quantum AI, universidades</li>
+<li>Demanda: Crítica (5% dos roles, 90% procura)</li>
+</ul>
+
+<p><strong>Quantum Hardware Engineer</strong></p>
+<ul>
+<li>Salário: $130-220k USD/ano (mais técnico)</li>
+<li>Skill: Física experimental, criogenia, eletrônica</li>
+<li><strong>Empresas:</strong> IBM, Google, IonQ, Atom Computing</li>
+<li>Demanda: Muito alta (infraestrutura crítica)</li>
+</ul>
+
+<p><strong>Quantum Software Developer</strong></p>
+<ul>
+<li>Salário: $100-170k USD/ano</li>
+<li>Skill: Programação quântica (Qiskit, Cirq), Python, ML</li>
+<li>Empresas: IBM, AWS, Azure, startups</li>
+<li>Demanda: Alta (mais roles disponíveis)</li>
+</ul>
+
+<h4>Trilha de Carreira</h4>
+<blockquote class="tip">
+<strong>📈 Progressão Típica (3-5 anos):</strong>
+<br>
+<br>Year 1: Junior Quantum Dev (Qiskit, R$300-500k)
+<br>Year 2-3: Mid-level (especialista algoritmo ou hardware, R$600-900k)
+<br>Year 4-5: Senior (liderança técnica, multiplicador, R$1M+)
+<br>Year 5+: Staff/Principal (arquitetura, inovação, R$1.5M+)
+<br>
+<br>Bônus: Pesquisa bem-publicada pode > salário
+</blockquote>
+
+<h4>Formação Necessária</h4>
+<p><strong>Diploma:</strong> Nem sempre necessário, mas ajuda</p>
+<ul>
+<li>PhD Physics/QC: top roles em research</li>
+<li>Masters CS + Physics: bom compromisso</li>
+<li>BS Physics + auto-estudo Qiskit: possível (mais difícil)</li>
+<li>Bootcamp: cursos online (Coursera, edX) + portfólio</li>
+</ul>
+
+<h4>Roadmap de Aprendizado (18-24 meses)</h4>
+<blockquote name="example">
+<strong>📚 Path to Quantum Dev Job:</strong>
+<br>
+<br><strong>Meses 0-3:</strong> Conceitos fundamentais (qubit, superposição, gates)
+<br>→ Livro: "Quantum Computing in Action"
+<br>
+<br><strong>Meses 3-6:</strong> Algoritmos (Shor, Grover, VQE, QAOA)
+<br>→ Coursera, MIT OpenCourseWare
+<br>
+<br><strong>Meses 6-12:</strong> Programação (Qiskit, Cirq, Q#)
+<br>→ Projetos: Bell state, VQE para H2, QAOA solver
+<br>
+<br><strong>Meses 12-18:</strong> Pesquisa + Portfolio
+<br>→ GitHub com 3-5 projetos bem feitos
+<br>→ Medium artigos explicando conceitos
+<br>
+<br><strong>Months 18-24:</strong> Job search + especialização
+<br>→ 2-3 ofertas esperadas
+<br>→ Começar papel verdadeiro
+</blockquote>
+
+<h4>Oportunidades Especializadas</h4>
+<p><strong>Quantum Finance Consultant</strong></p>
+<ul>
+<li>Ajudar bancos a preparar para quantum</li>
+<li>Post-quantum migration planning</li>
+<li>R$150-300k + consultoria freelance</li>
+</ul>
+
+<p><strong>Quantum Educator</strong></p>
+<ul>
+<li>Criar cursos, workshops, bootcamps</li>
+<li>Demanda explosiva (falta talent)</li>
+<li>R$50-150/hora consultoria</li>
+</ul>
+
+<p><strong>Quantum Researcher (Academia)</strong></p>
+<ul>
+<li>PhD, postdoc, professor track</li>
+<li>Mais pesquisa, menos dinheiro</li>
+<li>Impacto científico maior</li>
+</ul>
+
+<h4>Remote Work em Quantum</h4>
+<p>Excelentes notícias: maioria de roles quantum são 100% remote.</p>
+<ul>
+<li>IBM: Remote</li>
+<li>Google Quantum AI: Remote</li>
+<li>IonQ: Remote</li>
+<li>Startups: Majority remote</li>
+</ul>
+
+<h4>Investimento Necessário</h4>
+<p>Custo mínimo para começar:</p>
+<ul>
+<li>Computador: Já tem? (sim → free)</li>
+<li>Cursos: $100-500 (Coursera, edX)</li>
+<li>Qiskit: Gratuito (open-source)</li>
+<li>IBM Quantum Cloud: Gratuito (tier)</li>
+<li>Total: $100-500</li>
+</ul>
+
+<p>ROI é claro: primeiro job quantum paga $100-170k (~R$500k-850k). Investimento se paga em 2-3 meses.</p>
+
+<h4>Motivação Final</h4>
+<blockquote name="quote">
+"Quantum é fronteira final de computação. Quem entra agora está na posição perfeita para liderança na próxima decade. Somos ainda muito cedo."
+</blockquote>
+
+<p>Quântica é verdadeira "moonshot" — desafiador, recompensador, futuro-prova.</p>
+
+<h4>Perspectiva Realista</h4>
+<p>Quantum não vai substituir clássico. Vai complementar (hybrid):</p>
+<ul>
+<li>Clássico: 99% da computação</li>
+<li>Quantum: 1% de problemas específicos (mas importantes)</li>
+</ul>
+
+<p>Então demanda por quantum engineers será sempre especializada, mas bem-paga. Perfeito para early adopters.</p>
+        `,
+        cards:[
+          {q:"Salário Quantum Engineer em 2026?",a:"$120-200k USD/ano (~R$600k-1M), alta demanda"},
+          {q:"Tempo para empregar em quantum?",a:"18-24 meses (3-6 fundamentos, 6-12 algoritmos+código, 6-12 portfolio+job search)"},
+          {q:"Investment mínimo para começar quantum?",a:"$100-500 (cursos), resto é free (Qiskit, IBM cloud, computador próprio)"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Indústria, Aplicações e Carreira Quantum',
+      points:[
+        'IBM (open), Google (pesquisa), IonQ (melhor qualidade) dominam mercado',
+        'Aplicações reais: farmacêutica (VQE molécula), finance (QAOA portfolio), simulação',
+        'Carreira: $120-250k USD/ano, demanda alta, talent crítico escasso',
+        'Trilha: 18-24 meses (fundamentos → algoritmos → código → portfolio → emprego)'
+      ]
+    },
+    quizFinal:[
+      {q:"Quantum Computer é melhor para qual aplicação?",opts:["Streaming video","Descoberta de droga (VQE)","Email","Redes sociais"],correct:1},
+      {q:"Quando quantum será transformador?",opts:["2026","2028-2030","2032-2035","Nunca"],correct:2},
+      {q:"Salário quantum engineer é aproximadamente:",opts:["$80-100k","$120-200k","$300k+","$50-80k"],correct:1}
+    ]
+  }
 ];
 </script>
 <script src="shared/course-engine.js"></script>
