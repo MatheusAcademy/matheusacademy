@@ -3264,11 +3264,11 @@ var MA_COURSES = [
     addedTs: 1776024769258,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ip.jpg',
     id: 'ip',
     name: 'Inglês para Pronúncia e Listening',
-    desc: 'Trabalha escuta ativa, compreensão de falantes nativos, ritmo, entonação e correção de pronúncia.',
+    desc: 'Escuta ativa, compreensão de falantes nativos, ritmo, entonação e correção de pronúncia.',
     file: '17-ingles-pronuncia.html',
     cat: 'Inglês',
     modules: 3,
@@ -3280,7 +3280,8 @@ var MA_COURSES = [
     storagePrefix: 'ip_',
     icon: '🇺🇸',
     color: '#00838F',
-    addedTs: 1776024775014,
+    free: true,
+    addedTs: 1776284585172,
     active: true
   },
   {
