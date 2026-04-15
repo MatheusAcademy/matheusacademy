@@ -3411,13 +3411,13 @@ var MA_COURSES = [
     addedTs: 1776289845579,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ib.jpg',
     id: 'ib',
-    name: 'Inglês Básico do Zero à Conversação',
-    desc: 'Curso ideal para iniciantes absolutos, com foco em vocabulário essencial e frases do dia a dia.',
+    name: 'Inglês Básico',
+    desc: 'Aprenda os fundamentos do inglês do zero! Comece com pronúncia, vocabulário essencial e estruturas gramaticais básicas.',
     file: '11-ingles-basico.html',
-    cat: 'Inglês',
+    cat: 'Idiomas',
     modules: 3,
     topics: 9,
     hours: 2,
@@ -3425,10 +3425,10 @@ var MA_COURSES = [
     salt: 'IB_HENRY_2026_MASTER',
     ak: 'ib_auth',
     storagePrefix: 'ib_',
-    icon: '🇺🇸',
+    icon: '🎓',
     color: '#1976D2',
     free: true,
-    addedTs: 1776284617854,
+    addedTs: 1776289920258,
     active: true
   },
       {
