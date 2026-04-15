@@ -3,28 +3,1013 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Blockchain, Web3 e o Futuro da Internet — Matheus Academy</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<title>Blockchain e Web3 — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="shared/course.css">
 </head>
 <body>
 <script>
-var COURSE = {id:'BW',name:'Blockchain, Web3 e o Futuro da Internet',shortName:'Blockchain e Web3',cat:'Tecnologia e Inovação',desc:'Descentralização, contratos inteligentes, identidade digital e novas estruturas da internet.',salt:'BW_HENRY_2026_MASTER',ak:'bw_auth',courseKey:'bw',prefix:'bw_',color:'#F9A825',glow:'rgba(249,168,37,.35)',free:true,freeModules:1,modules:3,topics:9,hours:3,quizzes:9};
+var COURSE = {
+  id:'BW',
+  name:'Blockchain e Web3',
+  shortName:'bw',
+  cat:'Tecnologia e Inovação',
+  desc:'Domine blockchain, Bitcoin, Ethereum, smart contracts, NFTs e DeFi. Entenda a revolução descentralizada e construa aplicações Web3.',
+  salt:'PREFIX_HENRY_2026_MASTER',
+  ak:'bw_auth',
+  courseKey:'blockchain-web3',
+  prefix:'bw_',
+  color:'#F9A825',
+  glow:0.35,
+  free:true,
+  freeModules:1,
+  modules:3,
+  topics:9,
+  hours:3,
+  quizzes:9
+};
 var MODS = [
-  {id:'bw_mod1',name:'Fundamentos de Blockchain e Criptografia',free:true,topics:[1,2,3],summary:{title:'Resumo do Módulo 1: Conceitos Base',points:['Blockchain é ledger distribuído imutável onde transações são registradas permanentemente','Criptografia de chave pública e privada permite propriedade e segurança sem intermediários','Hash criptográfico torna impossível alterar dados históricos sem detecção','Consenso distribuído permite rede chegar acordo sobre verdade sem autoridade central']},quizFinal:[{q:'O que é blockchain?',opts:['Um tipo de criptografia militar','Ledger distribuído onde transações são registradas e verificadas criptograficamente','Uma moeda digital específica','Um software exclusivo do Bitcoin'],correct:1},{q:'O que é chave privada em blockchain?',opts:['Senha usada publicamente','Identificador único que controla seus ativos, deve ser guardado secretamente','Informação pública que qualquer um pode ver','Uma transação que falhou'],correct:1},{q:'Como blockchain detecta alteração de dados históricos?',opts:['Não consegue detectar','Através de hash criptográfico que muda se qualquer dado for alterado','Através de uma lista de quem acessou','Através de conexão com autoridade central'],correct:1}]},
-  {id:'bw_mod2',name:'Smart Contracts e Aplicações Descentralizadas',free:false,topics:[4,5,6],summary:{title:'Resumo do Módulo 2: DApps e Contratos',points:['Smart contracts são programas que executam automaticamente quando condições são atingidas','Aplicações descentralizadas (DApps) rodam em blockchain sem servidor central','Ethereum é plataforma principal para smart contracts, permitindo qualquer lógica executável','DeFi (Finanças Descentralizadas) oferece serviços financeiros sem intermediários tradicionais']},quizFinal:[{q:'O que é um smart contract?',opts:['Um contrato em papel tradicional','Programa autoexecutável que implementa termos automaticamente quando condições são atingidas','Um contrato que requer assinatura digital','Um acordo verbal entre partes'],correct:1},{q:'Qual é a plataforma principal para smart contracts?',opts:['Bitcoin','Ethereum','Facebook','Microsoft'],correct:1},{q:'O que significa DeFi?',opts:['Finanças definitivas','Finanças descentralizadas oferecendo serviços sem bancos intermediários','Finanças defasadas','Finanças em deficit'],correct:1}]},
-  {id:'bw_mod3',name:'Web3, Identidade Digital e Futuro Descentralizado',free:false,topics:[7,8,9],summary:{title:'Resumo do Módulo 3: Web3 e Identidade',points:['Web3 representa internet descentralizada baseada em blockchain e propriedade do usuário','Identidade digital descentralizada permite controle próprio sem corporações','NFTs tokenizam propriedade digital única criando novos modelos econômicos','Futuro da web prioriza privacidade, soberania dos dados e estruturas peer-to-peer']},quizFinal:[{q:'O que é Web3?',opts:['Versão 3 do protocolo HTTP','Internet descentralizada baseada em blockchain com propriedade do usuário','Internet mais rápida e lenta simultaneamente','Um navegador específico'],correct:1},{q:'O que é NFT?',opts:['Não Fungível Token - um ativo digital único e verificável na blockchain','National Finance Total - um fundo de investimento','Natural Fiber Textile - um tipo de tecido','Nothing For Today - uma expressão de erro']]},{q:'Como identidade descentralizada beneficia você?',opts:['Não oferece benefícios','Controle próprio de dados sem intermediários, portabilidade entre aplicações','Anonimato completo sempre','Obrigatoriedade de usar blockchain'],correct:1}]}
-];
-var TOPICS = [
-  {id:1,name:'O que é Blockchain?',dur:'15 min',content:`<h3>Blockchain: A Tecnologia que Mudou Tudo</h3><p>Blockchain é talvez a invenção mais importante desde internet. Permite que pessoas, sem conhecer uma à outra, sem confiar uma na outra, façam transações seguras e imutáveis. É revolução de confiança.</p><p>Imagine um caderno compartilhado por 10000 pessoas. Quando você escreve algo nele, todas as 10000 pessoas anotam também. Se você tenta apagar o que escreveu, 9999 cópias ainda têm registrado. Alteração é impossível. É basicamente blockchain: um ledger (registro contábil) distribuído que impossibilita alteração retrospectiva.</p><p>Blockchain foi inventado em 2008 por Satoshi Nakamoto (nome pseudônimo) para resolver problema matemático: como fazer transação financeira entre dois estranhos na internet sem intermediário? Bancos cobram taxa alta e demoram. Bitcoin foi solução: blockchain de moeda digital que qualquer um pode enviar a qualquer um instantaneamente sem banco no meio.</p><p>Como funciona? Você envia transação. Múltiplos computadores (chamados nodes) recebem sua transação. Eles verificam se você realmente tem o dinheiro usando chaves criptográficas (próxima seção). Se maioria concorda que transação é válida, ela é incluída em um bloco. Blocos são encadeados (daí 'blockchain'). Uma vez inserido, é impossível alterar sem refazer todas as cópias na rede.</p><p>Imutabilidade é poder real. Se você registrar no blockchain que é dono de um ativo, registro é permanente. Ninguém, nem mesmo governo, pode apagar esse registro. Isso é revolucionário para propriedade digital. Títulos de propriedade imóvel, certificados acadêmicos, documentos médicos—tudo pode viver em blockchain permanentemente.</p><p>Descentralização é a beleza. Web tradicional tem servidores centrais (Google, Facebook, Amazon). Se servidor cai, serviço inteiro cai. Se empresa decide deletar seus dados, desaparecem. Blockchain é milhares de servidores independentes. Se um cai, rede continua. Se uma entidade quer alterar dados, outras copias verificam e rejeitam. Controle é distribuído entre milhares.</p><p>Transparência é consequência. Toda transação em blockchain público é visível para qualquer pessoa. Você vê de onde vem cada Satoshi de Bitcoin. Isso reduz fraude porque tudo é auditável. Privacidade é preservada porque endereços são anônimos, mas transações são rastreáveis. É equilibrio perfeito.</p>`,cards:[{q:'O que torna blockchain imutável?',a:'Distribuição de dados entre muitos computadores e criptografia que torna alteração de dados históricos tecnicamente impossível de ocultar.'}]},
-  {id:2,name:'Criptografia: Chaves Pública e Privada',dur:'15 min',content:`<h3>Criptografia Moderna: Segurança Através de Matemática</h3><p>Se blockchain é o começo da história, criptografia é o coração. Sem criptografia moderna, blockchain seria ilusão de segurança. Com criptografia, segurança é matemática garantida.</p><p>Chave privada é número secreto de 256 bits (32 bytes) que representa suas riquezas. Se você tem 1 Bitcoin, aquele Bitcoin está asociado com sua chave privada. Qualquer um com sua chave privada pode transferir seu Bitcoin. Por isso: NUNCA compartilhe chave privada. É equivalente a deixar carteira com todo seu dinheiro em cima da mesa.</p><p>Chave pública é derivada matematicamente de chave privada, mas é impossível reverter o processo. Você pode tornar chave pública pública (daí o nome)—ela aparece em broadcasts a cada transação. Chave pública é como seu número de conta banco: outras pessoas precisam dela para enviar você dinheiro, mas ela sozinha não permite saques.</p><p>Assinatura digital funciona assim: você tem mensagem (transação). Você assina com sua chave privada, criando assinatura. Qualquer um pode verificar a assinatura com sua chave pública e confirmar que você realmente iniciou aquela transação. É como assinatura em papel, mas criptograficamente irrefutável.</p><p>Exemplo prático: você quer enviar 1 Bitcoin a amigo. Você cria transação: 'Enviar 1 BTC do meu endereço para endereço de amigo'. Você assina com sua chave privada. Network verifica sua chave pública contra assinatura. Se assinatura é válida, transação é aceita. Alguém poderia falsificar? Não—falsificar exigiria conhecer sua chave privada, que é computacionalmente impossível quebrar.</p><p>Hash é outro componente. Hash criptográfico transforma qualquer dado (1MB de filme, ou 1 byte) em string aleatória de 256 caracteres. Se você altera qualquer bit de dado original, hash muda completamente. Isso permite detectar alteração. Blockchain usa hash para encadear blocos: cada bloco contém hash do bloco anterior, criando corrente imutável.</p><p>Segurança vem de problemas matemáticos que são fáceis de verificar mas impossível de resolver sem conhecimento especial. Sua chave pública é derivada de chave privada através de função unidirecional. Sem a chave privada, é impossível falsificar transação. Matemática pura, não confiança em intermediários.</p>`,cards:[{q:'Por que chave privada deve ser secreta?',a:'Porque qualquer pessoa com a chave privada pode controlar e transferir todos os ativos associados àquele endereço blockchain.'}]},
-  {id:3,name:'Consenso Distribuído: Proof of Work e Proof of Stake',dur:'15 min',content:`<h3>Como Blockchain Alcança Acordo Sem Autoridade Central</h3><p>Maior desafio de blockchain descentralizado: como 10000 computadores independentes chegam ao acordo sobre verdade sem entidade central? Se 5000 dizem 'transação é válida' e 5000 dizem 'não é', quem decide?</p><p>Resposta é consenso. Blockchain usa mecanismos matemáticos que incentivam honestidade. Se você tenta fraudar, sistema torna economicamente impossível. Duas abordagens dominam: Proof of Work e Proof of Stake.</p><p>Proof of Work é método original do Bitcoin. Imagine problema de matemática muito difícil que apenas computador poderoso consegue resolver em minutos, mas qualquer um pode verificar resposta em segundos. Quem resolve o problema (chamaod 'mining') ganha recompensa (novos bitcoins). Isso incentiva honestidade: se você tenta fraudar, outros mineiros rejeitam seu bloco fraudulento, você perde recompensa. É mais lucrativo ser honesto.</p><p>Segurança vem de custo. Para controlar Bitcoin network, atacante teria que controlar 51% da capacidade computacional mundial. Custo estimado: dezenas de bilhões de dólares em hardware e eletricidade. Roubo que você poderia fazer com ese hardware seria insignificante. Economicamente irracional atacar.</p><p>Proof of Stake é método mais novo (Ethereum o usa agora). Ao invés de resolver problemas matemáticos, você coloca seu próprio capital como 'stake'. Se você quer validar bloco, você 'cria' uma certa quantidade de coin. Se bloco é honesto, você ganha taxa. Se bloco é fraudulento, você perde seu stake (chamado 'slashing'). Isso incentiva honestidade: fraude te custa diretamente.</p><p>Vantagem de Proof of Stake sobre Proof of Work: muito menor consumo de energia (90% menos). Bitcoin usa ~5 TWh eletricidade por ano. Ethereum pós-Stake usa ~0.05 TWh. Essa é diferença entre sustentabilidade e envergonhamento ambiental.</p><p>Desvantagem de Proof of Stake: rico fica mais rico. Se você tem muito capital para stake, você ganha muitas fees. Mecanismo recompensa acumulação. Proof of Work é mais democrático: qualquer um pode comprar hardware e minerar (embora em maior escala, GPUs especializadas chamadas ASICs tornem acesso mais centralizado).</p><p>Outros mecanismos existem: Proof of Authority (confiança em validadores conhecidos), Proof of History (sequência temporal criptográfica), Proof of Capacity (usar espaço em disco). Blockchain moderno é laboratório de inovação consensual.</p>`,cards:[{q:'Qual é o objetivo do mecanismo de consenso em blockchain?',a:'Alcançar acordo entre nós descentralizados sobre qual é a verdade sem autoridade central, incentivando honestidade e prevenindo fraude.'}]},
-  {id:4,name:'Smart Contracts: Programas na Blockchain',dur:'15 min',content:`<h3>Smart Contracts: Código Como Lei</h3><p>Bitcoin permite transações de valor. Ethereum permite programas inteiros rodar na blockchain. Esses programas são chamados smart contracts, e são revolucionários.</p><p>Contrato tradicional é acordo entre partes escrito em papel. Ambas assinam. Se alguém viola, você toma para corte (caro, lento, incerto). Smart contract é programa que implementa automaticamente: 'se condição X acontecer, execute ação Y'. Não requer confiança. Código garante execução.</p><p>Exemplo: aposta entre amigos. Bob aposta com Alice que chuva amanhã. Se chover, Bob paga Alice R$100. Como garantir honestidade? Normalmente confiam um no outro (fraude é possível). Smart contract: ambos colocam R$100 em contrato. Contrato consultará dados de chuva automáticos (weather API). Se choveu, R$100 de Bob vai para Alice. Se não choveu, R$100 de Alice vai para Bob. Execução automática, sem intermediário.</p><p>Aplicações são infinitas. Seguros: "Se voo for cancelado (dados automáticos), segurado recebe R$X instantaneamente". Empréstimos: "Se emprestador não pagar em data X (data é registrada na blockchain), colateral é automaticamente transferido para credor". Acordos comerciais: "Se fornecedor entregar produto em qualidade verificada pelo sensor IoT, pagamento é automático".</p><p>Ethereum é plataforma principal de smart contracts. Usa linguagem Solidity que é semelhante a JavaScript. Desenvolvedores escrevem contrato, o carrega na blockchain (pagando taxa 'gas' em ETH), e contrato vive para sempre, executando exatamente como programado.</p><p>Segurança é preocupação. Código com bugs é desastre. Se smart contract de empréstimo tem bug que permite saques duplos, alguém vai explorar. Bilhões já foram perdidos em hacks de smart contracts. Auditoria profissional de código é necessário para contratos de alto valor. Imutabilidade é faca de dois gumes: código correto é garantido forever, mas código errado também é garantido forever.</p><p>Oráculo é problema. Contrato inteligente funciona perfeito dentro da blockchain, mas e dados externos? Se contrato precisa saber temperatura de fora, precisa de 'oracle'—entidade que fornece dados externos. Mas qual oracle confiar? Isso reintroduz ponto de centralização. Soluções emergem: múltiplos oráculos, mecanismos de votação, provas criptográficas de dados.</p>`,cards:[{q:'O que é um smart contract e como se difere de contrato tradicional?',a:'É programa na blockchain que executa automaticamente quando condições são atingidas, sem necessidade de intermediário ou confiança entre partes.'}]},
-  {id:5,name:'DApps: Aplicações Descentralizadas',dur:'15 min',content:`<h3>DApps: O Futuro do Software Descentralizado</h3><p>Se smart contracts são motor, DApps (Decentralized Applications) são carro inteiro. Uma DApp é aplicação que roda em blockchain ao invés de servidores centralizados. Usuário mantém controle total. Nenhuma empresa pode derrubar ou censurar DApp.</p><p>DeFi (Decentralized Finance) é categoria maior de DApps. Uniswap é exchange descentralizado onde você troca criptogramas sem intermediário. Aave é protocolo de empréstimo: você empresta seu ETH e ganha juros. Maker permite criar stablecoin (moeda estável) colateralizada. Tudo sem banco, sem KYC (Know Your Customer), sem restrições geográficas.</p><p>Vantagem versus finanças tradicional: velocidade (transações em minutos), acessibilidade (qualquer um com internet pode participar, sem discriminação), transparência (pode ver toda lógica do protocolo), censura-resistência (governo não pode bloquear suas finanças).</p><p>Desvantagem: complexidade (interface é intimidadora para novatos), risco técnico (bugs podem custar milhões), volatilidade (preços são extremamente voláteis), regulação incerta (governo está perdido em como regular). DeFi é futuro, mas ainda jovem e experimental.</p><p>NFTs são categoria diferente de DApp. Non-Fungible Token é representação digital de propriedade única. Uma moeda é fungível: seu R$100 é igual a meu R$100 (permutável). Um NFT não é fungível: meu Picasso não é igual ao seu (único). Blockchain permite registrar essa unicidade.</p><p>Aplicações: arte digital, colecionáveis, ingressos de evento, certificados, títulos de propriedade. Um artista cria arte digital, cria NFT, vende por ETH diretamente ao colecionador. NFT prova propriedade e raridade. Secundariamente, artista recebe royalties automaticamente cada vez que NFT é revendido (revolucionário).</p><p>Crítica de NFTs é frequente: muitos são scams ou esquemas piramidais. Mas potencial legítimo existe. Sistema de propriedade digital verificável em blockchain é inovação fundamental. Abuso é esperado em tecnologia nova, assim como spams no email inicial.</p>`,cards:[{q:'Qual é a principal diferença entre DApp e aplicação tradicional?',a:'DApp roda em blockchain descentralizada, dando controle ao usuário, enquanto app tradicional roda em servidores da empresa que pode censura ou derrubar.'}]},
-  {id:6,name:'Ethereum e Evolução da Blockchain',dur:'15 min',content:`<h3>Ethereum: Blockchain Programável</h3><p>Bitcoin foi primeira blockchain. Ethereum foi segunda revolução. Bitcoin permite transações de valor. Ethereum permite qualquer coisa: smart contracts, DApps, tokens customizados, tudo.</p><p>Visão de Ethereum era criar 'computador mundial'. Imagine computador operado por 10000 nós distribuindo globalmente. Qualquer desenvolvedor pode publicar programa nele. Programa roda exatamente como foi programado, sem possibilidade de corrupção. É profundo.</p><p>ERC-20 é padrão de token. Desenvolvedor pode criar seu próprio token (tipo moeda) com poucas linhas de código. Existem 500000+ tokens ERC-20. Alguns com valor legítimo, a maioria são shitcoins (moedas sem valor, frequentemente scams). Mas permite inovação: empresas podem criar economia própria.</p><p>Evolução foi longa. Bitcoin usa Proof of Work (PoW) puro. Ethereum começou com PoW, mas em 2022 fez 'The Merge' migrando para Proof of Stake (PoS). Mudança reduziu consumo de energia 99.95%. Um passo gigante para sustentabilidade.</p><p>Layer 2 solutions multiplicaram throughput. Ethereum base é lento (~15 transações/segundo). Polygon, Arbitrum, Optimism rodam smart contracts compatíveis com Ethereum, mas 100-1000x mais rápido (e barato). Você escolhe qual layer usar conforme velocidade/custo necessários.</p><p>Competidores emergiram. Solana é fast mas menos segura. Cardano é acadêmico. Polkadot é modular. Bitcoin persiste como store of value (ouro digital). Ethereum domina DeFi e DApps. Mercado é grande o suficiente para múltiplos winners.</p><p>Futuro de Ethereum inclui prototipagem contínua. Layer 2 scaling, rollups otimistas e zero-knowledge, sharding para maior descentralização. Ethereum não é produto fixo, é experimento vivo melhorando continuamente.</p>`,cards:[{q:'O que torna Ethereum diferente de Bitcoin?',a:'Bitcoin permite apenas transações de valor, enquanto Ethereum permite smart contracts e DApps arbitrárias, atuando como computador mundial programável.'}]},
-  {id:7,name:'Web3: A Internet Descentralizada do Futuro',dur:'15 min',content:`<h3>Web3: Reimaginando a Internet</h3><p>Evoluímos da Web 1.0 (internet estática, ler-apenas) para Web 2.0 (internet interativa, redes sociais). Agora exploramos Web 3.0: internet descentralizada e proprietária do usuário.</p><p>Web 2.0 concentrou poder em poucas empresas. Google controla busca. Facebook controla redes sociais. Amazon controla e-commerce. Essas empresas possuem seus dados. Se dão ban, você perde acesso. Privacidade é questionável (dados são minados para publicidade). Inovação é sufocada por monopólios.</p><p>Web3 inverte poder. Você é proprietário de seus dados. Você autoriza qual aplicação pode acessar qual informação. Você pode portar dados de um app para outro. Inovação floresce porque qualquer desenvolvedor pode criar DApp e competir com gigantes no mesmo plano.</p><p>Identidade descentralizada é fundação. Ao invés de usar Google/Facebook login, você usa identidade blockchain. Seu DID (Decentralized Identifier) é endereço blockchain. Você controla qual informação pessoal anexa àquela identidade. Você não é rastreado através de web. Privacidade é padrão, rastreamento é opt-in.</p><p>Soberania de dados é revolução. Seus emails pertencem a você, não a Gmail. Seus fotos pertencem a você, não a Instagram. Você decide quem vê, quem copia, quem lucra. Isso muda incentivos fundamentalmente. Aplicações competem em qualidade, não em quem melhor captura dados.</p><p>Economia criativa é transformada. Artista publica NFT de obra. Fãs podem investir diretamente, recebendo royalties conforme obra se aprecia. Intermediários (galerias, editoras) são desintermediadas. Relacionamento direto artista-fã permite recompensa maior para artista, preços menores para fã.</p><p>Crítica de Web3: muita buzzword, pouca implementação real. Muitos anúncios não correspondem a realidade. Experiência de usuário ainda é complexa (gas fees, wallet management, UI confusa). Adoção mainstream ainda longe. Mas fundamentalmente, movimento é correto.</p><p>Desafios técnicos e culturais permanecem. Velocidade de transação precisa melhorar. Interfaces precisam simplificar. Regulação precisa clarificar. Educação pública precisa disseminar. Esses anos 2024-2026 são críticos para resolver desafios, senão Web3 continua nicho permanente.</p>`,cards:[{q:'Qual é a diferença fundamental entre Web 2.0 e Web3?',a:'Web 2.0 concentra dados em empresas grandes, Web3 dá propriedade dos dados aos usuários que controlam como são usados.'}]},
-  {id:8,name:'Identidade Digital Descentralizada e Autossoberania',dur:'15 min',content:`<h3>Identidade Digital: Controlando Você Mesmo</h3><p>Identidade digital descentralizada (também chamada autossoberania) é uma das mudanças mais profundas de Web3. Ao invés de depender de Google/Facebook/governo para provar quem você é, você prova a si mesmo.</p><p>Hoje, identidade é fragmentada. Governos têm CPF/RG. Bancos têm conta. Google sabe email. Facebook sabe interesses. Ninguém tem visão completa além você mesmo. Pior, você não controla. Governo pode bloquear CPF. Banco pode fechar conta. Google pode deletar email.</p><p>Identidade descentralizada funciona assim: você controla chave privada que representa sua identidade. Você anexa credenciais: diploma universitário, certificado de trabalho, comprovante de endereço. Qualquer organização pode verificar credenciais criptograficamente sem contatar intermediário. Uma universidade pode emitir certificado digital verificável sem necessidade de transcrição em papel.</p><p>Aplicação revolucionária: documentos perdidos. Pessoa com certificado digital em blockchain não precisa de transcrição original. Prova é criptográfica. Essa é revolução para refugiados, migrantes, pessoas com registros perdidos. Identidade não pode ser deletada ou perdida porque está distribuída globalmente na blockchain.</p><p>Empoderamento econômico: bilhões de pessoas sem identidade oficial. Não podem abrir conta banco. Não podem pegar empréstimo. Com identidade descentralizada, podem acessar serviços financeiros globais. Impacto é maior em países em desenvolvimento onde infraestrutura é deficiente.</p><p>Privacidade é melhorada. Você não revela tudo a todos. Ao aplicar emprego, revela apenas credenciais de trabalho. Ao abrir conta bancária, revela apenas comprovante de renda. Ninguém (nem banco) vê perfil inteiro sua. Cada aplicação vê apenas o necessário.</p><p>Desafios existem. Se você perde sua chave privada de identidade, identidade é perdida (ao contrário de senha de email que você pode recuperar com backup). Revogação de credenciais é complexa. Privacidade é maior, mas rastreabilidade de crime é menor (benefício double-edged).</p><p>Implementação está começando. Estonia digitalizou identidade cidadão. China usa credenciais sociais (diferente mas similar). Comunidade blockchain trabalha em padrões para credenciais verificáveis. Próxima década vai ver adoção massiva de identidade descentralizada.</p>`,cards:[{q:'Como identidade descentralizada muda acesso a serviços financeiros?',a:'Permite que pessoas sem documentação oficial acessem serviços financeiros globais baseado em credenciais verificáveis na blockchain.'}]},
-  {id:9,name:'Implementando Web3: Começando Sua Jornada',dur:'15 min',content:`<h3>Primeiros Passos em Web3: Guia Prático</h3><p>Blockchain e Web3 parecem intimidadores. Mas começar é mais simples que você imagina. Vamos guiar você através de primeiros passos reais.</p><p>Passo 1: Escolha e Wallet. Você precisa de carteira digital para armazenar criptomoedas. MetaMask é mais popular (extensão de navegador). Baixe, crie wallet, anote suas 12 palavras de recuperação (NUNCA compartilhe), configure senha forte. Você agora tem identidade blockchain.</p><p>Passo 2: Obtenha Criptomoeda. Você precisa de alguma criptomoeda para pagar transações. Compre Bitcoin ou Ethereum em exchange (Binance, Coinbase, FTX em seu país). Transfira para seu MetaMask. Você agora é dono de valor digital.</p><p>Passo 3: Explore DeFi. Visite Uniswap.org. Conecte seu MetaMask. Você verá interface para trocar tokens. Experimente trocar pequena quantia de USDC por DAI. Você completou sua primeira transação DeFi sem intermediário. Parabéns, você é DeFi user.</p><p>Passo 4: Aprenda Smart Contracts. Se tem conhecimento de programação, visite Remix.ethereum.org. Escreva simples smart contract em Solidity (semelhante a JavaScript). Compile e deplay em rede de teste (Sepolia). Veja seu contrato vivendo na blockchain. É momento wow.</p><p>Passo 5: Minhe um NFT. Visite OpenSea.io. Conecte MetaMask. Explore diferentes coleções. Compre um NFT interessante (comece com barato para aprender). Você agora possui arte digital verificada na blockchain. É meio loucura, meio interessante.</p><p>Passo 6: Aprofunde Conforme Interessa. Se DeFi fascina, aprenda Aave, Compound, Curve. Se Web3 negócios fascina, aprenda DAOs (Decentralized Autonomous Organizations) que permitem governo descentralizado. Se smart contracts fascina, aprenda Solidity profundamente. Comunidade é receptiva a aprendizes.</p><p>Recursos: CryptoZombies.io ensina Solidity de forma divertida. Ethereum.org tem documentação completa. Reddit r/defi e r/ethereum são comunidades amigáveis. YouTube tem tutoriais infinitos. Comece pequeno, aprenda iterativamente, nunca invista mais do que pode perder (volatilidade é extrema).</p><p>Cuidado: Web3 é ainda Wild West. Scams são abundantes. Nunca compartilhe chave privada com ninguém. Verificue URLs (site fake pode parecer real). Não FOMO (Fear Of Missing Out) em investimento de risco. Se parece bom demais ser verdade, é. Comunidade é amigável, mas inimigos são agressivos. Vigilância é necessária.</p>`,cards:[{q:'Qual é o primeiro e mais crítico componente de Web3 que você precisa?',a:'Uma carteira digital (como MetaMask) que armazena sua chave privada e permite interagir com aplicações blockchain descentralizadas.'}]}
+  {
+    id:'bw_mod1',
+    name:'Fundamentos de Blockchain e Criptografia',
+    free:true,
+    topics:[
+      {
+        id:1,
+        name:'O que é Blockchain? Do Bitcoin a Web3',
+        dur:'15 min',
+        content:`
+<h3>Blockchain: Uma Nova Forma de Confiar</h3>
+<p>Blockchain é uma ledger (registro) distribuída, imutável e descentralizada. Sem banco central, sem intermediário. Apenas matemática, criptografia e consenso. Revolucionário.</p>
+
+<h4>O Problema que Blockchain Resolve</h4>
+<p>Historicamente, confiar exigiu terceiros:</p>
+<ul>
+<li><strong>Enviar dinheiro:</strong> Precisa de banco (taxa, espera, intermediário)</li>
+<li><strong>Contratar:</strong> Precisa advogado (caro, lento)</li>
+<li><strong>Autenticar:</strong> Precisa de cartório (ineficiente)</li>
+<li><strong>Propriedade:</strong> Precisa de registro (centralizado, sujeito a falha)</li>
+</ul>
+
+<p>Blockchain permite confiança sem terceiros. Código é lei, matemática não mente.</p>
+
+<h4>Os 4 Pilares do Blockchain</h4>
+<p><strong>1. Descentralização:</strong> Não há servidor central. Milhares de nós mantêm cópia idêntica.</p>
+<blockquote class="example">
+<strong>Bitcoin:</strong> ~45.000 nós executando código Bitcoin, cada um verifica cada transação
+<br><strong>Ethereum:</strong> ~11.000 nós, rede ainda mais distribuída que Bitcoin
+<br><strong>Impacto:</strong> Ninguém pode "desligar" a rede, ninguém controla sozinho
+</blockquote>
+
+<p><strong>2. Imutabilidade:</strong> Uma vez registrado, é impossível mudar. Requer reescrita de histórico inteiro + consenso 51% da rede.</p>
+
+<p><strong>3. Transparência:</strong> Todas as transações são visíveis publicamente (exceto identidade). Qualquer um pode auditar.</p>
+
+<p><strong>4. Segurança Criptográfica:</strong> Hash SHA-256 garante que qualquer mudança invalida tudo depois. Uma letra muda → hash completamente diferente.</p>
+
+<h4>Jargão Essencial</h4>
+<ul>
+<li><strong>Blockchain:</strong> Corrente de blocos conectados criptograficamente</li>
+<li><strong>Bloco:</strong> Contém transações, timestamp, hash do bloco anterior</li>
+<li><strong>Hash:</strong> Impressão digital de dados (SHA-256)</li>
+<li><strong>Nó:</strong> Computador que executa software blockchain</li>
+<li><strong>Mineração/Validação:</strong> Computar poder para confirmar transações</li>
+<li><strong>Consenso:</strong> Mecanismo para nós concordarem (Proof of Work, Proof of Stake)</li>
+</ul>
+
+<h4>De Bitcoin a Web3: A Evolução</h4>
+<blockquote class="tip">
+<strong>📊 Timeline Blockchain:</strong>
+<br>
+<br><strong>2009:</strong> Bitcoin (Satoshi Nakamoto) — apenas transações de valor
+<br><strong>2015:</strong> Ethereum (Vitalik Buterin) — smart contracts, programabilidade
+<br><strong>2017-2018:</strong> Boom ICO, DApps, tokens ERC-20
+<br><strong>2020:</strong> DeFi explosão, empréstimos, yield farming
+<br><strong>2021:</strong> NFTs go mainstream
+<br><strong>2022-2026:</strong> Web3 consolidação, adoção institucional
+</blockquote>
+
+<h4>Blockchain Hoje: Números Reais</h4>
+<blockquote class="news">
+<strong>💰 Mercado Global (2026):</strong>
+<br>• Mercado total: $2+ trilhões em ativos criptográficos
+<br>• Bitcoin: $40-50k per coin, 21 milhões de limite
+<br>• Ethereum: $2-3k per ETH, rede de aplicações
+<br>• Transações diárias: 1-2 milhões no Bitcoin, 10+ milhões no Ethereum
+<br>• Adoção: 5% população global tem criptografia
+</blockquote>
+
+<p>Blockchain é realidade. Não é hype, não é bolha. É infraestrutura que mudará finanças, contratos, propriedade digital.</p>
+        `,
+        cards:[
+          {q:"O que é blockchain?",a:"Ledger distribuída, imutável, descentralizada conectada por criptografia"},
+          {q:"Cite 3 pilares do blockchain",a:"Descentralização, imutabilidade, transparência, segurança criptográfica"},
+          {q:"Qual é a diferença entre Bitcoin e Ethereum?",a:"Bitcoin é apenas transações de valor, Ethereum permite smart contracts e programabilidade"}
+        ]
+      },
+      {
+        id:2,
+        name:'Bitcoin: Dinheiro Eletrônico Peer-to-Peer',
+        dur:'20 min',
+        content:`
+<h3>Bitcoin: A Moeda Descentralizada</h3>
+<p>Bitcoin é a aplicação blockchain mais bem-sucedida da história. 15+ anos funcionando sem falha. Nunca foi hackeado. É digital gold — escasso (21M máximo), fungível, durável.</p>
+
+<h4>Como Bitcoin Funciona</h4>
+<p><strong>1. Carteiras e Endereços</strong></p>
+<ul>
+<li>Chave Privada: Seu "super-senha" (256 bits, 78 dígitos). Nunca compartilhe.</li>
+<li>Chave Pública: Derivada da privada via ECDSA. Segura compartilhar.</li>
+<li>Endereço: Hash da chave pública. Onde outras pessoas mandam Bitcoin para você.</li>
+</ul>
+
+<blockquote class="example">
+<strong>🔐 Analogia:</strong>
+<br>Chave Privada = Senha do seu banco
+<br>Chave Pública = Seu CPF
+<br>Endereço = Sua conta bancária
+<br>
+<br>Chave privada pode assinar transações (transferir Bitcoin).
+<br>Quem tem privada, tem os Bitcoin. Sem privada, não há recuperação.
+</blockquote>
+
+<p><strong>2. Transações</strong></p>
+<ul>
+<li>Você assina com chave privada: "Envio 1 BTC para Alice"</li>
+<li>Transação propagada pela rede (mempool)</li>
+<li>Mineradores incluem em bloco novo</li>
+<li>Bloco é adicionado quando encontram Proof of Work válido</li>
+<li>~10 minutos depois: transação confirmada (1 bloco)</li>
+<li>Após 6 blocos (~1 hora): praticamente irreversível</li>
+</ul>
+
+<p><strong>3. Mineração (Proof of Work)</strong></p>
+<blockquote class="tip">
+<strong>⛏️ Como Mineração Funciona:</strong>
+<br>
+<br>Minerador coleta transações no mempool
+<br>Tenta encontrar nonce (número aleatório) onde SHA256(bloco + nonce) < dificuldade
+<br>Isto requer trilhões de tentativas (força bruta)
+<br>Primeiro minerador a encontrar ganha recompensa: 6.25 BTC (~$150k)
+<br>
+<br>A dificuldade ajusta a cada 2 semanas para manter ~10 min por bloco.
+</blockquote>
+
+<h4>Métricas de Segurança Bitcoin</h4>
+<ul>
+<li><strong>Hash Rate:</strong> ~500 exahashes/segundo (quintilhões de tentativas/seg)</li>
+<li><strong>Segurança 51%:</strong> Atacante precisaria controlar 51% do poder mundial (impossível economicamente)</li>
+<li><strong>Uptime:</strong> 99.98% desde 2009 (praticamente nunca ficou offline)</li>
+<li><strong>Imutabilidade:</strong> Para mudar transação passada, recomputar 500M blocos (trilhões de $ em eletricidade)</li>
+</ul>
+
+<h4>Utilitários Práticos de Bitcoin</h4>
+<p><strong>Armazenamento de Valor</strong></p>
+<ul>
+<li>Escasso (21M máximo, apenas ~19.5M existem)</li>
+<li>Portável (pode sair do país em seed phrase)</li>
+<li>Resistente a censura (ninguém pode congelar conta)</li>
+</ul>
+
+<p><strong>Transferência de Valor</strong></p>
+<ul>
+<li>Envelope digital sem intermediário</li>
+<li>Qualquer valor, qualquer hora, de qualquer lugar</li>
+<li>Irreversível (seguro para vendedor)</li>
+</ul>
+
+<blockquote class="quote">
+"Bitcoin não é dinheiro. É código. É verdade matemática."
+</blockquote>
+
+<p>Bitcoin é estudado em universidades, mantido por governos em reservas, como criptomoeda #1 há 15 anos consecutivos.</p>
+        `,
+        cards:[
+          {q:"Quantos Bitcoin existirão no máximo?",a:"21 milhões (limite hard-coded no protocolo)"},
+          {q:"Quanto tempo leva para confirmar transação Bitcoin?",a:"~10 minutos para 1 bloco, ~1 hora (6 blocos) para irreversibilidade prática"},
+          {q:"O que é Proof of Work em Bitcoin?",a:"Mineradores encontram número (nonce) onde SHA256(bloco+nonce) < dificuldade (trilhões de tentativas)"}
+        ]
+      },
+      {
+        id:3,
+        name:'Ethereum: Computador Mundial Descentralizado',
+        dur:'20 min',
+        content:`
+<h3>Ethereum: Blockchain Programável</h3>
+<p>Bitcoin é ouro digital. Ethereum é computador. Você pode rodar qualquer programa na rede, descentralizado, imutável, sem censura. Revolucionário.</p>
+
+<h4>Smart Contracts: Código que Executa</h4>
+<p>Um smart contract é código que roda na blockchain. Sem intermediário. Quando condições são atendidas, contrato executa automaticamente.</p>
+<blockquote class="example">
+<strong>📋 Exemplo: Contrato de Aposta Desportiva</strong>
+<br>
+<br>Dois amigos apostam $100 em quem vence o Flamengo.
+<br>
+<br>Contrato Ethereum:
+<br>1. Ambos enviam $100 (total $200 no contrato)
+<br>2. Contrato aguarda resultado (oráculo externo)
+<br>3. Se Flamengo vence: envia $200 para vencedor
+<br>4. Se não vence: envia $200 para outro
+<br>
+<br>Sem intermediário, sem risco de contraparte. Código é lei.
+</blockquote>
+
+<h4>Solidity: Linguagem de Smart Contracts</h4>
+<p>Smart contracts Ethereum são escritos em Solidity (linguagem similar a JavaScript).</p>
+<blockquote class="example">
+<strong>💻 Contrato Simples: Contador</strong>
+<br>
+<br><code>pragma solidity ^0.8.0;
+<br>
+<br>contract Counter {
+<br>  uint count = 0;
+<br>
+<br>  function increment() public {
+<br>    count += 1;
+<br>  }
+<br>
+<br>  function getCount() public view returns (uint) {
+<br>    return count;
+<br>  }
+<br>}</code>
+<br>
+<br>Isso é um contrato imutável. Executa exatamente como escrito, para sempre.
+</blockquote>
+
+<h4>Gas: Combustível de Ethereum</h4>
+<p>Cada operação custa "gas" (unidade de computação). Mineradores recebem gas como taxa.</p>
+<ul>
+<li><strong>Gas Price:</strong> Quanto cada unidade custa em ETH (varia com demanda)</li>
+<li><strong>Gas Limit:</strong> Máximo de gas que você autoriza gastar</li>
+<li><strong>Custo Total:</strong> Gas Used × Gas Price = taxa em ETH</li>
+</ul>
+
+<blockquote class="tip">
+<strong>⛽ Exemplo:</strong>
+<br>Transferência ETH custa ~21.000 gas
+<br>Se gas price = 50 gwei: custo = 21.000 × 50 = 1.050.000 gwei = 0.00105 ETH (~$2-3)
+<br>
+<br>Contrato complexo pode custar 500k-1M gas (~$100-300)
+<br>
+<br>Por isso: otimização de código é importante!
+</blockquote>
+
+<h4>ERC-20: Tokens na Ethereum</h4>
+<p>ERC-20 é padrão para criar tokens (moedas custom) na Ethereum.</p>
+<ul>
+<li><strong>USDC, USDT:</strong> Stablecoins (valem $1)</li>
+<li><strong>UNI:</strong> Token do Uniswap (exchange descentralizado)</li>
+<li><strong>AAVE:</strong> Token de protocolo de empréstimo</li>
+<li><strong>Qualquer projeto:</strong> Cria seu token para fundraising (ICO)</li>
+</ul>
+
+<blockquote class="example">
+<strong>🪙 Interface Mínima ERC-20:</strong>
+<br>
+<br>balanceOf(address) → saldo do endereço
+<br>transfer(to, amount) → enviar tokens
+<br>approve(spender, amount) → autorizar gasto
+<br>transferFrom(from, to, amount) → transferência autorizada
+</blockquote>
+
+<h4>Ethereum 2.0: Proof of Stake</h4>
+<p>Ethereum está migrando de Proof of Work para Proof of Stake:</p>
+<ul>
+<li><strong>PoW:</strong> Mineradores usam eletricidade (ambientalmente caro)</li>
+<li><strong>PoS:</strong> Validadores apostam ETH (muito mais eficiente)</li>
+<li><strong>Economia:</strong> 99.95% menos eletricidade</li>
+<li><strong>Retorno:</strong> Validadores ganham ~4% ao ano em ETH novo</li>
+</ul>
+
+<blockquote class="news">
+<strong>🌍 Impacto Ambiental:</strong>
+<br>Bitcoin PoW: ~150 TWh/ano (consumo de alguns países)
+<br>Ethereum (pós-PoS): ~0.5 TWh/ano (1000x menos)
+<br>
+<br>Ethereum mergulhou para PoS em 2022. Bitcoin ainda é PoW por design.
+</blockquote>
+
+<p>Ethereum é plataforma mais flexível, porém Bitcoin é mais simples e seguro. Ambas coexistem e prosperam.</p>
+        `,
+        cards:[
+          {q:"O que é um smart contract?",a:"Código executável na blockchain que roda automaticamente quando condições são atendidas, sem intermediário"},
+          {q:"Qual é a linguagem de smart contracts Ethereum?",a:"Solidity (similar a JavaScript)"},
+          {q:"O que é gas em Ethereum?",a:"Unidade de computação que cada operação custa, pago em ETH aos mineradores/validadores"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Blockchain, Bitcoin e Ethereum',
+      points:[
+        'Blockchain é ledger descentralizada, imutável, transparente — resolve confiança sem terceiros',
+        'Bitcoin é ouro digital (21M máximo, Proof of Work seguro, desde 2009)',
+        'Ethereum é computador descentralizado onde smart contracts rodam imutavelmente',
+        'Solidity permite programar contratos, ERC-20 padroniza tokens, Gas é custo de computação'
+      ]
+    },
+    quizFinal:[
+      {q:"Bitcoin e Ethereum diferem principalmente em:",opts:["Mining speed","Bitcoin é moeda, Ethereum é plataforma programmável","Preço","Supply máxima"],correct:1},
+      {q:"Proof of Stake vs Proof of Work: qual é mais eficiente?",opts:["PoW (mais seguro)","PoS (99.95% menos energia)","Ambos iguais","Depende da rede"],correct:1},
+      {q:"ERC-20 é padrão para:",opts:["Minerar Ethereum","Criar tokens na Ethereum","Assinar transações","Validar blocos"],correct:1}
+    ]
+  },
+  {
+    id:'bw_mod2',
+    name:'DeFi, NFTs e Aplicações Web3',
+    free:false,
+    topics:[
+      {
+        id:4,
+        name:'DeFi: Finanças Descentralizadas',
+        dur:'20 min',
+        content:`
+<h3>DeFi: Banking Sem Bancos</h3>
+<p>DeFi (Finanças Descentralizadas) recria serviços financeiros em blockchain. Sem bancos, sem KYC, sem intermediários. Qualquer um com carteira Ethereum acessa.</p>
+
+<h4>Serviços DeFi Principais</h4>
+<p><strong>1. DEX (Descentralized Exchange)</strong></p>
+<ul>
+<li>Uniswap, Curve, SushiSwap: trocar tokens sem custódia</li>
+<li>Você controla chaves privadas o tempo inteiro</li>
+<li>Liquidez fornecida por usuários (não exchange)</li>
+<li>Taxa: ~0.30% para provedores de liquidez</li>
+</ul>
+
+<blockquote class="example">
+<strong>💱 Trocar 100 USDC por ETH no Uniswap:</strong>
+<br>
+<br>1. Conectar carteira (MetaMask, etc)
+<br>2. Autorizar Uniswap a gastar USDC
+<br>3. Clicar "swap" (especificar preço mínimo aceitável)
+<br>4. Assinar transação
+<br>5. 30 segundos: ETH recebido na sua carteira
+<br>
+<br>Ninguém pode congelar, ninguém sabe sua identidade.
+<br>Custa ~0.5-1% em taxa de gas.
+</blockquote>
+
+<p><strong>2. Lending (Empréstimos)</strong></p>
+<ul>
+<li>Aave, Compound: emprestar cripto, ganhar juros</li>
+<li>Você deposita 100 USDC → ganha 5% ao ano</li>
+<li>Tomadores pegam empréstimo pagando 8-10%</li>
+<li>Diferença vai para Aave (protocolo)</li>
+<li>Garantia (collateral): tomador deve deixar 200 USDC para pegar 100 USD empréstimo</li>
+</ul>
+
+<blockquote class="tip">
+<strong>💰 Yield Farming Real:</strong>
+<br>
+<br>Depositar cripto em protocolo → receber juros
+<br>Em 2020-2021: juros de 50-500% ao ano (unsustainável, bolha)
+<br>Hoje (2026): 4-8% ao ano (realista, sustentável)
+<br>
+<br>Comparado com banco: 0.1% no Brasil, 5% EUA
+<br>DeFi paga melhor, mas tem risco de smart contract falhar.
+</blockquote>
+
+<p><strong>3. Staking</strong></p>
+<ul>
+<li>Bloquear cripto como validador → ganhar recompensa</li>
+<li>Ethereum: stake 32 ETH → ganhar 4% ao ano em ETH novo</li>
+<li>Outro protocolo: stake 10.000 MATIC → ganhar 10% ao ano</li>
+<li>Recompensa é criação de moeda nova (inflação)</li>
+</ul>
+
+<p><strong>4. Derivados e Perpetuais</strong></p>
+<ul>
+<li>dYdX, Gmx: trading com leverage (10x, 100x)</li>
+<li>Perpetual = contrato que nunca vence</li>
+<li>Você pode fazer short (apostar em queda) ou long (apostar em subida)</li>
+<li>Risco altíssimo: perder tudo em liquidação</li>
+</ul>
+
+<h4>Riscos de DeFi</h4>
+<blockquote class="news">
+<strong>⚠️ Não é sem risco:</strong>
+<br>
+<br>• Bug em Smart Contract: Terra/Luna caiu de $40 para $0 em dias
+<br>• Impermanent Loss: Se você fornece liquidez e preço muda 10%, você perde
+<br>• Flash Loans: Ataque onde empréstimo é feito e devolvido em 1 transação
+<br>• Rug Pull: Desenvolvedores roubam fundos e desaparecem
+<br>
+<br>Pesquise auditorias de segurança antes de usar novo protocolo.
+</blockquote>
+
+<h4>DeFi vs TradFi (Finanças Tradicionais)</h4>
+<table>
+<tr><td><strong>Aspecto</strong></td><td><strong>DeFi</strong></td><td><strong>TradFi</strong></td></tr>
+<tr><td>Acesso</td><td>Global, sem KYC</td><td>Exige documento</td></tr>
+<tr><td>Juros</td><td>4-8% ao ano</td><td>0.1% ao ano</td></tr>
+<tr><td>Segurança</td><td>Código aberto, auditável</td><td>Caixa preta, regulada</td></tr>
+<tr><td>Risco</td><td>Smart contract, rug pull</td><td>Insolvência do banco</td></tr>
+</table>
+
+<p>DeFi é futuro, mas TradFi ainda domina. Ambas coexistirão.</p>
+        `,
+        cards:[
+          {q:"O que é DEX (Descentralized Exchange)?",a:"Exchange de tokens sem custódia centralizada, liquidez de usuários, você controla chaves o tempo inteiro"},
+          {q:"Como ganhar yield em DeFi?",a:"Depositar cripto em protocolo de lending (Aave, Compound) e ganhar 4-8% ao ano"},
+          {q:"Qual é o risco principal de yield farming?",a:"Smart contract bug, impermanent loss, rug pull (desenvolvedores roubam fundos)"}
+        ]
+      },
+      {
+        id:5,
+        name:'NFTs: Propriedade Digital e Colecionáveis',
+        dur:'18 min',
+        content:`
+<h3>NFTs: Tokens Não-Fungíveis</h3>
+<p>NFT (Non-Fungible Token) é token único na blockchain. Diferente de ETH (1 ETH = 1 ETH), cada NFT é singular. Prova de propriedade digital.</p>
+
+<h4>O que é Não-Fungível?</h4>
+<ul>
+<li><strong>Fungível:</strong> 1 Bitcoin = 1 Bitcoin (intercambiável)</li>
+<li><strong>Não-Fungível:</strong> Mona Lisa ≠ Guernica (única)</li>
+<li><strong>NFT:</strong> Token único representando ativo digital ou direito</li>
+</ul>
+
+<h4>Padrões ERC-721 e ERC-1155</h4>
+<p><strong>ERC-721:</strong> Um token = um item (caro para criar muitos)</p>
+<ul>
+<li>CryptoPunks, Bored Ape Yacht Club</li>
+<li>10.000 imagens únicas, cada uma é NFT</li>
+<li>Cada NFT pode ter propriedades diferentes (cor, acessório)</li>
+</ul>
+
+<p><strong>ERC-1155:</strong> Um contrato pode ter múltiplos tokens (eficiente para colecionar)</p>
+<ul>
+<li>Jogos usam esse padrão (10.000 espadas, 5.000 escudos)</li>
+<li>Mais barato criar múltiplos itens</li>
+</ul>
+
+<h4>Casos de Uso Reais</h4>
+<p><strong>Colecionáveis Digitais</strong></p>
+<ul>
+<li>CryptoPunks: 10k imagens pixeladas, alguns vendem por $1M+</li>
+<li>Bored Ape: 10k macacos com 170 traços diferentes</li>
+<li>Valor vem de escassez, comunidade, prestígio</li>
+</ul>
+
+<p><strong>Direitos de Propriedade</strong></p>
+<blockquote class="example">
+<strong>🏠 Exemplo: Casa como NFT</strong>
+<br>
+<br>Casa no Brasil vendida → Título é emitido como NFT
+<br>NFT vai para carteira Ethereum do novo dono
+<br>Blockchain prova propriedade para sempre
+<br>Transferência futura é swap de NFT (instantâneo, sem cartório)
+<br>
+<br>Vantagem: prova incorruptível, sem risco de documentos perdidos
+</blockquote>
+
+<p><strong>Gaming e Metaverso</strong></p>
+<ul>
+<li>Axie Infinity: monstros são NFTs que você possui</li>
+<li>Decentraland: terra virtual é NFT</li>
+<li>Itens: roupas, casas, carros são NFTs transferíveis</li>
+<li>Você pode vender seu personagem (com tudo dentro)</li>
+</ul>
+
+<p><strong>Royalties de Criadores</strong></p>
+<ul>
+<li>Artista cria NFT e coloca 10% de royalty</li>
+<li>Toda vez que NFT é vendido, artista ganha 10%</li>
+<li>Fluxo de renda passiva para criador</li>
+<li>Bitcoin e Ethereum não têm isso nativo, NFTs sim</li>
+</ul>
+
+<h4>A Verdade sobre NFTs (2026)</h4>
+<blockquote class="quote">
+"Em 2021-2022, NFT foi especulação pura. Hoje, sobrevivem apenas os com caso de uso real."
+</blockquote>
+
+<p>Realidade NFT hoje:</p>
+<ul>
+<li>Mercado passou de $25B (2021) para $5-10B (2026)</li>
+<li>Maioria de colecionáveis perdeu valor 90%+</li>
+<li>Gaming NFTs crescem (Axie, Decentraland ainda vivos)</li>
+<li>Propriedade digital (casas, diplomas) é tendência real</li>
+<li>Hype diminuiu, mas tecnologia permanece útil</li>
+</ul>
+
+<p>NFTs não são todo mundo ficando rico. São prova de propriedade digital. Alguns casos vão ser enormes.</p>
+        `,
+        cards:[
+          {q:"O que diferencia NFT de criptomoeda normal?",a:"NFT é único (não-fungível), cada um é singular. Cripto é fungível (1 = 1)"},
+          {q:"Qual padrão é melhor para jogos com muitos itens?",a:"ERC-1155 (mais eficiente que ERC-721)"},
+          {q:"Como criador ganha com NFTs?",a:"Royalties: toda vez que NFT é vendido, criador recebe % da venda"}
+        ]
+      },
+      {
+        id:6,
+        name:'Carteiras, Segurança e Boas Práticas Web3',
+        dur:'18 min',
+        content:`
+<h3>Carteiras: Seu Banco Pessoal</h3>
+<p>Carteira Ethereum é sua identidade Web3. Quem tem chave privada, tem seu dinheiro e ativos. Segurança é crítica. Um erro = perda permanente.</p>
+
+<h4>Tipos de Carteira</h4>
+<p><strong>1. Hot Wallet (Conectada à Internet)</strong></p>
+<ul>
+<li>MetaMask, Phantom, Trust Wallet</li>
+<li>Fácil usar, mas mais risco</li>
+<li>Chave privada fica no navegador/phone</li>
+<li>Ideal para: trading ativo, pequenas quantidades</li>
+</ul>
+
+<blockquote class="example">
+<strong>🔌 MetaMask Workflow:</strong>
+<br>
+<br>1. Instalar extensão do navegador
+<br>2. Criar carteira (ou importar existente via seed)
+<br>3. Conectar a dApps (Uniswap, Aave, etc)
+<br>4. Assinar transações manualmente (segurança)
+<br>
+<br>Risco: malware no PC rouba extensão
+</blockquote>
+
+<p><strong>2. Cold Wallet (Offline)</strong></p>
+<ul>
+<li>Hardware wallet: Ledger, Trezor</li>
+<li>Chave privada nunca toca internet</li>
+<li>Assinar é feito fisicamente (botão)</li>
+<li>Ideal para: holdings grandes, longo prazo</li>
+</ul>
+
+<blockquote class="tip">
+<strong>🔒 Hardware Wallet Segurança:</strong>
+<br>
+<br>Você tem 10 ETH = $25k
+<br>Compra Ledger ($100)
+<br>Chave privada gerada no dispositivo (nunca sai)
+<br>Mesmo se PC é hacked, $25k está seguro
+<br>
+<br>Para cada transação:
+<br>1. Conectar Ledger ao PC
+<br>2. Confirmar endereço e valor no visor Ledger
+<br>3. Apertar botão (assinar)
+<br>4. Desconectar
+<br>
+<br>Hacker não consegue roubar sem o dispositivo físico.
+</blockquote>
+
+<p><strong>3. Self-Custodial vs Custodial</strong></p>
+<ul>
+<li><strong>Self-Custodial:</strong> Você controla chaves (MetaMask, Ledger, Hardware)</li>
+<li><strong>Custodial:</strong> Exchange controla chaves (Binance, Coinbase, Kraken)</li>
+<li>"Not your keys, not your crypto" — você não controla custodial</li>
+<li>Custodial é mais fácil, mas risco de exchange falhar/roubar</li>
+</ul>
+
+<h4>Seed Phrase: A Magia Mnemônica</h4>
+<p>Seed phrase é 12-24 palavras que derivam sua chave privada.</p>
+<blockquote class="example">
+<strong>🌱 Exemplo Seed:</strong>
+<br>
+<br>"abandon ability able about above absolute absorb abstract abuse access accident account"
+<br>
+<br>Essas 12 palavras são padrão BIP-39 (Bitcoin Improvement Proposal)
+<br>Pode restaurar carteira em qualquer wallet (MetaMask, Trust Wallet, etc)
+<br>Perder seed = perder acesso para sempre (não há "recuperação")
+</blockquote>
+
+<p><strong>Guardar Seed Phrase:</strong></p>
+<ul>
+<li>❌ NUNCA em digital (screenshot, email, cloud)</li>
+<li>✅ Papel em cofre</li>
+<li>✅ Metal gravado (resistente a fogo)</li>
+<li>✅ Múltiplas cópias em lugares distintos</li>
+</ul>
+
+<h4>Ataques Comuns e Proteção</h4>
+<p><strong>1. Phishing</strong></p>
+<ul>
+<li>Site fake imitando Uniswap/OpenSea</li>
+<li>Você conecta carteira, eles pedem aprovação (drain account)</li>
+<li><strong>Proteção:</strong> Sempre verificar URL, bookmarking correto, nunca clicar links de email</li>
+</ul>
+
+<p><strong>2. Malware</strong></p>
+<ul>
+<li>Trojan roba chave privada ou seed</li>
+<li><strong>Proteção:</strong> PC seguro, antivírus, não baixar aleatoriamente</li>
+</ul>
+
+<p><strong>3. Rugging</strong></p>
+<ul>
+<li>Novo token promete 1000% ganho, você compra</li>
+<li>Desenvolvedores vendem tudo e somem</li>
+<li><strong>Proteção:</strong> Verificar contrato no Etherscan, checar auditorias</li>
+</ul>
+
+<h4>Boas Práticas Web3</h4>
+<blockquote class="news">
+<strong>✅ Checklist de Segurança:</strong>
+<br>
+<br>• Usar hardware wallet para >$5k
+<br>• Never share seed phrase ou chave privada
+<br>• Verificar endereço do contrato (copiar, não digitar)
+<br>• Testar com quantidade pequena primeiro
+<br>• Verificar approvals regularmente (revogar antigos)
+<br>• Manter ETH para gas (não deixar conta seca)
+<br>• Usar multisig para fundos críticos
+<br>• Backup seed em múltiplos lugares
+</blockquote>
+
+<p>Web3 é "you are your own bank" — liberdade, mas responsabilidade.</p>
+        `,
+        cards:[
+          {q:"Qual é a diferença entre hot wallet e cold wallet?",a:"Hot é conectada à internet (MetaMask, mais fácil), cold é offline (Ledger, mais seguro)"},
+          {q:"Qual é o maior risco de custodial wallet?",a:"Exchange pode falhar, roubar, ou ser hackeado — você não controla chaves"},
+          {q:"O que é seed phrase?",a:"12-24 palavras padrão BIP-39 que derivam chave privada, pode restaurar carteira em qualquer wallet"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: DeFi, NFTs e Segurança Web3',
+      points:[
+        'DeFi recria banking (lending, DEX, staking) sem intermediário, juros 4-8% vs 0.1%',
+        'NFTs provam propriedade digital única, úteis para gaming, arte, propriedade real',
+        'Carteiras podem ser hot (fácil, risco) ou cold (seguro, hardware)',
+        'Seed phrase de 12-24 palavras é backup que restaura tudo — guardar em papel seguro'
+      ]
+    },
+    quizFinal:[
+      {q:"DEX (como Uniswap) diferencia-se por:",opts:["Ser mais barato","Você controla chaves o tempo todo, sem custódia","Ter mais tokens","Ser mais rápido"],correct:1},
+      {q:"Yield farming de 50%+ ao ano em DeFi é:",opts:["Sustentável","Normal","Sinal de bolha/risco","Sem risco"],correct:2},
+      {q:"Perder seed phrase significa:",opts:["Recuperação é possível","Perder acesso para sempre","Você precisa chamar suporte","Transferir para novo wallet"],correct:1}
+    ]
+  },
+  {
+    id:'bw_mod3',
+    name:'Construindo DApps e Futuro de Web3',
+    free:false,
+    topics:[
+      {
+        id:7,
+        name:'Introdução ao Desenvolvimento de Smart Contracts',
+        dur:'20 min',
+        content:`
+<h3>Solidity: Programando o Futuro Descentralizado</h3>
+<p>Smart contracts são código imutável executado em blockchain. Vamos aprender Solidity e criar nosso primeiro contrato.</p>
+
+<h4>Setup: Ferramentas Mínimas</h4>
+<ul>
+<li><strong>Remix IDE:</strong> https://remix.ethereum.org (zero instalação)</li>
+<li><strong>MetaMask:</strong> Carteira no navegador para testar</li>
+<li><strong>Testnet (Sepolia):</strong> Ethereum de teste, ETH gratuito em faucet</li>
+<li><strong>Etherscan:</strong> Blockchain explorer para verificar transações</li>
+</ul>
+
+<h4>Contrato Simples: Token ERC-20</h4>
+<blockquote class="example">
+<strong>💻 Seu Primeiro Token:</strong>
+<br>
+<br><code>pragma solidity ^0.8.0;
+<br>
+<br>contract MyToken {
+<br>  string public name = "My Token";
+<br>  string public symbol = "MTK";
+<br>  uint public totalSupply = 1000000;
+<br>
+<br>  mapping(address => uint) public balances;
+<br>
+<br>  constructor() {
+<br>    balances[msg.sender] = totalSupply;
+<br>  }
+<br>
+<br>  function transfer(address to, uint amount) public {
+<br>    require(balances[msg.sender] >= amount, "Saldo insuficiente");
+<br>    balances[msg.sender] -= amount;
+<br>    balances[to] += amount;
+<br>  }
+<br>}</code>
+<br>
+<br>Isso é token funcional! Pode transferir, verificar saldo, tudo descentralizado.
+</blockquote>
+
+<h4>Conceitos-Chave Solidity</h4>
+<ul>
+<li><strong>mapping:</strong> Dicionário (address → saldo)</li>
+<li><strong>require:</strong> Validação (se falsa, revert transação)</li>
+<li><strong>msg.sender:</strong> Quem chamou a função</li>
+<li><strong>public/private:</strong> Visibilidade (quem pode chamar)</li>
+<li><strong>view:</strong> Apenas lê, não muda estado (sem gas)</li>
+<li><strong>pure:</strong> Não acessa estado, apenas computa</li>
+</ul>
+
+<h4>Gas Optimization</h4>
+<p>Gas caro = menos usuários usam seu contrato. Otimização é crítica.</p>
+<blockquote class="tip">
+<strong>⛽ Técnicas de Economia:</strong>
+<br>
+<br>❌ Loop sobre array grande (O(n) gas)
+<br>✅ Usar mapping (O(1) gas)
+<br>
+<br>❌ Variáveis string longas
+<br>✅ Usar bytes32 para dados pequenos
+<br>
+<br>❌ Múltiplas transações
+<br>✅ Batch em uma transação (economiza overhead)
+<br>
+<br>Um contrato bem otimizado economiza 50-90% em gas.
+</blockquote>
+
+<h4>Testando Localmente com Hardhat</h4>
+<p>Hardhat é framework para desenvolvimento Web3.</p>
+<blockquote class="example">
+<strong>📝 Workflow:</strong>
+<br>
+<br>npm init
+<br>npm install hardhat
+<br>npx hardhat init  // criar projeto
+<br>
+<br>Escrever contrato em contracts/
+<br>Escrever teste em test/
+<br>npx hardhat test  // rodar testes
+<br>npx hardhat run scripts/deploy.js --network sepolia  // deploy em testnet
+</blockquote>
+
+<h4>Segurança: Auditoria é Crítica</h4>
+<p>Smart contract bug = perda de dinheiro. Auditoria profissional é necessário para protocolos grandes.</p>
+<ul>
+<li><strong>OpenZeppelin:</strong> Biblioteca de contratos auditados (usar, não reinventar)</li>
+<li><strong>Slither:</strong> Ferramenta automatizada de análise estática</li>
+<li><strong>Audit Firms:</strong> Certik, Trail of Bits (caro, necessário para >$1M)</li>
+</ul>
+
+<blockquote class="quote">
+"Code is law — mas buggy code é lei que queima seu dinheiro."
+</blockquote>
+
+<p>Desenvolvedores Web3 com conhecimento Solidity têm salário 2-3x acima da média — demanda é gigante.</p>
+        `,
+        cards:[
+          {q:"O que é Remix IDE?",a:"IDE web gratuita para desenvolvr e testar smart contracts Solidity sem instalação"},
+          {q:"O que fazem require() e revert() em Solidity?",a:"require() valida condição (revert se falsa), revert() cancela transação e retorna estado"},
+          {q:"Como otimizar gas em smart contracts?",a:"Usar mapping em vez de arrays, bytes32 em vez de string, batch múltiplas operações"}
+        ]
+      },
+      {
+        id:8,
+        name:'DApps: Interfaces para Blockchain',
+        dur:'20 min',
+        content:`
+<h3>Frontend Web3: Conectando ao Blockchain</h3>
+<p>Smart contract é backend. Precisa de frontend para usuários interagirem. Web3.js e Ethers.js conectam UI ao blockchain.</p>
+
+<h4>Arquitetura DApp</h4>
+<blockquote class="tip">
+<strong>🏗️ Stack Típico:</strong>
+<br>
+<br>Frontend (React/Vue) → Web3.js/Ethers.js → Metamask → Ethereum RPC Node
+<br>
+<br>Usuário clica "Send ETH"
+<br>  → Frontend chama Ethers.sendTransaction()
+<br>  → Metamask abre popup (usuário assina)
+<br>  → RPC Node transmite transação
+<br>  → 12-60 segundos: confirmada
+</blockquote>
+
+<h4>Implementação Mínima (React)</h4>
+<blockquote class="example">
+<strong>💻 Conectar Metamask:</strong>
+<br>
+<br><code>import { ethers } from 'ethers';
+<br>
+<br>async function connectWallet() {
+<br>  const provider = new ethers.BrowserProvider(window.ethereum);
+<br>  const signer = await provider.getSigner();
+<br>  const address = await signer.getAddress();
+<br>  console.log("Conectado:", address);
+<br>}
+<br>
+<br>function App() {
+<br>  return <button onClick={connectWallet}>Conectar Metamask</button>;
+<br>}</code>
+<br>
+<br>Isso é suficiente para iniciar!
+</blockquote>
+
+<h4>Interagir com Smart Contract</h4>
+<p>Depois de conectar wallet, chame funções do contrato:</p>
+<blockquote class="example">
+<strong>📋 Chamar função do contrato:</strong>
+<br>
+<br><code>const contractAddress = "0x...";
+<br>const abi = [
+<br>  "function balanceOf(address) returns (uint)",
+<br>  "function transfer(address to, uint amount)"
+<br>];
+<br>
+<br>const contract = new ethers.Contract(
+<br>  contractAddress,
+<br>  abi,
+<br>  signer
+<br>);
+<br>
+<br>// Ler (view, sem gas)
+<br>const balance = await contract.balanceOf(userAddress);
+<br>
+<br>// Escrever (muda estado, precisa gas)
+<br>const tx = await contract.transfer(recipient, amount);
+<br>await tx.wait();  // esperar confirmação
+<br>console.log("Transferência OK!");
+</code>
+</blockquote>
+
+<h4>Bibliotecas Populares</h4>
+<ul>
+<li><strong>Web3.js:</strong> Mais antiga (2014), densa, 60KB+</li>
+<li><strong>Ethers.js:</strong> Mais nova (2016), simples, 15KB, recomendada</li>
+<li><strong>wagmi:</strong> React hooks para Web3 (melhor DX)</li>
+<li><strong>TanStack Query:</strong> Cachear dados RPC (não fazer chamada cada re-render)</li>
+</ul>
+
+<h4>The Graph: Indexação Descentralizada</h4>
+<p>Chamar RPC para cada dado é lento. The Graph indexa eventos e permite queries rápidas.</p>
+<blockquote class="example">
+<strong>📊 Ao invés de:</strong>
+<br>
+<br>// Lento, itera 1000 blocos
+<br>const transfers = [];
+<br>for (let i = 0; i < 1000; i++) {
+<br>  const events = contract.Transfer(address, {
+<br>    fromBlock: i, toBlock: i
+<br>  });
+<br>  transfers.push(...events);
+<br>}
+<br>
+<br><strong>Use GraphQL:</strong>
+<br>
+<br>query {
+<br>  transfers(where: {from: "0x..."}) {
+<br>    id
+<br>    from
+<br>    to
+<br>    value
+<br>    timestamp
+<br>  }
+<br>}
+<br>
+<br>Instantâneo!
+</blockquote>
+
+<h4>Padrão: Wallet Connect</h4>
+<p>Usuários conectam via QR code (mobile) ou metamask (desktop). Protocolo padrão: WalletConnect</p>
+<ul>
+<li>Suporta 200+ wallets (Metamask, Phantom, Trust, etc)</li>
+<li>Usuário escolhe qual carteira</li>
+<li>Transação assinada no dispositivo do usuário (seguro)</li>
+</ul>
+
+<p>DApps bem feitas parecem apps normais — usuário não vê blockchain.</p>
+        `,
+        cards:[
+          {q:"Qual é a diferença entre Web3.js e Ethers.js?",a:"Ambas conectam UI a blockchain, Ethers.js é mais simples e recomendada (15KB vs 60KB)"},
+          {q:"O que é The Graph?",a:"Indexador descentralizado que cria índices de eventos blockchain para queries GraphQL rápidas"},
+          {q:"Como chamar função view do contrato?",a:"await contract.functionName() (não custa gas, só lê dados)"}
+        ]
+      },
+      {
+        id:9,
+        name:'O Futuro de Web3: Tendências 2026+',
+        dur:'20 min',
+        content:`
+<h3>O Que Vem: Visão para 2026-2030</h3>
+<p>Web3 é jovem. Tudo ainda pode mudar. Vejamos onde o mercado está indo.</p>
+
+<h4>Layer 2: Escalabilidade</h4>
+<p>Ethereum base ≈ 12-15 transações/segundo. Layer 2 aumenta para 1000-4000 tx/s.</p>
+<ul>
+<li><strong>Arbitrum:</strong> Optimistic rollup, compatível com Solidity, ~50M TVL</li>
+<li><strong>Optimism:</strong> Outro optimistic rollup, mais conservador</li>
+<li><strong>Polygon:</strong> Sidechain paralela (não é true rollup)</li>
+<li><strong>Zk-Rollups:</strong> Futura geração (Starknet, zkSync) — zero-knowledge proofs</li>
+</ul>
+
+<blockquote class="tip">
+<strong>⚡ Comparação de Custo (2026):</strong>
+<br>
+<br>Ethereum L1: $1-10 por transação
+<br>Arbitrum L2: $0.01-0.10
+<br>Polygon: $0.001-0.01
+<br>
+<br>L2 = mesma segurança, 100-1000x mais barato
+</blockquote>
+
+<h4>Interoperabilidade: Bridges e Rollups</h4>
+<p>Futura: múltiplas chains, múltiplos L2s, tudo comunicando</p>
+<ul>
+<li>Bridges entre chains (risco: bugs, hacks)</li>
+<li>Interop standards emergindo</li>
+<li>Usuário não precisa saber qual chain está usando</li>
+</ul>
+
+<h4>Mainstream Adoption</h4>
+<p><strong>Institucional:</strong> Governo, banco, corporações adotando blockchain</p>
+<ul>
+<li>El Salvador: Bitcoin como moeda oficial (2021)</li>
+<li>Banco Central Digital (CBDC): China, Suécia, Brasil testando</li>
+<li>Stablecoin: USDC, USDT desafiando sistemas tradicionais</li>
+<li>RWA (Real World Assets): Imóvel, ações como blockchain tokens</li>
+</ul>
+
+<p><strong>Retail:</strong> PayPal, Square permitindo comprar cripto</p>
+<ul>
+<li>Apple, Google Pay adicionando Web3</li>
+<li>Expectativa: 10-20% população tem cripto em 2026</li>
+</ul>
+
+<h4>Regulação: O Desconhecido</h4>
+<p>Maior incerteza é regulação. Cenários:</p>
+<ul>
+<li><strong>Caso Otimista:</strong> Regulação clara e favorável (EU Markets in Crypto Regulation)</li>
+<li><strong>Caso Realista:</strong> Regulação por região (EUA, EU diferente)</li>
+<li><strong>Caso Pessimista:</strong> Banimento em maiores economias (improvável, mas possível)</li>
+</ul>
+
+<blockquote class="news">
+<strong>⚖️ Estado Regulatório (2026):</strong>
+<br>
+<br>EU: MiCA (Markets in Crypto Regulation) em efeito
+<br>EUA: Framework em formação, pressionado por indústria
+<br>Ásia: Singapura, Hong Kong favoráveis; China banida
+<br>América Latina: El Salvador, Paraguai, Argentina explorando
+<br>Brasil: Regulação em discussão (tende favorável)
+</blockquote>
+
+<h4>Tecnologia Futura</h4>
+<p><strong>ZK Proofs:</strong> Provar cálculos sem revelar dados (privacidade total)</p>
+<p><strong>Quantum-Resistant Cryptography:</strong> Proteger contra computadores quânticos futuros</p>
+<p><strong>Privacy Coins:</strong> Monero, Zcash, Tornado Cash (governo vs privacidade)</p>
+
+<h4>Profissões Emergentes</h4>
+<blockquote class="tip">
+<strong>💼 Carreira em Web3 (2026):</strong>
+<br>
+<br>Smart Contract Developer: $150-300k/ano
+<br>DeFi Protocol Designer: $120-250k/ano
+<br>Security Auditor: $100-200k/ano
+<br>Product Manager (Web3): $100-200k/ano
+<br>Blockchain Analyst: $80-150k/ano
+<br>
+<br>Demanda >> Oferta de profissionais qualificados
+</blockquote>
+
+<h4>Cenários 2026-2030</h4>
+<p><strong>Caso Otimista (30% probabilidade):</strong></p>
+<ul>
+<li>Regulação clara, mainstream adoption 20%+ população</li>
+<li>Layer 2 resolve escalabilidade</li>
+<li>Web3 é infraestrutura invisível (usuário não sabe)</li>
+<li>DeFi captura 5-10% de finanças globais</li>
+</ul>
+
+<p><strong>Caso Realista (50% probabilidade):</strong></p>
+<ul>
+<li>Web3 cresce mas fica nicho (5-10% população)</li>
+<li>Regulação restringe em grandes economias</li>
+<li>Casos de uso focados: pagamentos, RWA, gaming</li>
+<li>Bitcoin + Ethereum dominam 90% do valor</li>
+</ul>
+
+<p><strong>Caso Pessimista (20% probabilidade):</strong></p>
+<ul>
+<li>Banimento em EUA/EU, adoção desacelera</li>
+<li>Hack/rug pull massivo destrói confiança</li>
+<li>Quantum computing quebra criptografia</li>
+<li>Retorno ao sistema tradicional</li>
+</ul>
+
+<blockquote class="quote">
+"O futuro de Web3 não é certo. Mas uma coisa é: conhecimento é poder. Aprenda agora, participe da construção, ou fique para trás."
+</blockquote>
+
+<p>Você está aprendendo tecnologia que pode transformar finanças, governança, propriedade. Futuro é escrito por quem entende.</p>
+        `,
+        cards:[
+          {q:"Qual é a vantagem de Layer 2 vs Ethereum base?",a:"100-1000x mais barato ($0.01-0.10 vs $1-10), 1000x+ rápido, mesma segurança"},
+          {q:"Quanto programador Solidity ganha?",a:"$150-300k/ano (demanda >> oferta)"},
+          {q:"Qual é o maior risco de Web3 futuro?",a:"Regulação desfavorável em grandes economias, ou hack massivo que destrói confiança"}
+        ]
+      }
+    ],
+    summary:{
+      title:'Resumo: Desenvolvimento e Futuro Web3',
+      points:[
+        'Solidity e Hardhat permitem programar smart contracts com testes locais',
+        'Ethers.js conecta UI a blockchain via Metamask (15KB, simples, recomendado)',
+        'Layer 2 (Arbitrum, Optimism) escala Ethereum 100-1000x mais barato',
+        'Carreira Web3: Dev = $150-300k/ano, demanda gigante, apenas 5% população conhece'
+      ]
+    },
+    quizFinal:[
+      {q:"Qual ferramenta é recomendada para testar smart contracts localmente?",opts:["Remix só","Hardhat","Metamask","Etherscan"],correct:1},
+      {q:"Layer 2 escala Ethereum em:",opts:["Criptografia melhor","Taxa 100-1000x menor, 1000x mais rápido","Blocos maiores","Mais miners"],correct:1},
+      {q:"Maior risco de Web3 é:",opts:["Preço volatilidade","Regulação desfavorável ou hack massivo","Tecnologia fraca","Supply infinita"],correct:1}
+    ]
+  }
 ];
 </script>
 <script src="shared/course-engine.js"></script>
