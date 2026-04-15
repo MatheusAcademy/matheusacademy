@@ -3470,6 +3470,26 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776289864345,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/focoprof.jpg',
+    id: 'focoprof',
+    name: 'Foco Profundo',
+    desc: 'Domine o deep work e elimine distrações para multiplicar sua produtividade e criatividade. Aprenda as técnicas de Cal Newport e implemente fluxo profundo no seu dia a dia.',
+    file: '37-foco-profundo.html',
+    cat: 'Esportes & Alta Performance',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'fp_HENRY_2026_MASTER',
+    ak: 'fp_auth',
+    storagePrefix: 'fp_',
+    icon: '🏆',
+    color: '#283593',
+    free: true,
+    addedTs: 1776289938554,
+    active: true
   }
 ];
 var MA_CATS = [
