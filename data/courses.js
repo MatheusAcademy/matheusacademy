@@ -3211,24 +3211,24 @@ var MA_COURSES = [
     addedTs: 1776024751130,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ig.jpg',
     id: 'ig',
-    name: 'IA Generativa e Prompt Engineering',
-    desc: 'Como usar IA generativa para criar textos, ideias, análises e automações.',
+    name: 'IA Generativa',
+    desc: 'Explore Large Language Models, Prompt Engineering avançado e ferramentas generativas. Domine ChatGPT, Claude, DALL-E, Midjourney e crie aplicações revolucionárias.',
     file: '22-ia-generativa.html',
     cat: 'Tecnologia',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'IG_HENRY_2026_MASTER',
+    salt: 'PREFIX_HENRY_2026_MASTER',
     ak: 'ig_auth',
     storagePrefix: 'ig_',
     icon: '💻',
     color: '#6A1B9A',
     free: true,
-    addedTs: 1776284560231,
+    addedTs: 1776289924442,
     active: true
   },
   {
