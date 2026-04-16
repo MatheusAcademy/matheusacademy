@@ -3777,6 +3777,25 @@ var MA_COURSES = [
     color: '#0284c7',
     addedTs: 1776358960005,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/arw.jpg',
+    id: 'arw',
+    name: 'Geopolítica do Ártico: A Nova Fronteira do Poder',
+    desc: 'Explore a corrida por território, recursos naturais e rotas comerciais no Ártico, uma das regiões mais estratégicas do futuro.',
+    file: 'geopolitica-artico.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'AR_HENRY_2026_MASTER',
+    ak: 'ar_auth',
+    storagePrefix: 'ar_',
+    icon: '📰',
+    color: '#0891b2',
+    addedTs: 1776358965861,
+    active: true
   }
 ];
 var MA_CATS = [
