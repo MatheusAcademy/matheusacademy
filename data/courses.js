@@ -810,7 +810,7 @@ var MA_COURSES = [
     addedTs: 1775830996781,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/db.jpg',
     id: 'db',
     name: 'Direitos Básicos do Cidadão no Brasil',
@@ -820,13 +820,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'DB_HENRY_2026_MASTER',
     ak: 'db_auth',
     storagePrefix: 'db_',
     icon: '⚖️',
     color: '#0077b6',
-    addedTs: 1775831005243,
+    addedTs: 1776372303138,
     active: true
   },
       {
