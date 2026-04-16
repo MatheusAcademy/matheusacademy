@@ -5986,51 +5986,122 @@ async function aplicarReorganizacao() {
   showRes('reorg-apply-res', 'ld', '<div class="sp"></div> Aplicando mudanças...');
 
   try {
-    // Buscar courses.js atual
-    var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js', { headers: gh() });
+    // ═══════════════════════════════════════════════════════════
+    // PASSO 1: Buscar courses.js FRESCO do GitHub (sem cache)
+    // ═══════════════════════════════════════════════════════════
+    var _ts = '?t=' + Date.now();
+    var ghHeaders = gh();
+    ghHeaders['If-None-Match'] = '';
+    var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js' + _ts, { headers: ghHeaders, cache: 'no-store' });
+    if (!res.ok) { showRes('reorg-apply-res', 'er', '❌ Erro ao buscar courses.js: HTTP ' + res.status); return; }
     var fd = await res.json();
-    var content = b64d(fd.content);
+    var contentOriginal = b64d(fd.content);
     var sha = fd.sha;
-    var aplicadas = 0;
+    var content = contentOriginal; // cópia para modificar
 
-    // Aplicar cada mudança
+    // ═══════════════════════════════════════════════════════════
+    // PASSO 2: Validação PRÉ-modificação (salvar métricas do original)
+    // ═══════════════════════════════════════════════════════════
+    var countIdOriginal = (contentOriginal.match(/\bid:\s*['"]/g) || []).length;
+    var countCatOriginal = (contentOriginal.match(/\bcat:\s*['"]/g) || []).length;
+    var temMaCourses = contentOriginal.indexOf('var MA_COURSES') !== -1;
+    var temMaCats = contentOriginal.indexOf('var MA_CATS') !== -1;
+    var temMaTrails = contentOriginal.indexOf('var MA_TRAILS') !== -1;
+    var tamanhoOriginal = contentOriginal.length;
+
+    if (!temMaCourses || !temMaCats) {
+      showRes('reorg-apply-res', 'er', '❌ Arquivo courses.js não tem a estrutura esperada (MA_COURSES/MA_CATS ausente). Operação cancelada por segurança.');
+      return;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // PASSO 3: Aplicar mudanças com REGEX SEGURO
+    // Usa [^}]*? para não cruzar limites de objetos { }
+    // Só modifica o campo 'cat' dentro do mesmo bloco do 'id'
+    // ═══════════════════════════════════════════════════════════
+    var aplicadas = 0;
+    var erros = [];
+
     mudancas.forEach(function(m) {
       var idEsc = m.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       var catEsc = m.catAtual.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      var re = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][\\s\\S]{0,600}?cat:\\s*['\"])" + catEsc + "(['\"])");
+
+      // REGEX SEGURO: [^}]*? garante que NÃO sai do bloco { } do curso
+      // Isso impede que o regex cruze para outro curso ou para MA_CATS/MA_TRAILS
+      var re = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][^}]*?cat:\\s*['\"])" + catEsc + "(['\"])");
       var novo = content.replace(re, '$1' + m.catNova.replace(/'/g, "\\'") + '$2');
 
       if (novo !== content) {
-        // Atualizar ícone se mudou de categoria
+        // Atualizar ícone (também dentro do mesmo bloco {})
         var novoIcon = _catIcons[m.catNova] || '';
         if (novoIcon) {
-          var iconRe = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][\\s\\S]{0,600}?icon:\\s*['\"])[^'\"]+(['\"])");
+          var iconRe = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][^}]*?icon:\\s*['\"])[^'\"]+(['\"])");
           novo = novo.replace(iconRe, '$1' + novoIcon + '$2');
         }
         content = novo;
         aplicadas++;
+      } else {
+        erros.push(m.id + ' (' + m.nome + ')');
       }
     });
 
     if (!aplicadas) {
-      showRes('reorg-apply-res', 'er', '❌ Nenhuma mudança foi aplicada. Verifique se os cursos existem no courses.js.');
+      showRes('reorg-apply-res', 'er', '❌ Nenhuma mudança foi aplicada. Cursos não encontrados: ' + erros.join(', '));
       return;
     }
 
-    // Push para GitHub
+    // ═══════════════════════════════════════════════════════════
+    // PASSO 4: Validação PÓS-modificação (CRÍTICO!)
+    // Garante que o arquivo NÃO foi corrompido
+    // ═══════════════════════════════════════════════════════════
+    var countIdNovo = (content.match(/\bid:\s*['"]/g) || []).length;
+    var countCatNovo = (content.match(/\bcat:\s*['"]/g) || []).length;
+    var temMaCoursesNovo = content.indexOf('var MA_COURSES') !== -1;
+    var temMaCatsNovo = content.indexOf('var MA_CATS') !== -1;
+    var temMaTrailsNovo = content.indexOf('var MA_TRAILS') !== -1;
+    var tamanhoNovo = content.length;
+    var diffTamanho = Math.abs(tamanhoNovo - tamanhoOriginal);
+
+    // Checagem 1: mesma quantidade de cursos (ids)
+    if (countIdNovo !== countIdOriginal) {
+      showRes('reorg-apply-res', 'er', '❌ SEGURANÇA: Quantidade de IDs mudou de ' + countIdOriginal + ' para ' + countIdNovo + '. Operação CANCELADA para proteger seus dados.');
+      return;
+    }
+    // Checagem 2: mesma quantidade de cats
+    if (countCatNovo !== countCatOriginal) {
+      showRes('reorg-apply-res', 'er', '❌ SEGURANÇA: Quantidade de campos "cat" mudou de ' + countCatOriginal + ' para ' + countCatNovo + '. Operação CANCELADA.');
+      return;
+    }
+    // Checagem 3: estruturas principais ainda existem
+    if (!temMaCoursesNovo || !temMaCatsNovo || !temMaTrailsNovo) {
+      showRes('reorg-apply-res', 'er', '❌ SEGURANÇA: Estrutura do arquivo corrompida (MA_COURSES/MA_CATS/MA_TRAILS ausente). Operação CANCELADA.');
+      return;
+    }
+    // Checagem 4: tamanho não mudou mais que 5KB (só nomes de categorias mudam)
+    if (diffTamanho > 5000) {
+      showRes('reorg-apply-res', 'er', '❌ SEGURANÇA: Tamanho do arquivo mudou demais (' + diffTamanho + ' bytes). Operação CANCELADA por segurança.');
+      return;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // PASSO 5: Tudo validado — enviar para GitHub
+    // ═══════════════════════════════════════════════════════════
     var put = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js', {
       method: 'PUT',
       headers: gh(),
       body: JSON.stringify({
-        message: 'auto-reorg: ' + aplicadas + ' curso(s) recategorizados',
+        message: 'auto-reorg: ' + aplicadas + ' curso(s) recategorizados (seguro)',
         content: b64e(content),
         sha: sha
       })
     });
 
     if (put.ok) {
-      showRes('reorg-apply-res', 'ok', '✅ ' + aplicadas + ' curso(s) recategorizados com sucesso! O site será atualizado em instantes.');
-      addAudit('🏷️ Auto-reorganização: ' + aplicadas + ' curso(s) recategorizados');
+      var msg = '✅ ' + aplicadas + ' curso(s) recategorizados com sucesso!';
+      if (erros.length) msg += '<br><span style="color:#fcd34d;font-size:10px">⚠️ Não encontrados: ' + escH(erros.join(', ')) + '</span>';
+      msg += '<br><span style="color:var(--t3);font-size:10px">Validação: ' + countIdNovo + ' IDs, ' + countCatNovo + ' categorias, estrutura OK</span>';
+      showRes('reorg-apply-res', 'ok', msg);
+      addAudit('🏷️ Auto-reorganização segura: ' + aplicadas + ' curso(s) recategorizados');
       await loadCoursesData();
       loadList();
     } else {
