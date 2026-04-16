@@ -9,128 +9,18 @@
 </head>
 <body>
 <script>
-var COURSE = {
-  id: 'MU',
-  name: 'Mulheres que Fizeram História',
-  shortName: 'Mulheres na História',
-  cat: 'Liderança e Poder',
-  desc: 'Curso sobre líderes, pensadoras, cientistas, guerreiras e figuras femininas que marcaram épocas e transformaram sociedades.',
-  salt: 'MU_HENRY_2026_MASTER',
-  ak: 'mu_auth',
-  courseKey: 'mu',
-  prefix: 'mu_',
-  color: '#c77dff',
-  glow: 'rgba(199,125,255,.35)',
-  free: false,
-  freeModules: 1,
-  modules: 3,
-  topics: 9,
-  hours: 2,
-  quizzes: 9
-};
+var COURSE = {"id":"MU","name":"Mulheres que Fizeram História","shortName":"Mulheres na História","cat":"Liderança e Poder","desc":"Curso sobre líderes, pensadoras, cientistas, guerreiras e figuras femininas que marcaram épocas e transformaram sociedades.","salt":"MU_HENRY_2026_MASTER","ak":"mu_auth","courseKey":"mu","prefix":"mu_","color":"#c77dff","glow":"rgba(199,125,255,.35)","free":false,"freeModules":1,"modules":3,"topics":9,"hours":2,"quizzes":9};
 
 var MODS = [
   {
-    id: 1,
-    name: 'Rainhas Guerreiras e Líderes Poderosas',
-    free: true,
-    topics: [1, 2, 3],
-    summary: {
-      title: 'Mulheres que Governaram Impérios',
-      points: [
-        'Cleópatra VII navegou política complexa do Egito Helenístico para preservar reino contra Império Romano',
-        'Rainha Elizabeth I de Inglaterra transformou-a de potência secundária em superpotência global durante 45 anos',
-        'Catarina, a Grande expandiu Império Russo para tamanho que rivalizava Europeu continental'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Como Cleópatra conseguiu manter independência do Egito contra Roma?',
-        opts: ['Através de superioridade militar', 'Através de alianças diplomáticas e sedução política', 'Isolamento completo', 'Submissão total'],
-        correct: 1
-      },
-      {
-        q: 'Que reino Elizabeth I transformou em potência global?',
-        opts: ['França', 'Espanha', 'Inglaterra', 'Portugal'],
-        correct: 2
-      },
-      {
-        q: 'Qual foi o alcance da expansão territorial de Catarina a Grande?',
-        opts: ['Redução de território', 'Aumento massivo que rivalizava com Europa', 'Estagnação de borders', 'Perda de poder regional'],
-        correct: 1
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Cientistas, Filósofas e Pensadoras Revolucionárias',
-    free: false,
-    topics: [4, 5, 6],
-    summary: {
-      title: 'Inovação Intelectual Feminina',
-      points: [
-        'Marie Curie revolucionou química e física, sendo primeira mulher a ganhar Prêmio Nobel e única a ganhar em múltiplas disciplinas',
-        'Hypatia de Alexandria foi matemática, astrônoma, e filósofa cuja obra foi perdida, mas influência permanece',
-        'Simone de Beauvoir redefiniu feminismo moderno e filosofia existencialista através de escrita provocadora'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Qual foi a realização particular de Marie Curie na ciência?',
-        opts: ['Inventou microscópio', 'Descobriu radioatividade e primeira a ganhar múltiplos Prêmios Nobel', 'Desenvolveu antibióticos', 'Criou teoria da relatividade'],
-        correct: 1
-      },
-      {
-        q: 'Hypatia de Alexandria era conhecida por suas contribuições em quais campos?',
-        opts: ['Literatura apenas', 'Matemática, astronomia, e filosofia', 'Política militar', 'Medicina antiga'],
-        correct: 1
-      },
-      {
-        q: 'O trabalho de Simone de Beauvoir influenciou principalmente qual movimento?',
-        opts: ['Abolicionismo', 'Feminismo moderno', 'Comunismo puro', 'Conservadorismo'],
-        correct: 1
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Ativistas, Humanitárias e Transformadoras Sociais',
-    free: false,
-    topics: [7, 8, 9],
-    summary: {
-      title: 'Mudança Social através da Ativismo',
-      points: [
-        'Florence Nightingale revolucionou cuidados de saúde e enfermagem, salvando inúmeras vidas através de reforma',
-        'Rosa Parks desafiou segregação racial em evento que catalitou movimento pelos direitos civis americano',
-        'Aung San Suu Kyi liderou resistência não-violenta contra ditadura militar em Myanmar por décadas'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Como Florence Nightingale revolucionou cuidado de saúde?',
-        opts: ['Criou medicamentos novos', 'Reformou práticas de enfermagem e higiene hospitalar', 'Inventou cirurgia moderna', 'Descobriu vacinas'],
-        correct: 1
-      },
-      {
-        q: 'Qual ato de Rosa Parks catalitou o movimento pelos direitos civis?',
-        opts: ['Discurso inflamado', 'Recusa de ceder assento em ônibus segregado', 'Participação em marcha massiva', 'Escrita de manifesto'],
-        correct: 1
-      },
-      {
-        q: 'Por quanto tempo Aung San Suu Kyi resistiu contra ditadura militar de Myanmar?',
-        opts: ['Alguns meses', 'Alguns anos', 'Mais de duas décadas de resistência não-violenta', 'Apenas alguns dias'],
-        correct: 2
-      }
-    ]
-  }
-];
-
-var TOPICS = [
-  {
-    id: 1,
-    name: 'Cleópatra VII: Poder, Sedução e Diplomacia no Egito Helenístico',
-    dur: '12 min',
-    content: `
+  id:1,
+  name:"Rainhas Guerreiras e Líderes Poderosas",
+  free:true,
+  topics:[
+    {id:1,
+     name:"Cleópatra VII: Poder, Sedução e Diplomacia no Egito Helenístico",
+     dur:"12 min",
+     content:`
       <h3>A Última Rainha do Egito e Negociadora com Roma</h3>
       <p>Cleópatra VII Philopator (69-30 a.C.) foi a última monarca ativa do Reino Egípcio Ptolemaico. Nasceu em contexto de declínio gradual do poder egípcio enquanto Império Romano crescia. Seu reino estava dividido internamente, ameaçado militarmente por Roma, e economicamente fraco. Numa situação onde maioria dos líderes sucumbiria, Cleópatra navegou política extraordinária para manter independência egípcia durante quase duas décadas contra poder crescente de Roma.</p>
       <p>Cleópatra não era apenas beleza famosa pela história. Isto é mito que necessita ser corrigido. Era polimata linguística, matemática, asteonômica, e financeira. Falava múltiplas línguas (grego, egípcio, aramaico, latim, e potencialmente ainda mais). Estava educada em retorica e filosofia. Entendia profundamente economia, diplomacia, e política. Uma testemunha contemporânea descreveu-a não por beleza, mas pela conversa sedutor, inteligência, e capacidade de envolver pessoas em discussão.</p>
@@ -147,16 +37,12 @@ var TOPICS = [
         💡 Cleópatra demonstrou que poder feminino não é oposto ao inteligência ou educação; é absolutamente dependente deles. Sua importância era política e intelectual, não meramente baseada em atração física.
       </blockquote>
     `,
-    cards: {
-      q: 'Como Cleópatra conseguiu manter poder egípcio contra crescimento de Roma?',
-      a: 'Através de alianças políticas calculadas com líderes romanos poderosos (César e Marco Antonio), educação excepcional, fluência em múltiplas línguas, e sofisticação econômica e diplomática.'
-    }
-  },
-  {
-    id: 2,
-    name: 'Elizabeth I: A Rainha Virgem que Transformou a Inglaterra',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Como Cleópatra conseguiu manter poder egípcio contra crescimento de Roma?","a":"Através de alianças políticas calculadas com líderes romanos poderosos (César e Marco Antonio), educação excepcional, fluência em múltiplas línguas, e sofisticação econômica e diplomática."}]
+    },
+    {id:2,
+     name:"Elizabeth I: A Rainha Virgem que Transformou a Inglaterra",
+     dur:"12 min",
+     content:`
       <h3>Quarenta e Cinco Anos de Reinado que Criaram uma Potência Global</h3>
       <p>Elizabeth I (1533-1603) nasceu em contexto de incerteza. Seu pai, Henrique VIII, havia queimado católicos e protestantes indiscriminadamente. Sua mãe, Anne Boleyn, foi executada. Elizabeth foi declarada ilegítima. Através de sua juventude, sua vida foi constantemente em perigo — diversos lados o conflito religioso (católicos vs. protestantes) na Inglaterra viam suas como ameaça. Foi presa durante o reinado de sua meia-irmã, Maria, acusada de conspiração.</p>
       <p>Quando ascendeu ao trono em 1558, aos 25 anos, Elizabeth herdava reino dividido religiosamente, economicamente fraco, e militarmente ameaçado por potências católicas (Espanha e França). Não havia razão para supor que jovem mulher solteira conseguiria estabilizar reino tão problemático. No entanto, durante reinado de 45 anos, transformou Inglaterra em potência militar e econômica que rivalizava com os Hapsburgo e com França.</p>
@@ -179,16 +65,12 @@ var TOPICS = [
         💡 Elizabeth compreendeu que poder não é meramente força ou violência; é narrativa, simbolismo, e capacidade de manter coalizão de apoiadores através de mistura de carisma e interesse compartilhado.
       </blockquote>
     `,
-    cards: {
-      q: 'Por que Elizabeth I decidiu nunca casar apesar de pressão política para fazê-lo?',
-      a: 'Elizabeth percebeu que casamento teria subordinado seu poder a marido; mantendo-se solteira e "casada com a Inglaterra", preservou autoridade completa e ofereceu narrativa que explicava sua posição.'
-    }
-  },
-  {
-    id: 3,
-    name: 'Catarina, a Grande: Expansão Imperial e Despotismo Esclarecido',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Por que Elizabeth I decidiu nunca casar apesar de pressão política para fazê-lo?","a":"Elizabeth percebeu que casamento teria subordinado seu poder a marido; mantendo-se solteira e \"casada com a Inglaterra\", preservou autoridade completa e ofereceu narrativa que explicava sua posição."}]
+    },
+    {id:3,
+     name:"Catarina, a Grande: Expansão Imperial e Despotismo Esclarecido",
+     dur:"12 min",
+     content:`
       <h3>A Mulher que Expandiu Rússia para Superpotência Continental</h3>
       <p>Catarina II, conhecida como Catarina, a Grande (1729-1796), foi uma das monarcas mais poderosas da história europeia. Nasceu não como russa, mas como filha de nobre alemão prussiano. Casou com Pedro III, futuro Czar da Rússia, em casamento político que era destinado a solidificar alianças entre Rússia e Prússia. Pedro era fraco, instável, e possivelmente insano. Catarina era inteligente, educada, e extraordinariamente ambiciosa.</p>
       <p>Quando Pedro ascendeu ao trono em 1761, Catarina utilizou sua posição como consorte para analisar política russa e construir aliança com oficiais militares e nobres poderosos. Dentro de meses, Pedro se tornou extremamente impopular. Seus políticas eram caóticas, sua temperamento era erráticol, e oficiais militares viam-o como incompetente. Catarina, ao contrário, era vista como racional e competente.</p>
@@ -211,16 +93,21 @@ var TOPICS = [
         💡 Catarina demonstrou que mulheres conseguem exercer poder político absoluto em nível que rivalizava qualquer homem, e consegue usar este poder para transformação territorial e intelectual em escala enorme.
       </blockquote>
     `,
-    cards: {
-      q: 'Como Catarina, a Grande conseguiu chegar ao poder na Rússia?',
-      a: 'Através de golpe de palácio orquestrado com apoio de guarda imperial e altos oficiais, depôs seu marido Pedro III que era impopular; depois consolidou poder oferecendo privilégios à nobreza que a apoiava.'
+     cards:[{"q":"Como Catarina, a Grande conseguiu chegar ao poder na Rússia?","a":"Através de golpe de palácio orquestrado com apoio de guarda imperial e altos oficiais, depôs seu marido Pedro III que era impopular; depois consolidou poder oferecendo privilégios à nobreza que a apoiava."}]
     }
+  ],
+  summary:{"title":"Mulheres que Governaram Impérios","points":["Cleópatra VII navegou política complexa do Egito Helenístico para preservar reino contra Império Romano","Rainha Elizabeth I de Inglaterra transformou-a de potência secundária em superpotência global durante 45 anos","Catarina, a Grande expandiu Império Russo para tamanho que rivalizava Europeu continental"]},
+  quizFinal:[{"q":"Como Cleópatra conseguiu manter independência do Egito contra Roma?","opts":["Através de superioridade militar","Através de alianças diplomáticas e sedução política","Isolamento completo","Submissão total"],"correct":1},{"q":"Que reino Elizabeth I transformou em potência global?","opts":["França","Espanha","Inglaterra","Portugal"],"correct":2},{"q":"Qual foi o alcance da expansão territorial de Catarina a Grande?","opts":["Redução de território","Aumento massivo que rivalizava com Europa","Estagnação de borders","Perda de poder regional"],"correct":1}]
   },
   {
-    id: 4,
-    name: 'Marie Curie: Radioatividade, Ciência, e Barreiras de Gênero',
-    dur: '12 min',
-    content: `
+  id:2,
+  name:"Cientistas, Filósofas e Pensadoras Revolucionárias",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Marie Curie: Radioatividade, Ciência, e Barreiras de Gênero",
+     dur:"12 min",
+     content:`
       <h3>A Mulher que Revolucionou a Química e Física Modernas</h3>
       <p>Maria Skłodowska nasceu em Varsóvia, Polônia em 1867, em contexto onde educação de mulheres era severamente limitada. Seu pai era professor de matemática e física, que encorajou educação científica de sua filha — atípico para época. Quando Polônia estava sob controle russo, acesso a educação superior era ainda mais restrito, especialmente para mulheres. Maria trabalhou como governanta enquanto sonhava com educação científica.</p>
       <p>Em 1891, aos 23 anos, mudou-se para Paris para frequentar Universidade de Sorbonne. Paris oferecia acesso à educação que Varsóvia nunca conseguiria. Estudou física e matemática em ambiente onde era rara mulher estudando ciências. Conheceu Pierre Curie, físico já estabelecido e com 8 anos mais velho. Casaram-se e formaram parceria de pesquisa que seria extraordinária.</p>
@@ -241,16 +128,12 @@ var TOPICS = [
         💡 Marie Curie não foi apenas cientista extraordinária; foi símbolo de que gênero não é barreira para excelência científica. Seu exemplo inspirou milhões de mulheres a perseguir carreiras em ciência apesar de barreiras.
       </blockquote>
     `,
-    cards: {
-      q: 'Qual foi a descoberta científica central de Marie Curie?',
-      a: 'Marie descobriu e isolou dois novos elementos (polonium e radium) através de investigação de radioatividade; descobertas revolucionaram compreensão de estrutura atômica e abriram campos de física e química nuclear.'
-    }
-  },
-  {
-    id: 5,
-    name: 'Hypatia de Alexandria: Matemática e Filósofa da Antiguidade',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Qual foi a descoberta científica central de Marie Curie?","a":"Marie descobriu e isolou dois novos elementos (polonium e radium) através de investigação de radioatividade; descobertas revolucionaram compreensão de estrutura atômica e abriram campos de física e química nuclear."}]
+    },
+    {id:2,
+     name:"Hypatia de Alexandria: Matemática e Filósofa da Antiguidade",
+     dur:"12 min",
+     content:`
       <h3>A Intelectual que Buscava Verdade Através de Razão</h3>
       <p>Hypatia de Alexandria (c. 350-415 d.C.) foi uma das intelectuais mais notáveis da antiguidade tardia. Nasceu em Alexandria, Egito durante período em que a cidade era ainda centro de aprendizado e pesquisa extraordinários. Seu pai, Theon, era matemático e astrônomo eminente que educou filha em disciplinas científicas e filosóficas. Isto era extraordinário porque mulheres raramente recebiam educação matemática em época.</p>
       <p>Hypatia se tornou professora em Neoplatônica (escola de filosofia que misturava platonismo com pensamento orientalista). Ensinava matemática, astronomia, e filosofia. Contemporâneos descrevem-na como intelectual extraordinária que oferecia insights originais sobre geometria, álgebra, e cosmologia. Atraía estudantes de toda Mediterrânia que procuravam aprender em seus pés.</p>
@@ -270,16 +153,12 @@ var TOPICS = [
       <p>Embora trabalho específico de Hypatia seja frequentemente perdido, sua existência é importante. Oferece prova de que mulheres conseguem alcançar níveis de excelência intelectual extraordinários em matemática, astronomia, e filosofia. Sua morte oferece também lição histórica sobre perigos de intolerância religiosa que suprime busca racional por conhecimento.</p>
       <p>Em era moderna, Hypatia se tornou ícone para aqueles que vêem ciência e razão como valores que precisam ser defendidos contra obscurantismo. Morte dela é frequentemente usada como exemplo de o que pode acontecer quando fundamentalismo religioso consegue suprimir investigação racional.</p>
     `,
-    cards: {
-      q: 'Quais eram as principais áreas científicas e filosóficas em que Hypatia contribuiu?',
-      a: 'Hypatia trabalhou em matemática (geometria, álgebra), astronomia (possivelmente inventou astrolábio), e filosofia neoplatonista; contribuições foram originalmente notáveis mas muitos foram perdidos após sua morte.'
-    }
-  },
-  {
-    id: 6,
-    name: 'Simone de Beauvoir: Filosofia, Feminismo, e Existencialismo',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Quais eram as principais áreas científicas e filosóficas em que Hypatia contribuiu?","a":"Hypatia trabalhou em matemática (geometria, álgebra), astronomia (possivelmente inventou astrolábio), e filosofia neoplatonista; contribuições foram originalmente notáveis mas muitos foram perdidos após sua morte."}]
+    },
+    {id:3,
+     name:"Simone de Beauvoir: Filosofia, Feminismo, e Existencialismo",
+     dur:"12 min",
+     content:`
       <h3>A Pensadora que Redefiniu Feminismo Moderno</h3>
       <p>Simone de Beauvoir (1908-1986) foi filósofa, escritora, e ativista francesa que radicalmente transformou compreensão de feminismo no século XX. Nasceu em Paris em família católica burguesa. Seu pai desejava que filhos tivessem educação excelente, e Simone aproveitou oferta. Frequentou Sorbonne onde estudou filosofia, e posteriormente ensinou em várias escolas francesas.</p>
       <p>Beauvoir foi intelectual extraordinária e escritora de força extraordinária. Tinha romance longo com filósofo existencialista Jean-Paul Sartre, embora recusasse casamento. A relação foi intelectual e romântica, mas Beauvoir mantinha independência. Isto presagiava sua vida inteira: recusa de ser subordinada a homem, insistência em independência, e busca por authentic existência.</p>
@@ -301,16 +180,21 @@ var TOPICS = [
         💡 Beauvoir oferecia síntese de filosofia (existencialismo), história, e análise sociológica. Seus argumentos não eram meramente apelativos; eram rigorosamente defendidos através de análise filosófica cuidadosa.
       </blockquote>
     `,
-    cards: {
-      q: 'O que Simone de Beauvoir argumentava sobre natureza do gênero feminino?',
-      a: 'Beauvoir argumentava que feminilidade não é essência biológica inata, mas construção social; "alguém não nasce mulher, se torna mulher" através de socialização; isto oferecia base filosófica para argumento que mulheres conseguem recusar papéis sociais prescritos.'
+     cards:[{"q":"O que Simone de Beauvoir argumentava sobre natureza do gênero feminino?","a":"Beauvoir argumentava que feminilidade não é essência biológica inata, mas construção social; \"alguém não nasce mulher, se torna mulher\" através de socialização; isto oferecia base filosófica para argumento que mulheres conseguem recusar papéis sociais prescritos."}]
     }
+  ],
+  summary:{"title":"Inovação Intelectual Feminina","points":["Marie Curie revolucionou química e física, sendo primeira mulher a ganhar Prêmio Nobel e única a ganhar em múltiplas disciplinas","Hypatia de Alexandria foi matemática, astrônoma, e filósofa cuja obra foi perdida, mas influência permanece","Simone de Beauvoir redefiniu feminismo moderno e filosofia existencialista através de escrita provocadora"]},
+  quizFinal:[{"q":"Qual foi a realização particular de Marie Curie na ciência?","opts":["Inventou microscópio","Descobriu radioatividade e primeira a ganhar múltiplos Prêmios Nobel","Desenvolveu antibióticos","Criou teoria da relatividade"],"correct":1},{"q":"Hypatia de Alexandria era conhecida por suas contribuições em quais campos?","opts":["Literatura apenas","Matemática, astronomia, e filosofia","Política militar","Medicina antiga"],"correct":1},{"q":"O trabalho de Simone de Beauvoir influenciou principalmente qual movimento?","opts":["Abolicionismo","Feminismo moderno","Comunismo puro","Conservadorismo"],"correct":1}]
   },
   {
-    id: 7,
-    name: 'Florence Nightingale: Revolucionando Enfermagem e Cuidado de Saúde',
-    dur: '12 min',
-    content: `
+  id:3,
+  name:"Ativistas, Humanitárias e Transformadoras Sociais",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Florence Nightingale: Revolucionando Enfermagem e Cuidado de Saúde",
+     dur:"12 min",
+     content:`
       <h3>A Fundadora de Enfermagem Moderna</h3>
       <p>Florence Nightingale (1820-1910) nasceu em família britânica abastada durante era Vitoriana quando expectativa para mulheres de classe alta era que casa, tivessem filhos, e mantivessem casa. No entanto, desde juventude, Nightingale sentiu chamada vocacional para cuidado de doentes. Sua família se opôs violentamente — trabalho de enfermagem era frequentemente feito por mulheres de classe baixa e frequentemente associado com promiscuidade.</p>
       <p>No entanto, Nightingale persistiu. Treinou como enfermeira contra desejos de sua família. Rapidamente ganhou reputação de ser excelente organizadora e reformadora de instituições de saúde. Quando Guerra da Crimeia começou em 1853, Nightingale ofereceu seus serviços. Foi enviada para Turquia para supervisar cuidados para soldados britânicos feridos.</p>
@@ -333,16 +217,12 @@ var TOPICS = [
         💡 Florence Nightingale demonstrou que mudança social pode ser alcançada não através de retórica inflamada, mas através de reformas práticas apoiadas por dados estatísticos rigorosos — um modelo que permanece altamente efetivo hoje.
       </blockquote>
     `,
-    cards: {
-      q: 'Como Florence Nightingale revolucionou cuidados de saúde e enfermagem?',
-      a: 'Nightingale reformou hospitais de guerra através de higiene e organização, dramaticamente reduzindo mortalidade; fundou primeira escola de enfermagem formal; usou dados estatísticos para argumentar por reformas; transformou enfermagem de atividade causal em profissão respeitável.'
-    }
-  },
-  {
-    id: 8,
-    name: 'Rosa Parks: Um Ato de Recusa que Catalizou o Movimento de Direitos Civis',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Como Florence Nightingale revolucionou cuidados de saúde e enfermagem?","a":"Nightingale reformou hospitais de guerra através de higiene e organização, dramaticamente reduzindo mortalidade; fundou primeira escola de enfermagem formal; usou dados estatísticos para argumentar por reformas; transformou enfermagem de atividade causal em profissão respeitável."}]
+    },
+    {id:2,
+     name:"Rosa Parks: Um Ato de Recusa que Catalizou o Movimento de Direitos Civis",
+     dur:"12 min",
+     content:`
       <h3>A Mulher Cuja Coragem Desafiou Segregação Racial</h3>
       <p>Rosa Louise Parks (1913-2005) nasceu em Tuskegee, Alabama, em famílias de afro-americanos em era de segregação racial severa no Sul americano. Apesar de leis que supostamente providenciavam "separados mas iguais", realidade era que instalações para negros eram invariavelmente inferiores. Educação era segregada e inadequada. Oportunidades econômicas eram limitadas. E mais fundamentalmente, lei exigia deferência constante — uma espécie de teatro de subordinação onde negros precisavam demonstrar respeito aos brancos em todas as circunstâncias.</p>
       <p>Rosa Parks tinha espíritos de independência mesmo quando jovem. Frequentou escola, aprendeu a costurar, trabalhou como costureira. Era respeitada em sua comunidade. Mas também era consciente de injustiça da segregação. Num contexto onde muitos aceitavam segregação como inevitável, Parks questionava a legitimidade dela.</p>
@@ -362,16 +242,12 @@ var TOPICS = [
         💡 O ato de Rosa Parks demonstra que grandes mudanças sociais podem ser inicializadas através de atos simples de desobediência civil quando há movimento organizado por trás deles para sustentar e amplificar o desafio.
       </blockquote>
     `,
-    cards: {
-      q: 'Como o ato de Rosa Parks em 1º de dezembro de 1955 catalizou o movimento de direitos civis?',
-      a: 'Recusando ceder seu assento em ônibus segregado, Parks foi presa; isto inspirou boicote de 381 dias do sistema de ônibus de Montgomery que finalmente derrubou segregação, provando que resistência não-violenta poderia ser bem-sucedida.'
-    }
-  },
-  {
-    id: 9,
-    name: 'Aung San Suu Kyi: Resistência Não-Violenta Contra Ditadura',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Como o ato de Rosa Parks em 1º de dezembro de 1955 catalizou o movimento de direitos civis?","a":"Recusando ceder seu assento em ônibus segregado, Parks foi presa; isto inspirou boicote de 381 dias do sistema de ônibus de Montgomery que finalmente derrubou segregação, provando que resistência não-violenta poderia ser bem-sucedida."}]
+    },
+    {id:3,
+     name:"Aung San Suu Kyi: Resistência Não-Violenta Contra Ditadura",
+     dur:"12 min",
+     content:`
       <h3>A Mulher que Desafiou Ditadura Militar por Décadas</h3>
       <p>Aung San Suu Kyi (nascida em 1945) é filha do herói nacional da Birmânia (agora Myanmar), General Aung San, que levou país para independência de Grã-Bretanha. Seu pai foi assassinado quando ela tinha apenas 3 anos. Cresceu principalmente no exílio — sua mãe era embaixadora. Frequentou universidades em Grã-Bretanha, estudou filosofia, política, e economia. Casou com acadêmico britânico e viveu vida relativamente quieta como mãe e esposa.</p>
       <p>No entanto, em 1988, retornou para Birmânia quando regime militar começou a desestabilizar-se. Demonstrações públicas contra junta militar foram organizadas. Inicialmente pensava que seria envolvimento breve — talvez ajudaria a trazer democracia. Em vez disso, tornou-se envolvida em campanha que duraria décadas.</p>
@@ -392,10 +268,11 @@ var TOPICS = [
         💡 A trajetória de Aung San Suu Kyi demonstra que resistência contra injustiça e capacidade de governar justamente não são necessariamente mesma coisa, e que mesmo figuras heroicamente resistindo podem fazer escolhas questionáveis quando enfrentam realidades complexas do poder.
       </blockquote>
     `,
-    cards: {
-      q: 'Como Aung San Suu Kyi resistiu à ditadura militar de Myanmar por décadas?',
-      a: 'Através de resistência não-violenta mesmo quando confinada em prisão domiciliar por aproximadamente 15 anos; fundou National League for Democracy que oferecia visão de democracia; suas escritas e símbolo inspiravam população apesar de repressão severa.'
+     cards:[{"q":"Como Aung San Suu Kyi resistiu à ditadura militar de Myanmar por décadas?","a":"Através de resistência não-violenta mesmo quando confinada em prisão domiciliar por aproximadamente 15 anos; fundou National League for Democracy que oferecia visão de democracia; suas escritas e símbolo inspiravam população apesar de repressão severa."}]
     }
+  ],
+  summary:{"title":"Mudança Social através da Ativismo","points":["Florence Nightingale revolucionou cuidados de saúde e enfermagem, salvando inúmeras vidas através de reforma","Rosa Parks desafiou segregação racial em evento que catalitou movimento pelos direitos civis americano","Aung San Suu Kyi liderou resistência não-violenta contra ditadura militar em Myanmar por décadas"]},
+  quizFinal:[{"q":"Como Florence Nightingale revolucionou cuidado de saúde?","opts":["Criou medicamentos novos","Reformou práticas de enfermagem e higiene hospitalar","Inventou cirurgia moderna","Descobriu vacinas"],"correct":1},{"q":"Qual ato de Rosa Parks catalitou o movimento pelos direitos civis?","opts":["Discurso inflamado","Recusa de ceder assento em ônibus segregado","Participação em marcha massiva","Escrita de manifesto"],"correct":1},{"q":"Por quanto tempo Aung San Suu Kyi resistiu contra ditadura militar de Myanmar?","opts":["Alguns meses","Alguns anos","Mais de duas décadas de resistência não-violenta","Apenas alguns dias"],"correct":2}]
   }
 ];
 </script>
