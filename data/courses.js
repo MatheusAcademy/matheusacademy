@@ -40,7 +40,7 @@ var MA_COURSES = [
     addedTs: 1776289874203,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/cp.jpg',
     id: 'cp',
     name: 'Comunicação Persuasiva e Presença Pessoal',
@@ -57,7 +57,7 @@ var MA_COURSES = [
     icon: '🏆',
     color: '#C62828',
     free: true,
-    addedTs: 1776290000055,
+    addedTs: 1776372394957,
     active: true
   },
   {
