@@ -3758,6 +3758,25 @@ var MA_COURSES = [
     color: '#475569',
     addedTs: 1776358954068,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cbw.jpg',
+    id: 'cbw',
+    name: 'Moedas Digitais de Bancos Centrais (CBDCs)',
+    desc: 'Explore o futuro do dinheiro estatal e seus impactos na economia e liberdade financeira.',
+    file: 'cbdcs.html',
+    cat: 'Finanças & Economia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CB_HENRY_2026_MASTER',
+    ak: 'cb_auth',
+    storagePrefix: 'cb_',
+    icon: '💰',
+    color: '#0284c7',
+    addedTs: 1776358960005,
+    active: true
   }
 ];
 var MA_CATS = [
