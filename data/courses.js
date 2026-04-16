@@ -3702,7 +3702,7 @@ var MA_COURSES = [
     addedTs: 1776358890459,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ga.jpg',
     id: 'ga',
     name: 'Geopolítica da África: O Novo Campo de Disputa Global',
@@ -3718,7 +3718,7 @@ var MA_COURSES = [
     storagePrefix: 'ga_',
     icon: '📰',
     color: '#e63946',
-    addedTs: 1776358895138,
+    addedTs: 1776369988283,
     active: true
   },
   {
