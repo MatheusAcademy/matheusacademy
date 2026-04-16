@@ -2996,7 +2996,7 @@ var MA_COURSES = [
     addedTs: 1776024690011,
     active: true
   },
-          {
+            {
     coverImg: 'assets/capas/ic.jpg',
     id: 'ic',
     name: 'Inteligência Competitiva',
@@ -3012,7 +3012,7 @@ var MA_COURSES = [
     storagePrefix: 'ic_',
     icon: '🎓',
     color: '#475569',
-    addedTs: 1776370795089,
+    addedTs: 1776372189845,
     active: true
   },
   {
