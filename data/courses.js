@@ -3606,7 +3606,7 @@ var MA_COURSES = [
     addedTs: 1776370711418,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/cu.jpg',
     id: 'cu',
     name: 'Cultura Empresarial Forte',
@@ -3622,7 +3622,7 @@ var MA_COURSES = [
     storagePrefix: 'cu_',
     icon: '🎓',
     color: '#b45309',
-    addedTs: 1776370051361,
+    addedTs: 1776370776939,
     active: true
   },
       {
