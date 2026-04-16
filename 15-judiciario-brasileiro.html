@@ -9,176 +9,18 @@
 </head>
 <body>
 <script>
-var COURSE = {
-  id: 'JB',
-  name: 'Como Funciona o Judiciário Brasileiro',
-  shortName: 'Judiciário Brasileiro',
-  cat: 'Direito',
-  desc: 'Mostra de forma simples a estrutura do sistema judiciário, tribunais, juízes, recursos e funcionamento da Justiça no Brasil.',
-  salt: 'JB_HENRY_2026_MASTER',
-  ak: 'jb_auth',
-  courseKey: 'jb',
-  prefix: 'jb_',
-  color: '#94d2bd',
-  glow: 'rgba(148,210,189,.35)',
-  free: false,
-  freeModules: 1,
-  modules: 3,
-  topics: 9,
-  hours: 2,
-  quizzes: 9
-};
+var COURSE = {"id":"JB","name":"Como Funciona o Judiciário Brasileiro","shortName":"Judiciário Brasileiro","cat":"Direito","desc":"Mostra de forma simples a estrutura do sistema judiciário, tribunais, juízes, recursos e funcionamento da Justiça no Brasil.","salt":"JB_HENRY_2026_MASTER","ak":"jb_auth","courseKey":"jb","prefix":"jb_","color":"#94d2bd","glow":"rgba(148,210,189,.35)","free":false,"freeModules":1,"modules":3,"topics":9,"hours":2,"quizzes":9};
 
 var MODS = [
   {
-    id: 1,
-    name: 'Estrutura do Judiciário Brasileiro',
-    free: true,
-    topics: [1, 2, 3],
-    summary: {
-      title: 'Entendendo a hierarquia',
-      points: [
-        'Judiciário divide-se em Justiça Comum e Justiça Especializada (Trabalhista, Militar, Eleitoral)',
-        'Estrutura em 3 instâncias: Primeira (Juízes), Segunda (Tribunais), Terceira (STF, TST, etc)',
-        'Cada estado tem estrutura similar, subordinada ao sistema federal',
-        'Supremo Tribunal Federal é tribunal máximo e guardião da Constituição'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Qual é a função principal da Primeira Instância?',
-        opts: [
-          'Estabelecer jurisprudência vinculante',
-          'Decidir casos iniciais e ouvir as partes',
-          'Revisar todas as decisões dos juízes',
-          'Fazer leis interpretativas'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Qual é a diferença entre Justiça Comum e Justiça Especializada?',
-        opts: [
-          'Não há diferença',
-          'Comum resolve tudo; Especializada não pode funcionar',
-          'Comum trata casos gerais; Especializada trata áreas específicas (trabalho, militar, eleitoral)',
-          'Especializada é mais importante que Comum'
-        ],
-        correct: 2
-      },
-      {
-        q: 'Qual tribunal é o mais alto no sistema judiciário brasileiro?',
-        opts: [
-          'Superior Court of Justice',
-          'Tribunal de Justiça do Estado',
-          'Supremo Tribunal Federal',
-          'Tribunal Regional'
-        ],
-        correct: 2
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Juízes, Promotores e Advogados: Papéis Distintos',
-    free: false,
-    topics: [4, 5, 6],
-    summary: {
-      title: 'Quem faz o quê',
-      points: [
-        'Juiz é neutro e decide com base na lei e provas apresentadas',
-        'Promotor de Justiça representa interesse público e população',
-        'Advogado representa cliente (pessoa ou empresa) buscando seus direitos',
-        'Escrivão e oficial de justiça auxiliam nas funções administrativas'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Qual é a principal função de um Juiz?',
-        opts: [
-          'Acusar pessoas de crimes',
-          'Defender direitos de uma das partes',
-          'Ser neutro e decidir conforme lei e provas',
-          'Legislar sobre direitos'
-        ],
-        correct: 2
-      },
-      {
-        q: 'Quando entra um Promotor de Justiça em um processo?',
-        opts: [
-          'Sempre em todo processo',
-          'Apenas em crimes, defendendo interesse público/coletivo',
-          'Quando advogado quer',
-          'Nunca em processos civis'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Um advogado pode representar ambas as partes no mesmo processo?',
-        opts: [
-          'Sim, sempre',
-          'Não, é conflito de interesses e é proibido por ética',
-          'Sim, mas com autorização do juiz',
-          'Depende do tipo de processo'
-        ],
-        correct: 1
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Tribunais, Câmaras e Recursos: Segunda Instância',
-    free: false,
-    topics: [7, 8, 9],
-    summary: {
-      title: 'Revendo decisões',
-      points: [
-        'Tribunais revisam decisões de juízes de primeira instância',
-        'Apelação é recurso principal para reverter sentença de juiz',
-        'Câmaras especializadas julgam casos conforme área (cível, criminal, trabalhista)',
-        'Segundo tribunal pode manter, reformar ou anuler decisão anterior'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Qual é a função de um Tribunal?',
-        opts: [
-          'Ouvir partes em primeira instância',
-          'Revisar decisões de juízes em segunda instância',
-          'Criar novas leis',
-          'Fiscalizar advogados'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Qual é o recurso principal para questionar decisão de juiz?',
-        opts: [
-          'Mandado de Segurança',
-          'Apelação',
-          'Habeas Corpus',
-          'Ação Popular'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Se não concorda com decisão do Tribunal, para onde vai?',
-        opts: [
-          'Volta ao juiz de primeira instância',
-          'Vai para Terceira Instância (STF, TST, etc) se houver questionamento constitucional/legal',
-          'Termina ali, não há mais recurso',
-          'Pede novo julgamento do mesmo tribunal'
-        ],
-        correct: 1
-      }
-    ]
-  }
-];
-
-var TOPICS = [
-  {
-    id: 1,
-    name: 'O Sistema Judiciário: Organização Geral e Hierarquia',
-    dur: '17 min',
-    content: `O Judiciário é um dos três poderes da República (junto com Executivo e Legislativo). Sua função é interpretar e aplicar a lei, decidindo disputas entre pessoas, empresas, ou entre cidadão e Estado. Para isso, existe uma estrutura complexa com vários níveis.
+  id:1,
+  name:"Estrutura do Judiciário Brasileiro",
+  free:true,
+  topics:[
+    {id:1,
+     name:"O Sistema Judiciário: Organização Geral e Hierarquia",
+     dur:"17 min",
+     content:`O Judiciário é um dos três poderes da República (junto com Executivo e Legislativo). Sua função é interpretar e aplicar a lei, decidindo disputas entre pessoas, empresas, ou entre cidadão e Estado. Para isso, existe uma estrutura complexa com vários níveis.
 
 O judiciário brasileiro divide-se em duas grandes categorias:
 
@@ -238,18 +80,12 @@ O SUPREMO TRIBUNAL FEDERAL é a cúpula do judiciário. Funções:
 <blockquote class="tip">
 💡 Dica: Lembrar que há 3 instâncias é crucial. Primeiro juiz decide, tribunal revê, tribunal superior decide questão de lei. Cada nível tem sua função.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual é a diferença entre Justiça Comum e Justiça Especializada?',
-        a: 'Comum (Cível e Penal) resolve a maioria dos casos gerais. Especializada (Trabalho, Militar, Eleitoral) resolve casos de áreas específicas com procedimentos próprios.'
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Funcionamento Prático: Como um Processo Começa e Flui',
-    dur: '18 min',
-    content: `Para entender o judiciário, é importante acompanhar como um processo flui desde o início até a decisão final.
+     cards:[{"q":"Qual é a diferença entre Justiça Comum e Justiça Especializada?","a":"Comum (Cível e Penal) resolve a maioria dos casos gerais. Especializada (Trabalho, Militar, Eleitoral) resolve casos de áreas específicas com procedimentos próprios."}]
+    },
+    {id:2,
+     name:"Funcionamento Prático: Como um Processo Começa e Flui",
+     dur:"18 min",
+     content:`Para entender o judiciário, é importante acompanhar como um processo flui desde o início até a decisão final.
 
 FASE 1 - PREPARAÇÃO E APRESENTAÇÃO
 Antes de ir ao tribunal, pessoa ou empresa consulta um advogado. O advogado faz análise do caso:
@@ -345,18 +181,12 @@ ISENÇÃO DE CUSTAS:
 <blockquote class="example">
 📌 Exemplo: João foi enganado em compra. Processa loja em 2021. Sentença saiu em 2023 (2 anos). Loja apela. Tribunal julga em 2024 (mais 1 ano). Loja tenta recurso ao STJ. Se negado, sentença é final. Total: 3-4 anos desde início. Se loja não pagar, João executa para penhorar bens.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual é a sequência básica de um processo na Primeira Instância?',
-        a: 'Petição inicial → Citação do réu → Contestação → Instrução (provas) → Audiência → Sentença. Se não concorda, apela para segunda instância.'
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Procedimentos Especiais: Criminal, Cível, Trabalhista e Pequenas Causas',
-    dur: '17 min',
-    content: `Diferentes tipos de caso têm procedimentos diferentes. Conhecer os principais ajuda a entender o sistema.
+     cards:[{"q":"Qual é a sequência básica de um processo na Primeira Instância?","a":"Petição inicial → Citação do réu → Contestação → Instrução (provas) → Audiência → Sentença. Se não concorda, apela para segunda instância."}]
+    },
+    {id:3,
+     name:"Procedimentos Especiais: Criminal, Cível, Trabalhista e Pequenas Causas",
+     dur:"17 min",
+     content:`Diferentes tipos de caso têm procedimentos diferentes. Conhecer os principais ajuda a entender o sistema.
 
 PROCESSO PENAL: Quando há crime
 - ACUSAÇÃO: Promotor de Justiça apresenta acusação
@@ -409,7 +239,7 @@ PROCESSO MILITAR: Crimes militares
 
 JUIZADO ESPECIAL (PEQUENAS CAUSAS):
 - Criado para resolver conflitos pequenos sem burocracia
-- Valor: até R$ 20 mil
+- Valor: até R\$ 20 mil
 - Sem advogado obrigatório (cidadão pode ir sozinho)
 - Gratuito ou taxa mínima
 - Procedimento simples e rápido (meses em vez de anos)
@@ -450,20 +280,23 @@ AÇÃO RESCISÓRIA: Anula sentença por erro grave
 - Prazos estritos
 
 <blockquote class="tip">
-💡 Dica: Se seu conflito é pequeno (até R$ 20k) e simples, Juizado Especial é melhor. Se é maior ou complexo, processo comum. Se é trabalhista, Justiça do Trabalho. Escolher a via correta economiza tempo.
+💡 Dica: Se seu conflito é pequeno (até R\$ 20k) e simples, Juizado Especial é melhor. Se é maior ou complexo, processo comum. Se é trabalhista, Justiça do Trabalho. Escolher a via correta economiza tempo.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual é a diferença entre crime (processo penal) e conflito civil?',
-        a: 'Crime prejudica sociedade, é perseguido pelo Promotor. Civil é disputa entre dois cidadãos. Em crime, Promotor acusa; em cível, autor reclama do réu. Regras e penas são diferentes.'
-      }
-    ]
+     cards:[{"q":"Qual é a diferença entre crime (processo penal) e conflito civil?","a":"Crime prejudica sociedade, é perseguido pelo Promotor. Civil é disputa entre dois cidadãos. Em crime, Promotor acusa; em cível, autor reclama do réu. Regras e penas são diferentes."}]
+    }
+  ],
+  summary:{"title":"Entendendo a hierarquia","points":["Judiciário divide-se em Justiça Comum e Justiça Especializada (Trabalhista, Militar, Eleitoral)","Estrutura em 3 instâncias: Primeira (Juízes), Segunda (Tribunais), Terceira (STF, TST, etc)","Cada estado tem estrutura similar, subordinada ao sistema federal","Supremo Tribunal Federal é tribunal máximo e guardião da Constituição"]},
+  quizFinal:[{"q":"Qual é a função principal da Primeira Instância?","opts":["Estabelecer jurisprudência vinculante","Decidir casos iniciais e ouvir as partes","Revisar todas as decisões dos juízes","Fazer leis interpretativas"],"correct":1},{"q":"Qual é a diferença entre Justiça Comum e Justiça Especializada?","opts":["Não há diferença","Comum resolve tudo; Especializada não pode funcionar","Comum trata casos gerais; Especializada trata áreas específicas (trabalho, militar, eleitoral)","Especializada é mais importante que Comum"],"correct":2},{"q":"Qual tribunal é o mais alto no sistema judiciário brasileiro?","opts":["Superior Court of Justice","Tribunal de Justiça do Estado","Supremo Tribunal Federal","Tribunal Regional"],"correct":2}]
   },
   {
-    id: 4,
-    name: 'Quem é Quem: Juízes, Desembargadores, Promotores',
-    dur: '16 min',
-    content: `Para entender o sistema, é importante saber quem são os personagens principais e qual é o papel de cada um.
+  id:2,
+  name:"Juízes, Promotores e Advogados: Papéis Distintos",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Quem é Quem: Juízes, Desembargadores, Promotores",
+     dur:"16 min",
+     content:`Para entender o sistema, é importante saber quem são os personagens principais e qual é o papel de cada um.
 
 JUIZ (ou Magistrado de Primeira Instância):
 - Profissional com diploma de Direito, aprovado em concurso público
@@ -574,18 +407,12 @@ CONSELHO NACIONAL DE JUSTIÇA (CNJ):
 <blockquote class="quote">
 💬 "O juiz é neutro. O promotor acusa. O advogado defende. Confundir esses papéis é perder a compreensão do sistema."
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual é a diferença entre Juiz, Promotor e Advogado?',
-        a: 'Juiz decide casos de forma neutra. Promotor acusa em crimes, defendendo interesse público. Advogado defende cliente específico buscando seus direitos. Papéis distintos e não intercambiáveis.'
-      }
-    ]
-  },
-  {
-    id: 5,
-    name: 'Jurisprudência, Súmulas e Interpretação da Lei',
-    dur: '17 min',
-    content: `A lei é escrita de forma geral. Mas como é aplicada? Como um juiz sabe o que a lei significa? Aqui entra jurisprudência.
+     cards:[{"q":"Qual é a diferença entre Juiz, Promotor e Advogado?","a":"Juiz decide casos de forma neutra. Promotor acusa em crimes, defendendo interesse público. Advogado defende cliente específico buscando seus direitos. Papéis distintos e não intercambiáveis."}]
+    },
+    {id:2,
+     name:"Jurisprudência, Súmulas e Interpretação da Lei",
+     dur:"17 min",
+     content:`A lei é escrita de forma geral. Mas como é aplicada? Como um juiz sabe o que a lei significa? Aqui entra jurisprudência.
 
 JURISPRUDÊNCIA: Significa as decisões dos tribunais sobre interpretação de lei. Quando um tribunal importante (como STF) decide um caso, sua interpretação influencia como toda justiça vai aplicar aquela lei no futuro.
 
@@ -673,18 +500,12 @@ Se jurisprudência é favorável, advogado argumenta citando decisões. Se desfa
 <blockquote class="example">
 📌 Exemplo: Você processa empregador por horas extras não pagas. Advogado verifica: TST já decidiu muitas vezes que jornada com saídas para alimentação ainda conta como trabalho. Jurisprudência é pacífica. Apresenta isso ao juiz como argumento. Juiz provavelmente segue jurisprudência pacífica.
 </blockquote>`,
-    cards: [
-      {
-        q: 'O que é jurisprudência e qual é sua importância?',
-        a: 'Jurisprudência são decisões de tribunais interpretando lei. É importante porque cria padrão de como lei será aplicada. Decisões de tribunais altos (STF, STJ) vinculam juízes inferiores.'
-      }
-    ]
-  },
-  {
-    id: 6,
-    name: 'Recursos, Apelação e Como Questionar Decisão',
-    dur: '18 min',
-    content: `Se você não concorda com uma decisão de juiz, não termina ali. Existem vários recursos (caminhos) para questionar e tentar reverter a decisão.
+     cards:[{"q":"O que é jurisprudência e qual é sua importância?","a":"Jurisprudência são decisões de tribunais interpretando lei. É importante porque cria padrão de como lei será aplicada. Decisões de tribunais altos (STF, STJ) vinculam juízes inferiores."}]
+    },
+    {id:3,
+     name:"Recursos, Apelação e Como Questionar Decisão",
+     dur:"18 min",
+     content:`Se você não concorda com uma decisão de juiz, não termina ali. Existem vários recursos (caminhos) para questionar e tentar reverter a decisão.
 
 RECURSO: Pedido ao tribunal superior para revisar decisão
 - Não é novo processo, é revisão da decisão anterior
@@ -698,7 +519,7 @@ APELAÇÃO: Recurso principal na maioria dos casos
 - Prazo para apelar: 15 dias após sentença (é prazo peremptório, não alonga)
 - Se não apela nesse prazo, sentença fica pronta (transita em julgado)
 
-Exemplo: Juiz sentencia que você deve pagar R$ 10.000 ao vizinho. Você não concorda. Tem 15 dias para entrar com apelação no Tribunal.
+Exemplo: Juiz sentencia que você deve pagar R\$ 10.000 ao vizinho. Você não concorda. Tem 15 dias para entrar com apelação no Tribunal.
 
 APELAÇÃO CÍVEL vs PENAL:
 - Cível: Ambas partes apelam (autor apela se perdeu, réu apela se não ganhou o máximo)
@@ -786,18 +607,21 @@ MOROSIDADE DO SISTEMA:
 <blockquote class="tip">
 💡 Importante: Se recebe uma sentença contra você, não coloque fé que tudo terminou. Tem 15 dias para apelar. Passado isso, perde direito. Guarde prazo com atenção.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual é o prazo para entrar com apelação após sentença?',
-        a: '15 dias após sentença. É prazo peremptório (não alonga). Se passar, sentença transita em julgado e não pode mais recorrer na maioria dos casos.'
-      }
-    ]
+     cards:[{"q":"Qual é o prazo para entrar com apelação após sentença?","a":"15 dias após sentença. É prazo peremptório (não alonga). Se passar, sentença transita em julgado e não pode mais recorrer na maioria dos casos."}]
+    }
+  ],
+  summary:{"title":"Quem faz o quê","points":["Juiz é neutro e decide com base na lei e provas apresentadas","Promotor de Justiça representa interesse público e população","Advogado representa cliente (pessoa ou empresa) buscando seus direitos","Escrivão e oficial de justiça auxiliam nas funções administrativas"]},
+  quizFinal:[{"q":"Qual é a principal função de um Juiz?","opts":["Acusar pessoas de crimes","Defender direitos de uma das partes","Ser neutro e decidir conforme lei e provas","Legislar sobre direitos"],"correct":2},{"q":"Quando entra um Promotor de Justiça em um processo?","opts":["Sempre em todo processo","Apenas em crimes, defendendo interesse público/coletivo","Quando advogado quer","Nunca em processos civis"],"correct":1},{"q":"Um advogado pode representar ambas as partes no mesmo processo?","opts":["Sim, sempre","Não, é conflito de interesses e é proibido por ética","Sim, mas com autorização do juiz","Depende do tipo de processo"],"correct":1}]
   },
   {
-    id: 7,
-    name: 'Processo Criminal: Diferenças e Garantias Importantes',
-    dur: '19 min',
-    content: `Processo criminal é bem diferente de processo cível. As garantias são maiores porque está em jogo a liberdade de uma pessoa.
+  id:3,
+  name:"Tribunais, Câmaras e Recursos: Segunda Instância",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Processo Criminal: Diferenças e Garantias Importantes",
+     dur:"19 min",
+     content:`Processo criminal é bem diferente de processo cível. As garantias são maiores porque está em jogo a liberdade de uma pessoa.
 
 PRINCÍPIO FUNDAMENTAL: Presunção de Inocência
 - Acusado presume-se inocente até prova em contrário
@@ -917,18 +741,12 @@ ESTATUTO DA CRIANÇA E ADOLESCENTE:
 <blockquote class="example">
 📌 Exemplo: João é acusado de roubo. Polícia colhe evidências. Promotor oferece denúncia. João nega. Juiz ouve evidências, testemunhas. Há indicações de roubo mas não está além de dúvida razoável que foi João. Juiz o absolve. Pode Promotor processar de novo? Não, ne bis in idem protege João.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual é a diferença fundamental entre presunção de inocência (penal) e ônus da prova (cível)?',
-        a: 'No penal, acusado presume-se inocente; acusação precisa provar. No cível, ambos precisam provar suas versões. Em penal há proteção maior porque liberdade está em risco.'
-      }
-    ]
-  },
-  {
-    id: 8,
-    name: 'Justiça Especializada: Trabalho, Eleitoral e Militar',
-    dur: '18 min',
-    content: `Além da Justiça Comum (Cível e Penal), existem Justiças Especializadas com procedimentos próprios.
+     cards:[{"q":"Qual é a diferença fundamental entre presunção de inocência (penal) e ônus da prova (cível)?","a":"No penal, acusado presume-se inocente; acusação precisa provar. No cível, ambos precisam provar suas versões. Em penal há proteção maior porque liberdade está em risco."}]
+    },
+    {id:2,
+     name:"Justiça Especializada: Trabalho, Eleitoral e Militar",
+     dur:"18 min",
+     content:`Além da Justiça Comum (Cível e Penal), existem Justiças Especializadas com procedimentos próprios.
 
 JUSTIÇA DO TRABALHO:
 - Resolve conflitos entre empregado e empregador
@@ -998,18 +816,12 @@ DIFERENÇAS NAS ESPECIALIDADES:
 <blockquote class="tip">
 💡 Dica: Se seu caso é trabalhista, vai à Justiça do Trabalho (mais rápido e barato). Se é pequeno, vai ao Juizado Especial. Se é federal, vai à Justiça Federal. Escolher a via correta é importante.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual é a principal característica da Justiça do Trabalho que a diferencia da Justiça Comum?',
-        a: 'Foco em conciliação (tentar acordo), procedimento mais simples, custas reduzidas, e não exige advogado obrigatório. Ônus da prova é inversamente distribuído (empresa prova justa causa, não o contrário).'
-      }
-    ]
-  },
-  {
-    id: 9,
-    name: 'Sistema de Execução, Cumprimento de Sentença e Prática Forense',
-    dur: '18 min',
-    content: `Uma sentença ganha é apenas o papel. Agora precisa ser cumprida. Como se executa? Como se cobra? Isso é execução.
+     cards:[{"q":"Qual é a principal característica da Justiça do Trabalho que a diferencia da Justiça Comum?","a":"Foco em conciliação (tentar acordo), procedimento mais simples, custas reduzidas, e não exige advogado obrigatório. Ônus da prova é inversamente distribuído (empresa prova justa causa, não o contrário)."}]
+    },
+    {id:3,
+     name:"Sistema de Execução, Cumprimento de Sentença e Prática Forense",
+     dur:"18 min",
+     content:`Uma sentença ganha é apenas o papel. Agora precisa ser cumprida. Como se executa? Como se cobra? Isso é execução.
 
 EXECUÇÃO: Fase após sentença onde se cobra o devido
 - Sentença transita em julgado (virou final)
@@ -1117,12 +929,11 @@ PRÁTICA FORENSE - DICAS PARA QUEM LIDIA COM TRIBUNAIS:
 <blockquote class="quote">
 💬 "Ganhar um processo é começar. Cobrar a sentença é trabalho. Paciência com morosidade faz parte."
 </blockquote>`,
-    cards: [
-      {
-        q: 'Como se cobra uma sentença após ganh-la?',
-        a: 'Após transito em julgado, vai-se à execução. Juiz ordena penhora de bens do devedor. Se tem conta, bloqueia. Se tem imóvel, vai a leilão. Se não tem bens, fica na fila e cobra se devedor tiver bens depois.'
-      }
-    ]
+     cards:[{"q":"Como se cobra uma sentença após ganh-la?","a":"Após transito em julgado, vai-se à execução. Juiz ordena penhora de bens do devedor. Se tem conta, bloqueia. Se tem imóvel, vai a leilão. Se não tem bens, fica na fila e cobra se devedor tiver bens depois."}]
+    }
+  ],
+  summary:{"title":"Revendo decisões","points":["Tribunais revisam decisões de juízes de primeira instância","Apelação é recurso principal para reverter sentença de juiz","Câmaras especializadas julgam casos conforme área (cível, criminal, trabalhista)","Segundo tribunal pode manter, reformar ou anuler decisão anterior"]},
+  quizFinal:[{"q":"Qual é a função de um Tribunal?","opts":["Ouvir partes em primeira instância","Revisar decisões de juízes em segunda instância","Criar novas leis","Fiscalizar advogados"],"correct":1},{"q":"Qual é o recurso principal para questionar decisão de juiz?","opts":["Mandado de Segurança","Apelação","Habeas Corpus","Ação Popular"],"correct":1},{"q":"Se não concorda com decisão do Tribunal, para onde vai?","opts":["Volta ao juiz de primeira instância","Vai para Terceira Instância (STF, TST, etc) se houver questionamento constitucional/legal","Termina ali, não há mais recurso","Pede novo julgamento do mesmo tribunal"],"correct":1}]
   }
 ];
 </script>
