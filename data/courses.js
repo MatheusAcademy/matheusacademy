@@ -3815,6 +3815,25 @@ var MA_COURSES = [
     color: '#9333ea',
     addedTs: 1776358970945,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/deww.jpg',
+    id: 'deww',
+    name: 'Tomada de Decisão Estratégica',
+    desc: 'Aprenda a decidir com precisão mesmo sob pressão e incerteza.',
+    file: 'decisao-estrategica.html',
+    cat: 'Negócios',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'DE_HENRY_2026_MASTER',
+    ak: 'de_auth',
+    storagePrefix: 'de_',
+    icon: '🎓',
+    color: '#1d4ed8',
+    addedTs: 1776358978009,
+    active: true
   }
 ];
 var MA_CATS = [
