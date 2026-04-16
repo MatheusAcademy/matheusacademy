@@ -1136,7 +1136,7 @@ var MA_COURSES = [
     addedTs: 1775831070038,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/dc.jpg',
     id: 'dc',
     name: 'Direito do Consumidor Descomplicado',
@@ -1146,13 +1146,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'DC_HENRY_2026_MASTER',
     ak: 'dc_auth',
     storagePrefix: 'dc_',
     icon: '⚖️',
     color: '#006d77',
-    addedTs: 1775831072358,
+    addedTs: 1776372279964,
     active: true
   },
         {
