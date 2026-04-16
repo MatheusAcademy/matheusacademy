@@ -9,176 +9,18 @@
 </head>
 <body>
 <script>
-var COURSE = {
-  id: 'PC',
-  name: 'Pensamento Crítico e Clareza Intelectual',
-  shortName: 'Pensamento Crítico',
-  cat: 'Filosofia e Ética',
-  desc: 'Ensina como pensar melhor, argumentar com lógica, identificar manipulações e evitar erros de raciocínio.',
-  salt: 'PC_HENRY_2026_MASTER',
-  ak: 'pc_auth',
-  courseKey: 'pc',
-  prefix: 'pc_',
-  color: '#e76f51',
-  glow: 'rgba(231,111,81,.35)',
-  free: false,
-  freeModules: 1,
-  modules: 3,
-  topics: 9,
-  hours: 2,
-  quizzes: 9
-};
+var COURSE = {"id":"PC","name":"Pensamento Crítico e Clareza Intelectual","shortName":"Pensamento Crítico","cat":"Filosofia e Ética","desc":"Ensina como pensar melhor, argumentar com lógica, identificar manipulações e evitar erros de raciocínio.","salt":"PC_HENRY_2026_MASTER","ak":"pc_auth","courseKey":"pc","prefix":"pc_","color":"#e76f51","glow":"rgba(231,111,81,.35)","free":false,"freeModules":1,"modules":3,"topics":9,"hours":2,"quizzes":9};
 
 var MODS = [
   {
-    id: 1,
-    name: 'Fundamentos da Lógica e Raciocínio Válido',
-    free: true,
-    topics: [1, 2, 3],
-    summary: {
-      title: 'Bases de Pensamento Claro',
-      points: [
-        'Lógica é estudo de argumentos válidos; não é sobre ser "frio," mas sobre clareza racional',
-        'Diferença entre verdade e validade é crucial: argumento pode ser logicamente válido mas baseado em premissas falsas',
-        'Silogismos e deduções oferecem framework para verificar se conclusão segue necessariamente de premissas',
-        'Pensamento crítico começa com capacidade de raciocinar dedutivamente com precisão'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'O que é a diferença entre um argumento "válido" e um argumento "verdadeiro"?',
-        opts: [
-          'Não há diferença; são sinônimos',
-          'Um argumento é válido quando a conclusão segue necessariamente das premissas; verdadeiro exige que as premissas sejam também verdadeiras',
-          'Válido é para matemática; verdadeiro para filosofia',
-          'Verdadeiro é menos importante que válido'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Qual é a estrutura básica de um silogismo categórico?',
-        opts: [
-          'Conclusão primeiro, depois premissas',
-          'Premissa maior, premissa menor, conclusão',
-          'Não há estrutura específica',
-          'Exemplos e anedotas'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Por que lógica formal é importante para pensamento crítico?',
-        opts: [
-          'Porque torna você uma pessoa fria',
-          'Porque oferece ferramentas para verificar se raciocínio é válido e identificar erros',
-          'Porque elimina emoção completamente',
-          'Porque não é importante'
-        ],
-        correct: 1
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Falácias Lógicas: Armadilhas do Raciocínio',
-    free: false,
-    topics: [4, 5, 6],
-    summary: {
-      title: 'Reconhecendo Erros Comuns',
-      points: [
-        'Falácias são argumentos que parecem válidos mas contêm erro lógico ou pragmático sutil',
-        'Ad hominem, apelo à autoridade, falsa dicotomia são exemplos de falácias muito usadas em argumentação cotidiana',
-        'Pessoas inteligentes cometem falácias frequentemente porque podem ser persuasivas mesmo sendo inválidas',
-        'Capacidade de identificar falácias protege você de manipulação e melhora seu próprio raciocínio'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'O que é uma falácia ad hominem e por que é lógicamente inválida?',
-        opts: [
-          'É atacar a pessoa em vez do argumento dela; não refuta o argumento mesmo que a pessoa seja desagradável',
-          'É usar boas evidências',
-          'É concordar com tudo',
-          'É um tipo de verdade'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Por que apelo à autoridade pode ser falácia mesmo que autoridades reais existam?',
-        opts: [
-          'Porque autoridade sempre está certa',
-          'Porque autoridade em área A não necessariamente é autoridade em área B; validação de argumento requer evidência, não apenas status',
-          'Porque autoridades não existem',
-          'Porque democracia rejeita autoridade'
-        ],
-        correct: 1
-      },
-      {
-        q: 'O que é falsa dicotomia e qual seu perigo?',
-        opts: [
-          'É apresentar apenas dois extremos como se fossem as únicas opções quando há opções intermediárias',
-          'É aceitar ambas as opções',
-          'É não ter opções',
-          'É um tipo de verdade'
-        ],
-        correct: 0
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Avaliação de Evidência e Fontes Confiáveis',
-    free: false,
-    topics: [7, 8, 9],
-    summary: {
-      title: 'Epistemologia Prática',
-      points: [
-        'Nem toda evidência é criada igual; viés de confirmação e viés do pesquisador afetam o que é relatado',
-        'Avaliação de fontes requer considerar incentivos, metodologia, consenso de especialistas e potencial viés',
-        'Correlação não é causalidade; uma conexão observada não prova que uma coisa causa a outra',
-        'Pensamento crítico genuíno exige constante atualização conforme novas evidências emergem'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'O que é viés de confirmação e como ele prejudica pensamento crítico?',
-        opts: [
-          'É confirmar sempre com as pessoas',
-          'É tendência de procurar, interpretar e lembrar informação que confirma suas crenças pré-existentes',
-          'É um tipo de honestidade',
-          'Não prejudica pensamento'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Por que correlação não é causalidade?',
-        opts: [
-          'Porque palavras significam a mesma coisa',
-          'Porque dois eventos podem estar conectados sem que um cause o outro; pode haver variável confundidora ou coincidência',
-          'Porque causalidade não existe',
-          'Porque correlação é sempre causalidade'
-        ],
-        correct: 1
-      },
-      {
-        q: 'Como você avalia se uma fonte é confiável?',
-        opts: [
-          'Simplesmente acreditando no que diz',
-          'Considerando incentivos, metodologia, especialise, viés potencial, e consenso com outras fontes',
-          'Ignorando completamente',
-          'Baseado em quantas vezes é compartilhado'
-        ],
-        correct: 1
-      }
-    ]
-  }
-];
-
-var TOPICS = [
-  {
-    id: 1,
-    name: 'O Que é Pensamento Crítico e Por Que Importa',
-    dur: '16 min',
-    content: `
+  id:1,
+  name:"Fundamentos da Lógica e Raciocínio Válido",
+  free:true,
+  topics:[
+    {id:1,
+     name:"O Que é Pensamento Crítico e Por Que Importa",
+     dur:"16 min",
+     content:`
 <h3>Além de Cérebro Ligado: Ativa Versus Passiva Inteligência</h3>
 
 <p>Pensamento crítico é frequentemente malentendido como ceticismo negativista — questionar tudo, desconfiar de todos, ser contrário por hábito. Na verdade, é oposto. É capacidade de avaliar informação e argumentos com rigor, identificar força e fraqueza, chegar a conclusões racionais baseadas em evidência. Não é sobre ser desagradável. É sobre ser claro.</p>
@@ -215,18 +57,12 @@ Teste de pensamento crítico: quando alguém faz afirmação que importa para vo
 
 <p>Este curso ensinará essas habilidades. Mas o real trabalho é praticar — aplicar essas ferramentas constantemente em seu pensamento cotidiano até se tornarem automáticas. Esse é processo de vida.</p>
     `,
-    cards: [
-      {
-        q: 'O que é pensamento crítico e por que é importante em mundo moderno?',
-        a: 'Pensamento crítico é capacidade de avaliar informação e argumentos com rigor, identificar força e fraqueza lógicas. É importante porque protege contra manipulação, oferece autonomia intelectual e permite tomar decisões baseadas em evidência, não em emoção ou engano.'
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Estrutura de Argumentos: Premissas, Conclusões e Validade',
-    dur: '18 min',
-    content: `
+     cards:[{"q":"O que é pensamento crítico e por que é importante em mundo moderno?","a":"Pensamento crítico é capacidade de avaliar informação e argumentos com rigor, identificar força e fraqueza lógicas. É importante porque protege contra manipulação, oferece autonomia intelectual e permite tomar decisões baseadas em evidência, não em emoção ou engano."}]
+    },
+    {id:2,
+     name:"Estrutura de Argumentos: Premissas, Conclusões e Validade",
+     dur:"18 min",
+     content:`
 <h3>Decompondo Raciocínio para Avaliar Solidez</h3>
 
 <p>Toda afirmação inteligente é argumento. Você não pode evitar argumentar; pode apenas argumentar melhor ou pior. Argumento tem estrutura: premissas (afirmações que servem como base) levam a conclusão (o que você está tentando provar). Para avaliar se argumento é bom, deve-se examinar (1) se premissas são verdadeiras, (2) se conclusão segue logicamente das premissas. Falhar em qualquer um torna argumento fraco.</p>
@@ -265,18 +101,12 @@ Quando alguém tenta convencê-lo, pause e pergunte: (1) O que são as premissas
 
 <p>Compreensão de estrutura argumentativa é poder. Ele permite você navegar mundo cheio de argumentos, distinguindo força de fraqueza, verdade de manipulação. Ele permite você mesmo argumentar mais claramente. Essa é base de pensamento crítico.</p>
     `,
-    cards: [
-      {
-        q: 'O que faz um argumento ser logicamente válido e como você diferencia entre validade dedutiva e força indutiva?',
-        a: 'Um argumento válido é quando a conclusão segue necessariamente das premissas (dedução) ou quando as premissas fornecem boas razões para a conclusão (indução). Dedução oferece certeza; indução oferece probabilidade. Avaliar argumentos requer checar se premissas são verdadeiras E se conclusão segue.'
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Introdução à Lógica Formal e Silogismos',
-    dur: '17 min',
-    content: `
+     cards:[{"q":"O que faz um argumento ser logicamente válido e como você diferencia entre validade dedutiva e força indutiva?","a":"Um argumento válido é quando a conclusão segue necessariamente das premissas (dedução) ou quando as premissas fornecem boas razões para a conclusão (indução). Dedução oferece certeza; indução oferece probabilidade. Avaliar argumentos requer checar se premissas são verdadeiras E se conclusão segue."}]
+    },
+    {id:3,
+     name:"Introdução à Lógica Formal e Silogismos",
+     dur:"17 min",
+     content:`
 <h3>A Linguagem Universal do Raciocínio Válido</h3>
 
 <p>Lógica formal estuda estrutura de argumentos usando símbolos e regras precisas. Pode parecer abstrata, mas é extraordinariamente prática. A mesma estrutura lógica que você usa para raciocinar sobre matemática, crime, filosofia, economia — tudo usa mesmas regras. Compreender essas regras oferece você linguagem precisa para verificar raciocínio.</p>
@@ -310,18 +140,21 @@ Argumento: "Todos os políticos são corruptos. Maria é política. Logo, Maria 
 
 <p>Compreensão de lógica formal não torna você automaticamente crítico. Mas oferece você ferramentas precisas para examinar raciocínio — seu próprio e de outros. Essa é base do pensamento crítico genuíno.</p>
     `,
-    cards: [
-      {
-        q: 'O que é um silogismo categórico e por que a forma é separada da verdade das premissas?',
-        a: 'Um silogismo categórico tem três partes: premissa maior (geral), premissa menor (específica) e conclusão. A forma pode ser válida (conclusão segue das premissas) mesmo que as premissas sejam falsas. Você precisa tanto de forma válida quanto de premissas verdadeiras para conclusão confiável.'
-      }
-    ]
+     cards:[{"q":"O que é um silogismo categórico e por que a forma é separada da verdade das premissas?","a":"Um silogismo categórico tem três partes: premissa maior (geral), premissa menor (específica) e conclusão. A forma pode ser válida (conclusão segue das premissas) mesmo que as premissas sejam falsas. Você precisa tanto de forma válida quanto de premissas verdadeiras para conclusão confiável."}]
+    }
+  ],
+  summary:{"title":"Bases de Pensamento Claro","points":["Lógica é estudo de argumentos válidos; não é sobre ser \"frio,\" mas sobre clareza racional","Diferença entre verdade e validade é crucial: argumento pode ser logicamente válido mas baseado em premissas falsas","Silogismos e deduções oferecem framework para verificar se conclusão segue necessariamente de premissas","Pensamento crítico começa com capacidade de raciocinar dedutivamente com precisão"]},
+  quizFinal:[{"q":"O que é a diferença entre um argumento \"válido\" e um argumento \"verdadeiro\"?","opts":["Não há diferença; são sinônimos","Um argumento é válido quando a conclusão segue necessariamente das premissas; verdadeiro exige que as premissas sejam também verdadeiras","Válido é para matemática; verdadeiro para filosofia","Verdadeiro é menos importante que válido"],"correct":1},{"q":"Qual é a estrutura básica de um silogismo categórico?","opts":["Conclusão primeiro, depois premissas","Premissa maior, premissa menor, conclusão","Não há estrutura específica","Exemplos e anedotas"],"correct":1},{"q":"Por que lógica formal é importante para pensamento crítico?","opts":["Porque torna você uma pessoa fria","Porque oferece ferramentas para verificar se raciocínio é válido e identificar erros","Porque elimina emoção completamente","Porque não é importante"],"correct":1}]
   },
   {
-    id: 4,
-    name: 'Falácia Ad Hominem e Ataques Pessoais em Argumento',
-    dur: '19 min',
-    content: `
+  id:2,
+  name:"Falácias Lógicas: Armadilhas do Raciocínio",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Falácia Ad Hominem e Ataques Pessoais em Argumento",
+     dur:"19 min",
+     content:`
 <h3>Quando Atacar a Pessoa Em Vez do Argumento É Erro Lógico</h3>
 
 <p>Uma das falácias mais ubíquas em debate moderno é ad hominem — atacar a pessoa que faz afirmação em vez de refutar a afirmação mesma. Você vê isso constantemente em política: "Não confie em seu oponente porque é corrupto" em vez de refutar suas políticas. Em redes sociais: "Você é estúpido" em vez de engajar com argumento. No trabalho: "Você não tem qualificação" em vez de questionar suas ideias. Ad hominem é apelativa emocionalmente mas logicamente inválida.</p>
@@ -364,18 +197,12 @@ Quando em desacordo, pergunte-se: estou refutando argumento ou atacando a pessoa
 
 <p>Reconhecimento de ad Hominem como falácia é importante para não ser manipulado e para argumentar mais efetivamente.</p>
     `,
-    cards: [
-      {
-        q: 'Por que ad hominem é uma falácia lógica e qual é a diferença entre ataques pessoais inválidos e contexto pessoal legítimo?',
-        a: 'Ad hominem é falácia porque refuta a pessoa, não o argumento; qualidade moral de quem fala não determina se argumento é válido. Contexto pessoal importa para confiar em alguém, mas isso é diferente de refutar argumento — você ainda deve questionar a lógica subjacente, não apenas suspeitar de viés.'
-      }
-    ]
-  },
-  {
-    id: 5,
-    name: 'Apelo à Autoridade e Quando É Válido Confiar em Especialistas',
-    dur: '20 min',
-    content: `
+     cards:[{"q":"Por que ad hominem é uma falácia lógica e qual é a diferença entre ataques pessoais inválidos e contexto pessoal legítimo?","a":"Ad hominem é falácia porque refuta a pessoa, não o argumento; qualidade moral de quem fala não determina se argumento é válido. Contexto pessoal importa para confiar em alguém, mas isso é diferente de refutar argumento — você ainda deve questionar a lógica subjacente, não apenas suspeitar de viés."}]
+    },
+    {id:2,
+     name:"Apelo à Autoridade e Quando É Válido Confiar em Especialistas",
+     dur:"20 min",
+     content:`
 <h3>Nem Todo Apelo a Autoridade é Falacioso, Mas Muitos São</h3>
 
 <p>Você não pode ser especialista em tudo. Precisa confiar em especialistas para informação sobre medicina, engenharia, lei, ciência — em áreas onde você não tem tempo ou expertise para investigar completamente. Mas apelo cego a autoridade é perigoso. Especialista em cirurgia não é automaticamente especialista em nutrição. Celebridade com opinião forte não é especialista em nada simplesmente por ser famosa. Identificar quando é racional confiar em autoridade vs. quando é falácia é crucial.</p>
@@ -410,18 +237,12 @@ Teste crítico: quando alguém diz "especialistas concordam que X," pergunte: (1
 
 <p>Aprendizado é contínuo. Confiar em autoridade apropriada enquanto mantém pensamento crítico é balanço que oferece você eficiência (não tem tempo para aprender tudo) e autonomia (não é completamente dependente).</p>
     `,
-    cards: [
-      {
-        q: 'Quando apelo à autoridade é válido e quando é falácia, e como você avalia se alguém é genuinamente especialista?',
-        a: 'Apelo à autoridade é válido quando a pessoa é genuinamente especialista na área, há consenso entre especialistas, e não há conflito de interesse claro. É falácia quando autoridade não tem expertise real, quando há opinião minoritária sendo apresentada como consenso, ou quando há conflito de interesse óbvio. Sempre verifique qualificação e consenso.'
-      }
-    ]
-  },
-  {
-    id: 6,
-    name: 'Falsa Dicotomia e a Ilusão de Apenas Duas Opções',
-    dur: '18 min',
-    content: `
+     cards:[{"q":"Quando apelo à autoridade é válido e quando é falácia, e como você avalia se alguém é genuinamente especialista?","a":"Apelo à autoridade é válido quando a pessoa é genuinamente especialista na área, há consenso entre especialistas, e não há conflito de interesse claro. É falácia quando autoridade não tem expertise real, quando há opinião minoritária sendo apresentada como consenso, ou quando há conflito de interesse óbvio. Sempre verifique qualificação e consenso."}]
+    },
+    {id:3,
+     name:"Falsa Dicotomia e a Ilusão de Apenas Duas Opções",
+     dur:"18 min",
+     content:`
 <h3>Quando Argumento Oferece Apenas Dois Caminhos Quando Muitos Existem</h3>
 
 <p>Falsa dicotomia é falácia onde alguém apresenta apenas duas opções como se fossem as únicas, quando na verdade há múltiplas alternativas. "Você está comigo ou contra mim." "É este candidato ou caos." "Você é patriota ou traidor." Essas formulações parecem oferece escolha clara, mas na verdade eliminam opções legítimas. É ferramenta poderosa de manipulação porque simplifica mundo complexo em binário que é fácil de entender e causa medo.</p>
@@ -460,18 +281,21 @@ Falsa dicotomia: "Você deveria estar 100% feliz com seu emprego ou deveria sair
 <blockquote class="tip">
 Prática: próxima vez que ouve "você tem que escolher entre A e B," pause. Existem outras opções? Há graus ou combinações? Você realmente tem que escolher agora? Essa reflexão frequentemente quebra o spell da falsa dicotomia.</blockquote>
     `,
-    cards: [
-      {
-        q: 'O que é uma falsa dicotomia e por que é persuasiva mesmo sendo logicamente inválida?',
-        a: 'Falsa dicotomia oferece apenas duas opções (frequentemente extremos) como se fossem as únicas quando na verdade há múltiplas alternativas. É persuasiva porque seres humanos amam simplicidade, oferece urgência e apela a medo. Identificar terceiras opções quebra o efeito.'
-      }
-    ]
+     cards:[{"q":"O que é uma falsa dicotomia e por que é persuasiva mesmo sendo logicamente inválida?","a":"Falsa dicotomia oferece apenas duas opções (frequentemente extremos) como se fossem as únicas quando na verdade há múltiplas alternativas. É persuasiva porque seres humanos amam simplicidade, oferece urgência e apela a medo. Identificar terceiras opções quebra o efeito."}]
+    }
+  ],
+  summary:{"title":"Reconhecendo Erros Comuns","points":["Falácias são argumentos que parecem válidos mas contêm erro lógico ou pragmático sutil","Ad hominem, apelo à autoridade, falsa dicotomia são exemplos de falácias muito usadas em argumentação cotidiana","Pessoas inteligentes cometem falácias frequentemente porque podem ser persuasivas mesmo sendo inválidas","Capacidade de identificar falácias protege você de manipulação e melhora seu próprio raciocínio"]},
+  quizFinal:[{"q":"O que é uma falácia ad hominem e por que é lógicamente inválida?","opts":["É atacar a pessoa em vez do argumento dela; não refuta o argumento mesmo que a pessoa seja desagradável","É usar boas evidências","É concordar com tudo","É um tipo de verdade"],"correct":1},{"q":"Por que apelo à autoridade pode ser falácia mesmo que autoridades reais existam?","opts":["Porque autoridade sempre está certa","Porque autoridade em área A não necessariamente é autoridade em área B; validação de argumento requer evidência, não apenas status","Porque autoridades não existem","Porque democracia rejeita autoridade"],"correct":1},{"q":"O que é falsa dicotomia e qual seu perigo?","opts":["É apresentar apenas dois extremos como se fossem as únicas opções quando há opções intermediárias","É aceitar ambas as opções","É não ter opções","É um tipo de verdade"],"correct":0}]
   },
   {
-    id: 7,
-    name: 'Viés de Confirmação: Como Você Distorce Evidência',
-    dur: '21 min',
-    content: `
+  id:3,
+  name:"Avaliação de Evidência e Fontes Confiáveis",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Viés de Confirmação: Como Você Distorce Evidência",
+     dur:"21 min",
+     content:`
 <h3>Nossos Próprios Preconceitos Contra Nós Mesmos</h3>
 
 <p>Há verdade incômoda sobre pensamento crítico: você não é tão racional quanto acredita. Cérebro tem viés sistemáticos que o fazem ver evidência de forma que confirma o que você já acredita. Alguém que acredita em Deus frequentemente interpreta ambiguidade como confirmação de fé. Alguém que não acredita interpreta mesma ambiguidade como confirmação de ceticismo. Não é desonestidade — é funcionamento do próprio cérebro humano. Compreender esse viés é essencial para pensamento crítico genuíno.</p>
@@ -516,18 +340,12 @@ Prática de adversário: escolha crença que abraça (política, pessoal, religi
 
 <p>Combater viés de confirmação é trabalho de vida. Você nunca o eliminará completamente — é como funciona cérebro. Mas estar consciente oferece você chance de ser menos enganado por seus próprios preconceitos.</p>
     `,
-    cards: [
-      {
-        q: 'O que é viés de confirmação e como ele prejudica pensamento crítico? Como você o combate?',
-        a: 'Viés de confirmação é tendência de procurar, interpretar e lembrar informação que confirma crenças pré-existentes enquanto descarta o que contradiz. Combata buscando ativamente contra-evidência, considerando alternativas plausíveis, engajando genuinamente com pessoas que discordam, e examinando seus próprios incentivos psicológicos.'
-      }
-    ]
-  },
-  {
-    id: 8,
-    name: 'Correlação vs. Causalidade: Erros Comuns em Raciocínio',
-    dur: '19 min',
-    content: `
+     cards:[{"q":"O que é viés de confirmação e como ele prejudica pensamento crítico? Como você o combate?","a":"Viés de confirmação é tendência de procurar, interpretar e lembrar informação que confirma crenças pré-existentes enquanto descarta o que contradiz. Combata buscando ativamente contra-evidência, considerando alternativas plausíveis, engajando genuinamente com pessoas que discordam, e examinando seus próprios incentivos psicológicos."}]
+    },
+    {id:2,
+     name:"Correlação vs. Causalidade: Erros Comuns em Raciocínio",
+     dur:"19 min",
+     content:`
 <h3>Confundir Conexão Observada com Causação Real</h3>
 
 <p>Um dos erros mais comuns em pensamento crítico é assumir que porque A e B acontecem juntos, A causa B. Você nota que pessoas que bebem café dormem pior. Você conclui que café causa insônia. Mas pode ser oposto: pessoas que dormem pior bebem mais café para compensar fadiga. Ou pode haver variável confundidora: ansiedade causas ambas (mau sono e consumo de café). A correlação observada não prova causalidade. Mas é frequentemente tratada como tal.</p>
@@ -553,7 +371,7 @@ Você nota que em semanas que come menos açúcar, sua pele está melhor. Você 
 
 <p>Verdadeira causalidade requer: (1) <strong>Correlação temporal:</strong> A deve preceder B. Se B acontece antes de A, A não pode causar B. (2) <strong>Correlação consistente:</strong> Conexão deve ser repetida e confiável, não apenas uma vez. (3) <strong>Dose-resposta:</strong> Mais de A deve resultar em mais de B (quando aplicável). (4) <strong>Plausibilidade mecanística:</strong> Deve haver mecanismo claro para como A causa B. (5) <strong>Eliminação de confundidores:</strong> Variáveis alternativas devem ser consideradas e descartadas.</p>
 
-<p>Estudos experimentais oferecem melhor evidência de causalidade porque controlam variáveis. Se você aleatoriamente dá chocolate a alguns e não a outros, controlando por todos outros fatores, e aqueles que recebem chocolate têm QI mais alto, então chocolate provavelmente tem efeito. Estudos observacionais apenas mostram correlação — valioso para gerar hipóteses, mas não para confirmar causalidade.</p>
+<p>Estudos experimentais oferecem melhor evidência de causalidade porque controlam variáveis. Se você aleatoriamente d�� chocolate a alguns e não a outros, controlando por todos outros fatores, e aqueles que recebem chocolate têm QI mais alto, então chocolate provavelmente tem efeito. Estudos observacionais apenas mostram correlação — valioso para gerar hipóteses, mas não para confirmar causalidade.</p>
 
 <blockquote class="tip">
 Quando alguém claims que A causa B, questione: (1) Como eles sabem que é causalidade e não correlação? (2) Que evidência oferece? (3) Há variáveis alternativas que poderiam explicar correlação? (4) Qual é mecanismo proposto? Essas questões frequentemente revelam que afirmação de causalidade é prematura.</blockquote>
@@ -564,18 +382,12 @@ Quando alguém claims que A causa B, questione: (1) Como eles sabem que é causa
 
 <p>Pensamento crítico requer cautela. "Há evidência de que A e B estão correlacionadas" é afirmação cauta. "A causa B" é afirmação forte que requer mais evidência. Ser preciso em linguagem oferece você clareza e protege você de erros.</p>
     `,
-    cards: [
-      {
-        q: 'Por que correlação não é causalidade e como você avalia se uma conexão observada é realmente causal?',
-        a: 'Correlação é conexão observada; causalidade é que um causa o outro. Você não pode saber causalidade observando apenas correlação porque variáveis confundidoras ou causalidade reversa podem estar em jogo. Verdadeira causalidade requer: correlação temporal, consistência, dose-resposta, mecanismo plausível e eliminação de confundidores.'
-      }
-    ]
-  },
-  {
-    id: 9,
-    name: 'Aplicando Pensamento Crítico: De Teoria a Vida',
-    dur: '20 min',
-    content: `
+     cards:[{"q":"Por que correlação não é causalidade e como você avalia se uma conexão observada é realmente causal?","a":"Correlação é conexão observada; causalidade é que um causa o outro. Você não pode saber causalidade observando apenas correlação porque variáveis confundidoras ou causalidade reversa podem estar em jogo. Verdadeira causalidade requer: correlação temporal, consistência, dose-resposta, mecanismo plausível e eliminação de confundidores."}]
+    },
+    {id:3,
+     name:"Aplicando Pensamento Crítico: De Teoria a Vida",
+     dur:"20 min",
+     content:`
 <h3>Pensamento Crítico Como Prática Contínua, Não Destino</h3>
 
 <p>Você estudou lógica formal, identificou falácias, aprendeu sobre viés. Mas conhecimento não é automático uso. Muitos podem explicar o que é falácia ad hominem mas continuam usando-a. Muitos compreendem viés de confirmação mas continuam vítimas dele. O desafio real é integrar pensamento crítico em como você realmente pensa e age. Isso requer prática deliberada e reflexão contínua.</p>
@@ -627,12 +439,11 @@ Prática de filtro: para cada afirmação importante que lê, pergunte três per
 
 <p>Mundo muda quando mais pessoas pensam criticamente. Manipulação é menos efetiva. Verdade emergia mais claramente. Decisões são melhor tomadas. Conflitos são melhor navegados porque baseados em compreensão mútua, não em ilusão mútua. Sua contribuição individual importa — começando com clareza de seu próprio pensamento.</p>
     `,
-    cards: [
-      {
-        q: 'Como você integra pensamento crítico de teoria em sua vida cotidiana e por que comunidade importa?',
-        a: 'Aplique pensamento crítico em decisões pessoais importantes (questione evidência e alternativas), em consumo de informação (avalie fontes e perspectivas) e em argumentação (engaje com lógica, não emoção). Comunidade é essencial porque desafia viés individual; isolamento intelectual reforça engano.'
-      }
-    ]
+     cards:[{"q":"Como você integra pensamento crítico de teoria em sua vida cotidiana e por que comunidade importa?","a":"Aplique pensamento crítico em decisões pessoais importantes (questione evidência e alternativas), em consumo de informação (avalie fontes e perspectivas) e em argumentação (engaje com lógica, não emoção). Comunidade é essencial porque desafia viés individual; isolamento intelectual reforça engano."}]
+    }
+  ],
+  summary:{"title":"Epistemologia Prática","points":["Nem toda evidência é criada igual; viés de confirmação e viés do pesquisador afetam o que é relatado","Avaliação de fontes requer considerar incentivos, metodologia, consenso de especialistas e potencial viés","Correlação não é causalidade; uma conexão observada não prova que uma coisa causa a outra","Pensamento crítico genuíno exige constante atualização conforme novas evidências emergem"]},
+  quizFinal:[{"q":"O que é viés de confirmação e como ele prejudica pensamento crítico?","opts":["É confirmar sempre com as pessoas","É tendência de procurar, interpretar e lembrar informação que confirma suas crenças pré-existentes","É um tipo de honestidade","Não prejudica pensamento"],"correct":1},{"q":"Por que correlação não é causalidade?","opts":["Porque palavras significam a mesma coisa","Porque dois eventos podem estar conectados sem que um cause o outro; pode haver variável confundidora ou coincidência","Porque causalidade não existe","Porque correlação é sempre causalidade"],"correct":1},{"q":"Como você avalia se uma fonte é confiável?","opts":["Simplesmente acreditando no que diz","Considerando incentivos, metodologia, especialise, viés potencial, e consenso com outras fontes","Ignorando completamente","Baseado em quantas vezes é compartilhado"],"correct":1}]
   }
 ];
 </script>
