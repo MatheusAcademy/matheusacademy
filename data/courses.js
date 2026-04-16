@@ -3492,7 +3492,7 @@ var MA_COURSES = [
     addedTs: 1776289938554,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/oi.jpg',
     id: 'oi',
     name: 'Engenharia de Ofertas Irresistíveis',
@@ -3508,7 +3508,7 @@ var MA_COURSES = [
     storagePrefix: 'oi_',
     icon: '📢',
     color: '#15803d',
-    addedTs: 1776370041363,
+    addedTs: 1776370759096,
     active: true
   },
   {
