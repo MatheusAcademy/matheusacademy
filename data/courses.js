@@ -3511,6 +3511,25 @@ var MA_COURSES = [
     color: '#15803d',
     addedTs: 1776358842213,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ce.jpg',
+    id: 'ce',
+    name: 'História das Grandes Crises Econômicas',
+    desc: 'Estude os maiores colapsos financeiros da história e os padrões que se repetem.',
+    file: 'crises-economicas.html',
+    cat: 'História',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CE_HENRY_2026_MASTER',
+    ak: 'ce_auth',
+    storagePrefix: 'ce_',
+    icon: '📜',
+    color: '#92400e',
+    addedTs: 1776358846654,
+    active: true
   }
 ];
 var MA_CATS = [
