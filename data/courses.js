@@ -1385,23 +1385,23 @@ var MA_COURSES = [
     addedTs: 1775832742257,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ar.jpg',
     id: 'ar',
-    name: 'Amor, Respeito e Limites Saudáveis',
-    desc: 'Curso para ensinar como construir relações mais equilibradas, com reciprocidade, clareza emocional e limites bem definidos.',
-    file: '42-amor-respeito-limites.html',
-    cat: 'Família & Relacionamentos',
+    name: 'Geopolítica do Ártico: A Nova Fronteira do Poder',
+    desc: 'Explore a corrida por território, recursos naturais e rotas comerciais no Ártico, uma das regiões mais estratégicas do futuro.',
+    file: 'geopolitica-artico.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'AR_HENRY_2026_MASTER',
     ak: 'ar_auth',
     storagePrefix: 'ar_',
-    icon: '👨‍👩‍👧‍👦',
-    color: '#ff006e',
-    addedTs: 1775832744969,
+    icon: '📰',
+    color: '#0891b2',
+    addedTs: 1776370002612,
     active: true
   },
   {
