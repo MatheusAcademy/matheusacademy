@@ -3644,7 +3644,7 @@ var MA_COURSES = [
     addedTs: 1776370022473,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/nm.jpg',
     id: 'nm',
     name: 'Neuromarketing: Como o Cérebro Decide Comprar',
@@ -3660,7 +3660,7 @@ var MA_COURSES = [
     storagePrefix: 'nm_',
     icon: '📢',
     color: '#e11d48',
-    addedTs: 1776358881203,
+    addedTs: 1776370078414,
     active: true
   },
     {
