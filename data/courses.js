@@ -868,7 +868,7 @@ var MA_COURSES = [
     addedTs: 1775831010680,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/cf.jpg',
     id: 'cf',
     name: 'Constituição Federal Descomplicada',
@@ -878,13 +878,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'CF_HENRY_2026_MASTER',
     ak: 'cf_auth',
     storagePrefix: 'cf_',
     icon: '⚖️',
     color: '#005f73',
-    addedTs: 1775831018588,
+    addedTs: 1776372296944,
     active: true
   },
       {
