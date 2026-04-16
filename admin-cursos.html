@@ -4306,15 +4306,19 @@ async function hlSalvar(id) {
   }
 }
 
-// Auto-carregar ao conectar
+// Auto-carregar ao conectar + auto-atualização periódica
 (function() {
-  var _origTestGH = window.testGH;
   var _hlAutoLoaded = false;
-  // Tentar carregar automaticamente após 1s se token já estiver salvo
+  // Carregar automaticamente se token já estiver salvo
   setTimeout(function() {
     var c = g();
     if (c.t && c.o && c.r && !_hlAutoLoaded) { _hlAutoLoaded = true; homeListaCarregar(); }
   }, 800);
+  // Auto-atualização a cada 5 minutos (300000ms)
+  setInterval(function() {
+    var c = g();
+    if (c.t && c.o && c.r) { homeListaCarregar(); }
+  }, 300000);
 })();
 
 // ── EDITOR DE CURSOS ──
@@ -4339,7 +4343,7 @@ function parseCursosCompleto(content){
   //    independente de qual campo vem primeiro (coverImg, id, name, etc.)
   //    A regex detecta "  {" precedido de newline, que é o padrão de indentação
   //    dos objetos no array — funciona tanto para id: primeiro quanto coverImg: primeiro.
-  var blocos = content.split(/(?=\n  \{)/);
+  var blocos = content.split(/(?=\n\s*\{)/);
   blocos.forEach(function(b){
     // Ignora blocos que não contenham um campo id: (não são cursos)
     if(b.indexOf("id:") === -1) return;
