@@ -3568,7 +3568,7 @@ var MA_COURSES = [
     addedTs: 1776358856622,
     active: true
   },
-      {
+        {
     coverImg: 'assets/capas/gi.jpg',
     id: 'gi',
     name: 'Guerra da Informação e Manipulação de Narrativas',
@@ -3584,7 +3584,7 @@ var MA_COURSES = [
     storagePrefix: 'gi_',
     icon: '📰',
     color: '#cf1322',
-    addedTs: 1776370706357,
+    addedTs: 1776372172227,
     active: true
   },
       {
