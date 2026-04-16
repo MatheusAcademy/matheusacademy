@@ -3530,7 +3530,7 @@ var MA_COURSES = [
     addedTs: 1776358846654,
     active: true
   },
-      {
+        {
     coverImg: 'assets/capas/gc.jpg',
     id: 'gc',
     name: 'Gestão de Crises Empresariais',
@@ -3546,7 +3546,7 @@ var MA_COURSES = [
     storagePrefix: 'gc_',
     icon: '🎓',
     color: '#be123c',
-    addedTs: 1776370770931,
+    addedTs: 1776372166846,
     active: true
   },
   {
