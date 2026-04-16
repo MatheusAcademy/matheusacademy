@@ -1462,7 +1462,7 @@ var MA_COURSES = [
     addedTs: 1775832752373,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/pc.jpg',
     id: 'pc',
     name: 'Pensamento Crítico e Clareza Intelectual',
@@ -1472,13 +1472,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'PC_HENRY_2026_MASTER',
     ak: 'pc_auth',
     storagePrefix: 'pc_',
     icon: '🦉',
     color: '#e76f51',
-    addedTs: 1775832755187,
+    addedTs: 1776372327143,
     active: true
   },
     {
