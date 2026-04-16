@@ -2017,19 +2017,30 @@ function startContinuousScroll() {
 
 function buildEbooks() {
   // NOVA LÓGICA: Prioridade de cursos - Notícias > Geopolítica > Empresas > Conspiração/Finanças > Todos os outros
+  // Prioridade completa — cobre todas as 23 categorias do MA_CATS
   var priorityDefs = [
-    {key: 'geopolitica', patterns: ['gp_', 'geopolit', 'geopolít']},
-    {key: 'conspiracoes', patterns: ['cons_', 'conspira', 'fake', 'manipula']},
-    {key: 'tecnologia', patterns: ['tp_', 'tb_', 'tecnolog', 'ia_', 'tech', 'inteligência artificial', 'programaç']},
-    {key: 'negocios', patterns: ['nl_', 'neg_', 'negócio', 'empresa', 'empreend', 'business']},
-    {key: 'marketing', patterns: ['mkv_', 'mk_', 'marketing', 'vendas', 'venda', 'tráfego', 'copy', 'funil', 'ads']},
-    {key: 'pnl', patterns: ['pnl_', 'pnl', 'persuasão', 'comunicaç', 'influência', 'oratória', 'negociaç']},
-    {key: 'desenvolvimento', patterns: ['dev_', 'desenvolvimento', 'produtividade', 'hábito', 'disciplina', 'foco', 'liderança', 'mentalidade']},
-    {key: 'psicologia', patterns: ['psic_', 'psicolog', 'emocion', 'comportament', 'mental']},
-    {key: 'filosofia', patterns: ['filo_', 'filosof', 'estoicismo', 'pensador']},
-    {key: 'historia', patterns: ['hist_', 'ahistori', 'storytel', 'históri', 'história', 'reform', 'guerra', 'civiliza', 'corrupção']},
-    {key: 'biblia', patterns: ['bib_', 'bíblia', 'teolog', 'cristã', 'deus', 'fé']},
-    {key: 'biografias', patterns: ['bio_', 'biografia', 'vida de', 'história de vida']}
+    {key: 'geopolitica', patterns: ['geopolít', 'geopolit', 'gp_', 'ártico', 'oriente médio', 'china', 'rússia', 'otan']},
+    {key: 'conspiracoes', patterns: ['conspira', 'mistério', 'fake news', 'manipula', 'segredo', 'illuminati', 'controle']},
+    {key: 'tecnologia', patterns: ['tecnolog', 'inteligência artificial', 'ia ', 'programaç', 'software', 'automaç', 'tp_', 'tb_', 'ciberseg', 'blockchain', 'robótic']},
+    {key: 'negocios', patterns: ['negócio', 'empresa', 'empreend', 'gestão', 'nl_', 'neg_', 'competitiva', 'crise empresarial', 'cultura empresarial', 'modelo de negócio']},
+    {key: 'marketing', patterns: ['marketing', 'vendas', 'venda', 'tráfego', 'copy', 'funil', 'ads', 'mkv_', 'mk_', 'neuromarketing']},
+    {key: 'pnl', patterns: ['pnl', 'persuasão', 'comunicaç', 'influência', 'oratória', 'negociaç']},
+    {key: 'desenvolvimento', patterns: ['desenvolvimento', 'produtividade', 'hábito', 'disciplina', 'foco', 'liderança', 'mentalidade', 'dev_', 'autoconhecimento']},
+    {key: 'psicologia', patterns: ['psicolog', 'emocion', 'comportament', 'mental', 'psic_', 'ansied', 'terapia']},
+    {key: 'filosofia', patterns: ['filosof', 'estoicismo', 'pensador', 'filo_', 'sócrates', 'platão', 'nietzsche']},
+    {key: 'historia', patterns: ['históri', 'história', 'reform', 'civiliza', 'corrupção', 'hist_', 'ahistori', 'storytel', 'guerra mundial', 'império']},
+    {key: 'biblia', patterns: ['bíblia', 'teolog', 'cristã', 'deus', 'bib_', 'fé cristã', 'evangel']},
+    {key: 'biografias', patterns: ['biografia', 'vida de', 'bio_', 'líderes que', 'ditadores', 'mulheres que', 'empreendedores visionários', 'filósofos que mudaram']},
+    {key: 'politica', patterns: ['polític', 'democracia', 'eleição', 'constituiç', 'partido']},
+    {key: 'financas', patterns: ['finanç', 'econom', 'invest', 'bolsa', 'cripto', 'bitcoin', 'mercado', 'ações', 'renda']},
+    {key: 'direito', patterns: ['direito', 'cidadania', 'lei ', 'jurídic', 'constitucional', 'penal', 'trabalhist']},
+    {key: 'ingles', patterns: ['inglês', 'english', 'ielts', 'pronúncia', 'business english']},
+    {key: 'esportes', patterns: ['esporte', 'futebol', 'performance', 'atleta', 'copa do mundo', 'nba', 'mma', 'corrida']},
+    {key: 'seguranca', patterns: ['segurança', 'sobrevivência', 'defesa', 'arma', 'primeiros socorro']},
+    {key: 'familia', patterns: ['família', 'relacionament', 'casamento', 'parentalidade', 'educação dos filhos']},
+    {key: 'saude', patterns: ['saúde', 'ciência', 'medicina', 'bem-estar', 'nutrição', 'sono']},
+    {key: 'meioambiente', patterns: ['meio ambiente', 'sustentab', 'ecolog', 'mudanças climáticas', 'água']},
+    {key: 'noticias', patterns: ['notícia', 'semana', 'ni_', 'atualize-se']}
   ];
   var items = [];
   var categorizedCourses = {};
@@ -2494,62 +2505,34 @@ function rC() {
   if (!grid) return;
   var tM=0, tT=0, tH=0, h='';
 
-  // ═══ RECLASSIFICAÇÃO E REORDENAÇÃO DE SEÇÕES ═══
-  // Define a ordem desejada das seções
+  // ═══ REORDENAÇÃO DE SEÇÕES — ordem exata das 23 categorias ═══
+  // Cada entrada usa substring para dar match no nome da categoria do MA_CATS
   var sectionOrder = [
-    'geopolítica', 'geopolitica', 'conspirações', 'conspiração',
-    'tecnologia', 'negócios', 'negocios', 'empresas',
-    'marketing', 'vendas', 'pnl', 'comunicação', 'persuasão',
-    'desenvolvimento', 'psicologia', 'filosofia', 'história', 'historia',
-    'bíblia', 'biblia', 'biografias', 'biografia',
-    'inglês', 'ingles', 'english',
-    'finanças', 'investimentos', 'cripto',
-    'saúde', 'bem-estar'
+    'geopolítica',               // Geopolítica
+    'conspirações',              // Conspirações & Mistérios
+    'tecnologia',                // Tecnologia
+    'negócios',                  // Negócios / Empresas
+    'marketing',                 // Marketing & Vendas
+    'pnl',                       // PNL
+    'desenvolvimento',           // Desenvolvimento
+    'psicologia',                // Psicologia
+    'direito',                   // Direito & Cidadania
+    'filosofia',                 // Filosofia
+    'história',                  // História
+    'bíblia',                    // Bíblia / Teologia
+    'biografias',                // Biografias
+    'política',                  // Política Brasileira
+    'finanças',                  // Finanças & Economia
+    'inglês',                    // Inglês
+    'esportes',                  // Esportes & Alta Performance
+    'família',                   // Família & Relacionamentos
+    'segurança',                 // Segurança & Sobrevivência
+    'saúde',                     // Saúde & Ciência
+    'meio ambiente',             // Meio Ambiente & Sustentabilidade
+    'ebooks'                     // Ebooks
   ];
 
-  // Reclassify misplaced courses
-  var reclassRules = [
-    {match: /biografia|vida de/i, targetCats: ['biografias', 'biografia']},
-    {match: /ingl[eê]s|english/i, targetCats: ['inglês', 'ingles', 'english']},
-    {match: /b[ií]blia|teolog/i, targetCats: ['bíblia', 'biblia']},
-    {match: /geopolít|geopolit/i, targetCats: ['geopolítica', 'geopolitica']},
-    {match: /pnl|persuas[aã]o|comunica[cç][aã]o|orat[oó]ria|influ[eê]ncia/i, targetCats: ['pnl', 'comunicação', 'persuasão']}
-  ];
-
-  // Move misplaced courses
-  reclassRules.forEach(function(rule) {
-    var targetCat = null;
-    for (var ti = 0; ti < CATS.length; ti++) {
-      var catNameLow = (CATS[ti].name || '').toLowerCase();
-      for (var tj = 0; tj < rule.targetCats.length; tj++) {
-        if (catNameLow.indexOf(rule.targetCats[tj]) >= 0) {
-          targetCat = CATS[ti];
-          break;
-        }
-      }
-      if (targetCat) break;
-    }
-    if (!targetCat) return;
-
-    CATS.forEach(function(cat) {
-      if (cat === targetCat) return;
-      var toMove = [];
-      cat.courses = cat.courses.filter(function(c) {
-        var testStr = (c.name || '') + ' ' + (c.cat || '');
-        if (rule.match.test(testStr)) {
-          toMove.push(c);
-          return false;
-        }
-        return true;
-      });
-      toMove.forEach(function(c) {
-        var exists = targetCat.courses.some(function(ec) { return ec.file === c.file; });
-        if (!exists) targetCat.courses.push(c);
-      });
-    });
-  });
-
-  // Sort CATS by sectionOrder
+  // Ordenar CATS na ordem de prioridade definida acima
   CATS.sort(function(a, b) {
     var aName = (a.name || '').toLowerCase();
     var bName = (b.name || '').toLowerCase();
@@ -2558,7 +2541,7 @@ function rC() {
       if (aName.indexOf(sectionOrder[si]) >= 0 && aIdx === 999) aIdx = si;
       if (bName.indexOf(sectionOrder[si]) >= 0 && bIdx === 999) bIdx = si;
     }
-    // Special sections (like "Notícias") always go first
+    // Seções especiais (Notícias) sempre primeiro
     if (a.isSpecial && !b.isSpecial) return -1;
     if (!a.isSpecial && b.isSpecial) return 1;
     return aIdx - bIdx;
