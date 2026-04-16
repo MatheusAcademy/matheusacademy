@@ -2226,7 +2226,7 @@ var MA_COURSES = [
     addedTs: 1776024484823,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/sb.jpg',
     id: 'sb',
     name: 'Sistema Bancário e Criação de Dinheiro',
@@ -2242,7 +2242,7 @@ var MA_COURSES = [
     storagePrefix: 'sb_',
     icon: '💰',
     color: '#166534',
-    addedTs: 1776370011999,
+    addedTs: 1776370729562,
     active: true
   },
   {
