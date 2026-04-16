@@ -1060,7 +1060,7 @@ var MA_COURSES = [
     addedTs: 1775831048119,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/dt.jpg',
     id: 'dt',
     name: 'Direito Trabalhista para Trabalhadores e Empregadores',
@@ -1070,13 +1070,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'DT_HENRY_2026_MASTER',
     ak: 'dt_auth',
     storagePrefix: 'dt_',
     icon: '⚖️',
     color: '#0a9396',
-    addedTs: 1775831050615,
+    addedTs: 1776372285998,
     active: true
   },
   {
