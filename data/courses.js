@@ -3929,6 +3929,25 @@ var MA_COURSES = [
     color: '#b91c1c',
     addedTs: 1776359008036,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mnw.jpg',
+    id: 'mnw',
+    name: 'Modelos de Negócio Lucrativos',
+    desc: 'Aprenda a identificar e estruturar modelos que realmente geram lucro.',
+    file: 'modelos-negocio.html',
+    cat: 'Negócios',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'MN_HENRY_2026_MASTER',
+    ak: 'mn_auth',
+    storagePrefix: 'mn_',
+    icon: '🎓',
+    color: '#059669',
+    addedTs: 1776359013713,
+    active: true
   }
 ];
 var MA_CATS = [
