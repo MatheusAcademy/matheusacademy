@@ -1308,7 +1308,7 @@ var MA_COURSES = [
     addedTs: 1776372321179,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/hm.jpg',
     id: 'hm',
     name: 'História Mundial para Entender o Presente',
@@ -1318,13 +1318,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'HM_HENRY_2026_MASTER',
     ak: 'hm_auth',
     storagePrefix: 'hm_',
     icon: '📜',
     color: '#1d3557',
-    addedTs: 1775832734509,
+    addedTs: 1776372358997,
     active: true
   },
       {
