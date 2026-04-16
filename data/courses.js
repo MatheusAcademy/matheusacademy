@@ -1481,7 +1481,7 @@ var MA_COURSES = [
     addedTs: 1775832755187,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/jb.jpg',
     id: 'jb',
     name: 'Como Funciona o Judiciário Brasileiro',
@@ -1491,13 +1491,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'JB_HENRY_2026_MASTER',
     ak: 'jb_auth',
     storagePrefix: 'jb_',
     icon: '⚖️',
     color: '#94d2bd',
-    addedTs: 1775832757684,
+    addedTs: 1776372309259,
     active: true
   },
         {
