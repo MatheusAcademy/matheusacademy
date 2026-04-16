@@ -1519,13 +1519,13 @@ var MA_COURSES = [
     addedTs: 1776370723438,
     active: true
   },
-      {
+        {
     coverImg: 'assets/capas/cb.jpg',
     id: 'cb',
-    name: 'Moedas Digitais de Bancos Centrais (CBDCs)',
-    desc: 'Explore o futuro do dinheiro estatal e seus impactos na economia e liberdade financeira.',
-    file: 'cbdcs.html',
-    cat: 'Finanças & Economia',
+    name: 'Criptomoedas Além do Bitcoin',
+    desc: 'Explore o universo das criptomoedas além do Bitcoin, entendendo altcoins, tokens, utilidade de projetos, riscos do mercado, inovação em blockchain e oportunidades dentro do setor digital.',
+    file: 'criptomoedas-bitcoin.html',
+    cat: 'Criptomoedas',
     modules: 3,
     topics: 9,
     hours: 2,
@@ -1533,9 +1533,9 @@ var MA_COURSES = [
     salt: 'CB_HENRY_2026_MASTER',
     ak: 'cb_auth',
     storagePrefix: 'cb_',
-    icon: '💰',
-    color: '#0284c7',
-    addedTs: 1776370741095,
+    icon: '₿',
+    color: '#f77f00',
+    addedTs: 1776372151071,
     active: true
   },
       {
