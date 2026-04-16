@@ -3644,6 +3644,25 @@ var MA_COURSES = [
     color: '#7c3aed',
     addedTs: 1776358876162,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/nm.jpg',
+    id: 'nm',
+    name: 'Neuromarketing: Como o Cérebro Decide Comprar',
+    desc: 'Descubra como decisões de compra são tomadas no subconsciente e como usar isso para vender mais.',
+    file: 'neuromarketing.html',
+    cat: 'Marketing & Vendas',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'NM_HENRY_2026_MASTER',
+    ak: 'nm_auth',
+    storagePrefix: 'nm_',
+    icon: '📢',
+    color: '#e11d48',
+    addedTs: 1776358881203,
+    active: true
   }
 ];
 var MA_CATS = [
