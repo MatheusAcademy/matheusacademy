@@ -1519,7 +1519,7 @@ var MA_COURSES = [
     addedTs: 1776370723438,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/cb.jpg',
     id: 'cb',
     name: 'Moedas Digitais de Bancos Centrais (CBDCs)',
@@ -1535,7 +1535,7 @@ var MA_COURSES = [
     storagePrefix: 'cb_',
     icon: '💰',
     color: '#0284c7',
-    addedTs: 1776370026780,
+    addedTs: 1776370741095,
     active: true
   },
       {
