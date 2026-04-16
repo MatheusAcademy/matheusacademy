@@ -3682,6 +3682,25 @@ var MA_COURSES = [
     color: '#d4380d',
     addedTs: 1776358885680,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/hr.jpg',
+    id: 'hr',
+    name: 'História das Religiões e o Poder Espiritual no Mundo',
+    desc: 'Entenda como religiões moldaram civilizações, guerras e decisões políticas ao longo da história.',
+    file: 'historia-religioes.html',
+    cat: 'História',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'HR_HENRY_2026_MASTER',
+    ak: 'hr_auth',
+    storagePrefix: 'hr_',
+    icon: '📜',
+    color: '#854d0e',
+    addedTs: 1776358890459,
+    active: true
   }
 ];
 var MA_CATS = [
