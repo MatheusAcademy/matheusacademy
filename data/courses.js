@@ -1519,23 +1519,23 @@ var MA_COURSES = [
     addedTs: 1776369998164,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/cb.jpg',
     id: 'cb',
-    name: 'Casamento Blindado: Construindo uma União Forte e Duradoura',
-    desc: 'Curso sobre comunicação, respeito, confiança, parceria e prevenção de crises dentro do casamento.',
-    file: '37-casamento-blindado.html',
-    cat: 'Família & Relacionamentos',
+    name: 'Moedas Digitais de Bancos Centrais (CBDCs)',
+    desc: 'Explore o futuro do dinheiro estatal e seus impactos na economia e liberdade financeira.',
+    file: 'cbdcs.html',
+    cat: 'Finanças & Economia',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'CB_HENRY_2026_MASTER',
     ak: 'cb_auth',
     storagePrefix: 'cb_',
-    icon: '👨‍👩‍👧‍👦',
-    color: '#e63946',
-    addedTs: 1775832762741,
+    icon: '💰',
+    color: '#0284c7',
+    addedTs: 1776370026780,
     active: true
   },
       {
