@@ -9,131 +9,18 @@
 </head>
 <body>
 <script>
-var COURSE = {
-  id: 'CA',
-  name: 'Grandes Civilizações Antigas',
-  shortName: 'Civilizações Antigas',
-  cat: 'História',
-  desc: 'Explora Egito, Mesopotâmia, Grécia, Roma e outras civilizações que moldaram a base do mundo ocidental e oriental.',
-  salt: 'CA_HENRY_2026_MASTER',
-  ak: 'ca_auth',
-  courseKey: 'ca',
-  prefix: 'ca_',
-  color: '#c9a227',
-  glow: 'rgba(201,162,39,.35)',
-  free: false,
-  freeModules: 1,
-  modules: 3,
-  topics: 9,
-  hours: 2,
-  quizzes: 9
-};
+var COURSE = {"id":"CA","name":"Grandes Civilizações Antigas","shortName":"Civilizações Antigas","cat":"História","desc":"Explora Egito, Mesopotâmia, Grécia, Roma e outras civilizações que moldaram a base do mundo ocidental e oriental.","salt":"CA_HENRY_2026_MASTER","ak":"ca_auth","courseKey":"ca","prefix":"ca_","color":"#c9a227","glow":"rgba(201,162,39,.35)","free":false,"freeModules":1,"modules":3,"topics":9,"hours":2,"quizzes":9};
 
 var MODS = [
   {
-    id: 1,
-    name: 'Egito Antigo: O Presente dos Faraós',
-    free: true,
-    topics: [1, 2, 3],
-    summary: {
-      title: 'Civilização Egípcia Antiga',
-      points: [
-        'O Egito Antigo, desenvolvido ao longo do Nilo, durou mais de 3000 anos com continuidade cultural notável',
-        'Os faraós eram vistos como deuses vivos, concentrando poder absoluto sobre estado, religião e economia',
-        'A construção das pirâmides, templos e monumentos reflete engenharia avançada e organização social hierárquica',
-        'A religião egípcia era politeísta, com conceitos sofisticados sobre vida após morte e julgamento das almas'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Em qual rio se desenvolveu a civilização egípcia?',
-        opts: ['Tigre', 'Eufrates', 'Nilo', 'Indo'],
-        correct: 2
-      },
-      {
-        q: 'Qual era o papel do faraó na sociedade egípcia?',
-        opts: ['Militarista apenas', 'Deus vivo, autoridade absoluta', 'Conselheiro dos sacerdotes', 'Comerciante'],
-        correct: 1
-      },
-      {
-        q: 'Quantos anos, aproximadamente, durou a civilização egípcia?',
-        opts: ['1000 anos', '1500 anos', '3000 anos', '5000 anos'],
-        correct: 2
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Mesopotâmia: A Terra Entre Rios',
-    free: false,
-    topics: [4, 5, 6],
-    summary: {
-      title: 'Civilização Mesopotâmica',
-      points: [
-        'A Mesopotâmia, entre Tigre e Eufrates, foi berço de múltiplas civilizações: Sumérios, Acádios, Babilônios, Assírios',
-        'Os sumérios inventaram a escrita cuneiforme, primeira escrita da humanidade, revolucionando registro de informações',
-        'Cidades-estado independentes competiam por poder, água e comércio, criando instabilidade permanente',
-        'Código de Hamurabi estabelecia lei escrita com princípio "olho por olho", moldando conceitos jurídicos ocidentais'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Quais eram os dois rios principais da Mesopotâmia?',
-        opts: ['Nilo e Indo', 'Tigre e Eufrates', 'Danúbio e Reno', 'Amarelo e Yangtze'],
-        correct: 1
-      },
-      {
-        q: 'Qual povo mesopotâmico inventou a escrita cuneiforme?',
-        opts: ['Acádios', 'Babilônios', 'Sumérios', 'Assírios'],
-        correct: 2
-      },
-      {
-        q: 'Quem estabeleceu o Código de Hamurabi?',
-        opts: ['Gilgamesh', 'Naram-Sin', 'Hamurabi', 'Sargo I'],
-        correct: 2
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Grécia Clássica: Democracia e Filosofia',
-    free: false,
-    topics: [7, 8, 9],
-    summary: {
-      title: 'Civilização Grega Antiga',
-      points: [
-        'A Grécia Clássica, particularmente Atenas, desenvolveu democracia direta inovadora entre 500-400 a.C.',
-        'Filósofos como Sócrates, Platão e Aristóteles estabeleceram fundações do pensamento ocidental em metafísica, ética e lógica',
-        'A Polis (cidade-estado) era unidade política fundamental, com Atenas e Esparta representando modelos opostos',
-        'Tragédia grega, comédia e Olimpíadas refletem valores culturais de competição, excelência e exame moral'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Qual era a forma de governo em Atenas durante o período clássico?',
-        opts: ['Monarquia', 'Democracia direta', 'Oligarquia', 'Anarquia'],
-        correct: 1
-      },
-      {
-        q: 'Quem foi o aluno de Sócrates e mestre de Aristóteles?',
-        opts: ['Heródoto', 'Homero', 'Platão', 'Eurípides'],
-        correct: 2
-      },
-      {
-        q: 'Qual era a principal característica de Esparta em contraste com Atenas?',
-        opts: ['Democracia liberal', 'Focada em educação artística', 'Sociedade militar hierárquica', 'Centro comercial'],
-        correct: 2
-      }
-    ]
-  }
-];
-
-var TOPICS = [
-  {
-    id: 1,
-    name: 'O Nilo e Origem da Civilização Egípcia',
-    dur: '16 min',
-    content: `<h3>Geografia do Egito Antigo e o Papel do Nilo</h3>
+  id:1,
+  name:"Egito Antigo: O Presente dos Faraós",
+  free:true,
+  topics:[
+    {id:1,
+     name:"O Nilo e Origem da Civilização Egípcia",
+     dur:"16 min",
+     content:`<h3>Geografia do Egito Antigo e o Papel do Nilo</h3>
 <p>A civilização egípcia emergiu nas margens do Rio Nilo, no nordeste da África, em uma região onde clima árido e desértico dominava. O Nilo foi a razão da existência de uma civilização florescente onde se esperaria aridez absoluta. Anualmente, as inundações do Nilo, causadas por chuvas nas terras altas da Etiópia, traziam água e sedimentos férteis que criavam uma estreita faixa de terra fértil contrastando com desertos circundantes. Este ciclo previsível permitia agricultura sistemática: plantações de trigo, cevada e outros alimentos dependiam das cheias. Os egípcios desenvolveram sistemas sofisticados de canais e reservatórios para capturar e distribuir água das inundações durante épocas secas. O Nilo também era via de transporte crucial: barcos navegavam transportando pessoas, bens e materiais. A previsibilidade do ciclo do Nilo criava sensação de ordem cósmica, refletida na cosmologia egípcia que venerava o rio como deus (Hapi). A localização geográfica do Egito, com desertos protegendo a civilização, criava isolamento relativo que permitia continuidade cultural e estabilidade política extraordinárias comparadas a vizinhos. Porém, este isolamento também criava estagnação tecnológica eventual e dificuldade em adaptar a mudanças. O Egito Antigo durou extraordinários 3100 anos (convencionalmente de 3100 a.C. até conquista persa em 525 a.C., e continuando sob domínios sucessivos), duração quase incomparável em história humana.</p>
 
 <h4>Períodos Dinásticos do Egito Antigo</h4>
@@ -159,25 +46,19 @@ var TOPICS = [
 <blockquote class="example">
 📌 <strong>Legado Extraordinário:</strong> Os egípcios inventaram pasta de dentes, calculadora lunar (para prever inundações), procedimentos de cirurgia oftalmológica, e técnicas de preservação de alimentos. Seu conhecimento de matemática, astronomia e engenharia era adiantado para época.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Por que o Nilo foi crucial para desenvolvimento da civilização egípcia?',
-        a: 'Inundações anuais traziam água e sedimentos férteis, permitindo agricultura em deserto; também servia como via de transporte'
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Arte, Arquitetura e Conhecimento Egípcios',
-    dur: '17 min',
-    content: `<h3>Pirâmides, Templos e Monumentalidade Egípcia</h3>
+     cards:[{"q":"Por que o Nilo foi crucial para desenvolvimento da civilização egípcia?","a":"Inundações anuais traziam água e sedimentos férteis, permitindo agricultura em deserto; também servia como via de transporte"}]
+    },
+    {id:2,
+     name:"Arte, Arquitetura e Conhecimento Egípcios",
+     dur:"17 min",
+     content:`<h3>Pirâmides, Templos e Monumentalidade Egípcia</h3>
 <p>A arquitetura egípcia é dominada por estruturas colossais: pirâmides, templos e monumentos que permaneceram resistindo ao tempo durante milênios. As pirâmides, particularmente as três de Giza (Quéops, Quéfren, Miquerinos), são mais famosas estruturas do Egito Antigo. A Grande Pirâmide de Quéops, construída como tumba do faraó, continha originalmente 2,3 milhões de blocos de pedra, cada pesando em média 2,5 toneladas. A precisão de construção é notável: base é praticamente um quadrado perfeito (diferença de poucos centímetros apesar de ter 230 metros por lado), alinhamento com pontos cardeais é exato, inclinação de faces calculada com precisão matemática. Os egípcios não possuíam máquinas modernas: usavam rampas, alavancas, corolas e trabalho humano em massa. Engenheiros egípcios compreendiam princípios de física, distribuição de peso e geometria necessários para estas construções. Templos como o de Karnak, dedicado ao deus Amun, são estruturas colossais com colunatas que variam em tamanho (menor perto do santuário, maior mais afastado, criando ilusão de perspectiva). Hipostilo (sala com muitas colunas) eram comuns em templos, cobrindo grandes áreas. A decoração de templos incluía hieróglifos, baixos-relevos e pinturas coloridas narrando histórias religiosas e militares.</p>
 
 <h4>Escultura e Representação Artística Egípcia</h4>
 <p>A escultura egípcia reflete valores e convenções da civilização. As estátuas do faraó frequentemente o representavam em poses rígidas, idealizadas, não como retrato naturalista. As proporções seguiam cânones estritos: altura da cabeça representava 1/19 da altura total do corpo, olhos eram enormes para expressar vigilância divina. Esta rigidez não refletia limitação técnica, mas escolha estética-religiosa: o faraó era deus, deveria ser representado em forma idealizada e eterna, não em forma humana naturalista. Estátuas de escribas, sacerdotes e nobres eram frequentemente realistas em comparação, mostrando individualidade. Escultura em relevo, particularmente baixo-relevo, era comum em paredes de templos e tumbas. Relevos mostravam cenas cotidianas (trabalho de campo, processões religiosas) e cenas do além-vida, servindo como manual de vida após morte. A perspectiva não era ocidental (com ponto de fuga): figuras importantes eram maiores, figuras menores eram menos importantes hierarquicamente. Cores aplicadas em relevos eram vibrantes: azul (lápis lazúli ou vidro azul), vermelho (ocre), verde (malaquita). Estas pinturas e relevos fornecem nossa compreensão vívida da vida egípcia cotidiana.</p>
 
 <blockquote class="tip">
-💡 <strong>Convenção Artística:</strong> A representação egípcia frontal (figura de frente com pés apontando para frente) era convenção artística, não necessariamente indicador de incapacidade técnica. Os egípcios podiam representar naturalismo quando desejavam, como visto em alguns retratos de faraós.
+���� <strong>Convenção Artística:</strong> A representação egípcia frontal (figura de frente com pés apontando para frente) era convenção artística, não necessariamente indicador de incapacidade técnica. Os egípcios podiam representar naturalismo quando desejavam, como visto em alguns retratos de faraós.
 </blockquote>
 
 <h4>Conhecimento Matemático e Astronômico Egípcio</h4>
@@ -196,18 +77,12 @@ var TOPICS = [
 <blockquote class="example">
 📌 <strong>Avanço Surpreendente:</strong> Ossos e crânios encontrados em múmias mostram que egípcios realizavam trepanação (cirurgia do crânio). Mais surpreendente: muitos pacientes sobreviveram ao procedimento (mostrado por cicatrização óssea), indicando que a cirurgia não era extremamente perigosa como poderia parecer.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual era o propósito original das pirâmides egípcias?',
-        a: 'Servir como tumbas monumentais para faraós e suas riquezas, refletindo conceitos de vida após morte'
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Sociedade, Comércio e Influência Egípcia',
-    dur: '16 min',
-    content: `<h3>Estrutura Social Estamental Egípcia</h3>
+     cards:[{"q":"Qual era o propósito original das pirâmides egípcias?","a":"Servir como tumbas monumentais para faraós e suas riquezas, refletindo conceitos de vida após morte"}]
+    },
+    {id:3,
+     name:"Sociedade, Comércio e Influência Egípcia",
+     dur:"16 min",
+     content:`<h3>Estrutura Social Estamental Egípcia</h3>
 <p>A sociedade egípcia era dividida em estamentos rígidos com mobilidade vertical limitada, embora não inteiramente impossível. No topo estava o faraó, considerado encarnação divina e proprietário de toda terra. O faraó não era simples monarca, mas ser divino que mediava entre humano e divino, mantendo ordem cósmica (maat). Abaixo do faraó estava uma pequena elite de nobres (aristocracia de nascimento), sacerdotes de templos principais (poderosos possuindo terras e recursos), escribas de alto nível (administradores do reino), e generais militares. Esta elite possuía a maioria da terra, controlava comércio, e tinha monopólio sobre educação. Sacerdotes de Amun em particular acumulavam poder extraordinário: em períodos posteriores do Novo Reino, possuíam 1/3 de toda terra egípcia. A classe média consistia de escribas menores, comerciantes, artesãos qualificados (carpinteiros, pedreiros, orfebres), e soldados de carreira. Estes tinham propriedade limitada, mas status respeitável e oportunidade de educação para filhos. A maioria esmagadora da população era camponeses que trabalhavam terras do faraó ou de nobres. Embora tecnicamente não escravizados, sua situação era pouco melhor: tributação era pesada, trabalho era compulsório, mobilidade limitada. Havia também verdadeiros escravizados, frequentemente capturados em guerras e colocados em trabalho público pesado. Na base da sociedade estavam marginalizados: criminosos punidos, pessoas com deficiência, estrangeiros sem proteção. As mulheres egípcias, embora subordinadas aos homens, tinham direitos notáveis: podiam possuir propriedade, divorciar-se, participar em negócios, e ocasionalmente acessar educação. Rainhas e esposas reais tinham poder considerável, com algumas (como Hatshepsut) até assumindo título de faraó.</p>
 
 <h4>Vida Cotidiana e Estrutura Familiar</h4>
@@ -226,18 +101,21 @@ var TOPICS = [
 <blockquote class="example">
 📌 <strong>Sincretismo Cultural:</strong> A assimilação egípcia de tradições macedônicas e depois romanas demonstra flexibilidade cultural. Mesmo sob domínio estrangeiro, tradições egípcias persistiam e influenciavam conquistadores. Isto contrasta com ideia de civilização egípcia como imutável.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual era a posição das mulheres na sociedade egípcia em comparação com outras civilizações antigas?',
-        a: 'Notavelmente melhor: podiam possuir propriedade, divorçar-se, negociar, e ocasionalmente ocupar posições de poder'
-      }
-    ]
+     cards:[{"q":"Qual era a posição das mulheres na sociedade egípcia em comparação com outras civilizações antigas?","a":"Notavelmente melhor: podiam possuir propriedade, divorçar-se, negociar, e ocasionalmente ocupar posições de poder"}]
+    }
+  ],
+  summary:{"title":"Civilização Egípcia Antiga","points":["O Egito Antigo, desenvolvido ao longo do Nilo, durou mais de 3000 anos com continuidade cultural notável","Os faraós eram vistos como deuses vivos, concentrando poder absoluto sobre estado, religião e economia","A construção das pirâmides, templos e monumentos reflete engenharia avançada e organização social hierárquica","A religião egípcia era politeísta, com conceitos sofisticados sobre vida após morte e julgamento das almas"]},
+  quizFinal:[{"q":"Em qual rio se desenvolveu a civilização egípcia?","opts":["Tigre","Eufrates","Nilo","Indo"],"correct":2},{"q":"Qual era o papel do faraó na sociedade egípcia?","opts":["Militarista apenas","Deus vivo, autoridade absoluta","Conselheiro dos sacerdotes","Comerciante"],"correct":1},{"q":"Quantos anos, aproximadamente, durou a civilização egípcia?","opts":["1000 anos","1500 anos","3000 anos","5000 anos"],"correct":2}]
   },
   {
-    id: 4,
-    name: 'Mesopotâmia: Origem da Civilização Urbana',
-    dur: '17 min',
-    content: `<h3>Geografia e Primeiras Cidades-Estado Mesopotâmicas</h3>
+  id:2,
+  name:"Mesopotâmia: A Terra Entre Rios",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Mesopotâmia: Origem da Civilização Urbana",
+     dur:"17 min",
+     content:`<h3>Geografia e Primeiras Cidades-Estado Mesopotâmicas</h3>
 <p>A Mesopotâmia, palavra grega significando "terra entre rios", refere-se à região entre Tigre e Eufrates (moderna Iraque, partes da Síria e Turquia). Diferentemente do Egito com seu Nilo previsível, as cheias dos rios mesopotâmicos eram imprevisíveis e destrutivas, criando sociedade mais voltada para controle de água através de sistemas de irrigação e drenagem sofisticados. Os sumérios foram os primeiros grandes ocupantes, estabelecendo cidades-estado independentes como Uruk, Lagash, Ur, Nippur. Cada cidade-estado tinha seu próprio templo (zigurate), governo e território. As cidades-estado competiam frequentemente por água, terra e comércio, criando conflitos permanentes. O conceito de "Estado" moderno surgiu em Mesopotâmia: institucionalização de poder em estruturas administrativas permanentes, não simples dominação tribal ou pessoal. Os sumérios, por volta de 3100 a.C., inventaram escrita cuneiforme (escrita de cunhas), primeira escrita verdadeira da humanidade. Isto marcou transição de história para pré-história: registros escritos permitem compreensão direta de sociedades antigas. Os sumérios usavam tabuletas de barro para registrar: transações comerciais, leis, literatura, hinos religiosos. Este sistema revolucionou capacidade de registar informação complexa, permitindo administração sofisticada de economias complexas. A invenção de escrita mesopotâmica influenciou desenvolvimento de escrita em outras regiões (Egito desenvolveu escrita hieroglífica aproximadamente ao mesmo tempo, provavelmente independentemente).</p>
 
 <h4>Avanços Tecnológicos e Inovações Sumérias</h4>
@@ -263,18 +141,12 @@ var TOPICS = [
 <blockquote class="tip">
 💡 <strong>Diferença Cultural:</strong> Enquanto Egito virou obstetivamente para morte e vida após vida, Mesopotâmia focava na vida presente e apaziguamento dos deuses. Isto reflete diferenças filosóficas profundas entre civilizações.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual foi a contribuição mais importante dos sumérios para história humana?',
-        a: 'Invenção da escrita cuneiforme, primeira escrita verdadeira, que permitiu registro permanente de informação complexa'
-      }
-    ]
-  },
-  {
-    id: 5,
-    name: 'Impérios Sucessivos: Assírio e Persa',
-    dur: '18 min',
-    content: `<h3>Império Assírio: Militar Opressivo e Administração</h3>
+     cards:[{"q":"Qual foi a contribuição mais importante dos sumérios para história humana?","a":"Invenção da escrita cuneiforme, primeira escrita verdadeira, que permitiu registro permanente de informação complexa"}]
+    },
+    {id:2,
+     name:"Impérios Sucessivos: Assírio e Persa",
+     dur:"18 min",
+     content:`<h3>Império Assírio: Militar Opressivo e Administração</h3>
 <p>O Império Assírio (911-609 a.C.) sucedeu o babilônico e estabeleceu novo paradigma de império: domínio através de poder militar absoluto. Os assírios desenvolveram máquina militar mais sofisticada de seu tempo: infantaria pesada, arqueiros, carros de guerra, engenheiros de cerco. Cidades que resistiam eram destruídas, populações eram deportadas sistematicamente para outras regiões para prevenir revolta. Este sistema de terror era deliberado: criar medo tornaria futuras revoltas menos prováveis. Os assírios foram pioneiros em guerra psicológica: imagens de crueldade eram propagandizadas através de relevos que mostravam crucificação de cativos, empalação, flagelar. O rei assírio Sargão II e seus sucessores conquistaram Síria, Palestina, Egito parcialmente, e Mesopotâmia até Golfo Pérsico, criando maior império até então. Porém, este império era mantido através de guarnições militares, não lealdade. A ausência de ideologia unificadora e religião comum criava fragmentação: quando poder militar foi ameaçado, império colapsou rapidamente. Em 609 a.C., após morte do último rei assírio Assurbanipal, a coalizão de Média e Babilônia destruiu Nínive (capital assíria), eliminando o império. A queda foi tão completa que Assíria nunca foi restaurada como entidade política independente.</p>
 
 <h4>Administração Assíria e Conhecimento Preservado</h4>
@@ -300,18 +172,12 @@ var TOPICS = [
 <blockquote class="tip">
 💡 <strong>Comparação Intelectual:</strong> Considere a diferença entre Império Assírio (poder militar bruto, terror, opressão) e Império Persa (tolerância, administração sofisticada, legitimidade). O segundo tipo de império tende a durar mais porque é menos resistido e porque elite local coopera.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual foi a principal diferença entre Império Assírio e Império Persa?',
-        a: 'Assírio mantinha império através de terror e militar bruto; Persa através de tolerância religiosa, respeito por culturas locais, e administração sofisticada'
-      }
-    ]
-  },
-  {
-    id: 6,
-    name: 'Grécia Antigo: Polis, Democracia e Pensamento Racional',
-    dur: '17 min',
-    content: `<h3>Formação da Polis Grega e Época Arcaica</h3>
+     cards:[{"q":"Qual foi a principal diferença entre Império Assírio e Império Persa?","a":"Assírio mantinha império através de terror e militar bruto; Persa através de tolerância religiosa, respeito por culturas locais, e administração sofisticada"}]
+    },
+    {id:3,
+     name:"Grécia Antigo: Polis, Democracia e Pensamento Racional",
+     dur:"17 min",
+     content:`<h3>Formação da Polis Grega e Época Arcaica</h3>
 <p>A Grécia Antiga não era estado unificado, mas coleção de centenas de cidades-estado (Poleis) independentes, cada com seu próprio governo, leis, moeda frequentemente. O conceito de Polis era inovador: comunidade política onde cidadãos (homens adultos livres de origem grega) tinham participação na deliberação da cidade. A Polis combinava características urbanas (mercado central, templos, governo) com características rurais (território agrícola circundante). Atenas e Esparta eram duas principais Poleis, representando modelos opostos: Atenas desenvolveu democracia participativa; Esparta desenvolveu oligarquia militar rígida. Período Arcaico (800-480 a.C.) viu desenvolvimento gradual da Polis: de sociedades simples baseadas em clãs para comunidades políticas complexas. Durante este período, Homero compõe Ilíada e Odisseia (embora texto escrito fixo talvez tenha vindo depois), estabelecendo ideias de heroísmo, honra e conflito que moldaram valores gregos. Hesiodo compôs Teogonia (genealogia dos deuses) e Trabalhos e Dias (poesia didática sobre vida rural), estabelecendo cosmologia grega. Legisladores como Drácon em Atenas (620 a.C.) criaram primeiras leis escritas. Sólon reformou Atenas (590 a.C.), abolindo escravidão por dívida, criando classes baseadas em propriedade, e estabelecendo assembleia. Estas reformas criaram instabilidade mas também oportunidade para institucionalização gradual de democracia.</p>
 
 <h4>Democracia Ateniense e Participação Política</h4>
@@ -337,18 +203,21 @@ var TOPICS = [
 <blockquote class="example">
 📌 <strong>Ironia Histórica:</strong> As Guerras Médicas que elevaram glória de Atenas e permitiram democracia florescer também plantaram sementes de sua destruição: sucesso militar criou arrogância, levando a Guerra do Peloponeso que enfraqueceu Atenas permanentemente.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Como funcionava a democracia em Atenas durante seu apogeu?',
-        a: 'Democracia direta onde cidadãos votavam diretamente em assembleia sobre políticas, qualquer cidadão podia falar e propor legislação'
-      }
-    ]
+     cards:[{"q":"Como funcionava a democracia em Atenas durante seu apogeu?","a":"Democracia direta onde cidadãos votavam diretamente em assembleia sobre políticas, qualquer cidadão podia falar e propor legislação"}]
+    }
+  ],
+  summary:{"title":"Civilização Mesopotâmica","points":["A Mesopotâmia, entre Tigre e Eufrates, foi berço de múltiplas civilizações: Sumérios, Acádios, Babilônios, Assírios","Os sumérios inventaram a escrita cuneiforme, primeira escrita da humanidade, revolucionando registro de informações","Cidades-estado independentes competiam por poder, água e comércio, criando instabilidade permanente","Código de Hamurabi estabelecia lei escrita com princípio \"olho por olho\", moldando conceitos jurídicos ocidentais"]},
+  quizFinal:[{"q":"Quais eram os dois rios principais da Mesopotâmia?","opts":["Nilo e Indo","Tigre e Eufrates","Danúbio e Reno","Amarelo e Yangtze"],"correct":1},{"q":"Qual povo mesopotâmico inventou a escrita cuneiforme?","opts":["Acádios","Babilônios","Sumérios","Assírios"],"correct":2},{"q":"Quem estabeleceu o Código de Hamurabi?","opts":["Gilgamesh","Naram-Sin","Hamurabi","Sargo I"],"correct":2}]
   },
   {
-    id: 7,
-    name: 'Roma Republicana: Expansão e Instituições',
-    dur: '18 min',
-    content: `<h3>Origens de Roma e República Inicial</h3>
+  id:3,
+  name:"Grécia Clássica: Democracia e Filosofia",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Roma Republicana: Expansão e Instituições",
+     dur:"18 min",
+     content:`<h3>Origens de Roma e República Inicial</h3>
 <p>Roma começou como pequena aldeia no sete colinas da Itália central. Segundo tradição, foi fundada em 753 a.C. (data tradicional, provavelmente apocrifa), crescendo de assentamento pastoral para vila comercial. Nos primeiros séculos, Roma foi governada por reis que eram magistrados eletivos pela aristocracia (patrícios). As primeiras instituições romanas eram: Senado (conselho de patrícios), Assembleia Comicial (votação de patrícies), e magistrados. A República foi estabelecida em 509 a.C. (tradicional) quando último rei, Tarquínio o Soberbo, foi derrubado por conspiração de patrícios. A república inicial era oligarquia patriciada: poder estava nas mãos de famílias aristocráticas. Gradualmente, a classe de plebeus (não-aristocratas) ganhou poder político: Lei das 12 Tábuas (450 a.C.) foi primeira lei escrita de Roma, freando poderes arbitrários de magistrados. Tribunos de plebe eram oficiais designados para proteger direitos de plebeus. Ao longo de séculos de conflito (Conflito de Ordens), plebeus ganharam acesso ao consulado e outras magistraturas, criando sistema mais integrado onde poder era dividido entre patrícios e plebeus ricos. A República romana não era democracia: era oligarquia elitista onde poder estava concentrado em poucas famílias nobres. Porém, tinha instituições que limitavam poder individual e criavam responsabilidade coletiva.</p>
 
 <h4>Instituições Republicanas e Separação de Poderes</h4>
@@ -374,18 +243,12 @@ var TOPICS = [
 <blockquote class="example">
 📌 <strong>Permanência de Conceitos:</strong> A ideia de "república" (res publica) como Estado onde poder pertence ao povo, contraste com monarquia onde poder pertence ao rei, é conceito romano que permanece central a governo democrático moderno. Mesmo que República Romana fosse oligarquia, a ideia foi liberadora comparada a monarquias absolutas.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Como a República Romana tentava evitar concentração de poder?',
-        a: 'Através de separação de poderes, mandatos fixos para magistrados, poder compartilhado entre consulados e Senado, freios e contrapesos'
-      }
-    ]
-  },
-  {
-    id: 8,
-    name: 'Império Romano: Ascensão de Augusto e Pax Romana',
-    dur: '17 min',
-    content: `<h3>Otaviano/Augusto e Fundação do Principato</h3>
+     cards:[{"q":"Como a República Romana tentava evitar concentração de poder?","a":"Através de separação de poderes, mandatos fixos para magistrados, poder compartilhado entre consulados e Senado, freios e contrapesos"}]
+    },
+    {id:2,
+     name:"Império Romano: Ascensão de Augusto e Pax Romana",
+     dur:"17 min",
+     content:`<h3>Otaviano/Augusto e Fundação do Principato</h3>
 <p>Otaviano (63 a.C. - 14 d.C.), neto-sobrinho de Júlio César, herda legado de César e ambições políticas. Após morte de César em 44 a.C., Otaviano forma Segundo Triunvirato com Marcos Antônio e Lépido, dividindo poder sobre Império Romano. Durante anos de luta, Otaviano gradualmente consolida poder: Lépido é marginalizado, Marcos Antônio é derrotado em guerra civil (32-30 a.C.). Otaviano torna-se supremo poder, aclamado por Senado como Augusto (o Augusto, o Venerável) em 27 a.C. Seu título reflete subtileza política: não é "imperador" (termo odiado que sugeria tirania), mas "primeiro cidadão" com vários poderes republicanos. Augusto recebe: título de princeps (primeiro cidadão), imperium (poder militar), tribunicia potestas (poder de tribuno, proteção de direitos populares), e controle sobre certas províncias. Porém, permite ficção de República: Senado continua formalmente supremo, eleições continuam (embora Augusto orquestre resultados), magistrados são nomeados. Este arranjo é Principato: monarquia disfarçada de república. O genialidade de Augusto foi consolidar poder absoluto mantendo aparências constitucionais e ganhando consentimento de elite que temeria aberto autoritarismo. O Principato duraria 3 séculos, transformando-se eventualmente em Dominato (império claramente absolutista) sob Diocleciano.</p>
 
 <h4>Reformas Administrativas e Militares de Augusto</h4>
@@ -408,18 +271,12 @@ var TOPICS = [
 <blockquote class="example">
 📌 <strong>Descontinuidade Percebida:</strong> Historiadores debate quando "fim" do Império Romano ocorreu. Tradicionalmente 476 d.C., mas instituições romanas (Igreja, direito, linguagem, hábitos) persistiram, mudando gradualmente em Idade Média em lugar de ruptura catastrófica.
 </blockquote>`,
-    cards: [
-      {
-        q: 'O que foi a Pax Romana e sob quais imperadores primariamente ocorreu?',
-        a: 'Período de paz e estabilidade relativa de 27 a.C. a 180 d.C., particularmente sob Augusto e sucessores do século I-II d.C.'
-      }
-    ]
-  },
-  {
-    id: 9,
-    name: 'Legado das Civilizações Antigas para o Mundo Moderno',
-    dur: '16 min',
-    content: `<h3>Influência Legal, Política e Administrativa</h3>
+     cards:[{"q":"O que foi a Pax Romana e sob quais imperadores primariamente ocorreu?","a":"Período de paz e estabilidade relativa de 27 a.C. a 180 d.C., particularmente sob Augusto e sucessores do século I-II d.C."}]
+    },
+    {id:3,
+     name:"Legado das Civilizações Antigas para o Mundo Moderno",
+     dur:"16 min",
+     content:`<h3>Influência Legal, Política e Administrativa</h3>
 <p>As civilizações antigas, particularmente Grécia e Roma, deixaram legado profundo nas tradições legais e políticas modernas. O conceito grego de democracia participativa, embora imperfeitamente implementado em Atenas, estabeleceu modelo que democracias modernas buscam emular. A ideia que governo deve ter consentimento dos governados é descendente de Atenas. O conceito romano de "res publica" (coisa pública) como contrapeso a monarquia absoluta moldou pensamento político moderno. Autores como Cícero foram estudados obsessivamente durante Renascença como modelo de oratória política e pensamento republicano. As instituições romanas (separação de poderes, responsabilidade, imperio da lei) foram conscientemente copiadas pela constituição dos EUA: Senado dos EUA, poder executivo limitado em relação ao legislativo, sistema de freios e contrapesos, todos hereditários de Roma. A tradição legal romana permanece fundamento de lei civil europeia: conceitos de contrato, propriedade, responsabilidade delitual, todos elaborados por juristas romanos. Jurisdições que usam Common Law (Anglos) derivam menos diretamente de Roma, mas Magna Carta inglesa de 1215 também reflete ideia romana que até mesmo rei está sujeito a lei. O império da lei (rule of law) como conceito, embora não plenamente realizado em Roma (imperador eventual estava acima da lei), foi ideal romano que moldou constitucionalismo moderno. Portanto, estruturas legais e políticas modernas são em grande parte edificadas sobre fundações romanas e gregas.</p>
 
 <h4>Filosofia, Ciência e Pensamento Racional</h4>
@@ -448,12 +305,11 @@ var TOPICS = [
 <blockquote class="tip">
 💡 <strong>Crítica Histórica Balanceada:</strong> Valorizar contribuições da Grécia e Roma não significa romanticizar suas sociedades. Devemos admirar inovações enquanto reconhecemos limitações morais e incluir perspectivas de grupos marginalizados (escravizados, mulheres) em nossa compreensão.
 </blockquote>`,
-    cards: [
-      {
-        q: 'Qual é o legado mais importante das civilizações antigas para o mundo moderno?',
-        a: 'Combinação de: ideias democráticas e republicanas, tradição filosófica racional, direito codificado e estado de direito, arquitetura e arte influentes'
-      }
-    ]
+     cards:[{"q":"Qual é o legado mais importante das civilizações antigas para o mundo moderno?","a":"Combinação de: ideias democráticas e republicanas, tradição filosófica racional, direito codificado e estado de direito, arquitetura e arte influentes"}]
+    }
+  ],
+  summary:{"title":"Civilização Grega Antiga","points":["A Grécia Clássica, particularmente Atenas, desenvolveu democracia direta inovadora entre 500-400 a.C.","Filósofos como Sócrates, Platão e Aristóteles estabeleceram fundações do pensamento ocidental em metafísica, ética e lógica","A Polis (cidade-estado) era unidade política fundamental, com Atenas e Esparta representando modelos opostos","Tragédia grega, comédia e Olimpíadas refletem valores culturais de competição, excelência e exame moral"]},
+  quizFinal:[{"q":"Qual era a forma de governo em Atenas durante o período clássico?","opts":["Monarquia","Democracia direta","Oligarquia","Anarquia"],"correct":1},{"q":"Quem foi o aluno de Sócrates e mestre de Aristóteles?","opts":["Heródoto","Homero","Platão","Eurípides"],"correct":2},{"q":"Qual era a principal característica de Esparta em contraste com Atenas?","opts":["Democracia liberal","Focada em educação artística","Sociedade militar hierárquica","Centro comercial"],"correct":2}]
   }
 ];
 </script>
