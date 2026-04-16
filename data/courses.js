@@ -1155,23 +1155,23 @@ var MA_COURSES = [
     addedTs: 1775831072358,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/mn.jpg',
     id: 'mn',
-    name: 'Modelos de Negócio Digital',
-    desc: 'Descubra como funcionam os principais modelos de negócio na internet, incluindo infoprodutos, assinaturas, serviços, e-commerce, monetização de audiência e estratégias de escala no ambiente digital.',
-    file: 'modelos-negocio-digital.html',
+    name: 'Modelos de Negócio Lucrativos',
+    desc: 'Aprenda a identificar e estruturar modelos que realmente geram lucro.',
+    file: 'modelos-negocio.html',
     cat: 'Negócios',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'MN_HENRY_2026_MASTER',
     ak: 'mn_auth',
     storagePrefix: 'mn_',
     icon: '🎓',
-    color: '#669bbc',
-    addedTs: 1775831075002,
+    color: '#059669',
+    addedTs: 1776370083452,
     active: true
   },
   {
