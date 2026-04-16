@@ -2607,13 +2607,13 @@ var MA_COURSES = [
     addedTs: 1776024584976,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/mp.jpg',
     id: 'mp',
-    name: 'Medicina Preventiva',
-    desc: 'A importância da prevenção, exames regulares e hábitos saudáveis para evitar doenças.',
-    file: '08-medicina-preventiva.html',
-    cat: 'Saúde & Ciência',
+    name: 'Posicionamento de Marca Premium',
+    desc: 'Construa uma imagem forte que permite cobrar mais caro e atrair clientes de maior valor.',
+    file: 'marca-premium.html',
+    cat: 'Marketing & Vendas',
     modules: 3,
     topics: 9,
     hours: 2,
@@ -2621,9 +2621,9 @@ var MA_COURSES = [
     salt: 'MP_HENRY_2026_MASTER',
     ak: 'mp_auth',
     storagePrefix: 'mp_',
-    icon: '🧬',
-    color: '#d62828',
-    addedTs: 1776024589824,
+    icon: '📢',
+    color: '#a16207',
+    addedTs: 1776370036185,
     active: true
   },
   {
