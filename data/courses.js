@@ -2721,7 +2721,7 @@ var MA_COURSES = [
     addedTs: 1776024614889,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/sn.jpg',
     id: 'sn',
     name: 'Storytelling para Negócios',
@@ -2737,7 +2737,7 @@ var MA_COURSES = [
     storagePrefix: 'sn_',
     icon: '📢',
     color: '#7c2d12',
-    addedTs: 1776370046494,
+    addedTs: 1776370765272,
     active: true
   },
     {
