@@ -5701,79 +5701,165 @@ function listarCategorias(){
    Analisa nome + descrição do curso e sugere a categoria correta
    ══════════════════════════════════════════════════════════════ */
 
-// Mapa de palavras-chave → categoria (prioridade decrescente)
-var _catKeywords = [
-  { cat: 'Atualize-se! Notícias Mais Relevantes da Semana', keys: ['notícia','noticias','noticia','atualize-se','atualize se','semanal','semanais','aconteceu essa semana','resumo da semana','semana em','destaques da semana'], icon: '📰' },
-  { cat: 'Geopolítica', keys: ['geopolítica','geopolitica','belt and road','rota da seda','otan','nato','china','russia','eua','guerra fria','guerra mundial','conflito mundial','nova ordem','ordem mundial','ártico','artico','potência','potencia global','soberania','hegemonia','tratado','alianças internacionais','geopolitico','fronteira','sanções','sancoes','imperialismo','neocolonialismo','diplomacia'], icon: '🌍' },
-  { cat: 'Política Brasileira', keys: ['política brasileira','politica brasileira','brasil polít','congresso','senado','câmara','stf','constituição','impeachment','eleições','eleicoes','partidos','lula','bolsonaro','reforma polít','cpi','deputad','governador','prefeito','voto','urna'], icon: '🏛️' },
-  { cat: 'Finanças & Economia', keys: ['finanças','financas','economia','econômico','economico','inflação','inflacao','mercado financeiro','bolsa de valores','investiment','criptomoeda','bitcoin','banco central','selic','juros','dólar','dolar','câmbio','pib','recessão','deficit','superavit','tesouro direto','ações','acoes','fundos','educação financeira','financeiro','riqueza','dinheiro','milionário','milionario','patrimônio','patrimonio','renda passiva','poupar','poupança'], icon: '💰' },
-  { cat: 'Negócios / Empresas', keys: ['negócios','negocios','empresa','empreendedorismo','startup','gestão','gestao','liderança','lideranca','corporativ','ceo','executiv','business','oferta irresistível','oferta irresist','funil','modelo de negócio','modelo de negocio','escala','franquia','caso banco','caso master','empresarial','lucro','faturamento','receita','valuation'], icon: '🏛️' },
-  { cat: 'Marketing & Vendas', keys: ['marketing','vendas','tráfego','trafego','copywriting','copy','persuasão','persuasao','publicidade','propaganda','digital marketing','social media','instagram','youtube','anúncio','anuncio','lead','conversão','conversao','funil de vendas','neuromarketing','branding','marca','storytelling','negócios digitais','negocios digitais'], icon: '📢' },
-  { cat: 'Conspirações & Mistérios', keys: ['conspiração','conspiracao','mistério','misterio','oculto','illuminati','maçonaria','maconaria','sociedade secreta','nova ordem mundial','alienígena','alienigena','ovni','ufo','encoberto','teoria da conspiração','deep state','mk ultra','área 51','area 51','templários','templarios','segredo','sobrenatural','paranormal'], icon: '🕵️' },
-  { cat: 'PNL', keys: ['pnl','programação neurolinguística','programacao neurolinguistica','neurolinguística','neurolinguistica','ancoragem','rapport','modelagem','milton erickson','richard bandler','john grinder','hipnose','hipnoterapia'], icon: '🧠' },
-  { cat: 'Psicologia', keys: ['psicologia','psicológ','psicolog','freud','jung','comportamento humano','transtorno','ansiedade','depressão','depressao','mente','cognitiv','terapia','saúde mental','saude mental','inteligência emocional','inteligencia emocional','neurociência','neurociencia','personalidade','perfil comportamental','narcisis','manipulação mental','manipulacao mental','viés','vies','heurística','heuristica'], icon: '🧩' },
-  { cat: 'Desenvolvimento', keys: ['desenvolvimento pessoal','autoconhecimento','hábitos','habitos','produtividade','foco','disciplina','mentalidade','mindset','alta performance pessoal','motivação','motivacao','propósito','proposito','resiliência','resiliencia','superação','superacao','coaching','autoajuda','sucesso pessoal','rotina','tomada de decisão','tomada de decisao','decisão estratégica','decisao estrategica'], icon: '🚀' },
-  { cat: 'Tecnologia', keys: ['tecnologia','inteligência artificial','inteligencia artificial','ia ','ai ','machine learning','deep learning','programação','programacao','software','hardware','internet','blockchain','metaverso','robótica','robotica','computação','computacao','algoritmo','dados','big data','cibersegurança','ciberseguranca','hacker','código','codigo','app','sistema','web','digital','tech','inovação','inovacao','futuro da tecnologia'], icon: '💻' },
-  { cat: 'História', keys: ['história','historia','históric','historic','revolução','revolucao','império','imperio','civilização','civilizacao','medieval','antigo','antiguidade','guerra mundial','segunda guerra','primeira guerra','roma','grécia','grecia','egito','renascimento','idade média','idade media','colonização','colonizacao','independência','independencia','monarquia','república','republica','escravidão','escravidao','descobrimento','navegações','navegacoes','revoluções que mudaram','revolucoes que mudaram'], icon: '📜' },
-  { cat: 'Filosofia', keys: ['filosofia','filosóf','filosof','sócrates','socrates','platão','platao','aristóteles','aristoteles','kant','nietzsche','hegel','existencialismo','metafísica','metafisica','ética','etica','epistemologia','lógica','logica','estóic','estoic','estoicismo','iluminismo','racionalismo','empirismo','fenomenologia','ontologia','maquiavel','pensadores'], icon: '🦉' },
-  { cat: 'Bíblia / Teologia', keys: ['bíblia','biblia','teologia','teológic','teologic','deus','jesus','cristo','espírito santo','espirito santo','evangelho','apocalipse','gênesis','genesis','salmo','profeta','igreja','cristão','cristao','fé ','oração','oracao','católic','catolic','protestant','pentecostal','pastor','pregação','pregacao','sagrada escritura','velho testamento','novo testamento','religião','religiao','divino','espiritual','eclesiástic','eclesiastico'], icon: '✝️' },
-  { cat: 'Biografias', keys: ['biografia','vida de','trajetória de','trajetoria de','quem foi','quem é','a história de','a historia de','perfil de','legado de','memória de','memoria de'], icon: '👤' },
-  { cat: 'Direito & Cidadania', keys: ['direito','cidadania','jurídic','juridic','lei ','leis ','código civil','codigo civil','código penal','codigo penal','constituição','constituicao','tribunal','justiça','justica','advogado','processo','contrato','legislação','legislacao','regulamentação','regulamentacao','compliance'], icon: '⚖️' },
-  { cat: 'Família & Relacionamentos', keys: ['família','familia','relacionamento','casamento','casal','filhos','parentalidade','educação dos filhos','educacao dos filhos','conjugal','maternidade','paternidade','divórcio','divorcio','amor','namoro','convivência','convivencia','vínculo','vinculo'], icon: '👨‍👩‍👧‍👦' },
-  { cat: 'Segurança & Sobrevivência', keys: ['segurança','seguranca','sobrevivência','sobrevivencia','defesa pessoal','arma','tiro','proteção','protecao','emergência','emergencia','preparação','preparacao','prepper','tático','tatico','combate','vigilância','vigilancia','crime','autodefesa','krav maga','primeiros socorros'], icon: '🔐' },
-  { cat: 'Esportes & Alta Performance', keys: ['esporte','esportiva','futebol','basquete','mma','ufc','olimpíada','olimpiada','atleta','treino','treinamento físico','treinamento fisico','musculação','musculacao','fitness','corrida','maratona','competição','competicao','performance física','performance fisica','alta performance esportiva'], icon: '🏆' },
-  { cat: 'Saúde & Ciência', keys: ['saúde','saude','ciência','ciencia','medicina','médic','medic','doença','doenca','tratamento','vacina','nutrição','nutricao','dieta','alimentação','alimentacao','corpo humano','anatomia','fisiologia','farmácia','farmacia','remédio','remedio','prevenção','prevencao','pandemia','vírus','virus','bactéria','bacteria','genética','genetica','dna','biologia','química','quimica','laboratório','laboratorio','pesquisa científica'], icon: '🧬' },
-  { cat: 'Inglês', keys: ['inglês','ingles','english','vocabulário inglês','vocabulario ingles','gramática inglesa','gramatica inglesa','fluência','fluencia','speaking','listening','reading','writing','toefl','ielts','idioma inglês'], icon: '🇺🇸' },
-  { cat: 'Engenharia', keys: ['engenharia','engenheiro','estrutura','cálculo','calculo','projeto','civil','elétric','eletric','mecânic','mecanica engenharia','construção','construcao','ponte','edifício','edificio','material','concreto','aço','aco'], icon: '⚙️' },
-  { cat: 'Mecânica', keys: ['mecânica','mecanica','motor','automóvel','automovel','carro','veículo','veiculo','manutenção automotiva','manutencao automotiva','oficina','peça','peca','transmissão','transmissao','freio','suspensão','suspensao','diesel','injeção','injecao'], icon: '🔧' },
-  { cat: 'Meio Ambiente & Sustentabilidade', keys: ['meio ambiente','sustentabilidade','ecologia','ecológic','ecologic','reciclagem','poluição','poluicao','desmatamento','aquecimento global','clima','carbono','energia renovável','energia renovavel','biodiversidade','preservação','preservacao','floresta','água','agua limpa','esg'], icon: '🌱' },
-  { cat: 'Idiomas', keys: ['idioma','língua','lingua','espanhol','francês','frances','alemão','alemao','mandarim','japonês','japones','coreano','italiano','polyglot','poliglota','intermediário','intermediario','básico de inglês','basico de ingles','avançado de inglês','avancado de ingles','fluência em','fluencia em','conversação','conversacao em','vocabulário','vocabulario'], icon: '🌐' },
-  { cat: 'Liderança e Poder', keys: ['liderança','lideranca','líder','lider','poder','influência política','influencia politica','chefe','gestão de pessoas','gestao de pessoas','gestão de equipes','gestao de equipes','comando','autoridade','chefia','delegação','delegacao','mentor','mentoria'], icon: '👑' },
-  { cat: 'Criptomoedas', keys: ['criptomoeda','bitcoin','ethereum','blockchain','web3','defi','nft','token','satoshi','mineração cripto','mineracao cripto','carteira digital','exchange','binance','altcoin','halving','cripto'], icon: '₿' },
-  { cat: 'Ebooks', keys: ['ebook','e-book','livro digital','pdf exclusivo','material complementar'], icon: '📚' }
-];
+// ════════════════════════════════════════════════════════════
+// SISTEMA DE AUTO-CATEGORIZAÇÃO v3 — REGEX COM RAÍZES/STEMS
+// Usa raízes de palavras (stems) em vez de palavras completas
+// para reconhecer plurais, conjugações e variações.
+// Prioridade: primeira regra que bate GANHA.
+// Princípio: SÓ move se está CLARAMENTE errado.
+// ════════════════════════════════════════════════════════════
 
-// Mapa de normalização: categorias "erradas" ou variantes → categoria oficial do MA_CATS
+// Normalização: variantes de nome de categoria → nome oficial
 var _catNormalize = {
   'Negócios': 'Negócios / Empresas',
   'Negocios': 'Negócios / Empresas',
   'Negocios / Empresas': 'Negócios / Empresas',
-  'Idiomas': 'Inglês', // se só tem inglês no MA_CATS, mapear Idiomas → Inglês (ou criar Idiomas)
+  'Inglês': 'Idiomas'
 };
 
-// Normaliza nome de categoria (corrige variantes)
 function _normalizeCat(cat) {
   return _catNormalize[cat] || cat;
 }
 
-// Função principal: dado nome + desc, retorna a melhor categoria
-function _autoCategorizar(nome, desc) {
-  var texto = _normTxt((nome || '') + ' ' + (desc || ''));
-  var melhorCat = '';
-  var melhorScore = 0;
-  var melhorIcon = '🎓';
+// Ícones por categoria (para UI)
+var _catIcons = {
+  'Atualize-se! Notícias Mais Relevantes da Semana': '📰',
+  'Biografias': '👤', 'PNL': '🧠', 'Bíblia / Teologia': '✝️',
+  'Idiomas': '🌐', 'Criptomoedas': '₿', 'Conspirações & Mistérios': '🕵️',
+  'Psicologia': '🧩', 'Desenvolvimento': '🚀', 'Geopolítica': '🌍',
+  'Tecnologia': '💻', 'Filosofia': '🦉', 'História': '📜',
+  'Política Brasileira': '🏛️', 'Negócios / Empresas': '🏢',
+  'Finanças & Economia': '💰', 'Marketing & Vendas': '📢',
+  'Direito & Cidadania': '⚖️', 'Família & Relacionamentos': '👨‍👩‍👧‍👦',
+  'Segurança & Sobrevivência': '🔐', 'Esportes & Alta Performance': '🏆',
+  'Saúde & Ciência': '🧬', 'Liderança e Poder': '👑',
+  'Meio Ambiente & Sustentabilidade': '🌱', 'Ebooks': '📚'
+};
 
-  _catKeywords.forEach(function(entry) {
-    var score = 0;
-    entry.keys.forEach(function(kw) {
-      var kwNorm = _normTxt(kw);
-      if (texto.indexOf(kwNorm) !== -1) {
-        // Peso maior para keywords mais longas (mais específicas)
-        score += kwNorm.split(' ').length;
-        // Bonus se a keyword aparece no NOME (mais relevante que na desc)
-        if (_normTxt(nome || '').indexOf(kwNorm) !== -1) {
-          score += kwNorm.split(' ').length * 1.5;
-        }
-      }
-    });
-    if (score > melhorScore) {
-      melhorScore = score;
-      melhorCat = entry.cat;
-      melhorIcon = entry.icon;
+// ── Regras por categoria (ordem = prioridade, primeira que bate ganha) ──
+// Cada regra recebe: n=nome normalizado, d=desc normalizada, f=arquivo, catAtual
+var _catRules = [
+  // NOTÍCIAS: cursos já nessa categoria FICAM; arquivo noticia-* = certeza
+  { cat: 'Atualize-se! Notícias Mais Relevantes da Semana', test: function(n,d,f,catAtual) {
+    if (/^noticia-/.test(f)) return true;
+    if (catAtual === 'Atualize-se! Notícias Mais Relevantes da Semana') return true;
+    return false;
+  }},
+  // BIOGRAFIAS
+  { cat: 'Biografias', test: function(n) { return /biografia/.test(n); }},
+  // PNL (antes de Psicologia e Desenvolvimento)
+  { cat: 'PNL', test: function(n,d,f,catAtual) {
+    if (/\bpnl\b/.test(n) || /\bpnl\b/.test(d)) return true;
+    if (catAtual === 'PNL' && /(oratoria|comunicacao|persuasao|rapport|influencia)/.test(n+' '+d)) return true;
+    return false;
+  }},
+  // BÍBLIA / TEOLOGIA
+  { cat: 'Bíblia / Teologia', test: function(n,d) {
+    return /(biblic|teolog|cristolog|pastoral|hermeneutic|exeges|panorama do (antigo|novo) testamento|apologetic|escatolog)/.test(n+' '+d) && !/politic/.test(n);
+  }},
+  // IDIOMAS
+  { cat: 'Idiomas', test: function(n) {
+    return /(^ingles|ingles (para|do|basico|intermediar|avanc|fluent|com )|business english|preparacao.*ielts|ielts|toefl|pronuncia.*(ingl|perfeita)|^english|ingles profission|ingles.*conversac|ingles.*apresentac)/.test(n);
+  }},
+  // CRIPTOMOEDAS (só palavras muito específicas no NOME)
+  { cat: 'Criptomoedas', test: function(n) {
+    return /(bitcoin|criptomoeda|ethereum|altcoin|halving)/.test(n);
+  }},
+  // CONSPIRAÇÕES (antes de Geopolítica! "nova ordem mundial" é conspiração)
+  { cat: 'Conspirações & Mistérios', test: function(n) {
+    return /(conspira|misterio|illuminat|sociedade secreta|area 51|mk ultra|encobr|deep state|templario|sobrenatural|paranormal|bilderberg|great reset|oculto|agenda 2030|nova ordem mundial)/.test(n);
+  }},
+  // PSICOLOGIA (com exclusões precisas)
+  { cat: 'Psicologia', test: function(n) {
+    return /(psicolog|tipos de pessoa|perfis comportament|leitura social|neurociencia do comportament|comportamento human|psicologia da persuasao)/.test(n)
+    && !/pnl|esport|neuromarket|autoconfianc/.test(n);
+  }},
+  // DESENVOLVIMENTO PESSOAL
+  { cat: 'Desenvolvimento', test: function(n,d) {
+    return (/(desenvolvimento pessoal|habitos? de sucess|produtividad|foco profund|mentalidade forte|disciplina (diari|do zero)|mindset|rotina de resultado|autoconfianc|mudanca de habit|reprograme|resiliencia mental|foco e consist|identidade forte|^inteligencia emocional$|lideranca pessoal|comunicacao persuasiv|comunicacao assertiv)/.test(n)
+    || /(desenvolvimento pessoal|habitos? de sucess|produtividad|foco profund|mentalidade forte|rotina de resultado|autoconfianc|mudanca de habit|resiliencia mental)/.test(d))
+    && !/pnl|esport|psicolog|marketing|familia|amor/.test(n);
+  }},
+  // GEOPOLÍTICA (não pegar História nem Finanças)
+  { cat: 'Geopolítica', test: function(n) {
+    return /(^geopolit|geopolitica |\brelacoes internacion|guerra.*economic.*china.*eua|corrida.*espaci)/.test(n)
+    && !/historia|nova ordem/.test(n);
+  }},
+  // TECNOLOGIA
+  { cat: 'Tecnologia', test: function(n) {
+    return /(inteligencia artificial|machine learning|realidade virtual|realidade aumenta|computacao|blockchain|web3|ciberseguranc|automacao no.code|computacao em nuvem|iot |casas inteligent|ciencia de dado|ia generativ|big tech)/.test(n);
+  }},
+  // FILOSOFIA (cuidado com falsos positivos)
+  { cat: 'Filosofia', test: function(n,d) {
+    return /(filosof|pensamento critic|clareza intelectual|verdade e sentido|estoicismo)/.test(n) && !/politic|biografia|mulher/.test(n);
+  }},
+  // HISTÓRIA
+  { cat: 'História', test: function(n) {
+    return /(^historia |historia d[aeo]|civilizacoes? antiga|revolucoes? que mudar|grandes civilizac|historia contemp|guerras que mudar|era dos imperio|historia.*brasil|grandes crises economic|historia.*tecnolog|historia.*religio|ideologias politica|historia mundial)/.test(n) && !/biografia|politic.*brasil/.test(n);
+  }},
+  // POLÍTICA BRASILEIRA
+  { cat: 'Política Brasileira', test: function(n,d) {
+    return /(politic.*brasileir|politica.*brasil|bastidores de brasilia|congresso|senado|camara dos deputad|como funciona a politic|partidos politic|direita.*esquerda|futuro da direita|corrupcao no brasil|reformas que mudar.*brasil|historia politic.*brasil)/.test(n+' '+d);
+  }},
+  // NEGÓCIOS / EMPRESAS (antes de Finanças!)
+  { cat: 'Negócios / Empresas', test: function(n,d) {
+    return /(empreendedorism|empresa.*cresciment|gestao.*empresa|gestao profission|^negocio|startup|franquia|empresa media|cultura empresari|gestao de crise|inteligencia competitiv|modelos de negocio|decisao estrategic|finan.*empresari|mei lucrat|primeiro lucro)/.test(n+' '+d) && !/marketing/.test(n);
+  }},
+  // FINANÇAS & ECONOMIA
+  { cat: 'Finanças & Economia', test: function(n,d) {
+    return /(educacao financeir|investiment|bolsa de valor|mercado financeir|macroeconom|juros.*ciclo|inflacao|sistema bancari|economia comportament|cbdc|moedas? digitais? de banco|economia.*pratica|^economia )/.test(n+' '+d) && !/empresa|gestao|geopolit/.test(n);
+  }},
+  // MARKETING & VENDAS
+  { cat: 'Marketing & Vendas', test: function(n) {
+    return /(marketing|copywriting|trafego|funil de vend|neuromarket|branding|lancamento.*produto|storytelling|ofertas? irresistiv|posicionamento de marca|marca premium)/.test(n);
+  }},
+  // DIREITO & CIDADANIA
+  { cat: 'Direito & Cidadania', test: function(n) {
+    return /(direito|cidadania|juridic|nocoes de direito|direitos basic|direito trabalh|direito.*consumid|garantia legal|judiciario|constituicao.*descomplic|constituicao federal)/.test(n);
+  }},
+  // FAMÍLIA & RELACIONAMENTOS
+  { cat: 'Família & Relacionamentos', test: function(n) {
+    return /(familia|relacionament|casament|linguagens do amor|inteligencia emocional no amor|parentalid|educacao dos filh|amor.*respeito.*limit)/.test(n);
+  }},
+  // SEGURANÇA & SOBREVIVÊNCIA
+  { cat: 'Segurança & Sobrevivência', test: function(n) {
+    return /(sobrevivenc|defesa pessoal|primeiros socorro|tatico|autodefes|krav maga|preparacao.*crise|seguranca digital|seguranca )/.test(n) && !/ciberseguranc/.test(n);
+  }},
+  // ESPORTES & ALTA PERFORMANCE
+  { cat: 'Esportes & Alta Performance', test: function(n) {
+    return /(esport|futebol|basquete|mma|ufc|olimpiad|atleta|treinamento fisic|musculacao|fitness|lendas do esporte|nutricao esportiv|psicologia esportiv|alta performance$)/.test(n);
+  }},
+  // SAÚDE & CIÊNCIA
+  { cat: 'Saúde & Ciência', test: function(n,d) {
+    return /(saude|medicina|nutricao |dieta|alimentacao|anatomia|longevidad|pandemia|corpo human|medicina preventiv|saude mental)/.test(n+' '+d) && !/esportiv/.test(n);
+  }},
+  // LIDERANÇA E PODER
+  { cat: 'Liderança e Poder', test: function(n) {
+    return /(lideranca|lideres que constru|poder.*influencia.*legado|construcao de legado|como o poder.*funciona|ditadores|mulheres.*fizeram.*historia|empreendedores visionari)/.test(n) && !/politic|esport|pnl|pessoal/.test(n);
+  }},
+  // MEIO AMBIENTE & SUSTENTABILIDADE
+  { cat: 'Meio Ambiente & Sustentabilidade', test: function(n) {
+    return /(meio ambient|sustentabilid|ecologia|reciclagem|aquecimento global|energia renovavel|biodiversidad|amazonia|mudancas climatic|esg )/.test(n);
+  }}
+];
+
+// Lista de todas as categorias para selects na UI
+var _catListaCompleta = _catRules.map(function(r) { return r.cat; }).filter(function(c, i, a) { return a.indexOf(c) === i; });
+
+// Função principal: dado nome, desc, arquivo e cat atual → retorna melhor categoria
+function _autoCategorizar(nome, desc, file, catAtual) {
+  var n = _normTxt(nome || '');
+  var d = _normTxt(desc || '');
+  var f = _normTxt(file || '');
+  var catNorm = _normalizeCat(catAtual || '');
+
+  for (var i = 0; i < _catRules.length; i++) {
+    if (_catRules[i].test(n, d, f, catNorm)) {
+      return { cat: _catRules[i].cat, icon: _catIcons[_catRules[i].cat] || '🎓', score: 10 };
     }
-  });
-
-  return { cat: melhorCat || 'Negócios / Empresas', score: melhorScore, icon: melhorIcon };
+  }
+  // Nenhuma regra bateu → manter categoria atual
+  return { cat: catNorm || 'Negócios / Empresas', icon: _catIcons[catNorm] || '🎓', score: 0 };
 }
 
 // ── Reorganizar TODOS os cursos automaticamente ──
@@ -5793,50 +5879,32 @@ async function autoReorganizarCategorias() {
   var cursos = _cursosCarregados || [];
   if (!cursos.length) { alert('Nenhum curso encontrado. Clique em Atualizar primeiro.'); if (btn) { btn.disabled = false; btn.textContent = '🔄 Reorganizar Categorias Automaticamente'; } return; }
 
-  // Lista oficial de categorias (do MA_CATS)
-  var catsOficiais = [
-    'Atualize-se! Notícias Mais Relevantes da Semana','Negócios / Empresas','Geopolítica',
-    'Conspirações & Mistérios','Finanças & Economia','Política Brasileira','PNL',
-    'Marketing & Vendas','Desenvolvimento','Psicologia','Direito & Cidadania','Filosofia',
-    'História','Bíblia / Teologia','Biografias','Família & Relacionamentos',
-    'Segurança & Sobrevivência','Esportes & Alta Performance','Tecnologia','Saúde & Ciência',
-    'Inglês','Meio Ambiente & Sustentabilidade','Ebooks',
-    'Idiomas','Liderança e Poder','Criptomoedas'
-  ];
-
-  // Analisar cada curso
+  // Analisar cada curso com o novo algoritmo de stems/regex
   var mudancas = [];
   var corretos = [];
   cursos.forEach(function(curso) {
     var catAtual = curso.cat || '';
     var catNormalizada = _normalizeCat(catAtual);
 
-    // 1. Verificar se a categoria precisa ser normalizada (ex: "Negócios" → "Negócios / Empresas")
-    if (catNormalizada !== catAtual && catsOficiais.indexOf(catNormalizada) !== -1) {
+    // Auto-categorizar usando regex com raízes (stems)
+    var sugestao = _autoCategorizar(curso.name, curso.desc || '', curso.file || '', catAtual);
+
+    if (sugestao.cat !== catAtual && sugestao.cat !== catNormalizada) {
+      mudancas.push({
+        id: curso.id, nome: curso.name, icon: curso.icon,
+        catAtual: catAtual, catNova: sugestao.cat,
+        iconNova: sugestao.icon || _catIcons[sugestao.cat] || '🎓',
+        score: sugestao.score, aceita: true,
+        motivo: catNormalizada !== catAtual ? 'Categoria normalizada + reclassificada' : ''
+      });
+    } else if (catNormalizada !== catAtual) {
+      // Só normalização (ex: "Negócios" → "Negócios / Empresas")
       mudancas.push({
         id: curso.id, nome: curso.name, icon: curso.icon,
         catAtual: catAtual, catNova: catNormalizada,
-        iconNova: curso.icon, score: 999, aceita: true,
+        iconNova: _catIcons[catNormalizada] || curso.icon,
+        score: 999, aceita: true,
         motivo: 'Nome da categoria normalizado'
-      });
-      return;
-    }
-
-    // 2. Auto-categorizar baseado no conteúdo
-    var sugestao = _autoCategorizar(curso.name, curso.desc || '');
-
-    // 3. Se a categoria atual não existe nas oficiais, sempre sugerir mudança
-    var catNaoExiste = catsOficiais.indexOf(catAtual) === -1 && catAtual !== '';
-
-    if ((sugestao.cat !== catAtual && sugestao.score > 0) || catNaoExiste) {
-      mudancas.push({
-        id: curso.id, nome: curso.name, icon: curso.icon,
-        catAtual: catAtual,
-        catNova: sugestao.score > 0 ? sugestao.cat : catAtual,
-        iconNova: sugestao.icon || curso.icon,
-        score: sugestao.score,
-        aceita: sugestao.score > 1, // auto-aceitar apenas se alta confiança
-        motivo: catNaoExiste ? 'Categoria "' + catAtual + '" não existe nas seções do site' : ''
       });
     } else {
       corretos.push({ id: curso.id, nome: curso.name, cat: curso.cat, icon: curso.icon });
@@ -5851,7 +5919,7 @@ async function autoReorganizarCategorias() {
   html += '<div style="padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(96,165,250,.1);color:var(--acc2);border:1px solid rgba(96,165,250,.25)">Total: ' + cursos.length + ' cursos</div>';
   html += '<div style="padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.25)">Corretos: ' + corretos.length + '</div>';
   if (mudancas.length) html += '<div style="padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(245,158,11,.1);color:#fcd34d;border:1px solid rgba(245,158,11,.25)">Precisam mudar: ' + mudancas.length + '</div>';
-  else html += '<div style="padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.25)">Todos organizados corretamente!</div>';
+  else html += '<div style="padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.25)">✅ Todos organizados corretamente!</div>';
   html += '</div>';
 
   if (mudancas.length) {
@@ -5869,9 +5937,9 @@ async function autoReorganizarCategorias() {
       if (m.motivo) html += '<span style="font-size:9px;color:#fcd34d;margin-left:4px" title="' + escH(m.motivo) + '">⚠️ ' + escH(m.motivo) + '</span>';
       // Select para escolher outra categoria manualmente
       html += '<select style="font-size:10px;padding:3px 6px;max-width:180px" onchange="window._reorgMudancas[' + idx + '].catNova=this.value" title="Ou escolha outra categoria manualmente">';
-      _catKeywords.forEach(function(ck) {
-        var sel = ck.cat === m.catNova ? ' selected' : '';
-        html += '<option value="' + escH(ck.cat) + '"' + sel + '>' + ck.icon + ' ' + escH(ck.cat) + '</option>';
+      _catListaCompleta.forEach(function(catName) {
+        var sel = catName === m.catNova ? ' selected' : '';
+        html += '<option value="' + escH(catName) + '"' + sel + '>' + (_catIcons[catName] || '📚') + ' ' + escH(catName) + '</option>';
       });
       html += '</select>';
       html += '</div></div></div>';
@@ -5927,20 +5995,17 @@ async function aplicarReorganizacao() {
 
     // Aplicar cada mudança
     mudancas.forEach(function(m) {
-      // Regex para encontrar o bloco do curso e trocar a categoria
-      // Encontrar: id: 'XXXX' ... cat: 'CAT_ANTIGA'
       var idEsc = m.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       var catEsc = m.catAtual.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       var re = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][\\s\\S]{0,600}?cat:\\s*['\"])" + catEsc + "(['\"])");
       var novo = content.replace(re, '$1' + m.catNova.replace(/'/g, "\\'") + '$2');
 
-      // Também atualizar o ícone se mudou
       if (novo !== content) {
-        // Atualizar icone
-        var iconEntry = _catKeywords.find(function(ck) { return ck.cat === m.catNova; });
-        if (iconEntry) {
+        // Atualizar ícone se mudou de categoria
+        var novoIcon = _catIcons[m.catNova] || '';
+        if (novoIcon) {
           var iconRe = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][\\s\\S]{0,600}?icon:\\s*['\"])[^'\"]+(['\"])");
-          novo = novo.replace(iconRe, '$1' + iconEntry.icon + '$2');
+          novo = novo.replace(iconRe, '$1' + novoIcon + '$2');
         }
         content = novo;
         aplicadas++;
@@ -5966,7 +6031,6 @@ async function aplicarReorganizacao() {
     if (put.ok) {
       showRes('reorg-apply-res', 'ok', '✅ ' + aplicadas + ' curso(s) recategorizados com sucesso! O site será atualizado em instantes.');
       addAudit('🏷️ Auto-reorganização: ' + aplicadas + ' curso(s) recategorizados');
-      // Recarregar dados
       await loadCoursesData();
       loadList();
     } else {
@@ -5987,15 +6051,14 @@ function _sugerirCat(nameId, descId, catId, sugId) {
 
   if (nome.length < 3) { sugEl.style.display = 'none'; return; }
 
-  var sugestao = _autoCategorizar(nome, desc);
   var catSelect = el(catId);
   var catAtual = catSelect ? catSelect.value : '';
+  var sugestao = _autoCategorizar(nome, desc, '', catAtual);
 
   if (sugestao.score > 0 && sugestao.cat !== catAtual) {
     sugEl.style.display = 'block';
-    sugEl.innerHTML = '💡 Sugestão: <strong>' + sugestao.icon + ' ' + escH(sugestao.cat) + '</strong> — <span style="text-decoration:underline">clique para aplicar</span>';
+    sugEl.innerHTML = '💡 Sugestão: <strong>' + (sugestao.icon || '🎓') + ' ' + escH(sugestao.cat) + '</strong> — <span style="text-decoration:underline">clique para aplicar</span>';
     sugEl.onclick = function() {
-      // Selecionar a categoria sugerida
       for (var i = 0; i < catSelect.options.length; i++) {
         if (catSelect.options[i].value === sugestao.cat) {
           catSelect.selectedIndex = i;
