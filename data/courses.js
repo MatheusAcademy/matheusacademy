@@ -1022,23 +1022,23 @@ var MA_COURSES = [
     addedTs: 1776289825280,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/fm.jpg',
     id: 'fm',
     name: 'Filósofos que Mudaram o Mundo',
     desc: 'Apresenta pensadores que influenciaram política, ética, ciência, educação e a forma como entendemos a realidade.',
     file: '32-filosofos-mudaram-mundo.html',
-    cat: 'Filosofia',
+    cat: 'Liderança e Poder',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'FM_HENRY_2026_MASTER',
     ak: 'fm_auth',
     storagePrefix: 'fm_',
-    icon: '🦉',
+    icon: '👑',
     color: '#e8ac65',
-    addedTs: 1775831045588,
+    addedTs: 1776372389131,
     active: true
   },
   {
