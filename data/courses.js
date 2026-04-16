@@ -1692,23 +1692,23 @@ var MA_COURSES = [
     addedTs: 1775832784450,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/de.jpg',
     id: 'de',
-    name: 'Direita, Esquerda e Centro: Ideologias, Correntes Políticas, Guerra Cultural e Polarização',
-    desc: 'Compreenda as principais correntes ideológicas, os conflitos de visão de mundo, a disputa cultural, a polarização política e como essas forças moldam o debate público contemporâneo.',
-    file: 'direita-esquerda-centro.html',
-    cat: 'Política Brasileira',
+    name: 'Tomada de Decisão Estratégica',
+    desc: 'Aprenda a decidir com precisão mesmo sob pressão e incerteza.',
+    file: 'decisao-estrategica.html',
+    cat: 'Negócios',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'DE_HENRY_2026_MASTER',
     ak: 'de_auth',
     storagePrefix: 'de_',
-    icon: '📰',
-    color: '#c1121f',
-    addedTs: 1775832786978,
+    icon: '🎓',
+    color: '#1d4ed8',
+    addedTs: 1776370061566,
     active: true
   },
   {
