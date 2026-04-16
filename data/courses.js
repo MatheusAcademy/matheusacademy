@@ -524,7 +524,7 @@ var MA_COURSES = [
     addedTs: 1775757635083,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/a51.jpg',
     id: 'a51',
     name: 'Curso: Área 51 e Encobrimentos Governamentais',
@@ -534,13 +534,13 @@ var MA_COURSES = [
     modules: 5,
     topics: 20,
     hours: 3,
-    quizzes: 1,
+    quizzes: 15,
     salt: 'A51_HENRY_2026_MASTER',
     ak: 'a51_auth',
     storagePrefix: 'a51_',
     icon: '🕵️',
     color: '#1b1b3a',
-    addedTs: 1775757694403,
+    addedTs: 1776372424344,
     active: true
   },
   {
