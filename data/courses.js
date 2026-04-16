@@ -772,7 +772,7 @@ var MA_COURSES = [
     addedTs: 1776372377046,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ea.jpg',
     id: 'ea',
     name: 'Inteligência Emocional no Amor',
@@ -782,13 +782,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'EA_HENRY_2026_MASTER',
     ak: 'ea_auth',
     storagePrefix: 'ea_',
     icon: '👨‍👩‍👧‍👦',
     color: '#9d4edd',
-    addedTs: 1775830994150,
+    addedTs: 1776372418083,
     active: true
   },
     {
