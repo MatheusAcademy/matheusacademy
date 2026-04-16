@@ -849,7 +849,7 @@ var MA_COURSES = [
     addedTs: 1776289835343,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/mu.jpg',
     id: 'mu',
     name: 'Mulheres que Fizeram História',
@@ -859,13 +859,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'MU_HENRY_2026_MASTER',
     ak: 'mu_auth',
     storagePrefix: 'mu_',
-    icon: '🎓',
+    icon: '👑',
     color: '#c77dff',
-    addedTs: 1775831010680,
+    addedTs: 1776372383195,
     active: true
   },
     {
