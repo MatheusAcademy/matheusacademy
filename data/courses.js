@@ -1500,23 +1500,23 @@ var MA_COURSES = [
     addedTs: 1775832757684,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/if.jpg',
     id: 'if',
-    name: 'Identidade Forte: Como se Tornar uma Pessoa Mais Segura e Determinada',
-    desc: 'Explora autoestima, postura, autoconfiança, imagem pessoal e fortalecimento interno para mudança verdadeira.',
-    file: '05-identidade-forte.html',
-    cat: 'Desenvolvimento',
+    name: 'Inflação na Prática: Como Ela Afeta Seu Dinheiro',
+    desc: 'Aprenda como a inflação impacta seu poder de compra e como se proteger.',
+    file: 'inflacao-pratica.html',
+    cat: 'Finanças & Economia',
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'IF_HENRY_2026_MASTER',
     ak: 'if_auth',
     storagePrefix: 'if_',
-    icon: '🚀',
-    color: '#9b2226',
-    addedTs: 1775832760166,
+    icon: '💰',
+    color: '#dc2626',
+    addedTs: 1776369998164,
     active: true
   },
   {
