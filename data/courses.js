@@ -2996,24 +2996,23 @@ var MA_COURSES = [
     addedTs: 1776024690011,
     active: true
   },
-      {
+        {
     coverImg: 'assets/capas/ic.jpg',
     id: 'ic',
-    name: 'Inglês — Conversação',
-    desc: 'Desenvolva fluência para conversas do dia a dia: small talk, opiniões, phrasal verbs e interações autênticas',
-    file: '18-ingles-conversacao.html',
-    cat: 'Idiomas',
+    name: 'Inteligência Competitiva',
+    desc: 'Aprenda a analisar concorrentes e tomar decisões estratégicas com base em dados.',
+    file: 'inteligencia-competitiva.html',
+    cat: 'Negócios',
     modules: 3,
     topics: 9,
     hours: 2,
     quizzes: 9,
-    salt: 'ic_HENRY_2026_MASTER',
+    salt: 'IC_HENRY_2026_MASTER',
     ak: 'ic_auth',
     storagePrefix: 'ic_',
     icon: '🎓',
-    color: '#E65100',
-    free: true,
-    addedTs: 1776289933476,
+    color: '#475569',
+    addedTs: 1776370066670,
     active: true
   },
   {
