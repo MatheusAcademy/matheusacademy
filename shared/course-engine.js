@@ -1104,6 +1104,14 @@ function renderModLesson(mi){
     +'<option value="2.5">2.5x</option>'
     +'<option value="3">3x</option>'
     +'</select>'
+    +'<select class="mlc-speed mlc-voice-sel" id="ml_avoice_'+mi+'" onchange="mlChangeVoice(this.value)" title="Escolher voz">'
+    +'<option value="nova"'+ (_mlGetSavedVoice()==='nova'?' selected':'') +'>🎙 Nova</option>'
+    +'<option value="fable"'+ (_mlGetSavedVoice()==='fable'?' selected':'') +'>📖 Fábula</option>'
+    +'<option value="echo"'+ (_mlGetSavedVoice()==='echo'?' selected':'') +'>🔊 Echo</option>'
+    +'<option value="shimmer"'+ (_mlGetSavedVoice()==='shimmer'?' selected':'') +'>✨ Shimmer</option>'
+    +'<option value="alloy"'+ (_mlGetSavedVoice()==='alloy'?' selected':'') +'>🔈 Alloy</option>'
+    +'<option value="onyx"'+ (_mlGetSavedVoice()==='onyx'?' selected':'') +'>🎤 Onyx</option>'
+    +'</select>'
     +'</div>'
     +'<div class="mlc-sep"></div>'
     +'<div class="mlc-right">'
@@ -1548,6 +1556,49 @@ function checkStreak(){
 }
 
 /* ══════════════════════════════════════════════════════
+   SELETOR DE VOZ + PRÉ-PROCESSAMENTO NATURAL
+   ══════════════════════════════════════════════════════ */
+
+/* ── Salvar/Carregar voz preferida do localStorage ── */
+function _mlGetSavedVoice(){
+  try{return localStorage.getItem('ma_tts_voice')||'nova';}catch(e){return 'nova';}
+}
+function mlChangeVoice(v){
+  window.MA_TTS_VOICE=v;
+  try{localStorage.setItem('ma_tts_voice',v);}catch(e){}
+  // Atualiza todos os selects de voz na página
+  document.querySelectorAll('.mlc-voice-sel').forEach(function(sel){sel.value=v;});
+  // Limpa cache de áudio pré-carregado (voz diferente)
+  _mlPreCache={};
+}
+/* Aplica voz salva ao carregar */
+(function(){var sv=_mlGetSavedVoice();if(sv)window.MA_TTS_VOICE=sv;})();
+
+/* ── Pré-processamento de texto para voz mais natural ── */
+function _mlNaturalizarTexto(texto){
+  var t=texto;
+  /* Pausas naturais em transições */
+  t=t.replace(/\.\s+(Mas |Porém |No entanto |Entretanto |Contudo )/g, '.\n\n$1');
+  t=t.replace(/\.\s+(Então |Portanto |Assim |Logo |Por isso )/g, '... $1');
+  t=t.replace(/\.\s+(Vamos |Agora |Aqui |Neste )/g, '.\n$1');
+  /* Pausa dramática antes de pontos importantes */
+  t=t.replace(/:\s+/g, '... ');
+  t=t.replace(/\s*—\s*/g, '... ');
+  /* Números e listas mais naturais */
+  t=t.replace(/(\d+)\)\s*/g, '$1: ');
+  t=t.replace(/•\s*/g, '');
+  t=t.replace(/\*\*/g, '');
+  /* Remove HTML residual */
+  t=t.replace(/<[^>]+>/g, '');
+  /* Pausas em vírgulas longas (frases grandes) */
+  t=t.replace(/,\s+/g, ', ');
+  /* Limpa espaços múltiplos */
+  t=t.replace(/\s{3,}/g, ' ');
+  t=t.replace(/\n{3,}/g, '\n\n');
+  return t.trim();
+}
+
+/* ══════════════════════════════════════════════════════
    SISTEMA DE ÁUDIO IA — v5 PIPELINE
    • Divide texto em chunks → play começa em ~3-5s
    • Pipeline: enquanto chunk 1 toca, chunk 2 já está sendo gerado
@@ -1636,11 +1687,16 @@ function _mlSplitChunks(htmlStr,prefixo){
 function _mlFetchTTS(texto,abortSignal){
   var ttsUrl=window.MA_TTS_URL||'';
   if(!ttsUrl)return Promise.reject(new Error('no-url'));
+  var textoNatural=_mlNaturalizarTexto(texto);
   return fetch(ttsUrl,{
     method:'POST',
     signal:abortSignal,
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({text:texto.slice(0,4500),voice:window.MA_TTS_VOICE||'onyx'})
+    body:JSON.stringify({
+      text:textoNatural.slice(0,4500),
+      voice:window.MA_TTS_VOICE||'nova',
+      model:window.MA_TTS_MODEL||'tts-1-hd'
+    })
   }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.blob();})
     .then(function(b){return URL.createObjectURL(b);});
 }
@@ -2998,7 +3054,8 @@ function grantMission(type){
 /* ═══ CHAT IA ═══ */
 var CHAT_URL='https://shiny-disk-b207ma-academy-ai.matheushenry1998.workers.dev/chat';
 window.MA_TTS_URL='https://ma-tts.matheushenry1998.workers.dev';
-window.MA_TTS_VOICE='onyx';
+window.MA_TTS_VOICE=_mlGetSavedVoice()||'nova';
+window.MA_TTS_MODEL='tts-1-hd';
 var _chatHist=[];
 function addMsg(role,content){var msgs=document.getElementById('chatMessages');var d=document.createElement('div');d.className='chat-msg '+(role==='user'?'user':'bot');d.innerHTML='<div class="chat-avatar">'+(role==='user'?'👤':'🤖')+'</div><div class="chat-bubble">'+content+'</div>';msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 function addTyping(){var msgs=document.getElementById('chatMessages');var d=document.createElement('div');d.className='chat-msg bot';d.id='chatTyping';d.innerHTML='<div class="chat-avatar">🤖</div><div class="chat-bubble"><div class="chat-typing"><span></span><span></span><span></span></div></div>';msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
