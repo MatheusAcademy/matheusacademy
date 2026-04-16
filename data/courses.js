@@ -3568,6 +3568,25 @@ var MA_COURSES = [
     color: '#0369a1',
     addedTs: 1776358856622,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gi.jpg',
+    id: 'gi',
+    name: 'Guerra da Informação e Manipulação de Narrativas',
+    desc: 'Aprenda como mídia, redes sociais e governos moldam a opinião pública e controlam percepções em escala global.',
+    file: 'guerra-informacao.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'GI_HENRY_2026_MASTER',
+    ak: 'gi_auth',
+    storagePrefix: 'gi_',
+    icon: '📰',
+    color: '#cf1322',
+    addedTs: 1776358861501,
+    active: true
   }
 ];
 var MA_CATS = [
