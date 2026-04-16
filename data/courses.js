@@ -1366,7 +1366,7 @@ var MA_COURSES = [
     addedTs: 1775832739774,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ei.jpg',
     id: 'ei',
     name: 'A Era dos Impérios',
@@ -1376,13 +1376,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'EI_HENRY_2026_MASTER',
     ak: 'ei_auth',
     storagePrefix: 'ei_',
     icon: '📜',
     color: '#7b2d26',
-    addedTs: 1775832742257,
+    addedTs: 1776372341329,
     active: true
   },
         {
