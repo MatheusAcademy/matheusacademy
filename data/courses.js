@@ -3530,6 +3530,25 @@ var MA_COURSES = [
     color: '#92400e',
     addedTs: 1776358846654,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gc.jpg',
+    id: 'gc',
+    name: 'Gestão de Crises Empresariais',
+    desc: 'Saiba como agir em momentos críticos e proteger sua empresa.',
+    file: 'gestao-crises.html',
+    cat: 'Negócios',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'GC_HENRY_2026_MASTER',
+    ak: 'gc_auth',
+    storagePrefix: 'gc_',
+    icon: '🎓',
+    color: '#be123c',
+    addedTs: 1776358851494,
+    active: true
   }
 ];
 var MA_CATS = [
