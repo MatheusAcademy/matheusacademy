@@ -3720,6 +3720,25 @@ var MA_COURSES = [
     color: '#e63946',
     addedTs: 1776358895138,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/snw.jpg',
+    id: 'snw',
+    name: 'Storytelling para Negócios',
+    desc: 'Aprenda a usar histórias para criar conexão emocional e aumentar conversão.',
+    file: 'storytelling-negocios.html',
+    cat: 'Marketing & Vendas',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'SN_HENRY_2026_MASTER',
+    ak: 'sn_auth',
+    storagePrefix: 'sn_',
+    icon: '📢',
+    color: '#7c2d12',
+    addedTs: 1776358949404,
+    active: true
   }
 ];
 var MA_CATS = [
