@@ -3834,6 +3834,25 @@ var MA_COURSES = [
     color: '#1d4ed8',
     addedTs: 1776358978009,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/mpw.jpg',
+    id: 'mpw',
+    name: 'Posicionamento de Marca Premium',
+    desc: 'Construa uma imagem forte que permite cobrar mais caro e atrair clientes de maior valor.',
+    file: 'marca-premium.html',
+    cat: 'Marketing & Vendas',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'MP_HENRY_2026_MASTER',
+    ak: 'mp_auth',
+    storagePrefix: 'mp_',
+    icon: '📢',
+    color: '#a16207',
+    addedTs: 1776358984112,
+    active: true
   }
 ];
 var MA_CATS = [
