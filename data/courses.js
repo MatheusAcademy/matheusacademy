@@ -3739,6 +3739,25 @@ var MA_COURSES = [
     color: '#7c2d12',
     addedTs: 1776358949404,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/icw.jpg',
+    id: 'icw',
+    name: 'Inteligência Competitiva',
+    desc: 'Aprenda a analisar concorrentes e tomar decisões estratégicas com base em dados.',
+    file: 'inteligencia-competitiva.html',
+    cat: 'Negócios',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IC_HENRY_2026_MASTER',
+    ak: 'ic_auth',
+    storagePrefix: 'ic_',
+    icon: '🎓',
+    color: '#475569',
+    addedTs: 1776358954068,
+    active: true
   }
 ];
 var MA_CATS = [
