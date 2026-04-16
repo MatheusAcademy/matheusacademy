@@ -1289,7 +1289,7 @@ var MA_COURSES = [
     addedTs: 1775831116891,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/fv.jpg',
     id: 'fv',
     name: 'Filosofia para a Vida Real',
@@ -1299,13 +1299,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'FV_HENRY_2026_MASTER',
     ak: 'fv_auth',
     storagePrefix: 'fv_',
     icon: '🦉',
     color: '#e9c46a',
-    addedTs: 1775831119570,
+    addedTs: 1776372321179,
     active: true
   },
   {
