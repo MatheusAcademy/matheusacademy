@@ -2017,25 +2017,46 @@ function startContinuousScroll() {
 
 function buildEbooks() {
   // NOVA LÓGICA: Prioridade de cursos - Notícias > Geopolítica > Empresas > Conspiração/Finanças > Todos os outros
-  var priorityOrder = ['gp_', 'ni_', 'nl_', 'tp_', 'tb_', 'ahistori', 'storytel'];
+  var priorityDefs = [
+    {key: 'geopolitica', patterns: ['gp_', 'geopolit', 'geopolít']},
+    {key: 'conspiracoes', patterns: ['cons_', 'conspira', 'fake', 'manipula']},
+    {key: 'tecnologia', patterns: ['tp_', 'tb_', 'tecnolog', 'ia_', 'tech', 'inteligência artificial', 'programaç']},
+    {key: 'negocios', patterns: ['nl_', 'neg_', 'negócio', 'empresa', 'empreend', 'business']},
+    {key: 'marketing', patterns: ['mkv_', 'mk_', 'marketing', 'vendas', 'venda', 'tráfego', 'copy', 'funil', 'ads']},
+    {key: 'pnl', patterns: ['pnl_', 'pnl', 'persuasão', 'comunicaç', 'influência', 'oratória', 'negociaç']},
+    {key: 'desenvolvimento', patterns: ['dev_', 'desenvolvimento', 'produtividade', 'hábito', 'disciplina', 'foco', 'liderança', 'mentalidade']},
+    {key: 'psicologia', patterns: ['psic_', 'psicolog', 'emocion', 'comportament', 'mental']},
+    {key: 'filosofia', patterns: ['filo_', 'filosof', 'estoicismo', 'pensador']},
+    {key: 'historia', patterns: ['hist_', 'ahistori', 'storytel', 'históri', 'história', 'reform', 'guerra', 'civiliza', 'corrupção']},
+    {key: 'biblia', patterns: ['bib_', 'bíblia', 'teolog', 'cristã', 'deus', 'fé']},
+    {key: 'biografias', patterns: ['bio_', 'biografia', 'vida de', 'história de vida']}
+  ];
   var items = [];
   var categorizedCourses = {};
   
-  // Inicializar categorias
-  priorityOrder.forEach(function(cat) { categorizedCourses[cat] = []; });
+  // Inicializar categorias por prioridade
+  priorityDefs.forEach(function(def) { categorizedCourses[def.key] = []; });
   categorizedCourses['outros'] = [];
   
-  // Separar cursos por categoria
+  // Separar cursos por categoria (verificando name, cat, e file/id)
   COURSES.forEach(function(course) {
     var courseId = (course.file || course.id || '').toLowerCase();
+    var courseName = (course.name || '').toLowerCase();
+    var courseCat = (course.cat || '').toLowerCase();
+    var testStr = courseName + ' ' + courseCat + ' ' + courseId;
     var found = false;
-    
-    for (var j = 0; j < priorityOrder.length; j++) {
-      if (courseId.indexOf(priorityOrder[j]) === 0 || courseId === priorityOrder[j]) {
-        categorizedCourses[priorityOrder[j]].push(course);
-        found = true;
-        break;
+
+    for (var j = 0; j < priorityDefs.length; j++) {
+      var priorityDef = priorityDefs[j];
+      for (var pi = 0; pi < priorityDef.patterns.length; pi++) {
+        var pattern = priorityDef.patterns[pi];
+        if (testStr.indexOf(pattern) >= 0) {
+          categorizedCourses[priorityDef.key].push(course);
+          found = true;
+          break;
+        }
       }
+      if (found) break;
     }
     if (!found) {
       categorizedCourses['outros'].push(course);
@@ -2043,10 +2064,10 @@ function buildEbooks() {
   });
   
   // Montar array na ordem de prioridade (mais novos primeiro em cada categoria)
-  priorityOrder.forEach(function(cat) {
-    if (categorizedCourses[cat].length > 0) {
-      categorizedCourses[cat].sort(function(a, b) { return (b.addedTs || 0) - (a.addedTs || 0); });
-      items = items.concat(categorizedCourses[cat]);
+  priorityDefs.forEach(function(def) {
+    if (categorizedCourses[def.key].length > 0) {
+      categorizedCourses[def.key].sort(function(a, b) { return (b.addedTs || 0) - (a.addedTs || 0); });
+      items = items.concat(categorizedCourses[def.key]);
     }
   });
   
@@ -2472,6 +2493,76 @@ function rC() {
   var grid = document.getElementById('courseGrid');
   if (!grid) return;
   var tM=0, tT=0, tH=0, h='';
+
+  // ═══ RECLASSIFICAÇÃO E REORDENAÇÃO DE SEÇÕES ═══
+  // Define a ordem desejada das seções
+  var sectionOrder = [
+    'geopolítica', 'geopolitica', 'conspirações', 'conspiração',
+    'tecnologia', 'negócios', 'negocios', 'empresas',
+    'marketing', 'vendas', 'pnl', 'comunicação', 'persuasão',
+    'desenvolvimento', 'psicologia', 'filosofia', 'história', 'historia',
+    'bíblia', 'biblia', 'biografias', 'biografia',
+    'inglês', 'ingles', 'english',
+    'finanças', 'investimentos', 'cripto',
+    'saúde', 'bem-estar'
+  ];
+
+  // Reclassify misplaced courses
+  var reclassRules = [
+    {match: /biografia|vida de/i, targetCats: ['biografias', 'biografia']},
+    {match: /ingl[eê]s|english/i, targetCats: ['inglês', 'ingles', 'english']},
+    {match: /b[ií]blia|teolog/i, targetCats: ['bíblia', 'biblia']},
+    {match: /geopolít|geopolit/i, targetCats: ['geopolítica', 'geopolitica']},
+    {match: /pnl|persuas[aã]o|comunica[cç][aã]o|orat[oó]ria|influ[eê]ncia/i, targetCats: ['pnl', 'comunicação', 'persuasão']}
+  ];
+
+  // Move misplaced courses
+  reclassRules.forEach(function(rule) {
+    var targetCat = null;
+    for (var ti = 0; ti < CATS.length; ti++) {
+      var catNameLow = (CATS[ti].name || '').toLowerCase();
+      for (var tj = 0; tj < rule.targetCats.length; tj++) {
+        if (catNameLow.indexOf(rule.targetCats[tj]) >= 0) {
+          targetCat = CATS[ti];
+          break;
+        }
+      }
+      if (targetCat) break;
+    }
+    if (!targetCat) return;
+
+    CATS.forEach(function(cat) {
+      if (cat === targetCat) return;
+      var toMove = [];
+      cat.courses = cat.courses.filter(function(c) {
+        var testStr = (c.name || '') + ' ' + (c.cat || '');
+        if (rule.match.test(testStr)) {
+          toMove.push(c);
+          return false;
+        }
+        return true;
+      });
+      toMove.forEach(function(c) {
+        var exists = targetCat.courses.some(function(ec) { return ec.file === c.file; });
+        if (!exists) targetCat.courses.push(c);
+      });
+    });
+  });
+
+  // Sort CATS by sectionOrder
+  CATS.sort(function(a, b) {
+    var aName = (a.name || '').toLowerCase();
+    var bName = (b.name || '').toLowerCase();
+    var aIdx = 999, bIdx = 999;
+    for (var si = 0; si < sectionOrder.length; si++) {
+      if (aName.indexOf(sectionOrder[si]) >= 0 && aIdx === 999) aIdx = si;
+      if (bName.indexOf(sectionOrder[si]) >= 0 && bIdx === 999) bIdx = si;
+    }
+    // Special sections (like "Notícias") always go first
+    if (a.isSpecial && !b.isSpecial) return -1;
+    if (!a.isSpecial && b.isSpecial) return 1;
+    return aIdx - bIdx;
+  });
 
   CATS.forEach(function(cat, ci) {
     if (!cat.courses.length && !cat.soon.length) return;
