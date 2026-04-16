@@ -3872,6 +3872,25 @@ var MA_COURSES = [
     color: '#4338ca',
     addedTs: 1776358990053,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/lpw.jpg',
+    id: 'lpw',
+    name: 'Estratégias de Lançamento de Produtos Digitais',
+    desc: 'Aprenda a criar campanhas que geram picos de faturamento em curto prazo.',
+    file: 'lancamento-produtos.html',
+    cat: 'Marketing & Vendas',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'LP_HENRY_2026_MASTER',
+    ak: 'lp_auth',
+    storagePrefix: 'lp_',
+    icon: '📢',
+    color: '#ea580c',
+    addedTs: 1776358996121,
+    active: true
   }
 ];
 var MA_CATS = [
