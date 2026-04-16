@@ -2819,7 +2819,7 @@ var MA_COURSES = [
     addedTs: 1776024642034,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/pd.jpg',
     id: 'pd',
     name: 'Produtividade Inteligente e Gestão do Tempo',
@@ -2836,7 +2836,7 @@ var MA_COURSES = [
     icon: '🏆',
     color: '#2E7D32',
     free: true,
-    addedTs: 1776290005053,
+    addedTs: 1776372267962,
     active: true
   },
       {
