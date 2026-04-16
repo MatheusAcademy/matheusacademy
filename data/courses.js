@@ -3625,6 +3625,25 @@ var MA_COURSES = [
     color: '#b45309',
     addedTs: 1776358871433,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/gt.jpg',
+    id: 'gt',
+    name: 'Geopolítica da Tecnologia: Big Techs e Poder Global',
+    desc: 'Analise como empresas como Google, Apple e Microsoft influenciam governos, economias e até eleições, atuando como verdadeiros agentes de poder.',
+    file: 'geopolitica-tecnologia.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'GT_HENRY_2026_MASTER',
+    ak: 'gt_auth',
+    storagePrefix: 'gt_',
+    icon: '📰',
+    color: '#7c3aed',
+    addedTs: 1776358876162,
+    active: true
   }
 ];
 var MA_CATS = [
