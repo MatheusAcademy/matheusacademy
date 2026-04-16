@@ -4056,7 +4056,9 @@ function swTab(n){
 // ══════════════════════════════════════════════════════════════
 
 var _homeListaCursos = [];
-var _homeCapaCache = {}; // cache de URLs de capas já verificadas
+var _homeCapaCache = {}; // cache de URLs de capas (preserva uploads locais)
+var _homeCapasLocais = {}; // capas trocadas localmente (NUNCA sobrescrever)
+var _homeUploadCount = 0; // contador de uploads feitos nesta sessão
 
 async function homeListaCarregar() {
   var c = g();
@@ -4079,22 +4081,37 @@ async function homeListaCarregar() {
     return;
   }
 
-  // Buscar capas existentes no GitHub (em paralelo)
-  _homeCapaCache = {};
+  // Buscar capas do GitHub — MAS preservar capas trocadas localmente
   var cfg = g();
   try {
-    var capasRes = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/assets/capas', { headers: gh() });
+    var capasRes = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/assets/capas?t=' + Date.now(), { headers: gh(), cache: 'no-store' });
     if (capasRes.ok) {
       var capasFiles = await capasRes.json();
+      // Prioridade: .jpg > .png > outros (para pegar o mais recente)
+      var capasMap = {};
       capasFiles.forEach(function(f) {
-        // Extrair ID do arquivo (ex: "bc.jpg" → "bc", "ii.png" → "ii")
         var match = f.name.match(/^(.+)\.(jpg|jpeg|png|gif|webp)$/i);
         if (match) {
-          _homeCapaCache[match[1]] = 'https://raw.githubusercontent.com/' + cfg.o + '/' + cfg.r + '/main/' + f.path + '?t=' + Date.now();
+          var cid = match[1];
+          var ext = match[2].toLowerCase();
+          // Se já tem .jpg para este ID, pular .png (jpg é o formato do upload novo)
+          if (capasMap[cid] && capasMap[cid].ext === 'jpg' && ext !== 'jpg') return;
+          capasMap[cid] = { path: f.path, ext: ext, sha: f.sha };
         }
+      });
+      // Construir cache — usar API blob URL para evitar CDN cache do raw.githubusercontent.com
+      Object.keys(capasMap).forEach(function(cid) {
+        // NÃO sobrescrever capas trocadas localmente nesta sessão!
+        if (_homeCapasLocais[cid]) return;
+        _homeCapaCache[cid] = 'https://raw.githubusercontent.com/' + cfg.o + '/' + cfg.r + '/main/' + capasMap[cid].path + '?v=' + capasMap[cid].sha;
       });
     }
   } catch (e) { /* silencioso */ }
+
+  // Aplicar capas locais por cima (sempre ganham)
+  Object.keys(_homeCapasLocais).forEach(function(cid) {
+    _homeCapaCache[cid] = _homeCapasLocais[cid];
+  });
 
   homeListaRender();
 }
@@ -4190,33 +4207,107 @@ async function hlCapaUpload(id, input) {
   var wrap = document.querySelector('#hl-' + id + ' .hl-capa-wrap');
   if (!wrap) return;
 
-  // Mostrar preview imediato
+  // Mostrar preview imediato (blob local — funciona sem internet)
   var preview = URL.createObjectURL(file);
   var imgTag = wrap.querySelector('img');
   if (imgTag) {
     imgTag.src = preview;
   } else {
     var ph = wrap.querySelector('.hl-placeholder');
-    if (ph) ph.outerHTML = '<img src="' + preview + '" alt="Preview">';
+    if (ph) ph.outerHTML = '<img src="' + preview + '" alt="Preview" style="width:100%;height:100%;object-fit:cover">';
   }
+
+  // Marcar visualmente que está enviando
+  wrap.style.opacity = '0.5';
+  wrap.style.pointerEvents = 'none';
+  var overlayEl = wrap.querySelector('.hl-capa-overlay');
+  if (overlayEl) { overlayEl.style.opacity = '1'; overlayEl.innerHTML = '<span>⏳</span><small>Enviando...</small>'; }
 
   // Upload para GitHub
   try {
-    wrap.style.opacity = '0.5';
-    wrap.style.pointerEvents = 'none';
-    await uploadCapa(file, id);
+    var resultado = await uploadCapa(file, id);
+
+    // ═══ SUCESSO: salvar no cache LOCAL (nunca será sobrescrito por refresh) ═══
+    _homeCapasLocais[id] = preview;
+    _homeCapaCache[id] = preview;
+    _homeUploadCount++;
+
     wrap.style.opacity = '1';
     wrap.style.pointerEvents = '';
-    _homeCapaCache[id] = preview; // atualizar cache
+    if (overlayEl) { overlayEl.style.opacity = '0'; overlayEl.innerHTML = '<span>📷</span><small>Trocar Capa</small>'; }
 
-    // Feedback visual
+    // Feedback visual forte e claro
+    wrap.style.borderColor = '#22c55e';
+    wrap.style.boxShadow = '0 0 12px rgba(34,197,94,.4)';
+    setTimeout(function() { wrap.style.borderColor = ''; wrap.style.boxShadow = ''; }, 3000);
+
+    // Status de sucesso
+    var editArea = el('hl-edit-' + id);
     var st = el('hl-status-' + id);
-    if (st) { st.className = 'hl-status ok'; st.textContent = '✅ Capa atualizada!'; st.style.display = 'inline-block'; setTimeout(function() { st.style.display = 'none'; }, 3000); }
+    if (!st) {
+      // Criar elemento de status se não existe (fora da área de edição)
+      var btnsDiv = document.querySelector('#hl-' + id + ' .hl-btns');
+      if (btnsDiv) {
+        var newSt = document.createElement('div');
+        newSt.className = 'hl-status ok';
+        newSt.id = 'hl-status-' + id;
+        newSt.textContent = '✅ Capa ' + _homeUploadCount + ' enviada!';
+        newSt.style.display = 'inline-block';
+        btnsDiv.parentNode.insertBefore(newSt, btnsDiv.nextSibling);
+        st = newSt;
+      }
+    } else {
+      st.className = 'hl-status ok';
+      st.textContent = '✅ Capa enviada! (' + _homeUploadCount + ' nesta sessão)';
+      st.style.display = 'inline-block';
+    }
+    setTimeout(function() { if (st) st.style.display = 'none'; }, 5000);
+
+    // Atualizar também o coverImg no courses.js para o novo arquivo
+    hlAtualizarCoverImg(id);
+
   } catch (err) {
     wrap.style.opacity = '1';
     wrap.style.pointerEvents = '';
-    alert('❌ Erro ao subir capa: ' + err.message);
+    if (overlayEl) { overlayEl.style.opacity = '0'; overlayEl.innerHTML = '<span>📷</span><small>Trocar Capa</small>'; }
+    wrap.style.borderColor = '#ef4444';
+    wrap.style.boxShadow = '0 0 12px rgba(239,68,68,.4)';
+
+    // Reverter preview para a imagem anterior
+    var oldUrl = _homeCapaCache[id];
+    if (oldUrl && imgTag) imgTag.src = oldUrl;
+
+    alert('❌ ERRO ao enviar capa para "' + id + '": ' + err.message + '\n\nVerifique o token e a conexão.');
+    setTimeout(function() { wrap.style.borderColor = ''; wrap.style.boxShadow = ''; }, 3000);
   }
+}
+
+// Atualizar o campo coverImg no courses.js para apontar para o novo .jpg
+async function hlAtualizarCoverImg(id) {
+  try {
+    var c = g();
+    var _ts = '?t=' + Date.now();
+    var hd = gh(); hd['If-None-Match'] = '';
+    var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js' + _ts, { headers: hd, cache: 'no-store' });
+    if (!res.ok) return;
+    var fd = await res.json();
+    var content = b64d(fd.content);
+    var sha = fd.sha;
+
+    var idEsc = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var novoPath = 'assets/capas/' + id + '.jpg';
+
+    // Atualizar coverImg dentro do bloco do curso (regex seguro [^}])
+    var re = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][^}]*?coverImg:\\s*['\"])[^'\"]*(['\"])");
+    var novo = content.replace(re, '$1' + novoPath + '$2');
+
+    if (novo !== content) {
+      await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js', {
+        method: 'PUT', headers: gh(),
+        body: JSON.stringify({ message: 'capa: ' + id + ' → ' + novoPath, content: b64e(novo), sha: sha })
+      });
+    }
+  } catch (e) { /* silencioso — a capa já foi enviada, isso é secundário */ }
 }
 
 async function hlSalvar(id) {
@@ -4306,19 +4397,15 @@ async function hlSalvar(id) {
   }
 }
 
-// Auto-carregar ao conectar + auto-atualização periódica
+// Auto-carregar ao conectar (SEM auto-refresh destrutivo!)
 (function() {
   var _hlAutoLoaded = false;
-  // Carregar automaticamente se token já estiver salvo
   setTimeout(function() {
     var c = g();
     if (c.t && c.o && c.r && !_hlAutoLoaded) { _hlAutoLoaded = true; homeListaCarregar(); }
   }, 800);
-  // Auto-atualização a cada 5 minutos (300000ms)
-  setInterval(function() {
-    var c = g();
-    if (c.t && c.o && c.r) { homeListaCarregar(); }
-  }, 300000);
+  // NÃO usar setInterval para auto-refresh — isso destrói previews de capas
+  // O usuário atualiza manualmente clicando "🔄 Atualizar" quando quiser
 })();
 
 // ── EDITOR DE CURSOS ──
