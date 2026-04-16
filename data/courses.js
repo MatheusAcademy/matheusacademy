@@ -3625,7 +3625,7 @@ var MA_COURSES = [
     addedTs: 1776370051361,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/gt.jpg',
     id: 'gt',
     name: 'Geopolítica da Tecnologia: Big Techs e Poder Global',
@@ -3641,7 +3641,7 @@ var MA_COURSES = [
     storagePrefix: 'gt_',
     icon: '📰',
     color: '#7c3aed',
-    addedTs: 1776370022473,
+    addedTs: 1776370735154,
     active: true
   },
     {
