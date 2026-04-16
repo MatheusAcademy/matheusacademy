@@ -3910,6 +3910,25 @@ var MA_COURSES = [
     color: '#dc2626',
     addedTs: 1776359002032,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rmw.jpg',
+    id: 'rmw',
+    name: 'Revoluções que Mudaram o Mundo',
+    desc: 'Analise os eventos que romperam sistemas inteiros — como a Revolução Francesa, Industrial e Russa — e seus impactos atuais.',
+    file: 'revolucoes-mundo.html',
+    cat: 'História',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'RM_HENRY_2026_MASTER',
+    ak: 'rm_auth',
+    storagePrefix: 'rm_',
+    icon: '📜',
+    color: '#b91c1c',
+    addedTs: 1776359008036,
+    active: true
   }
 ];
 var MA_CATS = [
