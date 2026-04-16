@@ -3549,6 +3549,25 @@ var MA_COURSES = [
     color: '#be123c',
     addedTs: 1776358851494,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ht.jpg',
+    id: 'ht',
+    name: 'História da Tecnologia e das Grandes Inovações',
+    desc: 'Veja como invenções transformaram completamente a sociedade, da prensa ao mundo digital.',
+    file: 'historia-tecnologia.html',
+    cat: 'História',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'HT_HENRY_2026_MASTER',
+    ak: 'ht_auth',
+    storagePrefix: 'ht_',
+    icon: '📜',
+    color: '#0369a1',
+    addedTs: 1776358856622,
+    active: true
   }
 ];
 var MA_CATS = [
