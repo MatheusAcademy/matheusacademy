@@ -714,7 +714,7 @@ var MA_COURSES = [
     addedTs: 1775777114228,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/dr.jpg',
     id: 'dr',
     name: 'Noções de Direito para a Vida Real',
@@ -724,13 +724,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'DR_HENRY_2026_MASTER',
     ak: 'dr_auth',
     storagePrefix: 'dr_',
     icon: '⚖️',
     color: '#00b4d8',
-    addedTs: 1775830986041,
+    addedTs: 1776372315045,
     active: true
   },
   {
