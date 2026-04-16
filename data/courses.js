@@ -3663,6 +3663,25 @@ var MA_COURSES = [
     color: '#e11d48',
     addedTs: 1776358881203,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/rs.jpg',
+    id: 'rs',
+    name: 'A Nova Rota da Seda (Belt and Road Initiative)',
+    desc: 'Descubra como a China está conectando o mundo através de investimentos bilionários em infraestrutura e como isso redefine o comércio e o poder global.',
+    file: 'nova-rota-da-seda.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'RS_HENRY_2026_MASTER',
+    ak: 'rs_auth',
+    storagePrefix: 'rs_',
+    icon: '📰',
+    color: '#d4380d',
+    addedTs: 1776358885680,
+    active: true
   }
 ];
 var MA_CATS = [
