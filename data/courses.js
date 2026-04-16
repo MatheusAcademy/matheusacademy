@@ -1098,7 +1098,7 @@ var MA_COURSES = [
     addedTs: 1775831052985,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ca.jpg',
     id: 'ca',
     name: 'Grandes Civilizações Antigas',
@@ -1108,13 +1108,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'CA_HENRY_2026_MASTER',
     ak: 'ca_auth',
     storagePrefix: 'ca_',
     icon: '📜',
     color: '#c9a227',
-    addedTs: 1775831057882,
+    addedTs: 1776372353562,
     active: true
   },
   {
