@@ -1500,7 +1500,7 @@ var MA_COURSES = [
     addedTs: 1775832757684,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/if.jpg',
     id: 'if',
     name: 'Inflação na Prática: Como Ela Afeta Seu Dinheiro',
@@ -1516,7 +1516,7 @@ var MA_COURSES = [
     storagePrefix: 'if_',
     icon: '💰',
     color: '#dc2626',
-    addedTs: 1776369998164,
+    addedTs: 1776370723438,
     active: true
   },
     {
