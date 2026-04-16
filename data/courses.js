@@ -829,13 +829,13 @@ var MA_COURSES = [
     addedTs: 1776372303138,
     active: true
   },
-      {
+        {
     coverImg: 'assets/capas/cr.jpg',
     id: 'cr',
-    name: 'Cristologia',
-    desc: 'Estudo profundo da pessoa e obra de Jesus Cristo como Filho de Deus',
-    file: '09-cristologia.html',
-    cat: 'Bíblia / Teologia',
+    name: 'Corrupção no Brasil: História e Mecanismos',
+    desc: 'Analise como a corrupção se estruturou historicamente no Brasil, seus mecanismos políticos e institucionais, seus impactos econômicos e sociais e os desafios para o combate à impunidade.',
+    file: 'corrupcao-brasil.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
     modules: 3,
     topics: 9,
     hours: 2,
@@ -843,10 +843,9 @@ var MA_COURSES = [
     salt: 'CR_HENRY_2026_MASTER',
     ak: 'cr_auth',
     storagePrefix: 'cr_',
-    icon: '✝️',
-    color: '#AD1457',
-    free: true,
-    addedTs: 1776289835343,
+    icon: '📰',
+    color: '#780000',
+    addedTs: 1776372436173,
     active: true
   },
     {
