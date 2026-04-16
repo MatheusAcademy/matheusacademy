@@ -188,7 +188,51 @@ textarea{resize:vertical;min-height:54px}
 .capa-lightbox-close:hover{background:var(--red);border-color:var(--red);transform:scale(1.1)}
 @keyframes lbFadeIn{from{opacity:0}to{opacity:1}}
 
-@media(max-width:580px){.or,.row,.mg{grid-template-columns:1fr;flex-direction:column}.oc{flex-direction:column}.ar{flex-direction:column;align-items:flex-start}header{padding:10px 12px}main{padding:18px 10px 60px}.tabs{flex-wrap:wrap}}
+/* ── CAPAS POR CURSO (novo fluxo) ── */
+.capas-busca{margin-bottom:14px}
+.capas-busca input{width:100%;font-size:13px;padding:10px 14px;background:var(--card);border:1px solid var(--brd);border-radius:10px;color:var(--txt)}
+.capas-busca input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(59,130,246,.13)}
+.capas-busca input::placeholder{color:var(--t3)}
+.capas-curso-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;max-height:650px;overflow-y:auto;padding:4px}
+.capas-curso-card{background:var(--card);border:2px solid var(--brd);border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s;position:relative}
+.capas-curso-card:hover{border-color:var(--acc);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.capas-curso-card .ccc-thumb{width:100%;aspect-ratio:3/4;background:#0a0e18;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.capas-curso-card .ccc-thumb img{width:100%;height:100%;object-fit:cover}
+.capas-curso-card .ccc-thumb .ccc-placeholder{font-size:48px;opacity:.3}
+.capas-curso-card .ccc-thumb .ccc-hover-overlay{position:absolute;inset:0;background:rgba(59,130,246,.75);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;opacity:0;transition:.2s}
+.capas-curso-card:hover .ccc-hover-overlay{opacity:1}
+.capas-curso-card .ccc-hover-overlay span{color:#fff;font-size:28px}
+.capas-curso-card .ccc-hover-overlay small{color:rgba(255,255,255,.9);font-size:11px;font-weight:700}
+.capas-curso-card .ccc-body{padding:10px}
+.capas-curso-card .ccc-name{font-size:12px;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.capas-curso-card .ccc-id{font-size:10px;color:var(--t3);font-family:var(--mono)}
+.capas-curso-card .ccc-status{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;display:inline-block;margin-top:4px}
+.ccc-status.tem{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.25)}
+.ccc-status.sem{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.25)}
+
+/* Modal editar capa */
+.capa-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:9000;display:none;align-items:center;justify-content:center}
+.capa-modal-overlay.on{display:flex}
+.capa-modal{background:var(--sf);border:1px solid var(--brd);border-radius:16px;width:min(480px,92vw);max-height:90vh;overflow-y:auto;padding:24px;position:relative;animation:fadein .2s}
+.capa-modal-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;background:var(--card);border:1px solid var(--brd);color:var(--txt);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;z-index:1}
+.capa-modal-close:hover{background:var(--red);border-color:var(--red)}
+.capa-modal-title{font-size:16px;font-weight:800;color:var(--txt);margin-bottom:4px;padding-right:36px}
+.capa-modal-sub{font-size:11px;color:var(--t3);font-family:var(--mono);margin-bottom:16px}
+.capa-modal-current{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px}
+.capa-modal-preview{width:160px;flex-shrink:0;aspect-ratio:3/4;border-radius:10px;border:2px solid var(--brd);overflow:hidden;background:#0a0e18;display:flex;align-items:center;justify-content:center}
+.capa-modal-preview img{width:100%;height:100%;object-fit:cover}
+.capa-modal-preview .cmp-placeholder{font-size:48px;opacity:.25}
+.capa-modal-info{flex:1;font-size:11px;color:var(--t2);line-height:1.7}
+.capa-modal-info b{color:var(--txt);font-size:12px}
+.capa-modal-dropzone{border:2px dashed var(--brd);border-radius:10px;padding:20px 16px;text-align:center;cursor:pointer;transition:.2s;position:relative;margin-bottom:14px}
+.capa-modal-dropzone:hover,.capa-modal-dropzone.drag{border-color:var(--acc);background:rgba(59,130,246,.04)}
+.capa-modal-dropzone.tem{border-color:var(--grn);border-style:solid;background:rgba(34,197,94,.04)}
+.capa-modal-dropzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.capa-modal-new-preview{max-width:160px;aspect-ratio:3/4;object-fit:cover;border-radius:8px;border:2px solid var(--grn);margin:8px auto 0;display:none}
+.capa-modal-actions{display:flex;gap:8px;margin-top:4px}
+.capa-modal-actions .btnp{flex:1}
+
+@media(max-width:580px){.or,.row,.mg{grid-template-columns:1fr;flex-direction:column}.oc{flex-direction:column}.ar{flex-direction:column;align-items:flex-start}header{padding:10px 12px}main{padding:18px 10px 60px}.tabs{flex-wrap:wrap}.capas-curso-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}}
 
 /* ── ALUNOS ── */
 .al-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
@@ -454,7 +498,7 @@ textarea{resize:vertical;min-height:54px}
     <div class="tab" onclick="swTab('cp')">🎟️ Cupons</div>
     <div class="tab" onclick="swTab('fe')">⚙️ Ferramentas</div>
     <div class="tab" onclick="swTab('lt')">📦 Lote HTMLs</div>
-    <div class="tab" onclick="swTab('cl')">🖼️ Capas Lote</div>
+    <div class="tab" onclick="swTab('cl')">🖼️ Capas</div>
   </div>
 
   <!-- TAB UPLOAD -->
@@ -1797,116 +1841,78 @@ textarea{resize:vertical;min-height:54px}
   </div>
 
   <!-- ══════════════════════════════════════════
-       TAB CL — CAPAS EM LOTE (com OCR inteligente)
+       TAB CL — CAPAS POR CURSO (clique no curso para editar)
   ══════════════════════════════════════════ -->
   <div class="tc" id="tc-cl">
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
         <div>
-          <div style="font-size:15px;font-weight:800;color:var(--txt)">🖼️ Upload de Capas em Lote — com OCR Inteligente</div>
-          <div style="font-size:11px;color:var(--t2);margin-top:2px">Suba as capas e o sistema le o texto de cada imagem automaticamente, associando com o titulo do curso correto</div>
+          <div style="font-size:15px;font-weight:800;color:var(--txt)">🖼️ Capas dos Cursos</div>
+          <div style="font-size:11px;color:var(--t2);margin-top:2px">Clique no curso para trocar ou adicionar a capa. Simples e direto!</div>
         </div>
+        <button class="btns" onclick="capaCursoCarregar()" style="white-space:nowrap">🔄 Atualizar</button>
       </div>
 
-      <!-- Explicacao do fluxo -->
-      <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:10px;padding:14px;margin-bottom:18px">
-        <div style="font-size:11px;font-weight:700;color:var(--acc2);margin-bottom:8px">Como funciona:</div>
-        <div style="font-size:11px;color:var(--t2);line-height:1.8">
-          <span style="color:#86efac;font-weight:700">1.</span> Suba as capas (ate 300 imagens)<br>
-          <span style="color:#86efac;font-weight:700">2.</span> O sistema le o texto de cada imagem via OCR (Tesseract.js)<br>
-          <span style="color:#86efac;font-weight:700">3.</span> Compara o texto lido com os titulos dos cursos cadastrados no <code>courses.js</code> e dos HTMLs do lote<br>
-          <span style="color:#86efac;font-weight:700">4.</span> Mostra o resultado para voce confirmar — edite se precisar<br>
-          <span style="color:#86efac;font-weight:700">5.</span> Clique em Publicar para subir todas as capas sincronizadas
-        </div>
+      <!-- Stats rapidos -->
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+        <div id="capas-stat-total" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:var(--acc2);font-weight:700"></div>
+        <div id="capas-stat-com" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:#86efac;font-weight:700"></div>
+        <div id="capas-stat-sem" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:#fca5a5;font-weight:700"></div>
       </div>
 
-      <!-- Info: cursos disponiveis para match -->
-      <div id="capas-cursos-info" style="display:none;margin-bottom:14px;padding:10px 14px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:9px">
-        <div style="font-size:10px;font-weight:700;color:#86efac;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Cursos disponiveis para sincronizar:</div>
-        <div id="capas-cursos-chips" style="display:flex;flex-wrap:wrap;gap:4px"></div>
+      <!-- Busca -->
+      <div class="capas-busca">
+        <input type="text" id="capas-busca-input" placeholder="Buscar curso por nome ou ID..." oninput="capaCursoFiltrar()">
       </div>
 
-      <!-- Dropzone capas -->
-      <div id="capas-dz" style="border:2px dashed var(--brd);border-radius:12px;padding:36px 20px;text-align:center;cursor:pointer;transition:.2s;position:relative;margin-bottom:18px"
-        ondragover="event.preventDefault();this.style.borderColor='var(--acc)';this.style.background='rgba(59,130,246,.04)'"
-        ondragleave="this.style.borderColor='var(--brd)';this.style.background='transparent'"
-        ondrop="capaLoteDrop(event)">
-        <input type="file" accept="image/png,image/jpeg,image/jpg,image/webp" multiple style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%" onchange="capaLoteChosen(this.files)">
-        <div style="font-size:36px;margin-bottom:8px">🖼️</div>
-        <div style="font-size:15px;font-weight:700;color:var(--txt)">Arraste ate 300 imagens aqui</div>
-        <div style="font-size:11px;color:var(--t2);margin-top:4px">PNG, JPG ou WebP — proporcao 3:4 recomendada (300x400px)</div>
-        <div id="capas-count" style="font-size:12px;color:var(--grn);font-weight:700;margin-top:8px;display:none"></div>
+      <!-- Grid de cursos -->
+      <div id="capas-curso-grid" class="capas-curso-grid">
+        <div style="color:var(--t3);font-size:12px;padding:16px;text-align:center;grid-column:1/-1">Clique em Atualizar para carregar os cursos...</div>
       </div>
 
-      <!-- Progresso OCR -->
-      <div id="ocr-prog-wrap" style="display:none;margin-bottom:18px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-          <div class="sp" style="border-top-color:var(--acc2)"></div>
-          <span id="ocr-prog-label" style="font-size:12px;color:var(--acc2);font-weight:700">Lendo texto das imagens via OCR...</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t3);margin-bottom:4px">
-          <span id="ocr-prog-detail">Preparando...</span>
-          <span id="ocr-prog-pct">0%</span>
-        </div>
-        <div style="height:5px;background:var(--brd);border-radius:3px;overflow:hidden">
-          <div id="ocr-prog-bar" style="height:100%;background:linear-gradient(90deg,#7c3aed,#a78bfa);border-radius:3px;transition:width .3s;width:0%"></div>
-        </div>
-      </div>
-
-      <!-- Resultado do matching — grid de confirmacao -->
-      <div id="capas-match-wrap" style="display:none;margin-bottom:18px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-          <div>
-            <div style="font-size:13px;font-weight:800;color:#86efac">Resultado da Sincronizacao Automatica</div>
-            <div style="font-size:10px;color:var(--t2);margin-top:2px">Confira se cada capa esta associada ao curso correto. Edite o ID se precisar.</div>
-          </div>
-          <div style="display:flex;gap:6px">
-            <button class="btns" onclick="capasRerunOCR()" style="font-size:10px">🔄 Re-escanear OCR</button>
-            <button class="btns" onclick="capasAutoMatch()" style="font-size:10px">Auto-match por nome</button>
-          </div>
-        </div>
-
-        <!-- Stats rapidos -->
-        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-          <div id="match-stat-ok" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:#86efac;font-weight:700"></div>
-          <div id="match-stat-manual" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:#fcd34d;font-weight:700"></div>
-          <div id="match-stat-dupes" style="display:none;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:#c4b5fd;font-weight:700"></div>
-          <div id="match-stat-total" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:var(--acc2);font-weight:700"></div>
-        </div>
-
-        <!-- Area de conflitos / duplicatas -->
-        <div id="capas-dupes-wrap" style="display:none;margin-bottom:18px">
-          <div style="background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);border-radius:12px;padding:16px;margin-bottom:6px">
-            <div style="font-size:12px;font-weight:800;color:#c4b5fd;margin-bottom:4px">Capas duplicadas detectadas — escolha qual usar</div>
-            <div style="font-size:10px;color:var(--t2);margin-bottom:14px">Duas ou mais capas foram associadas ao mesmo curso. Clique na que voce quer usar como capa principal. A outra sera descartada.</div>
-            <div id="capas-dupes-list"></div>
-          </div>
-        </div>
-
-        <!-- Grid de cards -->
-        <div id="capas-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;max-height:650px;overflow-y:auto;padding:4px"></div>
-      </div>
-
-      <!-- Progresso upload -->
-      <div id="capas-prog-wrap" style="display:none;margin-bottom:16px">
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t2);margin-bottom:5px">
-          <span id="capas-prog-label">Subindo capas...</span>
-          <span id="capas-prog-pct">0/0</span>
-        </div>
-        <div style="height:6px;background:var(--brd);border-radius:3px;overflow:hidden">
-          <div id="capas-prog-bar" style="height:100%;background:linear-gradient(90deg,#22c55e,#86efac);border-radius:3px;transition:width .3s;width:0%"></div>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btnp" id="capas-pub-btn" onclick="capaLotePublicar()" disabled style="flex:1;min-width:200px;background:#22c55e">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
-          Confirmar e Subir Capas Sincronizadas
-        </button>
-        <button class="btns" id="capas-retry-btn" onclick="capaRetentarErros()" style="background:rgba(239,68,68,.15);color:#fca5a5;border-color:rgba(239,68,68,.3);display:none">🔄 Retentar erros</button>
-        <button class="btns" onclick="capaLoteLimpar()">Limpar tudo</button>
-      </div>
       <div class="res" id="capas-res"></div>
+    </div>
+  </div>
+
+  <!-- MODAL EDITAR CAPA -->
+  <div class="capa-modal-overlay" id="capaModalOverlay" onclick="if(event.target===this)capaModalFechar()">
+    <div class="capa-modal">
+      <button class="capa-modal-close" onclick="capaModalFechar()">X</button>
+      <div class="capa-modal-title" id="capaModalTitle">Editar Capa</div>
+      <div class="capa-modal-sub" id="capaModalSub">id: ---</div>
+
+      <div class="capa-modal-current">
+        <div class="capa-modal-preview" id="capaModalPreview">
+          <span class="cmp-placeholder">🖼️</span>
+        </div>
+        <div class="capa-modal-info" id="capaModalInfo">
+          <b>Capa atual</b><br>
+          Nenhuma capa enviada ainda.
+        </div>
+      </div>
+
+      <!-- Nova capa -->
+      <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Nova capa</div>
+      <div class="capa-modal-dropzone" id="capaModalDZ"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="capaModalDrop(event)">
+        <input type="file" id="capaModalFile" accept="image/png,image/jpeg,image/jpg,image/webp" onchange="capaModalFileChosen(this)">
+        <div style="font-size:24px;margin-bottom:4px">📸</div>
+        <div id="capaModalDZTxt" style="font-size:12px;font-weight:700;color:var(--txt)">Arraste a nova capa aqui ou clique</div>
+        <div style="font-size:10px;color:var(--t3);margin-top:2px">PNG, JPG ou WebP — proporcao 3:4 recomendada</div>
+      </div>
+      <img id="capaModalNewPreview" class="capa-modal-new-preview" src="" alt="nova capa">
+      <div id="capaModalFileName" style="font-size:10px;color:var(--grn);font-family:var(--mono);text-align:center;margin-bottom:8px;display:none"></div>
+
+      <div class="capa-modal-actions">
+        <button class="btnp" id="capaModalSaveBtn" onclick="capaModalSalvar()" disabled style="background:#22c55e">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+          Salvar Capa
+        </button>
+        <button class="btns" onclick="capaModalFechar()">Cancelar</button>
+      </div>
+      <div class="res" id="capaModalRes" style="margin-top:10px"></div>
     </div>
   </div>
 
@@ -8074,8 +8080,232 @@ function capaLightboxClose() {
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') capaLightboxClose();
+  if (e.key === 'Escape') { capaLightboxClose(); capaModalFechar(); }
 });
+
+// ══════════════════════════════════════════
+// CAPAS POR CURSO — Novo fluxo simplificado
+// ══════════════════════════════════════════
+
+var _capaCursos = []; // cursos carregados para a aba de capas
+var _capaModalCursoId = ''; // curso sendo editado no modal
+var _capaModalFile = null; // arquivo selecionado no modal
+
+async function capaCursoCarregar() {
+  var c = g();
+  if (!c.t) { el('capas-curso-grid').innerHTML = '<div style="color:var(--t3);font-size:12px;padding:16px;text-align:center;grid-column:1/-1">Configure o token GitHub primeiro.</div>'; return; }
+
+  el('capas-curso-grid').innerHTML = '<div style="color:var(--acc2);font-size:12px;padding:16px;text-align:center;grid-column:1/-1"><div class="sp" style="border-top-color:var(--acc2);display:inline-block;margin-right:8px;vertical-align:middle"></div>Carregando cursos...</div>';
+
+  try {
+    // Carregar courses.js se ainda nao tiver
+    if (!_cursosCarregados || !_cursosCarregados.length) {
+      await loadCoursesData();
+      if (typeof carregarCursosEditor === 'function') await carregarCursosEditor();
+    }
+
+    _capaCursos = (_cursosCarregados || []).slice();
+
+    // Verificar quais cursos tem capa no GitHub
+    var capaCheckPromises = _capaCursos.map(function(curso) {
+      var capaPath = curso.coverImg || ('assets/capas/' + curso.id + '.jpg');
+      var url = 'https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/' + capaPath;
+      return fetch(url, { headers: gh() })
+        .then(function(r) {
+          curso._temCapa = r.ok;
+          if (r.ok) return r.json().then(function(d) { curso._capaUrl = 'https://raw.githubusercontent.com/' + c.o + '/' + c.r + '/main/' + capaPath + '?t=' + Date.now(); });
+        })
+        .catch(function() { curso._temCapa = false; });
+    });
+
+    await Promise.all(capaCheckPromises);
+    capaCursoRenderGrid();
+  } catch (e) {
+    el('capas-curso-grid').innerHTML = '<div style="color:#fca5a5;font-size:12px;padding:16px;text-align:center;grid-column:1/-1">Erro ao carregar: ' + escH(e.message) + '</div>';
+  }
+}
+
+function capaCursoRenderGrid(filtro) {
+  var grid = el('capas-curso-grid');
+  var cursos = _capaCursos;
+
+  if (filtro) {
+    var f = filtro.toLowerCase();
+    cursos = cursos.filter(function(c) {
+      return c.id.toLowerCase().indexOf(f) !== -1 || (c.name || '').toLowerCase().indexOf(f) !== -1;
+    });
+  }
+
+  if (!cursos.length) {
+    grid.innerHTML = '<div style="color:var(--t3);font-size:12px;padding:16px;text-align:center;grid-column:1/-1">Nenhum curso encontrado.</div>';
+    return;
+  }
+
+  // Stats
+  var comCapa = _capaCursos.filter(function(c) { return c._temCapa; }).length;
+  var semCapa = _capaCursos.length - comCapa;
+  el('capas-stat-total').textContent = 'Total: ' + _capaCursos.length + ' cursos';
+  el('capas-stat-com').textContent = 'Com capa: ' + comCapa;
+  el('capas-stat-sem').textContent = 'Sem capa: ' + semCapa;
+
+  grid.innerHTML = cursos.map(function(c) {
+    var thumb = c._temCapa && c._capaUrl
+      ? '<img src="' + escH(c._capaUrl) + '" alt="' + escH(c.name) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'">'
+        + '<span class="ccc-placeholder" style="display:none">🖼️</span>'
+      : '<span class="ccc-placeholder">🖼️</span>';
+
+    var statusCls = c._temCapa ? 'tem' : 'sem';
+    var statusTxt = c._temCapa ? 'Com capa' : 'Sem capa';
+
+    return '<div class="capas-curso-card" onclick="capaModalAbrir(\'' + escH(c.id) + '\')" title="Clique para editar a capa de ' + escH(c.name) + '">'
+      + '<div class="ccc-thumb">' + thumb
+      + '<div class="ccc-hover-overlay"><span>📸</span><small>Editar capa</small></div>'
+      + '</div>'
+      + '<div class="ccc-body">'
+      + '<div class="ccc-name">' + (c.icon || '📚') + ' ' + escH(c.name) + '</div>'
+      + '<div class="ccc-id">id: ' + c.id + '</div>'
+      + '<span class="ccc-status ' + statusCls + '">' + statusTxt + '</span>'
+      + '</div></div>';
+  }).join('');
+}
+
+function capaCursoFiltrar() {
+  var val = el('capas-busca-input').value.trim();
+  capaCursoRenderGrid(val || null);
+}
+
+// ── Modal de edição de capa ──
+
+function capaModalAbrir(courseId) {
+  var curso = _capaCursos.find(function(c) { return c.id === courseId; });
+  if (!curso) return;
+
+  _capaModalCursoId = courseId;
+  _capaModalFile = null;
+
+  el('capaModalTitle').textContent = (curso.icon || '📚') + ' ' + curso.name;
+  el('capaModalSub').textContent = 'id: ' + curso.id + '  |  cat: ' + (curso.cat || '—');
+
+  // Preview atual
+  var previewEl = el('capaModalPreview');
+  if (curso._temCapa && curso._capaUrl) {
+    previewEl.innerHTML = '<img src="' + escH(curso._capaUrl) + '" alt="capa atual">';
+    el('capaModalInfo').innerHTML = '<b>Capa atual</b><br>'
+      + '<span style="color:#86efac">Capa encontrada no GitHub</span><br>'
+      + '<span style="font-size:10px;color:var(--t3)">Arquivo: assets/capas/' + curso.id + '.jpg</span><br><br>'
+      + '<span style="color:var(--t2)">Envie uma nova imagem abaixo para substituir a capa atual.</span>';
+  } else {
+    previewEl.innerHTML = '<span class="cmp-placeholder">🖼️</span>';
+    el('capaModalInfo').innerHTML = '<b>Sem capa</b><br>'
+      + '<span style="color:#fca5a5">Nenhuma capa encontrada</span><br>'
+      + '<span style="font-size:10px;color:var(--t3)">Arquivo esperado: assets/capas/' + curso.id + '.jpg</span><br><br>'
+      + '<span style="color:var(--t2)">Envie uma imagem abaixo para definir a capa deste curso.</span>';
+  }
+
+  // Reset campos
+  el('capaModalNewPreview').style.display = 'none';
+  el('capaModalFileName').style.display = 'none';
+  el('capaModalDZ').classList.remove('tem');
+  el('capaModalDZTxt').textContent = 'Arraste a nova capa aqui ou clique';
+  el('capaModalFile').value = '';
+  el('capaModalSaveBtn').disabled = true;
+  el('capaModalRes').className = 'res';
+  el('capaModalRes').innerHTML = '';
+
+  el('capaModalOverlay').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+
+function capaModalFechar() {
+  el('capaModalOverlay').classList.remove('on');
+  document.body.style.overflow = '';
+  _capaModalFile = null;
+  _capaModalCursoId = '';
+}
+
+function capaModalDrop(e) {
+  e.preventDefault();
+  el('capaModalDZ').classList.remove('drag');
+  if (e.dataTransfer.files && e.dataTransfer.files.length) {
+    capaModalSetFile(e.dataTransfer.files[0]);
+  }
+}
+
+function capaModalFileChosen(input) {
+  if (input.files && input.files.length) {
+    capaModalSetFile(input.files[0]);
+  }
+}
+
+function capaModalSetFile(file) {
+  if (!file || !file.type.startsWith('image/')) { alert('Selecione uma imagem (PNG, JPG ou WebP).'); return; }
+  _capaModalFile = file;
+
+  // Preview da nova imagem
+  var rd = new FileReader();
+  rd.onload = function(e) {
+    var prev = el('capaModalNewPreview');
+    prev.src = e.target.result;
+    prev.style.display = 'block';
+  };
+  rd.readAsDataURL(file);
+
+  el('capaModalDZ').classList.add('tem');
+  el('capaModalDZTxt').textContent = 'Imagem selecionada!';
+  el('capaModalFileName').textContent = file.name;
+  el('capaModalFileName').style.display = 'block';
+  el('capaModalSaveBtn').disabled = false;
+}
+
+async function capaModalSalvar() {
+  if (!_capaModalFile || !_capaModalCursoId) return;
+  var cfg = g();
+  if (!cfg.t) { alert('Configure o token GitHub primeiro.'); return; }
+
+  var btn = el('capaModalSaveBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="sp" style="border-top-color:#fff;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px"></div>Salvando...';
+  showRes('capaModalRes', 'ld', '<div class="sp"></div> Subindo capa para o GitHub...');
+
+  try {
+    await uploadCapa(_capaModalFile, _capaModalCursoId);
+    showRes('capaModalRes', 'ok', 'Capa salva com sucesso! Arquivo: assets/capas/' + _capaModalCursoId + '.jpg');
+    addAudit('🖼️ Capa atualizada: ' + _capaModalCursoId + '.jpg (via editor de capas)');
+
+    // Atualizar o curso na lista local
+    var curso = _capaCursos.find(function(c) { return c.id === _capaModalCursoId; });
+    if (curso) {
+      curso._temCapa = true;
+      curso._capaUrl = 'https://raw.githubusercontent.com/' + cfg.o + '/' + cfg.r + '/main/assets/capas/' + _capaModalCursoId + '.jpg?t=' + Date.now();
+    }
+
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg> Salvo!';
+
+    // Fechar modal após 1.5s e atualizar grid
+    setTimeout(function() {
+      capaModalFechar();
+      capaCursoRenderGrid(el('capas-busca-input').value.trim() || null);
+    }, 1500);
+
+  } catch (e) {
+    showRes('capaModalRes', 'er', 'Erro ao salvar: ' + escH(e.message));
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg> Salvar Capa';
+    btn.disabled = false;
+  }
+}
+
+// Auto-carregar ao trocar para aba de capas
+var _origSwTab = typeof swTab === 'function' ? swTab : null;
+// Intercept swTab para auto-carregar capas
+(function() {
+  var _swTabOrig = swTab;
+  swTab = function(n) {
+    _swTabOrig(n);
+    if (n === 'cl' && _capaCursos.length === 0) {
+      capaCursoCarregar();
+    }
+  };
+})();
 
 </script>
 
