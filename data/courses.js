@@ -1921,7 +1921,7 @@ var MA_COURSES = [
     addedTs: 1776024417561,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/hs.jpg',
     id: 'hs',
     name: 'Hábitos de Sucesso e Rotina de Resultado',
@@ -1938,7 +1938,7 @@ var MA_COURSES = [
     icon: '🏆',
     color: '#558B2F',
     free: true,
-    addedTs: 1776289995135,
+    addedTs: 1776372274214,
     active: true
   },
   {
