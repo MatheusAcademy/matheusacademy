@@ -3891,6 +3891,25 @@ var MA_COURSES = [
     color: '#ea580c',
     addedTs: 1776358996121,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ifw.jpg',
+    id: 'ifw',
+    name: 'Inflação na Prática: Como Ela Afeta Seu Dinheiro',
+    desc: 'Aprenda como a inflação impacta seu poder de compra e como se proteger.',
+    file: 'inflacao-pratica.html',
+    cat: 'Finanças & Economia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IF_HENRY_2026_MASTER',
+    ak: 'if_auth',
+    storagePrefix: 'if_',
+    icon: '💰',
+    color: '#dc2626',
+    addedTs: 1776359002032,
+    active: true
   }
 ];
 var MA_CATS = [
