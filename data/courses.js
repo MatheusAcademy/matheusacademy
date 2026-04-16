@@ -1268,7 +1268,7 @@ var MA_COURSES = [
     addedTs: 1775831114326,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/fn.jpg',
     id: 'fn',
     name: 'O Poder das Fake News na Política',
@@ -1284,7 +1284,7 @@ var MA_COURSES = [
     storagePrefix: 'fn_',
     icon: '📰',
     color: '#9b2226',
-    addedTs: 1775831116891,
+    addedTs: 1776372448431,
     active: true
   },
     {
