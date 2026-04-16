@@ -752,7 +752,7 @@ var MA_COURSES = [
     addedTs: 1775830988380,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/mf.jpg',
     id: 'mf',
     name: 'Mentalidade Forte e Disciplina Diária',
@@ -769,7 +769,7 @@ var MA_COURSES = [
     icon: '🏆',
     color: '#4A148C',
     free: true,
-    addedTs: 1776290009866,
+    addedTs: 1776372377046,
     active: true
   },
   {
