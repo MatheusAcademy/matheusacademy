@@ -1767,7 +1767,7 @@ var MA_COURSES = [
     addedTs: 1775832795864,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/bv.jpg',
     id: 'bv',
     name: 'Como Investir na Bolsa de Valores',
@@ -1783,7 +1783,7 @@ var MA_COURSES = [
     storagePrefix: 'bv_',
     icon: '💰',
     color: '#006d77',
-    addedTs: 1775832798441,
+    addedTs: 1776372453976,
     active: true
   },
   {
