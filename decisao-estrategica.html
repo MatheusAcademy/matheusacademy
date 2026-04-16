@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tomada de Decisão Estratégica — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23FFFFFF' font-family='Arial Black' font-weight='900' font-size='40'%3EM%3C/text%3E%3Cline x1='8' y1='50' x2='56' y2='50' stroke='%234A7EFF' stroke-width='2.5'/%3E%3Cline x1='8' y1='54' x2='56' y2='54' stroke='%234A7EFF' stroke-width='1.2' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = {
+  id: 'DE',
+  name: 'Tomada de Decisão Estratégica',
+  shortName: 'Decisão Estratégica',
+  cat: 'Negócios',
+  desc: 'Aprenda a decidir com precisão mesmo sob pressão e incerteza.',
+  salt: 'DE_HENRY_2026_MASTER',
+  ak: 'de_auth',
+  courseKey: 'de',
+  prefix: 'de_',
+  color: '#1d4ed8',
+  glow: 'rgba(29,78,216,.35)',
+  free: false,
+  freeModules: 1,
+  modules: 3,
+  topics: 9,
+  hours: 13,
+  quizzes: 9
+};
+
+var MODS = [
+  {
+    id: 'de_mod1',
+    name: 'Fundamentos da Tomada de Decisão',
+    free: true,
+    topics: 3,
+    summary: {
+      title: 'Resumo do Módulo 1',
+      points: [
+        'Decisão estratégica é escolha que determina direção significativa da empresa com consequências longo prazo',
+        'Viés cognitivo (confirmação, disponibilidade, sunk cost) distorce percepção e decisão',
+        'Decisão bom não é aquela que resultou bem, é aquela feita com processo correto com informação disponível no tempo da decisão',
+        'Framework estruturado reduz influência de viés e emoção em decisões importantes'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Por que decisão que resultou bem pode ter sido errada, e decisão que resultou mal pode ter sido correta?',
+        opts: [
+          'Não há diferença entre resultado e qualidade',
+          'Sorte é factor. Decisão boa = processo correto + informação disponível, resultado pode variar',
+          'Sempre você consegue prever resultado',
+          'Resultado nunca importa'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Qual viés causa você a procurar informação que confirma sua opinião enquanto ignora contradições?',
+        opts: [
+          'Viés de disponibilidade',
+          'Viés de confirmação',
+          'Viés de ancoragem',
+          'Viés de sunk cost'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Qual é o primeiro passo em decisão estratégica estruturada?',
+        opts: [
+          'Imediatamente escolher opção',
+          'Clarificar qual é a decisão sendo feita e contexto',
+          'Votar com grupo',
+          'Seguir intuição'
+        ],
+        correct: 1
+      }
+    ]
+  },
+  {
+    id: 'de_mod2',
+    name: 'Modelos e Ferramentas de Decisão',
+    free: false,
+    topics: 3,
+    summary: {
+      title: 'Resumo do Módulo 2',
+      points: [
+        'Modelos de decisão (matriz RACI, árvore de decisão, análise de cenário) estruturam pensamento e reduzem viés',
+        'Análise de trade-off força explicitação de o que você está ganho versus perdendo',
+        'Coleta de dados requer rigor: fontes viáveis, data correta para contexto, n-size suficiente',
+        'Decisão com incerteza requer estimativa probabilística e análise de downside risk'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Em matriz de urgência-importância (Eisenhower), qual quadrante causa mais desperdício de tempo?',
+        opts: [
+          'Importante e Urgente',
+          'Importante mas Não Urgente',
+          'Não Importante mas Urgente',
+          'Não Importante e Não Urgente'
+        ],
+        correct: 2
+      },
+      {
+        q: 'Por que análise de trade-off é importante em decisão?',
+        opts: [
+          'Para não tomar decisão',
+          'Para ganhar tudo sem perder nada',
+          'Para explicitar o que você está perdendo enquanto ganha outra coisa',
+          'Não é importante'
+        ],
+        correct: 2
+      },
+      {
+        q: 'Como você deveria avaliar dados em incerteza?',
+        opts: [
+          'Assuma que resultado é 50-50',
+          'Use intuição pura',
+          'Estime probabilidade, estude downside risk, prepare contingency',
+          'Ignore incerteza'
+        ],
+        correct: 2
+      }
+    ]
+  },
+  {
+    id: 'de_mod3',
+    name: 'Decisão sob Pressão e Incerteza',
+    free: false,
+    topics: 3,
+    summary: {
+      title: 'Resumo do Módulo 3',
+      points: [
+        'Pressão reduz capacidade cognitiva e aumenta recorrência a viés: estrutura é ainda mais crítica',
+        'Decisão reversível requer menos análise que irreversível',
+        'Speed versus accuracy é trade-off: frequentemente speed (com qualidade mínima aceitável) é superior',
+        'Decisão em crise requer plano de comunicação, controle de narrativa, leadership visível'
+      ]
+    },
+    quizFinal: [
+      {
+        q: 'Como pressão impacta qualidade de decisão?',
+        opts: [
+          'Melhora porque força focus',
+          'Reduz capacidade cognitiva e aumenta viés: estrutura torna-se ainda mais crítica',
+          'Não impacta',
+          'Sempre melhora'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Por que decisão reversível requer menos análise que irreversível?',
+        opts: [
+          'Porque não importa',
+          'Porque pode mudar depois se errar, custo de erro é baixo',
+          'Porque sempre é melhor',
+          'Porque são iguais'
+        ],
+        correct: 1
+      },
+      {
+        q: 'Em crise, qual é componente crítico além da decisão técnica?',
+        opts: [
+          'Apenas resolver problema técnico',
+          'Comunicação de liderança, controle de narrativa, visibilidade',
+          'Não comunicar para evitar pânico',
+          'Deixar que press comunique'
+        ],
+        correct: 1
+      }
+    ]
+  }
+];
+
+var TOPICS = [
+  {
+    id: 'de_t1',
+    name: 'Anatomia de uma Decisão Estratégica',
+    dur: 48,
+    content: `
+<h3>O Que Torna uma Decisão Estratégica?</h3>
+<p>Nem toda decisão é estratégica. Qual cor pintar a parede é tática. Se abrimos nova filial em mercado novo é estratégico. Decisão estratégica é aquela que: (1) impacta direção significativa da empresa, (2) tem consequências longo prazo, (3) é difícil ou impossível reverter, (4) envolve alocação de recursos significativos, (5) requer alinhamento de múltiplas partes.</p>
+<p>Exemplos: Entrar novo mercado. Aquisição ou fusão. Mudança de modelo de negócio. Lançamento de novo produto que canibiliza base. Decisões estratégicas frequentemente aparecem simples até você começar a implementar e descobre complexidade oculta.</p>
+
+<h4>Qualidade de Decisão Versus Qualidade de Resultado</h4>
+<p>Erro conceitual comum: avaliar decisão retrospectivamente baseado em resultado. "Contratei pessoa que falhou, foi decisão ruim." Talvez não. Se você usou processo rigoroso, pediu referencias, entrevistou bem, mas pessoa não deu certo por circunstâncias imprevistas, decisão foi boa, resultado foi ruim.</p>
+<p>Inversamente, "fiz aposta irracional e consegui luck, foi boa decisão." Não. Você teve sorte. Decisão foi ruim porque não foi fundamentada em realidade.</p>
+<p>Isso importa porque: se você julga suas decisões por resultado, você vai aprender as lições erradas. Sorte positiva vai fazer você repetir irracionalmente. Sorte negativa vai fazer você evitar racionalmente. Processo-oriented thinking permite aprendizado correto.</p>
+
+<h4>Os Vieses Cognitivos Que Te Traem</h4>
+<p>Viés de Confirmação: você acredita que mercado X é grande. Você procura dados que confirmam. Ignora dados que dizem é pequeno. Resultado: você satura em informação que suporta crença original, pensa estar mais confiante que deveria.</p>
+<p>Viés de Sunk Cost: você investiu R$ 5 milhões em projeto. Está falhando. Você continua investindo porque "já gastei tanto". Racional é: esse dinheiro passado não importa, importa custo de continuar vs benefício de parar. Mas emocional é difícil de aceitar.</p>
+<p>Viés de Disponibilidade: você lembra de recente fracasso de competitor fazendo algo, agora desconfia de estratégia inteira. Você lembra de sucesso recente de alguém similar, agora quer copiar. Viés é que exemplos recentes e memoráveis dominam julgamento mesmo se não são representativos.</p>
+<p>Viés de Ancoragem: primeira number que você ouve influencia sua estimativa depois. Se alguém sugere "valuation de R$ 100 milhões", seu julgamento de realístico é enviesado por esse número mesmo se não tem evidência suportando.</p>
+<p>Viés de Otimismo: você subestima risco e tempo de execução. "Levará 3 meses". Sempre leva 6. Você acredita que seu projeto é diferente, que seu time é melhor. Frequentemente não está.</p>
+
+<h4>Como Pressão Amplifica Viés</h4>
+<p>Pessoas sob pressão têm cérebro em mode de survival. Analítico cede a automático. Você volta a heurísticas rápidas (rules of thumb) que frequentemente estão erradas. Você procura informação que confirma rápido (viés de confirmação amplificado). Você ignora complexidade porque não há tempo (simplificação excessiva).</p>
+<p>Isso significa que em pressão, processo estruturado é ainda mais crítico. Quando você não consegue pensar bem, você precisa de estrutura que pense por você. Roteiro que você não improvisa, mesmo sob pressão.</p>
+
+<h4>Framework Básico de Decisão</h4>
+<p>Passo 1: Clarificar que decisão está sendo feita. Não "qual é estratégia?" é vago. "Devemos lançar produto X em mercado Y em Q2 de 2026?" é claro. Clareza permite que você identifique que informação é relevante.</p>
+<p>Passo 2: Identificar critérios de sucesso. "Bom" para quem? Maximizar receita? Minimizar risco? Usar recurso existente? Critérios guiam qual opção é superior.</p>
+<p>Passo 3: Listar opções. Pelo menos 3. Forçar múltiplas opções reduz viés de "essa é a única jeito". Opções devem ser materialmente diferentes, não just variações.</p>
+<p>Passo 4: Coletar dados para cada opção. Não perfecção, qualidade suficiente para distinguir. Se estimar que opção A gera R$ 10M e B gera R$ 8M com incerteza de ±2M, já sabe que A é melhor mesmo com incerteza.</p>
+<p>Passo 5: Análise de trade-off. Cada opção ganha em algo, perde em algo. Explícito isso. Ajuda a não ter ilusão que uma opção é melhor em tudo.</p>
+<p>Passo 6: Decisão. Baseado em análise. Não em "como eu sinto".</p>
+
+<blockquote class="tip">
+<p><strong>Dica do Professor:</strong> Sempre pressione a si mesmo com pergunta de "devil's advocate": qual é o cenário onde essa decisão é desastrosa? O que teria que ser verdade? Você consegue tolerar isso? Se não consegue tolerar downside, decisão é muito arriscada para você.</p>
+</blockquote>
+
+<blockquote class="quote">
+<p>"Qualidade de decisão é função de processo que você usou no tempo que estava sendo feita, não função de resultado que obtém depois." — Andrew Grove, High Output Management</p>
+</blockquote>
+
+<p>O grande insight é que você não consegue controlar resultado. Você consegue controlar processo. Foco em processo permite que você melhore decisões longo prazo mesmo se resultado dessa é ruim por sorte. É paradoxo: ignorar resultado imediato permite que você tenha resultados melhores em longo prazo.</p>
+    `,
+    cards: [
+      {
+        q: 'Como você diferencia entre "decisão boa que resultou mal" e "decisão ruim que teve sorte"?',
+        a: 'Decisão boa = processo rigoroso + informação disponível no tempo. Resultado varia por sorte. Decisão ruim = processo fraco ou enviesado. Se resultado foi bom, foi sorte, não bom julgamento.'
+      }
+    ]
+  },
+  {
+    id: 'de_t2',
+    name: 'Reduzindo Viés em Decisões Importantes',
+    dur: 50,
+    content: `
+<h3>Técnicas Práticas de Debiasing</h3>
+<p>Você não consegue eliminar viés. Mas consegue estruturar processo para reduzir seu impacto. Isso requer disciplina porque impulsos naturais dele são confortáveis.</p>
+
+<h4>Pre-Mortем: A Arma Secreta</h4>
+<p>Antes de decidir, imagine que é 6 meses depois e decisão foi desastro. O que aconteceu? Essa exercício força seu brain a pensar em downsides. Frequentemente você descobre risco que não estava considerando.</p>
+<p>Comparado a "qual é risco?", pre-mortém é muito mais efetivo porque é narrativa (seu brain pensa em histórias melhor que em abstrato). "O projeto começou com bravura, mas descobrimos que mercado era 10x menor do que estimávamos" é muito mais real que "mercado poderia ser menor".</p>
+<p>Melhor ainda: pedir a outras pessoas que fiquem "defensoras do downside". "Assuma que essa decisão vai falhar, você consegue apontar como?" Com roles diferentes, você consegue perspectivas que seu próprio brain enviesado não vê.</p>
+
+<h4>Externalização de Pensamento</h4>
+<p>Pensar sozinho amplifica viés próprio. Externalizar (falar com outra pessoa) força claridade. "Na verdade, quando eu digo em voz alta, soa sem sentido." Isso é valor de ter conselheiro, partner, alguém que questiona sua lógica.</p>
+<p>Importante: conselheiro precisa ser alguém que desafia você, não que apenas concorda. "Sounding board" que diz "sim, ótima ideia" é inútil. Você precisa de "espera, qual é o assunção que você está fazendo aí? É verdade?"</p>
+
+<h4>Busca Ativa de Desconfirming Evidence</h4>
+<p>Em vez de procurar evidência que confirma, ativamente procure que contradiz. "Minha hipótese é que mercado Y é grande. Que dados existem que sugerem que está errado? Que competitor falhou ali? Por quê?" Essa inversão é incômoda mas efetiva.</p>
+<p>Isso é especialmente importante com pessoas que discordam de você. Em vez de ignorar objeção, investigue dela. "Você acha que produto X não vai funcionar. Qual evidência você tem? Qual feedback de clientes você ouviu?" Frequentemente você descobre que objeção é baseada em algo real que você deixou passar.</p>
+
+<h4>Separação de Informação e Interpretação</h4>
+<p>Você coleta dado: "35% de respondentes disseram que pagariam R$ 100/mês". Isso é informação. Interpretação é "mercado é enorme, vamos investir R$ 5 milhões". Mas interpretação requerer múltiplas assunções (respondentes representativos? realmente pagariam? ao longo tempo?).</p>
+<p>Exercício: separe explicitamente informação de interpretação. "Dado é X. Interpretação é Y. Assunções para Y serem verdadeiro são Z." Uma vez explícito, você consegue questionar cada assunção.</p>
+
+<h4>Premortém Coletivo</h4>
+<p>Assemble sua equipe (diversa em perspectiva, não em similaridade). Explique decisão. Peça que cada um escreva (não compartilhe): "6 meses depois, isso fracassou. Por quê?" Pré-compromisso individual reduz conformidade social (todos não concordando apenas para concordar).</p>
+<p>Depois, cada um compartilha sua hipótese de fracasso. Você vai descobrir múltiplas perspectivas de risco que você sozinho não veria. Frequentemente há padrão: "3 pessoas mencionaram customer adoption é problema". Ótima sinal de que esse é lugar para investigar mais.</p>
+
+<blockquote class="tip">
+<p><strong>Dica do Professor:</strong> Crie "decision journal": para cada decisão importante, documente: qual era decisão, qual era seus critérios, qual era informação disponível, qual era sua confiança, qual foi a decisão tomada. Meses depois, volte: qual foi resultado? Qual foi diferença? Esse journal é melhor professor de decisão que qualquer livro.</p>
+</blockquote>
+
+<blockquote class="example">
+<p><strong>Exemplo:</strong> CEO pensava que aquisição de empresa X era ótima. Pre-mortém coletivo revelou: 3 pessoas tinham preocupação de "cultural fit é ruim, vamos ter turnover de seus melhores talentos". CEO tinha ignorado isso. Por causa disso, investigou mais, fez entrevistas culturais mais rigorosas, descobriu que realmente era preocupação válida. Decisão mudou de aquisição total para partnership estruturado. Decisão muito melhor graças ao debiasing.</p>
+</blockquote>
+
+<p>Debiasing requer admissão de que você é enviesado. Isso é não natural (ego é defender que seu pensamento é certo). Mas essa admissão é mais valiosa que IQ alto na determinação de qualidade de decisão. CEO que diz "eu sou enviesado, preciso de estrutura e conselheiros" toma melhores decisões que CEO que diz "minha intuição é perfeita".</p>
+    `,
+    cards: [
+      {
+        q: 'Como pre-mortém é mais efetivo que direto perguntar "qual é o risco da decisão"?',
+        a: 'Porque pre-mortém usa narrativa (seu brain pensa em histórias). Força você a imaginar concretamente como fracassa. Abstraço é fácil ignorar, narrativa é difícil.'
+      }
+    ]
+  },
+  {
+    id: 'de_t3',
+    name: 'Matriz de Decisão e Trade-off Analysis',
+    dur: 47,
+    content: `
+<h3>Ferramenta: Matriz de Decisão</h3>
+<p>Quando você tem múltiplas opções e múltiplos critérios, matriz de decisão estrutura análise e reduz viés de favoritism a uma opção.</p>
+
+<h4>Como Construir Matriz</h4>
+<p>Coluna são opções (Lançar produto X, Aquisição de Y, Entrada mercado Z). Linhas são critérios (Receita esperada, Risco, Tempo de implementação, Requerimento de capital, Alinhamento com visão). Para cada célula, escore: 1-5 ou específico número.</p>
+<p>Crítico: pesar critérios de acordo com importância. Receita esperada pode valer 40%, Risco 30%, Tempo 20%, Capital 5%, Visão 5%. Pesos devem ser decidido antes de preencher matriz (não após ver que desfavorece sua opção preferida).</p>
+<p>Resultado: escores ponderados revelam qual opção sai melhor nos critérios que importam. Útil para comunicar decisão: "Opção X sai melhor em receita (9/10) mas pior em risco (3/10). Opção Y é balanced melhor".</p>
+
+<h4>Limitação Importante de Matriz</h4>
+<p>Matriz é ferramenta de comunicação e estrutura, não oráculo de verdade. Escores são subjetivos. Se você coloca "Opção A sai 8/10 em risco", é sua estimativa enviesada. Matriz não elimina viés, apenas organiza pensamento para que viés seja visível.</p>
+<p>Também, matriz assume que critérios são independentes (não são). Às vezes, opção que sai melhor em receita é porque está assumindo risco que você subestimou. Isso não é capturado.</p>
+
+<h4>Trade-off Analysis Qualitativo</h4>
+<p>Frequentemente, ao invés de escores, você faz análise narrativa. "Opção A maximiza curto prazo (receita rápida, capital low) mas reduz long-term flexibility (nos prende a direção). Opção B reduz receita curto prazo mas abre opções futuro (mantém flexibilidade). Trade-off é velocidade vs optionality".</p>
+<p>Uma vez que trade-off é explícito, você consegue decidir: qual importa mais? Se você é startup que precisa de capital em 12 meses, velocidade importa mais. Se você é empresa madura que otimiza para duração, flexibilidade importa mais.</p>
+
+<h4>Reversibilidade Como Criterio</h4>
+<p>Alguns trade-offs pode ser resolvidos com noção de reversibilidade. Decisão reversível (você consegue mudar depois com custo modesto) requer menos análise. Decisão irreversível requer análise profunda.</p>
+<p>"Qual plataforma usamos para elo?" é reversível (você consegue migrar depois se errar). Requer análise moderada. "Qual mercado entrar?" é semi-reversível (você consegue sair mas custa tempo e capital). Requer análise substantiva. "Qual é modelo de negócio?" é praticamente irreversível (mudança destroi valor construído). Requer análise profunda.</p>
+
+<blockquote class="tip">
+<p><strong>Dica do Professor:</strong> Antes de computar matriz, pergunte: "de verdade eu sei esses números?" Se você está estimando sem dados, diga isso. "Receita é estimativa wild porque falta dados de mercado. Isso reforça que precisamos de mais research antes de decidir" é honesto. Matriz que usa números que você não sabe está pior que matriz que diz claramente o que é vago.</p>
+</blockquote>
+
+<blockquote class="example">
+<p><strong>Exemplo:</strong> Startup em decisão de "aquisição vs levantar investimento vs crescimento orgânico". Matriz mostrou que organicamente tem risco menor mas receita mais lenta. Aquisição tem risco alto (cultural integration) mas receita rápida. Investimento é middle. Mas quando fez trade-off qualitativo explícito: "Aquisição nos coloca em pressão de entrega imediata, pode danificar capacidade de inovação. Crescimento orgânico nos mantém flexível mas pode perder momentum." Startup escolheu investimento como opção que era balanced melhor para aspiração longo prazo vs pressão curto prazo.</p>
+</blockquote>
+
+<p>Matriz e trade-off são ferramentas que forçam explicitação de pensamento. Elas não fazem decisão por você. Mas ao externalizar, você consegue ver sua própria lógica, questionar assunções, comunicar claramente por que você escolheu. Isso é progressão de "eu sinto que essa é melhor" para "essa é melhor porque X".</p>
+    `,
+    cards: [
+      {
+        q: 'Por que pesos em matriz de decisão precisam ser decididos ANTES de preencher escores?',
+        a: 'Porque se decide depois, você subconscientemente ajusta pesos para favorecer sua opção preferida. Isso é viés de confirmação. Pesos prévios forçam objectividade.'
+      }
+    ]
+  },
+  {
+    id: 'de_t4',
+    name: 'Decisão em Cenários de Incerteza e Risco',
+    dur: 52,
+    content: `
+<h3>Probabilidade e Análise de Risco</h3>
+<p>Muitas decisões estratégicas têm alto nível de incerteza. Você não consegue saber resultado. Mas consegue estimar probabilidade e magnitude de cada resultado possível.</p>
+
+<h4>Estimativa Probabilística</h4>
+<p>Em vez de "mercado será grande ou pequeno", estime: "há 60% chance de mercado ser grande (>R$ 100M), 30% chance de ser médio (R$ 20-100M), 10% chance de ser pequeno (<R$ 20M)". Essa probabilidade permite cálculo de valor esperado.</p>
+<p>Valor esperado = (60% × valor se grande) + (30% × valor se médio) + (10% × valor se pequeno). Se valor se grande é R$ 10M retorno, médio é R$ 2M, pequeno é -R$ 1M, valor esperado é (60% × 10M) + (30% × 2M) + (10% × -1M) = R$ 6.5M. Isso é seu expectativa razoável.</p>
+<p>Isso não é predição. É honesto julgamento: "dadas informação que tenho, aqui está minha estimativa melhor e range de incerteza".</p>
+
+<h4>Downside Risk: O Que Você Não Consegue Perder</h4>
+<p>Mesmo que valor esperado é positivo, downside pode ser inaceitável. Exemplo: você tem 90% chance de ganhar R$ 10M e 10% chance de perder tudo. Valor esperado é R$ 9M. Mas se você não consegue perder tudo (ia falir), essa aposta não é para você.</p>
+<p>Assim, em adicional a valor esperado, considere: qual é worst-case scenario? Consegue você tolerar isso? Se não consegue, decisão é muito arriscada mesmo se valor esperado é ótimo.</p>
+
+<h4>Sensitivity Analysis: O Que Importa?</h4>
+<p>Se sua decisão de "entrar mercado X" depende de assunção "mercado cresce 20% ao ano", teste: se crescimento é 10% ao ano, ainda faz sentido? Se é 30%? Sensitivity analysis mostra qual assunção é crítica (pequena mudança em assunção muda decisão significativamente).</p>
+<p>Resultado é que você foca investigação em assunções que realmente importam. Se entrar mercado faz sentido mesmo se crescimento é 5% ao ano, você não precisa estudar projeção de crescimento tanto. Se muda drasticamente se é 15% vs 20%, você precisa de melhor estimativa.</p>
+
+<h4>Opção de Esperar Vs Agir Agora</h4>
+<p>Sob incerteza, às vezes é racional esperar por mais informação. Mas custo de esperar é oportunidade perdida. Decisão é: vale o custo de oportunidade de esperar pela redução de incerteza se você esperar?</p>
+<p>Exemplo: você pode entrar mercado agora (arriscado mas ganha se crescer) ou esperar 6 meses por mais dados (reduz risco mas perde momentum). Qual é preferível? Depende: quanto você ganha se move agora? Quanto perde se movimento é errado? Quanto custa esperar em oportunidade perdida?</p>
+
+<h4>Estrutura de Contingency</h4>
+<p>Em vez de decidir "faremos X", melhor é "faremos X com gatilhos de revisão". "Entrar mercado Y. Se em 6 meses traction é <10% do esperado, vamos pivotar para Y2. Se traction é >50% do esperado, vamos expandir investimento". Contingency allows flexibilidade sem paralisia de indecisão.</p>
+<p>Contingency em adicional a decision permite que você aja sob incerteza. Você não está apostando tudo em que seu julgamento inicial é correto. Você está dizendo "aqui está meu melhor julgamento, mas preciso de feedback para validar e mudar".</p>
+
+<blockquote class="tip">
+<p><strong>Dica do Professor:</strong> Quando estimar probabilidade, pergunte: "se eu apostasse R$ 1000 nessa probabilidade, qual seria minha estimativa?" Money-motivated estimativa é frequentemente mais honesto que abstrata. R$ para pôr seu julgamento à prova.</p>
+</blockquote>
+
+<blockquote class="example">
+<p><strong>Exemplo:</strong> Empresa tinha 70% probabilidade estimado que novo produto seria hit, 30% seria fracasso. Valor esperado era positivo. Mas downside de fracasso incluía demissão de 30% do team (muito capital sunk). CEO colocou contingency: "Vamos investir em MVP por 3 meses. Se atingir 20% de aceitação teste, expandimos. Se não, pivotamos para vertical diferente." Contingency permitiu que tomasse decisão mesmo com risco sem arriscar empresa inteira.</p>
+</blockquote>
+
+<p>Decisão em incerteza nunca é perfect. Mas estruturada (probabilidades, downside, contingency) é infinitamente melhor que baseada em intuição. Porque mesmo que sua intuição está errada, você tem plano de como ajustar quando realidade revela verdade.</p>
+    `,
+    cards: [
+      {
+        q: 'Como você balanceia valor esperado positivo com downside risco inaceitável?',
+        a: 'Valor esperado é métrica, mas downside tolerable é constraint pessoal/organizacional. Se downside é intolerável, decisão é não para você mesmo se valor esperado é ótimo.'
+      }
+    ]
+  },
+  {
+    id: 'de_t5',
+    name: 'Decisão Sob Pressão: O Fator Stress',
+    dur: 49,
+    content: `
+<h3>Como Pressão Quebra Julgamento</h3>
+<p>Tudo que você aprendeu em ambiente controlado cai pelas janelas quando há pressão. Prazo apertado, capital faltando, board esperando respostas, cliente importante ameaçando ir embora. Sob essas condições, seu brain não funciona bem.</p>
+
+<h4>Neurociência da Pressão</h4>
+<p>Quando estressado, seu amígdala (centro emocional) toma conta. Seu córtex prefrontal (centro analítico) se silencia. Você volta a heurísticas rápidas ("isso sempre funcionou antes, vamos fazer novamente"). Você amplifica viés de confirmação (procura informação que suporta ação que quer tomar). Você ignora complexidade.</p>
+<p>Isso é evolução: em perigo físico real, análise lenta é bad, reação rápida é good. Mas em perigo de negócio, análise é good, reação emocional é bad. Seu cérebro não distingue.</p>
+
+<h4>Estrutura Como Defesa Contra Stress</h4>
+<p>Melhor defesa contra decisão ruim sob stress é estrutura prévio construído. Não tentar pensar claramente quando estressado. Ter processo que você já praticou.</p>
+<p>Exemplo: piloto em emergência não pensa "o que deveria fazer?" Segue checklist. Checklist foi praticado dezenas de vezes. Sob pressão, muscle memory toma conta, cérebro analítico não é necessário. Mesma coisa em decisão de negócio: se tem processo que praticou, em pressão você segue vs tentando inovar.</p>
+
+<h4>Separação de Decisão e Implementação</h4>
+<p>Sob pressão, você quer resolver tudo simultaneamente. "Decidir E implementar E comunicar E consertar fallout". Paralelo é caótico. Melhor: (1) Decisão de fato (processo que você praticou, 30-60 minutos), (2) Comunicação (explicar por quê), (3) Implementação (passos concretos).</p>
+<p>Separação permite que cada fase é feito bem ao invés de tudo feito mal simultaneamente.</p>
+
+<h4>Comunicação em Pressão: Narrativa vs Técnico</h4>
+<p>Quando você comunica decisão sob pressão (market crash, competitor attack, produto falha), pessoas não querem números. Querem histórica que faz sentido de por que você escolheu esse caminho, onde você está levando, como você vai chegar.</p>
+<p>Comunicação efetiva em pressão tem: (1) Honestidade sobre situação (não minimize, não exagere), (2) Narrativa clara (para onde vamos, por quê, como chegamos lá), (3) Claridade de quem faz o quê (accountability), (4) Ponto de visibilidade de progresso (como saberemos se está funcionando).</p>
+<p>Falta de comunicação clara causa rumor e desconfiança. Comunicação vaga causa confusão. Comunicação clara + honesta causa confiança mesmo se situação é ruim.</p>
+
+<blockquote class="tip">
+<p><strong>Dica do Professor:</strong> Em pressão, chame time e faça 10 minutos de pre-mortém. "Aqui está decisão que preciso fazer. Qual é disaster scenario?" Pessoas frequentemente enxergam risco que você não vê quando estressado. É reality check rápido antes de agir.</p>
+</blockquote>
+
+<blockquote class="example">
+<p><strong>Exemplo:</strong> Startup descobriu que seu biggest customer vai embora (50% de revenue). CEO em pânico queria imediatamente encontrar outro grande customer. Seu CFO sugeriu 30 minutos de pre-mortém: "Se procuramos grande customer rapidamente, qual é disaster?" Lista incluía: vender barato demais em desesperação, pegar customer que é tóxico, distrar de produto fixes. Resultado: em vez de caçar grande customer, focou em reter medium customers e fixar produto churn. 6 meses depois, empresa estava de saúde melhor. Estrutura preveniu decisão de pânico.</p>
+</blockquote>
+
+<p>Pressão é constante em liderança. Você nunca consegue eliminar. Mas estrutura e prática permitela que você funcione bem debaixo dela. Pessoa que nunca praticou decisão estruturada em calma vai fazer ruim em pressão. Pessoa que praticou consegue fazer bem.</p>
+    `,
+    cards: [
+      {
+        q: 'Por que estrutura prévio é melhor defesa contra decisão ruim sob stress do que tentando pensar claramente?',
+        a: 'Porque stress silencia seu cortex prefrontal (análise) e ativa amígdala (reação emocional). Muscle memory de estrutura prática funciona sem análise consciente.'
+      }
+    ]
+  },
+  {
+    id: 'de_t6',
+    name: 'Decisão Reversível Versus Irreversível',
+    dur: 46,
+    content: `
+<h3>O Eixo Mais Importante: Reversibilidade</h3>
+<p>Jeff Bezos torna essa distinção a centerpiece de Amazon leadership. Ele separa decisão em "Type 1" (irreversível, requer análise profunda) e "Type 2" (reversível, pode ser alterado depois, requer análise moderada mas movimento rápido).</p>
+<p>Type 1: entrar novo mercado geográfico, mudar modelo de negócio, grande aquisição. Type 2: qual vendor escolher, qual tecnologia usar, qual processo implementar. Type 1 requer months de análise. Type 2 requer dias e iteração.</p>
+
+<h4>Como Identificar Reversibilidade</h4>
+<p>Pergunta: se essa decisão sair errada, consigo voltar atrás? Se sim, qual é custo de voltar? Tempo? Capital? Reputação?</p>
+<p>Decisão é reversível se custo de reverter é modesto relativamente ao custo de análise profunda. Escolher qual CRM usar: reversível, custo de migração é alto mas não existencial. Qual é nome da empresa: praticamente irreversível, reputação e brand é muito custoso mudar.</p>
+
+<h4>Common Mistake: Treating Type 2 como Type 1</h4>
+<p>Muitas empresas ficam paralisadas analisando decisão reversível. "Qual plataforma de código usamos?" "Qual é nosso stack de tecnologia?" Essas são Type 2. Você consegue escolher Python, descobrir é ruim, reescrever em Go depois. Custo é alto mas não existencial. Melhor é escolher rápido, iterar, do que ficar analisando meses.</p>
+<p>Custo de indecisão em Type 2 frequentemente é maior que custo de errar e corrigir. Você perde momentum, perde oportunidades, perde velocidade. Isso é mais caro que custo de reverter depois.</p>
+
+<h4>Common Mistake: Treating Type 1 como Type 2</h4>
+<p>Inversamente, algumas startups tratam Type 1 decisão como reversível. "Vamos entrar mercado China rapidamente, se não funciona a gente sai." Erro. Custo de entrar e sair China é enorme (regulação, relacionamentos, capital). Decisão é praticamente irreversível. Requer análise profunda prévio.</p>
+
+<h4>Speed em Type 2, Caution em Type 1</h4>
+<p>Princípio é simples: (1) Seja rápido em Type 2 (reversível). Esperar torna o projeto inteiro mais lento. (2) Seja cauteloso em Type 1 (irreversível). Custo de errar é tão alto que análise profunda é racional. (3) Claramente identifique qual tipo é cada decisão ANTES de começar análise.</p>
+<p>Empresa que não faz essa distinção fica ou paralizada (trata tudo como Type 1) ou em chaos (trata tudo como Type 2).</p>
+
+<h4>Re-reversibility Através de Experiência Piloto</h4>
+<p>Frequentemente, você consegue transformar Type 1 em Type 2 através de piloto. "Entrar mercado China é Type 1. Mas podemos abrir escritório piloto pequeno em Shanghai por 6 meses (investimento modesto) para aprender" (Type 2). Resultado de piloto informa decisão Type 1 posteriormente.</p>
+<p>Piloto reduz incerteza em Type 1, transformando de "aposta baseada em theory" para "aposta baseada em experiment". Custo de piloto é pequeno comparado a custo de entrar full sem aprender.</p>
+
+<blockquote class="tip">
+<p><strong>Dica do Professor:</strong> Para cada decisão importante, escreva: "Esta é Type 1 ou Type 2? Se Type 1, quanto tempo de análise é racional? Se Type 2, quanto tempo de análise seria procrastinação? Qual é cutoff?" Honestidade sobre isso muda muito decisão de como você gasta tempo.</p>
+</blockquote>
+
+<blockquote class="example">
+<p><strong>Exemplo:</strong> Startup decidiu "qual é nossa color palette de brand?" Gastou 3 meses com design agency criando perfect palette. Error: é Type 2 (reversível, consegue mudar depois). Melhor era escolher rápido em 1 dia, usar por alguns meses, iterar. 3 meses era custo de oportunidade enorme que poderia ter sido usado em sales ou product. Se Color palette é Type 2, não merece 3 meses de analysis.</p>
+</blockquote>
+
+<p>Essa é distinção de Bezos que mais impactou Amazon culture. Permite decisão rápida em Type 2 (que são maioria) enquanto investindo em Type 1 (que são minoria). Resultado é velocidade em experimentation enquanto sendo cuidadoso com apuestas existenciais.</p>
+    `,
+    cards: [
+      {
+        q: 'Como você diferencia Type 1 (irreversível) de Type 2 (reversível)?',
+        a: 'Type 1: se errar, custo de reverter é alto (tempo, capital, reputação). Type 2: se errar, consegue mudar depois com custo modesto. Type 1 requer análise profunda, Type 2 requer iteração rápida.'
+      }
+    ]
+  },
+  {
+    id: 'de_t7',
+    name: 'Análise de Cenários: Planejando para Múltiplas Futuros',
+    dur: 51,
+    content: `
+<h3>Quando Um Futuro Não É Suficiente</h3>
+<p>Plano que assume um futuro específico é frágil. "Crescimento será 30% ao ano" é suposição singular. Realidade é múltiplos futuros possíveis: 10%, 30%, 50%, ou negative growth. Planejamento robusto considera múltiplos cenários.</p>
+
+<h4>Construção de Cenários</h4>
+<p>Escolha 2 variables que são: (1) Importantes para seu negócio, (2) Altamente incertas. Exemplo: "Market growth rate" (10% vs 50%) e "Competitor entry" (não entram vs entram forte). Isso cria 4 cenários: (1) Slow growth, no competition, (2) Slow growth, strong competition, (3) Fast growth, no competition, (4) Fast growth, strong competition.</p>
+<p>Para cada cenário, game out: qual é sua estratégia? Qual é sua receita esperada? Qual é seu cash burn? Quais métricas você monitora para saber em qual cenário você está?</p>
+
+<h4>Identificação de Early Warning Signals</h4>
+<p>Se você planejou para 4 cenários, você sabe qual signal diferencia eles. "Market growth scenario" varia por sign-up rate de novos customers. "Competitor entry scenario" varia por quantidade de competitive announcements. Ao monitorar esses signals, você consegue identificar em qual cenário você está em tempo real.</p>
+<p>Resultado é que você não espera 6 meses de resultados ruins para pivotar. Você vê early signal (sign-up rate is low) e muda plano (shift to slow-growth scenario playbook).</p>
+
+<h4>Strategy Robusta vs Contingency Específico</h4>
+<p>Algumas estratégias funcionam em múltiplos cenários (são robustas). Outras funcionam bem em um cenário mas falham em outro. Estratégia robusta tem vantagem de que você não precisa antecipar cenário certo.</p>
+<p>Exemplo: em vez de "apostamos em growth rápido", estratégia robusta é "crescemos rápido quando temos recursos, ralentamos quando market é tough, core metric que otimizamos é profitability por customer não absolute size". Essa estratégia funciona em cenário de slow growth ou fast growth.</p>
+
+<h4>Comunicação de Múltiplos Cenários para Stakeholders</h4>
+<p>Board frequentemente quer "o número". Qual é receita esperada? Qual é valuation? Resposta de múltiplos cenários (R$ 5M em scenario A, R$ 20M em scenario B) causa desconforto. Board quer certeza.</p>
+<p>Mas honestidade é: você não sabe qual cenário vai ocorrer. Comunicar múltiplos cenários com probabilidades estimadas é mais honesto. "Há 40% chance de slow growth scenario, 60% chance de fast growth scenario. Valor esperado é R$ 14M." Permite que investidor entenda risco e incerteza.</p>
+
+<blockquote class="tip">
+<p><strong>Dica do Professor:</strong> Cada trimestre, atualize cenários baseado em novo dados. Você começou achando 50-50 entre dois cenários. Dados mostram que é agora 70-30? Atualize. Cenários devem evoluir conforme aprende.</p>
+</blockquote>
+
+<blockquote class="example">
+<p><strong>Exemplo:</strong> 2020 pandemia criou shift abrupto de cenários para muitos negócios. Empresa que tinha cenários pré-covidão (office work continues, supply chain normal) precisou rapidamente de novos cenários (remote work, supply disruption). Aquelas que já tinham framework de múltiplos cenários ajustaram rápido. Aquelas que tinham plano singular se perderam.</p>
+</blockquote>
+
+<p>Análise de cenários é não predição mas preparação. Você não está tentando adivinhar futuro. Está dizendo "aqui estão futuros possíveis, aqui está como vou responder a cada um, aqui estão signals que diferenciam eles". Isso permite que você navegue incerteza com intenção.</p>
+    `,
+    cards: [
+      {
+        q: 'Por que plano que assume um futuro singular é frágil?',
+        a: 'Porque realidade geralmente não é futuro assumido. Se seu plano funciona apenas em 1 cenário possível, probabilidade de falhar é alta. Múltiplos cenários com early signals permite ajuste rápido.'
+      }
+    ]
+  },
+  {
+    id: 'de_t8',
+    name: 'Decisão em Crise: O Teste Real',
+    dur: 54,
+    content: `
+<h3>Quando Tempo é Medido em Horas</h3>
+<p>Tudo que você aprendeu em ambiente normal é desafiado em crise. Você não tem semanas para análise. Você tem horas ou dias. Stakeholders estão estressados. Mercado está vendo falha acontecendo. Expectativa de liderança é que você resolva rápido.</p>
+
+<h4>Anatomia de Decisão de Crise</h4>
+<p>Crise é situação que: (1) é inesperada, (2) ameaça sobrevivência ou reputação, (3) requer decisão rápida, (4) tem informação incompleta. Exemplos: servidor principal falhou (downtime de 6 horas), major customer descobriu fraud nos números, competitor fez acquisition que muda competitive landscape radicalmente, founder vira notícia de escândalo.</p>
+<p>Em crise, você não consegue análise profunda porque não há tempo. Você consegue decisão rápida estruturada com informação imperfeita. Diferente de decisão estratégica normal.</p>
+
+<h4>Estrutura Mínima em Crise</h4>
+<p>(1) Assess situation: o que de verdade aconteceu? Que informação você tem? Que falta? Tem 15 minutos, não 15 horas. (2) Identificar opções: qual você consegue fazer nos próximos 24 horas? Não 3 meses. Opções são limitadas por tempo. (3) Consequências rápidas: qual é upside e downside de cada? (4) Decisão. (5) Implementação imediata.</p>
+<p>Velocidade é critério chave em crise. Decisão boa agora é melhor que decisão perfeita em semana. Porque oportunidade custo de inação é enorme.</p>
+
+<h4>Comunicação de Crise: Narrativa Importa Mais que Fatos</h4>
+<p>Em crise, você é avaliado não apenas em decisão técnica mas em ability de comunicar. Silêncio causa pânico. Comunicação vaga causa rumor. Comunicação clara (mesmo se notícia é ruim) causa calma.</p>
+<p>Comunicação de crise efetiva tem: (1) Rapidez (comunicar no dia mesmo se não sabe tudo), (2) Honestidade (não minimize, não exagere), (3) Narrativa clara (aqui está o que aconteceu, aqui está como estou respondendo, aqui está o que esperamos depois), (4) Responsabilidade pessoal (liderança é visível, não está escondido).</p>
+<p>Exemplo comunicação fraca em crise: "estamos em emergência, precisamos fazer coisas rápido, todos trabalhem hard". Não diz nada. Exemplo comunicação forte: "descobrimos que nossos dados de customer foram accessed sem autorização. Isso aconteceu porque tínhamos fraqueza de segurança Y. Aqui está que estou fazendo para consertar (reset todas passwords, notify customers, auditoria de segurança). Aqui está expectativa: reinicializaremos Friday. Aqui está como Vou comunicar progresso: update diário às 5PM".</p>
+
+<h4>Post-Crisis: Aprendendo da Crise</h4>
+<p>Uma vez que crise é resolvida, impulso é voltar a normal. Erro. Crise é oportunidade de aprender: por quê aconteceu? O que falhou? Como você evita próxima vez? Isso é "post-mortem".</p>
+<p>Post-mortem de crise (diferente de post-mortem regular) é focado em "como consegui errado" não em "quem é culpado". "Tínhamos fraqueza de segurança porque não priorizávamos segurança suficientemente. Aqui está como priorizamos adiante".</p>
+
+<blockquote class="tip">
+<p><strong>Dica do Professor:</strong> Antes de crise acontecer, construa "crisis playbook": quando X acontece, aqui está sequência de ações. Quando server falha, aqui está who calls who, what's communicated when. Ter playbook prévio reduz tempo de resposta em crise real. Prática reduz tempo de resposta adiante.</p>
+</blockquote>
+
+<blockquote class="example">
+<p><strong>Exemplo:</strong> GitHub tinha outage de 43 minutos em 2013. Comunicação foi excelente: atualizações a cada 5 minutos, explicação clara de que estava acontecendo, transparência de causa depois. Resultado: clientes forgave porque transparência gerou confiança. Comparado a empresa que tem outage, fica silêncio 6 horas, depois diz "estamos resolvendo" vago. Confiança quebra.</p>
+</blockquote>
+
+<p>Liderança em crise é diferente de liderança normal. Velocidade, transparência, e decisão com informação incompleta são premium. Pessoa que consegue decidir bem em crise ganhou confiança que dura. Pessoa que falha em crise, perde confiança que toma anos de recuperação.</p>
+    `,
+    cards: [
+      {
+        q: 'Por que comunicação clara em crise é tão importante quanto decisão técnica correta?',
+        a: 'Porque silêncio causa pânico, rumor causa desconfiança. Comunicação clara (mesmo que notícia é ruim) causa calma e confiança. Confiança permite implementação rápida da decisão.'
+      }
+    ]
+  },
+  {
+    id: 'de_t9',
+    name: 'Construindo Julgamento: A Prática de Decidir',
+    dur: 50,
+    content: `
+<h3>Decisão Como Habilidade, Não Dom</h3>
+<p>Algumas pessoas parecem naturalmente boas em decisão. Realidade é que elas praticaram muito. Você não nasce sabendo decidir bem. Você aprende através de prática deliberada, reflexão, feedback, reiterando.</p>
+
+<h4>Como Praticar Decisão</h4>
+<p>Passo 1: Decida com estrutura (não intuição). Use processo que aprendeu em course: clarificar decisão, listar opções, análise de trade-off. Forçar estrutura inicial é incômodo. Se você permanecer com estrutura suficientemente longo, vira instinto.</p>
+<p>Passo 2: Document sua decisão. "Decidir que vamos focar em customer X porque Y. Confiança: 60%. Critério de sucesso: Z". Documentação força claridade. Também permite reflectir depois.</p>
+<p>Passo 3: Outcome learning. 3 meses depois, revist decision. "Concentrei em X, resultado foi Y. Se tivesse focado em W, resultado teria sido Z. O que aprendi?" Outcome learning é único professor.</p>
+<p>Passo 4: Transferência de aprendizados. Não mantenha insights em sua cabeça. Compartilhe com time, documente em playbooks, ensine líderes que reportam. Isso multiplica valor de experiência.</p>
+
+<h4>O Custo de Aprendizagem: Erros</h4>
+<p>Para desenvolver julgamento, você precisa fazer decisões. Algumas sairão erradas. Isso é tuition de aprendizagem. Erro que você aprende de é investimento. Erro que você repete é desperdício.</p>
+<p>Interessante: pessoa que nunca cometeu erro sob seu comando frequentemente tem pior julgamento que pessoa que cometeu vários e aprendeu. Porque cometimento de erro é parte de aprendizagem.</p>
+
+<h4>Mentorship em Decisão</h4>
+<p>Tendo bom mentor acelera aprendizagem. Mentor que quando você propõe decisão, questiona: "qual é assunção aí? Considerou opção Z? Qual é downside?" força que você pense melhor sem fazer decisão por você. Esse tipo de mentorship é invaluável.</p>
+
+<h4>Humildade Como Pré-requisito</h4>
+<p>Melhor tomador de decisão que conheco combina: (1) Confiança em capacidade de pensar, (2) Humildade de que pode estar errado, (3) Rapidez de reconhecer quando está errado, (4) Velocidade de corrigir. Combinação desses 4 cria julgamento confiável.</p>
+<p>Pessoa que é arrogante (pensa que sempre está certo) não aprende de feedback. Pessoa que é insegura (acha que sempre está errado) é paralisada. Pessoa que é humilde (acredita em si mas reconhece limitação) aprende e melhora.</p>
+
+<blockquote class="tip">
+<p><strong>Dica do Professor:</strong> Mantenha "decision journal" simples: o que decidi, por que, confiança (1-5), qual foi resultado. Trimestral, revise. Que decisão com 5/5 confiança saiu errada? Que foi com 1/5 confiança saiu certo? Seu journal revela padrão de viés ou enviesado. Isso é material para reflexão e melhora.</p>
+</blockquote>
+
+<blockquote class="example">
+<p><strong>Exemplo:</strong> CEO acompanhei por 5 anos mapeou cada decisão importante, resultado depois. Descobriu padrão: aquelas com "long detailed analysis" frequentemente saíam erradas (overthinking). Aquelas com "quick intuition + 1 day analysis" saíam certas (decisão rápida permite feedback faster). Isso não significava que analysis é ruim. Significava que sua particular bias era overthinking. Conhecer viés próprio permite que trabalhe ao redor dele.</p>
+</blockquote>
+
+<p>Desenvolvendo julgamento é obra de vida. Você nunca chega a perfeição. Mas cada decisão é oportunidade de praticar estrutura, aprender de resultado, melhorar próxima. Pessoa que valoriza esse processo melhora visivelmente ao longo dos anos. Pessoa que não reflete fica estagnada. A diferença não é talento inato, é comprometimento com aprendizagem.</p>
+    `,
+    cards: [
+      {
+        q: 'Por que erro sob sua supervisão com aprendizagem é investimento e não desperdício?',
+        a: 'Porque aprender de erro é como desenvolvemos julgamento. Pessoa que nunca erra frequentemente tem pior julgamento que pessoa que errou, refletiu e aprendeu. Tuição de aprendizagem.'
+      }
+    ]
+  }
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
