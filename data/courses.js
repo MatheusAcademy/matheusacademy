@@ -2341,7 +2341,7 @@ var MA_COURSES = [
     addedTs: 1776024514823,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/lp.jpg',
     id: 'lp',
     name: 'Estratégias de Lançamento de Produtos Digitais',
@@ -2357,7 +2357,7 @@ var MA_COURSES = [
     storagePrefix: 'lp_',
     icon: '📢',
     color: '#ea580c',
-    addedTs: 1776370071309,
+    addedTs: 1776370801075,
     active: true
   },
   {
