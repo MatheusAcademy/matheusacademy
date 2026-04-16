@@ -522,8 +522,8 @@ textarea{resize:vertical;min-height:54px}
             <div class="idfb" id="fb1"></div>
             <div style="font-size:9px;color:var(--t3);margin-top:3px">Letras/números curto. Ex: ss, tp, gp</div>
           </div>
-          <div class="mf"><label>Nome *</label><input type="text" id="mName" placeholder="Nome do Curso"></div>
-          <div class="mf" style="grid-column:1/-1"><label>Descrição</label><textarea id="mDesc" rows="2" placeholder="Descrição curta (1-2 linhas)"></textarea></div>
+          <div class="mf"><label>Nome *</label><input type="text" id="mName" placeholder="Nome do Curso" oninput="_sugerirCat('mName','mDesc','mCat','mCatSug')"></div>
+          <div class="mf" style="grid-column:1/-1"><label>Descrição</label><textarea id="mDesc" rows="2" placeholder="Descrição curta (1-2 linhas)" oninput="_sugerirCat('mName','mDesc','mCat','mCatSug')"></textarea></div>
           <div class="mf">
             <label>Categoria *</label>
             <select id="mCat">
@@ -554,6 +554,7 @@ textarea{resize:vertical;min-height:54px}
               <option value="Ebooks">Ebooks</option>
             </select>
             <div style="font-size:9px;color:var(--t3);margin-top:3px">Notícias = gratuito + seção especial</div>
+            <div id="mCatSug" style="display:none;font-size:10px;margin-top:4px;padding:4px 8px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:5px;color:var(--acc2);cursor:pointer" title="Clique para aplicar"></div>
           </div>
           <div class="mf"><label>Ícone</label><input type="text" id="mIcon" placeholder="🎓"></div>
           <div class="mf"><label>Módulos</label><input type="number" id="mModules" min="1" placeholder="9"></div>
@@ -614,8 +615,8 @@ textarea{resize:vertical;min-height:54px}
           <input type="text" id="nId" placeholder="ss" oninput="chkId(this.value,'fb2','nId')">
           <div class="idfb" id="fb2"></div>
         </div>
-        <div class="mf"><label>Nome *</label><input type="text" id="nName" placeholder="Nome do Curso"></div>
-        <div class="mf" style="grid-column:1/-1"><label>Descrição</label><textarea id="nDesc" rows="2" placeholder="Descrição curta"></textarea></div>
+        <div class="mf"><label>Nome *</label><input type="text" id="nName" placeholder="Nome do Curso" oninput="_sugerirCat('nName','nDesc','nCat','nCatSug')"></div>
+        <div class="mf" style="grid-column:1/-1"><label>Descrição</label><textarea id="nDesc" rows="2" placeholder="Descrição curta" oninput="_sugerirCat('nName','nDesc','nCat','nCatSug')"></textarea></div>
         <div class="mf"><label>Arquivo HTML *</label><input type="text" id="nFile" placeholder="seguranca-sociedade-2025.html"></div>
         <div class="mf">
           <label>Categoria *</label>
@@ -644,8 +645,12 @@ textarea{resize:vertical;min-height:54px}
             <option value="Engenharia">Engenharia</option>
             <option value="Mecânica">Mecânica</option>
             <option value="Meio Ambiente & Sustentabilidade">Meio Ambiente & Sustentabilidade</option>
+            <option value="Idiomas">Idiomas</option>
+            <option value="Liderança e Poder">Liderança e Poder</option>
+            <option value="Criptomoedas">Criptomoedas</option>
             <option value="Ebooks">Ebooks</option>
           </select>
+          <div id="nCatSug" style="display:none;font-size:10px;margin-top:4px;padding:4px 8px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:5px;color:var(--acc2);cursor:pointer" title="Clique para aplicar"></div>
         </div>
         <div class="mf"><label>Ícone</label><input type="text" id="nIcon" placeholder="🛡️"></div>
         <div class="mf"><label>Módulos</label><input type="number" id="nModules" placeholder="9" min="1"></div>
@@ -739,6 +744,9 @@ textarea{resize:vertical;min-height:54px}
             <option value="Engenharia">Engenharia</option>
             <option value="Mecânica">Mecânica</option>
             <option value="Meio Ambiente & Sustentabilidade">Meio Ambiente & Sustentabilidade</option>
+            <option value="Idiomas">Idiomas</option>
+            <option value="Liderança e Poder">Liderança e Poder</option>
+            <option value="Criptomoedas">Criptomoedas</option>
             <option value="Ebooks">Ebooks</option>
           </select>
         </div>
@@ -939,6 +947,9 @@ textarea{resize:vertical;min-height:54px}
             <option value="Engenharia">Engenharia</option>
             <option value="Mecânica">Mecânica</option>
             <option value="Meio Ambiente & Sustentabilidade">Meio Ambiente & Sustentabilidade</option>
+            <option value="Idiomas">Idiomas</option>
+            <option value="Liderança e Poder">Liderança e Poder</option>
+            <option value="Criptomoedas">Criptomoedas</option>
             <option value="Ebooks">Ebooks</option>
           </select>
         </div>
@@ -1302,6 +1313,27 @@ textarea{resize:vertical;min-height:54px}
       <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Visualize todas as categorias, cursos ativos e "Em Breve" de cada uma</div>
       <button class="btns" onclick="listarCategorias()">🏷️ Listar Categorias</button>
       <div id="catmgr-result" style="display:none;margin-top:12px;max-height:500px;overflow-y:auto"></div>
+    </div>
+
+    <!-- 17b. Auto-Reorganização de Categorias -->
+    <div class="card" style="border-left:3px solid #f59e0b">
+      <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:4px">🔄 Reorganizar Categorias Automaticamente</div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:6px">Analisa o nome e descrição de cada curso e detecta se está na categoria errada.</div>
+      <div style="font-size:10px;color:var(--t3);margin-bottom:14px;line-height:1.6;padding:8px;background:rgba(245,158,11,.06);border-radius:6px;border:1px solid rgba(245,158,11,.15)">
+        Exemplos de erros que detecta:<br>
+        • "Comunicação Persuasiva" em Esportes → move para PNL/Desenvolvimento<br>
+        • "Bitcoin" em Negócios → move para Criptomoedas/Finanças<br>
+        • "Inglês Intermediário" em Idiomas → corrige para categoria Inglês/Idiomas<br>
+        • Cursos de tecnologia em História, política em teologia, etc.
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btnp" id="btn-auto-reorg" onclick="autoReorganizarCategorias()" style="flex:1;min-width:200px;background:#f59e0b;font-size:13px;padding:12px">
+          🔄 Reorganizar Categorias Automaticamente
+        </button>
+        <button class="btns" onclick="autoReorganizarCategorias()" title="Mesmo que o botão principal, mas sem aplicar">🔍 Apenas Analisar</button>
+      </div>
+      <div id="reorg-result" style="display:none;margin-top:14px;max-height:600px;overflow-y:auto"></div>
+      <div class="res" id="reorg-apply-res" style="margin-top:10px"></div>
     </div>
 
     <!-- 18. Exportar Alunos CSV -->
@@ -2231,6 +2263,9 @@ function extractMeta(html,fn){
     else if(catLC.indexOf('esporte')!==-1||catLC.indexOf('performance')!==-1) cat = 'Esportes & Alta Performance';
     else if(catLC.indexOf('saúde')!==-1||catLC.indexOf('ciência')!==-1||catLC.indexOf('saude')!==-1) cat = 'Saúde & Ciência';
     else if(catLC.indexOf('meio ambiente')!==-1||catLC.indexOf('sustentab')!==-1) cat = 'Meio Ambiente & Sustentabilidade';
+    else if(catLC.indexOf('idioma')!==-1||catLC.indexOf('língua')!==-1) cat = 'Idiomas';
+    else if(catLC.indexOf('lideranç')!==-1||catLC.indexOf('lideranca')!==-1||catLC.indexOf('poder')!==-1) cat = 'Liderança e Poder';
+    else if(catLC.indexOf('cripto')!==-1||catLC.indexOf('bitcoin')!==-1) cat = 'Criptomoedas';
     else cat = rawCat; // passa direto se não reconhecer
   }
 
@@ -2245,7 +2280,8 @@ function extractMeta(html,fn){
     'Política Brasileira':'🏛️','Marketing & Vendas':'📢',
     'Direito & Cidadania':'⚖️','Família & Relacionamentos':'👨‍👩‍👧‍👦',
     'Segurança & Sobrevivência':'🔐','Esportes & Alta Performance':'🏆',
-    'Saúde & Ciência':'🧬','Meio Ambiente & Sustentabilidade':'🌱'
+    'Saúde & Ciência':'🧬','Meio Ambiente & Sustentabilidade':'🌱',
+    'Idiomas':'🌐','Liderança e Poder':'👑','Criptomoedas':'₿'
   };
   var icon = iconMap[cat] || g2([/const\s+COURSE_ICON\s*=\s*['"]([^'"]{1,4})['"]/],'🎓');
 
@@ -5658,6 +5694,325 @@ function listarCategorias(){
     h+='</div>';
   });
   d.innerHTML=h;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   AUTO-CATEGORIZAÇÃO INTELIGENTE
+   Analisa nome + descrição do curso e sugere a categoria correta
+   ══════════════════════════════════════════════════════════════ */
+
+// Mapa de palavras-chave → categoria (prioridade decrescente)
+var _catKeywords = [
+  { cat: 'Atualize-se! Notícias Mais Relevantes da Semana', keys: ['notícia','noticias','noticia','atualize-se','atualize se','semanal','semanais','aconteceu essa semana','resumo da semana','semana em','destaques da semana'], icon: '📰' },
+  { cat: 'Geopolítica', keys: ['geopolítica','geopolitica','belt and road','rota da seda','otan','nato','china','russia','eua','guerra fria','guerra mundial','conflito mundial','nova ordem','ordem mundial','ártico','artico','potência','potencia global','soberania','hegemonia','tratado','alianças internacionais','geopolitico','fronteira','sanções','sancoes','imperialismo','neocolonialismo','diplomacia'], icon: '🌍' },
+  { cat: 'Política Brasileira', keys: ['política brasileira','politica brasileira','brasil polít','congresso','senado','câmara','stf','constituição','impeachment','eleições','eleicoes','partidos','lula','bolsonaro','reforma polít','cpi','deputad','governador','prefeito','voto','urna'], icon: '🏛️' },
+  { cat: 'Finanças & Economia', keys: ['finanças','financas','economia','econômico','economico','inflação','inflacao','mercado financeiro','bolsa de valores','investiment','criptomoeda','bitcoin','banco central','selic','juros','dólar','dolar','câmbio','pib','recessão','deficit','superavit','tesouro direto','ações','acoes','fundos','educação financeira','financeiro','riqueza','dinheiro','milionário','milionario','patrimônio','patrimonio','renda passiva','poupar','poupança'], icon: '💰' },
+  { cat: 'Negócios / Empresas', keys: ['negócios','negocios','empresa','empreendedorismo','startup','gestão','gestao','liderança','lideranca','corporativ','ceo','executiv','business','oferta irresistível','oferta irresist','funil','modelo de negócio','modelo de negocio','escala','franquia','caso banco','caso master','empresarial','lucro','faturamento','receita','valuation'], icon: '🏛️' },
+  { cat: 'Marketing & Vendas', keys: ['marketing','vendas','tráfego','trafego','copywriting','copy','persuasão','persuasao','publicidade','propaganda','digital marketing','social media','instagram','youtube','anúncio','anuncio','lead','conversão','conversao','funil de vendas','neuromarketing','branding','marca','storytelling','negócios digitais','negocios digitais'], icon: '📢' },
+  { cat: 'Conspirações & Mistérios', keys: ['conspiração','conspiracao','mistério','misterio','oculto','illuminati','maçonaria','maconaria','sociedade secreta','nova ordem mundial','alienígena','alienigena','ovni','ufo','encoberto','teoria da conspiração','deep state','mk ultra','área 51','area 51','templários','templarios','segredo','sobrenatural','paranormal'], icon: '🕵️' },
+  { cat: 'PNL', keys: ['pnl','programação neurolinguística','programacao neurolinguistica','neurolinguística','neurolinguistica','ancoragem','rapport','modelagem','milton erickson','richard bandler','john grinder','hipnose','hipnoterapia'], icon: '🧠' },
+  { cat: 'Psicologia', keys: ['psicologia','psicológ','psicolog','freud','jung','comportamento humano','transtorno','ansiedade','depressão','depressao','mente','cognitiv','terapia','saúde mental','saude mental','inteligência emocional','inteligencia emocional','neurociência','neurociencia','personalidade','perfil comportamental','narcisis','manipulação mental','manipulacao mental','viés','vies','heurística','heuristica'], icon: '🧩' },
+  { cat: 'Desenvolvimento', keys: ['desenvolvimento pessoal','autoconhecimento','hábitos','habitos','produtividade','foco','disciplina','mentalidade','mindset','alta performance pessoal','motivação','motivacao','propósito','proposito','resiliência','resiliencia','superação','superacao','coaching','autoajuda','sucesso pessoal','rotina','tomada de decisão','tomada de decisao','decisão estratégica','decisao estrategica'], icon: '🚀' },
+  { cat: 'Tecnologia', keys: ['tecnologia','inteligência artificial','inteligencia artificial','ia ','ai ','machine learning','deep learning','programação','programacao','software','hardware','internet','blockchain','metaverso','robótica','robotica','computação','computacao','algoritmo','dados','big data','cibersegurança','ciberseguranca','hacker','código','codigo','app','sistema','web','digital','tech','inovação','inovacao','futuro da tecnologia'], icon: '💻' },
+  { cat: 'História', keys: ['história','historia','históric','historic','revolução','revolucao','império','imperio','civilização','civilizacao','medieval','antigo','antiguidade','guerra mundial','segunda guerra','primeira guerra','roma','grécia','grecia','egito','renascimento','idade média','idade media','colonização','colonizacao','independência','independencia','monarquia','república','republica','escravidão','escravidao','descobrimento','navegações','navegacoes','revoluções que mudaram','revolucoes que mudaram'], icon: '📜' },
+  { cat: 'Filosofia', keys: ['filosofia','filosóf','filosof','sócrates','socrates','platão','platao','aristóteles','aristoteles','kant','nietzsche','hegel','existencialismo','metafísica','metafisica','ética','etica','epistemologia','lógica','logica','estóic','estoic','estoicismo','iluminismo','racionalismo','empirismo','fenomenologia','ontologia','maquiavel','pensadores'], icon: '🦉' },
+  { cat: 'Bíblia / Teologia', keys: ['bíblia','biblia','teologia','teológic','teologic','deus','jesus','cristo','espírito santo','espirito santo','evangelho','apocalipse','gênesis','genesis','salmo','profeta','igreja','cristão','cristao','fé ','oração','oracao','católic','catolic','protestant','pentecostal','pastor','pregação','pregacao','sagrada escritura','velho testamento','novo testamento','religião','religiao','divino','espiritual','eclesiástic','eclesiastico'], icon: '✝️' },
+  { cat: 'Biografias', keys: ['biografia','vida de','trajetória de','trajetoria de','quem foi','quem é','a história de','a historia de','perfil de','legado de','memória de','memoria de'], icon: '👤' },
+  { cat: 'Direito & Cidadania', keys: ['direito','cidadania','jurídic','juridic','lei ','leis ','código civil','codigo civil','código penal','codigo penal','constituição','constituicao','tribunal','justiça','justica','advogado','processo','contrato','legislação','legislacao','regulamentação','regulamentacao','compliance'], icon: '⚖️' },
+  { cat: 'Família & Relacionamentos', keys: ['família','familia','relacionamento','casamento','casal','filhos','parentalidade','educação dos filhos','educacao dos filhos','conjugal','maternidade','paternidade','divórcio','divorcio','amor','namoro','convivência','convivencia','vínculo','vinculo'], icon: '👨‍👩‍👧‍👦' },
+  { cat: 'Segurança & Sobrevivência', keys: ['segurança','seguranca','sobrevivência','sobrevivencia','defesa pessoal','arma','tiro','proteção','protecao','emergência','emergencia','preparação','preparacao','prepper','tático','tatico','combate','vigilância','vigilancia','crime','autodefesa','krav maga','primeiros socorros'], icon: '🔐' },
+  { cat: 'Esportes & Alta Performance', keys: ['esporte','esportiva','futebol','basquete','mma','ufc','olimpíada','olimpiada','atleta','treino','treinamento físico','treinamento fisico','musculação','musculacao','fitness','corrida','maratona','competição','competicao','performance física','performance fisica','alta performance esportiva'], icon: '🏆' },
+  { cat: 'Saúde & Ciência', keys: ['saúde','saude','ciência','ciencia','medicina','médic','medic','doença','doenca','tratamento','vacina','nutrição','nutricao','dieta','alimentação','alimentacao','corpo humano','anatomia','fisiologia','farmácia','farmacia','remédio','remedio','prevenção','prevencao','pandemia','vírus','virus','bactéria','bacteria','genética','genetica','dna','biologia','química','quimica','laboratório','laboratorio','pesquisa científica'], icon: '🧬' },
+  { cat: 'Inglês', keys: ['inglês','ingles','english','vocabulário inglês','vocabulario ingles','gramática inglesa','gramatica inglesa','fluência','fluencia','speaking','listening','reading','writing','toefl','ielts','idioma inglês'], icon: '🇺🇸' },
+  { cat: 'Engenharia', keys: ['engenharia','engenheiro','estrutura','cálculo','calculo','projeto','civil','elétric','eletric','mecânic','mecanica engenharia','construção','construcao','ponte','edifício','edificio','material','concreto','aço','aco'], icon: '⚙️' },
+  { cat: 'Mecânica', keys: ['mecânica','mecanica','motor','automóvel','automovel','carro','veículo','veiculo','manutenção automotiva','manutencao automotiva','oficina','peça','peca','transmissão','transmissao','freio','suspensão','suspensao','diesel','injeção','injecao'], icon: '🔧' },
+  { cat: 'Meio Ambiente & Sustentabilidade', keys: ['meio ambiente','sustentabilidade','ecologia','ecológic','ecologic','reciclagem','poluição','poluicao','desmatamento','aquecimento global','clima','carbono','energia renovável','energia renovavel','biodiversidade','preservação','preservacao','floresta','água','agua limpa','esg'], icon: '🌱' },
+  { cat: 'Idiomas', keys: ['idioma','língua','lingua','espanhol','francês','frances','alemão','alemao','mandarim','japonês','japones','coreano','italiano','polyglot','poliglota','intermediário','intermediario','básico de inglês','basico de ingles','avançado de inglês','avancado de ingles','fluência em','fluencia em','conversação','conversacao em','vocabulário','vocabulario'], icon: '🌐' },
+  { cat: 'Liderança e Poder', keys: ['liderança','lideranca','líder','lider','poder','influência política','influencia politica','chefe','gestão de pessoas','gestao de pessoas','gestão de equipes','gestao de equipes','comando','autoridade','chefia','delegação','delegacao','mentor','mentoria'], icon: '👑' },
+  { cat: 'Criptomoedas', keys: ['criptomoeda','bitcoin','ethereum','blockchain','web3','defi','nft','token','satoshi','mineração cripto','mineracao cripto','carteira digital','exchange','binance','altcoin','halving','cripto'], icon: '₿' },
+  { cat: 'Ebooks', keys: ['ebook','e-book','livro digital','pdf exclusivo','material complementar'], icon: '📚' }
+];
+
+// Mapa de normalização: categorias "erradas" ou variantes → categoria oficial do MA_CATS
+var _catNormalize = {
+  'Negócios': 'Negócios / Empresas',
+  'Negocios': 'Negócios / Empresas',
+  'Negocios / Empresas': 'Negócios / Empresas',
+  'Idiomas': 'Inglês', // se só tem inglês no MA_CATS, mapear Idiomas → Inglês (ou criar Idiomas)
+};
+
+// Normaliza nome de categoria (corrige variantes)
+function _normalizeCat(cat) {
+  return _catNormalize[cat] || cat;
+}
+
+// Função principal: dado nome + desc, retorna a melhor categoria
+function _autoCategorizar(nome, desc) {
+  var texto = _normTxt((nome || '') + ' ' + (desc || ''));
+  var melhorCat = '';
+  var melhorScore = 0;
+  var melhorIcon = '🎓';
+
+  _catKeywords.forEach(function(entry) {
+    var score = 0;
+    entry.keys.forEach(function(kw) {
+      var kwNorm = _normTxt(kw);
+      if (texto.indexOf(kwNorm) !== -1) {
+        // Peso maior para keywords mais longas (mais específicas)
+        score += kwNorm.split(' ').length;
+        // Bonus se a keyword aparece no NOME (mais relevante que na desc)
+        if (_normTxt(nome || '').indexOf(kwNorm) !== -1) {
+          score += kwNorm.split(' ').length * 1.5;
+        }
+      }
+    });
+    if (score > melhorScore) {
+      melhorScore = score;
+      melhorCat = entry.cat;
+      melhorIcon = entry.icon;
+    }
+  });
+
+  return { cat: melhorCat || 'Negócios / Empresas', score: melhorScore, icon: melhorIcon };
+}
+
+// ── Reorganizar TODOS os cursos automaticamente ──
+async function autoReorganizarCategorias() {
+  var c = g();
+  if (!c.t) { alert('Configure o token GitHub primeiro.'); return; }
+
+  var btn = el('btn-auto-reorg');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<div class="sp" style="border-top-color:currentColor;width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:6px"></div>Analisando...'; }
+
+  // Carregar courses.js
+  if (!_cursosCarregados || !_cursosCarregados.length) {
+    await loadCoursesData();
+    if (typeof carregarCursosEditor === 'function') await carregarCursosEditor();
+  }
+
+  var cursos = _cursosCarregados || [];
+  if (!cursos.length) { alert('Nenhum curso encontrado. Clique em Atualizar primeiro.'); if (btn) { btn.disabled = false; btn.textContent = '🔄 Reorganizar Categorias Automaticamente'; } return; }
+
+  // Lista oficial de categorias (do MA_CATS)
+  var catsOficiais = [
+    'Atualize-se! Notícias Mais Relevantes da Semana','Negócios / Empresas','Geopolítica',
+    'Conspirações & Mistérios','Finanças & Economia','Política Brasileira','PNL',
+    'Marketing & Vendas','Desenvolvimento','Psicologia','Direito & Cidadania','Filosofia',
+    'História','Bíblia / Teologia','Biografias','Família & Relacionamentos',
+    'Segurança & Sobrevivência','Esportes & Alta Performance','Tecnologia','Saúde & Ciência',
+    'Inglês','Meio Ambiente & Sustentabilidade','Ebooks',
+    'Idiomas','Liderança e Poder','Criptomoedas'
+  ];
+
+  // Analisar cada curso
+  var mudancas = [];
+  var corretos = [];
+  cursos.forEach(function(curso) {
+    var catAtual = curso.cat || '';
+    var catNormalizada = _normalizeCat(catAtual);
+
+    // 1. Verificar se a categoria precisa ser normalizada (ex: "Negócios" → "Negócios / Empresas")
+    if (catNormalizada !== catAtual && catsOficiais.indexOf(catNormalizada) !== -1) {
+      mudancas.push({
+        id: curso.id, nome: curso.name, icon: curso.icon,
+        catAtual: catAtual, catNova: catNormalizada,
+        iconNova: curso.icon, score: 999, aceita: true,
+        motivo: 'Nome da categoria normalizado'
+      });
+      return;
+    }
+
+    // 2. Auto-categorizar baseado no conteúdo
+    var sugestao = _autoCategorizar(curso.name, curso.desc || '');
+
+    // 3. Se a categoria atual não existe nas oficiais, sempre sugerir mudança
+    var catNaoExiste = catsOficiais.indexOf(catAtual) === -1 && catAtual !== '';
+
+    if ((sugestao.cat !== catAtual && sugestao.score > 0) || catNaoExiste) {
+      mudancas.push({
+        id: curso.id, nome: curso.name, icon: curso.icon,
+        catAtual: catAtual,
+        catNova: sugestao.score > 0 ? sugestao.cat : catAtual,
+        iconNova: sugestao.icon || curso.icon,
+        score: sugestao.score,
+        aceita: sugestao.score > 1, // auto-aceitar apenas se alta confiança
+        motivo: catNaoExiste ? 'Categoria "' + catAtual + '" não existe nas seções do site' : ''
+      });
+    } else {
+      corretos.push({ id: curso.id, nome: curso.name, cat: curso.cat, icon: curso.icon });
+    }
+  });
+
+  // Renderizar resultado
+  var html = '';
+
+  // Stats
+  html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">';
+  html += '<div style="padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(96,165,250,.1);color:var(--acc2);border:1px solid rgba(96,165,250,.25)">Total: ' + cursos.length + ' cursos</div>';
+  html += '<div style="padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.25)">Corretos: ' + corretos.length + '</div>';
+  if (mudancas.length) html += '<div style="padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(245,158,11,.1);color:#fcd34d;border:1px solid rgba(245,158,11,.25)">Precisam mudar: ' + mudancas.length + '</div>';
+  else html += '<div style="padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.25)">Todos organizados corretamente!</div>';
+  html += '</div>';
+
+  if (mudancas.length) {
+    html += '<div style="font-size:12px;font-weight:700;color:var(--txt);margin-bottom:10px">Mudanças sugeridas (desmarque as que não quer aplicar):</div>';
+
+    mudancas.forEach(function(m, idx) {
+      html += '<div style="background:var(--card);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px" id="reorg-item-' + idx + '">';
+      html += '<input type="checkbox" ' + (m.aceita ? 'checked' : '') + ' onchange="window._reorgMudancas[' + idx + '].aceita=this.checked" style="width:18px;height:18px;accent-color:#3b82f6;flex-shrink:0;cursor:pointer">';
+      html += '<div style="flex:1;min-width:0">';
+      html += '<div style="font-size:13px;font-weight:700;color:var(--txt)">' + escH(m.icon || '📚') + ' ' + escH(m.nome) + ' <span style="font-size:10px;color:var(--t3);font-family:var(--mono)">(' + m.id + ')</span></div>';
+      html += '<div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap">';
+      html += '<span style="font-size:10px;padding:3px 8px;background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.2);border-radius:5px;text-decoration:line-through">' + escH(m.catAtual) + '</span>';
+      html += '<span style="font-size:14px;color:var(--t3)">→</span>';
+      html += '<span style="font-size:10px;padding:3px 8px;background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.2);border-radius:5px;font-weight:700">' + escH(m.iconNova) + ' ' + escH(m.catNova) + '</span>';
+      if (m.motivo) html += '<span style="font-size:9px;color:#fcd34d;margin-left:4px" title="' + escH(m.motivo) + '">⚠️ ' + escH(m.motivo) + '</span>';
+      // Select para escolher outra categoria manualmente
+      html += '<select style="font-size:10px;padding:3px 6px;max-width:180px" onchange="window._reorgMudancas[' + idx + '].catNova=this.value" title="Ou escolha outra categoria manualmente">';
+      _catKeywords.forEach(function(ck) {
+        var sel = ck.cat === m.catNova ? ' selected' : '';
+        html += '<option value="' + escH(ck.cat) + '"' + sel + '>' + ck.icon + ' ' + escH(ck.cat) + '</option>';
+      });
+      html += '</select>';
+      html += '</div></div></div>';
+    });
+
+    html += '<div style="display:flex;gap:8px;margin-top:12px">';
+    html += '<button class="btnp" onclick="aplicarReorganizacao()" style="flex:1;background:#22c55e;font-size:13px;padding:12px">';
+    html += '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>';
+    html += ' Aplicar Reorganização no GitHub</button>';
+    html += '<button class="btns" onclick="el(\'reorg-result\').style.display=\'none\'">Cancelar</button>';
+    html += '</div>';
+  }
+
+  // Mostrar cursos que estão corretos (colapsável)
+  if (corretos.length) {
+    html += '<details style="margin-top:14px"><summary style="font-size:11px;font-weight:700;color:var(--t2);cursor:pointer;margin-bottom:8px">Ver ' + corretos.length + ' cursos já categorizados corretamente</summary>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:4px">';
+    corretos.forEach(function(c2) {
+      html += '<span style="font-size:9px;padding:3px 7px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15);border-radius:5px;color:#86efac">' + (c2.icon || '📚') + ' ' + escH(c2.nome).substring(0, 30) + ' → ' + escH(c2.cat) + '</span>';
+    });
+    html += '</div></details>';
+  }
+
+  window._reorgMudancas = mudancas;
+
+  var res = el('reorg-result');
+  res.innerHTML = html;
+  res.style.display = 'block';
+  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  if (btn) { btn.disabled = false; btn.innerHTML = '🔄 Reorganizar Categorias Automaticamente'; }
+}
+
+// ── Aplicar as mudanças de categoria no GitHub (courses.js) ──
+async function aplicarReorganizacao() {
+  var mudancas = (window._reorgMudancas || []).filter(function(m) { return m.aceita; });
+  if (!mudancas.length) { alert('Nenhuma mudança selecionada.'); return; }
+
+  if (!confirm('Aplicar ' + mudancas.length + ' mudança(s) de categoria no GitHub?\n\nIsso vai atualizar o arquivo courses.js.')) return;
+
+  var c = g();
+  if (!c.t) { alert('Configure o token.'); return; }
+
+  showRes('reorg-apply-res', 'ld', '<div class="sp"></div> Aplicando mudanças...');
+
+  try {
+    // Buscar courses.js atual
+    var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js', { headers: gh() });
+    var fd = await res.json();
+    var content = b64d(fd.content);
+    var sha = fd.sha;
+    var aplicadas = 0;
+
+    // Aplicar cada mudança
+    mudancas.forEach(function(m) {
+      // Regex para encontrar o bloco do curso e trocar a categoria
+      // Encontrar: id: 'XXXX' ... cat: 'CAT_ANTIGA'
+      var idEsc = m.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      var catEsc = m.catAtual.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      var re = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][\\s\\S]{0,600}?cat:\\s*['\"])" + catEsc + "(['\"])");
+      var novo = content.replace(re, '$1' + m.catNova.replace(/'/g, "\\'") + '$2');
+
+      // Também atualizar o ícone se mudou
+      if (novo !== content) {
+        // Atualizar icone
+        var iconEntry = _catKeywords.find(function(ck) { return ck.cat === m.catNova; });
+        if (iconEntry) {
+          var iconRe = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][\\s\\S]{0,600}?icon:\\s*['\"])[^'\"]+(['\"])");
+          novo = novo.replace(iconRe, '$1' + iconEntry.icon + '$2');
+        }
+        content = novo;
+        aplicadas++;
+      }
+    });
+
+    if (!aplicadas) {
+      showRes('reorg-apply-res', 'er', '❌ Nenhuma mudança foi aplicada. Verifique se os cursos existem no courses.js.');
+      return;
+    }
+
+    // Push para GitHub
+    var put = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js', {
+      method: 'PUT',
+      headers: gh(),
+      body: JSON.stringify({
+        message: 'auto-reorg: ' + aplicadas + ' curso(s) recategorizados',
+        content: b64e(content),
+        sha: sha
+      })
+    });
+
+    if (put.ok) {
+      showRes('reorg-apply-res', 'ok', '✅ ' + aplicadas + ' curso(s) recategorizados com sucesso! O site será atualizado em instantes.');
+      addAudit('🏷️ Auto-reorganização: ' + aplicadas + ' curso(s) recategorizados');
+      // Recarregar dados
+      await loadCoursesData();
+      loadList();
+    } else {
+      var e = await put.json();
+      showRes('reorg-apply-res', 'er', '❌ Erro GitHub: ' + (e.message || put.status));
+    }
+  } catch (err) {
+    showRes('reorg-apply-res', 'er', '❌ Erro: ' + escH(err.message));
+  }
+}
+
+// ── Sugestão de categoria ao digitar nome/desc ──
+function _sugerirCat(nameId, descId, catId, sugId) {
+  var nome = el(nameId) ? el(nameId).value : '';
+  var desc = el(descId) ? el(descId).value : '';
+  var sugEl = el(sugId);
+  if (!sugEl) return;
+
+  if (nome.length < 3) { sugEl.style.display = 'none'; return; }
+
+  var sugestao = _autoCategorizar(nome, desc);
+  var catSelect = el(catId);
+  var catAtual = catSelect ? catSelect.value : '';
+
+  if (sugestao.score > 0 && sugestao.cat !== catAtual) {
+    sugEl.style.display = 'block';
+    sugEl.innerHTML = '💡 Sugestão: <strong>' + sugestao.icon + ' ' + escH(sugestao.cat) + '</strong> — <span style="text-decoration:underline">clique para aplicar</span>';
+    sugEl.onclick = function() {
+      // Selecionar a categoria sugerida
+      for (var i = 0; i < catSelect.options.length; i++) {
+        if (catSelect.options[i].value === sugestao.cat) {
+          catSelect.selectedIndex = i;
+          break;
+        }
+      }
+      sugEl.style.display = 'none';
+      sugEl.innerHTML = '✅ Categoria aplicada!';
+      sugEl.style.display = 'block';
+      sugEl.style.color = '#86efac';
+      sugEl.style.background = 'rgba(34,197,94,.08)';
+      sugEl.style.borderColor = 'rgba(34,197,94,.2)';
+      setTimeout(function() { sugEl.style.display = 'none'; }, 2000);
+    };
+  } else {
+    sugEl.style.display = 'none';
+  }
 }
 
 /* 18. Exportar Alunos CSV */
