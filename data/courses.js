@@ -1692,7 +1692,7 @@ var MA_COURSES = [
     addedTs: 1775832784450,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/de.jpg',
     id: 'de',
     name: 'Tomada de Decisão Estratégica',
@@ -1708,7 +1708,7 @@ var MA_COURSES = [
     storagePrefix: 'de_',
     icon: '🎓',
     color: '#1d4ed8',
-    addedTs: 1776370061566,
+    addedTs: 1776370783186,
     active: true
   },
   {
