@@ -3948,6 +3948,25 @@ var MA_COURSES = [
     color: '#059669',
     addedTs: 1776359013713,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/sbw.jpg',
+    id: 'sbw',
+    name: 'Sistema Bancário e Criação de Dinheiro',
+    desc: 'Entenda como os bancos realmente funcionam e como o dinheiro é criado na economia.',
+    file: 'sistema-bancario.html',
+    cat: 'Finanças & Economia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'SB_HENRY_2026_MASTER',
+    ak: 'sb_auth',
+    storagePrefix: 'sb_',
+    icon: '💰',
+    color: '#166534',
+    addedTs: 1776359018360,
+    active: true
   }
 ];
 var MA_CATS = [
