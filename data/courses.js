@@ -907,7 +907,7 @@ var MA_COURSES = [
     addedTs: 1776289928807,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/rt.jpg',
     id: 'rt',
     name: 'Relacionamentos Tóxicos: Como Identificar e se Proteger',
@@ -917,13 +917,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'RT_HENRY_2026_MASTER',
     ak: 'rt_auth',
     storagePrefix: 'rt_',
     icon: '👨‍👩‍👧‍👦',
     color: '#6a040f',
-    addedTs: 1775831024654,
+    addedTs: 1776372412126,
     active: true
   },
   {
