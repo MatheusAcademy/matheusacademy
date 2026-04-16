@@ -3606,6 +3606,25 @@ var MA_COURSES = [
     color: '#4f46e5',
     addedTs: 1776358866696,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/cu.jpg',
+    id: 'cu',
+    name: 'Cultura Empresarial Forte',
+    desc: 'Construa uma empresa com valores sólidos, disciplina e identidade clara.',
+    file: 'cultura-empresarial.html',
+    cat: 'Negócios',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'CU_HENRY_2026_MASTER',
+    ak: 'cu_auth',
+    storagePrefix: 'cu_',
+    icon: '🎓',
+    color: '#b45309',
+    addedTs: 1776358871433,
+    active: true
   }
 ];
 var MA_CATS = [
