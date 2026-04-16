@@ -3796,6 +3796,25 @@ var MA_COURSES = [
     color: '#0891b2',
     addedTs: 1776358965861,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ecw.jpg',
+    id: 'ecw',
+    name: 'Economia Comportamental',
+    desc: 'Descubra por que as pessoas tomam decisões financeiras irracionais.',
+    file: 'economia-comportamental.html',
+    cat: 'Finanças & Economia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'EC_HENRY_2026_MASTER',
+    ak: 'ec_auth',
+    storagePrefix: 'ec_',
+    icon: '💰',
+    color: '#9333ea',
+    addedTs: 1776358970945,
+    active: true
   }
 ];
 var MA_CATS = [
