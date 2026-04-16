@@ -9,128 +9,18 @@
 </head>
 <body>
 <script>
-var COURSE = {
-  id: 'FM',
-  name: 'Filósofos que Mudaram o Mundo',
-  shortName: 'Filósofos Influentes',
-  cat: 'Liderança e Poder',
-  desc: 'Apresenta pensadores que influenciaram política, ética, ciência, educação e a forma como entendemos a realidade.',
-  salt: 'FM_HENRY_2026_MASTER',
-  ak: 'fm_auth',
-  courseKey: 'fm',
-  prefix: 'fm_',
-  color: '#e8ac65',
-  glow: 'rgba(232,172,101,.35)',
-  free: false,
-  freeModules: 1,
-  modules: 3,
-  topics: 9,
-  hours: 2,
-  quizzes: 9
-};
+var COURSE = {"id":"FM","name":"Filósofos que Mudaram o Mundo","shortName":"Filósofos Influentes","cat":"Liderança e Poder","desc":"Apresenta pensadores que influenciaram política, ética, ciência, educação e a forma como entendemos a realidade.","salt":"FM_HENRY_2026_MASTER","ak":"fm_auth","courseKey":"fm","prefix":"fm_","color":"#e8ac65","glow":"rgba(232,172,101,.35)","free":false,"freeModules":1,"modules":3,"topics":9,"hours":2,"quizzes":9};
 
 var MODS = [
   {
-    id: 1,
-    name: 'Pilares da Filosofia Ocidental',
-    free: true,
-    topics: [1, 2, 3],
-    summary: {
-      title: 'Fundadores do Pensamento Racional',
-      points: [
-        'Platão estabeleceu método dialético e ideias de justiça que influenciaram educação por 2400 anos',
-        'Aristóteles criou lógica formal e sistemas de classificação que fundamentaram ciência moderna',
-        'Descartes revolucionou epistemologia com "Penso, logo existo" e método científico'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Qual foi a principal contribuição de Platão para educação?',
-        opts: ['Criação de escolas públicas obrigatórias', 'Método dialético de questionamento e Academia de Atenas', 'Invenção do quadro negro', 'Desenvolvimento de currículos técnicos'],
-        correct: 1
-      },
-      {
-        q: 'Que criação intelectual Aristóteles é mais conhecido?',
-        opts: ['Teoria das Ideias', 'Silogismo lógico', 'Teorema de Pitágoras', 'Método cartesiano'],
-        correct: 1
-      },
-      {
-        q: 'Como o pensamento de Descartes revolucionou a filosofia?',
-        opts: ['Rejeitou toda forma de dúvida', 'Começou com dúvida radical e ceticismo metodológico', 'Retornou ao pensamento de Platão', 'Aboliu a razão científica'],
-        correct: 1
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Pensadores de Política, Poder e Liberdade',
-    free: false,
-    topics: [4, 5, 6],
-    summary: {
-      title: 'Ideologias que Transformaram Governos',
-      points: [
-        'Maquiavel redefiniu política como estudo amoral de poder, influenciando realismo político moderno',
-        'Locke e Rousseau fundamentaram democracia liberal e direitos naturais dos homens',
-        'Marx analisou capitalismo e criou ideologia que guiou revoluções do século XX'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Qual foi a principal inovação intelectual de Maquiavel?',
-        opts: ['Defender monarquia absoluta', 'Separar análise de poder da moral', 'Criar primeira constituição escrita', 'Inventar diplomacia moderna'],
-        correct: 1
-      },
-      {
-        q: 'Que conceito John Locke defendeu que fundamentou democracia?',
-        opts: ['Soberania absoluta do Estado', 'Direitos naturais e consentimento governado', 'Determinismo histórico', 'Supremacia da razão pura'],
-        correct: 1
-      },
-      {
-        q: 'Marx argumentava que capitalismo inevitavelmente levaria a quê?',
-        opts: ['Maior igualdade', 'Colapso de classe trabalhadora e revolução comunista', 'Democracia perfeita', 'Aumento indefinido de bem-estar'],
-        correct: 1
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Filósofos da Modernidade e Pós-Modernidade',
-    free: false,
-    topics: [7, 8, 9],
-    summary: {
-      title: 'Pensamento Contemporâneo',
-      points: [
-        'Nietzsche questionou morais cristãs e criou psicologia do ressentimento e vontade de poder',
-        'Wittgenstein revolucionou filosofia da linguagem entendendo como palavras ganham significado',
-        'Foucault analisou poder, sexualidade, e como conhecimento reproduz estruturas sociais'
-      ]
-    },
-    quizFinal: [
-      {
-        q: 'Qual era o alvo principal das críticas de Nietzsche?',
-        opts: ['Capitalismo industrial', 'Moralidade cristã tradicional', 'Tecnologia moderna', 'Educação científica'],
-        correct: 1
-      },
-      {
-        q: 'Wittgenstein revolucionou compreensão de linguagem ao perceber que:',
-        opts: ['Linguagem existe fora da realidade', 'Significado vem de uso em contexto social', 'Palavras têm significado essencial imutável', 'Linguagem é decorativa apenas'],
-        correct: 1
-      },
-      {
-        q: 'O que Foucault investigou primariamente em seu trabalho?',
-        opts: ['Natureza da consciência individual', 'Relação entre poder, conhecimento e identidade social', 'Fundamentos de lógica pura', 'Existência de verdade absoluta'],
-        correct: 1
-      }
-    ]
-  }
-];
-
-var TOPICS = [
-  {
-    id: 1,
-    name: 'Platão: Fundador da Academia e Método Dialético',
-    dur: '12 min',
-    content: `
+  id:1,
+  name:"Pilares da Filosofia Ocidental",
+  free:true,
+  topics:[
+    {id:1,
+     name:"Platão: Fundador da Academia e Método Dialético",
+     dur:"12 min",
+     content:`
       <h3>O Filósofo que Criou a Primeira Universidade</h3>
       <p>Platão (428-348 a.C.) nasceu em Atenas, em período turbulento da história grega. Sua família era aristocrática e politicamente influente, o que o posicionava para envolvimento em assuntos públicos. No entanto, o destino que o esperava não era político direto: seria intelectual. Encontrou seu mentor, Sócrates, ainda jovem, e foi transformado por encontro. Diferentemente de outros atenienses que viam Sócrates como mero sofista questionador, Platão entendia que Sócrates estava perseguindo verdade fundamental sobre virtude, beleza, justiça, e realidade subjacente.</p>
       <p>Quando Sócrates foi julgado e executado em 399 a.C., Platão testemunhou este ato de injustiça que moldaria sua visão de filosofia por toda sua vida. Sócrates morreu porque Atenas não conseguia reconhecer seu valor; não conseguia separar sua busca por verdade de perseguição de "corrupção da juventude". Este trauma inspirou Platão a fundar instituição onde verdade poderia ser perseguida sem interferência política: a Academia de Platão.</p>
@@ -152,16 +42,12 @@ var TOPICS = [
       </blockquote>
       <p>Este método revolucionou educação. Ao invés de transferir conhecimento de professor para aluno (modelo de instrução passiva), método socrático envolve aluno ativamente no busca de verdade. Força participante pensar criticamente, questionar suposições, e desenvolver compreensão própria. Método persiste em educação superior contemporânea em forma de seminários, discussões, e educação baseada em problemas.</p>
     `,
-    cards: {
-      q: 'Por que Platão criou a Academia e qual era seu método de educação?',
-      a: 'Platão criou Academia de Atenas em 387 a.C. como comunidade de investigação intelectual, usando método dialético socrático e insistindo que toda educação começasse com matemática para treinar a mente em pensamento abstrato e racional.'
-    }
-  },
-  {
-    id: 2,
-    name: 'Aristóteles: Lógica, Classificação e Método Científico',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Por que Platão criou a Academia e qual era seu método de educação?","a":"Platão criou Academia de Atenas em 387 a.C. como comunidade de investigação intelectual, usando método dialético socrático e insistindo que toda educação começasse com matemática para treinar a mente em pensamento abstrato e racional."}]
+    },
+    {id:2,
+     name:"Aristóteles: Lógica, Classificação e Método Científico",
+     dur:"12 min",
+     content:`
       <h3>O Construtor de Sistemas de Conhecimento</h3>
       <p>Aristóteles (384-322 a.C.) nasceu em Stagira, na Macedônia, não em Atenas. Seu pai era médico, o que talvez explique seu interesse em observação cuidadosa de natureza. Aos 17 anos, mudou-se para Atenas e ingressou na Academia de Platão, onde permaneceu por 20 anos. Inicialmente, era discípulo entusiasmado, mas gradualmente desenvolveu discordâncias com o maestro.</p>
       <p>Enquanto Platão acreditava que verdade residia em reino imutável das Formas transcendental, Aristóteles era empirista: acreditava que conhecimento vinha de observação cuidadosa do mundo natural. O desacordo filosófico era fundamental. Depois que Platão morreu, Aristóteles deixou Academia. Trabalhou em corte de Filipo de Macedônia como tutor de seu filho, o futuro Alexandre o Grande. Mais tarde retornou a Atenas e fundou sua própria escola, o Liceu.</p>
@@ -182,16 +68,12 @@ var TOPICS = [
         💡 A abordagem de Aristóteles para ética baseada em desenvolvimento de virtude através de hábito precedeu por 2300 anos a moderna psicologia de hábito e ainda oferece insights profundos para como vidas humanas devem ser estruturadas.
       </blockquote>
     `,
-    cards: {
-      q: 'Qual foi a inovação lógica de Aristóteles que revolucionou o pensamento racional?',
-      a: 'Aristóteles inventou o silogismo, método formal de raciocínio dedutivo que estabelecia regras para inferência válida; isto permitiu verificação de argumentos pela forma lógica em vez de intuição, fornecendo fundação para ciência moderna.'
-    }
-  },
-  {
-    id: 3,
-    name: 'René Descartes: Matemática, Razão e a Revolução Científica',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Qual foi a inovação lógica de Aristóteles que revolucionou o pensamento racional?","a":"Aristóteles inventou o silogismo, método formal de raciocínio dedutivo que estabelecia regras para inferência válida; isto permitiu verificação de argumentos pela forma lógica em vez de intuição, fornecendo fundação para ciência moderna."}]
+    },
+    {id:3,
+     name:"René Descartes: Matemática, Razão e a Revolução Científica",
+     dur:"12 min",
+     content:`
       <h3>O Fundador da Filosofia Moderna</h3>
       <p>René Descartes (1596-1650) nasceu na França durante período de transição intelectual entre Renascimento e Ilustração. Recebeu educação jesuíta excelente, que enfatizava lógica e scholasticism medieval. No entanto, durante seus estudos, Descartes ficou insatisfeito: percebeu que muito do que era ensinado era baseado em autoridade de antigos filósofos, e quando diferentes autoridades discordavam, não havia método para determinar quem estava certo.</p>
       <p>Após completar educação formal, Descartes viajou extensivamente, participou em guerras, e teve tempo para reflexão profunda sobre conhecimento. Em 1628, retirou-se para Holanda, onde viveu por muitos anos dedicado à filosofia e matemática. Foi neste retiro que desenvolveu sua abordagem revolucionária ao conhecimento: se alguém quer conhecimento verdadeiro, deve começar com dúvida radical de tudo que não pode ser absolutamente certo.</p>
@@ -212,16 +94,21 @@ var TOPICS = [
       <p>Descartes também é famoso (ou infame) por seu dualismo mente-corpo. Argumentava que dois substâncias fundamentais existem: res cogitans (coisa pensante, mente) e res extensa (coisa extensa, matéria). Mente é imaterial e livre; matéria é material e governada por leis mecânicas. Esta separação enfatizava importância da razão e livre vontade, mas criou "problema mente-corpo" que filósofos debateram desde então: como mente imaterial interage com corpo material?</p>
       <p>Apesar de questões deixadas em aberto, contribuição de Descartes foi transformadora. Estabeleceu que filosofia deveria começar com dúvida racional, não com autoridade. Conectou método filosófico com método matemático e científico. Estabeleceu que conhecimento humano é possível através da razão, mesmo que sensorialmente enganados. Estes princípios formaram fundação da Ilustração e ciência moderna.</p>
     `,
-    cards: {
-      q: 'Como o método de dúvida radical de Descartes revolucionou a filosofia?',
-      a: 'Descartes propôs duvidar sistematicamente de tudo até chegar a algo indubidável: "Penso, logo existo"; isto estabeleceu que conhecimento deveria ser baseado em razão e verificação, não em autoridade ou tradição, formando fundação do método científico moderno.'
+     cards:[{"q":"Como o método de dúvida radical de Descartes revolucionou a filosofia?","a":"Descartes propôs duvidar sistematicamente de tudo até chegar a algo indubidável: \"Penso, logo existo\"; isto estabeleceu que conhecimento deveria ser baseado em razão e verificação, não em autoridade ou tradição, formando fundação do método científico moderno."}]
     }
+  ],
+  summary:{"title":"Fundadores do Pensamento Racional","points":["Platão estabeleceu método dialético e ideias de justiça que influenciaram educação por 2400 anos","Aristóteles criou lógica formal e sistemas de classificação que fundamentaram ciência moderna","Descartes revolucionou epistemologia com \"Penso, logo existo\" e método científico"]},
+  quizFinal:[{"q":"Qual foi a principal contribuição de Platão para educação?","opts":["Criação de escolas públicas obrigatórias","Método dialético de questionamento e Academia de Atenas","Invenção do quadro negro","Desenvolvimento de currículos técnicos"],"correct":1},{"q":"Que criação intelectual Aristóteles é mais conhecido?","opts":["Teoria das Ideias","Silogismo lógico","Teorema de Pitágoras","Método cartesiano"],"correct":1},{"q":"Como o pensamento de Descartes revolucionou a filosofia?","opts":["Rejeitou toda forma de dúvida","Começou com dúvida radical e ceticismo metodológico","Retornou ao pensamento de Platão","Aboliu a razão científica"],"correct":1}]
   },
   {
-    id: 4,
-    name: 'Nicolau Maquiavel: Realismo Político e Análise do Poder',
-    dur: '12 min',
-    content: `
+  id:2,
+  name:"Pensadores de Política, Poder e Liberdade",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Nicolau Maquiavel: Realismo Político e Análise do Poder",
+     dur:"12 min",
+     content:`
       <h3>O Filósofo que Separou Política da Moralidade</h3>
       <p>Nicolau Maquiavel (1469-1527) foi diplomata e escritor florentino que viveu durante período turbulento de Itália Renaissance. Trabalhou para República Florentina realizando missões diplomáticas delicadas e desenvolveu íntima compreensão de como poder realmente funciona na prática política, não em teoria. Em 1512, foi expulso de cargo quando família Medici retornou ao poder. Durante tempo de retiro forçado, escreveu sua obra mais famosa: "O Príncipe".</p>
       <p>"O Príncipe" foi projetado como conselho prático para novo príncipe (jovem Medici) sobre como conquistar poder, mantê-lo, e expandi-lo. Ao contrário de tradições medievais de "espelhos de príncipes" que enfatizavam virtudes cristãs de bondade, misericórdia, e honestidade, Maquiavel oferecia análise crua e amoral de que realmente funciona em política.</p>
@@ -241,16 +128,12 @@ var TOPICS = [
         📌 Todas as análises modernas de poder — desde análise de diplomacia até compreensão de política corporativa — carregam influência do entendimento maquiavélico de que poder tem lógica própria separada de moralidade pessoal.
       </blockquote>
     `,
-    cards: {
-      q: 'Qual foi a principal inovação intelectual de Maquiavel em sua análise de política?',
-      a: 'Maquiavel separou política de moralidade pessoal, permitindo análise desinteressada de poder: políticos devem parecer virtuosos mas não ser necessariamente virtuosos; isto estabeleceu campo do realismo político moderno independente de considerações morais.'
-    }
-  },
-  {
-    id: 5,
-    name: 'John Locke: Direitos Naturais e Democracia Liberal',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Qual foi a principal inovação intelectual de Maquiavel em sua análise de política?","a":"Maquiavel separou política de moralidade pessoal, permitindo análise desinteressada de poder: políticos devem parecer virtuosos mas não ser necessariamente virtuosos; isto estabeleceu campo do realismo político moderno independente de considerações morais."}]
+    },
+    {id:2,
+     name:"John Locke: Direitos Naturais e Democracia Liberal",
+     dur:"12 min",
+     content:`
       <h3>O Filósofo da Liberdade Política</h3>
       <p>John Locke (1632-1704) foi filósofo inglês que viveu durante período de grande instabilidade política — Guerra Civil Inglesa, Interregno de Cromwell, e Restauração de Stuart. Suas experiências políticas moldaram sua filosofia. Serviu como advisor à figuras políticas progressivas e foi forçado ao exílio por algum tempo devido a suas ideias sobre limite ao poder real. Durante exílio, escreveu suas obras mais influentes.</p>
       <p>Diferentemente de Maquiavel, Locke não tentava ser amoral em análise política. Em vez disso, tendia perguntar: qual é fundação moral legítima de poder político? Como pode governo ser justificado moralmente? Esta pergunta levou a revolucionária resposta que fundamentou democracia liberal moderna.</p>
@@ -271,16 +154,12 @@ var TOPICS = [
         💡 Praticamente toda constituição democrática moderna — da Declaração de Independência americana à Declaração Universal de Direitos Humanos da ONU — carrega impressão direta de ideias de Locke sobre direitos naturais e consentimento governado.
       </blockquote>
     `,
-    cards: {
-      q: 'Qual foi a contribuição fundamental de John Locke para a teoria política democrática?',
-      a: 'Locke argumentou que humanos possuem direitos naturais inatos de vida, liberdade, e propriedade; governo é justificado apenas se protege estes direitos através de consentimento; se governo viola direitos, povo tem direito de rebelião.'
-    }
-  },
-  {
-    id: 6,
-    name: 'Karl Marx: Materialismo Histórico e Crítica do Capitalismo',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Qual foi a contribuição fundamental de John Locke para a teoria política democrática?","a":"Locke argumentou que humanos possuem direitos naturais inatos de vida, liberdade, e propriedade; governo é justificado apenas se protege estes direitos através de consentimento; se governo viola direitos, povo tem direito de rebelião."}]
+    },
+    {id:3,
+     name:"Karl Marx: Materialismo Histórico e Crítica do Capitalismo",
+     dur:"12 min",
+     content:`
       <h3>O Filósofo que Transformou História</h3>
       <p>Karl Marx (1818-1883) foi filósofo, economista, e ativista revolucionário que viveu durante industrialização europeia acelerada. Testemunhou transformação da sociedade através da urbanização em massa, mecanização de trabalho, e intensificação de desigualdade. Seus escritos moldaram subsequente século XX mais que talvez qualquer outro intelectual — para bem (inspirando movimentos pelo direitos de trabalhadores) ou mal (fornecendo fundação para totalitarismos comunistas).</p>
       <p>Marx começou como hegeliano esquerdo, discípulo da filosofia de Hegel que entendia história como desenvolvimento progressivo através de contradição dialética. No entanto, Marx rejeitou aspecto idealista de Hegel. Hegel acreditava que ideia era força motriz da história. Marx inverteu isto: acreditava que materiais condições econômicas — base econômica — determinavam ideias superstrutura (incluindo política, religião, e filosofia) que construída sobre ela.</p>
@@ -301,16 +180,21 @@ var TOPICS = [
         💡 Mesmo críticos de Marx reconhecem que seu trabalho foi tentativa mais ambiciosa para compreender como economia estrutura sociedade — uma pergunta permanentemente importante mesmo se respostas específicas dele fossem equivocadas.
       </blockquote>
     `,
-    cards: {
-      q: 'O que Marx entendia por materialismo histórico e como isto diferenciava sua análise de história?',
-      a: 'Marx argumentava que as condições econômicas e relações de classe (base material) determinam ideias, política e cultura (superestrutura), não o inverso; história não é batalha de ideias, mas batalha de classes pela apropriação de valor econômico.'
+     cards:[{"q":"O que Marx entendia por materialismo histórico e como isto diferenciava sua análise de história?","a":"Marx argumentava que as condições econômicas e relações de classe (base material) determinam ideias, política e cultura (superestrutura), não o inverso; história não é batalha de ideias, mas batalha de classes pela apropriação de valor econômico."}]
     }
+  ],
+  summary:{"title":"Ideologias que Transformaram Governos","points":["Maquiavel redefiniu política como estudo amoral de poder, influenciando realismo político moderno","Locke e Rousseau fundamentaram democracia liberal e direitos naturais dos homens","Marx analisou capitalismo e criou ideologia que guiou revoluções do século XX"]},
+  quizFinal:[{"q":"Qual foi a principal inovação intelectual de Maquiavel?","opts":["Defender monarquia absoluta","Separar análise de poder da moral","Criar primeira constituição escrita","Inventar diplomacia moderna"],"correct":1},{"q":"Que conceito John Locke defendeu que fundamentou democracia?","opts":["Soberania absoluta do Estado","Direitos naturais e consentimento governado","Determinismo histórico","Supremacia da razão pura"],"correct":1},{"q":"Marx argumentava que capitalismo inevitavelmente levaria a quê?","opts":["Maior igualdade","Colapso de classe trabalhadora e revolução comunista","Democracia perfeita","Aumento indefinido de bem-estar"],"correct":1}]
   },
   {
-    id: 7,
-    name: 'Friedrich Nietzsche: Morte de Deus e Vontade de Poder',
-    dur: '12 min',
-    content: `
+  id:3,
+  name:"Filósofos da Modernidade e Pós-Modernidade",
+  free:false,
+  topics:[
+    {id:1,
+     name:"Friedrich Nietzsche: Morte de Deus e Vontade de Poder",
+     dur:"12 min",
+     content:`
       <h3>O Filósofo que Questionou Toda Moralidade</h3>
       <p>Friedrich Nietzsche (1844-1900) foi filósofo alemão perturbador que passou sua carreira questionando raízes da civilização ocidental. Começou como estudioso brilhante de filologia clássica, mas gradualmente dedicou-se à filosofia, produzindo uma das obras mais provocativas da tradição ocidental. Sofreu de problemas de saúde crônicos — enxaquecas debilitantes, cegueira parcial, insônia — que influenciaram sua perspectiva pessimista sobre existência humana.</p>
       <p>A pergunta central que guia pensamento de Nietzsche é: qual é base real de moralidade e valores? Ele observava que sociedade cristã ocidental havia construído sua moralidade sobre conceitos como compaixão, humildade, igualdade, e sacrifício. Mas de onde vieram estes valores? Nietzsche argumentava que eles não eram eternas verdades, mas produtos históricos — e mais, que eram produtos de ressentimento de fracos contra os fortes.</p>
@@ -331,16 +215,12 @@ var TOPICS = [
         💡 Nietzsche antecipou muitas preocupações da psicologia moderna: importância de ressentimento reprimido, dinâmica de poder em relacionamentos, papel de avaliação pessoal em definição de bem-estar psicológico.
       </blockquote>
     `,
-    cards: {
-      q: 'Como Nietzsche criticava a moralidade cristã e qual era sua proposta alternativa?',
-      a: 'Nietzsche argumentava que moralidade cristã era "moral de escravos" baseada em ressentimento — os fracos inverteram valores para condenar a força dos fortes; propunha "revalorização de valores" onde indivíduos extraordinários (super-homens) criariam novos valores através de vontade de poder.'
-    }
-  },
-  {
-    id: 8,
-    name: 'Ludwig Wittgenstein: Filosofia da Linguagem e Significado',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Como Nietzsche criticava a moralidade cristã e qual era sua proposta alternativa?","a":"Nietzsche argumentava que moralidade cristã era \"moral de escravos\" baseada em ressentimento — os fracos inverteram valores para condenar a força dos fortes; propunha \"revalorização de valores\" onde indivíduos extraordinários (super-homens) criariam novos valores através de vontade de poder."}]
+    },
+    {id:2,
+     name:"Ludwig Wittgenstein: Filosofia da Linguagem e Significado",
+     dur:"12 min",
+     content:`
       <h3>O Filósofo que Reformou Pensamento Sobre Linguagem</h3>
       <p>Ludwig Wittgenstein (1889-1951) foi filósofo austríaco-britânico que trabalhou em dois períodos intelectuais distintos, produzindo duas filosofias quase opostas. Nasceu em Viena em família aristocrática extremamente rica. Inicialmente estudou engenharia, mas foi atraído à filosofia após ler Bertrand Russell. Trabalhou com Russell em Cambridge na lógica, depois serviu como soldado em Primeira Guerra Mundial. Após guerra, tornou-se professor de escola primária na Áustria.</p>
       <p>Seu primeiro trabalho principal, "Tractatus Logico-Philosophicus", foi manuscrito revolucionário que ele completou durante Primeira Guerra Mundial. Oferecia análise lógica de linguagem como fundação para filosofia. Mas após reler seu próprio trabalho anos depois, Wittgenstein percebeu que era fundamentalmente equivocado. Retornou à filosofia na década de 1930 e gastou seus anos finais desenvolvendo filosofia completamente diferente.</p>
@@ -362,16 +242,12 @@ var TOPICS = [
       </blockquote>
       <p>Influência de Wittgenstein sobre filosofia, lógica, linguística, e mesmo inteligência artificial foi profunda. Sua insistência que significado vem de uso em contexto social se tornou ortodoxia em filosofia de linguagem. Seu tratamento de problemas filosóficos como arising from linguística confusão moldou filosofia analítica por décadas. Trabalho posterior de teóricos da interpretação e pragmáticos todos se constroem sobre fundações que Wittgenstein estabeleceu.</p>
     `,
-    cards: {
-      q: 'Como a visão de Wittgenstein sobre significado mudou entre seu Tractatus e suas obras posteriores?',
-      a: 'No Tractatus, Wittgenstein entendia significado como correspondência entre proposição e realidade; depois reformulou radicalmente: significado vem do uso em contextos sociais diferentes (jogos de linguagem) inseridos em formas de vida compartilhadas.'
-    }
-  },
-  {
-    id: 9,
-    name: 'Michel Foucault: Poder, Conhecimento e Identidade Social',
-    dur: '12 min',
-    content: `
+     cards:[{"q":"Como a visão de Wittgenstein sobre significado mudou entre seu Tractatus e suas obras posteriores?","a":"No Tractatus, Wittgenstein entendia significado como correspondência entre proposição e realidade; depois reformulou radicalmente: significado vem do uso em contextos sociais diferentes (jogos de linguagem) inseridos em formas de vida compartilhadas."}]
+    },
+    {id:3,
+     name:"Michel Foucault: Poder, Conhecimento e Identidade Social",
+     dur:"12 min",
+     content:`
       <h3>O Filósofo que Desmascarou Estruturas de Poder</h3>
       <p>Michel Foucault (1926-1984) foi filósofo e historiador francês cuja obra transformou como compreendemos poder, sexualidade, e construção de conhecimento. Começou sua carreira como historiador de ideias, mas gradualmente desenvolveu abordagem original que examina como poder opera através de aparentemente instituições neutras como prisões, hospitais, e escolas. Trabalho de Foucault é difícil, frequentemente obscuro, mas sua influência sobre pensamento contemporâneo é imensurável.</p>
       <p>Uma obsessão consistente na obra de Foucault é relação entre poder e conhecimento. Como distingue-se "conhecimento" de poder? Foucault argumentava que esta distinção é ilusória. Conhecimento não é neutro; é sempre interligado com poder. Quem consegue definir o que conta como "conhecimento" já exerceu poder enorme. Estabelecer disciplina — como psiquiatria ou criminologia — é exercício de poder tanto quanto é criação de conhecimento.</p>
@@ -396,10 +272,11 @@ var TOPICS = [
         💡 A perspectiva de Foucault que "conhecimento" é frequentemente máscara para exercício de poder, que categorias que parecem naturais são construções históricas — isto se tornou prism através do qual pensadores contemporâneos examinam instituições sociais.
       </blockquote>
     `,
-    cards: {
-      q: 'Como Foucault entendia a relação entre poder e conhecimento?',
-      a: 'Foucault argumentava que conhecimento nunca é neutro; é sempre interligado com poder; conhecimento moderno funciona através de produção positiva de categorias, identidades, e discursos que regulam e controlam corpos, não apenas através de repressão negativa.'
+     cards:[{"q":"Como Foucault entendia a relação entre poder e conhecimento?","a":"Foucault argumentava que conhecimento nunca é neutro; é sempre interligado com poder; conhecimento moderno funciona através de produção positiva de categorias, identidades, e discursos que regulam e controlam corpos, não apenas através de repressão negativa."}]
     }
+  ],
+  summary:{"title":"Pensamento Contemporâneo","points":["Nietzsche questionou morais cristãs e criou psicologia do ressentimento e vontade de poder","Wittgenstein revolucionou filosofia da linguagem entendendo como palavras ganham significado","Foucault analisou poder, sexualidade, e como conhecimento reproduz estruturas sociais"]},
+  quizFinal:[{"q":"Qual era o alvo principal das críticas de Nietzsche?","opts":["Capitalismo industrial","Moralidade cristã tradicional","Tecnologia moderna","Educação científica"],"correct":1},{"q":"Wittgenstein revolucionou compreensão de linguagem ao perceber que:","opts":["Linguagem existe fora da realidade","Significado vem de uso em contexto social","Palavras têm significado essencial imutável","Linguagem é decorativa apenas"],"correct":1},{"q":"O que Foucault investigou primariamente em seu trabalho?","opts":["Natureza da consciência individual","Relação entre poder, conhecimento e identidade social","Fundamentos de lógica pura","Existência de verdade absoluta"],"correct":1}]
   }
 ];
 </script>
