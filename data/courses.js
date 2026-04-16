@@ -3587,6 +3587,25 @@ var MA_COURSES = [
     color: '#cf1322',
     addedTs: 1776358861501,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/jc.jpg',
+    id: 'jc',
+    name: 'Juros e Ciclos Econômicos',
+    desc: 'Entenda como taxas de juros influenciam crescimento, crises e oportunidades.',
+    file: 'juros-ciclos.html',
+    cat: 'Finanças & Economia',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'JC_HENRY_2026_MASTER',
+    ak: 'jc_auth',
+    storagePrefix: 'jc_',
+    icon: '💰',
+    color: '#4f46e5',
+    addedTs: 1776358866696,
+    active: true
   }
 ];
 var MA_CATS = [
