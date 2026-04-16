@@ -7190,12 +7190,18 @@ async function loteDiagnostico() {
       html += '<div style="font-size:10px;color:var(--t3);margin-top:2px">Arraste as capas faltantes. OCR vai associar automaticamente ao curso correto.</div></div>';
       html += '</div>';
 
-      // Chips dos cursos sem capa
-      html += '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">';
+      // Chips dos cursos sem capa — CLICAVEIS para editar individualmente
+      html += '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px">';
       semCapa.forEach(function(c) {
-        html += '<span style="padding:3px 8px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.2);border-radius:5px;font-size:9px;color:#fde047;font-family:var(--mono)">' + escH(c.id) + ' · ' + escH(c.name).substring(0,30) + '</span>';
+        html += '<span style="padding:4px 10px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.3);border-radius:6px;font-size:10px;color:#fde047;font-family:var(--mono);cursor:pointer;transition:all .15s;user-select:none" '
+          + 'onmouseover="this.style.background=\'rgba(234,179,8,.25)\';this.style.borderColor=\'#fde047\';this.style.transform=\'translateY(-1px)\'" '
+          + 'onmouseout="this.style.background=\'rgba(234,179,8,.12)\';this.style.borderColor=\'rgba(234,179,8,.3)\';this.style.transform=\'none\'" '
+          + 'onclick="diagCapaAbrirModal(\'' + escH(c.id) + '\',\'' + escH(c.name).replace(/'/g, "\\'") + '\')" '
+          + 'title="Clique para enviar a capa de ' + escH(c.name) + '">'
+          + '📸 ' + escH(c.id) + ' · ' + escH(c.name).substring(0,30) + '</span>';
       });
       html += '</div>';
+      html += '<div style="font-size:10px;color:var(--t3);margin-bottom:10px">👆 Clique em qualquer curso acima para enviar a capa individualmente, ou arraste varias imagens abaixo para upload em lote.</div>';
 
       // Dropzone
       html += '<div id="diag-capa-drop" style="border:2px dashed rgba(234,179,8,.3);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(234,179,8,.02)" onclick="el(\'diag-capa-input\').click()" ondragover="event.preventDefault();this.style.borderColor=\'#fde047\';this.style.background=\'rgba(234,179,8,.08)\'" ondragleave="this.style.borderColor=\'rgba(234,179,8,.3)\';this.style.background=\'rgba(234,179,8,.02)\'" ondrop="event.preventDefault();this.style.borderColor=\'rgba(234,179,8,.3)\';this.style.background=\'rgba(234,179,8,.02)\';diagCapaChosen(event.dataTransfer.files)">';
@@ -7273,7 +7279,15 @@ async function diagCapaRunOCR() {
   var total = _diagCapaItems.length;
 
   try {
-    var worker = await Tesseract.createWorker('por');
+    // Criar worker com idiomas portugues + ingles para melhor cobertura
+    var worker = await Tesseract.createWorker('por+eng', 1, {
+      logger: function() {}
+    });
+    // Configurar parametros do Tesseract para melhor precisao
+    await worker.setParameters({
+      tessedit_pageseg_mode: '6',      // Assume bloco uniforme de texto
+      tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜàáâãäçèéêëìíîïñòóôõöùúûü0123456789 .:,-—·()&!?/\n',
+    });
 
     for (var i = 0; i < _diagCapaItems.length; i++) {
       var item = _diagCapaItems[i];
@@ -7282,8 +7296,19 @@ async function diagCapaRunOCR() {
       el('diag-capa-bar').style.width = ((i+1)/total*100).toFixed(0) + '%';
 
       try {
-        var result = await worker.recognize(item.dataUrl);
-        item.ocrText = (result.data && result.data.text) ? result.data.text.trim() : '';
+        // Pre-processar imagem para melhor leitura
+        var processedImg = await _preprocessImageForOCR(item.dataUrl);
+        var result = await worker.recognize(processedImg);
+        var ocrRaw = (result.data && result.data.text) ? result.data.text.trim() : '';
+
+        // Se o preprocessado nao deu bom resultado, tentar com original
+        if (ocrRaw.length < 5) {
+          var result2 = await worker.recognize(item.dataUrl);
+          var ocrRaw2 = (result2.data && result2.data.text) ? result2.data.text.trim() : '';
+          if (ocrRaw2.length > ocrRaw.length) ocrRaw = ocrRaw2;
+        }
+
+        item.ocrText = ocrRaw;
       } catch(e) { item.ocrText = ''; }
 
       // Match: comparar OCR text + nome do arquivo com cursos sem capa
@@ -7297,15 +7322,32 @@ async function diagCapaRunOCR() {
         if (fnScore > bestMatch.score) { bestMatch = { id: c.id, name: c.name, score: fnScore }; }
       });
 
-      // Tentar pelo OCR text
+      // Tentar pelo OCR text — combinar todas as linhas + match por linha individual
       if (item.ocrText) {
+        // Match do texto completo
         var ocrMatch = _findBestMatch(item.ocrText, courseList);
         if (ocrMatch.score > bestMatch.score) {
           bestMatch = ocrMatch;
         }
+        // Match por cada linha individualmente (capas tem texto em linhas separadas)
+        var lines = item.ocrText.split('\n').filter(function(l) { return l.trim().length > 2; });
+        lines.forEach(function(line) {
+          var lineMatch = _findBestMatch(line.trim(), courseList);
+          if (lineMatch.score > bestMatch.score) {
+            bestMatch = lineMatch;
+          }
+        });
+        // Match combinando pares de linhas adjacentes
+        for (var li = 0; li < lines.length - 1; li++) {
+          var combined = lines[li].trim() + ' ' + lines[li+1].trim();
+          var combMatch = _findBestMatch(combined, courseList);
+          if (combMatch.score > bestMatch.score) {
+            bestMatch = combMatch;
+          }
+        }
       }
 
-      if (bestMatch.score >= 0.51) {
+      if (bestMatch.score >= 0.40) {
         item.matchedId = bestMatch.id;
         item.matchedName = bestMatch.name;
         item.score = bestMatch.score;
@@ -7495,6 +7537,26 @@ async function diagCapaPublicar() {
   }
 }
 
+// ── Modal individual para curso sem capa (via chips do diagnostico) ──
+function diagCapaAbrirModal(courseId, courseName) {
+  // Buscar info completa do curso
+  var curso = null;
+  if (_cursosCarregados && _cursosCarregados.length) {
+    curso = _cursosCarregados.find(function(c) { return c.id === courseId; });
+  }
+  if (!curso) {
+    curso = { id: courseId, name: courseName, icon: '📚', cat: '—', coverImg: '', _temCapa: false, _capaUrl: '' };
+  }
+
+  // Garantir que _capaCursos tenha esse curso (para o modal funcionar)
+  if (!_capaCursos.some(function(c) { return c.id === courseId; })) {
+    var cursoClone = Object.assign({}, curso, { _temCapa: false, _capaUrl: '' });
+    _capaCursos.push(cursoClone);
+  }
+
+  capaModalAbrir(courseId);
+}
+
 /* ══════════════════════════════════════════════════════════════
    CAPAS EM LOTE — OCR inteligente + auto-match com titulos
    ══════════════════════════════════════════════════════════════ */
@@ -7521,6 +7583,68 @@ function _getAllCourseNames() {
   return list;
 }
 
+// ── Pre-processamento de imagem para OCR mais preciso ──
+// Converte para escala de cinza com alto contraste + binarizacao + upscale
+function _preprocessImageForOCR(dataUrl) {
+  return new Promise(function(resolve) {
+    var img = new Image();
+    img.onload = function() {
+      try {
+        // Upscale: garantir que a imagem tenha pelo menos 1200px de largura para OCR
+        var scale = Math.max(1, 1200 / img.width);
+        var w = Math.round(img.width * scale);
+        var h = Math.round(img.height * scale);
+
+        var canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        var ctx = canvas.getContext('2d');
+
+        // Desenhar imagem escalada
+        ctx.drawImage(img, 0, 0, w, h);
+
+        // Pegar pixels para processamento
+        var imageData = ctx.getImageData(0, 0, w, h);
+        var data = imageData.data;
+
+        // Converter para escala de cinza com alto contraste
+        for (var i = 0; i < data.length; i += 4) {
+          // Luminancia ponderada
+          var gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+
+          // Aumentar contraste (esticar o histograma)
+          gray = ((gray - 128) * 1.8) + 128;
+          gray = Math.max(0, Math.min(255, gray));
+
+          // Binarizacao com threshold adaptativo (Otsu simples)
+          var bin = gray > 140 ? 255 : 0;
+
+          data[i] = bin;
+          data[i+1] = bin;
+          data[i+2] = bin;
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+
+        // Tambem aplicar um filtro de sharpening via segundo canvas
+        var canvas2 = document.createElement('canvas');
+        canvas2.width = w;
+        canvas2.height = h;
+        var ctx2 = canvas2.getContext('2d');
+        ctx2.filter = 'contrast(1.5) brightness(1.1)';
+        ctx2.drawImage(canvas, 0, 0);
+
+        resolve(canvas2.toDataURL('image/png'));
+      } catch(e) {
+        // Fallback: retorna imagem original
+        resolve(dataUrl);
+      }
+    };
+    img.onerror = function() { resolve(dataUrl); };
+    img.src = dataUrl;
+  });
+}
+
 // ── Normalizar texto para comparacao ──
 function _normTxt(s) {
   return (s || '').toLowerCase()
@@ -7544,24 +7668,72 @@ function _similarity(a, b) {
   return (2 * inter) / ((a.length - 1) + (b.length - 1));
 }
 
-// ── Bonus: verifica se TODAS as palavras do titulo do curso aparecem no texto OCR ──
+// ── Bonus: verifica se as palavras do titulo do curso aparecem no texto OCR ──
 function _wordMatchBonus(ocrText, courseName) {
   var ocrNorm = _normTxt(ocrText);
   var words = _normTxt(courseName).split(' ').filter(function(w) { return w.length > 2; });
   if (!words.length) return 0;
   var found = 0;
-  words.forEach(function(w) { if (ocrNorm.indexOf(w) !== -1) found++; });
+  words.forEach(function(w) {
+    // Match exato
+    if (ocrNorm.indexOf(w) !== -1) { found++; return; }
+    // Match fuzzy: tolerar 1 char de diferenca (OCR erra letras)
+    var ocrWords = ocrNorm.split(' ');
+    for (var j = 0; j < ocrWords.length; j++) {
+      if (_levenshtein(w, ocrWords[j]) <= 1 && w.length > 3) { found += 0.8; return; }
+    }
+  });
   return found / words.length; // 0 a 1
+}
+
+// ── Levenshtein distance (para fuzzy matching de palavras com erros de OCR) ──
+function _levenshtein(a, b) {
+  if (!a || !b) return Math.max((a||'').length, (b||'').length);
+  var m = a.length, n = b.length;
+  var dp = [];
+  for (var i = 0; i <= m; i++) { dp[i] = [i]; }
+  for (var j = 0; j <= n; j++) { dp[0][j] = j; }
+  for (var i2 = 1; i2 <= m; i2++) {
+    for (var j2 = 1; j2 <= n; j2++) {
+      dp[i2][j2] = a[i2-1] === b[j2-1]
+        ? dp[i2-1][j2-1]
+        : 1 + Math.min(dp[i2-1][j2], dp[i2][j2-1], dp[i2-1][j2-1]);
+    }
+  }
+  return dp[m][n];
 }
 
 // ── Encontrar melhor match para texto OCR ──
 function _findBestMatch(ocrText, courseList) {
   var best = { id: '', name: '', score: 0 };
   courseList.forEach(function(c) {
-    // Score = similaridade de dice + bonus de palavras inteiras
+    // Score 1: Dice coefficient (similaridade de bigramas)
     var dice = _similarity(ocrText, c.name);
+    // Score 2: Palavras inteiras encontradas (com fuzzy)
     var wordBonus = _wordMatchBonus(ocrText, c.name);
-    var score = (dice * 0.4) + (wordBonus * 0.6); // Peso maior para palavras inteiras
+    // Score 3: Substring direto — se o nome do curso aparece inteiro no OCR
+    var substringBonus = 0;
+    var ocrNorm = _normTxt(ocrText);
+    var nameNorm = _normTxt(c.name);
+    if (ocrNorm.indexOf(nameNorm) !== -1) substringBonus = 1.0;
+    else {
+      // Verificar se pelo menos 60% do nome aparece como substring continua
+      var nameWords = nameNorm.split(' ').filter(function(w) { return w.length > 2; });
+      if (nameWords.length >= 2) {
+        // Tentar pares e trios consecutivos
+        for (var k = 0; k < nameWords.length - 1; k++) {
+          var pair = nameWords[k] + ' ' + nameWords[k+1];
+          if (ocrNorm.indexOf(pair) !== -1) { substringBonus = Math.max(substringBonus, 0.6); }
+          if (k < nameWords.length - 2) {
+            var trio = pair + ' ' + nameWords[k+2];
+            if (ocrNorm.indexOf(trio) !== -1) { substringBonus = Math.max(substringBonus, 0.85); }
+          }
+        }
+      }
+    }
+
+    // Score composto: peso maior para palavras inteiras e substring
+    var score = (dice * 0.25) + (wordBonus * 0.45) + (substringBonus * 0.30);
     if (score > best.score) {
       best = { id: c.id, name: c.name, score: score };
     }
@@ -7641,13 +7813,14 @@ async function capasRunOCR() {
   var courseList = _getAllCourseNames();
 
   try {
-    // Criar worker Tesseract para portugues
-    var worker = await Tesseract.createWorker('por', 1, {
-      logger: function(m) {
-        if (m.status === 'recognizing text') {
-          // progress do OCR individual
-        }
-      }
+    // Criar worker Tesseract para portugues + ingles com melhor precisao
+    var worker = await Tesseract.createWorker('por+eng', 1, {
+      logger: function(m) {}
+    });
+    // Configurar parametros para melhor leitura
+    await worker.setParameters({
+      tessedit_pageseg_mode: '6',
+      tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜàáâãäçèéêëìíîïñòóôõöùúûü0123456789 .:,-—·()&!?/\n',
     });
 
     for (var i = 0; i < total; i++) {
@@ -7659,16 +7832,40 @@ async function capasRunOCR() {
       el('ocr-prog-bar').style.width = pct + '%';
 
       try {
-        var result = await worker.recognize(item.dataUrl);
-        item.ocrText = (result.data && result.data.text) ? result.data.text.trim() : '';
+        // Pre-processar imagem para OCR mais preciso
+        var processedImg = await _preprocessImageForOCR(item.dataUrl);
+        var result = await worker.recognize(processedImg);
+        var ocrRaw = (result.data && result.data.text) ? result.data.text.trim() : '';
+
+        // Tentar imagem original se preprocessada deu pouco resultado
+        if (ocrRaw.length < 5) {
+          var result2 = await worker.recognize(item.dataUrl);
+          var ocrRaw2 = (result2.data && result2.data.text) ? result2.data.text.trim() : '';
+          if (ocrRaw2.length > ocrRaw.length) ocrRaw = ocrRaw2;
+        }
+
+        item.ocrText = ocrRaw;
       } catch (ocrErr) {
         item.ocrText = '';
       }
 
-      // Auto-match com o melhor curso
+      // Auto-match com o melhor curso (texto completo + por linha + pares de linhas)
       if (item.ocrText && courseList.length) {
         var best = _findBestMatch(item.ocrText, courseList);
-        if (best.score >= 0.51) { // Threshold minimo de 51%
+
+        // Tambem tentar cada linha e combinacoes de linhas adjacentes
+        var lines = item.ocrText.split('\n').filter(function(l) { return l.trim().length > 2; });
+        lines.forEach(function(line) {
+          var lineMatch = _findBestMatch(line.trim(), courseList);
+          if (lineMatch.score > best.score) best = lineMatch;
+        });
+        for (var li = 0; li < lines.length - 1; li++) {
+          var combined = lines[li].trim() + ' ' + lines[li+1].trim();
+          var combMatch = _findBestMatch(combined, courseList);
+          if (combMatch.score > best.score) best = combMatch;
+        }
+
+        if (best.score >= 0.40) { // Threshold mais baixo (matching melhorou)
           item.newId = best.id;
           item.matchedName = best.name;
           item.confidence = Math.round(best.score * 100);
