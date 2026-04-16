@@ -410,7 +410,7 @@ var MA_COURSES = [
     addedTs: 1775746804118,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ec.jpg',
     id: 'ec',
     name: 'Economia Comportamental',
@@ -426,7 +426,7 @@ var MA_COURSES = [
     storagePrefix: 'ec_',
     icon: '💰',
     color: '#9333ea',
-    addedTs: 1776370030910,
+    addedTs: 1776370747489,
     active: true
   },
   {
