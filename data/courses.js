@@ -1596,7 +1596,7 @@ var MA_COURSES = [
     addedTs: 1775832770753,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ev.jpg',
     id: 'ev',
     name: 'Empreendedores Visionários que Mudaram o Mundo',
@@ -1606,13 +1606,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'EV_HENRY_2026_MASTER',
     ak: 'ev_auth',
     storagePrefix: 'ev_',
-    icon: '🎓',
+    icon: '👑',
     color: '#ff9f1c',
-    addedTs: 1775832773238,
+    addedTs: 1776372365036,
     active: true
   },
   {
