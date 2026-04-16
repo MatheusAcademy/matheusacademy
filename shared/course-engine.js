@@ -915,6 +915,16 @@ function removePoints(src,pts){
   showToast('⭐ -'+pts+' pontos — '+src,'warn');
 }
 
+/* ═══ NORMALIZAR TOPICS (resolve referências numéricas) ═══ */
+if(typeof TOPICS!=='undefined'&&Array.isArray(TOPICS)){
+  MODS.forEach(function(m){
+    m.topics=m.topics.map(function(t){
+      if(typeof t==='number'){var f=TOPICS.find(function(tp){return tp.id===t;});return f||t;}
+      return t;
+    });
+  });
+}
+
 /* ═══ SIDEBAR BUILD ═══ */
 var _allTopics=[],_curModIdx=0,_curTopIdx=0,_filterStr='';
 function buildSidebar(){
