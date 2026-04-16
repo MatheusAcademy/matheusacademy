@@ -964,7 +964,7 @@ var MA_COURSES = [
     addedTs: 1775831030570,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/di.jpg',
     id: 'di',
     name: 'Ditadores: Como Chegaram ao Poder',
@@ -974,13 +974,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'DI_HENRY_2026_MASTER',
     ak: 'di_auth',
     storagePrefix: 'di_',
-    icon: '🎓',
+    icon: '👑',
     color: '#582f0e',
-    addedTs: 1775831033161,
+    addedTs: 1776372371280,
     active: true
   },
   {
