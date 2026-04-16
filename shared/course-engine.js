@@ -4,6 +4,16 @@
    COURSE e MODS devem ser definidos ANTES deste script ser carregado
    ══════════════════════════════════════════════════════════════ */
 
+/* ═══ NORMALIZAR TOPICS (resolve referências numéricas) ═══ */
+if(typeof TOPICS!=='undefined'&&Array.isArray(TOPICS)){
+  MODS.forEach(function(m){
+    m.topics=m.topics.map(function(t){
+      if(typeof t==='number'){var f=TOPICS.find(function(tp){return tp.id===t;});return f||t;}
+      return t;
+    });
+  });
+}
+
 /* ── HTML ESTRUTURAL (injetado automaticamente no body) ── */
 (function injectShell(){
   var shell = `
@@ -915,16 +925,6 @@ function removePoints(src,pts){
   showToast('⭐ -'+pts+' pontos — '+src,'warn');
 }
 
-/* ═══ NORMALIZAR TOPICS (resolve referências numéricas) ═══ */
-if(typeof TOPICS!=='undefined'&&Array.isArray(TOPICS)){
-  MODS.forEach(function(m){
-    m.topics=m.topics.map(function(t){
-      if(typeof t==='number'){var f=TOPICS.find(function(tp){return tp.id===t;});return f||t;}
-      return t;
-    });
-  });
-}
-
 /* ═══ SIDEBAR BUILD ═══ */
 var _allTopics=[],_curModIdx=0,_curTopIdx=0,_filterStr='';
 function buildSidebar(){
@@ -1548,17 +1548,21 @@ function checkStreak(){
 }
 
 /* ══════════════════════════════════════════════════════
-   SISTEMA DE ÁUDIO IA — v4
-   • 1 único fetch por tópico → sem pausa entre parágrafos
-   • Pré-carrega ao abrir tópico → play instantâneo
-   • Clique em parágrafo → pula para posição proporcional no áudio
+   SISTEMA DE ÁUDIO IA — v5 PIPELINE
+   • Divide texto em chunks → play começa em ~3-5s
+   • Pipeline: enquanto chunk 1 toca, chunk 2 já está sendo gerado
+   • Pré-carrega 1º chunk ao abrir tópico
+   • Clique em parágrafo → pula para chunk correspondente
    • Anti-duplo-clique com flag + AbortController
    • Velocidade até 3x
    ══════════════════════════════════════════════════════ */
 
 var _mlModMi=-1,_mlTopIdx=-1,_mlAudioEl=null,_mlLoading=false,_mlAbort=null;
-var _mlPreCache={};   // { 'mi_ti': blobUrl }
+var _mlPreCache={};   // { 'mi_ti_chunk0': blobUrl } — agora por chunk
 var _mlBlocos={};     // { 'mi_ti': [blocos] } para mapear clique → posição
+
+/* ── Pipeline state ── */
+var _mlPipe={active:false,chunks:[],idx:0,cache:{},aborts:[],mi:-1,ti:-1,spd:1};
 
 /* ── helpers ── */
 function _mlGetSpd(mi){
@@ -1579,6 +1583,9 @@ function _mlSetBtn(mi,state){
 /* ── Para tudo imediatamente ── */
 function _mlStopTudo(clearBtn){
   if(_mlAbort){try{_mlAbort.abort();}catch(e){}}_mlAbort=null;
+  // Aborta todos os fetches do pipeline
+  if(_mlPipe.aborts){_mlPipe.aborts.forEach(function(ac){try{ac.abort();}catch(e){}});}
+  _mlPipe={active:false,chunks:[],idx:0,cache:{},aborts:[],mi:-1,ti:-1,spd:1};
   if(_mlAudioEl){try{_mlAudioEl.pause();_mlAudioEl.src='';}catch(e){}}_mlAudioEl=null;
   try{window.speechSynthesis.cancel();}catch(e){}
   _mlLoading=false;
@@ -1609,7 +1616,23 @@ function _mlExtrairBlocos(htmlStr,prefixo){
   return blocos;
 }
 
-/* ── Fetch TTS — 1 chamada única ── */
+/* ── Divide texto em chunks de ~500 chars para pipeline rápido ── */
+function _mlSplitChunks(htmlStr,prefixo){
+  var blocos=_mlExtrairBlocos(htmlStr,prefixo);
+  var chunks=[],current='';
+  blocos.forEach(function(b){
+    if(current.length+b.length>500&&current.length>50){
+      chunks.push(current.trim());
+      current=b+' ';
+    } else {
+      current+=b+' ';
+    }
+  });
+  if(current.trim())chunks.push(current.trim());
+  return chunks.length?chunks:[''];
+}
+
+/* ── Fetch TTS — 1 chamada por chunk ── */
 function _mlFetchTTS(texto,abortSignal){
   var ttsUrl=window.MA_TTS_URL||'';
   if(!ttsUrl)return Promise.reject(new Error('no-url'));
@@ -1622,20 +1645,20 @@ function _mlFetchTTS(texto,abortSignal){
     .then(function(b){return URL.createObjectURL(b);});
 }
 
-/* ── PRÉ-CARREGA ao abrir tópico ── */
-var _mlPrePromises={};   // { 'mi_ti': Promise<blobUrl> } — para esperar preload em vez de refazer fetch
+/* ── PRÉ-CARREGA 1º chunk ao abrir tópico (rápido ~3s) ── */
+var _mlPrePromises={};
 function _mlPreload(mi,ti){
   var ttsUrl=window.MA_TTS_URL||'';if(!ttsUrl)return;
-  var key=mi+'_'+ti;
+  var key=mi+'_'+ti+'_chunk0';
   if(_mlPreCache[key])return;
   var mod=MODS[mi];if(!mod||!mod.topics[ti])return;
   var t=mod.topics[ti];
-  var texto=_mlExtrairTexto(t.content,t.name);
-  if(!texto.trim())return;
-  _mlBlocos[key]=_mlExtrairBlocos(t.content,t.name);
+  var chunks=_mlSplitChunks(t.content,t.name);
+  if(!chunks[0].trim())return;
+  _mlBlocos[mi+'_'+ti]=_mlExtrairBlocos(t.content,t.name);
   _mlPreCache[key]='loading';
   var ac=new AbortController();
-  var p=_mlFetchTTS(texto,ac.signal)
+  var p=_mlFetchTTS(chunks[0],ac.signal)
     .then(function(url){_mlPreCache[key]=url;delete _mlPrePromises[key];return url;})
     .catch(function(){_mlPreCache[key]=null;delete _mlPrePromises[key];return null;});
   _mlPrePromises[key]=p;
@@ -1652,14 +1675,117 @@ function _mlPlayUrl(blobUrl,spd,mi,onEnd){
   audio.onended=function(){
     URL.revokeObjectURL(blobUrl);
     _mlAudioEl=null;
-    _mlSetBtn(mi,'idle');
     if(onEnd)onEnd();
+    else _mlSetBtn(mi,'idle');
   };
   audio.onerror=function(){
     URL.revokeObjectURL(blobUrl);
     _mlAudioEl=null;
     _mlSetBtn(mi,'idle');
   };
+}
+
+/* ── PIPELINE: busca chunk e dispara prefetch do próximo ── */
+function _mlPipeFetchChunk(idx){
+  if(!_mlPipe.active||idx>=_mlPipe.chunks.length)return;
+  if(_mlPipe.cache[idx])return; // já tem cache
+  var ac=new AbortController();
+  _mlPipe.aborts.push(ac);
+  _mlFetchTTS(_mlPipe.chunks[idx],ac.signal)
+    .then(function(url){
+      if(!_mlPipe.active)return;
+      _mlPipe.cache[idx]=url;
+      // Se é o chunk que estamos esperando, toca imediatamente
+      if(idx===_mlPipe.idx&&_mlLoading){
+        _mlLoading=false;
+        _mlPipePlayCurrent();
+      }
+    })
+    .catch(function(e){
+      if(e.name==='AbortError'||!_mlPipe.active)return;
+      // Chunk falhou — pula para próximo ou para
+      if(idx===_mlPipe.idx){
+        _mlLoading=false;
+        _mlPipe.idx++;
+        if(_mlPipe.idx<_mlPipe.chunks.length){_mlPipePlayCurrent();}
+        else{_mlSetBtn(_mlPipe.mi,'idle');_mlPipe.active=false;}
+      }
+    });
+}
+
+/* ── Toca o chunk atual e prepara o próximo ── */
+function _mlPipePlayCurrent(){
+  if(!_mlPipe.active)return;
+  var idx=_mlPipe.idx;
+  var url=_mlPipe.cache[idx];
+  if(!url){
+    // Ainda não chegou — mostra loading
+    _mlLoading=true;_mlSetBtn(_mlPipe.mi,'loading');
+    return;
+  }
+  var mi=_mlPipe.mi,spd=_mlPipe.spd;
+  // Prefetch próximos 2 chunks
+  if(idx+1<_mlPipe.chunks.length)_mlPipeFetchChunk(idx+1);
+  if(idx+2<_mlPipe.chunks.length)_mlPipeFetchChunk(idx+2);
+  // Toca chunk atual
+  _mlPlayUrl(url,spd,mi,function(){
+    // Quando termina, avança para próximo chunk
+    if(!_mlPipe.active)return;
+    _mlPipe.idx++;
+    if(_mlPipe.idx<_mlPipe.chunks.length){
+      _mlPipePlayCurrent();
+    } else {
+      // Fim de todos os chunks
+      _mlSetBtn(mi,'idle');
+      _mlPipe.active=false;
+    }
+  });
+}
+
+/* ── Inicia pipeline para um tópico ── */
+function _mlStartPipeline(topico,ti,mi,spd){
+  var chunks=_mlSplitChunks(topico.content,topico.name);
+  if(!chunks[0].trim()){showToast('Sem conteúdo para narrar','warn');return;}
+  var key=mi+'_'+ti;
+  if(!_mlBlocos[key])_mlBlocos[key]=_mlExtrairBlocos(topico.content,topico.name);
+
+  // Configura pipeline
+  _mlPipe={active:true,chunks:chunks,idx:0,cache:{},aborts:[],mi:mi,ti:ti,spd:spd};
+  _mlLoading=true;_mlSetBtn(mi,'loading');
+
+  // Verifica se 1º chunk já está pré-carregado
+  var preKey=mi+'_'+ti+'_chunk0';
+  var cached=_mlPreCache[preKey];
+  if(cached&&cached!=='loading'){
+    _mlPreCache[preKey]=null;
+    _mlPipe.cache[0]=cached;
+    _mlLoading=false;
+    _mlPipePlayCurrent();
+    return;
+  }
+
+  // Se preload do 1º chunk está em andamento, espera
+  if(cached==='loading'&&_mlPrePromises[preKey]){
+    _mlPrePromises[preKey].then(function(url){
+      if(!_mlPipe.active||_mlPipe.mi!==mi)return;
+      if(url){
+        _mlPipe.cache[0]=url;
+        _mlLoading=false;
+        _mlPipePlayCurrent();
+      } else {
+        // Preload falhou — busca denovo
+        _mlPipeFetchChunk(0);
+      }
+    });
+    // Também inicia prefetch do chunk 1
+    if(chunks.length>1)_mlPipeFetchChunk(1);
+    return;
+  }
+
+  // Sem preload — busca chunk 0 agora
+  _mlPipeFetchChunk(0);
+  // Prefetch chunk 1 em paralelo
+  if(chunks.length>1)_mlPipeFetchChunk(1);
 }
 
 /* ── TOGGLE PRINCIPAL (botão ▶️) ── */
@@ -1679,6 +1805,13 @@ function mlToggleModAudio(mi){
     return;
   }
 
+  // Pipeline ativo mas entre chunks → retoma
+  if(_mlPipe.active&&_mlPipe.mi===mi){
+    _mlPipe.spd=spd;
+    _mlPipePlayCurrent();
+    return;
+  }
+
   // Para anterior
   _mlStopTudo(false);
   _mlSetBtn(_mlModMi,'idle');
@@ -1692,7 +1825,7 @@ function mlToggleModAudio(mi){
   });
 
   if(!topicoAberto){
-    // Nenhum tópico aberto — narra o nome do módulo
+    // Nenhum tópico aberto — narra o nome do módulo (texto curto, 1 fetch só)
     var txtMod=('Módulo '+mod.name+'. Tópicos: '+mod.topics.map(function(t){return t.name;}).join(', ')+'.').slice(0,600);
     _mlLoading=true;_mlSetBtn(mi,'loading');
     _mlAbort=new AbortController();
@@ -1703,53 +1836,8 @@ function mlToggleModAudio(mi){
   }
 
   _mlTopIdx=topicoIdx;
-  var key=mi+'_'+topicoIdx;
-  var cached=_mlPreCache[key];
-
-  if(cached&&cached!=='loading'){
-    // ✅ INSTANTÂNEO — usa cache pré-carregado
-    _mlPreCache[key]=null;
-    _mlPlayUrl(cached,spd,mi,null);
-    return;
-  }
-
-  // Se preload está em andamento → ESPERA ele (não faz novo fetch duplicado)
-  if(cached==='loading'&&_mlPrePromises[key]){
-    _mlLoading=true;_mlSetBtn(mi,'loading');
-    var reqMi=mi;
-    _mlPrePromises[key].then(function(url){
-      if(_mlModMi!==reqMi){if(url)URL.revokeObjectURL(url);return;}
-      _mlLoading=false;
-      if(url){
-        _mlPreCache[key]=null;
-        _mlPlayUrl(url,spd,mi,null);
-      } else {
-        // Preload falhou → fallback voz navegador
-        _mlSetBtn(mi,'idle');
-        _mlFallbackBrowser(topicoAberto,spd,mi);
-      }
-    });
-    return;
-  }
-
-  // Sem cache → fetch agora (tópico inteiro, 1 chamada)
-  var texto=_mlExtrairTexto(topicoAberto.content,topicoAberto.name);
-  if(!texto.trim()){showToast('Sem conteúdo para narrar','warn');return;}
-  if(!_mlBlocos[key])_mlBlocos[key]=_mlExtrairBlocos(topicoAberto.content,topicoAberto.name);
-  _mlLoading=true;_mlSetBtn(mi,'loading');
-  _mlAbort=new AbortController();
-  var reqKey=key,reqMi2=mi;
-  _mlFetchTTS(texto,_mlAbort.signal)
-    .then(function(url){
-      if(_mlModMi!==reqMi2){URL.revokeObjectURL(url);return;}
-      _mlLoading=false;_mlAbort=null;
-      _mlPlayUrl(url,spd,mi,null);
-    })
-    .catch(function(e){
-      if(e.name==='AbortError')return;
-      _mlLoading=false;_mlAbort=null;_mlSetBtn(mi,'idle');
-      _mlFallbackBrowser(topicoAberto,spd,mi);
-    });
+  // Inicia pipeline para o tópico
+  _mlStartPipeline(topicoAberto,topicoIdx,mi,spd);
 }
 
 /* ── Fallback: voz do navegador quando TTS API falha ── */
@@ -1763,15 +1851,37 @@ function _mlFallbackBrowser(topico,spd,mi){
   window.speechSynthesis.speak(utt);
 }
 
-/* ── CLIQUE EM PARÁGRAFO — pula para posição proporcional no áudio ── */
+/* ── CLIQUE EM PARÁGRAFO — pula para chunk correspondente ── */
 function mlClickParagraph(mi,ti,blocoIdx){
-  if(!_mlAudioEl||_mlModMi!==mi)return; // só funciona se áudio ativo
+  if(!_mlPipe.active&&(!_mlAudioEl||_mlModMi!==mi))return;
+  // Se pipeline ativo, calcula qual chunk contém este bloco
+  if(_mlPipe.active&&_mlPipe.mi===mi){
+    var blocos=_mlBlocos[mi+'_'+ti]||[];
+    if(!blocos.length)return;
+    // Encontra em qual chunk está o bloco clicado
+    var charTarget=0;
+    for(var i=0;i<blocoIdx&&i<blocos.length;i++)charTarget+=blocos[i].length+1;
+    var charCount=0;
+    for(var c=0;c<_mlPipe.chunks.length;c++){
+      charCount+=_mlPipe.chunks[c].length;
+      if(charCount>=charTarget){
+        // Pula para este chunk
+        if(c!==_mlPipe.idx){
+          _mlPipe.idx=c;
+          if(_mlAudioEl){try{_mlAudioEl.pause();_mlAudioEl.src='';}catch(e){}}_mlAudioEl=null;
+          _mlPipePlayCurrent();
+        }
+        return;
+      }
+    }
+    return;
+  }
+  // Fallback: modo antigo com áudio único
   var key=mi+'_'+ti;
-  var blocos=_mlBlocos[key]||[];
-  if(!blocos.length||!_mlAudioEl.duration)return;
-  // Estimativa de posição: proporção de caracteres até este bloco
-  var totalChars=blocos.reduce(function(s,b){return s+b.length;},0);
-  var charsAte=blocos.slice(0,blocoIdx).reduce(function(s,b){return s+b.length;},0);
+  var blocos2=_mlBlocos[key]||[];
+  if(!blocos2.length||!_mlAudioEl||!_mlAudioEl.duration)return;
+  var totalChars=blocos2.reduce(function(s,b){return s+b.length;},0);
+  var charsAte=blocos2.slice(0,blocoIdx).reduce(function(s,b){return s+b.length;},0);
   var proporcao=totalChars>0?charsAte/totalChars:0;
   _mlAudioEl.currentTime=_mlAudioEl.duration*proporcao;
 }
