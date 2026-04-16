@@ -3853,6 +3853,25 @@ var MA_COURSES = [
     color: '#a16207',
     addedTs: 1776358984112,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/ipw.jpg',
+    id: 'ipw',
+    name: 'História das Ideologias Políticas',
+    desc: 'Compreenda a origem e evolução de correntes como liberalismo, socialismo e conservadorismo.',
+    file: 'ideologias-politicas.html',
+    cat: 'História',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'IP_HENRY_2026_MASTER',
+    ak: 'ip_auth',
+    storagePrefix: 'ip_',
+    icon: '📜',
+    color: '#4338ca',
+    addedTs: 1776358990053,
+    active: true
   }
 ];
 var MA_CATS = [
