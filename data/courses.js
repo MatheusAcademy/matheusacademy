@@ -1079,7 +1079,7 @@ var MA_COURSES = [
     addedTs: 1776372285998,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/la.jpg',
     id: 'la',
     name: 'Linguagens do Amor na Prática',
@@ -1089,13 +1089,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'LA_HENRY_2026_MASTER',
     ak: 'la_auth',
     storagePrefix: 'la_',
     icon: '👨‍👩‍👧‍👦',
     color: '#d62828',
-    addedTs: 1775831052985,
+    addedTs: 1776372430023,
     active: true
   },
     {
