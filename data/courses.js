@@ -1155,7 +1155,7 @@ var MA_COURSES = [
     addedTs: 1775831072358,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/mn.jpg',
     id: 'mn',
     name: 'Modelos de Negócio Lucrativos',
@@ -1171,7 +1171,7 @@ var MA_COURSES = [
     storagePrefix: 'mn_',
     icon: '🎓',
     color: '#059669',
-    addedTs: 1776370083452,
+    addedTs: 1776370807673,
     active: true
   },
   {
