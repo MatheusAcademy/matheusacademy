@@ -1385,7 +1385,7 @@ var MA_COURSES = [
     addedTs: 1775832742257,
     active: true
   },
-    {
+      {
     coverImg: 'assets/capas/ar.jpg',
     id: 'ar',
     name: 'Geopolítica do Ártico: A Nova Fronteira do Poder',
@@ -1401,7 +1401,7 @@ var MA_COURSES = [
     storagePrefix: 'ar_',
     icon: '📰',
     color: '#0891b2',
-    addedTs: 1776370002612,
+    addedTs: 1776370701572,
     active: true
   },
   {
