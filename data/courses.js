@@ -2721,13 +2721,13 @@ var MA_COURSES = [
     addedTs: 1776024614889,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/sn.jpg',
     id: 'sn',
-    name: 'Sustentabilidade nos Negócios',
-    desc: 'Como empresas podem crescer de forma responsável unindo lucro e compromisso ambiental.',
-    file: '03-sustentabilidade-negocios.html',
-    cat: 'Meio Ambiente & Sustentabilidade',
+    name: 'Storytelling para Negócios',
+    desc: 'Aprenda a usar histórias para criar conexão emocional e aumentar conversão.',
+    file: 'storytelling-negocios.html',
+    cat: 'Marketing & Vendas',
     modules: 3,
     topics: 9,
     hours: 2,
@@ -2735,9 +2735,9 @@ var MA_COURSES = [
     salt: 'SN_HENRY_2026_MASTER',
     ak: 'sn_auth',
     storagePrefix: 'sn_',
-    icon: '🌱',
-    color: '#264653',
-    addedTs: 1776024620068,
+    icon: '📢',
+    color: '#7c2d12',
+    addedTs: 1776370046494,
     active: true
   },
     {
