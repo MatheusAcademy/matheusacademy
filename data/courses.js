@@ -1404,7 +1404,7 @@ var MA_COURSES = [
     addedTs: 1776372243174,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/fp.jpg',
     id: 'fp',
     name: 'Filosofias Políticas: Da Liberdade ao Poder do Estado',
@@ -1414,13 +1414,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'FP_HENRY_2026_MASTER',
     ak: 'fp_auth',
     storagePrefix: 'fp_',
     icon: '🦉',
     color: '#264653',
-    addedTs: 1775832747770,
+    addedTs: 1776372334086,
     active: true
   },
       {
