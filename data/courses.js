@@ -3587,7 +3587,7 @@ var MA_COURSES = [
     addedTs: 1776372172227,
     active: true
   },
-      {
+        {
     coverImg: 'assets/capas/jc.jpg',
     id: 'jc',
     name: 'Juros e Ciclos Econômicos',
@@ -3603,7 +3603,7 @@ var MA_COURSES = [
     storagePrefix: 'jc_',
     icon: '💰',
     color: '#4f46e5',
-    addedTs: 1776370711418,
+    addedTs: 1776372237088,
     active: true
   },
         {
