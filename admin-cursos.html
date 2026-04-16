@@ -188,6 +188,46 @@ textarea{resize:vertical;min-height:54px}
 .capa-lightbox-close:hover{background:var(--red);border-color:var(--red);transform:scale(1.1)}
 @keyframes lbFadeIn{from{opacity:0}to{opacity:1}}
 
+/* ── PAINEL INICIAL: LISTA DE CURSOS COM CAPA GRANDE ── */
+.home-lista{margin-bottom:28px}
+.home-lista-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.home-lista-header h3{font-size:16px;font-weight:800;color:var(--txt);margin:0}
+.home-lista-header .hl-count{font-size:11px;color:var(--t3);font-weight:600}
+.home-busca{flex:1;min-width:200px;max-width:400px}
+.home-busca input{width:100%;font-size:13px;padding:9px 14px;background:var(--card);border:1px solid var(--brd);border-radius:10px;color:var(--txt)}
+.home-busca input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(59,130,246,.13)}
+.home-busca input::placeholder{color:var(--t3)}
+.hl-item{background:var(--sf);border:1px solid var(--brd);border-radius:14px;padding:16px;margin-bottom:14px;display:flex;gap:18px;align-items:flex-start;transition:.15s}
+.hl-item:hover{border-color:rgba(96,165,250,.3);box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.hl-capa-wrap{flex-shrink:0;width:160px;aspect-ratio:2/3;border-radius:10px;overflow:hidden;background:#0a0e18;position:relative;cursor:pointer;border:2px solid var(--brd);transition:.2s}
+.hl-capa-wrap:hover{border-color:var(--acc);box-shadow:0 4px 20px rgba(59,130,246,.25)}
+.hl-capa-wrap img{width:100%;height:100%;object-fit:cover}
+.hl-capa-wrap .hl-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px;opacity:.25}
+.hl-capa-overlay{position:absolute;inset:0;background:rgba(59,130,246,.8);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;transition:.2s}
+.hl-capa-wrap:hover .hl-capa-overlay{opacity:1}
+.hl-capa-overlay span{color:#fff;font-size:26px}
+.hl-capa-overlay small{color:rgba(255,255,255,.9);font-size:10px;font-weight:700}
+.hl-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.hl-nome-row{display:flex;align-items:center;gap:8px}
+.hl-nome{font-size:15px;font-weight:700;color:var(--txt);word-break:break-word}
+.hl-id{font-size:10px;color:var(--t3);font-family:var(--mono);background:var(--card);padding:2px 7px;border-radius:5px;border:1px solid var(--brd);flex-shrink:0}
+.hl-cat-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;background:rgba(96,165,250,.1);color:var(--acc2);border:1px solid rgba(96,165,250,.2)}
+.hl-edit-area{display:none;flex-direction:column;gap:8px;margin-top:4px}
+.hl-edit-area.on{display:flex}
+.hl-edit-area label{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase}
+.hl-edit-area input,.hl-edit-area select{font-size:12px;padding:7px 10px;background:var(--card);border:1px solid var(--brd);border-radius:8px;color:var(--txt)}
+.hl-edit-area input:focus,.hl-edit-area select:focus{border-color:var(--acc)}
+.hl-btns{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.hl-btn{padding:6px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--brd);background:var(--card);color:var(--txt);transition:.15s}
+.hl-btn:hover{border-color:var(--acc);color:var(--acc2)}
+.hl-btn.save{background:var(--grn);border-color:var(--grn);color:#fff}
+.hl-btn.save:hover{opacity:.9}
+.hl-btn.cancel{background:transparent;color:var(--t2)}
+.hl-status{font-size:10px;padding:4px 10px;border-radius:6px;display:none;font-weight:600}
+.hl-status.ok{display:inline-block;background:rgba(34,197,94,.1);color:#86efac;border:1px solid rgba(34,197,94,.2)}
+.hl-status.er{display:inline-block;background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+.hl-capa-input{display:none}
+
 /* ── CAPAS POR CURSO (novo fluxo) ── */
 .capas-busca{margin-bottom:14px}
 .capas-busca input{width:100%;font-size:13px;padding:10px 14px;background:var(--card);border:1px solid var(--brd);border-radius:10px;color:var(--txt)}
@@ -483,6 +523,17 @@ textarea{resize:vertical;min-height:54px}
       <div class="ect">IDs já cadastrados (não pode repetir):</div>
       <div class="ecs" id="ecs"></div>
     </div>
+  </div>
+
+  <!-- ═══ PAINEL INICIAL: LISTA DE CURSOS ═══ -->
+  <div class="home-lista" id="home-lista">
+    <div class="home-lista-header">
+      <h3>📚 Meus Cursos</h3>
+      <span class="hl-count" id="hl-count"></span>
+      <div class="home-busca"><input type="text" id="hl-busca" placeholder="🔍 Buscar curso por nome, ID ou categoria..." oninput="homeListaFiltrar()"></div>
+      <button class="hl-btn" onclick="homeListaCarregar()" style="background:var(--acc);color:#fff;border-color:var(--acc)">🔄 Atualizar</button>
+    </div>
+    <div id="hl-container" style="color:var(--t3);font-size:12px;padding:12px">Conecte o token GitHub e clique em Atualizar para ver seus cursos.</div>
   </div>
 
   <!-- TABS -->
@@ -3997,6 +4048,274 @@ function swTab(n){
   if(n==='cp') renderCupons();
   if(n==='fe'){ renderAudit(); carregarConfigs(); }
 }
+
+// ══════════════════════════════════════════════════════════════
+// PAINEL INICIAL — LISTA DE CURSOS COM CAPA GRANDE
+// Mostra todos os cursos com foto 2:3, nome, categoria
+// Permite editar nome, categoria e trocar capa inline
+// ══════════════════════════════════════════════════════════════
+
+var _homeListaCursos = [];
+var _homeCapaCache = {}; // cache de URLs de capas já verificadas
+
+async function homeListaCarregar() {
+  var c = g();
+  if (!c.t) { el('hl-container').innerHTML = '<div style="color:#fca5a5;font-size:12px;padding:8px">⚠️ Configure o token GitHub acima primeiro.</div>'; return; }
+  el('hl-container').innerHTML = '<div style="color:var(--t3);font-size:12px;padding:12px;text-align:center"><div class="sp" style="display:inline-block;margin-right:6px"></div>Carregando cursos e capas...</div>';
+
+  // Carregar courses.js
+  try {
+    var _ts = '?t=' + Date.now();
+    var hd = gh(); hd['If-None-Match'] = '';
+    var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js' + _ts, { headers: hd, cache: 'no-store' });
+    if (!res.ok) { el('hl-container').innerHTML = '<div style="color:#fca5a5;font-size:12px;padding:8px">❌ Erro ao carregar courses.js (HTTP ' + res.status + ')</div>'; return; }
+    var fd = await res.json();
+    _coursesContent = b64d(fd.content);
+    _coursesSha = fd.sha;
+    _homeListaCursos = parseCursosCompleto(_coursesContent);
+    _cursosCarregados = _homeListaCursos;
+  } catch (err) {
+    el('hl-container').innerHTML = '<div style="color:#fca5a5;font-size:12px;padding:8px">❌ Erro: ' + escH(err.message) + '</div>';
+    return;
+  }
+
+  // Buscar capas existentes no GitHub (em paralelo)
+  _homeCapaCache = {};
+  var cfg = g();
+  try {
+    var capasRes = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/assets/capas', { headers: gh() });
+    if (capasRes.ok) {
+      var capasFiles = await capasRes.json();
+      capasFiles.forEach(function(f) {
+        // Extrair ID do arquivo (ex: "bc.jpg" → "bc", "ii.png" → "ii")
+        var match = f.name.match(/^(.+)\.(jpg|jpeg|png|gif|webp)$/i);
+        if (match) {
+          _homeCapaCache[match[1]] = 'https://raw.githubusercontent.com/' + cfg.o + '/' + cfg.r + '/main/' + f.path + '?t=' + Date.now();
+        }
+      });
+    }
+  } catch (e) { /* silencioso */ }
+
+  homeListaRender();
+}
+
+function homeListaRender(filtro) {
+  var cursos = _homeListaCursos;
+  if (!cursos.length) { el('hl-container').innerHTML = '<div style="color:var(--t3);font-size:12px;padding:12px">Nenhum curso encontrado.</div>'; return; }
+
+  var f = _normTxt(filtro || (el('hl-busca') ? el('hl-busca').value : ''));
+  var filtrados = cursos;
+  if (f.length >= 2) {
+    filtrados = cursos.filter(function(c2) {
+      return _normTxt(c2.name).indexOf(f) !== -1 || _normTxt(c2.id).indexOf(f) !== -1 || _normTxt(c2.cat).indexOf(f) !== -1;
+    });
+  }
+
+  el('hl-count').textContent = filtrados.length + ' de ' + cursos.length + ' cursos';
+
+  // Gerar a opção de categorias uma vez
+  var catOpts = '';
+  var catsList = [
+    'Atualize-se! Notícias Mais Relevantes da Semana','Negócios / Empresas','Geopolítica',
+    'Conspirações & Mistérios','Finanças & Economia','Política Brasileira','PNL',
+    'Marketing & Vendas','Desenvolvimento','Psicologia','Direito & Cidadania','Filosofia',
+    'História','Bíblia / Teologia','Biografias','Família & Relacionamentos',
+    'Segurança & Sobrevivência','Esportes & Alta Performance','Tecnologia','Saúde & Ciência',
+    'Meio Ambiente & Sustentabilidade','Ebooks','Idiomas','Liderança e Poder','Criptomoedas'
+  ];
+  catsList.forEach(function(cat) {
+    catOpts += '<option value="' + escH(cat) + '">' + (_catIcons[cat] || '📚') + ' ' + escH(cat) + '</option>';
+  });
+
+  var html = '';
+  filtrados.forEach(function(c2) {
+    var capaUrl = _homeCapaCache[c2.id] || '';
+    var capaHtml = capaUrl
+      ? '<img src="' + escH(capaUrl) + '" alt="Capa" onerror="this.parentNode.innerHTML=\'<div class=hl-placeholder>📷</div>\'">'
+      : '<div class="hl-placeholder">📷</div>';
+
+    html += '<div class="hl-item" id="hl-' + c2.id + '">';
+
+    // CAPA (clicável para trocar)
+    html += '<div class="hl-capa-wrap" onclick="hlCapaClick(\'' + c2.id + '\')" title="Clique para trocar a capa">';
+    html += capaHtml;
+    html += '<div class="hl-capa-overlay"><span>📷</span><small>Trocar Capa</small></div>';
+    html += '<input type="file" accept="image/*" class="hl-capa-input" id="hl-capa-file-' + c2.id + '" onchange="hlCapaUpload(\'' + c2.id + '\', this)">';
+    html += '</div>';
+
+    // INFO
+    html += '<div class="hl-info">';
+    html += '<div class="hl-nome-row"><span class="hl-nome">' + escH(c2.icon || '📚') + ' ' + escH(c2.name) + '</span><span class="hl-id">' + c2.id + '</span></div>';
+    html += '<div><span class="hl-cat-badge">' + (_catIcons[c2.cat] || '📚') + ' ' + escH(c2.cat) + '</span></div>';
+
+    // Botões
+    html += '<div class="hl-btns">';
+    html += '<button class="hl-btn" onclick="hlEditToggle(\'' + c2.id + '\')">✏️ Editar</button>';
+    html += '<button class="hl-btn" onclick="hlCapaClick(\'' + c2.id + '\')">📷 Trocar Capa</button>';
+    html += '</div>';
+
+    // Área de edição (escondida por padrão)
+    html += '<div class="hl-edit-area" id="hl-edit-' + c2.id + '">';
+    html += '<div><label>Nome do Curso</label><input type="text" id="hl-name-' + c2.id + '" value="' + escH(c2.name) + '"></div>';
+    html += '<div><label>Categoria</label><select id="hl-cat-' + c2.id + '">' + catOpts.replace('value="' + escH(c2.cat) + '"', 'value="' + escH(c2.cat) + '" selected') + '</select></div>';
+    html += '<div style="display:flex;gap:6px">';
+    html += '<button class="hl-btn save" onclick="hlSalvar(\'' + c2.id + '\')">💾 Salvar</button>';
+    html += '<button class="hl-btn cancel" onclick="hlEditToggle(\'' + c2.id + '\')">Cancelar</button>';
+    html += '</div>';
+    html += '<div class="hl-status" id="hl-status-' + c2.id + '"></div>';
+    html += '</div>';
+
+    html += '</div>'; // hl-info
+    html += '</div>'; // hl-item
+  });
+
+  el('hl-container').innerHTML = html;
+}
+
+function homeListaFiltrar() { homeListaRender(); }
+
+function hlEditToggle(id) {
+  var area = el('hl-edit-' + id);
+  if (area) area.classList.toggle('on');
+}
+
+function hlCapaClick(id) {
+  var input = el('hl-capa-file-' + id);
+  if (input) input.click();
+}
+
+async function hlCapaUpload(id, input) {
+  if (!input.files || !input.files[0]) return;
+  var file = input.files[0];
+  var wrap = document.querySelector('#hl-' + id + ' .hl-capa-wrap');
+  if (!wrap) return;
+
+  // Mostrar preview imediato
+  var preview = URL.createObjectURL(file);
+  var imgTag = wrap.querySelector('img');
+  if (imgTag) {
+    imgTag.src = preview;
+  } else {
+    var ph = wrap.querySelector('.hl-placeholder');
+    if (ph) ph.outerHTML = '<img src="' + preview + '" alt="Preview">';
+  }
+
+  // Upload para GitHub
+  try {
+    wrap.style.opacity = '0.5';
+    wrap.style.pointerEvents = 'none';
+    await uploadCapa(file, id);
+    wrap.style.opacity = '1';
+    wrap.style.pointerEvents = '';
+    _homeCapaCache[id] = preview; // atualizar cache
+
+    // Feedback visual
+    var st = el('hl-status-' + id);
+    if (st) { st.className = 'hl-status ok'; st.textContent = '✅ Capa atualizada!'; st.style.display = 'inline-block'; setTimeout(function() { st.style.display = 'none'; }, 3000); }
+  } catch (err) {
+    wrap.style.opacity = '1';
+    wrap.style.pointerEvents = '';
+    alert('❌ Erro ao subir capa: ' + err.message);
+  }
+}
+
+async function hlSalvar(id) {
+  var novoNome = el('hl-name-' + id) ? el('hl-name-' + id).value.trim() : '';
+  var novaCat = el('hl-cat-' + id) ? el('hl-cat-' + id).value : '';
+  if (!novoNome) { alert('Nome não pode ficar vazio.'); return; }
+
+  var curso = _homeListaCursos.find(function(c2) { return c2.id === id; });
+  if (!curso) return;
+
+  // Verificar se algo mudou
+  var mudouNome = novoNome !== curso.name;
+  var mudouCat = novaCat !== curso.cat;
+  if (!mudouNome && !mudouCat) { hlEditToggle(id); return; }
+
+  var st = el('hl-status-' + id);
+  if (st) { st.className = 'hl-status'; st.style.display = 'inline-block'; st.style.background = 'rgba(96,165,250,.1)'; st.style.color = 'var(--acc2)'; st.style.border = '1px solid rgba(96,165,250,.2)'; st.textContent = '⏳ Salvando...'; }
+
+  var c = g();
+  if (!c.t) { alert('Token não configurado.'); return; }
+
+  try {
+    // Buscar versão fresca
+    var _ts = '?t=' + Date.now();
+    var hd = gh(); hd['If-None-Match'] = '';
+    var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js' + _ts, { headers: hd, cache: 'no-store' });
+    var fd = await res.json();
+    var content = b64d(fd.content);
+    var sha = fd.sha;
+
+    // ═══ VALIDAÇÃO PRÉ ═══
+    var countIdPre = (content.match(/\bid:\s*['"]/g) || []).length;
+
+    var idEsc = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    // Trocar nome (SEGURO: [^}]*? dentro do mesmo bloco)
+    if (mudouNome) {
+      var nomeEsc = curso.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/'/g, "\\\\'");
+      var reNome = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][^}]*?name:\\s*['\"])" + nomeEsc + "(['\"])");
+      content = content.replace(reNome, '$1' + novoNome.replace(/'/g, "\\'") + '$2');
+    }
+
+    // Trocar categoria (SEGURO)
+    if (mudouCat) {
+      var catEsc = curso.cat.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      var reCat = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][^}]*?cat:\\s*['\"])" + catEsc + "(['\"])");
+      content = content.replace(reCat, '$1' + novaCat.replace(/'/g, "\\'") + '$2');
+
+      // Atualizar ícone
+      var novoIcon = _catIcons[novaCat] || '';
+      if (novoIcon) {
+        var iconRe = new RegExp("(id:\\s*['\"]" + idEsc + "['\"][^}]*?icon:\\s*['\"])[^'\"]+(['\"])");
+        content = content.replace(iconRe, '$1' + novoIcon + '$2');
+      }
+    }
+
+    // ═══ VALIDAÇÃO PÓS ═══
+    var countIdPos = (content.match(/\bid:\s*['"]/g) || []).length;
+    if (countIdPos !== countIdPre || content.indexOf('var MA_COURSES') === -1) {
+      if (st) { st.className = 'hl-status er'; st.textContent = '❌ Validação falhou — operação cancelada por segurança'; }
+      return;
+    }
+
+    // Push
+    var put = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js', {
+      method: 'PUT', headers: gh(),
+      body: JSON.stringify({ message: 'edit: ' + id + (mudouNome ? ' nome' : '') + (mudouCat ? ' cat→' + novaCat : ''), content: b64e(content), sha: sha })
+    });
+
+    if (put.ok) {
+      // Atualizar dados locais
+      curso.name = novoNome;
+      curso.cat = novaCat;
+      if (st) { st.className = 'hl-status ok'; st.textContent = '✅ Salvo!'; }
+      // Atualizar visual sem recarregar tudo
+      var nomeEl = document.querySelector('#hl-' + id + ' .hl-nome');
+      if (nomeEl) nomeEl.textContent = (_catIcons[novaCat] || '📚') + ' ' + novoNome;
+      var catEl = document.querySelector('#hl-' + id + ' .hl-cat-badge');
+      if (catEl) catEl.textContent = (_catIcons[novaCat] || '📚') + ' ' + novaCat;
+      setTimeout(function() { hlEditToggle(id); if (st) st.style.display = 'none'; }, 1500);
+    } else {
+      var e = await put.json();
+      if (st) { st.className = 'hl-status er'; st.textContent = '❌ ' + (e.message || 'Erro GitHub'); }
+    }
+  } catch (err) {
+    if (st) { st.className = 'hl-status er'; st.textContent = '❌ ' + err.message; }
+  }
+}
+
+// Auto-carregar ao conectar
+(function() {
+  var _origTestGH = window.testGH;
+  var _hlAutoLoaded = false;
+  // Tentar carregar automaticamente após 1s se token já estiver salvo
+  setTimeout(function() {
+    var c = g();
+    if (c.t && c.o && c.r && !_hlAutoLoaded) { _hlAutoLoaded = true; homeListaCarregar(); }
+  }, 800);
+})();
 
 // ── EDITOR DE CURSOS ──
 var _cursoEditando = null;
