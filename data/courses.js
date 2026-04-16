@@ -3664,7 +3664,7 @@ var MA_COURSES = [
     addedTs: 1776358881203,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/rs.jpg',
     id: 'rs',
     name: 'A Nova Rota da Seda (Belt and Road Initiative)',
@@ -3680,7 +3680,7 @@ var MA_COURSES = [
     storagePrefix: 'rs_',
     icon: '📰',
     color: '#d4380d',
-    addedTs: 1776358885680,
+    addedTs: 1776370007279,
     active: true
   },
   {
