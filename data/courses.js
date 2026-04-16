@@ -1347,7 +1347,7 @@ var MA_COURSES = [
     addedTs: 1776289855284,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/vs.jpg',
     id: 'vs',
     name: 'Filosofia, Verdade e Sentido da Vida',
@@ -1357,13 +1357,13 @@ var MA_COURSES = [
     modules: 3,
     topics: 9,
     hours: 2,
-    quizzes: 1,
+    quizzes: 9,
     salt: 'VS_HENRY_2026_MASTER',
     ak: 'vs_auth',
     storagePrefix: 'vs_',
     icon: '🦉',
     color: '#8ab17d',
-    addedTs: 1775832739774,
+    addedTs: 1776372347048,
     active: true
   },
     {
