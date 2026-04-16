@@ -2607,7 +2607,7 @@ var MA_COURSES = [
     addedTs: 1776024584976,
     active: true
   },
-      {
+        {
     coverImg: 'assets/capas/mp.jpg',
     id: 'mp',
     name: 'Posicionamento de Marca Premium',
@@ -2623,7 +2623,7 @@ var MA_COURSES = [
     storagePrefix: 'mp_',
     icon: '📢',
     color: '#a16207',
-    addedTs: 1776370753567,
+    addedTs: 1776372184316,
     active: true
   },
   {
