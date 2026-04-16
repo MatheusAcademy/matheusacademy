@@ -3492,6 +3492,25 @@ var MA_COURSES = [
     free: true,
     addedTs: 1776289938554,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/oi.jpg',
+    id: 'oi',
+    name: 'Engenharia de Ofertas Irresistíveis',
+    desc: 'Descubra como montar ofertas que tornam a decisão de compra quase automática.',
+    file: 'ofertas-irresistiveis.html',
+    cat: 'Marketing & Vendas',
+    modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'OI_HENRY_2026_MASTER',
+    ak: 'oi_auth',
+    storagePrefix: 'oi_',
+    icon: '📢',
+    color: '#15803d',
+    addedTs: 1776358842213,
+    active: true
   }
 ];
 var MA_CATS = [
