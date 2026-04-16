@@ -410,23 +410,23 @@ var MA_COURSES = [
     addedTs: 1775746804118,
     active: true
   },
-  {
+    {
     coverImg: 'assets/capas/ec.jpg',
     id: 'ec',
-    name: 'Curso: Empresa em Crescimento – Gestão e Escala',
-    desc: 'Estruture sua empresa para crescer sem perder controle: organize equipe, defina KPIs, padronize processos, e escale com segurança.',
-    file: 'empresa-crescimento-curso.html',
-    cat: 'Negócios / Empresas',
+    name: 'Economia Comportamental',
+    desc: 'Descubra por que as pessoas tomam decisões financeiras irracionais.',
+    file: 'economia-comportamental.html',
+    cat: 'Finanças & Economia',
     modules: 3,
-    topics: 12,
+    topics: 9,
     hours: 2,
     quizzes: 9,
     salt: 'EC_HENRY_2026_MASTER',
     ak: 'ec_auth',
     storagePrefix: 'ec_',
-    icon: '🎓',
-    color: '#1a56db',
-    addedTs: 1775749148597,
+    icon: '💰',
+    color: '#9333ea',
+    addedTs: 1776370030910,
     active: true
   },
   {
