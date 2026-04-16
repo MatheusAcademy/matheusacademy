@@ -3966,6 +3966,25 @@ var MA_COURSES = [
     color: '#166534',
     addedTs: 1776359018360,
     active: true
+  },
+  {
+    coverImg: 'assets/capas/t.jpg',
+    id: 't',
+    name: 'test',
+    desc: '',
+    file: 'test.html',
+    cat: 'Negócios',
+    modules: 1,
+    topics: 6,
+    hours: 1,
+    quizzes: 3,
+    salt: 'T_HENRY_2026_MASTER',
+    ak: 't_auth',
+    storagePrefix: 't_',
+    icon: '🎓',
+    color: '#3b82f6',
+    addedTs: 1776372291828,
+    active: true
   }
 ];
 var MA_CATS = [
