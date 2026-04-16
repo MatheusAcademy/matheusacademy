@@ -178,6 +178,16 @@ textarea{resize:vertical;min-height:54px}
 /* ── IA ── */
 .ia-loading{display:flex;align-items:center;gap:10px;padding:12px;font-size:12px;color:var(--acc2)}
 
+/* ── LIGHTBOX MODAL PARA EXPANDIR CAPAS ── */
+.capa-lightbox{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);cursor:zoom-out;animation:lbFadeIn .2s ease}
+.capa-lightbox.on{display:flex}
+.capa-lightbox-inner{position:relative;max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:default}
+.capa-lightbox-img{width:auto;height:auto;max-height:80vh;max-width:min(450px,90vw);aspect-ratio:2/3;object-fit:contain;border-radius:12px;border:2px solid var(--brd);box-shadow:0 20px 60px rgba(0,0,0,.6);background:#0a0e18}
+.capa-lightbox-name{font-size:12px;color:var(--t2);font-family:var(--mono);text-align:center;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:rgba(0,0,0,.6);padding:4px 12px;border-radius:6px}
+.capa-lightbox-close{position:absolute;top:-12px;right:-12px;width:32px;height:32px;border-radius:50%;background:var(--card);border:1px solid var(--brd);color:var(--txt);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;z-index:1}
+.capa-lightbox-close:hover{background:var(--red);border-color:var(--red);transform:scale(1.1)}
+@keyframes lbFadeIn{from{opacity:0}to{opacity:1}}
+
 @media(max-width:580px){.or,.row,.mg{grid-template-columns:1fr;flex-direction:column}.oc{flex-direction:column}.ar{flex-direction:column;align-items:flex-start}header{padding:10px 12px}main{padding:18px 10px 60px}.tabs{flex-wrap:wrap}}
 
 /* ── ALUNOS ── */
@@ -7360,7 +7370,7 @@ function diagCapaRender(byId) {
         var isChosen = it.chosen;
         var border = isChosen ? 'border:2px solid #22c55e' : 'border:2px solid var(--brd)';
         html += '<div style="' + border + ';border-radius:8px;padding:6px;width:140px;cursor:pointer;text-align:center;transition:all .2s;' + (isChosen ? 'background:rgba(34,197,94,.06)' : 'background:var(--sf);opacity:.6') + '" onclick="diagCapaChooseDupe(\'' + escH(dupId) + '\',' + idx + ')">';
-        html += '<img src="' + it.dataUrl + '" style="width:100%;height:80px;object-fit:cover;border-radius:4px;margin-bottom:4px">';
+        html += '<img src="' + it.dataUrl + '" style="width:100%;height:80px;object-fit:cover;border-radius:4px;margin-bottom:4px;cursor:zoom-in" onclick="event.stopPropagation();capaLightboxOpen(\'' + it.dataUrl.replace(/\x27/g, "\\'") + '\',\'' + escH(it.origName).replace(/\x27/g, "\\'") + '\')" title="Clique para expandir">';
         html += '<div style="font-size:9px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escH(it.origName) + '</div>';
         html += '<div style="font-size:9px;color:' + (it.score > 0.51 ? '#86efac' : '#fca5a5') + '">' + Math.round(it.score * 100) + '% match' + (it.score <= 0.51 ? ' ⛔' : ' ✅') + '</div>';
         if (isChosen) html += '<div style="font-size:9px;color:#22c55e;font-weight:700;margin-top:2px">✅ Selecionada</div>';
@@ -7381,7 +7391,7 @@ function diagCapaRender(byId) {
 
     var borderColor = it.status === 'matched' ? 'rgba(34,197,94,.4)' : (it.status === 'ok' ? 'rgba(34,197,94,.6)' : 'rgba(239,68,68,.3)');
     html += '<div style="border:1px solid ' + borderColor + ';border-radius:8px;padding:6px;width:155px;background:var(--sf)">';
-    html += '<img src="' + it.dataUrl + '" style="width:100%;height:80px;object-fit:cover;border-radius:4px;margin-bottom:4px">';
+    html += '<img src="' + it.dataUrl + '" style="width:100%;height:80px;object-fit:cover;border-radius:4px;margin-bottom:4px;cursor:zoom-in" onclick="event.stopPropagation();capaLightboxOpen(\'' + it.dataUrl.replace(/'/g, "\\'") + '\',\'' + escH(it.origName).replace(/'/g, "\\'") + '\')" title="Clique para expandir">';
     html += '<div style="font-size:9px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:2px" title="' + escH(it.origName) + '">' + escH(it.origName) + '</div>';
 
     if (it.status === 'matched') {
@@ -7751,7 +7761,7 @@ function _renderDupes() {
         + 'onclick="capaDupeChoose(\'' + escH(id) + '\',' + idx + ')" '
         + 'onmouseover="this.style.opacity=\'1\';this.style.transform=\'scale(1.03)\'" '
         + 'onmouseout="this.style.opacity=\'' + opacity + '\';this.style.transform=\'none\'">'
-        + '<img src="' + item.dataUrl + '" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block">'
+        + '<img src="' + item.dataUrl + '" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block;cursor:zoom-in" onclick="event.stopPropagation();capaLightboxOpen(\'' + item.dataUrl.replace(/\x27/g, "\\'") + '\',\'' + escH(item.origName).replace(/\x27/g, "\\'") + '\')" title="Clique para expandir">'
         + '<div style="padding:6px">'
         + '<div style="font-size:8px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escH(item.origName) + '</div>'
         + (item.confidence ? '<div style="font-size:8px;color:var(--acc2)">OCR: ' + item.confidence + '%</div>' : '')
@@ -7867,7 +7877,7 @@ function capaLoteRenderGrid() {
 
     html += '<div style="background:' + bgColor + ';border:2px solid ' + borderColor + ';border-radius:10px;overflow:hidden;position:relative" id="capa-card-' + idx + '">'
       + confBadge + statusBadge
-      + '<img src="' + item.dataUrl + '" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block">'
+      + '<img src="' + item.dataUrl + '" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block;cursor:zoom-in" onclick="event.stopPropagation();capaLightboxOpen(\'' + item.dataUrl.replace(/\x27/g, "\\'") + '\',\'' + escH(item.origName).replace(/\x27/g, "\\'") + '\')" title="Clique para expandir">'
       + '<div style="padding:10px">'
       + '<div style="font-size:9px;color:var(--t3);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + escH(item.origName) + '">' + escH(item.origName) + '</div>'
       + ocrPreview
@@ -8047,6 +8057,36 @@ async function capaRetentarErros() {
   await capaLotePublicar();
 }
 
+// ── LIGHTBOX: expandir imagem da capa ──
+function capaLightboxOpen(src, nome) {
+  var lb = document.getElementById('capaLightbox');
+  var img = document.getElementById('capaLightboxImg');
+  var nm = document.getElementById('capaLightboxNome');
+  if (!lb || !img) return;
+  img.src = src;
+  if (nm) nm.textContent = nome || '';
+  lb.classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function capaLightboxClose() {
+  var lb = document.getElementById('capaLightbox');
+  if (lb) lb.classList.remove('on');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') capaLightboxClose();
+});
+
 </script>
+
+<!-- LIGHTBOX MODAL -->
+<div class="capa-lightbox" id="capaLightbox" onclick="capaLightboxClose()">
+  <div class="capa-lightbox-inner" onclick="event.stopPropagation()">
+    <button class="capa-lightbox-close" onclick="capaLightboxClose()" title="Fechar (Esc)">✕</button>
+    <img class="capa-lightbox-img" id="capaLightboxImg" src="" alt="Capa expandida">
+    <div class="capa-lightbox-name" id="capaLightboxNome"></div>
+  </div>
+</div>
+
 </body>
 </html>
