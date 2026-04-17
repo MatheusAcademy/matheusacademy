@@ -106,7 +106,7 @@ var MA_COURSES = [
   },
   {
     id: 'gtavi',
-    coverImg: 'assets/capas/gtavi.png',
+    coverImg: 'assets/capas/gtavi.jpg',
     courseKey: 'gtavi',
     name: 'Hype do Grand Theft Auto VI',
     desc: 'A espera épica pelo maior lançamento da história dos games. US$7,6bi em 60 dias.',
