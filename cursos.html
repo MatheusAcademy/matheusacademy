@@ -14,6 +14,8 @@
 <script src="firebase-config.js"></script>
 <script src="shared/time-tracker.js"></script>
 
+<script src="shared/ma-global-styles.js" defer></script>
+
 <style>
 :root{
   --bg:#08080f;--bg2:#0d0d1a;--bg3:#111122;--card:#0f0f1e;
@@ -290,10 +292,10 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
 
 .summary-prog{
   grid-column:1/-1;
-  padding:12px;
-  background:rgba(74,126,255,.08);
-  border:1px solid rgba(74,126,255,.15);
-  border-radius:12px;
+  padding:16px;
+  background:linear-gradient(135deg,rgba(74,126,255,.12) 0%,rgba(0,212,255,.06) 100%);
+  border:1px solid rgba(74,126,255,.2);
+  border-radius:14px;
 }
 
 .summary-prog-label{
@@ -302,7 +304,8 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
   text-transform:uppercase;
   letter-spacing:.1em;
   display:block;
-  margin-bottom:8px;
+  margin-bottom:14px;
+  font-weight:700;
 }
 
 .summary-prog-bar{
@@ -310,6 +313,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
   background:rgba(255,255,255,.06);
   border-radius:3px;
   overflow:hidden;
+  margin-bottom:12px;
 }
 
 .summary-prog-fill{
@@ -317,6 +321,48 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
   border-radius:3px;
   background:linear-gradient(90deg,var(--pri),var(--neon));
   transition:width 1s cubic-bezier(.2,0,.3,1);
+}
+
+/* ══ PERFORMANCE DASHBOARD ══ */
+.perf-dashboard{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+  margin-top:12px;
+}
+
+.perf-card{
+  padding:10px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(74,126,255,.1);
+  border-radius:10px;
+  text-align:center;
+  transition:all .3s cubic-bezier(.2,0,.3,1);
+}
+
+.perf-card:hover{
+  background:rgba(74,126,255,.08);
+  border-color:rgba(74,126,255,.25);
+  transform:translateY(-1px);
+}
+
+.perf-card-val{
+  font-size:1.2rem;
+  font-weight:900;
+  color:#fff;
+  display:block;
+  line-height:1;
+  margin-bottom:2px;
+}
+
+.perf-card-lbl{
+  font-size:.45rem;
+  color:var(--txt3);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  display:block;
+  font-weight:600;
+  line-height:1.2;
 }
 
 /* ══ MAIN GRID ══ */
@@ -835,6 +881,20 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--fo
       <div class="summary-prog">
         <div class="summary-prog-label">Seu Desempenho Geral</div>
         <div class="summary-prog-bar"><div class="summary-prog-fill" id="sumProgFill" style="width:0%"></div></div>
+        <div class="perf-dashboard">
+          <div class="perf-card">
+            <span class="perf-card-val" id="perfInProgress">0</span>
+            <span class="perf-card-lbl">Em Andamento</span>
+          </div>
+          <div class="perf-card">
+            <span class="perf-card-val" id="perfCompleted">0</span>
+            <span class="perf-card-lbl">Concluídos</span>
+          </div>
+          <div class="perf-card">
+            <span class="perf-card-val" id="perfHours">0h</span>
+            <span class="perf-card-lbl">Horas Estudo</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1138,9 +1198,9 @@ function renderCursos(cursos) {
     console.log('[Render] Nenhum curso');
     return;
   }
-  
+
   console.log('[Render] Renderizando', cursos.length, 'cursos');
-  
+
   var grid = document.getElementById('coursesGrid');
   cursos = cursos.filter(function(c) { return c.active !== false; });
   cursos.sort(function(a, b) { return (b.addedTs || 0) - (a.addedTs || 0); });
@@ -1152,7 +1212,7 @@ function renderCursos(cursos) {
   console.log('[Render]', noticias.length, 'notícias +', cursosCompletos.length, 'cursos');
 
   var html = '';
-  var totalPct = 0, concluidos = 0;
+  var totalPct = 0, concluidos = 0, emAndamento = 0, totalHoras = 0;
 
   if (noticias.length) {
     html += '<div class="section-divider"><span>📰 Notícias em Destaque</span><span class="section-count">' + noticias.length + ' notícias</span></div>';
@@ -1167,6 +1227,8 @@ function renderCursos(cursos) {
       var prog = getCourseProgress(c);
       totalPct += prog.pct;
       if (prog.pct === 100) concluidos++;
+      if (prog.pct > 0 && prog.pct < 100) emAndamento++;
+      totalHoras += (c.hours || 1);
       html += renderCourseCard(c);
     });
   }
@@ -1179,8 +1241,22 @@ function renderCursos(cursos) {
   document.getElementById('sumConcluidos').textContent = concluidos;
   document.getElementById('sumProgPct').textContent = avgPct + '%';
   document.getElementById('sumProgFill').style.width = avgPct + '%';
-  
+
+  // Atualizar dashboard de desempenho
+  updatePerformanceDashboard(emAndamento, concluidos, totalHoras);
+
   console.log('[Render] Stats: ' + totalCursos + ' disponíveis, ' + concluidos + ' concluídos, ' + avgPct + '% progresso');
+  console.log('[Render] Perf: ' + emAndamento + ' em andamento, ' + totalHoras + ' horas totais');
+}
+
+function updatePerformanceDashboard(emAndamento, concluidos, totalHoras) {
+  var perfInProgressEl = document.getElementById('perfInProgress');
+  var perfCompletedEl = document.getElementById('perfCompleted');
+  var perfHoursEl = document.getElementById('perfHours');
+
+  if (perfInProgressEl) perfInProgressEl.textContent = emAndamento;
+  if (perfCompletedEl) perfCompletedEl.textContent = concluidos;
+  if (perfHoursEl) perfHoursEl.textContent = totalHoras + 'h';
 }
 
 // ══ MENU ══

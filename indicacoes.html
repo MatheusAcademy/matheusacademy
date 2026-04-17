@@ -26,7 +26,7 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 
 /* ── HERO ── */
 .hero{text-align:center;padding:32px 0 28px;position:relative}
-.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(ellipse,rgba(168,85,247,.12),transparent 70%);pointer-events:none;z-index:0}
+.hero::before{content:'';position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:500px;height:400px;background:radial-gradient(ellipse at center,rgba(168,85,247,.25),rgba(75,139,255,.15),transparent 65%);pointer-events:none;z-index:0;animation:gradientShift 8s ease-in-out infinite}@keyframes gradientShift{0%,100%{opacity:.8;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
 .hero-icon{font-size:3rem;margin-bottom:12px;display:block;position:relative;z-index:1}
 .hero h1{font-family:var(--serif);font-size:1.9rem;font-weight:900;color:#fff;margin-bottom:8px;position:relative;z-index:1}
 .hero h1 span{color:var(--pur)}
@@ -61,15 +61,15 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .section-title{font-size:.65rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
 .steps{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
 .step-item{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:14px}
-.step-num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--pur),#7c3aed);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff;flex-shrink:0}
+.step-num{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:900;color:#fff;flex-shrink:0;transition:all .3s;box-shadow:0 0 20px rgba(75,139,255,.4)}.step-item:nth-child(1) .step-num{background:linear-gradient(135deg,#2563eb,#3b82f6);box-shadow:0 0 25px rgba(37,99,235,.5)}.step-item:nth-child(2) .step-num{background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 0 25px rgba(34,197,94,.5)}.step-item:nth-child(3) .step-num{background:linear-gradient(135deg,#a855f7,#7c3aed);box-shadow:0 0 25px rgba(168,85,247,.5)}.step-item:nth-child(4) .step-num{background:linear-gradient(135deg,#f59e0b,#f97316);box-shadow:0 0 25px rgba(245,158,11,.5)}.step-item:hover .step-num{transform:scale(1.12)}
 .step-body .step-t{font-size:.78rem;font-weight:700;color:#fff;margin-bottom:2px}
 .step-body .step-d{font-size:.68rem;color:var(--txt2);line-height:1.5}
 
 /* ── COMMISSION BANNER ── */
-.comm-banner{background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(251,146,60,.06));border:1.5px solid rgba(245,158,11,.3);border-radius:16px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+.comm-banner{background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(251,146,60,.06));border:2px solid rgba(245,158,11,.4);border-radius:16px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px;animation:pulseBorder 2s ease-in-out infinite}@keyframes pulseBorder{0%,100%{border-color:rgba(245,158,11,.4);box-shadow:0 0 0 0 rgba(245,158,11,.1)}50%{border-color:rgba(245,158,11,.6);box-shadow:0 0 20px rgba(245,158,11,.3)}}
 .comm-icon{font-size:2rem;flex-shrink:0}
 .comm-body .comm-title{font-size:.82rem;font-weight:800;color:var(--orn);margin-bottom:3px}
-.comm-body .comm-desc{font-size:.68rem;color:var(--txt2);line-height:1.55}
+.comm-body .comm-desc{font-size:.72rem;color:var(--txt2);line-height:1.55;font-weight:500}.comm-body .comm-desc strong{font-size:.88rem;font-weight:900;color:var(--orn);text-shadow:0 0 10px rgba(245,158,11,.4)}
 
 /* ── INDICADOS LIST ── */
 .ind-box{background:var(--card);border:1.5px solid var(--brd);border-radius:16px;margin-bottom:20px;overflow:hidden}
@@ -179,6 +179,9 @@ body{padding-bottom:58px!important}
 
 <!-- MA-Fixes: SEO, LGPD cookies, error monitoring, lazy loading -->
 <script src="shared/ma-fixes.js"></script>
+
+<!-- Global styles and footer script -->
+<script src="shared/ma-global-styles.js" defer></script>
 </head>
 <body>
 
