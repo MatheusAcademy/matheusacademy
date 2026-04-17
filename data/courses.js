@@ -316,7 +316,7 @@ var MA_COURSES = [
   },
   {
     id: 'go',
-    coverImg: 'assets/capas/go.png',
+    coverImg: 'assets/capas/go.jpg',
     courseKey: 'go',
     name: 'Ganhar Dinheiro Online: IA, Afiliados e Automação',
     desc: 'Estratégias de renda online: IA, afiliados bilionários, dropshipping e conteúdo monetizado.',
