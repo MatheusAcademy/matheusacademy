@@ -489,7 +489,7 @@ function ptUpdateMenuUser() {
   } else {
     sec.innerHTML  = '<span class="ma-mu-name" style="color:#8888a8">Visitante</span>'
                    + '<div class="ma-mu-pts">Faça login para salvar seu progresso</div>';
-    auth.innerHTML = '<a class="ma-mi" href="index.html">'
+    auth.innerHTML = '<a class="ma-mi" href="index.html" onclick="localStorage.setItem(\'ma_open_modal\',\'login\');return true">'
                    + '<span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a>'
                    + '<a class="ma-mi gold" href="planos.html">'
                    + '<span class="ma-mi-icon">💎</span>Ver Planos</a>';

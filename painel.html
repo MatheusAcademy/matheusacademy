@@ -315,7 +315,7 @@ body{padding-bottom:80px!important}
       <div class="hero-info">
         <div class="hero-name" id="heroName">Carregando...</div>
         <div class="hero-lv-badge" id="heroLvBadge"><span class="lv-dot"></span></div>
-        <div class="hero-streak">🔥 <span id="heroStreak">0</span> dias seguidos</div>
+        <div class="hero-streak">🔥 <span id="heroStreak">0</span> <span id="heroStreakLabel">dias seguidos</span></div>
       </div>
       <div class="hero-pts-block">
         <span class="hero-pts-num" id="heroPts">0</span>
@@ -374,7 +374,7 @@ body{padding-bottom:80px!important}
       <div class="card" style="margin:0">
         <div class="card-hdr"><div class="ch-icon" style="background:rgba(245,158,11,.15)">🔥</div><div><div class="ch-title">Sequência</div><div class="ch-sub">Dias consecutivos</div></div></div>
         <span class="streak-num" id="streakBig">0</span>
-        <span class="streak-lbl">dias seguidos</span>
+        <span class="streak-lbl" id="streakBigLabel">dias seguidos</span>
         <div class="sdays" id="sDays"></div>
       </div>
       <!-- WEEKLY -->
@@ -535,6 +535,7 @@ function render(){
   var hn=document.getElementById('heroName');if(hn)hn.textContent=u?u.name:'Aluno';
   var hlv=document.getElementById('heroLvBadge');if(hlv){hlv.innerHTML='<span class="lv-dot"></span>'+lv.n;hlv.className='hero-lv-badge '+lv.c;}
   var hs=document.getElementById('heroStreak');if(hs)hs.textContent=ss.streak||0;
+  var hsl=document.getElementById('heroStreakLabel');if(hsl)hsl.textContent=(ss.streak===1?'dia seguido':'dias seguidos');
   var hp=document.getElementById('heroPts');if(hp)hp.textContent=p.total.toLocaleString('pt-BR');
   // Stats
   var sp=document.getElementById('sPts');if(sp)sp.textContent=p.total.toLocaleString('pt-BR');
@@ -552,7 +553,8 @@ function render(){
   renderRank(u,p);
   // Missions
   renderMiss();
-  // Badges
+  // Badges — sincronizar conquistas baseando-se no estado atual
+  checkAch(p.total,p.history.length);
   renderBadges();
   // Courses
   renderCourses();
@@ -573,6 +575,7 @@ function renderXP(p,lv){
 
 function renderStreak(ss){
   var sb=document.getElementById('streakBig');if(sb)sb.textContent=ss.streak||0;
+  var sbl=document.getElementById('streakBigLabel');if(sbl)sbl.textContent=(ss.streak===1?'dia seguido':'dias seguidos');
   var days=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
   var ti=new Date().getDay();ti=ti===0?6:ti-1;
   var h='';for(var i=0;i<7;i++){var isT=i===ti;var isA=i<ti&&(ss.streak||0)>=(ti-i);h+='<div class="sday '+(isT?'today':isA?'active':'')+'"><span>'+(isT?'🔥':isA?'✓':'')+'</span><span>'+days[i]+'</span></div>';}

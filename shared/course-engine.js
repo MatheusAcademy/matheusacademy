@@ -1032,6 +1032,18 @@ function selectTopic(mi,ti,canAcc){
   // Salvar ultimo topico para "continuar de onde parou"
   localStorage.setItem(COURSE.prefix+'lastMod',mi);
   localStorage.setItem(COURSE.prefix+'lastTopic',ti);
+  // Salvar para o card "Continuar estudando" do painel
+  try{
+    var _mod=MODS[mi],_top=_mod?_mod.topics[ti]:null;
+    localStorage.setItem('mae_last_module',JSON.stringify({
+      courseKey:COURSE.prefix||COURSE.id||'',
+      courseName:COURSE.name||document.title||'',
+      moduleId:_mod?_mod.id:'',
+      moduleName:_top?_top.name:(_mod?_mod.name:''),
+      url:window.location.pathname,
+      ts:Date.now()
+    }));
+  }catch(_e){}
   buildSidebar();
   showTabs();switchTab('conteudo');
   if(_isMobile())closeSidebarMobile();

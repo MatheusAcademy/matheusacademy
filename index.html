@@ -179,7 +179,7 @@ body {
   background: rgba(10, 10, 15, 0.8);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
-*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh;overflow-x:hidden}::selection{background:var(--pri);color:#fff}
+*{margin:0;padding:0;box-sizing:border-box}html,body{overflow-x:hidden}body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh}::selection{background:var(--pri);color:#fff}
 #page-wrap{max-width:1400px;margin:0 auto;overflow:visible}
 .hdr{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:1000}
 .hdr-left{display:flex;align-items:center;gap:10px;cursor:pointer}.hdr-left img{width:32px;height:32px;border-radius:8px}.hdr-left h1{font-size:.88rem;font-weight:700;color:var(--txt)}.hdr-left h1 span{color:var(--pri)}
@@ -1666,6 +1666,17 @@ var CATS = MA_buildCats();
 // Cover images (loaded from separate elements to avoid JS string issues)
 var COVERS = {};
 
+// Helper: resolve topics count (pode ser número ou array de módulos)
+function _topicsCount(t) {
+  if (typeof t === 'number') return t;
+  if (Array.isArray(t)) {
+    var total = 0;
+    t.forEach(function(m){ total += (m.lessons ? m.lessons.length : 0); });
+    return total;
+  }
+  return 0;
+}
+
 // ═══════════════════════════════ MA-TOPBAR FUNCTIONS ═══════════════════════════════
 function toggleMenu(){document.getElementById('menuDd').classList.toggle('open');document.getElementById('menuOverlay').classList.toggle('open');}
 function closeMenu(){document.getElementById('menuDd').classList.remove('open');document.getElementById('menuOverlay').classList.remove('open');}
@@ -1802,7 +1813,7 @@ function makeAutoCover(course, gi, isSoon) {
   var stats = [];
   if (course.hours) stats.push(course.hours + 'H');
   if (course.modules) stats.push(course.modules + ' MÓD');
-  if (course.topics) stats.push(course.topics + ' TÓP');
+  if (course.topics) stats.push(_topicsCount(course.topics) + ' TÓP');
   var statsText = stats.slice(0,3).join(' · ');
 
   // ── Shapes decorativos por tema ──
@@ -2135,7 +2146,7 @@ function buildEbooks() {
     h += '<div class="ebook-balloon">';
     h += '<div class="bal-name">' + c.name + '</div>';
     h += '<div class="bal-desc">' + c.desc.substring(0, 85) + '</div>';
-    h += '<div class="bal-meta"><span><b>' + c.hours + 'h</b> Horas</span><span><b>' + c.topics + '</b> T&oacute;p.</span><span><b>' + c.modules + '</b> M&oacute;d.</span></div>';
+    h += '<div class="bal-meta"><span><b>' + c.hours + 'h</b> Horas</span><span><b>' + _topicsCount(c.topics) + '</b> T&oacute;p.</span><span><b>' + c.modules + '</b> M&oacute;d.</span></div>';
     h += '</div>';
     h += '</div>'; // cover
     h += '<button class="ebook-btn ' + btnCls + '">' + btnTxt + '</button>';
@@ -2489,9 +2500,9 @@ function makeCard(c) {
          || makeAutoCover(c, gi);                    // 4. capa genérica automática
   var _nowTs=Date.now();
   var _isNew=(c.addedTs&&(_nowTs-c.addedTs)<7*24*60*60*1000);
-  // Se for ebook, abrir o PDF direto (em nova aba)
+  // Se for ebook, abrir a landing page (NÃO o PDF direto)
   var isEbook = (c.type === 'ebook' && c.pdfFile);
-  var fileTarget = isEbook ? c.pdfFile : c.file;
+  var fileTarget = c.file;
   var h = '<div class="cc" data-file="' + fileTarget + '"' + (isEbook ? ' data-ebook="1"' : '') + '>';
   h += '<div class="cc-img"><img src="' + img + '" alt="' + c.name + '" loading="lazy">';
   if (un && !c.free) h += '<div class="cc-badge live">&#10003; Liberado</div>';
@@ -2578,7 +2589,7 @@ function rC() {
     h += '<div class="row-wrap">';
     h += '<button class="arr-btn ap" data-scroll="ro' + ci + '" data-dir="-1">&#8249;</button>';
     h += '<div class="row-outer" id="ro' + ci + '"><div class="row-inner" id="ri' + ci + '">';
-    cat.courses.slice().sort(function(a,b){if(a.pinned&&!b.pinned)return -1;if(!a.pinned&&b.pinned)return 1;return(b.addedTs||0)-(a.addedTs||0);}).forEach(function(c){tM+=c.modules;tT+=c.topics;tH+=c.hours;h+=makeCard(c);});
+    cat.courses.slice().sort(function(a,b){if(a.pinned&&!b.pinned)return -1;if(!a.pinned&&b.pinned)return 1;return(b.addedTs||0)-(a.addedTs||0);}).forEach(function(c){tM+=c.modules;tT+=_topicsCount(c.topics);tH+=c.hours;h+=makeCard(c);});
     cat.soon.forEach(function(s, si) {
       var lbl = cat.isSpecial?'Em Preparação':cat.isEbook?'Em Produção':'Em Breve';
       // Gerar capa automática baseada no nome

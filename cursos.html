@@ -1033,18 +1033,29 @@ function loadCoursesFromSources() {
 function isCourseUnlocked(c) {
   if (c.free === true || c.ak === 'free') return true;
   if (!CURRENT_USER) return false;
-  
-  if (CURRENT_USER.cursos && Array.isArray(CURRENT_USER.cursos)) {
-    return CURRENT_USER.cursos.indexOf(c.id || c.ak) >= 0;
-  }
-  
-  if (typeof MAStore !== 'undefined' && MAStore.hasCourseAccess) {
-    const accessKey = c.ak || (c.id + '_access');
-    if (MAStore.hasCourseAccess(accessKey)) {
-      return true;
+
+  // Plano ativo (master, anual ou mensal) desbloqueia TODOS os cursos
+  var plano = CURRENT_USER.plano || '';
+  if (plano === 'master' || plano === 'anual' || plano === 'mensal') return true;
+
+  // Verificar via localStorage legado (course-engine salva com chave = c.ak)
+  try {
+    var stored = localStorage.getItem(c.ak);
+    if (stored) {
+      var parsed = JSON.parse(stored);
+      if (parsed && parsed.type === 'master') return true;
+      if (parsed && parsed.code) return true;
     }
+  } catch(e) {}
+
+  // Verificar lista de cursos comprados
+  if (CURRENT_USER.cursos && Array.isArray(CURRENT_USER.cursos)) {
+    if (CURRENT_USER.cursos.indexOf(c.id) >= 0 || CURRENT_USER.cursos.indexOf(c.ak) >= 0) return true;
   }
-  
+  if (CURRENT_USER.cursos_comprados && Array.isArray(CURRENT_USER.cursos_comprados)) {
+    if (CURRENT_USER.cursos_comprados.indexOf(c.id) >= 0 || CURRENT_USER.cursos_comprados.indexOf(c.ak) >= 0) return true;
+  }
+
   return false;
 }
 

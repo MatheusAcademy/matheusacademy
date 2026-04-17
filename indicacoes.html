@@ -379,7 +379,7 @@ body{padding-bottom:58px!important}
 <script>
 var _user = null;
 var _refCode = '';
-var _BASE_URL = 'https://matheusacademy.github.io/matheusacademy/index.html';
+var _BASE_URL = 'https://matheusacademy.com.br/index.html';
 
 // ── DADOS ──
 function getIndData() {
@@ -389,8 +389,25 @@ function getIndData() {
 function saveIndData(d) { localStorage.setItem('ma_ind_data', JSON.stringify(d)); }
 
 // ── INIT ──
-function init() {
-  _user = MAStore.getUser();
+async function init() {
+  // Tentar MAStore (async)
+  if (typeof MAStore !== 'undefined' && MAStore.getUser) {
+    try { _user = await MAStore.getUser(); } catch(e) {}
+  }
+  // Fallback: localStorage
+  if (!_user) {
+    try { _user = JSON.parse(localStorage.getItem('ma_user') || 'null'); } catch(e) {}
+  }
+  // Fallback: Firebase onAuthStateChanged com timeout
+  if (!_user && window.firebase && firebase.auth) {
+    _user = await new Promise(function(resolve) {
+      var resolved = false;
+      firebase.auth().onAuthStateChanged(function(fbUser) {
+        if (!resolved) { resolved = true; resolve(fbUser ? {email: fbUser.email, uid: fbUser.uid, name: fbUser.displayName} : null); }
+      });
+      setTimeout(function() { if (!resolved) { resolved = true; resolve(null); } }, 3000);
+    });
+  }
   if (!_user) {
     document.getElementById('notLogged').style.display = 'block';
     return;
