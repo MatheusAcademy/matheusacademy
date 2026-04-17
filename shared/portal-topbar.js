@@ -186,6 +186,16 @@
   `;
   document.head.appendChild(style);
 
+  /* ── Lê XP em cache ANTES de gerar HTML (evita flash de 0) ── */
+  var _cachedXP = 0;
+  try {
+    var _cu = JSON.parse(localStorage.getItem('ma_user') || 'null');
+    if (_cu && typeof _cu.xp_total === 'number') {
+      _cachedXP = _cu.xp_total;
+    }
+  } catch(e) {}
+  var _cachedXPStr = _cachedXP.toLocaleString('pt-BR');
+
   /* ── HTML da topbar ── */
   var html = `
 <nav class="ma-topbar">
@@ -222,7 +232,7 @@
         <path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/>
       </svg>
     </span>
-    <span class="ma-tb-pts-num" id="maPtsNum">0</span>
+    <span class="ma-tb-pts-num" id="maPtsNum">${_cachedXPStr}</span>
   </a>
 
   <!-- BOTÃO TEMA -->
@@ -289,7 +299,8 @@
    ══════════════════════════════════════════════════════════════ */
 
 function ptInitTopbar() {
-  // XP atualiza apenas via onAuthStateChanged (evita flash de 0 XP)
+  // Atualiza pontos imediatamente com dados do cache (já populado no HTML inicial)
+  ptUpdatePts();
 
   // Oculta/mostra botão Planos conforme o plano do usuário
   (function _ptUpdPlansBtn() {
