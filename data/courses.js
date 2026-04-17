@@ -64,7 +64,7 @@ var MA_COURSES = [
   },
   {
     id: 'jr',
-    coverImg: 'assets/capas/jr.png',
+    coverImg: 'assets/capas/jr.jpg',
     courseKey: 'jr',
     name: 'Juros Altos Travando o Crédito no Brasil',
     desc: 'Selic em 14,75%, endividamento recorde e o impacto da política monetária nas famílias.',
