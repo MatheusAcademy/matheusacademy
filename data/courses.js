@@ -3878,6 +3878,71 @@ var MA_COURSES = [
     file: 'revolucoes-mundo.html',
     cat: 'História',
     modules: 3,
+  {
+    id: 'cxe',
+    coverImg: 'assets/capas/cxe.png',
+    name: 'China x EUA: Rivalidade Geopolitica no Seculo XXI',
+    desc: 'Ebook completo sobre a rivalidade entre as duas maiores potencias mundiais.',
+    file: 'ebook-china-eua.html',
+    cat: 'Geopolitica',
+    modules: 7, topics: 30, hours: 2, quizzes: 0,
+    salt: 'CXE_EBOOK_2026', ak: 'cxe_auth', storagePrefix: 'cxe_',
+    icon: '🌍', color: '#FF4444',
+    free: true, active: true, addedTs: 1713225600000,
+    type: 'ebook', pdfFile: 'ebooks/China_x_EUA_Matheus_Academy.pdf'
+  },
+  {
+    id: 'ixi',
+    coverImg: 'assets/capas/ixi.png',
+    name: 'Israel x Ira: Conflito e Geopolitica',
+    desc: 'Analise completa do conflito entre Israel e Ira. Historia, atores e cenarios futuros.',
+    file: 'ebook-israel-ira.html',
+    cat: 'Geopolitica',
+    modules: 8, topics: 30, hours: 2, quizzes: 0,
+    salt: 'IXI_EBOOK_2026', ak: 'ixi_auth', storagePrefix: 'ixi_',
+    icon: '⚔️', color: '#FF6B35',
+    free: true, active: true, addedTs: 1713225600000,
+    type: 'ebook', pdfFile: 'ebooks/Israel_x_Ira_Matheus_Academy.pdf'
+  },
+  {
+    id: 'dv26',
+    coverImg: 'assets/capas/dv26.png',
+    name: 'Devocional 2026: Reflexoes Diarias Para Fortalecer Sua Fe',
+    desc: 'Ebook devocional com 12 reflexoes biblicas profundas. Perspectiva protestante.',
+    file: 'ebook-devocional-2026.html',
+    cat: 'Biblia / Teologia',
+    modules: 12, topics: 30, hours: 2, quizzes: 0,
+    salt: 'DV26_EBOOK_2026', ak: 'dv26_auth', storagePrefix: 'dv26_',
+    icon: '✝️', color: '#7B2FBE',
+    free: true, active: true, addedTs: 1713225600000,
+    type: 'ebook', pdfFile: 'ebooks/Devocional_2026_Matheus_Academy.pdf'
+  },
+  {
+    id: 'epf',
+    coverImg: 'assets/capas/epf.png',
+    name: 'Estamos Proximos do Fim? Compreendendo os Tempos Profeticos',
+    desc: 'Analise das maiores ameacas existenciais: clima, pandemias, IA, nuclear e economia.',
+    file: 'ebook-estamos-proximos-fim.html',
+    cat: 'Geopolitica',
+    modules: 8, topics: 30, hours: 2, quizzes: 0,
+    salt: 'EPF_EBOOK_2026', ak: 'epf_auth', storagePrefix: 'epf_',
+    icon: '🔥', color: '#FF4444',
+    free: true, active: true, addedTs: 1713225600000,
+    type: 'ebook', pdfFile: 'ebooks/Estamos_Proximos_do_Fim_Matheus_Academy.pdf'
+  },
+  {
+    id: 'mii',
+    coverImg: 'assets/capas/mii.png',
+    name: 'Manual do Investidor Iniciante',
+    desc: 'Guia completo para iniciantes: renda fixa, variavel, fundos, criptomoedas e estrategias.',
+    file: 'ebook-investidor-iniciante.html',
+    cat: 'Financas & Economia',
+    modules: 9, topics: 37, hours: 3, quizzes: 0,
+    salt: 'MII_EBOOK_2026', ak: 'mii_auth', storagePrefix: 'mii_',
+    icon: '💰', color: '#00FF88',
+    free: true, active: true, addedTs: 1713225600000,
+    type: 'ebook', pdfFile: 'ebooks/Manual_Investidor_Iniciante_Matheus_Academy.pdf'
+    }
     topics: 9,
     hours: 2,
     quizzes: 9,
@@ -4046,7 +4111,7 @@ function MA_buildCats() {
   return cats.filter(function(cat) { return cat.courses.length > 0 || cat.soon.length > 0; });
 }
 
-function MA_buildTrails() {
+function MA_buildTrails() {h
   return MA_TRAILS.map(function(trail) {
     var resolved = [];
     trail.courseIds.forEach(function(cid) {
