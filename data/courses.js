@@ -505,7 +505,7 @@ var MA_COURSES = [
   },
   {
     id: 'iee',
-    coverImg: 'assets/capas/iee.png',
+    coverImg: 'assets/capas/iee.jpg',
     courseKey: 'iee',
     name: 'Instabilidade Política em Estados Brasileiros',
     desc: 'Colapso no RJ: Castro inelegível, Operação Contenção e crise fiscal estadual.',
