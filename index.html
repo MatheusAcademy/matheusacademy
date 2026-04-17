@@ -2976,6 +2976,8 @@ function upUI() {
   }
   rC();
   updatePointsBadge();
+  // FIX: sincroniza o menu da .ma-topbar (menuUserSec/menuAuthSec) com estado atual
+  if (typeof updateMenuUser === 'function') updateMenuUser();
 }
 
 // ═══════════════════════════════ INIT ═══════════════════════════════
@@ -3354,10 +3356,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // Remove chave legada
             localStorage.removeItem('ma_points');
             upUI();
+            // FIX: atualiza menu tambem (evita Visitante/Entrar quando logado)
+            if (typeof updateMenuUser === 'function') updateMenuUser();
+            if (typeof updatePts === 'function') updatePts();
             // Atualiza topbar após salvar cache
             if (window.updTopbar) window.updTopbar();
           }
         }).catch(function(){});
+      } else {
+        // FIX: Firebase confirmou deslogado - atualiza UI
+        if (typeof updateMenuUser === 'function') updateMenuUser();
       }
       // Se abriu login em outra aba (ma_open_modal)
       var openMod = localStorage.getItem('ma_open_modal');
