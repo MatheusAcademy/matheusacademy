@@ -201,6 +201,10 @@ body{padding-bottom:80px!important}
   <div class="rank-hero">
     <h1>🏆 Ranking</h1>
     <p>Compete, evolui e mostra quem você é</p>
+    <div style="margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);padding:6px 14px;border-radius:20px">
+      <span style="width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite"></span>
+      <span style="font-size:.72rem;font-weight:700;color:#22c55e;letter-spacing:.03em">5.900+ alunos ativos</span>
+    </div>
   </div>
 
   <div class="rank-tabs">
@@ -347,14 +351,97 @@ function gP(){
 }
 function getSess(){try{return JSON.parse(localStorage.getItem('ma_sessions'))||{streak:0};}catch(e){return{streak:0};}}
 
+
+// ═══════════════════════════════════════════════
+// ALUNOS FICTÍCIOS — volume visual
+// ═══════════════════════════════════════════════
+var FAKE_STUDENTS = [
+  {name:'Lucas Ferreira',city:'São Paulo, SP'},
+  {name:'Ana Beatriz Costa',city:'Belo Horizonte, MG'},
+  {name:'Pedro Henrique Silva',city:'Curitiba, PR'},
+  {name:'Mariana Oliveira',city:'Rio de Janeiro, RJ'},
+  {name:'Gabriel Santos',city:'Brasília, DF'},
+  {name:'Juliana Rodrigues',city:'Salvador, BA'},
+  {name:'Rafael Almeida',city:'Fortaleza, CE'},
+  {name:'Camila Souza',city:'Recife, PE'},
+  {name:'Felipe Nascimento',city:'Porto Alegre, RS'},
+  {name:'Larissa Martins',city:'Campinas, SP'},
+  {name:'Thiago Barbosa',city:'Goiânia, GO'},
+  {name:'Fernanda Lima',city:'Manaus, AM'},
+  {name:'Bruno Carvalho',city:'Florianópolis, SC'},
+  {name:'Isabela Pereira',city:'Vitória, ES'},
+  {name:'Diego Ribeiro',city:'Belém, PA'},
+  {name:'Natália Araújo',city:'São Luís, MA'},
+  {name:'Vinícius Gomes',city:'Natal, RN'},
+  {name:'Amanda Teixeira',city:'João Pessoa, PB'},
+  {name:'Rodrigo Moreira',city:'Campo Grande, MS'},
+  {name:'Letícia Cardoso',city:'Cuiabá, MT'},
+  {name:'Matheus Lopes',city:'Maceió, AL'},
+  {name:'Carolina Nunes',city:'Teresina, PI'},
+  {name:'André Mendes',city:'Aracaju, SE'},
+  {name:'Patrícia Correia',city:'Londrina, PR'},
+  {name:'Gustavo Rocha',city:'Uberlândia, MG'},
+  {name:'Bianca Dias',city:'Ribeirão Preto, SP'},
+  {name:'Eduardo Castro',city:'Juiz de Fora, MG'},
+  {name:'Priscila Monteiro',city:'Joinville, SC'},
+  {name:'Leonardo Freitas',city:'São José dos Campos, SP'},
+  {name:'Débora Pinto',city:'Santos, SP'},
+  {name:'Caio Vieira',city:'Sorocaba, SP'},
+  {name:'Renata Campos',city:'Niterói, RJ'},
+  {name:'Marcos Paulo Duarte',city:'Maringá, PR'},
+  {name:'Jéssica Cunha',city:'Feira de Santana, BA'},
+  {name:'Henrique Azevedo',city:'Piracicaba, SP'},
+  {name:'Vanessa Ramos',city:'São Bernardo, SP'},
+  {name:'Daniel Fonseca',city:'Osasco, SP'},
+  {name:'Aline Batista',city:'Vila Velha, ES'},
+  {name:'Samuel Cavalcanti',city:'Caruaru, PE'},
+  {name:'Tayná Melo',city:'Imperatriz, MA'}
+];
+
+function _buildFakePlayers(count, maxXP) {
+  // Gera 'count' alunos fictícios com XP <= maxXP
+  var fakes = [];
+  var pool = FAKE_STUDENTS.slice(0, count);
+  for (var i = 0; i < pool.length; i++) {
+    var s = pool[i];
+    // XP decrescente, todos abaixo do maxXP
+    var xp = maxXP <= 0 ? 0 : Math.max(0, Math.floor(maxXP * (1 - (i * 0.6) / pool.length) * (0.5 + Math.sin(i * 7) * 0.3)));
+    // Garantir que nunca ultrapassa maxXP
+    if (xp > maxXP) xp = maxXP;
+    // Meses fictícios de cadastro
+    var months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+    var mIdx = (i * 3 + 2) % 12;
+    fakes.push({
+      id: 'fake_' + i,
+      uid: 'fake_' + i,
+      name: s.name,
+      city: s.city,
+      pts: xp,
+      streak: Math.floor(Math.random() * 5),
+      date: months[mIdx] + '/2026',
+      av: avColor(s.name),
+      foto: null,
+      xp_mes: Math.floor(xp * 0.3),
+      xp_semana: Math.floor(xp * 0.1),
+      xp_hoje: 0,
+      isFake: true
+    });
+  }
+  // Ordenar por XP decrescente
+  fakes.sort(function(a, b) { return b.pts - a.pts; });
+  return fakes;
+}
+
 // ═══════════════════════════════════════════════
 // RENDER RANK
 // ═══════════════════════════════════════════════
 var _currentTab = 'geral';
 
+var _showCount = {}; // quantos mostrar por tab
 function buildList(players, tab){
   var u=gU(), myPts=gP().total, myUid=u?u.uid:null;
   var list = players.slice();
+  if (!_showCount[tab]) _showCount[tab] = 50;
 
   // Inserir o aluno logado se ele não estiver na lista (pts locais podem estar à frente)
   if(u){
@@ -402,8 +489,10 @@ function buildList(players, tab){
   }
   // Regular list (skip top 3 if podium shown)
   var startIdx = list.length >= 3 ? 3 : 0;
+  var maxShow = _showCount[tab] || 50;
+  var visibleList = list.slice(startIdx, maxShow);
   if(startIdx < list.length){
-    list.slice(startIdx).forEach(function(r,i){
+    visibleList.forEach(function(r,i){
       var pos = startIdx + i;
       var lv      = getLvObj(r.pts);
       var posClass= pos===0?'p1':pos===1?'p2':pos===2?'p3':'';
@@ -425,6 +514,12 @@ function buildList(players, tab){
         +'<div class="r-pts">'+r.pts.toLocaleString('pt-BR')+'</div>'
         +'</div>';
     });
+    // Botão "Ver mais" se há mais alunos
+    if (list.length > maxShow) {
+      html += '<div style="text-align:center;padding:16px 0">'
+        +'<button onclick="_verMais(\'' + tab + '\')" style="background:var(--card);border:1px solid var(--brd);color:var(--txt);padding:10px 28px;border-radius:10px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .2s">'
+        +'Ver mais (' + (list.length - maxShow) + ' restantes)</button></div>';
+    }
   } else if(list.length < 3) {
     // Less than 3, show all in regular list
     list.forEach(function(r,i){
@@ -449,15 +544,56 @@ function buildList(players, tab){
         +'</div>';
     });
   }
+  // Truncar lista e adicionar "Ver mais"
+  var totalCount = list.length;
+  if (totalCount > _showCount[tab]) {
+    // Re-render com limite — precisamos truncar o HTML gerado
+    // Na verdade, vamos controlar isso no loop acima
+  }
   return html;
 }
 
+function _verMais(tab) {
+  _showCount[tab] = (_showCount[tab] || 50) + 30;
+  renderRank(tab);
+}
+
 function getTabPlayers(tab){
-  var all = _rankPlayers.slice();
-  if(tab==='diario')  return all.map(function(p){ return Object.assign({},p,{pts: p.xp_hoje   || 0}); }).sort(function(a,b){return b.pts-a.pts;});
-  if(tab==='semanal') return all.map(function(p){ return Object.assign({},p,{pts: p.xp_semana || 0}); }).sort(function(a,b){return b.pts-a.pts;});
-  if(tab==='mensal')  return all.map(function(p){ return Object.assign({},p,{pts: p.xp_mes    || 0}); }).sort(function(a,b){return b.pts-a.pts;});
-  return all; // geral — já vem ordenado do Firestore
+  var reais = _rankPlayers.slice();
+  // Determinar XP mínimo para posicionar fictícios abaixo dos reais
+  var minRealXP = 0;
+  if (reais.length > 0) {
+    var sorted = reais.slice().sort(function(a,b){ return b.pts - a.pts; });
+    // Pegar o XP do último real (ou do 10º se houver mais de 10)
+    var refIdx = Math.min(9, sorted.length - 1);
+    minRealXP = sorted[refIdx].pts || 0;
+  }
+
+  if(tab==='diario') {
+    // Hoje: SOMENTE reais
+    return reais.map(function(p){ return Object.assign({},p,{pts: p.xp_hoje || 0}); }).sort(function(a,b){return b.pts-a.pts;});
+  }
+  if(tab==='semanal') {
+    var semReais = reais.map(function(p){ return Object.assign({},p,{pts: p.xp_semana || 0}); });
+    var minSem = 0;
+    semReais.sort(function(a,b){return b.pts-a.pts;});
+    if(semReais.length > 0) minSem = semReais[Math.min(9, semReais.length-1)].pts || 0;
+    var fakeSem = _buildFakePlayers(10, minSem);
+    fakeSem.forEach(function(f){ f.pts = f.xp_semana; });
+    return semReais.concat(fakeSem).sort(function(a,b){return b.pts-a.pts;});
+  }
+  if(tab==='mensal') {
+    var mesReais = reais.map(function(p){ return Object.assign({},p,{pts: p.xp_mes || 0}); });
+    var minMes = 0;
+    mesReais.sort(function(a,b){return b.pts-a.pts;});
+    if(mesReais.length > 0) minMes = mesReais[Math.min(9, mesReais.length-1)].pts || 0;
+    var fakeMes = _buildFakePlayers(20, minMes);
+    fakeMes.forEach(function(f){ f.pts = f.xp_mes; });
+    return mesReais.concat(fakeMes).sort(function(a,b){return b.pts-a.pts;});
+  }
+  // Geral: reais + 40 fictícios
+  var fakeGeral = _buildFakePlayers(40, minRealXP);
+  return reais.concat(fakeGeral).sort(function(a,b){return b.pts-a.pts;});
 }
 
 async function renderRank(tab){
