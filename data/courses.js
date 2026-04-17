@@ -463,7 +463,7 @@ var MA_COURSES = [
   },
   {
     id: 'fb',
-    coverImg: 'assets/capas/fb.png',
+    coverImg: 'assets/capas/fb.jpg',
     courseKey: 'fb',
     name: 'Futebol: Bastidores e Polêmicas',
     desc: 'VAR no Brasileirão, Seleção rumo à Copa 2026 e mercado bilionário de transferências.',
