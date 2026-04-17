@@ -131,7 +131,7 @@
       background: #0f0f1e; border: 1px solid #252540; border-radius: 16px;
       min-width: 240px; max-width: calc(100vw - 20px);
       z-index: 10001; box-shadow: 0 16px 56px rgba(0,0,0,.75);
-      overflow: hidden; opacity: 0;
+      overflow-y: auto; max-height: 80vh; opacity: 0;
       transform: scale(.88) translateY(-12px); pointer-events: none;
       transition: all .22s cubic-bezier(.2,0,.3,1); transform-origin: top right;
     }
