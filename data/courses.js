@@ -127,7 +127,7 @@ var MA_COURSES = [
   },
   {
     id: 'dibv',
-    coverImg: 'assets/capas/dibv.png',
+    coverImg: 'assets/capas/dibv.jpg',
     courseKey: 'dibv',
     name: 'Dólar em Alta e Ibovespa Caindo',
     desc: 'Por que o dólar sobe e a bolsa cai no Brasil: risco fiscal, fluxo de capitais e cenário 2026.',
