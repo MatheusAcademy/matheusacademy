@@ -526,7 +526,7 @@ var MA_COURSES = [
   },
   {
     id: 'rem',
-    coverImg: 'assets/capas/rem.png',
+    coverImg: 'assets/capas/rem.jpg',
     courseKey: 'rem',
     name: 'Reorganização da Economia Mundial',
     desc: 'Desglobalização, nearshoring, BRICS, desdolarização e a nova ordem multipolar.',
