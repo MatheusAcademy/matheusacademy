@@ -442,7 +442,7 @@ var MA_COURSES = [
   },
   {
     id: 'pp26',
-    coverImg: 'assets/capas/pp26.png',
+    coverImg: 'assets/capas/pp26.jpg',
     courseKey: 'pp26',
     name: 'Polarização Política Forte para 2026',
     desc: 'Eleições 2026: pesquisas Datafolha/Quaest, polarização e desinformação com IA.',
