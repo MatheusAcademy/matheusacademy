@@ -589,7 +589,7 @@ var MA_COURSES = [
   },
   {
     id: 'tg',
-    coverImg: 'assets/capas/tg.png',
+    coverImg: 'assets/capas/tg.jpg',
     courseKey: 'tg',
     name: 'Aumento de Ataques e Terrorismo Global',
     desc: 'ISIS, radicalização, ataques recentes, terrorismo doméstico e estratégias de defesa.',
