@@ -610,7 +610,7 @@ var MA_COURSES = [
   },
   {
     id: 'inf',
-    coverImg: 'assets/capas/inf.png',
+    coverImg: 'assets/capas/inf.jpg',
     courseKey: 'inf',
     name: 'Inflação Pressionando o Custo de Vida',
     desc: 'IPCA 4,14%, cesta básica, salário mínimo R$1.621 e impacto no bolso do brasileiro.',
