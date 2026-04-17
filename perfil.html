@@ -754,8 +754,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function _tryAuthFallback() {
     if (window.firebase && firebase.auth) {
       firebase.auth().onAuthStateChanged(function(fbUser) {
-        if (typeof _authSafetyTimeout !== 'undefined') clearTimeout(_authSafetyTimeout);
         if (fbUser) {
+          // Usuário autenticado — limpa timeout e renderiza com dados reais
+          if (typeof _authSafetyTimeout !== 'undefined') clearTimeout(_authSafetyTimeout);
           try {
             var local = JSON.parse(localStorage.getItem('ma_user') || '{}');
             if (!local.uid)    local.uid   = fbUser.uid;
@@ -770,14 +771,13 @@ document.addEventListener('DOMContentLoaded', function() {
           renderPage();
           updTopbar();
           _rendered = true;
-        } else if (!_rendered) {
-          renderPage(); // Mostra tela de "faça login"
-          _rendered = true;
         }
+        // Se fbUser é null, NAO renderiza "Faca login" imediatamente.
+        // Deixa o _authSafetyTimeout (15s) decidir — evita falso positivo
+        // quando Firebase ainda esta restaurando a sessao.
       });
-    } else if (!_rendered) {
-      renderPage();
     }
+    // Se Firebase nao estiver disponivel, o _authSafetyTimeout resolve
   }
 
   // Timeout de segurança: 15s máximo de espera
