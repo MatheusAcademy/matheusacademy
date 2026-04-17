@@ -2,7 +2,7 @@ var MA_COURSES = [
   {
     id: 'bm',
     coverImg: 'assets/capas/bm.png',
-    courseKey: 'bm',
+    courseKey: 'bm', 
     name: 'Caso Banco Master',
     desc: 'A maior fraude bancária do Brasil. R$52bi, CPI e delação premiada.',
     file: 'caso-banco-master.html',
