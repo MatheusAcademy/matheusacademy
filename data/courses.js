@@ -3878,15 +3878,15 @@ var MA_COURSES = [
     file: 'revolucoes-mundo.html',
     cat: 'História',
     modules: 3,
-    topics: 9,
-    hours: 2,
+    topics: [{n:'Módulo 1 – Revoluções Políticas Fundamentais',lessons:[{t:'A Revolução Francesa (1789-1799): O Evento que Redefiniu o Mundo Ocidental',d:55},{t:'A Revolução Industrial: A Transformação que Moldou o Mundo Moderno',d:50},{t:'A Revolução Russa (1917): O Experimento que Dividiu o Mundo',d:50}]},{n:'Módulo 2 – Revoluções Sociais e Culturais',lessons:[{t:'A Revolução dos Direitos Civis nos EUA (1954-1968): A Luta que Mudou uma Nação',d:55},{t:'A Revolução Feminista: A Maior Revolução Social da História Moderna',d:50},{t:'A Primavera Árabe (2010-2012): A Revolução Digital nas Ruas',d:50}]},{n:'Módulo 3 – Revoluções Tecnológicas e Científicas',lessons:[{t:'A Revolução Digital: Como a Tecnologia Redefiniu a Civilização',d:55},{t:'A Revolução Verde: A Transformação que Alimentou o Mundo',d:50},{t:'A Revolução da Inteligência Artificial: O Futuro que Já Começou',d:55}]}],
+    hours: 7.8,
     quizzes: 9,
-    salt: 'RM_HENRY_2026_MASTER',
-    ak: 'rm_auth',
-    storagePrefix: 'rm_',
-    icon: '📜',
-    color: '#b91c1c',
-    addedTs: 1776359008036,
+    salt: 'rmw_salt_2025',
+    ak: 'rmw_ak_2025',
+    storagePrefix: 'rmw',
+    icon: '⚡',
+    color: '#e74c3c',
+    addedTs: 1744761600000,
     active: true
   },
   {
@@ -3952,7 +3952,18 @@ var MA_COURSES = [
     salt: 'MII_EBOOK_2026', ak: 'mii_auth', storagePrefix: 'mii_',
     icon: '💰', color: '#00FF88',
     free: true, active: true, addedTs: 1713225600000,
-    type: 'ebook', pdfFile: 'ebooks/Manual_Investidor_Iniciante_Matheus_Academy.pdf',
+    type: 'ebook', pdfFile: 'ebooks/Manual_Investidor_Iniciante_Matheus_Academy.pdf'
+    }
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'RM_HENRY_2026_MASTER',
+    ak: 'rm_auth',
+    storagePrefix: 'rm_',
+    icon: '📜',
+    color: '#b91c1c',
+    addedTs: 1776359008036,
+    active: true
   },
   {
     coverImg: 'assets/capas/mnw.jpg',
