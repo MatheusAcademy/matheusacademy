@@ -358,7 +358,7 @@ var MA_COURSES = [
   },
   {
     id: 'ed',
-    coverImg: 'assets/capas/ed.png',
+    coverImg: 'assets/capas/ed.jpg',
     courseKey: 'ed',
     name: 'Economia Brasileira Desacelerando',
     desc: 'PIB de 1,6% em 2026, indústria estagnada e agronegócio recordista.',
