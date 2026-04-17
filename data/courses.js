@@ -22,7 +22,7 @@ var MA_COURSES = [
   },
   {
     id: 'grua',
-    coverImg: 'assets/capas/grua.png',
+    coverImg: 'assets/capas/grua.jpg',
     courseKey: 'grua',
     name: 'Guerra Rússia x Ucrânia: O Conflito Prolongado',
     desc: 'Cobertura completa dos últimos acontecimentos, negociações de paz, sanções e impacto global.',
