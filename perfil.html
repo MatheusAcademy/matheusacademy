@@ -779,8 +779,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Timeout de segurança: 6s máximo de espera
-  setTimeout(function() { if (!_rendered) { renderPage(); _rendered = true; } }, 6000);
+  // Timeout de segurança: 15s máximo de espera (aumentado para evitar falso "Faça login" em mobile lento)
+  setTimeout(function() { if (!_rendered) { renderPage(); _rendered = true; } }, 15000);
 
   // Dispara lógica Firebase
   if (window.__maFirebaseReady) {
