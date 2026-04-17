@@ -541,3 +541,16 @@ async function ptLogout() {
 }
 
 console.log('[Portal Topbar v3] ✅ Carregado - Firebase Edition');
+
+/* ══════ LGPD / COOKIES BANNER ══════ */
+(function(){
+  if(localStorage.getItem('ma_lgpd_ok'))return;
+  var s=document.createElement('style');
+  s.textContent='.lgpd-banner{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0d0d1f,#141428);border-top:1px solid rgba(91,127,255,.2);padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:14px;z-index:99999;font-size:.78rem;color:#b0b0c8;flex-wrap:wrap;box-shadow:0 -4px 20px rgba(0,0,0,.4)}.lgpd-banner a{color:#5b7fff;text-decoration:underline}.lgpd-btn{padding:8px 20px;background:linear-gradient(135deg,#5b7fff,#4A7EFF);color:#fff;border:none;border-radius:8px;font-weight:600;font-size:.75rem;cursor:pointer;white-space:nowrap}.lgpd-btn:hover{opacity:.9}@media(max-width:600px){.lgpd-banner{flex-direction:column;text-align:center;gap:10px;padding:12px 16px}}';
+  document.head.appendChild(s);
+  var d=document.createElement('div');
+  d.className='lgpd-banner';
+  d.innerHTML='<span>Este site usa cookies e tecnologias semelhantes para melhorar sua experiencia. Ao continuar navegando, voce concorda com nossa politica de privacidade.</span><button class="lgpd-btn" id="lgpdOk">Aceitar</button>';
+  document.body.appendChild(d);
+  document.getElementById('lgpdOk').onclick=function(){localStorage.setItem('ma_lgpd_ok','1');d.remove();};
+})();

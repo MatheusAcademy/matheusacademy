@@ -1582,6 +1582,24 @@ function mlChangeVoice(v){
   document.querySelectorAll('.mlc-voice-sel').forEach(function(sel){sel.value=v;});
   // Limpa cache de áudio pré-carregado (voz diferente)
   _mlPreCache={};
+  // Se está tocando, para imediatamente e reinicia o chunk atual com a nova voz
+  if(_mlPipe&&_mlPipe.active){
+    var currentIdx=_mlPipe.idx;
+    var currentMi=_mlPipe.mi;
+    // Limpa cache do pipeline (voz antiga)
+    _mlPipe.cache={};
+    // Para áudio atual
+    if(_mlAudioEl){try{_mlAudioEl.pause();_mlAudioEl.src='';}catch(e){}_mlAudioEl=null;}
+    // Aborta fetches pendentes
+    if(_mlPipe.aborts)_mlPipe.aborts.forEach(function(ac){try{ac.abort();}catch(e){}});
+    _mlPipe.aborts=[];
+    // Re-busca o chunk atual com a nova voz e toca
+    _mlLoading=true;
+    _mlSetBtn(currentMi,'loading');
+    _mlPipeFetchChunk(currentIdx);
+    // Prefetch próximo chunk também
+    if(currentIdx+1<_mlPipe.chunks.length)_mlPipeFetchChunk(currentIdx+1);
+  }
 }
 /* Aplica voz salva ao carregar */
 (function(){var sv=_mlGetSavedVoice();if(sv)window.MA_TTS_VOICE=sv;})();
@@ -1707,7 +1725,8 @@ function _mlFetchTTS(texto,abortSignal){
     body:JSON.stringify({
       text:textoNatural.slice(0,4500),
       voice:window.MA_TTS_VOICE||'nova',
-      model:window.MA_TTS_MODEL||'tts-1-hd'
+      model:window.MA_TTS_MODEL||'tts-1-hd',
+      language:'pt-BR'
     })
   }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.blob();})
     .then(function(b){return URL.createObjectURL(b);});
@@ -3082,9 +3101,12 @@ async function sendChat(){
     var res=await fetch(CHAT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'system',content:sys}].concat(_chatHist),courseKey:COURSE.courseKey,plan:isUnlocked()?'premium':'free',userEmail:u.email})});
     var data=await res.json();
     document.getElementById('chatTyping')&&document.getElementById('chatTyping').remove();
-    var reply=data.content?.[0]?.text||data.reply||'Não consegui processar. Tente novamente.';
+    if(data.error){throw new Error(data.error);}
+    var reply=data.content?.[0]?.text||data.reply||data.choices?.[0]?.message?.content||'Não consegui processar. Tente novamente.';
     _chatHist.push({role:'assistant',content:reply});addMsg('bot',reply);
-  }catch(e){document.getElementById('chatTyping')&&document.getElementById('chatTyping').remove();addMsg('bot','❌ Erro de conexão.');}
+  }catch(e){document.getElementById('chatTyping')&&document.getElementById('chatTyping').remove();addMsg('bot','❌ Erro de conexão. Verifique sua internet e tente novamente. ('+(e.message||'timeout')+')');}
+  // Se a API retornou erro estruturado, exibir
+  if(typeof data!=='undefined'&&data&&data.error){document.getElementById('chatTyping')&&document.getElementById('chatTyping').remove();}
   document.getElementById('chatSendBtn').disabled=false;
 }
 
