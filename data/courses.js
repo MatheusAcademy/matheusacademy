@@ -211,7 +211,7 @@ var MA_COURSES = [
   },
   {
     id: 'inad',
-    coverImg: 'assets/capas/inad.png',
+    coverImg: 'assets/capas/inad.jpg',
     courseKey: 'inad',
     name: 'Recorde de Inadimplência no Brasil',
     desc: '81,7 milhões de CPFs negativados, R$539bi em dívidas e o vilão invisível: apostas online.',
