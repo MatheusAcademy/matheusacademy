@@ -296,12 +296,26 @@ if(typeof TOPICS!=='undefined'&&Array.isArray(TOPICS)){
         </div>
 
         <!-- BOTÃO MAPA MENTAL -->
-        <div style="width:100%;display:flex;justify-content:center;margin-bottom:18px;">
-          <button class="cover-continue-btn" onclick="downloadMindMapPDF()" style="display:inline-flex!important;gap:8px;align-items:center;font-size:.82rem;padding:12px 24px;background:linear-gradient(135deg, #ef4444, #dc2626);border:none;color:#fff;border-radius:12px;cursor:pointer;font-weight:700;transition:all 0.2s ease;box-shadow:0 4px 15px rgba(239,68,68,.3);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(239,68,68,.5)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(239,68,68,.3)'">
-            <span style="font-size:1rem;">📄</span>
-            Baixar Mapa Mental (PDF)
+        <div style="width:100%;display:flex;justify-content:center;margin-bottom:18px;padding:0 12px;box-sizing:border-box;">
+          <button class="ma-pdf-btn" onclick="downloadMindMapPDF()">
+            <span class="ma-pdf-btn-ico">📄</span>
+            <span class="ma-pdf-btn-txt">Baixar Mapa Mental (PDF)</span>
           </button>
         </div>
+        <style>
+          .ma-pdf-btn{display:inline-flex;gap:8px;align-items:center;justify-content:center;font-size:.88rem;padding:12px 22px;background:linear-gradient(135deg,#ef4444,#dc2626);border:none;color:#fff;border-radius:12px;cursor:pointer;font-weight:700;font-family:'Outfit',sans-serif;transition:all .2s ease;box-shadow:0 4px 15px rgba(239,68,68,.35);white-space:nowrap;max-width:100%;line-height:1;letter-spacing:.01em}
+          .ma-pdf-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(239,68,68,.55);filter:brightness(1.08)}
+          .ma-pdf-btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(239,68,68,.4)}
+          .ma-pdf-btn-ico{font-size:1.05rem;line-height:1;flex-shrink:0}
+          .ma-pdf-btn-txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+          @media (max-width:480px){
+            .ma-pdf-btn{font-size:.78rem;padding:11px 16px;gap:6px}
+            .ma-pdf-btn-ico{font-size:.95rem}
+          }
+          @media (max-width:360px){
+            .ma-pdf-btn{font-size:.72rem;padding:10px 12px}
+          }
+        </style>
 
         <!-- TÍTULO E MÓDULOS -->
         <div class="cover-modules-title" id="coverModulesTitle">
