@@ -169,7 +169,7 @@ var MA_COURSES = [
   },
   {
     id: 'ecwar',
-    coverImg: 'assets/capas/ecwar.png',
+    coverImg: 'assets/capas/ecwar.jpg',
     courseKey: 'ecwar',
     name: 'Tensões entre Estados Unidos e China',
     desc: 'Guerra comercial, tarifas, disputa por chips e IA, Taiwan e a nova ordem global.',
