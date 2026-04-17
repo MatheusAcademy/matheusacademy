@@ -295,7 +295,7 @@ var MA_COURSES = [
   },
   {
     id: 'ot',
-    coverImg: 'assets/capas/ot.png',
+    coverImg: 'assets/capas/ot.jpg',
     courseKey: 'ot',
     name: 'Reforço Militar da OTAN',
     desc: 'Gastos de USD1,4 trilhão, meta de 5% do PIB, flanco oriental e exercícios militares.',
