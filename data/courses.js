@@ -232,7 +232,7 @@ var MA_COURSES = [
   },
   {
     id: 'iaa',
-    coverImg: 'assets/capas/iaa.png',
+    coverImg: 'assets/capas/iaa.jpg',
     courseKey: 'iaa',
     name: 'Avanço Acelerado da Inteligência Artificial',
     desc: 'GPT-5, Claude Opus 4, Gemini 3, corrida rumo à AGI e regulamentação em 2026.',
