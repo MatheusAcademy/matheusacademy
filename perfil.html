@@ -754,6 +754,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function _tryAuthFallback() {
     if (window.firebase && firebase.auth) {
       firebase.auth().onAuthStateChanged(function(fbUser) {
+        if (typeof _authSafetyTimeout !== 'undefined') clearTimeout(_authSafetyTimeout);
         if (fbUser) {
           try {
             var local = JSON.parse(localStorage.getItem('ma_user') || '{}');
@@ -780,7 +781,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Timeout de segurança: 6s máximo de espera
-  setTimeout(function() { if (!_rendered) { renderPage(); _rendered = true; } }, 6000);
+  var _authSafetyTimeout = setTimeout(function() { if (!_rendered) { renderPage(); _rendered = true; } }, 15000);
 
   // Dispara lógica Firebase
   if (window.__maFirebaseReady) {
