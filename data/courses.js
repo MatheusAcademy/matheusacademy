@@ -547,7 +547,7 @@ var MA_COURSES = [
   },
   {
     id: 'id',
-    coverImg: 'assets/capas/id.png',
+    coverImg: 'assets/capas/id.jpg',
     courseKey: 'id',
     name: 'Uso Massivo de IA no Dia a Dia',
     desc: 'Agentes de IA, assistentes virtuais, IA na saúde/educação e automação doméstica.',
