@@ -13,7 +13,7 @@
      <script src="data/courses.js"></script>
      <script src="data/userStore.js"></script>
      <script src="shared/portal-topbar.js"></script>
-   ══════════════════════════════════════════════════════════════ */
+  ══════════════════════════════════════════════════════════════ */
 
 (function injectPortalTopbar() {
 
@@ -81,7 +81,7 @@
     @media(min-width:480px){ .ma-tb-page-name { max-width: 180px; } }
     .ma-tb-spacer { flex: 1; min-width: 0; }
 
-    /* Bloco troféu + pontos */
+    /* Bloco trofåu + pontos */
     .ma-tb-pts-block {
       display: flex; align-items: center; gap: 5px;
       text-decoration: none; flex-shrink: 0;
@@ -131,7 +131,7 @@
       background: #0f0f1e; border: 1px solid #252540; border-radius: 16px;
       min-width: 240px; max-width: calc(100vw - 20px);
       z-index: 10001; box-shadow: 0 16px 56px rgba(0,0,0,.75);
-      overflow: hidden; opacity: 0;
+      overflow-y: auto; max-height: 80vh; opacity: 0;
       transform: scale(.88) translateY(-12px); pointer-events: none;
       transition: all .22s cubic-bezier(.2,0,.3,1); transform-origin: top right;
     }
@@ -169,7 +169,7 @@
     body.light .ma-mi:hover { background: #f0f2f8; color: #1a1a2e; }
     body.light .ma-menu-sec + .ma-menu-sec { border-top-color: #e8eaf2; }
 
-    /* ══ BOTÃO PLANOS — oculto em telas pequenas ══ */
+    /* ══ BOTÃO PLANOS — Oculto em telas pequenas ══ */
     .ma-tb-plans-btn {
       display: flex; align-items: center; gap: 5px;
       padding: 4px 10px; border-radius: 20px; flex-shrink: 0;
@@ -183,339 +183,97 @@
     /* Oculta totalmente em telas muito pequenas */
     @media (max-width: 380px) { .ma-tb-plans-btn { display: none !important; } }
     @media (max-width: 480px) { .ma-tb-plans-btn span.ma-tb-plans-label { display: none; } }
-  `;
-  document.head.appendChild(style);
-
-  /* ── HTML da topbar ── */
-  var html = `
-<nav class="ma-topbar">
-
-  <!-- LOGO SVG horizontal — M branco + linha dupla azul + ACADEMY -->
-  <a class="ma-tb-logo" href="index.html">
-    <svg viewBox="0 0 260 76" xmlns="http://www.w3.org/2000/svg">
-      <text x="36" y="52" text-anchor="middle" fill="#FFFFFF"
-            font-family="Arial Black,sans-serif" font-weight="900" font-size="56" letter-spacing="-2">M</text>
-      <line x1="4" y1="60" x2="70" y2="60" stroke="#4A7EFF" stroke-width="2.2"/>
-      <line x1="4" y1="65" x2="70" y2="65" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>
-      <line x1="84" y1="12" x2="84" y2="66" stroke="rgba(74,126,255,0.35)" stroke-width="1"/>
-      <text x="175" y="49" text-anchor="middle" fill="#4A7EFF"
-            font-family="Arial,sans-serif" font-weight="400" font-size="20" letter-spacing="7">ACADEMY</text>
-    </svg>
-  </a>
-
-  <div class="ma-tb-sep"></div>
-  <span class="ma-tb-page-name" id="tbPageName">${pageName}</span>
-  <div class="ma-tb-spacer"></div>
-
-  <!-- BOTÃO PLANOS — visível sempre na topbar -->
-  <a class="ma-tb-plans-btn" href="planos.html" id="maTopbarPlansBtn">
-    💎 <span class="ma-tb-plans-label">Planos</span>
-  </a>
-
-  <!-- TROFÉU + PONTOS -->
-  <a class="ma-tb-pts-block" id="maPtsLive" href="painel.html">
-    <span class="ma-tb-trophy">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 9H4a2 2 0 0 1-2-2V5h4"/>
-        <path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/>
-        <path d="M8 21h8"/><path d="M12 17v4"/>
-        <path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/>
-      </svg>
-    </span>
-    <span class="ma-tb-pts-num" id="maPtsNum">0</span>
-  </a>
-
-  <!-- BOTÃO TEMA -->
-  <button class="ma-tb-theme-btn" id="ptThemeBtn" onclick="ptToggleTheme()" title="Alternar tema">
-    <svg id="ptIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-         stroke-linecap="round" stroke-linejoin="round" style="display:block">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-    <svg id="ptIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-         stroke-linecap="round" stroke-linejoin="round" style="display:none">
-      <circle cx="12" cy="12" r="5"/>
-      <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-    </svg>
-  </button>
-
-  <!-- MENU 3 PONTOS -->
-  <button class="ma-tb-menu-btn" onclick="ptToggleMenu()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <circle cx="12" cy="5"  r="1" fill="currentColor"/>
-      <circle cx="12" cy="12" r="1" fill="currentColor"/>
-      <circle cx="12" cy="19" r="1" fill="currentColor"/>
-    </svg>
-  </button>
-</nav>
-
-<div class="ma-menu-overlay" id="ptMenuOverlay" onclick="ptCloseMenu()"></div>
-<div class="ma-menu-dd" id="ptMenuDd">
-  <div id="ptMenuUser" class="ma-menu-user"></div>
-  <div class="ma-menu-sec">
-    <a class="ma-mi" href="index.html">       <span class="ma-mi-icon">🏠</span>Início</a>
-    <a class="ma-mi" href="painel.html">      <span class="ma-mi-icon">📊</span>Meu Painel</a>
-    <a class="ma-mi" href="ranking.html">     <span class="ma-mi-icon">🏆</span>Ranking</a>
-    <a class="ma-mi" href="perfil.html">      <span class="ma-mi-icon">👤</span>Meu Perfil</a>
-    <a class="ma-mi" href="indicacoes.html">  <span class="ma-mi-icon">🤝</span>Indicações</a>
-    <a class="ma-mi" href="trilhas.html">     <span class="ma-mi-icon">🗺️</span>Trilhas</a>
-    <a class="ma-mi" href="loja.html">        <span class="ma-mi-icon">🛒</span>Loja de XP</a>
-    <a class="ma-mi" href="mural.html">       <span class="ma-mi-icon">📌</span>Mural</a>
-  </div>
-  <div class="ma-menu-sec" id="ptMenuAuth"></div>
-</div>
-`;
-
-  /* ── Injeta no body assim que o DOM estiver pronto ── */
-  function inject() {
-    var wrapper = document.createElement('div');
-    wrapper.innerHTML = html;
-    document.body.insertBefore(wrapper, document.body.firstChild);
-    ptInitTopbar();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', inject);
-  } else {
-    inject();
-  }
-
-})();
-
-/* ══════════════════════════════════════════════════════════════
-   FUNÇÕES GLOBAIS DA TOPBAR DO PORTAL
-   ══════════════════════════════════════════════════════════════ */
-
-function ptInitTopbar() {
-  // Atualiza pontos imediatamente com dados do cache
-  ptUpdatePts();
-
-  // Oculta/mostra botão Planos conforme o plano do usuário
-  (function _ptUpdPlansBtn() {
-    var btn = document.getElementById('maTopbarPlansBtn');
-    if (!btn) return;
-    try {
-      var u = window.MAStore ? MAStore.getUserSync() : JSON.parse(localStorage.getItem('ma_user') || 'null');
-      var plano = u ? (u.plano || 'gratuito').toLowerCase() : 'gratuito';
-      // Master tem tudo: botão fica discreto mas visível (pode querer ver dias restantes)
-      if (plano === 'master') {
-        btn.style.opacity = '.45';
-        btn.title = 'Voc\u00ea j\u00e1 tem o Plano Master 3 Anos \u2014 acesso completo!';
-      }
-    } catch(e) {}
-  })();
-
-  // Tema salvo
-  var saved = localStorage.getItem('ma_theme');
-  if (saved === 'light') {
-    document.body.classList.add('light');
-    var moon = document.getElementById('ptIconMoon');
-    var sun  = document.getElementById('ptIconSun');
-    if (moon) moon.style.display = 'none';
-    if (sun)  sun.style.display  = 'block';
-  }
-
-  ptUpdateMenuUser();
-
-  // Atualiza XP a cada 30s (backup para manter sincronizado)
-  setInterval(ptUpdatePts, 30000);
   
-  // Escuta evento de atualização de pontos
-  document.addEventListener('ma:pointsUpdate', function(e) {
-    ptUpdatePtsFromEvent(e.detail);
-  });
   
-  // CORREÇÃO: quando Firebase estiver pronto, registra observer de auth
-  // que atualiza a topbar sempre que o estado de login mudar
-  function _setupFirebaseSync() {
-    // Sincroniza imediatamente
-    ptSyncFromFirebase();
-
-    // Registra observer de autenticação para manter XP sempre atualizado
-    if (window.maAuth) {
-      window.maAuth.onAuthStateChanged(function(authUser) {
-        if (authUser) {
-          // Pequeno delay para garantir que MAStore terminou de iniciar
-          setTimeout(ptSyncFromFirebase, 300);
-        } else {
-          var el = document.getElementById('maPtsNum');
-          if (el) { el.textContent = '0'; el._prev = 0; }
-          ptUpdateMenuUser();
-        }
-      });
-    }
-  }
-
-  if (window.__maFirebaseReady) {
-    _setupFirebaseSync();
-  } else {
-    document.addEventListener('maFirebaseReady', _setupFirebaseSync, { once: true });
-  }
-}
-
-/**
- * Atualiza pontos na topbar - VERSÃO FIREBASE
- */
-function ptUpdatePts() {
-  var el = document.getElementById('maPtsNum');
-  if (!el) return;
   
-  var total = 0;
   
-  // Prioridade 1: MAStore (Firebase)
-  if (window.MAStore && window.MAStore.getTotalPointsSync) {
-    total = MAStore.getTotalPointsSync();
-  } 
-  // Fallback: localStorage ma_user.xp_total (escrito pelo Firebase)
-  else {
-    try {
-      var localUser = JSON.parse(localStorage.getItem('ma_user') || 'null');
-      // v3 FIX: lê xp_total do ma_user — NUNCA ma_points legado
-      total = (localUser && typeof localUser.xp_total === 'number') ? localUser.xp_total : 0;
-    } catch(e) {}
-  }
   
-  var prev = el._prev;
-  el.textContent = total.toLocaleString('pt-BR');
   
-  // Animação de bump se mudou
-  if (prev !== undefined && prev !== total) {
-    var block = document.getElementById('maPtsLive');
-    if (block) {
-      block.classList.remove('bump');
-      void block.offsetWidth;
-      block.classList.add('bump');
-    }
-  }
   
-  el._prev = total;
-}
-
-/**
- * Atualiza pontos quando recebe evento
- */
-function ptUpdatePtsFromEvent(detail) {
-  var el = document.getElementById('maPtsNum');
-  if (!el) return;
   
-  el.textContent = detail.total.toLocaleString('pt-BR');
   
-  // Animação de bump
-  var block = document.getElementById('maPtsLive');
-  if (block) {
-    block.classList.remove('bump');
-    void block.offsetWidth;
-    block.classList.add('bump');
-  }
   
-  el._prev = detail.total;
   
-  // Atualiza menu também se estiver aberto
-  ptUpdateMenuUser();
-}
-
-/**
- * Sincroniza pontos do Firebase
- */
-async function ptSyncFromFirebase() {
-  if (!window.MAStore) return;
   
-  try {
-    var user = await MAStore.getUser();
-    if (user) {
-      var total = user.xp_total || 0;
-      var el = document.getElementById('maPtsNum');
-      if (el) {
-        el.textContent = total.toLocaleString('pt-BR');
-        el._prev = total;
-      }
-      console.log('[Portal Topbar] Pontos sincronizados:', total);
-    }
-  } catch(e) {
-    console.error('[Portal Topbar] Erro na sincronização:', e);
-  }
-}
-
-function ptUpdateMenuUser() {
-  var sec  = document.getElementById('ptMenuUser');
-  var auth = document.getElementById('ptMenuAuth');
-  if (!sec || !auth) return;
   
-  // Prioridade: MAStore
-  var u = null;
-  var total = 0;
   
-  if (window.MAStore && window.MAStore.getUserSync) {
-    u = MAStore.getUserSync();
-    total = u ? (u.xp_total || 0) : 0;
-    // Se MAStore tem cache com xp_total mais preciso, usa ele
-    if (window.MAStore.getTotalPointsSync) {
-      total = MAStore.getTotalPointsSync();
-    }
-  } else {
-    try {
-      u = JSON.parse(localStorage.getItem('ma_user') || 'null');
-      // v3 FIX: lê xp_total do ma_user (escrito pelo Firebase) — NUNCA ma_points legado
-      total = (u && typeof u.xp_total === 'number') ? u.xp_total : 0;
-    } catch(e) {}
-  }
   
-  if (u && (u.email || u.nome)) {
-    sec.innerHTML  = '<span class="ma-mu-name">' + (u.nome || u.name || u.email) + '</span>'
-                   + '<div class="ma-mu-pts"><b>' + total.toLocaleString('pt-BR') + '</b> XP</div>';
-    auth.innerHTML = '<a class="ma-mi gold" href="planos.html">'
-                   + '<span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a>'
-                   + '<button class="ma-mi red" onclick="ptLogout()">'
-                   + '<span class="ma-mi-icon">🚪</span>Sair da conta</button>';
-  } else {
-    sec.innerHTML  = '<span class="ma-mu-name" style="color:#8888a8">Visitante</span>'
-                   + '<div class="ma-mu-pts">Faça login para salvar seu progresso</div>';
-    auth.innerHTML = '<a class="ma-mi" href="index.html">'
-                   + '<span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a>'
-                   + '<a class="ma-mi gold" href="planos.html">'
-                   + '<span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a>';
-  }
-}
-
-function ptToggleMenu() {
-  var d = document.getElementById('ptMenuDd');
-  var o = document.getElementById('ptMenuOverlay');
-  if (!d || !o) return;
-  d.classList.toggle('open');
-  o.classList.toggle('open');
-  if (d.classList.contains('open')) ptUpdateMenuUser();
-}
-
-function ptCloseMenu() {
-  var d = document.getElementById('ptMenuDd');
-  var o = document.getElementById('ptMenuOverlay');
-  if (d) d.classList.remove('open');
-  if (o) o.classList.remove('open');
-}
-
-function ptToggleTheme() {
-  document.body.classList.toggle('light');
-  var isLight = document.body.classList.contains('light');
-  localStorage.setItem('ma_theme', isLight ? 'light' : 'dark');
-  var moon = document.getElementById('ptIconMoon');
-  var sun  = document.getElementById('ptIconSun');
-  if (moon) moon.style.display = isLight ? 'none'  : 'block';
-  if (sun)  sun.style.display  = isLight ? 'block' : 'none';
-}
-
-async function ptLogout() {
-  ptCloseMenu();
   
-  if (window.MAStore && MAStore.logout) {
-    await MAStore.logout();
-  } else if (window.MA_AUTH && MA_AUTH.logout) {
-    await MA_AUTH.logout().catch(function(){});
-  }
   
-  localStorage.removeItem('ma_user');
-  location.href = 'index.html';
-}
-
-console.log('[Portal Topbar v3] ✅ Carregado - Firebase Edition');
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
