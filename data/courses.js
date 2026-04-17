@@ -43,7 +43,7 @@ var MA_COURSES = [
   },
   {
     id: 'pc',
-    coverImg: 'assets/capas/pc.png',
+    coverImg: 'assets/capas/pc.jpg',
     courseKey: 'pc',
     name: 'Podcasts e Cortes Virais Dominando as Redes',
     desc: 'Descubra como podcasts brasileiros dominam a cultura pop através de cortes virais.',
