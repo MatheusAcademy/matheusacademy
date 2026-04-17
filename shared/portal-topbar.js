@@ -371,20 +371,21 @@ function ptInitTopbar() {
 function ptUpdatePts() {
   var el = document.getElementById('maPtsNum');
   if (!el) return;
-  
+
   var total = 0;
-  
-  // Prioridade 1: MAStore (Firebase)
-  if (window.MAStore && window.MAStore.getTotalPointsSync) {
+
+  // FIX: Se nao tem ma_user em localStorage, forca XP=0 (evita cache apos logout)
+  var _lu = null;
+  try { _lu = JSON.parse(localStorage.getItem('ma_user') || 'null'); } catch(e) {}
+
+  if (!_lu) {
+    total = 0;
+  } else if (window.MAStore && window.MAStore.getTotalPointsSync) {
+    // Prioridade 1: MAStore (Firebase)
     total = MAStore.getTotalPointsSync();
-  } 
-  // Fallback: localStorage ma_user.xp_total (escrito pelo Firebase)
-  else {
-    try {
-      var localUser = JSON.parse(localStorage.getItem('ma_user') || 'null');
-      // v3 FIX: lê xp_total do ma_user — NUNCA ma_points legado
-      total = (localUser && typeof localUser.xp_total === 'number') ? localUser.xp_total : 0;
-    } catch(e) {}
+  } else {
+    // Fallback: localStorage ma_user.xp_total
+    total = (typeof _lu.xp_total === 'number') ? _lu.xp_total : 0;
   }
   
   var prev = el._prev;
@@ -517,14 +518,19 @@ function ptToggleTheme() {
 
 async function ptLogout() {
   ptCloseMenu();
-  
-  if (window.MAStore && MAStore.logout) {
-    await MAStore.logout();
-  } else if (window.MA_AUTH && MA_AUTH.logout) {
-    await MA_AUTH.logout().catch(function(){});
-  }
-  
-  localStorage.removeItem('ma_user');
+
+  try {
+    if (window.MAStore && MAStore.logout) {
+      await MAStore.logout();
+    } else if (window.MA_AUTH && MA_AUTH.logout) {
+      await MA_AUTH.logout();
+    }
+  } catch(e) { console.warn('[ptLogout] erro:', e); }
+
+  // FIX: limpa TODAS as chaves de sessao (evita XP persistir apos logout)
+  var _keys = ['ma_user','ma_points','ma_streak2','ma_sessions','ma_online_status','ma_avatar','ma_course_progress','ma_activity_log'];
+  _keys.forEach(function(k){ try { localStorage.removeItem(k); } catch(e) {} });
+
   location.href = 'index.html';
 }
 
