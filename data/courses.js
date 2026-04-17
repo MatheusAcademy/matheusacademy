@@ -1,7 +1,7 @@
 var MA_COURSES = [
   {
     id: 'oz',
-    coverImg: 'assets/capas/oz.png',
+    coverImg: 'assets/capas/oz.jpg',
     courseKey: 'oz',
     name: 'Ozempic e Mounjaro: A Revolução do Emagrecimento',
     desc: 'Entenda o boom dos medicamentos GLP-1, a regulamentação Anvisa e os impactos do mercado de R$20bi em 2026.',
