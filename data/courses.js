@@ -568,7 +568,7 @@ var MA_COURSES = [
   },
   {
     id: 'gb',
-    coverImg: 'assets/capas/gb.png',
+    coverImg: 'assets/capas/gb.jpg',
     courseKey: 'gb',
     name: 'Brasil Buscando Mais Gás da Bolívia',
     desc: 'Importação boliviana, renegociação YPFB/Petrobras e a nova geopolítica energética.',
