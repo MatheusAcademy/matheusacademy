@@ -484,7 +484,7 @@ var MA_COURSES = [
   },
   {
     id: 'cpet',
-    coverImg: 'assets/capas/cpet.png',
+    coverImg: 'assets/capas/cpet.jpg',
     courseKey: 'cpet',
     name: 'Crise Global do Petróleo',
     desc: 'Queda de 18% do petróleo, estratégias da OPEP+ e impacto no Brasil e Petrobras.',
