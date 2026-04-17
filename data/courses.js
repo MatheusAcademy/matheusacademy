@@ -337,7 +337,7 @@ var MA_COURSES = [
   },
   {
     id: 'om',
-    coverImg: 'assets/capas/om.png',
+    coverImg: 'assets/capas/om.jpg',
     courseKey: 'om',
     name: 'Guerra no Oriente Médio: Tensões e Conflitos',
     desc: 'Israel x Hezbollah, EUA x Irã, programa nuclear e o caldeirão geopolítico de 2026.',
