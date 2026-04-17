@@ -289,8 +289,12 @@
    ══════════════════════════════════════════════════════════════ */
 
 function ptInitTopbar() {
-  // Atualiza pontos imediatamente com dados do cache
-  ptUpdatePts();
+  // BUG #3 FIX: não atualiza XP imediatamente via localStorage para evitar
+  // race condition onde XP stale aparece mesmo quando o usuário está deslogado.
+  // A atualização real ocorrerá via onAuthStateChanged em _setupFirebaseSync.
+  // Zera o contador enquanto Firebase ainda não confirmou o estado de auth.
+  var _elPts = document.getElementById('maPtsNum');
+  if (_elPts) { _elPts.textContent = '0'; _elPts._prev = 0; }
 
   // Oculta/mostra botão Planos conforme o plano do usuário
   (function _ptUpdPlansBtn() {
