@@ -190,7 +190,7 @@ var MA_COURSES = [
   },
   {
     id: 'lf',
-    coverImg: 'assets/capas/lf.png',
+    coverImg: 'assets/capas/lf.jpg',
     courseKey: 'lf',
     name: 'Lifestyle Fitness e Shape Seco',
     desc: 'Tendências ACSM 2026, cutting science, wearables e os influenciadores do fitness.',
