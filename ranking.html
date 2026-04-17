@@ -44,6 +44,26 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .r-bar{height:3px;background:var(--brd);border-radius:2px;margin-top:4px;overflow:hidden}
 .r-bar-f{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--pri),var(--pur))}
 .r-pts{font-size:.85rem;font-weight:900;color:var(--pri);white-space:nowrap;flex-shrink:0}
+/* ── PODIUM ── */
+.podium-wrap{display:flex;align-items:flex-end;justify-content:center;gap:8px;padding:20px 16px 10px;margin-bottom:16px}
+.podium-col{display:flex;flex-direction:column;align-items:center;text-align:center;flex:1;max-width:120px}
+.podium-col.gold{order:2}.podium-col.silver{order:1}.podium-col.bronze{order:3}
+.podium-av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;position:relative;overflow:hidden;margin-bottom:6px}
+.podium-col.gold .podium-av{width:64px;height:64px;font-size:1.5rem;border:3px solid #f59e0b;box-shadow:0 0 20px rgba(245,158,11,.35)}
+.podium-col.silver .podium-av{width:52px;height:52px;font-size:1.2rem;border:3px solid #9898b0;box-shadow:0 0 15px rgba(152,152,176,.25)}
+.podium-col.bronze .podium-av{width:52px;height:52px;font-size:1.2rem;border:3px solid #b45309;box-shadow:0 0 15px rgba(180,83,9,.25)}
+.podium-av img{width:100%;height:100%;object-fit:cover}
+.podium-medal{font-size:1.4rem;margin-bottom:4px}
+.podium-col.gold .podium-medal{font-size:1.8rem}
+.podium-name{font-size:.68rem;font-weight:700;color:#fff;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.podium-pts{font-size:.75rem;font-weight:900;margin-top:2px}
+.podium-col.gold .podium-pts{color:#f59e0b}
+.podium-col.silver .podium-pts{color:#9898b0}
+.podium-col.bronze .podium-pts{color:#b45309}
+.podium-bar{width:100%;border-radius:8px 8px 0 0;margin-top:8px;display:flex;align-items:flex-end;justify-content:center}
+.podium-col.gold .podium-bar{height:80px;background:linear-gradient(180deg,rgba(245,158,11,.25),rgba(245,158,11,.08));border:1px solid rgba(245,158,11,.3);border-bottom:none}
+.podium-col.silver .podium-bar{height:56px;background:linear-gradient(180deg,rgba(152,152,176,.2),rgba(152,152,176,.06));border:1px solid rgba(152,152,176,.25);border-bottom:none}
+.podium-col.bronze .podium-bar{height:44px;background:linear-gradient(180deg,rgba(180,83,9,.2),rgba(180,83,9,.06));border:1px solid rgba(180,83,9,.25);border-bottom:none}
 /* ── PERFIL MODAL ── */
 .pf-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:20000;display:none;align-items:flex-end;justify-content:center}
 .pf-modal-bg.show{display:flex}
@@ -146,6 +166,7 @@ body{padding-bottom:80px!important}
 
 <!-- MA-Fixes: SEO, LGPD cookies, error monitoring, lazy loading -->
 <script src="shared/ma-fixes.js"></script>
+<script src="shared/ma-global-styles.js" defer></script>
 </head>
 <body>
 <!-- Topbar injetada automaticamente pelo portal-topbar.js -->
@@ -356,27 +377,78 @@ function buildList(players, tab){
   }
 
   var html='';
-  list.forEach(function(r,i){
-    var lv      = getLvObj(r.pts);
-    var posClass= i===0?'p1':i===1?'p2':i===2?'p3':'';
-    var posEmoji= i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
-    var pct     = Math.round(r.pts/maxPts*100);
-    var initial = (r.name||'A').charAt(0).toUpperCase();
-    var avStyle = r.foto
-      ? 'background:url('+r.foto+') center/cover no-repeat'
-      : 'background:linear-gradient(135deg,'+r.av+','+r.av+'cc)';
-    var avHtml  = '<div class="r-av" style="'+avStyle+'">'+(r.foto?'':initial)+'</div>';
-    html += '<div class="rank-item'+(r.isMe?' me':'')+'" onclick="openPfModal(\''+r.id+'\')">'
-      +'<div class="r-pos '+posClass+'">'+posEmoji+'</div>'
-      +avHtml
-      +'<div class="r-info">'
-        +'<div class="r-name">'+r.name+(r.isMe?'<span class="r-you">VOCÊ</span>':'')+'</div>'
-        +'<div class="r-lv">'+lv.i+' '+lv.n+(r.city?' · '+r.city:'')+'</div>'
-        +'<div class="r-bar"><div class="r-bar-f" style="width:'+pct+'%"></div></div>'
-      +'</div>'
-      +'<div class="r-pts">'+r.pts.toLocaleString('pt-BR')+'</div>'
-      +'</div>';
-  });
+  // PODIUM for top 3
+  if(list.length >= 3){
+    var podiumOrder = [1,0,2]; // silver, gold, bronze
+    var podiumClasses = ['silver','gold','bronze'];
+    var podiumMedals = ['🥈','🥇','🥉'];
+    html += '<div class="podium-wrap">';
+    podiumOrder.forEach(function(idx, i){
+      var r = list[idx];
+      var initial = (r.name||'A').charAt(0).toUpperCase();
+      var firstName = (r.name||'Aluno').split(' ')[0];
+      var avStyle = r.foto
+        ? 'background:url('+r.foto+') center/cover no-repeat'
+        : 'background:linear-gradient(135deg,'+r.av+','+r.av+'cc)';
+      html += '<div class="podium-col '+podiumClasses[i]+'" onclick="openPfModal(\''+r.id+'\')" style="cursor:pointer">'
+        +'<div class="podium-medal">'+podiumMedals[i]+'</div>'
+        +'<div class="podium-av" style="'+avStyle+'">'+(r.foto?'':initial)+'</div>'
+        +'<div class="podium-name">'+firstName+(r.isMe?' (Você)':'')+'</div>'
+        +'<div class="podium-pts">'+r.pts.toLocaleString('pt-BR')+' XP</div>'
+        +'<div class="podium-bar"></div>'
+        +'</div>';
+    });
+    html += '</div>';
+  }
+  // Regular list (skip top 3 if podium shown)
+  var startIdx = list.length >= 3 ? 3 : 0;
+  if(startIdx < list.length){
+    list.slice(startIdx).forEach(function(r,i){
+      var pos = startIdx + i;
+      var lv      = getLvObj(r.pts);
+      var posClass= pos===0?'p1':pos===1?'p2':pos===2?'p3':'';
+      var posEmoji= pos===0?'🥇':pos===1?'🥈':pos===2?'🥉':(pos+1);
+      var pct     = Math.round(r.pts/maxPts*100);
+      var initial = (r.name||'A').charAt(0).toUpperCase();
+      var avStyle = r.foto
+        ? 'background:url('+r.foto+') center/cover no-repeat'
+        : 'background:linear-gradient(135deg,'+r.av+','+r.av+'cc)';
+      var avHtml  = '<div class="r-av" style="'+avStyle+'">'+(r.foto?'':initial)+'</div>';
+      html += '<div class="rank-item'+(r.isMe?' me':'')+'" onclick="openPfModal(\''+r.id+'\')">'
+        +'<div class="r-pos '+posClass+'">'+posEmoji+'</div>'
+        +avHtml
+        +'<div class="r-info">'
+          +'<div class="r-name">'+r.name+(r.isMe?'<span class="r-you">VOCÊ</span>':'')+'</div>'
+          +'<div class="r-lv">'+lv.i+' '+lv.n+(r.city?' · '+r.city:'')+'</div>'
+          +'<div class="r-bar"><div class="r-bar-f" style="width:'+pct+'%"></div></div>'
+        +'</div>'
+        +'<div class="r-pts">'+r.pts.toLocaleString('pt-BR')+'</div>'
+        +'</div>';
+    });
+  } else if(list.length < 3) {
+    // Less than 3, show all in regular list
+    list.forEach(function(r,i){
+      var lv      = getLvObj(r.pts);
+      var posClass= i===0?'p1':i===1?'p2':i===2?'p3':'';
+      var posEmoji= i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+      var pct     = Math.round(r.pts/maxPts*100);
+      var initial = (r.name||'A').charAt(0).toUpperCase();
+      var avStyle = r.foto
+        ? 'background:url('+r.foto+') center/cover no-repeat'
+        : 'background:linear-gradient(135deg,'+r.av+','+r.av+'cc)';
+      var avHtml  = '<div class="r-av" style="'+avStyle+'">'+(r.foto?'':initial)+'</div>';
+      html += '<div class="rank-item'+(r.isMe?' me':'')+'" onclick="openPfModal(\''+r.id+'\')">'
+        +'<div class="r-pos '+posClass+'">'+posEmoji+'</div>'
+        +avHtml
+        +'<div class="r-info">'
+          +'<div class="r-name">'+r.name+(r.isMe?'<span class="r-you">VOCÊ</span>':'')+'</div>'
+          +'<div class="r-lv">'+lv.i+' '+lv.n+(r.city?' · '+r.city:'')+'</div>'
+          +'<div class="r-bar"><div class="r-bar-f" style="width:'+pct+'%"></div></div>'
+        +'</div>'
+        +'<div class="r-pts">'+r.pts.toLocaleString('pt-BR')+'</div>'
+        +'</div>';
+    });
+  }
   return html;
 }
 

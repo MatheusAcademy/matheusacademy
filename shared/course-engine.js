@@ -297,8 +297,8 @@ if(typeof TOPICS!=='undefined'&&Array.isArray(TOPICS)){
 
         <!-- BOTÃO MAPA MENTAL -->
         <div style="width:100%;display:flex;justify-content:center;margin-bottom:18px;">
-          <button class="cover-continue-btn" onclick="downloadMindMapPDF()" style="display:inline-flex!important;gap:8px;align-items:center;font-size:.82rem;padding:12px 28px;background:rgba(74,126,255,.12);border:1px solid rgba(74,126,255,.3);color:#4A7EFF;border-radius:12px;cursor:pointer;font-weight:700;transition:all .2s;" onmouseover="this.style.background='rgba(74,126,255,.22)'" onmouseout="this.style.background='rgba(74,126,255,.12)'">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="21"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="21" y2="12"/><line x1="5.6" y1="5.6" x2="8.5" y2="8.5"/><line x1="15.5" y1="15.5" x2="18.4" y2="18.4"/><line x1="5.6" y1="18.4" x2="8.5" y2="15.5"/><line x1="15.5" y1="8.5" x2="18.4" y2="5.6"/></svg>
+          <button class="cover-continue-btn" onclick="downloadMindMapPDF()" style="display:inline-flex!important;gap:8px;align-items:center;font-size:.82rem;padding:12px 24px;background:linear-gradient(135deg, #ef4444, #dc2626);border:none;color:#fff;border-radius:12px;cursor:pointer;font-weight:700;transition:all 0.2s ease;box-shadow:0 4px 15px rgba(239,68,68,.3);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(239,68,68,.5)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(239,68,68,.3)'">
+            <span style="font-size:1rem;">📄</span>
             Baixar Mapa Mental (PDF)
           </button>
         </div>
@@ -3633,6 +3633,21 @@ function buildModuleCarousel(){
   if(!section||!MODS||!MODS.length)return;
   var prog=gProg();
   var unlocked=isUnlocked();
+
+  // Gradientes por módulo
+  var moduleGradients=[
+    'linear-gradient(135deg, #4b8bff, #2563eb)',
+    'linear-gradient(135deg, #a855f7, #7c3aed)',
+    'linear-gradient(135deg, #f59e0b, #d97706)',
+    'linear-gradient(135deg, #22c55e, #16a34a)',
+    'linear-gradient(135deg, #ef4444, #dc2626)',
+    'linear-gradient(135deg, #00d4ff, #0891b2)',
+    'linear-gradient(135deg, #ec4899, #db2777)',
+    'linear-gradient(135deg, #8b5cf6, #6d28d9)',
+    'linear-gradient(135deg, #f97316, #ea580c)',
+    'linear-gradient(135deg, #14b8a6, #0d9488)'
+  ];
+
   var html='<div class="mod-scroll-track">';
   MODS.forEach(function(mod,mi){
     var canAcc=unlocked||modHasFreeContent(mi);
@@ -3643,20 +3658,21 @@ function buildModuleCarousel(){
     var isActive=!isDone&&doneT>0;
     var cls='mod-scroll-card'+(isDone?' msc-done':isActive?' msc-active':canAcc?'':' msc-locked');
     html+='<div class="'+cls+'" onclick="'+(firstTopicAcc?'selectTopic('+mi+',0,true)':canAcc?'openModModal('+mi+')':'openLockScreen()')+'" title="'+mod.name+'">';
-    // Capa visual do card com logo M
-    html+='<div class="msc-cover">';
+    // Capa visual do card com gradient + número do módulo
+    var gradientIdx=mi%moduleGradients.length;
+    var gradient=moduleGradients[gradientIdx];
+    html+='<div class="msc-cover" style="background:'+gradient+'">';
     html+='<div class="msc-cover-grid"></div>';
-    // Logo M centralizada
+    // Número centralizado com formatação
     html+='<svg class="msc-logo" viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg">';
-    html+='<text x="60" y="65" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="68" letter-spacing="-2" opacity=".9">M</text>';
-    html+='<line x1="8" y1="72" x2="112" y2="72" stroke="#4A7EFF" stroke-width="2.5"/>';
-    html+='<line x1="8" y1="78" x2="112" y2="78" stroke="#4A7EFF" stroke-width="1" opacity=".4"/>';
+    html+='<text x="60" y="65" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black,sans-serif" font-weight="900" font-size="68" letter-spacing="-2" opacity=".95">'+String(mi+1).padStart(2,'0')+'</text>';
     html+='</svg>';
-    // Numero do modulo e badge de status
-    html+='<div class="msc-num">';
+    // Numero do modulo e badge de status com gradiente
+    var numGradient=gradient.replace('linear-gradient','').substring(1,gradient.lastIndexOf(')')).split(',').map(function(c){return c.trim();}).slice(1,3).join(',');
+    html+='<div class="msc-num" style="background:linear-gradient(135deg,'+numGradient+')">';
     if(isDone) html+='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
     else if(!canAcc) html+='🔒';
-    else html+=(mi+1);
+    else html+='<span style="font-weight:900;font-size:.75rem;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3)">'+String(mi+1).padStart(2,'0')+'</span>';
     html+='</div>';
     html+='</div>';
     // Info

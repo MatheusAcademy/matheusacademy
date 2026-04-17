@@ -2398,16 +2398,10 @@ body.light .trail-name{color:#3a3a5a;}
 .msc-cover{
   position:relative;
   height:90px;
-  background:linear-gradient(135deg,#070714 0%,#0d0d22 50%,#070714 100%);
+  background:linear-gradient(135deg,#070714 0%,#0d0d22 50%,#070714 100%) !important;
   overflow:hidden;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
-}
-.mod-scroll-card.msc-done .msc-cover{
-  background:linear-gradient(135deg,#052e16 0%,#065f2a 50%,#052e16 100%);
-}
-.mod-scroll-card.msc-active .msc-cover{
-  background:linear-gradient(135deg,#0f0f35 0%,#1a1a55 50%,#0f0f35 100%);
 }
 .msc-cover-grid{
   position:absolute;inset:0;
@@ -2424,25 +2418,7 @@ body.light .trail-name{color:#3a3a5a;}
 }
 .mod-scroll-card:hover .msc-logo{opacity:1;transform:scale(1.05);}
 /* Número do módulo — canto superior direito */
-.msc-num{
-  position:absolute;top:7px;left:8px;
-  width:24px;height:24px;border-radius:50%;
-  background:rgba(0,0,0,.5);
-  border:1.5px solid rgba(255,255,255,.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.6rem;font-weight:900;color:rgba(255,255,255,.8);
-  z-index:3;backdrop-filter:blur(4px);
-}
-.msc-num svg{width:12px;height:12px;stroke:#22c55e;}
-.mod-scroll-card.msc-done .msc-num{
-  background:rgba(34,197,94,.3);
-  border-color:rgba(34,197,94,.6);
-}
-.mod-scroll-card.msc-active .msc-num{
-  background:rgba(91,127,255,.3);
-  border-color:rgba(91,127,255,.6);
-  color:#fff;
-}
+/* Primeiro CSS é obsoleto — ver CSS atualizado mais abaixo */
 .mod-scroll-card.msc-done{
   border-color:rgba(34,197,94,.4);
   background:rgba(34,197,94,.05);
@@ -2461,18 +2437,24 @@ body.light .trail-name{color:#3a3a5a;}
   display:flex;align-items:center;justify-content:center;
   font-size:.72rem;font-weight:900;color:var(--txt2);
   flex-shrink:0;
+  position:absolute;top:7px;left:8px;z-index:3;
+  backdrop-filter:blur(4px);
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
 }
-.msc-num svg{width:14px;height:14px;stroke:var(--grn);}
+.msc-num svg{width:14px;height:14px;stroke:#fff;}
+.msc-num span{display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
 .mod-scroll-card.msc-done .msc-num{
-  background:rgba(34,197,94,.15);
+  background:rgba(34,197,94,.9);
   border-color:var(--grn);
-  color:var(--grn);
+  color:#fff;
 }
+.mod-scroll-card.msc-done .msc-num svg{stroke:#fff;}
 .mod-scroll-card.msc-active .msc-num{
-  background:rgba(91,127,255,.15);
+  background:rgba(91,127,255,.9);
   border-color:var(--pri);
-  color:var(--pri);
+  color:#fff;
 }
+.mod-scroll-card.msc-active .msc-num svg{stroke:#fff;}
 /* Info */
 .msc-info{display:flex;flex-direction:column;gap:2px;flex:1;padding:10px 10px 8px;}
 .msc-label{font-size:.5rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;}
@@ -2491,8 +2473,10 @@ body.light .trail-name{color:#3a3a5a;}
 /* Tema claro */
 body.light .mod-scroll-card{background:#fff;border-color:#e0e4f0;}
 body.light .mod-scroll-card:hover{border-color:rgba(91,127,255,.4);background:#f5f6fc;}
-body.light .msc-num{background:#f0f2f8;border-color:#d0d4e8;color:#5a5a7a;}
+body.light .msc-num{border:2px solid rgba(0,0,0,.15);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1);}
 body.light .msc-name{color:#1a1a2e;}
+body.light .mod-scroll-card.msc-done .msc-num{border-color:var(--grn);}
+body.light .mod-scroll-card.msc-active .msc-num{border-color:var(--pri);}
 /* Responsivo */
 @media(max-width:900px){
   .mod-scroll-track{grid-template-columns:repeat(3,1fr);}
