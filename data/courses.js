@@ -36,7 +36,7 @@ var MA_COURSES = [
     storagePrefix: 'ii_',
     icon: '🎓',
     color: '#388E3C',
-    free: true,
+    free: false,
     addedTs: 1776289874203,
     active: true
   },
@@ -56,7 +56,7 @@ var MA_COURSES = [
     storagePrefix: 'cp_',
     icon: '🏆',
     color: '#C62828',
-    free: true,
+    free: false,
     addedTs: 1776372394957,
     active: true
   },
@@ -768,7 +768,7 @@ var MA_COURSES = [
     storagePrefix: 'mf_',
     icon: '🏆',
     color: '#4A148C',
-    free: true,
+    free: false,
     addedTs: 1776372377046,
     active: true
   },
@@ -1016,7 +1016,7 @@ var MA_COURSES = [
     storagePrefix: 'ap_',
     icon: '✝️',
     color: '#00695C',
-    free: true,
+    free: false,
     addedTs: 1776289825280,
     active: true
   },
@@ -1341,7 +1341,7 @@ var MA_COURSES = [
     storagePrefix: 'rv_',
     icon: '💻',
     color: '#6200EA',
-    free: true,
+    free: false,
     addedTs: 1776289855284,
     active: true
   },
@@ -1437,7 +1437,7 @@ var MA_COURSES = [
     storagePrefix: 'ie_',
     icon: '🏆',
     color: '#1565C0',
-    free: true,
+    free: false,
     addedTs: 1776289905839,
     active: true
   },
@@ -1552,7 +1552,7 @@ var MA_COURSES = [
     storagePrefix: 'hb_',
     icon: '✝️',
     color: '#4A148C',
-    free: true,
+    free: false,
     addedTs: 1776289978598,
     active: true
   },
@@ -1648,7 +1648,7 @@ var MA_COURSES = [
     storagePrefix: 'iv_',
     icon: '🎓',
     color: '#F57C00',
-    free: true,
+    free: false,
     addedTs: 1776289830321,
     active: true
   },
@@ -1725,7 +1725,7 @@ var MA_COURSES = [
     storagePrefix: 'eb_',
     icon: '✝️',
     color: '#1B5E20',
-    free: true,
+    free: false,
     addedTs: 1776289972822,
     active: true
   },
@@ -1916,7 +1916,7 @@ var MA_COURSES = [
     storagePrefix: 'hs_',
     icon: '🏆',
     color: '#558B2F',
-    free: true,
+    free: false,
     addedTs: 1776372274214,
     active: true
   },
@@ -2259,7 +2259,7 @@ var MA_COURSES = [
     storagePrefix: 'cs_',
     icon: '💻',
     color: '#D32F2F',
-    free: true,
+    free: false,
     addedTs: 1776289910639,
     active: true
   },
@@ -2735,7 +2735,7 @@ var MA_COURSES = [
     storagePrefix: 'rm_',
     icon: '🏆',
     color: '#BF360C',
-    free: true,
+    free: false,
     addedTs: 1776289879074,
     active: true
   },
@@ -2755,7 +2755,7 @@ var MA_COURSES = [
     storagePrefix: 'lp_',
     icon: '🏆',
     color: '#00695C',
-    free: true,
+    free: false,
     addedTs: 1776289887838,
     active: true
   },
@@ -2775,7 +2775,7 @@ var MA_COURSES = [
     storagePrefix: 'af_',
     icon: '🏆',
     color: '#AD1457',
-    free: true,
+    free: false,
     addedTs: 1776289915216,
     active: true
   },
@@ -2814,7 +2814,7 @@ var MA_COURSES = [
     storagePrefix: 'pd_',
     icon: '🏆',
     color: '#2E7D32',
-    free: true,
+    free: false,
     addedTs: 1776372267962,
     active: true
   },
@@ -2834,7 +2834,7 @@ var MA_COURSES = [
     storagePrefix: 'cq_',
     icon: '💻',
     color: '#00BFA5',
-    free: true,
+    free: false,
     addedTs: 1776289840473,
     active: true
   },
@@ -2854,7 +2854,7 @@ var MA_COURSES = [
     storagePrefix: 'bw_',
     icon: '💻',
     color: '#F9A825',
-    free: true,
+    free: false,
     addedTs: 1776289859596,
     active: true
   },
@@ -2893,7 +2893,7 @@ var MA_COURSES = [
     storagePrefix: 'an_',
     icon: '💻',
     color: '#FF6F00',
-    free: true,
+    free: false,
     addedTs: 1776289816530,
     active: true
   },
@@ -2913,7 +2913,7 @@ var MA_COURSES = [
     storagePrefix: 'cn_',
     icon: '💻',
     color: '#1565C0',
-    free: true,
+    free: false,
     addedTs: 1776289869089,
     active: true
   },
@@ -2952,7 +2952,7 @@ var MA_COURSES = [
     storagePrefix: 'in_',
     icon: '🎓',
     color: '#311B92',
-    free: true,
+    free: false,
     addedTs: 1776289897305,
     active: true
   },
@@ -3010,7 +3010,7 @@ var MA_COURSES = [
     storagePrefix: 'iv_',
     icon: '🌐',
     color: '#F57C00',
-    free: true,
+    free: false,
     addedTs: 1776024700142,
     active: true
   },
@@ -3030,7 +3030,7 @@ var MA_COURSES = [
     storagePrefix: 'pn_',
     icon: '✝️',
     color: '#0D47A1',
-    free: true,
+    free: false,
     addedTs: 1776289961857,
     active: true
   },
@@ -3088,7 +3088,7 @@ var MA_COURSES = [
     storagePrefix: 'ai_',
     icon: '💻',
     color: '#0277BD',
-    free: true,
+    free: false,
     addedTs: 1776289950565,
     active: true
   },
@@ -3108,7 +3108,7 @@ var MA_COURSES = [
     storagePrefix: 'hp_',
     icon: '🏆',
     color: '#E65100',
-    free: true,
+    free: false,
     addedTs: 1776289944591,
     active: true
   },
@@ -3128,7 +3128,7 @@ var MA_COURSES = [
     storagePrefix: 'io_',
     icon: '💻',
     color: '#2E7D32',
-    free: true,
+    free: false,
     addedTs: 1776289892430,
     active: true
   },
@@ -3148,7 +3148,7 @@ var MA_COURSES = [
     storagePrefix: 'eb_',
     icon: '✝️',
     color: '#1B5E20',
-    free: true,
+    free: false,
     addedTs: 1776024739233,
     active: true
   },
@@ -3168,7 +3168,7 @@ var MA_COURSES = [
     storagePrefix: 'cd_',
     icon: '💻',
     color: '#00796B',
-    free: true,
+    free: false,
     addedTs: 1776289883416,
     active: true
   },
@@ -3207,7 +3207,7 @@ var MA_COURSES = [
     storagePrefix: 'ig_',
     icon: '💻',
     color: '#6A1B9A',
-    free: true,
+    free: false,
     addedTs: 1776289924442,
     active: true
   },
@@ -3227,7 +3227,7 @@ var MA_COURSES = [
     storagePrefix: 'hb_',
     icon: '✝️',
     color: '#4A148C',
-    free: true,
+    free: false,
     addedTs: 1776024763217,
     active: true
   },
@@ -3247,7 +3247,7 @@ var MA_COURSES = [
     storagePrefix: 'pa_',
     icon: '✝️',
     color: '#BF360C',
-    free: true,
+    free: false,
     addedTs: 1776289984830,
     active: true
   },
@@ -3267,7 +3267,7 @@ var MA_COURSES = [
     storagePrefix: 'ip_',
     icon: '🎓',
     color: '#00838F',
-    free: true,
+    free: false,
     addedTs: 1776289956365,
     active: true
   },
@@ -3287,7 +3287,7 @@ var MA_COURSES = [
     storagePrefix: 'it_',
     icon: '🎓',
     color: '#455A64',
-    free: true,
+    free: false,
     addedTs: 1776289820894,
     active: true
   },
@@ -3307,7 +3307,7 @@ var MA_COURSES = [
     storagePrefix: 'ii_',
     icon: '🌐',
     color: '#388E3C',
-    free: true,
+    free: false,
     addedTs: 1776024784753,
     active: true
   },
@@ -3327,7 +3327,7 @@ var MA_COURSES = [
     storagePrefix: 'be_',
     icon: '🎓',
     color: '#37474F',
-    free: true,
+    free: false,
     addedTs: 1776289967433,
     active: true
   },
@@ -3347,7 +3347,7 @@ var MA_COURSES = [
     storagePrefix: 'tb_',
     icon: '✝️',
     color: '#8B0000',
-    free: true,
+    free: false,
     addedTs: 1776289990322,
     active: true
   },
@@ -3367,7 +3367,7 @@ var MA_COURSES = [
     storagePrefix: 'ts_',
     icon: '✝️',
     color: '#1565C0',
-    free: true,
+    free: false,
     addedTs: 1776289850514,
     active: true
   },
@@ -3387,7 +3387,7 @@ var MA_COURSES = [
     storagePrefix: 'ia_',
     icon: '🎓',
     color: '#7B1FA2',
-    free: true,
+    free: false,
     addedTs: 1776289845579,
     active: true
   },
@@ -3407,7 +3407,7 @@ var MA_COURSES = [
     storagePrefix: 'ib_',
     icon: '🎓',
     color: '#1976D2',
-    free: true,
+    free: false,
     addedTs: 1776289920258,
     active: true
   },
@@ -3427,7 +3427,7 @@ var MA_COURSES = [
     storagePrefix: 'ac_',
     icon: '✝️',
     color: '#C62828',
-    free: true,
+    free: false,
     addedTs: 1776289901877,
     active: true
   },
@@ -3447,7 +3447,7 @@ var MA_COURSES = [
     storagePrefix: 'es_',
     icon: '✝️',
     color: '#4527A0',
-    free: true,
+    free: false,
     addedTs: 1776289864345,
     active: true
   },
@@ -3467,7 +3467,7 @@ var MA_COURSES = [
     storagePrefix: 'fp_',
     icon: '🚀',
     color: '#283593',
-    free: true,
+    free: false,
     addedTs: 1776289938554,
     active: true
   },

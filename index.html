@@ -1552,7 +1552,7 @@ body {
 </div>
 
 <div id="ebookDedicatedSection" class="section-wrap" style="display:none">
-  <div class="section-hdr"><h3 style="background:linear-gradient(135deg,#a855f7,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">📖 E-books Gratuitos</h3></div>
+  <div class="section-hdr"><h3 style="background:linear-gradient(135deg,#a855f7,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">📖 E-books Exclusivos</h3></div>
   <div class="row-wrap">
     <div class="row-outer" id="ebookDedicatedOuter"><div class="row-inner" id="ebookDedicatedRow"></div></div>
   </div>
@@ -2518,7 +2518,8 @@ function makeCard(c) {
   var h = '<div class="cc" data-file="' + fileTarget + '"' + (isEbook ? ' data-ebook="1"' : '') + '>';
   h += '<div class="cc-img"><img src="' + img + '" alt="' + c.name + '" loading="lazy">';
   if (un && !c.free) h += '<div class="cc-badge live">&#10003; Liberado</div>';
-  if (c.free && !isEbook) h += '<div class="cc-badge free">&#127873; Grátis</div>';
+  if (!un && !c.free && !isEbook) h += '<div class="cc-badge" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.6)">&#128274; Assinante</div>';
+  if (c.free && !isEbook) h += '<div class="cc-badge free">&#127873; Gr&aacute;tis</div>';
   if (isEbook) h += '<div class="cc-badge free" style="background:linear-gradient(135deg,#a855f7,#60a5fa)">&#128214; PDF</div>';
   if (_isNew) h += '<div class="cc-badge novo">&#128293; NOVO</div>';
   h += '</div>';
