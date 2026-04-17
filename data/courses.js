@@ -274,7 +274,7 @@ var MA_COURSES = [
   },
   {
     id: 'ci',
-    coverImg: 'assets/capas/ci.png',
+    coverImg: 'assets/capas/ci.jpg',
     courseKey: 'ci',
     name: 'Crise Institucional no Brasil: Poderes em Conflito',
     desc: 'Embates entre STF, Congresso e Executivo, emendas parlamentares e governança sob pressão.',
