@@ -421,7 +421,7 @@ var MA_COURSES = [
   },
   {
     id: 'ni',
-    coverImg: 'assets/capas/ni.png',
+    coverImg: 'assets/capas/ni.jpg',
     courseKey: 'ni',
     name: 'Risco Nuclear Envolvendo o Irã',
     desc: 'Programa nuclear iraniano, enriquecimento de urânio e riscos de escalada global.',
