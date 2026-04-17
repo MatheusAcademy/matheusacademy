@@ -1267,6 +1267,42 @@ function renderModLesson(mi){
     html+='<div class="ml-nav-btns">'+prevModBtn+nextModBtnNav+'</div>';
   }
 
+  /* ══ RECOMENDAÇÃO DE PRÓXIMO CURSO (último módulo) ══ */
+  if(mi===MODS.length-1&&typeof MA_COURSES!=='undefined'){
+    try{
+      var _curCat=COURSE.cat||'';
+      var _curId=COURSE.prefix||COURSE.id||'';
+      var _prog=gProg();
+      var _recs=MA_COURSES.filter(function(c){
+        if(!c.active||c.id===_curId)return false;
+        // Não recomendar cursos já concluídos
+        if(c.cat===_curCat)return true;
+        return false;
+      }).slice(0,3);
+      // Se não há cursos da mesma categoria, pegar aleatórios
+      if(_recs.length<2){
+        var _others=MA_COURSES.filter(function(c){return c.active&&c.id!==_curId&&_recs.indexOf(c)<0;});
+        _others.sort(function(){return Math.random()-.5;});
+        while(_recs.length<3&&_others.length>0)_recs.push(_others.shift());
+      }
+      if(_recs.length>0){
+        html+='<div class="ml-recs" style="margin:24px 0;padding:20px;background:rgba(91,127,255,.05);border:1px solid rgba(91,127,255,.15);border-radius:14px">';
+        html+='<div style="font-size:1rem;font-weight:700;margin-bottom:14px;color:#e2e2f0">🎯 Continue Aprendendo</div>';
+        html+='<div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px">';
+        _recs.forEach(function(rc){
+          var rcImg=rc.coverImg||'';
+          html+='<a href="'+(rc.file||'#')+'" style="flex:0 0 180px;text-decoration:none;color:inherit;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;transition:transform .2s" onmouseover="this.style.transform=\'translateY(-3px)\'" onmouseout="this.style.transform=\'none\'">';
+          if(rcImg)html+='<div style="height:100px;background:#0a0a1f;overflow:hidden"><img src="'+rcImg+'" alt="" style="width:100%;height:100%;object-fit:cover"></div>';
+          html+='<div style="padding:10px"><div style="font-size:.65rem;color:#5b7fff;font-weight:600;margin-bottom:4px">'+(rc.cat||'Curso')+'</div>';
+          html+='<div style="font-size:.8rem;font-weight:600;color:#e2e2f0;line-height:1.3">'+rc.name+'</div>';
+          html+='<div style="font-size:.6rem;color:#8888a8;margin-top:6px">'+(rc.modules||0)+' mód. · '+(rc.hours||0)+'h</div>';
+          html+='</div></a>';
+        });
+        html+='</div></div>';
+      }
+    }catch(e){}
+  }
+
   /* ══ Rodé social — idêntico ao index ══ */
   html+='<footer class="ml-footer">'
     +'<div class="ml-footer-links">'
@@ -4292,6 +4328,43 @@ document.addEventListener('DOMContentLoaded',function(){
   initTheme();
   // Init
   initSidebar();setupEvents();updateTopbar();buildSidebar();initHighlight();setBottomNavActive();updateLessonCoverMini();initFloatingPen();buildModuleCarousel();
+
+  // ═══ SAUDAÇÃO POR VOZ AO ENTRAR NO CURSO ═══
+  (function(){
+    try{
+      var cId=COURSE.prefix||COURSE.id||COURSE.courseKey||'';
+      var today=new Date().toISOString().slice(0,10);
+      var greetKey='greeted_'+cId+'_'+today;
+      if(localStorage.getItem(greetKey))return; // já saudou hoje
+      // Pegar nome do aluno
+      var userName='';
+      try{var u=JSON.parse(localStorage.getItem('ma_user')||'null');if(u&&u.name)userName=u.name.split(' ')[0];}catch(e){}
+      if(!userName&&window.firebase&&firebase.auth&&firebase.auth().currentUser){
+        userName=(firebase.auth().currentUser.displayName||'').split(' ')[0];
+      }
+      if(!userName)return; // sem nome, sem saudação
+      // Montar texto
+      var isNews=(COURSE.cat||'').toLowerCase().indexOf('not')>=0;
+      var texto='Olá '+userName+'! Você acaba de '+(isNews?'acessar a notícia sobre ':'iniciar o curso de ')+COURSE.name+'. '+(isNews?'Boa leitura!':'Ótimos estudos!');
+      // Usar mesma TTS API do narrador
+      var ttsUrl=window.MA_TTS_URL||'';
+      if(ttsUrl){
+        setTimeout(function(){
+          fetch(ttsUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:texto,voice:window.MA_TTS_VOICE||'nova',model:'tts-1',language:'pt-BR'})})
+          .then(function(r){if(!r.ok)throw new Error();return r.blob();})
+          .then(function(b){var a=new Audio(URL.createObjectURL(b));a.volume=0.8;a.play().catch(function(){});})
+          .catch(function(){});
+        },1500);
+      }else{
+        // Fallback: Web Speech API
+        setTimeout(function(){
+          try{var u2=new SpeechSynthesisUtterance(texto);u2.lang='pt-BR';u2.rate=1;window.speechSynthesis.speak(u2);}catch(e){}
+        },1500);
+      }
+      localStorage.setItem(greetKey,'1');
+    }catch(e){}
+  })();
+
   // v3 FIX: Sincronizar com Firebase ao carregar — garante XP correto na topbar
   document.addEventListener('maFirebaseReady', function(){
     if(window.MAStore&&MAStore.syncFromFirebase){
@@ -4305,13 +4378,30 @@ document.addEventListener('DOMContentLoaded',function(){
   // Polling de pontos — unificado no timer principal acima
   // Sessão — salva duração e contagem, sem mexer no streak (gerenciado por checkStreak)
   var _ss=Date.now();
+  var _sessionSaved=false;
   function saveSession(){
+    if(_sessionSaved)return;_sessionSaved=true;
     var dur=Math.floor((Date.now()-_ss)/60000);
+    if(dur<1)dur=1; // mínimo 1 minuto
     var s;try{s=JSON.parse(localStorage.getItem('ma_sessions'))||{};}catch(e){s={};}
     s.count=(s.count||0)+1;
     s.lastDuration=dur;
-    // NÃO sobrescreve lastStudyDate nem streak — isso é responsabilidade do checkStreak()
+    // Atualizar contadores de tempo de estudo
+    var tk=new Date().toISOString().split('T')[0];
+    if(s.lastStudyDate!==tk){s.todayMin=0;}
+    s.lastStudyDate=tk;
+    s.todayMin=(s.todayMin||0)+dur;
     localStorage.setItem('ma_sessions',JSON.stringify(s));
+    // Atualizar chaves de estudo para o perfil
+    try{
+      var prev=parseInt(localStorage.getItem('ma_study_total_min'))||0;
+      localStorage.setItem('ma_study_total_min',String(prev+dur));
+      localStorage.setItem('ma_study_today_min',String(s.todayMin));
+      var prevW=parseInt(localStorage.getItem('ma_study_week_min'))||0;
+      localStorage.setItem('ma_study_week_min',String(prevW+dur));
+      var prevM=parseInt(localStorage.getItem('ma_study_month_min'))||0;
+      localStorage.setItem('ma_study_month_min',String(prevM+dur));
+    }catch(e){}
   }
   window.addEventListener('beforeunload',saveSession);
   window.addEventListener('pagehide',saveSession);

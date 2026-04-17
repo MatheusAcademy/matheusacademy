@@ -241,7 +241,11 @@ function showRankLoading(tab){
 async function loadRankingFirestore(){
   if(_rankLoaded) return _rankPlayers;
   try {
-    await new Promise(function(res){ if(window.__maFirebaseReady){res();}else{document.addEventListener('maFirebaseReady',res,{once:true});} });
+    // Timeout de 5s para Firebase ficar pronto
+    await Promise.race([
+      new Promise(function(res){ if(window.__maFirebaseReady){res();}else{document.addEventListener('maFirebaseReady',res,{once:true});} }),
+      new Promise(function(_,rej){ setTimeout(function(){rej(new Error('Firebase timeout'));},5000); })
+    ]);
     var db = window.maDb;
     var snap = await db.collection('usuarios')
       .orderBy('xp_total','desc')
@@ -268,14 +272,26 @@ async function loadRankingFirestore(){
         xp_hoje:   d.xp_hoje   || 0,
       });
     });
-    _rankLoaded = true;
-    return _rankPlayers;
   } catch(e) {
     console.error('[Ranking] Firestore erro:', e);
     _rankPlayers = [];
-    _rankLoaded = true;
-    return [];
   }
+  // Garantir que o proprio usuario aparece no ranking
+  var _me = gU(), _myPts = gP();
+  if(_me && _me.uid) {
+    var _found = _rankPlayers.some(function(p){ return p.uid === _me.uid; });
+    if(!_found) {
+      _rankPlayers.push({
+        id: _me.uid, uid: _me.uid, name: _me.name || 'Aluno',
+        city: _me.city || '', pts: _myPts.total || 0, streak: 0,
+        date: '2026', av: avColor(_me.name || 'A'), foto: _me.foto || null,
+        xp_mes: 0, xp_semana: 0, xp_hoje: 0, isMe: true
+      });
+      _rankPlayers.sort(function(a,b){ return b.pts - a.pts; });
+    }
+  }
+  _rankLoaded = true;
+  return _rankPlayers;
 }
 
 // ═══════════════════════════════════════════════
