@@ -4039,7 +4039,7 @@ var MA_CATS = [
   /* ═══ 22. MEIO AMBIENTE & SUSTENTABILIDADE ═══ */
   {name:'Meio Ambiente & Sustentabilidade', sub:'O planeta precisa de você — entenda os desafios e as soluções', courses:[], soon:['Mudanças Climáticas Descomplicadas','Energias Renováveis','Sustentabilidade nos Negócios','Amazônia: O Pulmão do Mundo','Água: O Recurso Mais Valioso']},
   /* ═══ 23. EBOOKS (sempre por último) ═══ */
-  {name:'Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x Irã','Devocional 2026','Estamos Próximos do Fim?','Manual do Investidor Iniciante'], isEbook:true}
+  {name:'Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:[], isEbook:true}
 ];
 
 var MA_TRAILS = [
