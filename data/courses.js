@@ -148,7 +148,7 @@ var MA_COURSES = [
   },
   {
     id: 'bgel',
-    coverImg: 'assets/capas/bgel.png',
+    coverImg: 'assets/capas/bgel.jpg',
     courseKey: 'bgel',
     name: 'Banho Gelado: Disciplina e Performance',
     desc: 'A ciência do cold exposure, protocolo Wim Hof e os benefícios reais para imunidade e mente.',
