@@ -253,7 +253,7 @@ var MA_COURSES = [
   },
   {
     id: 'mv',
-    coverImg: 'assets/capas/mv.png',
+    coverImg: 'assets/capas/mv.jpg',
     courseKey: 'mv',
     name: 'Músicas Virais e Trends de Dança',
     desc: 'Algoritmo do TikTok, funknejo, K-pop, Afrobeats e artistas brasileiros dominando o mundo.',
