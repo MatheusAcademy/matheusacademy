@@ -3878,6 +3878,17 @@ var MA_COURSES = [
     file: 'revolucoes-mundo.html',
     cat: 'História',
     modules: 3,
+    topics: 9,
+    hours: 2,
+    quizzes: 9,
+    salt: 'RM_HENRY_2026_MASTER',
+    ak: 'rm_auth',
+    storagePrefix: 'rm_',
+    icon: '📜',
+    color: '#b91c1c',
+    addedTs: 1776359008036,
+    active: true
+  },
   {
     id: 'cxe',
     coverImg: 'assets/capas/cxe.png',
@@ -3942,17 +3953,6 @@ var MA_COURSES = [
     icon: '💰', color: '#00FF88',
     free: true, active: true, addedTs: 1713225600000,
     type: 'ebook', pdfFile: 'ebooks/Manual_Investidor_Iniciante_Matheus_Academy.pdf'
-    }
-    topics: 9,
-    hours: 2,
-    quizzes: 9,
-    salt: 'RM_HENRY_2026_MASTER',
-    ak: 'rm_auth',
-    storagePrefix: 'rm_',
-    icon: '📜',
-    color: '#b91c1c',
-    addedTs: 1776359008036,
-    active: true
   },
   {
     coverImg: 'assets/capas/mnw.jpg',
@@ -4111,7 +4111,7 @@ function MA_buildCats() {
   return cats.filter(function(cat) { return cat.courses.length > 0 || cat.soon.length > 0; });
 }
 
-function MA_buildTrails() {h
+function MA_buildTrails() {
   return MA_TRAILS.map(function(trail) {
     var resolved = [];
     trail.courseIds.forEach(function(cid) {
