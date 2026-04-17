@@ -85,7 +85,7 @@ var MA_COURSES = [
   },
   {
     id: 'cm',
-    coverImg: 'assets/capas/cm.png',
+    coverImg: 'assets/capas/cm.jpg',
     courseKey: 'cm',
     name: 'Crise Migratória na Europa: Desafios e Impactos',
     desc: 'Novo Pacto de Migração da UE, rotas do Mediterrâneo e ascensão de partidos anti-imigração.',
