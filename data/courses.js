@@ -400,7 +400,7 @@ var MA_COURSES = [
   },
   {
     id: 'co',
-    coverImg: 'assets/capas/co.png',
+    coverImg: 'assets/capas/co.jpg',
     courseKey: 'co',
     name: 'Combate ao Crime Organizado com Apoio Internacional',
     desc: 'PCC e CV como facções transnacionais, Operação Contenção, Interpol e cooperação Brasil-EUA.',
