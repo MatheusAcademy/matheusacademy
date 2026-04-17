@@ -2933,6 +2933,13 @@ function upUI() {
   if (!hr || !ca) return;
   var p = getPoints ? getPoints() : {total:0};
   var lv = _idxGLv(p.total);
+  // FIX: esconde .ma-topbar (portal) quando deslogado para nao cobrir header com Entrar/Cadastrar
+  var _maTb = document.querySelector('.ma-topbar');
+  var _maOv = document.getElementById('menuOverlay');
+  var _maDd = document.getElementById('menuDd');
+  if (_maTb) _maTb.style.display = user ? '' : 'none';
+  if (_maOv) _maOv.style.display = user ? '' : 'none';
+  if (_maDd) _maDd.style.display = user ? '' : 'none';
   if (user) {
     hr.innerHTML = '';
     // Planos removido do header - está somente no menu
