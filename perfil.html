@@ -29,10 +29,10 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
 .ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}
 .ma-menu-overlay.open{display:block}
-.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:232px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:14px;min-width:220px;max-height:65vh;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow-y:auto;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
 .ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
-.ma-menu-user{padding:14px 16px 0;border-bottom:1px solid #1e1e35}
-.ma-mu-name{font-size:.85rem;font-weight:800;color:#fff;display:block;margin-bottom:5px}
+.ma-menu-user{padding:10px 14px 0;border-bottom:1px solid #1e1e35}
+.ma-mu-name{font-size:.78rem;font-weight:700;color:#fff;display:block;margin-bottom:2px}
 .ma-mu-level{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:10px;font-size:.64rem;font-weight:700}
 .ma-lv-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 .ma-lvc0{background:rgba(180,83,9,.18);color:#b45309}.ma-lvc0 .ma-lv-dot{background:#b45309}
@@ -40,11 +40,12 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .ma-lvc2{background:rgba(168,85,247,.18);color:#a855f7}.ma-lvc2 .ma-lv-dot{background:#a855f7}
 .ma-lvc3{background:rgba(245,158,11,.18);color:#f59e0b}.ma-lvc3 .ma-lv-dot{background:#f59e0b}
 .ma-lvc4{background:rgba(239,68,68,.18);color:#ef4444}.ma-lvc4 .ma-lv-dot{background:#ef4444}
-.ma-mu-pts{font-size:.63rem;color:#8888a8;margin-top:6px;margin-bottom:10px}.ma-mu-pts b{color:#5b7fff}
-.ma-menu-sec{padding:5px 0}.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
-.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
+.ma-mu-badge{display:inline-block;font-size:.55rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:1px 7px;margin-top:2px}
+.ma-mu-pts{font-size:.6rem;color:rgba(255,255,255,.35);margin-top:4px;margin-bottom:8px}.ma-mu-pts b{color:#5b7fff}
+.ma-menu-sec{padding:3px 0}.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
+.ma-mi{display:flex;align-items:center;gap:8px;padding:7px 14px;font-size:.72rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
 .ma-mi:hover{background:#161628;color:#e8e8f0}
-.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.ma-mi-icon{font-size:.85rem;width:20px;text-align:center;flex-shrink:0}
 .ma-mi.green{color:#22c55e}.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
 .page{padding:72px 14px 90px}
 /* PROFILE CARD */
@@ -292,7 +293,7 @@ body{padding-bottom:var(--bottombar-h);}
     <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
   </div>
   <div class="ma-menu-sec">
-    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
+    <a class="ma-mi gold" href="planos.html"><span class="ma-mi-icon">💎</span>Ver Planos</a>
   </div>
   <div class="ma-menu-sec" id="menuAuthSec"></div>
 </div>
@@ -632,14 +633,11 @@ function updTopbar(){
   document.getElementById('maPtsNum').textContent=pts<1000?String(pts).padStart(3,'0'):pts.toLocaleString('pt-BR');
   var mu=document.getElementById('menuUserSec');
   if(u&&mu){
-    var lv=getLv(p.total),nxt=LEVELS[LEVELS.indexOf(lv)+1];
-    mu.innerHTML='<div style="padding:14px 16px 0;border-bottom:1px solid #1e1e35"><span class="ma-mu-name">'+((u.name||u.email||'').split(' ')[0])+'</span>';
-    if(!mu.querySelector('.ma-mu-level')){mu.innerHTML+='<span class="ma-mu-level '+lv.c+'"><span class="ma-lv-dot"></span>'+lv.n+'</span>';}
-    if(!mu.querySelector('.ma-mu-pts')){mu.innerHTML+='<div class="ma-mu-pts"><b>'+p.total.toLocaleString('pt-BR')+'</b> pts'+(nxt?' · faltam '+(nxt.m-p.total).toLocaleString('pt-BR')+' para '+nxt.n:'')+'</div>';}
-    mu.innerHTML+='</div>';
-    var auth=document.getElementById('menuAuthSec');if(auth)auth.innerHTML='<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair da conta</button>';
+    var firstName=(u.name||u.email||'').split(' ')[0];
+    mu.innerHTML='<div style="padding:10px 14px 0;border-bottom:1px solid #1e1e35"><span class="ma-mu-name">'+firstName+'</span><span class="ma-mu-badge">Iniciante</span><div class="ma-mu-pts"><b>'+pts.toLocaleString('pt-BR')+'</b> XP</div></div>';
+    var auth=document.getElementById('menuAuthSec');if(auth)auth.innerHTML='<a class="ma-mi gold" href="planos.html"><span class="ma-mi-icon">💎</span>Ver Planos</a><button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair da conta</button>';
   }else if(mu){
-    mu.innerHTML='';var auth=document.getElementById('menuAuthSec');if(auth)auth.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar na Conta</a>';
+    mu.innerHTML='';var auth=document.getElementById('menuAuthSec');if(auth)auth.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a><a class="ma-mi gold" href="planos.html"><span class="ma-mi-icon">💎</span>Ver Planos</a>';
   }
 }
 function toggleMenu(){document.getElementById('menuDd').classList.toggle('open');document.getElementById('menuOverlay').classList.toggle('open');}
@@ -754,6 +752,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function _tryAuthFallback() {
     if (window.firebase && firebase.auth) {
       firebase.auth().onAuthStateChanged(function(fbUser) {
+        if (typeof _authSafetyTimeout !== 'undefined') clearTimeout(_authSafetyTimeout);
         if (fbUser) {
           try {
             var local = JSON.parse(localStorage.getItem('ma_user') || '{}');
@@ -779,8 +778,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Timeout de segurança: 15s máximo de espera (aumentado para evitar falso "Faça login" em mobile lento)
-  setTimeout(function() { if (!_rendered) { renderPage(); _rendered = true; } }, 15000);
+  // Timeout de segurança: 15s máximo de espera
+  var _authSafetyTimeout = setTimeout(function() { if (!_rendered) { renderPage(); _rendered = true; } }, 15000);
 
   // Dispara lógica Firebase
   if (window.__maFirebaseReady) {

@@ -128,28 +128,29 @@
     .ma-menu-dd {
       position: fixed; top: calc(var(--topbar-h) + 6px);
       right: max(10px, env(safe-area-inset-right));
-      background: #0f0f1e; border: 1px solid #252540; border-radius: 16px;
-      min-width: 240px; max-width: calc(100vw - 20px);
+      background: #0f0f1e; border: 1px solid #252540; border-radius: 14px;
+      min-width: 220px; max-width: calc(100vw - 20px);
       z-index: 10001; box-shadow: 0 16px 56px rgba(0,0,0,.75);
-      overflow-y: auto; max-height: 80vh; opacity: 0;
+      overflow-y: auto; max-height: 65vh; opacity: 0;
       transform: scale(.88) translateY(-12px); pointer-events: none;
       transition: all .22s cubic-bezier(.2,0,.3,1); transform-origin: top right;
     }
     .ma-menu-dd.open { opacity: 1; transform: scale(1) translateY(0); pointer-events: all; }
-    .ma-menu-user { padding: 14px 16px 0; border-bottom: 1px solid #1e1e35; }
-    .ma-mu-name { font-size: .85rem; font-weight: 800; color: #fff; display: block; margin-bottom: 5px; }
-    .ma-mu-pts { font-size: .63rem; color: #8888a8; margin-top: 6px; margin-bottom: 10px; }
+    .ma-menu-user { padding: 10px 14px 0; border-bottom: 1px solid #1e1e35; }
+    .ma-mu-name { font-size: .78rem; font-weight: 800; color: #fff; display: block; margin-bottom: 2px; }
+    .ma-mu-badge { display: inline-block; font-size: .55rem; font-weight: 700; color: #f59e0b; background: rgba(245,158,11,.12); border: 1px solid rgba(245,158,11,.25); border-radius: 8px; padding: 1px 7px; margin-top: 2px; }
+    .ma-mu-pts { font-size: .6rem; color: #8888a8; margin-top: 4px; margin-bottom: 8px; }
     .ma-mu-pts b { color: #5b7fff; }
-    .ma-menu-sec { padding: 5px 0; }
+    .ma-menu-sec { padding: 3px 0; }
     .ma-menu-sec + .ma-menu-sec { border-top: 1px solid #1e1e35; }
     .ma-mi {
-      display: flex; align-items: center; gap: 10px; padding: 11px 16px;
-      font-size: .78rem; font-weight: 600; color: #8888a8; text-decoration: none;
+      display: flex; align-items: center; gap: 8px; padding: 7px 14px;
+      font-size: .72rem; font-weight: 600; color: #8888a8; text-decoration: none;
       cursor: pointer; border: none; background: transparent;
       font-family: var(--font); width: 100%; text-align: left; transition: background .15s;
     }
     .ma-mi:hover { background: #161628; color: #e8e8f0; }
-    .ma-mi-icon { font-size: 1rem; width: 22px; text-align: center; flex-shrink: 0; }
+    .ma-mi-icon { font-size: .85rem; width: 20px; text-align: center; flex-shrink: 0; }
     .ma-mi.gold { color: #f59e0b; }
     .ma-mi.red  { color: #ef4444; }
 
@@ -168,6 +169,7 @@
     body.light .ma-mi { color: #5a5a7a; }
     body.light .ma-mi:hover { background: #f0f2f8; color: #1a1a2e; }
     body.light .ma-menu-sec + .ma-menu-sec { border-top-color: #e8eaf2; }
+    body.light .ma-mu-badge { background: rgba(245,158,11,.08); border-color: rgba(245,158,11,.2); }
 
     /* ══ BOTÃO PLANOS — oculto em telas pequenas ══ */
     .ma-tb-plans-btn {
@@ -185,6 +187,16 @@
     @media (max-width: 480px) { .ma-tb-plans-btn span.ma-tb-plans-label { display: none; } }
   `;
   document.head.appendChild(style);
+
+  /* ── Lê XP em cache ANTES de gerar HTML (evita flash de 0) ── */
+  var _cachedXP = 0;
+  try {
+    var _cu = JSON.parse(localStorage.getItem('ma_user') || 'null');
+    if (_cu && typeof _cu.xp_total === 'number') {
+      _cachedXP = _cu.xp_total;
+    }
+  } catch(e) {}
+  var _cachedXPStr = _cachedXP.toLocaleString('pt-BR');
 
   /* ── HTML da topbar ── */
   var html = `
@@ -222,7 +234,7 @@
         <path d="M6 5v4a6 6 0 0 0 12 0V5H6z"/>
       </svg>
     </span>
-    <span class="ma-tb-pts-num" id="maPtsNum">0</span>
+    <span class="ma-tb-pts-num" id="maPtsNum">${_cachedXPStr}</span>
   </a>
 
   <!-- BOTÃO TEMA -->
@@ -256,6 +268,7 @@
   <div id="ptMenuUser" class="ma-menu-user"></div>
   <div class="ma-menu-sec">
     <a class="ma-mi" href="index.html">       <span class="ma-mi-icon">🏠</span>Início</a>
+    <a class="ma-mi" href="cursos.html">      <span class="ma-mi-icon">🎓</span>Meus Cursos</a>
     <a class="ma-mi" href="painel.html">      <span class="ma-mi-icon">📊</span>Meu Painel</a>
     <a class="ma-mi" href="ranking.html">     <span class="ma-mi-icon">🏆</span>Ranking</a>
     <a class="ma-mi" href="perfil.html">      <span class="ma-mi-icon">👤</span>Meu Perfil</a>
@@ -289,12 +302,8 @@
    ══════════════════════════════════════════════════════════════ */
 
 function ptInitTopbar() {
-  // BUG #3 FIX: não atualiza XP imediatamente via localStorage para evitar
-  // race condition onde XP stale aparece mesmo quando o usuário está deslogado.
-  // A atualização real ocorrerá via onAuthStateChanged em _setupFirebaseSync.
-  // Zera o contador enquanto Firebase ainda não confirmou o estado de auth.
-  var _elPts = document.getElementById('maPtsNum');
-  if (_elPts) { _elPts.textContent = '0'; _elPts._prev = 0; }
+  // Atualiza pontos imediatamente com dados do cache (já populado no HTML inicial)
+  ptUpdatePts();
 
   // Oculta/mostra botão Planos conforme o plano do usuário
   (function _ptUpdPlansBtn() {
@@ -365,20 +374,21 @@ function ptInitTopbar() {
 function ptUpdatePts() {
   var el = document.getElementById('maPtsNum');
   if (!el) return;
-  
+
   var total = 0;
-  
-  // Prioridade 1: MAStore (Firebase)
-  if (window.MAStore && window.MAStore.getTotalPointsSync) {
+
+  // FIX: Se nao tem ma_user em localStorage, forca XP=0 (evita cache apos logout)
+  var _lu = null;
+  try { _lu = JSON.parse(localStorage.getItem('ma_user') || 'null'); } catch(e) {}
+
+  if (!_lu) {
+    total = 0;
+  } else if (window.MAStore && window.MAStore.getTotalPointsSync) {
+    // Prioridade 1: MAStore (Firebase)
     total = MAStore.getTotalPointsSync();
-  } 
-  // Fallback: localStorage ma_user.xp_total (escrito pelo Firebase)
-  else {
-    try {
-      var localUser = JSON.parse(localStorage.getItem('ma_user') || 'null');
-      // v3 FIX: lê xp_total do ma_user — NUNCA ma_points legado
-      total = (localUser && typeof localUser.xp_total === 'number') ? localUser.xp_total : 0;
-    } catch(e) {}
+  } else {
+    // Fallback: localStorage ma_user.xp_total
+    total = (typeof _lu.xp_total === 'number') ? _lu.xp_total : 0;
   }
   
   var prev = el._prev;
@@ -467,10 +477,13 @@ function ptUpdateMenuUser() {
   }
   
   if (u && (u.email || u.nome)) {
-    sec.innerHTML  = '<span class="ma-mu-name">' + (u.nome || u.name || u.email) + '</span>'
+    var _firstName = ((u.nome || u.name || u.email || '').split(' ')[0]);
+    var _badge = u.badge || 'Iniciante';
+    sec.innerHTML  = '<span class="ma-mu-name">' + _firstName + '</span>'
+                   + '<span class="ma-mu-badge">' + _badge + '</span>'
                    + '<div class="ma-mu-pts"><b>' + total.toLocaleString('pt-BR') + '</b> XP</div>';
     auth.innerHTML = '<a class="ma-mi gold" href="planos.html">'
-                   + '<span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a>'
+                   + '<span class="ma-mi-icon">💎</span>Ver Planos</a>'
                    + '<button class="ma-mi red" onclick="ptLogout()">'
                    + '<span class="ma-mi-icon">🚪</span>Sair da conta</button>';
   } else {
@@ -479,7 +492,7 @@ function ptUpdateMenuUser() {
     auth.innerHTML = '<a class="ma-mi" href="index.html">'
                    + '<span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a>'
                    + '<a class="ma-mi gold" href="planos.html">'
-                   + '<span class="ma-mi-icon">💎</span>Planos &amp; Assinaturas</a>';
+                   + '<span class="ma-mi-icon">💎</span>Ver Planos</a>';
   }
 }
 
@@ -511,14 +524,19 @@ function ptToggleTheme() {
 
 async function ptLogout() {
   ptCloseMenu();
-  
-  if (window.MAStore && MAStore.logout) {
-    await MAStore.logout();
-  } else if (window.MA_AUTH && MA_AUTH.logout) {
-    await MA_AUTH.logout().catch(function(){});
-  }
-  
-  localStorage.removeItem('ma_user');
+
+  try {
+    if (window.MAStore && MAStore.logout) {
+      await MAStore.logout();
+    } else if (window.MA_AUTH && MA_AUTH.logout) {
+      await MA_AUTH.logout();
+    }
+  } catch(e) { console.warn('[ptLogout] erro:', e); }
+
+  // FIX: limpa TODAS as chaves de sessao (evita XP persistir apos logout)
+  var _keys = ['ma_user','ma_points','ma_streak2','ma_sessions','ma_online_status','ma_avatar','ma_course_progress','ma_activity_log'];
+  _keys.forEach(function(k){ try { localStorage.removeItem(k); } catch(e) {} });
+
   location.href = 'index.html';
 }
 

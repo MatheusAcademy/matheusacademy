@@ -2,7 +2,7 @@ var MA_COURSES = [
   {
     id: 'bm',
     coverImg: 'assets/capas/bm.png',
-    courseKey: 'bm',
+    courseKey: 'bm', 
     name: 'Caso Banco Master',
     desc: 'A maior fraude bancária do Brasil. R$52bi, CPI e delação premiada.',
     file: 'caso-banco-master.html',
@@ -3878,15 +3878,15 @@ var MA_COURSES = [
     file: 'revolucoes-mundo.html',
     cat: 'História',
     modules: 3,
-    topics: 9,
-    hours: 2,
+    topics: [{n:'Módulo 1 – Revoluções Políticas Fundamentais',lessons:[{t:'A Revolução Francesa (1789-1799): O Evento que Redefiniu o Mundo Ocidental',d:55},{t:'A Revolução Industrial: A Transformação que Moldou o Mundo Moderno',d:50},{t:'A Revolução Russa (1917): O Experimento que Dividiu o Mundo',d:50}]},{n:'Módulo 2 – Revoluções Sociais e Culturais',lessons:[{t:'A Revolução dos Direitos Civis nos EUA (1954-1968): A Luta que Mudou uma Nação',d:55},{t:'A Revolução Feminista: A Maior Revolução Social da História Moderna',d:50},{t:'A Primavera Árabe (2010-2012): A Revolução Digital nas Ruas',d:50}]},{n:'Módulo 3 – Revoluções Tecnológicas e Científicas',lessons:[{t:'A Revolução Digital: Como a Tecnologia Redefiniu a Civilização',d:55},{t:'A Revolução Verde: A Transformação que Alimentou o Mundo',d:50},{t:'A Revolução da Inteligência Artificial: O Futuro que Já Começou',d:55}]}],
+    hours: 7.8,
     quizzes: 9,
-    salt: 'RM_HENRY_2026_MASTER',
-    ak: 'rm_auth',
-    storagePrefix: 'rm_',
-    icon: '📜',
-    color: '#b91c1c',
-    addedTs: 1776359008036,
+    salt: 'rmw_salt_2025',
+    ak: 'rmw_ak_2025',
+    storagePrefix: 'rmw',
+    icon: '⚡',
+    color: '#e74c3c',
+    addedTs: 1744761600000,
     active: true
   },
   {
@@ -3895,7 +3895,7 @@ var MA_COURSES = [
     name: 'China x EUA: Rivalidade Geopolitica no Seculo XXI',
     desc: 'Ebook completo sobre a rivalidade entre as duas maiores potencias mundiais.',
     file: 'ebook-china-eua.html',
-    cat: 'Geopolitica',
+    cat: 'Ebooks',
     modules: 7, topics: 30, hours: 2, quizzes: 0,
     salt: 'CXE_EBOOK_2026', ak: 'cxe_auth', storagePrefix: 'cxe_',
     icon: '🌍', color: '#FF4444',
@@ -3908,7 +3908,7 @@ var MA_COURSES = [
     name: 'Israel x Ira: Conflito e Geopolitica',
     desc: 'Analise completa do conflito entre Israel e Ira. Historia, atores e cenarios futuros.',
     file: 'ebook-israel-ira.html',
-    cat: 'Geopolitica',
+    cat: 'Ebooks',
     modules: 8, topics: 30, hours: 2, quizzes: 0,
     salt: 'IXI_EBOOK_2026', ak: 'ixi_auth', storagePrefix: 'ixi_',
     icon: '⚔️', color: '#FF6B35',
@@ -3921,7 +3921,7 @@ var MA_COURSES = [
     name: 'Devocional 2026: Reflexoes Diarias Para Fortalecer Sua Fe',
     desc: 'Ebook devocional com 12 reflexoes biblicas profundas. Perspectiva protestante.',
     file: 'ebook-devocional-2026.html',
-    cat: 'Biblia / Teologia',
+    cat: 'Ebooks',
     modules: 12, topics: 30, hours: 2, quizzes: 0,
     salt: 'DV26_EBOOK_2026', ak: 'dv26_auth', storagePrefix: 'dv26_',
     icon: '✝️', color: '#7B2FBE',
@@ -3934,7 +3934,7 @@ var MA_COURSES = [
     name: 'Estamos Proximos do Fim? Compreendendo os Tempos Profeticos',
     desc: 'Analise das maiores ameacas existenciais: clima, pandemias, IA, nuclear e economia.',
     file: 'ebook-estamos-proximos-fim.html',
-    cat: 'Geopolitica',
+    cat: 'Ebooks',
     modules: 8, topics: 30, hours: 2, quizzes: 0,
     salt: 'EPF_EBOOK_2026', ak: 'epf_auth', storagePrefix: 'epf_',
     icon: '🔥', color: '#FF4444',
@@ -3947,7 +3947,7 @@ var MA_COURSES = [
     name: 'Manual do Investidor Iniciante',
     desc: 'Guia completo para iniciantes: renda fixa, variavel, fundos, criptomoedas e estrategias.',
     file: 'ebook-investidor-iniciante.html',
-    cat: 'Financas & Economia',
+    cat: 'Ebooks',
     modules: 9, topics: 37, hours: 3, quizzes: 0,
     salt: 'MII_EBOOK_2026', ak: 'mii_auth', storagePrefix: 'mii_',
     icon: '💰', color: '#00FF88',
@@ -4039,7 +4039,7 @@ var MA_CATS = [
   /* ═══ 22. MEIO AMBIENTE & SUSTENTABILIDADE ═══ */
   {name:'Meio Ambiente & Sustentabilidade', sub:'O planeta precisa de você — entenda os desafios e as soluções', courses:[], soon:['Mudanças Climáticas Descomplicadas','Energias Renováveis','Sustentabilidade nos Negócios','Amazônia: O Pulmão do Mundo','Água: O Recurso Mais Valioso']},
   /* ═══ 23. EBOOKS (sempre por último) ═══ */
-  {name:'Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:['China x EUA','Israel x Irã','Devocional 2026','Estamos Próximos do Fim?','Manual do Investidor Iniciante'], isEbook:true}
+  {name:'Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:[], isEbook:true}
 ];
 
 var MA_TRAILS = [

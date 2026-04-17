@@ -13,10 +13,11 @@
 .ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}.ma-menu-overlay.open{display:block}
 .ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:232px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
 .ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
-.ma-mu-user{padding:14px 16px 0;border-bottom:1px solid #1e1e35}.ma-mu-name{font-size:.85rem;font-weight:800;color:#fff;display:block;margin-bottom:5px}
-.ma-menu-sec{padding:5px 0}.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
-.ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
-.ma-mi:hover{background:#161628;color:#e8e8f0}.ma-mi-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.ma-mu-user{padding:10px 14px 0;border-bottom:1px solid #1e1e35}.ma-mu-name{font-size:.78rem;font-weight:700;color:#fff;display:block;margin-bottom:2px}
+.ma-mu-badge{display:inline-block;font-size:.55rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:1px 7px;margin-top:2px}
+.ma-menu-sec{padding:3px 0}.ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
+.ma-mi{display:flex;align-items:center;gap:8px;padding:7px 14px;font-size:.72rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
+.ma-mi:hover{background:#161628;color:#e8e8f0}.ma-mi-icon{font-size:.85rem;width:20px;text-align:center;flex-shrink:0}
 .ma-mi.green{color:#22c55e}.ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
 .ma-fpts{position:fixed;bottom:18px;right:16px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:50px;padding:7px 14px;display:none;align-items:center;gap:7px;z-index:9990;box-shadow:0 4px 18px rgba(91,127,255,.45);cursor:pointer;text-decoration:none;border:1px solid rgba(255,255,255,.1)}
 .ma-fpts-icon{font-size:.9rem}.ma-fpts-num{font-size:.85rem;font-weight:900;color:#fff}.ma-fpts-lv{font-size:.46rem;color:rgba(255,255,255,.65);display:block;text-transform:uppercase}
@@ -73,12 +74,12 @@ h1 span{color:#f59e0b}
 .ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
 .ma-menu-overlay{position:fixed;inset:0;z-index:10000;display:none}
 .ma-menu-overlay.open{display:block}
-.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:240px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd{position:fixed;top:62px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:14px;min-width:220px;max-height:65vh;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow-y:auto;opacity:0;transform:scale(.88) translateY(-12px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
 .ma-menu-dd.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
 .ma-menu-user{padding:14px 16px 12px;border-bottom:1px solid #1e1e35}
 .ma-mu-name{font-size:.85rem;font-weight:700;color:#fff;display:block;margin-bottom:3px}
 .ma-mu-pts{font-size:.6rem;color:rgba(255,255,255,.35)}
-.ma-menu-sec{padding:5px 0}
+.ma-menu-sec{padding:3px 0}
 .ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
 .ma-mi{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:.78rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:var(--font);width:100%;text-align:left;transition:background .15s}
 .ma-mi:hover{background:#161628;color:#e8e8f0}
@@ -149,7 +150,7 @@ body{padding-top:56px!important;padding-bottom:58px!important}
     <a class="ma-mi" href="mural.html"><span class="ma-mi-icon">📌</span>Mural</a>
   </div>
   <div class="ma-menu-sec">
-    <a class="ma-mi gold" href="https://pay.kiwify.com.br/uzERliL" target="_blank"><span class="ma-mi-icon">💎</span>Ver Planos</a>
+    <a class="ma-mi gold" href="planos.html"><span class="ma-mi-icon">💎</span>Ver Planos</a>
   </div>
   <div class="ma-menu-sec" id="menuAuthSec"></div>
 </div>
@@ -394,11 +395,12 @@ function updateMenuUser(){
   var pts=0;if(window.MAStore&&MAStore.getTotalPointsSync){pts=MAStore.getTotalPointsSync()||0;}else{try{var _u=JSON.parse(localStorage.getItem('ma_user')||'null');if(_u&&typeof _u.xp_total==='number')pts=_u.xp_total;}catch(e){}}
   var us=document.getElementById('menuUserSec'),as=document.getElementById('menuAuthSec');
   if(u){
-    if(us)us.innerHTML='<span class="ma-mu-name">'+((u.name||u.email||'').split(' ')[0])+'</span><div class="ma-mu-pts">'+pts.toLocaleString('pt-BR')+' pontos</div>';
-    if(as)as.innerHTML='<button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair</button>';
+    var firstName=(u.name||u.email||'').split(' ')[0];
+    if(us)us.innerHTML='<span class="ma-mu-name">'+firstName+'</span><span class="ma-mu-badge">Iniciante</span><div class="ma-mu-pts"><b>'+pts.toLocaleString('pt-BR')+'</b> XP</div>';
+    if(as)as.innerHTML='<a class="ma-mi gold" href="planos.html"><span class="ma-mi-icon">💎</span>Ver Planos</a><button class="ma-mi red" onclick="doLogout()"><span class="ma-mi-icon">🚪</span>Sair da conta</button>';
   }else{
     if(us)us.innerHTML='<span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span>';
-    if(as)as.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar</a>';
+    if(as)as.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-icon">🔑</span>Entrar / Cadastrar</a><a class="ma-mi gold" href="planos.html"><span class="ma-mi-icon">💎</span>Ver Planos</a>';
   }
 }
 function doLogout(){if(typeof MAStore!=='undefined'){MAStore.logout();return;}if(window.MA_AUTH){MA_AUTH.logout().catch(function(){});}localStorage.removeItem('ma_user');closeMenu();location.href='index.html';}

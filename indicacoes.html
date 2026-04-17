@@ -138,17 +138,18 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .ma-tb-menu-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
 .ma-menu-ov{position:fixed;inset:0;z-index:10000;display:none;background:rgba(0,0,0,.4)}
 .ma-menu-ov.on{display:block}
-.ma-menu-dd{position:fixed;top:60px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:16px;min-width:230px;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow:hidden;opacity:0;transform:scale(.88) translateY(-10px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
+.ma-menu-dd{position:fixed;top:60px;right:10px;background:#0f0f1e;border:1px solid #252540;border-radius:14px;min-width:220px;max-height:65vh;z-index:10001;box-shadow:0 16px 56px rgba(0,0,0,.75);overflow-y:auto;opacity:0;transform:scale(.88) translateY(-10px);pointer-events:none;transition:all .22s cubic-bezier(.2,0,.3,1);transform-origin:top right}
 .ma-menu-dd.on{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
-.ma-menu-user{padding:12px 14px;border-bottom:1px solid #1e1e35}
-.ma-mu-name{font-size:.82rem;font-weight:800;color:#fff;display:block;margin-bottom:3px}
-.ma-mu-pts{font-size:.6rem;color:#8888a8}
+.ma-menu-user{padding:10px 14px 0;border-bottom:1px solid #1e1e35}
+.ma-mu-name{font-size:.78rem;font-weight:700;color:#fff;display:block;margin-bottom:2px}
+.ma-mu-badge{display:inline-block;font-size:.55rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:1px 7px;margin-top:2px}
+.ma-mu-pts{font-size:.6rem;color:rgba(255,255,255,.35);margin-top:4px;margin-bottom:8px}
 .ma-mu-pts b{color:#5b7fff}
-.ma-menu-sec{padding:4px 0}
+.ma-menu-sec{padding:3px 0}
 .ma-menu-sec+.ma-menu-sec{border-top:1px solid #1e1e35}
-.ma-mi{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:.76rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:"Outfit",sans-serif;width:100%;text-align:left;transition:background .15s}
+.ma-mi{display:flex;align-items:center;gap:8px;padding:7px 14px;font-size:.72rem;font-weight:600;color:#8888a8;text-decoration:none;cursor:pointer;border:none;background:transparent;font-family:"Outfit",sans-serif;width:100%;text-align:left;transition:background .15s}
 .ma-mi:hover{background:#161628;color:#e8e8f0}
-.ma-mi-i{font-size:.95rem;width:20px;text-align:center;flex-shrink:0}
+.ma-mi-i{font-size:.85rem;width:20px;text-align:center;flex-shrink:0}
 .ma-mi.gold{color:#f59e0b}.ma-mi.red{color:#ef4444}
 body{padding-top:54px!important;padding-bottom:58px!important}
 @media(max-width:400px){.ma-tb-page-name{max-width:80px}.ma-tb-pts-num{min-width:20px;font-size:.75rem}}
@@ -198,7 +199,7 @@ body{padding-bottom:58px!important}
     <a class="ma-mi" href="mural.html"><span class="ma-mi-i">📌</span>Mural</a>
   </div>
   <div class="ma-menu-sec">
-    <a class="ma-mi gold" href="index.html" onclick="localStorage.setItem('ma_open_modal','plans');return true"><span class="ma-mi-i">💎</span>Ver Planos</a>
+    <a class="ma-mi gold" href="planos.html"><span class="ma-mi-i">💎</span>Ver Planos</a>
   </div>
   <div class="ma-menu-sec" id="maMenuAuth">
     <a class="ma-mi" href="index.html"><span class="ma-mi-i">🔑</span>Entrar / Cadastrar</a>
@@ -234,8 +235,12 @@ body{padding-bottom:58px!important}
       var sec=document.getElementById('maMenuUser'),auth=document.getElementById('maMenuAuth');
       var pts=JSON.parse(localStorage.getItem('ma_points')||'{}');
       if(u&&u.email){
-        if(sec)sec.innerHTML='<span class="ma-mu-name">'+(u.name||u.email)+'</span><div class="ma-mu-pts"><b>'+(pts.total||0).toLocaleString('pt-BR')+'</b> XP</div>';
-        if(auth)auth.innerHTML='<button class="ma-mi red" onclick="maTbLogout()"><span class="ma-mi-i">🚪</span>Sair da conta</button>';
+        var firstName=(u.name||u.email).split(' ')[0];
+        if(sec)sec.innerHTML='<span class="ma-mu-name">'+firstName+'</span><span class="ma-mu-badge">Iniciante</span><div class="ma-mu-pts"><b>'+(pts.total||0).toLocaleString('pt-BR')+'</b> XP</div>';
+        if(auth)auth.innerHTML='<a class="ma-mi gold" href="planos.html"><span class="ma-mi-i">💎</span>Ver Planos</a><button class="ma-mi red" onclick="maTbLogout()"><span class="ma-mi-i">🚪</span>Sair da conta</button>';
+      }else{
+        if(sec)sec.innerHTML='<span class="ma-mu-name" style="color:rgba(255,255,255,.35)">Visitante</span>';
+        if(auth)auth.innerHTML='<a class="ma-mi" href="index.html"><span class="ma-mi-i">🔑</span>Entrar / Cadastrar</a><a class="ma-mi gold" href="planos.html"><span class="ma-mi-i">💎</span>Ver Planos</a>';
       }
     }catch(e){}
   }

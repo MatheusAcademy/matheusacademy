@@ -655,7 +655,7 @@ body.light .highlight-toolbar::after{border-top-color:rgba(99,102,241,.2);}
 .sb-search{padding:8px 12px;margin:10px 12px 0;background:var(--bg3);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:var(--font);font-size:.74rem;outline:none;width:calc(100% - 24px);transition:border-color .2s}
 .sb-search:focus{border-color:var(--pri)}
 .sb-search::placeholder{color:var(--txt3)}
-.sb-list{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 0 20px;-webkit-overflow-scrolling:touch}
+.sb-list{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 0 20px;-webkit-overflow-scrolling:touch;max-height:80vh}
 .sb-list::-webkit-scrollbar{width:4px}
 .sb-list::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
 .sb-module{margin-bottom:2px}
@@ -3066,14 +3066,21 @@ img, video, iframe { max-width: 100%; height: auto; }
   /* ── Barra de controles — sticky abaixo das tabs ── */
   .ml-controls-bar {
     top: calc(var(--topbar-h) + 40px);
-    padding: 6px 12px;
+    padding: 8px 12px;
     flex-wrap: wrap;
-    gap: 8px;
-    overflow-x: auto;
+    gap: 10px 8px;
+    justify-content: space-between;
+    overflow: visible;
   }
+  .mlc-left  { flex: 1 1 auto; min-width: 0; gap: 6px; }
+  .mlc-right { flex: 0 0 auto; gap: 4px; }
   .ml-audio-ctrl  { top: calc(var(--topbar-h) + 40px); }
-  .mlc-play-btn   { width: 32px; height: 32px; }
-  .mlc-sep        { margin: 0 8px; }
+  .mlc-play-btn   { width: 32px; height: 32px; flex-shrink: 0; }
+  .mlc-sep        { margin: 0 6px; }
+  .mlc-speed      { padding: 4px 6px; font-size: .7rem; }
+  .mlc-font-btn   { width: 26px; height: 26px; font-size: .7rem; }
+  .mlc-font-val   { min-width: 26px; padding: 2px 4px; font-size: .6rem; }
+  .mlc-font-label { display: none; }
 
   /* ── Capa do curso ── */
   .cover-course-title { font-size: 1.4rem; }
