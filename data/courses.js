@@ -3953,17 +3953,6 @@ var MA_COURSES = [
     icon: '💰', color: '#00FF88',
     free: true, active: true, addedTs: 1713225600000,
     type: 'ebook', pdfFile: 'ebooks/Manual_Investidor_Iniciante_Matheus_Academy.pdf'
-    }
-    topics: 9,
-    hours: 2,
-    quizzes: 9,
-    salt: 'RM_HENRY_2026_MASTER',
-    ak: 'rm_auth',
-    storagePrefix: 'rm_',
-    icon: '📜',
-    color: '#b91c1c',
-    addedTs: 1776359008036,
-    active: true
   },
   {
     coverImg: 'assets/capas/mnw.jpg',
