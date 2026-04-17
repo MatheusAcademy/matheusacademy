@@ -379,7 +379,7 @@ var MA_COURSES = [
   },
   {
     id: 'dd',
-    coverImg: 'assets/capas/dd.png',
+    coverImg: 'assets/capas/dd.jpg',
     courseKey: 'dd',
     name: 'Dopamina Detox: Controle de Estímulos Digitais',
     desc: 'Ciência da dopamina, vício digital e protocolo Huberman de 30 dias para resetar seu cérebro.',
