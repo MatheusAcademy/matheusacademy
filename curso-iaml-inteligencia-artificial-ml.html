@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inteligência Artificial e Machine Learning para Todos — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6B35'/%3E%3Cstop offset='100%25' stop-color='%23F7C948'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23g)'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55' font-weight='bold' fill='white' font-family='Arial,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = { id:'iaml', title:'Inteligência Artificial e Machine Learning para Todos', subtitle:'De conceitos básicos a aplicações práticas com ChatGPT, Gemini e além', free: false, freeModules: 1 };
+var MODS = [
+{
+  id: 0,
+  title: 'O que é IA de Verdade',
+  free: true,
+  topics: [
+    {
+      id: 'aim1',
+      title: 'Entendendo Inteligência Artificial',
+      html: `<h4>Além do Hype</h4>
+<p>Quando você ouve "inteligência artificial", você provavelmente pensa em ChatGPT ou Terminator. A realidade é mais nuançada e igualmente interessante.</p>
+<p><strong>Inteligência Artificial (IA)</strong> é campo de estudo que tenta criar máquinas que comportam inteligentemente. "Inteligentemente" pode significar muitas coisas: resolver problemas, aprender de experiência, reconhecer padrões, tomar decisões.</p>
+<p>Um problema fundamental: <strong>ninguém sabe realmente o que é inteligência</strong>. Como você define? Humanos são inteligentes porque resolvem problemas abstratos? Porque compreendem humor? Porque sentem empatia?</p>
+<blockquote class="example">
+Um sistema de IA pode ser "inteligente" em xadrez mas completamente estúpido em conversa. Deep Blue (computador) venceu Garry Kasparov em xadrez mas não conseguiria contar uma piada.
+
+Isto nos ensina que "inteligência" é relativa à tarefa específica.
+</blockquote>
+<p>Há dois tipos de IA que frequentemente se discute:</p>
+<p><strong>IA Fraca (Narrow AI):</strong> IA que é bom em uma tarefa específica. ChatGPT é IA fraca em geração de texto. Classificador de email é IA fraca em detectar spam. Todos os sistemas IA que existem hoje são fracos.</p>
+<p><strong>IA Forte (General AI):</strong> IA que é bom em qualquer tarefa, como humano. Teoria, não realidade ainda. Ninguém sabe como construir isto.</p>
+<blockquote class="tip">
+Quando alguém diz "IA vai tomar o mundo", eles falam de IA Forte. Quando você usa ChatGPT, você usa IA Fraca. Diferença é imensa.
+</blockquote>
+<p>Uma taxonomia útil de IA:</p>
+<p><strong>Simbólica (1950s-1980s):</strong> IA baseada em regras explícitas. "Se X, então Y". Sistemas especialistas.</p>
+<blockquote name="example">
+Sistema de diagnóstico médico: "Se paciente tem febre E tosse E falta de ar, ENTÃO suspeitar pneumonia."
+
+Isto é IA simbólica. Regras escritas por humanos.
+</blockquote>
+<p><strong>Machine Learning (1990s-present):</strong> IA que aprende de dados. Você não escreve regras; você fornece dados de exemplo, e algoritmo descobre padrões.</p>
+<p><strong>Deep Learning (2010s-present):</strong> ML com redes neurais com muitas camadas. Especialmente bom em dados complexos (imagens, texto, áudio).</p>
+<p><strong>Grandes Modelos de Linguagem (Large Language Models, 2020s-present):</strong> GPT, Gemini, Claude. Treinados em trilhões de tokens de texto, conseguem conversar, escrever, codificar.</p>
+<blockquote class="news">
+Em 2024, o debate dominante é: LLMs são "apenas fancy autocomplete"? Ou emergem capacidades genuínas de raciocínio? A verdade é provavelmente no meio. Eles são muito poderosos mas ainda têm limitações fundamentais.
+</blockquote>
+<p>Você aprenderá que IA não é monolítica. Diferentes técnicas servem diferentes problemas. Não há uma "verdadeira IA"; há muitas.</p>`
+    },
+    {
+      id: 'aim2',
+      title: 'Máquinas Pensantes vs Simulação de Inteligência',
+      html: `<h4>O Teste de Turing e Além</h4>
+<p>Alan Turing, em 1950, propôs pergunta: "Podem máquinas pensar?" Ele respondeu com Teste de Turing: se conversa com algo e não consegue dizer se é humano ou máquina, então é inteligente.</p>
+<p>Problema com Teste de Turing: não mede verdadera compreensão. Mede apenas engano convincente.</p>
+<blockquote class="example">
+ELIZA (1960s), programa simples de chatbot, passava Teste de Turing em conversa ingênua. Pessoas esqueciam que conversavam com máquina e abriamse emocionalmente. Mas ELIZA não entendia nada. Apenas fazia pattern matching ("você mencionou mãe. diga mais sobre sua mãe").
+
+Isto ilustra diferença entre aparência de inteligência e genuíno entendimento.
+</blockquote>
+<p>Problema do Quarto Chinês (Searle, 1980): Imagine um homem em quarto que não conhece chinês. Ele tem libro de regras em inglês para responder perguntas em chinês. Pessoa fora envia pergunta em chinês. Homem segue regras, produz resposta em chinês. Pessoa fora pensa que alguém dentro entende chinês. Mas homem não entende nada; apenas segue regras.</p>
+<blockquote class="tip">
+Este é argumento Searle que máquinas nunca podem entender realmente; apenas simulam. ChatGPT, em seu núcleo, é sofisticado "Quarto Chinês": não entende, apenas segue padrões estatísticos.
+
+Alguns discordam. Talvez entendimento é apenas padrões sofisticados.
+</blockquote>
+<p>A questão filosófica é: se uma máquina se comporta como entende, ela entende? Ou é apenas ilusão?</p>
+<p>Pragmaticamente, não importa. Se ChatGPT consegue escrever código funcional, não importa se "entende" programação. Funciona.</p>
+<blockquote class="example">
+Você pode discutir se ChatGPT "realmente entende" língua. Mas ao mesmo tempo, ele está escrevendo código, traduzindo idiomas, explicando conceitos complexos. Para maioria das pessoas, "entendimento prático" é suficiente.
+</blockquote>
+<p><strong>O que LLMs realmente fazem:</strong></p>
+<p>Um LLM é um preditor de tokens. Dado os tokens anteriores, prediz qual token vem próximo com base em padrões de treinamento.</p>
+<blockquote name="example">
+Você escreve: "O capital do Brasil é"
+
+O LLM viu bilhões de textos. Praticamente todos depois de "capital do Brasil é" segue "Brasília". Então é extremamente provável (99%+) que próximo token é "Brasília".
+
+Você escreve: "O maior dinossauro foi"
+
+Viu muitos textos com "Brachiosaurus", "Argentinosaurus", "Tyrannosaurus". Dependendo de contexto, pode ser qualquer um. LLM adivinha.
+
+Isto é todo o negócio. Padrões de token extremamente sofisticados.
+</blockquote>
+<p>Implicações:</p>
+<p>• LLMs são bons em tarefas onde treinamento cobriu bem</p>
+<p>• LLMs alucinam (inventam coisas) quando fora de distribuição</p>
+<p>• LLMs não raciocina genuinamente; apenas segue padrões</p>
+<p>• LLMs podem reproduzir viés dos dados de treinamento</p>
+<blockquote class="news">
+Em 2024, pesquisa mostra que LLMs conseguem resolver alguns tipos de problemas lógicos que pareciam além de seus poderes. Talvez emergem capacidades genuínas. Debate ainda está aberto.
+</blockquote>
+<p>Você aprenderá que entender limitações de IA é tão importante quanto entender capacidades.</p>`
+    },
+    {
+      id: 'aim3',
+      title: 'Aplicações práticas de IA hoje',
+      html: `<h4>IA Que Você Já Usa</h4>
+<p>IA não é futurista. Você interage diariamente com sistemas IA sem perceber.</p>
+<p><strong>Reconhecimento de Face:</strong> Seu telefone desbloqueia com seu rosto. Redes neurais de deep learning aprendem padrão único de seu rosto. Face ID (Apple), Face Unlock (Android) usam isto. Precisão > 99%.</p>
+<blockquote name="example">
+Quando você tira foto, telefone usa face recognition em tempo real para:
+- Detectar rosto na imagem
+- Alinhar rosto (rotação, perspectiva)
+- Extrair características (distância olhos, formato nariz)
+- Comparar com padrão armazenado
+- Decidir se é você
+
+Tudo em <1 segundo. Sem você fazer nada.
+</blockquote>
+<p><strong>Recomendações:</strong> Netflix sabe qual filme você quer ver. Spotify sabe qual música você quer ouvir. Amazon sabe qual produto você quer comprar. Tudo via collaborative filtering (se você assistiu filmes que outros também assistem, recomenda filmes que aqueles assistem).</p>
+<p><strong>Processamento de Linguagem Natural:</strong> Seu assistente virtual (Alexa, Siri, Google) entende o que você fala. Converte áudio em texto (speech recognition) então entende intenção (NLP).</p>
+<blockquote name="example">
+Você diz: "Reproduza música dos anos 80"
+
+Sistema ouve áudio, converte para texto ("play music from the 80s"), entende intenção (reproduce_music, decade=80s), executa ação.
+
+Simples? Não. Áudio pode ter ruído, sotaque, gíria. NLP de fato é incrivelmente complexo.
+</blockquote>
+<p><strong>Detecção de Fraude:</strong> Seu banco usa IA para detectar transações fraudulentas. Padrões normal: você sempre compra em certos lugares, certos horários. Violação de padrão = alerta.</p>
+<p><strong>Diagnóstico Médico:</strong> Radiologistas usam IA para detectar câncer em imagens de raio-x. Algumas IAs chegam perto ou excedem radiologista humano em acurácia.</p>
+<blockquote name="example">
+Um modelo de deep learning treinado em 100.000 imagens de raio-x consegue detectar pneumonia com 94% acurácia. Um radiologista típico tem 85%. IA é mais consistente, não fica cansado.
+</blockquote>
+<p><strong>Tradução Automática:</strong> Google Translate usa neural machine translation. 5 anos atrás era terrível. Hoje é usável para textos casuais.</p>
+<p><strong>LLMs para Produtividade:</strong> ChatGPT, Gemini, Claude ajudam escrever, codificar, brainstorming. Não substituem humano mas augmentam.</p>
+<blockquote class="news">
+Em 2024, IA acessível a todos. Você pode usar ChatGPT gratuitamente, Copilot no Microsoft 365, IA nativa em aplicativos populares. Barreira de entrada praticamente zero.
+</blockquote>
+<p><strong>Limitações Atuais:</strong></p>
+<p>• <strong>Falta de sentido comum:</strong> IA pode ser brilhante em tarefa específica mas idiota em situação inesperada</p>
+<p>• <strong>Alucinações:</strong> LLMs inventam respostas que parecem plausíveis mas são falsas</p>
+<p>• <strong>Viés:</strong> Se dados de treinamento é enviesado, IA é enviesado</p>
+<p>• <strong>Explicabilidade:</strong> Nem sempre está claro por que IA fez decisão</p>
+<p>Você aprenderá que IA prático é muitas vezes 80% de solução que é bom suficiente.</p>`
+    },
+    {
+      id: 'aim4',
+      title: 'Por que IA está explodindo agora',
+      html: `<h4>Convergência de Três Fatores</h4>
+<p>IA não é nova. Pesquisa existe há 70 anos. Mas por que explodiu apenas recentemente?</p>
+<p><strong>Fator 1: Dados</strong></p>
+<p>Treinamento de IA requer dados massivos. 10 anos atrás, você não tinha. Hoje tem:</p>
+<p>• Internet inteira é dados de treinamento</p>
+<p>• Bilhões de imagens no Flickr, Instagram</p>
+<p>• Bilhões de vídeos no YouTube</p>
+<p>• Trilhões de palavras em websites, livros digitalizados</p>
+<blockquote name="example">
+GPT-3 foi treinado em ~45 TB de dados de texto. Isto é aproximadamente toda literatura em inglês que existe online, mais código GitHub, mais páginas web.
+
+Em 1990, ter 45 TB de dados era impossível. Caro demais, lento demais conectar, armazenar.
+</blockquote>
+<p><strong>Fator 2: Computação</strong></p>
+<p>Treinar redes neurais profundas requer poder computacional massivo. 10 anos atrás, era limitado a universidades com supercomputadores. Hoje tem GPUs (Graphics Processing Units) que são incrivelmente rápidas para computação paralela.</p>
+<blockquote name="example">
+Uma NVIDIA A100 GPU consegue fazer 312 TFLOPS (teraflops = trilhões de cálculos ponto-flutuante por segundo). Isto é velocidade de supercomputador de 5 anos atrás, pelo preço de $12.000.
+
+Você pode alugar em nuvem por $2-4/hora. Democratizado.
+</blockquote>
+<p>Avanços em arquitetura de rede neurais também ajudaram. Transformers (arquitetura de GPT) permitiu treinamento mais rápido e escalável que RNNs antigas.</p>
+<p><strong>Fator 3: Algoritmos</strong></p>
+<p>Pesquisa em machine learning descobriu técnicas melhores. Backpropagation (1980s) era bom mas ineficiente. Agora tem:</p>
+<p>• Dropout (reduz overfitting)</p>
+<p>• Batch normalization (estabiliza treinamento)</p>
+<p>• Residual networks (redes muito profundas possíveis)</p>
+<p>• Transformer architecture (eficiente, parallelizável)</p>
+<blockquote class="tip">
+Transformer é inovação que mudou tudo. Inventado em 2017 (Vaswani et al.), permitiu que modelos fossem treinados em paralelo (rápido) e em escala gigantesca. GPT-3 em 2020 mostrou potencial, ChatGPT em 2022 abriu para público.
+</blockquote>
+<p>Estes três fatores convergiram:</p>
+<p>• Dados em escala inédita ✓</p>
+<p>• Computação em escala inédita ✓</p>
+<p>• Algoritmos bom suficiente ✓</p>
+<p>Resultado: IA que funciona de verdade, em escala massiva.</p>
+<blockquote class="example">
+Analogia: aviação em 1900. Tecnologia (metais leves, motor) existia. Mas faltava alguém para colocar junto certo. Irmãos Wright fizeram. Aviação decolou.
+
+IA é similar. Componentes existiam. Mas só recentemente convergiram certo e "decolou".
+</blockquote>
+<blockquote class="news">
+Em 2024, discussão é quanto tempo até AGI (Artificial General Intelligence, IA que é bom em qualquer tarefa). Estimativas variam de 5 a 50+ anos. O debate é aquecido.
+</blockquote>
+<p>Você aprenderá que "explosão" de IA não é mágica; é resultado de progresso acumulativo.</p>`
+    }
+  ],
+  flashcards: [
+    {q: 'O que é IA Fraca vs IA Forte?', a: 'Fraca: bom em tarefa específica (hoje). Forte: bom em qualquer tarefa como humano (teórico).'},
+    {q: 'O que é Teste de Turing?', a: 'Se você não consegue distinguir máquina de humano em conversa, máquina é inteligente.'},
+    {q: 'Qual é crítica de Searle ao Quarto Chinês?', a: 'Máquina segue regras mas não entende realmente.'},
+    {q: 'O que um LLM realmente faz?', a: 'Prediz próximo token baseado em padrões estatísticos dos dados de treinamento.'},
+    {q: 'Qual é diferença entre Symbolic AI e Machine Learning?', a: 'Simbólica: regras explícitas. ML: aprende de dados.'},
+    {q: 'Qual é a arquitetura de IA que revolucionou tudo em 2017?', a: 'Transformer, que permitiu treinamento paralelo em escala massiva.'},
+    {q: 'O que é collaborative filtering em recomendações?', a: 'Se você gostou filmes que outros também gostam, recomenda filmes que aqueles gostam.'},
+    {q: 'Por que IA explodiu apenas recentemente?', a: 'Convergência de: dados massivos + computação barata + bons algoritmos.'},
+    {q: 'O que é Deep Learning?', a: 'Machine Learning com redes neurais profundas (muitas camadas).'},
+    {q: 'Como LLMs podem alucinar?', a: 'Quando fora de distribuição do treinamento, inventam respostas plausíveis mas falsas.'},
+    {q: 'O que é alucinação em IA?', a: 'Quando IA gera conteúdo falso mas convincente que parece verdadeiro.'},
+    {q: 'Qual é aplicação prática mais comum de IA em 2024?', a: 'Recomendações, reconhecimento facial, detecção fraude, LLMs para produtividade.'}
+  ],
+  quizzes: [
+    {q: 'GPT-3 é IA Fraca ou Forte?', opts: ['Fraca', 'Forte', 'Híbrida', 'Nenhuma'], correct: 0},
+    {q: 'Qual convergência permitiu explosão de IA?', opts: ['Apenas dados', 'Apenas algoritmos', 'Dados + computação + algoritmos', 'Crença em sci-fi'], correct: 2},
+    {q: 'Se máquina simula inteligência convincentemente, ela é inteligente?', opts: ['Sempre', 'Nunca', 'Depende da definição de inteligência', 'Pergunta sem sentido'], correct: 2}
+  ],
+  summary: {
+    title: 'Resumo: O que é IA de Verdade',
+    points: [
+      'IA Fraca é bom em tarefas específicas; IA Forte (ainda teórica) é bom em qualquer tarefa.',
+      'LLMs predizem tokens baseado em padrões estatísticos, não genuíno raciocínio.',
+      'IA prático está em recomendações, reconhecimento facial, diagnóstico médico, LLMs.',
+      'Explosão de IA vem de convergência: dados massivos + computação barata + bons algoritmos.'
+    ]
+  }
+},
+{
+  id: 1,
+  title: 'Machine Learning Fundamentos',
+  free: false,
+  topics: [
+    {
+      id: 'aim5',
+      title: 'Conceitos Básicos: Treino, Teste, Validação',
+      html: `<h4>Como Máquinas Aprendem de Dados</h4>
+<p>Machine Learning fundamental: você fornece dados de exemplo com respostas, algoritmo aprende padrão, depois pode predizer respostas para dados novos.</p>
+<p>Processo típico:</p>
+<p><strong>1. Coleta de Dados:</strong> Você precisa de muitos exemplos. Para detector de spam, você precisa 10.000+ emails classificados como "spam" ou "não spam".</p>
+<p><strong>2. Preparação de Dados:</strong> Limpar dados, remover outliers, normalizar.</p>
+<blockquote name="example">
+Você tem dataset de emails. Alguns têm caracteres estranhos. Alguns têm attachments que quebram parsing. Você remove dados ruins, padroniza formato, converte palavras em números que algoritmo pode processar.
+</blockquote>
+<p><strong>3. Split em Treino/Teste:</strong> Você divide dados em dois sets.</p>
+<p>• <strong>Treino (70-80%):</strong> Algoritmo aprende disto</p>
+<p>• <strong>Teste (20-30%):</strong> Você avalia em dados nunca vistos</p>
+<p>Nunca testar em dados que treinou, senão você mede memorização, não generalização.</p>
+<blockquote name="example">
+Você treina modelo de classificação de spam em 10.000 emails. Depois testa em 1.000 emails diferentes que modelo nunca viu. Se acurácia é 95% no treino mas 70% no teste, modelo está overfitted (memorização).
+</blockquote>
+<p><strong>4. Escolha de Modelo:</strong> Qual algoritmo usar? Regressão linear? Decision tree? Neural network?</p>
+<p><strong>5. Treinamento:</strong> Algoritmo processa dados de treino, ajusta pesos internos para minimizar erro.</p>
+<blockquote name="tip">
+Treino é processo iterativo. Você começa com pesos aleatórios, calcula erro, ajusta pesos um pouco, repete até convergência. Isto é feito via backpropagation (ou outra técnica de otimização).
+</blockquote>
+<p><strong>6. Avaliação:</strong> Você testa em test set. Métricas dependem do problema:</p>
+<p>• <strong>Regressão (preditar número):</strong> MAE (mean absolute error), RMSE (root mean square error)</p>
+<p>• <strong>Classificação (predizer categoria):</strong> Acurácia, Precisão, Recall, F1-score</p>
+<blockquote name="example">
+Modelo de spam:
+- Acurácia: 95% (95% das emails classificadas corretamente)
+- Precisão: 92% (92% dos emails predictos como spam realmente são)
+- Recall: 88% (88% dos spams reais foram detectados)
+
+Precision vs Recall é trade-off. Você quer ambos mas é difícil ter ambos perfeitos.
+</blockquote>
+<p><strong>7. Validação Cruzada (opcional):</strong> Para dados limitados, você pode usar k-fold: divide dados em k partes, treina k vezes usando k-1 como treino e 1 como teste, media os resultados.</p>
+<p><strong>8. Hyperparameter Tuning:</strong> Modelos têm "knobs" que você pode ajustar (learning rate, regularization, etc). Você experimenta diferentes valores para encontrar melhores.</p>
+<p><strong>Overfitting vs Underfitting:</strong></p>
+<p><strong>Overfitting:</strong> Modelo aprendeu padrões específicos do treino que não generalizam. Acurácia alta no treino, baixa no teste.</p>
+<p><strong>Underfitting:</strong> Modelo é muito simples para dados. Acurácia baixa em ambos treino e teste.</p>
+<p>Você quer modelo que está entre: generaliza bem a dados novos.</p>
+<blockquote class="news">
+Em 2024, técnicas como dropout, early stopping, e regularização são standard para combater overfitting. Mas é ainda arte: você precisa desenvolvimento intuição.
+</blockquote>
+<p>Você aprenderá que rigor em separar treino/teste é essencial para avaliar modelo honestamente.</p>`
+    },
+    {
+      id: 'aim6',
+      title: 'Algoritmos Populares: Regressão, SVM, Árvores',
+      html: `<h4>Ferramentas no Toolbox</h4>
+<p>Diferentes problemas requerem diferentes algoritmos. Você deve conhecer quando usar qual.</p>
+<p><strong>Regressão Linear:</strong> Predizer número contínuo (preço casa, temperatura amanhã).</p>
+<blockquote name="example">
+Você tem dados de casas: tamanho (m²), número quartos, localização. Você quer predizer preço.
+
+Regressão linear ajusta linha (em múltiplas dimensões) que melhor passa pelos dados. Se casa tem 100m² e 3 quartos, linha prediz preço.
+
+Simples, interpretável, mas assume relação linear (nem sempre verdade).
+</blockquote>
+<p><strong>Logistic Regression:</strong> Apesar do nome, é para classificação (predizer categoria, não número).</p>
+<blockquote name="example">
+Você tem dados de clientes: idade, renda, histórico de crédito. Você quer predizer se vão fazer compra (sim/não).
+
+Logistic regression prediz probabilidade de "sim". Se >50%, prediz "sim".
+</blockquote>
+<p><strong>Decision Trees:</strong> Árvore de regras "Se X, então Y".</p>
+<blockquote name="example">
+Árvore de decisão para aprovar empréstimo:
+<pre><code>[código removido]</code></pre>
+
+Interpretável (você vê as regras), mas pode overfit facilmente.
+</blockquote>
+<p><strong>Random Forests:</strong> Múltiplas árvores de decisão votando. Melhor que uma árvore.</p>
+<p><strong>Support Vector Machines (SVM):</strong> Encontra linha/plano que melhor separa classes. Bom para dados de alta dimensão.</p>
+<blockquote name="example">
+Você tem pontos em 2D: alguns são "spam", alguns são "não spam". SVM encontra linha que melhor separa os dois grupos. Dados no lado certo da linha são classificados como tal.
+</blockquote>
+<p><strong>K-Means Clustering:</strong> Agrupar dados em k clusters. Sem labels (unsupervised).</p>
+<blockquote name="example">
+Você tem 1 milhão de clientes. Você quer entender quantos segmentos existem. K-Means agrupa em k grupos baseado em similaridade de features. Se k=5, descobre 5 tipos de clientes.
+</blockquote>
+<p><strong>Quando usar qual?</strong></p>
+<p>• <strong>Regressão Linear:</strong> Dados com relação linear clara, interpretabilidade importante</p>
+<p>• <strong>Decision Trees:</strong> Interpretabilidade crítica (medicine, law), dados mistos</p>
+<p>• <strong>Random Forests:</strong> Bom balanço de poder e interpretabilidade, dados complexos</p>
+<p>• <strong>SVM:</strong> Dados de alta dimensão, kernel tricks</p>
+<p>• <strong>K-Means:</strong> Explorar dados, entender clusters</p>
+<p>Na prática, você treina múltiplos modelos e escolhe melhor performer no test set.</p>
+<blockquote class="tip">
+Modelo simples que generaliza bem é melhor que modelo complexo que overfits. Isso é "Occam's Razor": não multiplique complexidade sem necessidade.
+</blockquote>
+<blockquote class="news">
+Em 2024, XGBoost (extreme gradient boosting) é modelo mais popular em Kaggle competitions e indústria. Combina árvores de decisão com boosting para desempenho excelente.
+</blockquote>
+<p>Você aprenderá que mestria em ML é saber qual ferramenta para qual trabalho.</p>`
+    },
+    {
+      id: 'aim7',
+      title: 'Feature Engineering e Preparação de Dados',
+      html: `<h4>80% do Trabalho</h4>
+<p>Uma verdade incômoda: maioria do tempo em ML é gastos não em modelagem mas em preparação de dados.</p>
+<p><strong>"Garbage in, garbage out":</strong> Se dados é ruim, modelo é ruim. Dados é onde batalha é ganho ou perdida.</p>
+<p><strong>Feature Engineering:</strong> Processo de criar features (variáveis de entrada) que modelo pode aprender de.</p>
+<blockquote name="example">
+Você quer predizer se pessoa vai fazer compra. Features óbvias: idade, renda. Mas que tal engineered features:
+- "Dias desde última compra" (pessoas que compraram recentemente compram novamente)
+- "Número de visitas no último mês" (engagement)
+- "Tempo média em site" (interesse)
+- "Marca de produtos anteriores" (preferência)
+
+Estes engineered features são muito mais preditivos que features brutos.
+</blockquote>
+<p><strong>Técnicas de Feature Engineering:</strong></p>
+<p>• <strong>Scaling/Normalization:</strong> Colocar valores em range similar (0-1 ou -1 to 1) então algoritmo não é biased por magnitude</p>
+<blockquote name="example">
+Se você tem feature "edad" (0-100) e "income" (0-1 million), algoritmo pode dar peso muito maior a income simplesmente por magnitude. Você normaliza ambos para 0-1 range.
+</blockquote>
+<p>• <strong>One-Hot Encoding:</strong> Converter categoria em variáveis binárias</p>
+<blockquote name="example">
+Feature "color" pode ser "red", "blue", "green". One-hot encoding cria:
+- color_red: 0 ou 1
+- color_blue: 0 ou 1
+- color_green: 0 ou 1
+
+Algoritmo pode aprender que "red" tem efeito diferente de "blue".
+</blockquote>
+<p>• <strong>Polynomial Features:</strong> Criar features de ordem superior</p>
+<blockquote name="example">
+Se feature é "age", você pode criar "age²", "age³". Permite modelo capturar relações não-lineares.
+</blockquote>
+<p>• <strong>Interaction Features:</strong> Combinar features</p>
+<blockquote name="example">
+"age * income" = interação idade e renda. Pode ser que pessoas de certa idade mas alta renda tem comportamento único.
+</blockquote>
+<p><strong>Preparação de Dados:</strong></p>
+<p>• <strong>Missing Values:</strong> Como lidar com dados faltando? Remover? Preencher com média? Aprender a imputar?</p>
+<p>• <strong>Outliers:</strong> Valores muito extremos. Remover ou manter?</p>
+<blockquote name="example">
+Dataset de salários: você tem $30k a $200k típicos, mas 1 CEO ganha $10 million. Outlier? Mantém, remove, ou trata separado?
+</blockquote>
+<p>• <strong>Imbalanced Classes:</strong> Se 99% dados é "normal" e 1% é "fraude", modelo vai aprender "prediga sempre normal" e ter 99% acurácia. Ruim.</p>
+<p>Soluções: oversampling (mais amostras da classe rara), undersampling (menos da classe comum), weighted loss (penalidade maior para erros na classe rara).</p>
+<p>• <strong>Dimensionality Reduction:</strong> Muitos features podem levar a curse of dimensionality. Técnicas como PCA reduzem número de features preservando informação.</p>
+<blockquote class="tip">
+Feature engineering é onde domínio expertise importa. Você precisa entender negócio para saber quais features são importantes. Dados scientist puro não consegue; precisa trabalhar com especialista de domínio.
+</blockquote>
+<blockquote class="news">
+Em 2024, automatização de feature engineering (AutoML) está melhorando. Ferramentas como TPOT e AutoKeras tentam automatizar seleção de features e modelo. Mas humano ainda é melhor.
+</blockquote>
+<p>Você aprenderá que 80% da vantagem competitiva em ML vem de features criativas, não de algoritmicamente sofisticado.</p>`
+    },
+    {
+      id: 'aim8',
+      title: 'Deep Learning: Redes Neurais Profundas',
+      html: `<h4>Quando Você Precisa de Muitas Camadas</h4>
+<p>Deep Learning é ML com redes neurais de muitas camadas. Especialmente poderoso para dados complexos: imagens, áudio, texto.</p>
+<p><strong>Neurônio Artificial:</strong> Unidade básica. Recebe múltiplas inputs, aplica pesos, aplica função não-linear, produz output.</p>
+<blockquote name="example">
+Um neurônio: y = sigmoid(w1*x1 + w2*x2 + w3*x3 + b)
+
+Onde w1, w2, w3 são pesos aprendidos durante treinamento, b é bias, sigmoid é função não-linear.
+
+Múltiplos neurônios ligados formam rede.
+</blockquote>
+<p><strong>Redes Neurais Profundas:</strong> Múltiplas camadas (input → hidden → hidden → ... → output). Camadas "hidden" aprendem representações intermediárias.</p>
+<p>Por que múltiplas camadas?</p>
+<blockquote name="example">
+Tarefa: reconhecer rosto em imagem.
+- Camada 1 aprende baixo-level features: edges, texturas
+- Camada 2 aprende mid-level: olhos, nariz, boca
+- Camada 3 aprende high-level: "isto parece rosto"
+- Camada final: "este é rosto de pessoa X"
+
+Cada camada constrói em representações anteriores. É por isso deep learning é poderoso.
+</blockquote>
+<p><strong>Tipos de Redes Neurais:</strong></p>
+<p><strong>CNN (Convolutional Neural Networks):</strong> Bom para imagens. Usa convolução (janela deslizante) para extrair features espaciais locais.</p>
+<blockquote name="example">
+CNN para classificar se imagem é "gato" ou "cão". Primeira camada de convolução detecta edges. Segunda detecta shapes (orelhas, olhos). Terceira detecta parts (cabeça, corpo). Última classifica.
+</blockquote>
+<p><strong>RNN (Recurrent Neural Networks):</strong> Bom para sequências (texto, série temporal). Neurônios têm feedback, formam loops.</p>
+<blockquote name="example">
+RNN para predizer próxima palavra em frase. Entrada: palavra anterior. Entrada também: hidden state (memória) da palavra anterior. Isto permite RNN "lembrar" contexto.
+</blockquote>
+<p><strong>Transformer:</strong> Bom para texto. Usa "attention mechanism" que permite focar em partes relevantes de sequência.</p>
+<p><strong>Treinamento de Redes Profundas:</strong> Usa backpropagation para calcular gradiente de erro com respeito a cada peso. Pesos são atualizados na direção que reduz erro.</p>
+<p><strong>Vanishing Gradient Problem:</strong> Em redes muito profundas, gradiente diminui exponencialmente com profundidade. Gradient para primeiras camadas fica próximo de zero, aprende lentamente.</p>
+<p>Soluções: ReLU (ativação), residual connections (skip layers), batch normalization.</p>
+<blockquote class="tip">
+Deep Learning requer muito poder computacional e dados. Se você tem problema que poder ser resolvido com modelo simples, use simples. Deep Learning é quando simplista não funciona.
+</blockquote>
+<p><strong>Transfer Learning:</strong> Treinar modelo gigantesco do zero é caro. Ao invés, você pega modelo já treinado (exemplo: ImageNet para imagens) e "fine-tune" em seus dados específicos.</p>
+<blockquote name="example">
+Você quer classificar plantas. Você pega ResNet treinado em 1 milhão imagens de muitos objetos. Você remove última camada (que classifica 1000 objetos), adiciona sua camada final (que classifica 50 plantas). Treina apenas suas camadas finais em seus dados.
+
+Isto é 100x mais rápido que treinar do zero porque camadas iniciais (edge detection, shape detection) já aprenderam.
+</blockquote>
+<blockquote class="news">
+Em 2024, transformer-based models dominam. BERT, GPT, T5 para NLP. Vision Transformers para imagens. Arquitetura unificada, muito poderosa, escalável.
+</blockquote>
+<p>Você aprenderá que Deep Learning é poder incrível quando adequadamente aplicado.</p>`
+    }
+  ],
+  flashcards: [
+    {q: 'Qual é split padrão entre treino e teste?', a: '70-80% treino, 20-30% teste.'},
+    {q: 'O que é overfitting?', a: 'Modelo aprendeu padrões específicos do treino que não generalizam a dados novos.'},
+    {q: 'Qual algoritmo você usa para predizer número contínuo?', a: 'Regressão Linear.'},
+    {q: 'Qual algoritmo é interpretável e baseado em regras?', a: 'Decision Trees.'},
+    {q: 'O que é feature engineering?', a: 'Processo de criar features (variáveis) que modelo pode aprender de dados.'},
+    {q: 'Qual técnica converte categoria em variáveis binárias?', a: 'One-hot encoding.'},
+    {q: 'O que é CNN?', a: 'Convolutional Neural Network, bom para processamento de imagens.'},
+    {q: 'O que é RNN?', a: 'Recurrent Neural Network, bom para sequências (texto, série temporal).'},
+    {q: 'O que é Transfer Learning?', a: 'Usar modelo pré-treinado e fine-tune em seu problema específico.'},
+    {q: 'O que é backpropagation?', a: 'Algoritmo que calcula gradiente para atualizar pesos em rede neural.'},
+    {q: 'Qual é o problema de ter muitas features?', a: 'Curse of dimensionality: modelo aprende ruído ao invés de padrões.'},
+    {q: 'Por que transformer é melhor que RNN para texto?', a: 'Transformer usa attention mechanism que captura dependências globais melhor, paralleliza.'}
+  ],
+  quizzes: [
+    {q: 'Se modelo tem 95% acurácia em treino mas 60% em teste, qual é problema?', opts: ['Underfitting', 'Overfitting', 'Dados ruim', 'Algoritmo errado'], correct: 1},
+    {q: 'Qual é regra mais importante em ML?', opts: ['Use modelo mais complexo', 'Sempre use deep learning', 'Dados de treino/teste deve ser separado', 'Não importa hiperparâmetros'], correct: 2},
+    {q: 'Para predizer preço de casa, qual algoritmo é melhor?', opts: ['Decision Tree', 'Regressão Linear', 'SVM com RBF kernel', 'KNN'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo: Machine Learning Fundamentos',
+    points: [
+      'ML: forneça dados + algoritmo aprende padrões + prediz em dados novos.',
+      'Sempre separe treino/teste para avaliar honestamente generalização.',
+      'Feature engineering (80% do trabalho) é mais importante que algoritmo sofisticado.',
+      'Deep Learning poderoso para dados complexos mas requer mais dados e computação.'
+    ]
+  }
+}
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
