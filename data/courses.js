@@ -5799,6 +5799,8 @@ var MA_COURSES = [
   {
     "id": "se",
     "coverImg": "assets/capas/se.png",
+    "name": "Startups e Empreendedorismo",
+    "desc": "Aprenda a criar, validar e escalar startups de sucesso no mercado atual",
     "courseKey": "se",
     "file": "curso-se-seguranca-empresa.html",
     "cat": "Negócios / Empresas",
@@ -5885,6 +5887,8 @@ var MA_COURSES = [
   {
     "id": "tcc",
     "coverImg": "assets/capas/tcc.png",
+    "name": "Trabalho de Conclusão de Curso",
+    "desc": "Guia completo para elaborar seu TCC com metodologia e excelência",
     "courseKey": "tcc",
     "file": "curso-tcc-trabalho-conclusao.html",
     "cat": "Desenvolvimento Pessoal",
@@ -5905,6 +5909,8 @@ var MA_COURSES = [
   {
     "id": "ti",
     "coverImg": "assets/capas/ti.png",
+    "name": "Tecnologia da Informação",
+    "desc": "Fundamentos e tendências em TI, infraestrutura, redes e sistemas",
     "courseKey": "ti",
     "file": "curso-ti-tecnologia-informacao.html",
     "cat": "Tecnologia",
@@ -5969,6 +5975,8 @@ var MA_COURSES = [
   {
     "id": "ux",
     "coverImg": "assets/capas/ux.png",
+    "name": "UX Design e Experiência do Usuário",
+    "desc": "Crie interfaces intuitivas e experiências digitais memoráveis",
     "courseKey": "ux",
     "file": "curso-ux-user-experience.html",
     "cat": "Tecnologia",
