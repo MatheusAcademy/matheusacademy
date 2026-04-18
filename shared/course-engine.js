@@ -1709,6 +1709,7 @@ function _mlSetBtn(mi,state){
   else if(state==='playing'){btn.classList.add('playing');if(st)st.textContent='🎙️ Narrando com IA...';}
   else if(state==='paused'){if(st)st.textContent='⏸ Pausado';}
   else{if(st)st.textContent='Clique para ouvir';}
+  if(typeof _mlUpdateFAB==='function')_mlUpdateFAB();
 }
 
 /* ── Para tudo imediatamente ── */
@@ -1872,7 +1873,24 @@ function _mlPipePlayCurrent(){
     if(_mlPipe.idx<_mlPipe.chunks.length){
       _mlPipePlayCurrent();
     } else {
-      // Fim de todos os chunks
+      // Fim de todos os chunks deste tópico — avança para o próximo tópico do módulo
+      var mod=MODS[mi];
+      if(mod){
+        var nextTi=_mlPipe.ti+1;
+        if(nextTi<mod.topics.length){
+          // Abre visualmente o próximo tópico (expande o body)
+          var nextBody=document.getElementById('ml_tbody_'+mi+'_'+nextTi);
+          if(nextBody&&(nextBody.offsetHeight===0||nextBody.style.display==='none')){
+            mlToggleTopic(mi,nextTi);
+          }
+          // Inicia pipeline para o próximo tópico
+          _mlPipe.active=false; // limpa estado antes de reiniciar
+          _mlTopIdx=nextTi;
+          _mlStartPipeline(mod.topics[nextTi],nextTi,mi,spd);
+          return;
+        }
+      }
+      // Último tópico do módulo — para de verdade
       _mlSetBtn(mi,'idle');
       _mlPipe.active=false;
     }
@@ -2043,6 +2061,41 @@ function _mlBindTopicClicks(mi,ti){
       }
       // Se áudio não ativo: não faz nada com o áudio, evento sobe normalmente
     });
+    // Duplo clique: inicia narração a partir deste parágrafo mesmo sem áudio ativo
+    el.addEventListener('dblclick',function(e){
+      e.preventDefault();e.stopPropagation();
+      // Limpa seleção de texto causada pelo duplo clique
+      try{window.getSelection().removeAllRanges();}catch(ex){}
+      // Para qualquer narração anterior
+      _mlStopTudo(false);
+      if(_mlModMi>=0)_mlSetBtn(_mlModMi,'idle');
+      _mlModMi=mi;
+      _mlTopIdx=ti;
+      // Monta chunks a partir deste bloco em diante (deste tópico + próximos)
+      var topico=mod.topics[ti];
+      var todosBlocos=_mlExtrairBlocos(topico.content,topico.name);
+      // Pega blocos a partir do blocoIdx clicado
+      var blocosRestantes=todosBlocos.slice(blocoIdx);
+      var textoRestante=blocosRestantes.join(' ');
+      if(!textoRestante.trim()){showToast('Sem conteúdo para narrar','warn');return;}
+      // Cria chunks do texto restante
+      var chunks=[],current='';
+      blocosRestantes.forEach(function(b){
+        if(current.length+b.length>500&&current.length>50){
+          chunks.push(current.trim());current=b+' ';
+        } else {current+=b+' ';}
+      });
+      if(current.trim())chunks.push(current.trim());
+      if(!chunks.length)return;
+      var spd=_mlGetSpd(mi);
+      // Configura pipeline com os chunks parciais e marca para continuar nos próximos tópicos
+      _mlPipe={active:true,chunks:chunks,idx:0,cache:{},aborts:[],mi:mi,ti:ti,spd:spd};
+      _mlLoading=true;_mlSetBtn(mi,'loading');
+      _mlPipeFetchChunk(0);
+      if(chunks.length>1)_mlPipeFetchChunk(1);
+      // Atualiza FAB flutuante
+      _mlUpdateFAB();
+    });
     // Tooltip e cursor só aparecem quando áudio está ativo
     el.addEventListener('mouseenter',function(){
       if(_mlModMi===mi&&(_mlAudioEl||_mlLoading)){
@@ -2066,6 +2119,117 @@ function _mlBindTopicClicks(mi,ti){
     });
   });
 }
+
+/* ── FAB FLUTUANTE DE NARRAÇÃO ── */
+(function(){
+  // Injeta CSS do FAB
+  var fabStyle=document.createElement('style');
+  fabStyle.textContent=''
+    +'.ml-fab-narrar{'
+    +'  position:fixed;bottom:140px;left:16px;z-index:9999;'
+    +'  width:38px;height:38px;border-radius:50%;border:none;'
+    +'  background:rgba(40,40,50,0.45);'
+    +'  color:rgba(255,255,255,0.75);font-size:15px;cursor:pointer;'
+    +'  box-shadow:0 2px 8px rgba(0,0,0,0.15);'
+    +'  display:flex;align-items:center;justify-content:center;'
+    +'  opacity:0;pointer-events:none;'
+    +'  transition:opacity .3s,transform .2s,box-shadow .2s,background .3s;'
+    +'}'
+    +'.ml-fab-narrar.visible{opacity:0.45;pointer-events:auto;}'
+    +'.ml-fab-narrar.visible:hover{opacity:0.8;transform:scale(1.08);box-shadow:0 3px 12px rgba(0,0,0,0.25);}'
+    +'.ml-fab-narrar.playing{opacity:0.7!important;background:rgba(91,127,255,0.55);animation:ml-fab-glow 2s ease-in-out infinite;}'
+    +'.ml-fab-narrar.loading{opacity:0.65!important;background:rgba(200,160,50,0.5);}'
+    +'@keyframes ml-fab-glow{0%,100%{box-shadow:0 2px 8px rgba(91,127,255,0.2);}50%{box-shadow:0 2px 14px rgba(91,127,255,0.45);}}'
+    +'.ml-fab-narrar .ml-fab-progress{'
+    +'  position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);'
+    +'  width:36px;height:3px;border-radius:2px;background:rgba(255,255,255,0.3);overflow:hidden;'
+    +'}'
+    +'.ml-fab-narrar .ml-fab-progress-bar{'
+    +'  height:100%;width:0%;background:#fff;border-radius:2px;'
+    +'  transition:width .3s linear;'
+    +'}'
+    +'.ml-fab-narrar.playing .ml-fab-ring{'
+    +'  position:absolute;inset:-3px;border-radius:50%;'
+    +'  border:2px solid transparent;border-top-color:rgba(255,255,255,0.7);'
+    +'  animation:ml-fab-spin 1.2s linear infinite;'
+    +'}'
+    +'@keyframes ml-fab-spin{to{transform:rotate(360deg);}}';
+  document.head.appendChild(fabStyle);
+  // Cria o botão FAB
+  var fab=document.createElement('button');
+  fab.className='ml-fab-narrar';
+  fab.id='mlFabNarrar';
+  fab.title='Narrar por IA';
+  fab.innerHTML='<span class="ml-fab-icon">&#9654;&#65039;</span>'
+    +'<span class="ml-fab-ring" style="display:none"></span>'
+    +'<div class="ml-fab-progress" style="display:none"><div class="ml-fab-progress-bar"></div></div>';
+  fab.addEventListener('click',function(){
+    // Se tem módulo ativo, toggle play/pause
+    if(_mlModMi>=0){
+      mlToggleModAudio(_mlModMi);
+      _mlUpdateFAB();
+      return;
+    }
+    // Se não, tenta achar o módulo visível na tela
+    var visMi=-1;
+    if(typeof MODS!=='undefined'){
+      for(var i=0;i<MODS.length;i++){
+        var el=document.getElementById('ml_mod_'+i);
+        if(el&&el.offsetHeight>0){visMi=i;break;}
+      }
+    }
+    if(visMi>=0){
+      mlToggleModAudio(visMi);
+      _mlUpdateFAB();
+    }
+  });
+  document.body.appendChild(fab);
+})();
+
+function _mlUpdateFAB(){
+  var fab=document.getElementById('mlFabNarrar');
+  if(!fab)return;
+  var icon=fab.querySelector('.ml-fab-icon');
+  var ring=fab.querySelector('.ml-fab-ring');
+  var progWrap=fab.querySelector('.ml-fab-progress');
+  var progBar=fab.querySelector('.ml-fab-progress-bar');
+  // Mostra FAB quando existe módulo na página
+  var hasMods=typeof MODS!=='undefined'&&MODS.length>0;
+  fab.classList.toggle('visible',hasMods);
+  if(!hasMods)return;
+  // Estado
+  var isPlaying=!!_mlAudioEl&&!_mlAudioEl.paused;
+  var isPaused=!!_mlAudioEl&&_mlAudioEl.paused&&_mlAudioEl.currentTime>0;
+  var isLoading=_mlLoading;
+  fab.classList.toggle('playing',isPlaying);
+  fab.classList.toggle('loading',isLoading);
+  if(ring)ring.style.display=isPlaying?'block':'none';
+  if(icon){
+    if(isLoading)icon.innerHTML='&#9203;'; // hourglass
+    else if(isPlaying)icon.innerHTML='&#9646;&#9646;'; // pause
+    else icon.innerHTML='&#9654;&#65039;'; // play
+  }
+  // Progress bar
+  if(progWrap&&progBar){
+    if(_mlPipe.active&&_mlPipe.chunks.length>0){
+      progWrap.style.display='block';
+      var pct=Math.round((_mlPipe.idx/(_mlPipe.chunks.length))*100);
+      progBar.style.width=pct+'%';
+    } else if(isPlaying&&_mlAudioEl&&_mlAudioEl.duration){
+      progWrap.style.display='block';
+      var pct2=Math.round((_mlAudioEl.currentTime/_mlAudioEl.duration)*100);
+      progBar.style.width=pct2+'%';
+    } else {
+      progWrap.style.display='none';
+      progBar.style.width='0%';
+    }
+  }
+}
+
+// Atualiza o FAB periodicamente quando tocando
+setInterval(function(){
+  if(_mlAudioEl||_mlLoading||(_mlPipe&&_mlPipe.active))_mlUpdateFAB();
+},500);
 
 function mlChangeModSpeed(mi,val){
   var spd=parseFloat(val)||1;
