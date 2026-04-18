@@ -1,4 +1,4 @@
-var MA_COURSES = [
+hvar MA_COURSES = [
   {
     id: 'oz',
     coverImg: 'assets/capas/oz.jpg',
@@ -4622,7 +4622,28 @@ var MA_COURSES = [
     addedTs: 1776359018360,
     active: true
   }
-];
+,
+  {
+    id: 'nf',
+    coverImg: 'assets/capas/nf.png',
+    courseKey: 'nf',
+    name: 'Operação Narcofluxo — Lavagem Bilionária dos Artistas do Funk',
+    desc: 'A Operação Narcofluxo da PF revelou esquema bilionário de lavagem de dinheiro conectando o tráfico do Complexo da Maré ao funk carioca.',
+    file: 'lavagem-dinheiro-oruam-chrys-mcrian.html',
+    cat: 'Atualize-se! Notícias Mais Relevantes da Semana',
+    modules: 1,
+    topics: 3,
+    hours: 2,
+    quizzes: 3,
+    salt: 'NF_HENRY_2026_MASTER',
+    ak: 'nf_auth',
+    storagePrefix: 'nf_',
+    icon: 'NEWS',
+    color: '#e63946',
+    free: true,
+    addedTs: 1776472090025,
+    active: true
+  }];
 var MA_CATS = [
   /* ═══ 1. NOTÍCIAS (sempre primeiro) ═══ */
   {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?','Crise Hídrica no Brasil 2026','Guerra Rússia x Ucrânia: O Desfecho','Novo Acordo Comercial BRICS','Colapso do Dólar: Mito ou Realidade?'], isSpecial:true},
@@ -4735,7 +4756,7 @@ function MA_buildCats() {
     };
   });
   MA_getActiveCourses().forEach(function(c) {
-    var cat = cats.find(function(k) { return k.name === c.cat; });
+    var cat = cats.find(function(k) { returnh k.name === c.cat; });
     if (cat) cat.courses.push(c);
   });
   return cats.filter(function(cat) { return cat.courses.length > 0 || cat.soon.length > 0; });
