@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cloud Computing: Do Básico ao Avançado — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6B35'/%3E%3Cstop offset='100%25' stop-color='%23F7C948'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23g)'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55' font-weight='bold' fill='white' font-family='Arial,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = { id:'clod', title:'Cloud Computing: Do Básico ao Avançado', subtitle:'Domine as três maiores plataformas em nuvem do mundo', free: false, freeModules: 1 };
+var MODS = [
+{
+  id: 0,
+  title: 'Fundamentos da Computação em Nuvem',
+  free: true,
+  topics: [
+    {
+      id: 'cld1',
+      title: 'O que é cloud computing e por que importa',
+      html: `<h4>Computação Sem Infraestrutura Própria</h4>
+<p>Você já parou para pensar em onde estão seus arquivos quando você usa Google Drive, Dropbox, ou Netflix? Eles estão em servidores de empresas roubadas em data centers gigantescos espalhados pelo mundo. Isto é cloud computing.</p>
+<p><strong>Cloud computing</strong> é simplesmente o uso de servidores remotos hospedados na internet para armazenar, processar e gerenciar dados ao invés de usar seu próprio computador ou servidor local.</p>
+<p>Parece simples? É. Mas as implicações são profundas.</p>
+<blockquote class="example">
+Historicamente, se você queria rodar uma aplicação web, você precisava comprar servidores (custo de capital gigantesco), contratar um time para gerenciá-los, obter espaço em um data center, configurar segurança, fazer backups, lidar com falhas de hardware. Tudo isto era caro e demorado. Com cloud computing, você clica um botão, aluga um servidor por horas, e começa. Quando termina, paga apenas pelo que usou.
+</blockquote>
+<p>Os benefícios são imensos:</p>
+<p><strong>1. Custo:</strong> Você não paga por infraestrutura que você não usa. Não há investimento de capital antecipado.</p>
+<p><strong>2. Escalabilidade:</strong> Você quer passar de 1 usuário para 1 milhão? Apenas aumente sua capacidade em nuvem. Sem necessidade de comprar novos servidores.</p>
+<p><strong>3. Confiabilidade:</strong> Data centers em nuvem têm redundância. Se um servidor falha, seu aplicativo ainda roda em outro.</p>
+<p><strong>4. Acesso Global:</strong> Você pode acessar seus dados de qualquer lugar, qualquer dispositivo, qualquer hora.</p>
+<p><strong>5. Segurança:</strong> Provedores de nuvem investem bilhões em segurança. Mais seguro que maioria das empresas pode ser sozinha.</p>
+<blockquote class="tip">
+Quando você escolhe usar cloud computing, você está terceirizando um problema complexo (executar data centers) para alguém que faz isto como negócio principal e pode fazer melhor, mais barato, mais seguro.
+</blockquote>
+<p>As maiores provedoras de cloud são:</p>
+<p><strong>AWS (Amazon Web Services):</strong> ~32% de market share, maior player</p>
+<p><strong>Microsoft Azure:</strong> ~23% de market share, crescendo rápido</p>
+<p><strong>Google Cloud Platform (GCP):</strong> ~10% de market share, forte em data e IA</p>
+<p><strong>Outros:</strong> IBM Cloud, Oracle Cloud, Alibaba Cloud, etc.</p>
+<blockquote class="news">
+Em 2024, o mercado global de cloud computing atingiu $650 bilhões, com crescimento de 15-20% ao ano. Cloud não é moda passageira; é o futuro da computação.
+</blockquote>
+<p>Porém, cloud computing não é panacea. Há desafios:</p>
+<p>• <strong>Segurança e privacidade:</strong> Seus dados estão com terceiros</p>
+<p>• <strong>Vendor lock-in:</strong> Mudar de provedor é difícil</p>
+<p>• <strong>Custo se mal-gerenciado:</strong> Servidores ociosos cobram você ainda</p>
+<p>• <strong>Latência:</strong> Dados podem estar fisicamente longe</p>
+<p>Você verá que a verdade está no meio. Cloud é poderoso quando bem-usado, mas requer conhecimento e boas práticas.</p>`
+    },
+    {
+      id: 'cld2',
+      title: 'Modelo de responsabilidade compartilhada',
+      html: `<h4>Quem é Responsável por Quê?</h4>
+<p>Um conceito fundamental em cloud que você deve entender é <strong>responsabilidade compartilhada</strong>. Quando você usa cloud, tanto você quanto o provedor têm responsabilidades em segurança.</p>
+<p>Vamos simplificar com um exemplo:</p>
+<blockquote class="example">
+Você aluga um servidor do AWS. Dentro do servidor você instala uma aplicação web. Usuários acessam sua aplicação.
+
+Quem é responsável por:
+- Manter os discos rígidos do servidor funcionando? AWS
+- Manter o software de rede funcionando? AWS
+- Atualizar o sistema operacional com patches de segurança? Depende (pode ser você ou AWS)
+- Manter sua aplicação atualizada? VOCÊ
+- Criar senhas fortes para sua aplicação? VOCÊ
+- Fazer backups de seus dados? Você (exceto se contratar um serviço específico)
+- Encriptar seus dados? Você (AWS fornece ferramentas, mas você decide usar)
+</blockquote>
+<p>Este modelo varia por tipo de serviço:</p>
+<p><strong>IaaS (Infrastructure as a Service):</strong> Você tem máxima responsabilidade. AWS providencia apenas a "máquina". Você instala OS, software, aplicações.</p>
+<blockquote class="tip">
+IaaS é como alugar um terreno em branco. O provedor cuida que o terreno existe e é acessível. Você constrói a casa, a prensa, a cerca.
+</blockquote>
+<p><strong>PaaS (Platform as a Service):</strong> Responsabilidade compartilhada. Provedor fornece sistema operacional, database, etc. Você apenas foca em aplicação.</p>
+<p><strong>SaaS (Software as a Service):</strong> Provedor tem máxima responsabilidade. Você apenas usa. Gmail, Salesforce são SaaS.</p>
+<p>Visualizando a hierarquia de responsabilidade:</p>
+<p>On-Premises (você tem 100% de responsabilidade)</p>
+<p>IaaS (você ~60%, provedor ~40%)</p>
+<p>PaaS (você ~40%, provedor ~60%)</p>
+<p>SaaS (você ~10%, provedor ~90%)</p>
+<p>Serverless (você ~5%, provedor ~95%)</p>
+<p>Um exemplo concreto:</p>
+<blockquote class="example">
+Você está rodando uma aplicação Node.js em AWS EC2 (IaaS).
+
+AWS é responsável por:
+- Manter o data center seguro
+- Manter redundância de energia
+- Manter hardware funcionando
+- Manter conectividade de rede
+
+Você é responsável por:
+- Atualizar o Node.js quando há patches de segurança
+- Manter sua aplicação segura (sem SQL injection, etc.)
+- Gerenciar permissões de usuários
+- Fazer backups
+- Escolher a região (para latência/regulação)
+
+Se você escolher AWS Lambda (Serverless ao invés), AWS cuida de quase tudo. Você apenas envia seu código.
+</blockquote>
+<p>Muitos ataques e breaches ocorrem porque empresas não entendem este modelo. Eles pensam "AWS cuida de segurança" e negligenciam sua própria segurança de aplicação.</p>
+<blockquote class="news">
+Em 2024, 60% dos breaches em cloud foram resultado de configuração incorreta do cliente, não falha de AWS/Azure/GCP. Responsabilidade compartilhada significa você deve cuidar da sua parte.
+</blockquote>
+<p>Você aprenderá que entender este modelo é crítico para segurança efetiva em cloud.</p>`
+    },
+    {
+      id: 'cld3',
+      title: 'História de cloud e evolução',
+      html: `<h4>Como Chegamos Aqui</h4>
+<p>Cloud computing não apareceu do nada. É a culminação de décadas de evolução tecnológica. Entender história ajuda você entender porque cloud é como é.</p>
+<p>Nos anos 1950-1970, computadores eram caros e grandes. Empresas compravam um mainframe que custava milhões. Múltiplos usuários se conectavam via terminais (basicamente teclados dumb). Isto era "computação compartilhada".</p>
+<p>Nos anos 1980-1990, PCs explodiram. Cada pessoa tinha seu próprio computador. "Mainframe computing" morreu. Empresas tinham servidores locais, mas ainda era tudo no prédio.</p>
+<p>Nos anos 2000, internet ficou ubíqua. Empresas perceberam que não precisavam ter servidores no prédio; podia ser em outro lugar, acessível via internet.</p>
+<blockquote class="example">
+Em 2002, Amazon criou serviços internos para gerenciar sua infraestrutura massiva de e-commerce. Eles se perguntaram: "Por que não alugamos isto para outras empresas?" AWS nasceu em 2006.
+
+Os primeiros clientes não eram empresas Fortune 500 (que queriam suporte dedicado). Eram startups que não podiam comprar servidores. AWS era perfeito para eles: pague pelo que usa, escalável, sem necessidade de staff de TI.
+</blockquote>
+<p>De 2006 a 2012, AWS cresceu mas era muito técnico. Você precisava saber programação, Linux, networking para usar.</p>
+<p>Em 2010, Salesforce popularizou SaaS mostrando que software poderia ser consumido como serviço, não instalado localmente.</p>
+<p>Em 2012, Microsoft Azure lançou seu cloud, integrando com Windows e Office que corporações já usavam.</p>
+<p>De 2012-2015, cloud explodiu. Interfaces melhoraram. Preços caíram. Mais serviços foram adicionados. Isto foi a "Era de Ouro" de cloud.</p>
+<p>De 2015-2020, serverless, containers (Docker), e Kubernetes mudaram como aplicações são construídas.</p>
+<blockquote class="tip">
+Kubernetes foi lançado pelo Google em 2014 (baseado em seu próprio Borg) e transformou como aplicações rodam em containers em escala. Você pode rodar milhões de containers coordenados facilmente.
+</blockquote>
+<p>De 2020-2024, edge computing, IA/ML, e multi-cloud emergiram. Empresas não usam apenas um provedor; usam múltiplos.</p>
+<blockquote class="news">
+Em 2024, cloud está evoluindo de "uma empresa tem um data center em um lugar" para "aplicações distribuídas globalmente rodando em múltiplos provedores, múltiplas regiões, com dados processados onde gerados (edge)".
+</blockquote>
+<p>Esta evolução mostra que cloud não é um destino; é um journey de computação cada vez mais distribuída e eficiente.</p>`
+    },
+    {
+      id: 'cld4',
+      title: 'Comparação entre AWS, Azure e GCP',
+      html: `<h4>Os Três Líderes</h4>
+<p>Se você vai entrar em cloud, você provavelmente usará um destes três: AWS, Azure ou GCP. Você deve entender as diferenças.</p>
+<p><strong>AWS (Amazon Web Services):</strong></p>
+<p>Fundada: 2006. O pioneiro. O líder de mercado absoluto.</p>
+<p>Força: Imenso leque de serviços (200+). Mais ecossistema de terceiros. Melhor documentação (porque mais tempo existindo). Mais maduro.</p>
+<p>Fraqueza: Complexidade gigantesca. Pricing é confuso (20+ dimensões de custo). Tende a ser mais caro se você não otimizar.</p>
+<blockquote class="example">
+Com AWS, você pode rodar praticamente qualquer coisa. Tem serviços para IA, análise, blockchain, IoT, tudo. O problema é que há muitos serviços parecidos fazendo coisas ligeiramente diferentes (Simple Queue Service, SQS FIFO, Amazon MQ). Escolher o certo requer expertise.
+</blockquote>
+<p><strong>Microsoft Azure:</strong></p>
+<p>Fundada: 2010. O #2 em crescimento rápido.</p>
+<p>Força: Integração com Microsoft Stack (Windows, Office, Active Directory). Se você já usa Office 365, Azure é natural. Pricing mais previsível. Strong em enterprise (corporações grandes).</p>
+<p>Fraqueza: Menos maduro que AWS. Menos ecossistema terceiro. Às vezes produto Azure é inferior a equivalente AWS mas aceita porque está integrado (vendor lock-in).</p>
+<blockquote class="tip">
+Se você está em uma empresa corporativa grande que já usa Active Directory, Office 365, Dynamics, Azure é a escolha óbvia. A integração é perfeita. Se é startup, AWS é mais comum.
+</blockquote>
+<p><strong>Google Cloud Platform (GCP):</strong></p>
+<p>Fundada: 2008. O #3 mas crescendo.</p>
+<p>Força: Excelente em data analytics, BigQuery é incomparável. Excelente em machine learning, TensorFlow é do Google. Pricing simples. Muito orientado a open-source.</p>
+<p>Fraqueza: Menor marketplace de serviços. Documentação às vezes é vaga. Menos adotado em enterprise (você pode não encontrar expertise no mercado). Menos tooling terceiro.</p>
+<p>Um exemplo de diferença prática:</p>
+<blockquote class="example">
+Você precisa de um database relacional (como MySQL).
+
+AWS: RDS (Relational Database Service) é bem estabelecido, muitas opções de versão, backup automático, replicas.
+
+Azure: Azure SQL Database é bom, mas é mais direcionado a SQL Server (product Microsoft).
+
+GCP: Cloud SQL existe mas é menos maduro, menos recursos que RDS.
+
+Se você quer um database NoSQL (como MongoDB):
+
+AWS: DynamoDB é nativo e muito bom, ou pode usar MongoDB em EC2
+
+Azure: Cosmos DB é um produto único só do Azure, poderoso mas com pricing complexo
+
+GCP: Datastore/Firestore é bom para documentos, BigTable para séries temporais.
+</blockquote>
+<p>Comparação rápida:</p>
+<p>AWS: Melhor em flexibilidade, pior em previsibilidade de custo</p>
+<p>Azure: Melhor em integração enterprise, pior em pricing simples</p>
+<p>GCP: Melhor em data/IA, pior em mercado de terceiros</p>
+<p>A realidade é que você precisa conhecer os três. Empresas modernas usam múltiplos. A expertise transfere parcialmente (conceitos são similares) mas cada um tem jeito próprio de fazer coisas.</p>
+<blockquote class="news">
+Em 2024, um padrão emergiu chamado "multi-cloud": empresas usam AWS para alguns workloads, Azure para outros, GCP para outros. Isto reduz vendor lock-in e permite otimização por caso de uso.
+</blockquote>
+<p>Você aprenderá que escolher entre os três é menos sobre "melhor" e mais sobre "melhor para seu caso específico".</p>`
+    }
+  ],
+  flashcards: [
+    {q: 'O que é cloud computing?', a: 'Uso de servidores remotos na internet para armazenar e processar dados em vez de infraestrutura local.'},
+    {q: 'Qual é o maior provedor de cloud em 2024?', a: 'AWS (Amazon Web Services) com ~32% de market share.'},
+    {q: 'O que é IaaS?', a: 'Infrastructure as a Service, onde você aluga máquinas virtuais e você instala sistema operacional e software.'},
+    {q: 'O que é responsabilidade compartilhada?', a: 'Tanto o provedor quanto o cliente têm responsabilidades diferentes em segurança e operação.'},
+    {q: 'Qual é a vantagem principal de cloud?', a: 'Escalabilidade, você paga apenas pelo que usa, sem investimento de capital antecipado.'},
+    {q: 'Quando AWS foi fundada?', a: '2006 como divisão interna de Amazon, depois se tornou serviço público.'},
+    {q: 'O que é SaaS?', a: 'Software as a Service, software acessado via navegador (Gmail, Salesforce).'},
+    {q: 'Qual é a força principal de Azure?', a: 'Integração com Microsoft Stack (Office, Active Directory) e enterprise.'},
+    {q: 'Qual é a força principal de GCP?', a: 'Excelência em data analytics e machine learning, pricing simples.'},
+    {q: 'O que é vendor lock-in?', a: 'Dificuldade de mudar de provedor porque seus aplicativos dependem de serviços específicos.'},
+    {q: 'Qual é a desvantagem principal de cloud?', a: 'Custo pode ser alto se mal-gerenciado, segurança depende do cliente cuidar da sua parte.'},
+    {q: 'O que é multi-cloud?', a: 'Usar múltiplos provedores de cloud (AWS, Azure, GCP) simultaneamente para diferentes workloads.'}
+  ],
+  quizzes: [
+    {q: 'Por que cloud computing é mais barato que infraestrutura local?', opts: ['Provedores cobram menos', 'Você paga apenas pelo que usa, sem investimento de capital antecipado', 'Cloud é sempre mais barato', 'Internet é mais barata'], correct: 1},
+    {q: 'Em um modelo IaaS, quem é principalmente responsável pela segurança da aplicação?', opts: ['O provedor AWS', 'O cliente', 'Ambos igualmente', 'Ninguém'], correct: 1},
+    {q: 'Qual provedor é mais forte em data analytics e machine learning?', opts: ['AWS', 'Azure', 'GCP', 'Todos são iguais'], correct: 2}
+  ],
+  summary: {
+    title: 'Resumo: Fundamentos da Computação em Nuvem',
+    points: [
+      'Cloud computing permite uso de infraestrutura remota em vez de servidores próprios.',
+      'Responsabilidade compartilhada significa tanto provedor quanto cliente têm responsabilidades em segurança.',
+      'AWS, Azure e GCP são os três maiores provedores com forças e fraquezas diferentes.',
+      'Cloud oferece escalabilidade, confiabilidade e custo reduzido comparado a infraestrutura local.'
+    ]
+  }
+},
+{
+  id: 1,
+  title: 'Modelos de Serviço: IaaS, PaaS, SaaS',
+  free: false,
+  topics: [
+    {
+      id: 'cld5',
+      title: 'Infrastructure as a Service (IaaS)',
+      html: `<h4>Alugando Computadores Virtuais</h4>
+<p>IaaS é o modelo mais flexível e mais similar a possuir seu próprio servidor. Você aluga uma máquina virtual e tem quase controle total.</p>
+<p>Em AWS, isto é chamado EC2 (Elastic Compute Cloud). Em Azure, é Virtual Machines. Em GCP, é Compute Engine.</p>
+<blockquote class="example">
+Você quer rodar um servidor web. Com IaaS, você:
+1. Escolhe tamanho (quantos CPUs, quanto RAM)
+2. Escolhe sistema operacional (Linux, Windows)
+3. Inicia a máquina
+4. Conecta via SSH ou RDP
+5. Instala software (Apache, Node.js, Python, etc.)
+6. Coloca sua aplicação nela
+7. Configura firewall
+8. Faz backups
+
+Você tem controle completo, mas também tem responsabilidade completa.
+</blockquote>
+<p>As vantagens de IaaS:</p>
+<p>• <strong>Flexibilidade máxima:</strong> Você pode instalar qualquer coisa</p>
+<p>• <strong>Custo-efetivo:</strong> Pague por hora de uso</p>
+<p>• <strong>Escalabilidade:</strong> Pode adicionar máquinas quando precisa</p>
+<p>• <strong>Controle:</strong> Tudo é sob seu comando</p>
+<p>As desvantagens:</p>
+<p>• <strong>Complexidade:</strong> Você deve saber administração de sistemas</p>
+<p>• <strong>Responsabilidade:</strong> Você cuida de segurança, patches, atualizações</p>
+<p>• <strong>Overhead:</strong> Muita configuração manual</p>
+<blockquote class="tip">
+IaaS é como alugar um apartamento vazio. Você tem total liberdade de decoração, mas você também cuida de manutenção, limpeza, consertar coisas quebradas.
+</blockquote>
+<p>Dentro de IaaS, há vários tipos de serviços:</p>
+<p><strong>Virtual Machines (VMs):</strong> Máquinas completas. Você instala tudo você mesmo.</p>
+<p><strong>Containers:</strong> Um nível acima. Você coloca sua aplicação em um container (Docker) que já tem sistema operacional mínimo. Mais leve que VM.</p>
+<p>AWS oferece:</p>
+<p>• EC2 para máquinas virtuais tradicionais</p>
+<p>• ECS para gerenciamento de containers</p>
+<p>• Lightsail para aplicações web simples com menos configuração</p>
+<blockquote class="example">
+Uma startup quer rodar um servidor web Node.js. Com IaaS:
+- Inicia uma EC2 t3.small (2 CPUs, 2GB RAM)
+- SSH para dentro da máquina
+- Instala Node.js
+- Clona código GitHub
+- Instala dependências
+- Inicia aplicação
+- Configura Nginx como reverse proxy
+- Configura SSL/TLS
+- Faz backup do código
+
+Isto leva talvez 2 horas de trabalho da primeira vez. Depois de feito, é basicamente grátis (além de custo de EC2).
+</blockquote>
+<p>Pricing de IaaS é por hora ou por segundo:</p>
+<p>• t3.micro na AWS: ~$0.01/hora</p>
+<p>• c5.4xlarge na AWS: ~$0.68/hora</p>
+<p>• Você também paga por storage (EBS), bandwidth, etc.</p>
+<blockquote class="news">
+Em 2024, os novos tipos de instâncias em cloud são otimizadas para cargas específicas: graviton (processadores custom), GPU (para IA), ARM vs x86. Você pode economizar escolhendo certo tipo para sua carga.
+</blockquote>
+<p>Você verá que IaaS é o "pão com manteiga" do cloud. A maioria das empresas usa principalmente IaaS.</p>`
+    },
+    {
+      id: 'cld6',
+      title: 'Platform as a Service (PaaS)',
+      html: `<h4>Quando o Provedor Gerencia Mais</h4>
+<p>PaaS é um nível acima de IaaS. O provedor gerencia sistema operacional, database, middleware. Você apenas coloca seu código e ele roda.</p>
+<p>Em AWS, isto é Elastic Beanstalk ou AppRunner. Em Azure, é App Service. Em GCP, é App Engine.</p>
+<blockquote class="example">
+Você tem uma aplicação Flask em Python. Com PaaS você:
+1. Coloca código em Git
+2. Faz push para serviço PaaS
+3. Serviço detecta que é Python, instala dependências automaticamente
+4. Aplicação está rodando
+5. PaaS automaticamente escala se houver mais tráfego
+6. Você não se preocupa com SO, patches, segurança de infraestrutura
+
+Isto é radicalmente diferente de IaaS onde você faz tudo manualmente.
+</blockquote>
+<p>As vantagens de PaaS:</p>
+<p>• <strong>Menos overhead:</strong> Não cuida de infraestrutura</p>
+<p>• <strong>Escalabilidade automática:</strong> Provedor escala para você</p>
+<p>• <strong>Integração:</strong> Muitas integrações built-in (database, logging, monitoring)</p>
+<p>• <strong>Implantação fácil:</strong> Git push e pronto</p>
+<p>As desvantagens:</p>
+<p>• <strong>Menos controle:</strong> Você não pode instalar coisas arbitrárias</p>
+<p>• <strong>Vendor lock-in:</strong> Seu código depende de APIs específicas do provedor</p>
+<p>• <strong>Limitações:</strong> Pode não suportar exatamente o que você precisa</p>
+<p>• <strong>Customização limitada:</strong> Menos controle fino</p>
+<blockquote class="tip">
+PaaS é como alugar um apartamento mobiliado e decorado. Você move e pronto. Mas você não pode remover a parede entre sala e cozinha. É mais conforto, menos liberdade.
+</blockquote>
+<p>PaaS é especialmente bom para:</p>
+<p>• Startups que querem lançar rápido</p>
+<p>• Equipes pequenas sem ops/devops expertise</p>
+<p>• Aplicações web tradicionais</p>
+<p>• Prototipagem</p>
+<p>Um exemplo com Heroku (PaaS clássico antes de ser adquirido por Salesforce):</p>
+<blockquote name="example">
+Um desenvolvedor cria app Rails. Faz 'git push heroku main'. Heroku detecta Rails, instala gems, cria database, escala, configura SSL. Pronto. Desenvolvedor pode focar em código, não em infraestrutura.
+</blockquote>
+<p>Pricing de PaaS é geralmente por "dyno" ou "instance":</p>
+<p>• Heroku Eco: $7/mês</p>
+<p>• AWS App Runner: pay per request (~$0.000001 por requisição)</p>
+<p>• Azure App Service: ~$10-100/mês por plano</p>
+<blockquote class="news">
+Em 2024, serverless (que é um passo adiante de PaaS) está se tornando mais popular que PaaS tradicional porque você paga apenas por execução, não por instâncias rodando.
+</blockquote>
+<p>Você verá que PaaS é o ponto doce para muitas empresas. Mais controle que SaaS, menos overhead que IaaS.</p>`
+    },
+    {
+      id: 'cld7',
+      title: 'Software as a Service (SaaS)',
+      html: `<h4>Aplicações Prontas para Usar</h4>
+<p>SaaS é quando você usa uma aplicação pronta, hospedada na nuvem, acessada via navegador. Você não gerencia infraestrutura ou código. Apenas usa.</p>
+<p>Exemplos: Gmail, Google Drive, Salesforce, Microsoft 365, Slack, Figma, Notion.</p>
+<p>Com SaaS você:</p>
+<p>1. Faz login em um navegador</p>
+<p>2. Usa a aplicação</p>
+<p>3. Paga mensalmente</p>
+<p>4. Pronto</p>
+<blockquote name="example">
+Você quer colaborar em um documento. Com SaaS (Google Docs):
+- Acessa Google Docs
+- Cria novo documento
+- Compartilha com colegas
+- Todos editam simultaneamente
+- Tudo é salvo automaticamente
+- Versão é feita automaticamente
+
+Você não cuida de servidor, database, backup, segurança, scaling. Google cuida de tudo. Você paga $5-10/mês.
+</blockquote>
+<p>As vantagens de SaaS:</p>
+<p>• <strong>Sem overhead:</strong> Pronto para usar, sem instalação</p>
+<p>• <strong>Sem manutenção:</strong> Provedor atualiza, faz backup, cuida de segurança</p>
+<p>• <strong>Acessibilidade:</strong> Qualquer navegador, qualquer dispositivo</p>
+<p>• <strong>Colaboração:</strong> Fácil compartilhar com outros</p>
+<p>• <strong>Sempre atualizado:</strong> Você nunca está usando versão desatualizada</p>
+<p>As desvantagens:</p>
+<p>• <strong>Zero customização:</strong> Você usa como é ou não usa</p>
+<p>• <strong>Privacidade:</strong> Seus dados são com o provedor</p>
+<p>• <strong>Dependência:</strong> Se o serviço cai, você não pode fazer nada</p>
+<p>• <strong>Custo recorrente:</strong> Você paga forever enquanto usa</p>
+<blockquote class="tip">
+SaaS é como usar um táxi. Você não precisa comprar carro, aprender dirigir, manter seguro, gasolina. Você apenas paga para usar. Mas você não pode customizar o táxi para suas necessidades.
+</blockquote>
+<p>SaaS é especialmente bom para:</p>
+<p>• Operações de negócio (CRM, ERP, HCM)</p>
+<p>• Produtividade (email, calendário, documentos)</p>
+<p>• Comunicação (messaging, video conferencing)</p>
+<p>• Serviços especializados que você não faria sozinho</p>
+<blockquote name="example">
+Salesforce. Uma empresa teria que gastar anos e milhões desenvolvendo seu próprio CRM. Em vez disso, paga Salesforce $100-300/usuário/mês e tem ferramenta world-class imediatamente.
+</blockquote>
+<p>Dentro de SaaS há variações:</p>
+<p><strong>On-Demand SaaS:</strong> Você paga por mês. Salesforce, Slack são assim.</p>
+<p><strong>Freemium SaaS:</strong> Versão básica grátis, premium custa. Notion, Figma são assim.</p>
+<p><strong>Open-Source SaaS:</strong> Código é aberto mas você usa versão hospedada. Algum cloud CMS.</p>
+<blockquote class="news">
+Em 2024, o mercado de SaaS está maduro. Há um SaaS para praticamente qualquer função empresarial imaginável. O desafio não é encontrar um, é escolher qual de 10 opções usar.
+</blockquote>
+<p>Você verá que a maioria das pessoas usa SaaS no dia a dia (Gmail, Google Drive) sem saber que é cloud computing.</p>`
+    },
+    {
+      id: 'cld8',
+      title: 'Comparando IaaS, PaaS e SaaS',
+      html: `<h4>Quando Usar Cada Um</h4>
+<p>Agora que você entende os três modelos, a pergunta natural é: quando usar qual?</p>
+<blockquote name="example">
+Uma empresa precisa de sistema de CRM. As opções são:
+
+IaaS: Compra servidor AWS. Contrata desenvolvedor. Desenvolver CRM do zero. Demora 2 anos, custa $2 milhões. Mas é exatamente para a empresa.
+
+PaaS: Usa Salesforce mas com customizações pesadas. Hires Salesforce specialist. Demora 6 meses, custa $500K. Excelente para empresa específica.
+
+SaaS: Usa Salesforce standard sem customizações. Demora 1 mês, custa $50K/ano. Perde alguns requisitos específicos mas 95% das necessidades são atendidas.
+
+Para maioria das empresas, SaaS é a resposta correta. Você não precisa daqueles 5% de customizações.
+</blockquote>
+<p>A regra geral:</p>
+<p><strong>Use SaaS se:</strong> Você quer resolver um problema rápido e uma solução padrão atende suas necessidades. Exemplo: email, colaboração, CRM, acounting.</p>
+<p><strong>Use PaaS se:</strong> Você quer construir uma aplicação customizada mas não quer se preocupar com infraestrutura. Exemplo: app web interna, sistema que lê de múltiplos SaaS e consolida.</p>
+<p><strong>Use IaaS se:</strong> Você quer máxima flexibilidade porque seus requisitos são muito únicos ou você quer rodar algo especializador que nenhum PaaS suporta. Exemplo: high-performance computing, processamento de dados em massa, rodando banco de dados NoSQL customizado.</p>
+<p>Na prática, muitas empresas usam os três simultaneamente:</p>
+<blockquote name="example">
+Uma empresa de e-commerce:
+- Usa SaaS para email (Google Workspace)
+- Usa SaaS para CRM (Salesforce)
+- Usa SaaS para accounting (Xero)
+- Usa PaaS para seu próprio backend (AWS Elastic Beanstalk) porque precisa customização específica
+- Usa IaaS para big data analytics (Spark em EC2) porque precisa máximo desempenho
+</blockquote>
+<p>Uma visualização útil da abstração:</p>
+<p>IaaS: "você gerencia aplicação"</p>
+<p>PaaS: "provedor gerencia runtime"</p>
+<p>SaaS: "provedor gerencia aplicação"</p>
+<p>Serverless (que verá depois): "provedor gerencia tudo, você paga só execução"</p>
+<blockquote class="tip">
+A tendência é ir "para cima" na stack quando possível. Começar em IaaS porque precisa controle, depois migrar para PaaS conforme aprende seus patterns, depois usar SaaS onde aplicável.
+</blockquote>
+<p>Custos (comparação áspera):</p>
+<p>IaaS: $100-1000/mês por servidor + staff (caro)</p>
+<p>PaaS: $50-500/mês por aplicação</p>
+<p>SaaS: $5-500/usuário/mês</p>
+<blockquote class="news">
+Em 2024, há uma quarta categoria emergindo: DBaaS (Database as a Service) como MongoDB Atlas, e specialized services como "XaaS" para qualquer coisa. A ideia é simplesmente: você não deveria gerenciar algo tão especializado. Deixe o expert fazer.
+</blockquote>
+<p>Você aprenderá que a escolha correta entre os três é o skill mais importante em arquitetura de sistemas modernos.</p>`
+    }
+  ],
+  flashcards: [
+    {q: 'O que é IaaS?', a: 'Infrastructure as a Service, você aluga máquinas virtuais e instala software você mesmo.'},
+    {q: 'O que é PaaS?', a: 'Platform as a Service, provedor gerencia infraestrutura, você coloca código e pronto.'},
+    {q: 'O que é SaaS?', a: 'Software as a Service, aplicação pronta para usar acessada via navegador.'},
+    {q: 'Qual modelo tem menos responsabilidade do cliente?', a: 'SaaS, provedor gerencia tudo.'},
+    {q: 'Qual modelo tem mais flexibilidade?', a: 'IaaS, você tem controle completo.'},
+    {q: 'O que é EC2?', a: 'Elastic Compute Cloud, serviço IaaS do AWS de máquinas virtuais.'},
+    {q: 'O que é Elastic Beanstalk?', a: 'Serviço PaaS do AWS que gerencia infraestrutura enquanto você coloca código.'},
+    {q: 'Qual modelo é melhor para startup que quer lançar rápido?', a: 'PaaS ou SaaS, você não quer gastar tempo em infraestrutura.'},
+    {q: 'O que é vendor lock-in?', a: 'Quando seu código depende de APIs específicas e é difícil mudar de provedor.'},
+    {q: 'Qual provedor PaaS da AWS é mais simples?', a: 'Lightsail para aplicações simples.'},
+    {q: 'Por que usar PaaS em vez de IaaS?', a: 'Menos overhead, escalabilidade automática, menos responsabilidade operacional.'},
+    {q: 'Qual é o risco principal de SaaS?', a: 'Se o serviço cai, você não pode fazer nada, privacidade é com o provedor.'}
+  ],
+  quizzes: [
+    {q: 'Se você quer máxima customização e está disposto a cuidar de infraestrutura, qual modelo escolher?', opts: ['SaaS', 'PaaS', 'IaaS', 'Nenhum dos três'], correct: 2},
+    {q: 'Qual é a vantagem principal de PaaS sobre IaaS?', opts: ['É mais barato', 'Menos overhead e escalabilidade automática', 'Oferece mais serviços', 'Nenhuma vantagem'], correct: 1},
+    {q: 'Se sua equipe é pequena e não tem ops expertise, qual modelo é melhor?', opts: ['IaaS', 'PaaS ou SaaS', 'Ambos igualmente', 'Nenhum funciona'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo: Modelos de Serviço',
+    points: [
+      'IaaS oferece máxima flexibilidade mas máxima responsabilidade operacional.',
+      'PaaS reduz overhead enquanto oferece boa flexibilidade, ideal para startups.',
+      'SaaS oferece zero overhead e pronto para usar, ideal para problemas padrão.',
+      'A escolha depende do balanço entre controle e conveniência que você quer.'
+    ]
+  }
+},
+{
+  id: 2,
+  title: 'AWS Essentials: Serviços Principais',
+  free: false,
+  topics: [
+    {
+      id: 'cld9',
+      title: 'Computação: EC2, Lambda, Beanstalk',
+      html: `<h4>Rodando Código na AWS</h4>
+<p>AWS oferece três principais maneiras de rodar código: EC2 (máquinas virtuais), Lambda (serverless), e Beanstalk (PaaS).</p>
+<p><strong>EC2 (Elastic Compute Cloud):</strong> Máquinas virtuais tradicionais. Você escolhe CPU, RAM, SO, e o que instalar.</p>
+<blockquote name="example">
+Um desenvolvedor precisa rodar um servidor web Apache. Com EC2:
+1. Inicia uma t3.small
+2. Instala Apache: 'apt-get install apache2'
+3. Copia files HTML para /var/www/html
+4. Inicia Apache: 'systemctl start apache2'
+5. Configura security group (firewall) para permite HTTP/HTTPS
+6. Associa um IP elástico
+7. Pronto, servidor web rodando
+
+Isto leva talvez 15 minutos. Custa ~$0.01-0.05/hora.
+</blockquote>
+<p>Tipos de instâncias EC2:</p>
+<p>• <strong>t3 (General Purpose):</strong> Para maioria das cargas. Bom balance de CPU/RAM.</p>
+<p>• <strong>m5 (General Purpose):</strong> Maior que t3, mais recursos.</p>
+<p>• <strong>c5 (Compute Optimized):</strong> CPUs rápidas. Para processamento pesado.</p>
+<p>• <strong>r5 (Memory Optimized):</strong> Muito RAM. Para caching, databases.</p>
+<p>• <strong>p3 (GPU):</strong> GPUs poderosas. Para AI/ML.</p>
+<p><strong>Lambda:</strong> Serverless. Você envia função Python/Node/etc, e AWS executa quando acionada.</p>
+<blockquote name="example">
+Um desenvolvedor quer processar uma imagem quando usuário faz upload. Com Lambda:
+1. Escreve função Python que redimensiona imagem
+2. Deploy função
+3. Configura trigger: quando S3 (storage) recebe novo arquivo, chame função
+4. Pronto
+
+Lambda executa a função, lida com escalabilidade, você paga apenas por execução (~$0.000001 por requisição).
+</blockquote>
+<p>Benefícios de Lambda:</p>
+<p>• <strong>Sem servidor para gerenciar</strong></p>
+<p>• <strong>Escalabilidade automática infinita</strong></p>
+<p>• <strong>Pague por execução</strong></p>
+<p>• <strong>Fácil acionar em eventos</strong></p>
+<p>Limitações de Lambda:</p>
+<p>• <strong>Timeout máximo 15 minutos</strong> (não bom para processamento longo)</p>
+<p>• <strong>Cold start</strong> (primeira execução é lenta, talvez 100-1000ms)</p>
+<p>• <strong>Máximo 10GB RAM</strong></p>
+<p>• <strong>Menos controle</strong> (você não acesso direto ao SO)</p>
+<blockquote name="tip">
+Lambda é perfeito para "event-driven" processing: arquivo foi uploaded, processe. Pedido foi colocado, envie email de confirmação. Sensor detectou movimento, dispare alerta.
+</blockquote>
+<p><strong>Elastic Beanstalk:</strong> PaaS do AWS. Você coloca código (Python/Node/Java) e Beanstalk cuida de infraestrutura.</p>
+<blockquote name="example">
+Um desenvolvedor tem aplicação Flask. Com Beanstalk:
+1. Faz zip código + requirements.txt
+2. Upload via web console ou CLI
+3. Beanstalk detecta Flask, instala dependências, inicia aplicação
+4. Configura load balancer, auto-scaling
+5. Pronto
+
+Você não vê servidores, não gerencia nada. Beanstalk gerencia tudo.
+</blockquote>
+<p>Comparação rápida:</p>
+<p>EC2: Você gerencia tudo, máximo controle, mais trabalho.</p>
+<p>Lambda: Sem servidores, menor latência aceitável, melhor para eventos.</p>
+<p>Beanstalk: Meio termo, bom para aplicações web tradicionais.</p>
+<blockquote name="news">
+Em 2024, serverless (Lambda) está crescendo rapidamente. Muitas novas aplicações usam Lambda ao invés de EC2/Beanstalk. O único obstáculo é "cold start" que está melhorando.
+</blockquote>
+<p>Você aprenderá que EC2 é "de propósito geral", Lambda é "event-driven", Beanstalk é "aplicações web".</p>`
+    },
+    {
+      id: 'cld10',
+      title: 'Storage: S3, EBS, EFS',
+      html: `<h4>Armazenando Dados</h4>
+<p>AWS oferece várias maneiras de armazenar dados com diferentes características.</p>
+<p><strong>S3 (Simple Storage Service):</strong> Object storage. Você coloca arquivos (chamados "objects") em "buckets".</p>
+<blockquote name="example">
+Uma empresa tem fotos de clientes. Com S3:
+1. Cria bucket "company-photos"
+2. Upload fotos: S3://company-photos/cliente1.jpg
+3. Pronto
+
+S3 é duravelmente armazenado (11 nines de durabilidade = 0.0000001% de chance de perder arquivo em um ano), replicas geograficamente, é praticamente grátis (centavos por GB).
+
+Você pode restringir acesso (apenas funcionários podem ver), versionamento (manter histórico), compressão automática (para economizar espaço), etc.
+</blockquote>
+<p>S3 é não-estruturado. Você não precisa esquema como database. Você apenas coloca arquivos.</p>
+<p>Benefícios:</p>
+<p>• <strong>Duradouro:</strong> Dados nunca são perdidos</p>
+<p>• <strong>Massivamente escalável:</strong> Armazene petabytes</p>
+<p>• <strong>Barato:</strong> ~$0.023 por GB/mês</p>
+<p>• <strong>Flexível:</strong> Qualquer tipo de arquivo</p>
+<p>Casos de uso:</p>
+<p>• Backup e archive</p>
+<p>• Distribuição de conteúdo (servir videos, downloads)</p>
+<p>• Data lake (armazenar dados brutos para análise)</p>
+<p>• Hospedagem de website estático</p>
+<blockquote name="tip">
+Netflix usa S3 massivamente para armazenar todas as imagens de filme/série (milhões), trailers, etc. É barato e escalável. Eles servem estes via CloudFront (CDN) que copia para data centers próximos a usuários.
+</blockquote>
+<p><strong>EBS (Elastic Block Store):</strong> Disco para EC2. Quando você inicia uma EC2, você pode usar EBS como disco.</p>
+<p>EBS é como um disco rígido virtual. Você cria volume, o atacha a EC2, formata, monta, e usa como disco normal.</p>
+<blockquote name="example">
+Uma EC2 precisa de 100GB de storage. Você:
+1. Cria volume EBS 100GB
+2. Conecta a EC2
+3. Formata: 'mkfs.ext4 /dev/xvdf'
+4. Monta: 'mount /dev/xvdf /data'
+5. Usa como disco normal
+
+Custa ~$10/mês para 100GB com alta performance.
+</blockquote>
+<p>EBS é estruturado (você precisa estrutura para dados), rápido (SSDs), e persistent (dados ficam mesmo se EC2 cai).</p>
+<p><strong>EFS (Elastic File System):</strong> Network file system. Múltiplas EC2 podem acessar o mesmo EFS simultaneamente.</p>
+<p>EFS é útil quando múltiplas máquinas precisam acessar mesmos dados.</p>
+<blockquote name="example">
+Um projeto precisa que múltiplas máquinas processem arquivos de um diretório compartilhado. Com EFS:
+1. Cria EFS
+2. Monta em máquina 1
+3. Monta em máquina 2
+4. Máquina 1 escreve arquivo em /mnt/efs/data
+5. Máquina 2 vê arquivo imediatamente em /mnt/efs/data
+
+Sem EFS, você precisaria de servidor NFS separado ou sincronizar entre máquinas manualmente.
+</blockquote>
+<p>Comparação:</p>
+<p>S3: Object storage, não-estruturado, barato, acessível via API HTTP</p>
+<p>EBS: Block storage, estruturado, rápido, attachado a EC2</p>
+<p>EFS: File system compartilhado, acessível por múltiplas EC2s</p>
+<blockquote name="news">
+Em 2024, S3 é o serviço mais usado da AWS, com trilhões de objetos armazenados globalmente. Isto fala de quanto a infraestrutura depende de simples object storage.
+</blockquote>
+<p>Você aprenderá que S3 é o "coração" do armazenamento AWS.</p>`
+    },
+    {
+      id: 'cld11',
+      title: 'Banco de Dados: RDS, DynamoDB, MongoDB Atlas',
+      html: `<h4>Persistindo Dados Estruturados</h4>
+<p>Enquanto S3 é para arquivos, você frequentemente precisa de database para dados estruturados (tabelas, relacionamentos).</p>
+<p><strong>RDS (Relational Database Service):</strong> Database SQL gerenciado. Você quer MySQL, PostgreSQL, Oracle, SQL Server? RDS cuida de tudo.</p>
+<blockquote name="example">
+Uma aplicação precisa database PostgreSQL. Com RDS:
+1. Cria DB instance PostgreSQL
+2. AWS provê host (algo como: mydb.abc123.us-east-1.rds.amazonaws.com)
+3. Você conecta sua app: psycopg2.connect("host=mydb.abc123.us-east-1.rds.amazonaws.com, user=admin, password=xyz")
+4. Pronto
+
+RDS automaticamente:
+- Faz backups diários
+- Mantém réplicas de leitura (para escalabilidade)
+- Aplica patches de segurança
+- Escala storage se necessário
+- Você pode ativar multi-AZ para alta disponibilidade
+</blockquote>
+<p>Benefícios:</p>
+<p>• <strong>Gerenciado:</strong> Você não cuida de backups, patches</p>
+<p>• <strong>Confiável:</strong> Múltiplas réplicas, backup automático</p>
+<p>• <strong>Escalável:</strong> Você pode aumentar tamanho facilmente</p>
+<p>• <strong>Seguro:</strong> Criptografia, VPC, security groups</p>
+<p>Desvantagens:</p>
+<p>• <strong>Caro:</strong> Você paga até mesmo quando pouco usa</p>
+<p>• <strong>Menos controle:</strong> Você não pode mudar parâmetros do SO</p>
+<p><strong>DynamoDB:</strong> NoSQL database gerenciado da AWS. Para dados não-estruturados, chave-valor.</p>
+<blockquote name="example">
+Uma aplicação mobile quer armazenar dados de usuário (perfil, configurações, histórico). Com DynamoDB:
+1. Cria tabela "users" com chave "user_id"
+2. Armazena documentos JSON
+3. DynamoDB automaticamente escala para bilhões de items
+
+Você paga por leitura/escrita, não por armazenamento do servidor rodando. Se ninguém acessa, paga $0.
+</blockquote>
+<p>DynamoDB é NoSQL (JSON), escalável infinitamente, e serverless (pague por requisição).</p>
+<p><strong>MongoDB Atlas:</strong> Não é AWS, mas competitor popular. MongoDB gerenciado na nuvem.</p>
+<blockquote name="tip">
+Escolha entre RDS, DynamoDB, MongoDB depende do seu dado:
+- Dados estruturados com relacionamentos? RDS (SQL)
+- Dados não-estruturados, alto throughput? DynamoDB ou MongoDB
+- Dados geoespaciais complexos? PostGIS no RDS
+</blockquote>
+<p>Para aplicações modernas, é comum usar:</p>
+<p>• RDS para dados estruturados (usuários, pedidos)</p>
+<p>• DynamoDB para sessão (rápido, expire automático)</p>
+<p>• S3 para blobs (imagens, videos)</p>
+<p><strong>Elasticache:</strong> In-memory cache. Redis ou Memcached. Muito rápido para dados frequentemente acessados.</p>
+<blockquote name="example">
+Uma aplicação frequentemente consulta "quais são os top 10 produtos?" Ao invés de consultar database cada vez, você cache resultado em Redis por 1 hora. Resultado é instantâneo, database nunca é sobrecarregado.
+</blockquote>
+<blockquote name="news">
+Em 2024, serverless databases estão ficando mais populares. Aurora Serverless (RDS serverless) permite você pagar por execução, não por servidor rodando.
+</blockquote>
+<p>Você aprenderá que escolher o database correto é uma das decisões mais impactantes em arquitetura.</p>`
+    },
+    {
+      id: 'cld12',
+      title: 'Integração: SNS, SQS, EventBridge, API Gateway',
+      html: `<h4>Conectando Serviços</h4>
+<p>Aplicações modernas são conjuntos de serviços que precisam conversar. AWS oferece vários serviços para isto.</p>
+<p><strong>SQS (Simple Queue Service):</strong> Fila de mensagens. Um serviço coloca mensagens, outro as processa.</p>
+<blockquote name="example">
+Uma aplicação web recebe pedidos. Ao invés de processar imediatamente (o que pode ser lento), ela:
+1. Coloca pedido em fila SQS
+2. Responde ao usuário imediatamente
+3. Um worker separado processa fila SQS
+4. Quando termina, remove mensagem da fila
+
+Se houver spike de pedidos, fila cresce, você inicia mais workers. Arquitetura é desacoplada.
+</blockquote>
+<p>SQS garante at-least-once delivery (mensagem será processada). Se worker cai no meio, mensagem é recolocada na fila.</p>
+<p><strong>SNS (Simple Notification Service):</strong> Pub/sub. Um serviço publica evento, múltiplos se inscrevem.</p>
+<blockquote name="example">
+Uma aplicação de e-commerce tem evento "Pedido Confirmado". Múltiplos serviços se inscrevem:
+- Email service: envia confirmação
+- Inventory service: reduz stock
+- Analytics: registra evento
+- Shipping service: prepara shipment
+
+SNS publica evento uma vez, todos os subscribers o recebem. Serviços são desacoplados.
+</blockquote>
+<p><strong>EventBridge:</strong> Versão mais avançada de SNS/SQS. Rota eventos complexos com filter e transformação.</p>
+<blockquote name="example">
+Você quer: "Se pedido > $1000 E cliente é novo, coloque em fila de revisão manual". EventBridge pode fazer isto com rules.
+</blockquote>
+<p><strong>API Gateway:</strong> Cria REST API em frente de seus serviços.</p>
+<blockquote name="example">
+Você tem backend em Lambda. Você quer que clientes acessem via HTTP API. Você:
+1. Cria API Gateway
+2. Configura rota /users/{id}
+3. Aponta para Lambda function
+4. AWS fornece URL: https://abc123.execute-api.us-east-1.amazonaws.com/users/123
+5. Client fazer GET /users/123, Lambda é invocado
+
+API Gateway cuida de authentication, rate limiting, CORS, etc.
+</blockquote>
+<p>Todos esses serviços se integram para criar arquitéturas de microserviços:</p>
+<blockquote name="example">
+Arquitetura completa:
+- API Gateway (entrada HTTP)
+- Lambda (processa requisição)
+- DynamoDB (armazena dados)
+- SQS (fila para processamento assíncrono)
+- Outro Lambda (processa fila)
+- S3 (armazena resultados)
+- SNS (notifica clientes)
+- CloudWatch (logging e monitoring)
+
+Cada componente é independente, escalável, pagamos só pelo que usamos.
+</blockquote>
+<blockquote class="news">
+Em 2024, serverless microserquitetura é o padrão para aplicações novas. Você não gerencia servidores, você gerencia dados e lógica. Infraestrutura é transparente.
+</blockquote>
+<p>Você aprenderá que estes serviços de integração são a cola que mantém aplicações modernas funcionando.</p>`
+    }
+  ],
+  flashcards: [
+    {q: 'O que é EC2?', a: 'Elastic Compute Cloud, máquinas virtuais da AWS que você configura e gerencia.'},
+    {q: 'O que é Lambda?', a: 'Serviço serverless que executa função Python/Node quando acionada por evento.'},
+    {q: 'O que é S3?', a: 'Simple Storage Service, armazena arquivos ("objects") em "buckets" de forma barata e durável.'},
+    {q: 'O que é RDS?', a: 'Relational Database Service, oferece MySQL, PostgreSQL, Oracle, SQL Server gerenciados.'},
+    {q: 'O que é DynamoDB?', a: 'NoSQL database gerenciado, serverless, pague por requisição, escalável infinitamente.'},
+    {q: 'O que é EBS?', a: 'Elastic Block Store, disco para EC2, similar a disco rígido virtual.'},
+    {q: 'O que é SQS?', a: 'Simple Queue Service, fila de mensagens para processamento assíncrono desacoplado.'},
+    {q: 'O que é SNS?', a: 'Simple Notification Service, pub/sub para publicar eventos que múltiplos subscribers recebem.'},
+    {q: 'O que é API Gateway?', a: 'Cria REST API em frente de serviços (Lambda, EC2), gerencia authentication, rate limiting.'},
+    {q: 'Quando usar Lambda?', a: 'Para event-driven processing, funções curtas, quando quer serverless sem gerenciar servidores.'},
+    {q: 'Quando usar EC2?', a: 'Quando quer máximo controle, processos longos, ou rodar software específico.'},
+    {q: 'O que é Elasticache?', a: 'In-memory cache (Redis/Memcached) para muito rápido acesso a dados frequentes.'}
+  ],
+  quizzes: [
+    {q: 'Para uma aplicação web simples, qual é a arquitetura mais econômica?', opts: ['EC2 robusto', 'Lambda + API Gateway + DynamoDB', 'RDS com 10 instâncias', 'Ambos A e B'], correct: 1},
+    {q: 'Se você precisa de processamento de longa duração (>15 minutos), qual não é apropriado?', opts: ['EC2', 'Lambda', 'ECS', 'Beanstalk'], correct: 1},
+    {q: 'Qual serviço você usa para fila de mensagens para processamento assíncrono?', opts: ['SNS', 'SQS', 'S3', 'RDS'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo: AWS Essentials',
+    points: [
+      'Computação: EC2 (VMs), Lambda (serverless), Beanstalk (PaaS) oferecem diferentes níveis de controle.',
+      'Storage: S3 (objetos), EBS (disco), EFS (network file system) servem diferentes necessidades.',
+      'Databases: RDS (SQL), DynamoDB (NoSQL), Elasticache (cache) para dados estruturados.',
+      'Integração: SQS, SNS, EventBridge, API Gateway conectam serviços em arquitetura microserviços.'
+    ]
+  }
+}
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
