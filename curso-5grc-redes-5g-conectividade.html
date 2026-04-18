@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5G e o Futuro da Conectividade — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6B35'/%3E%3Cstop offset='100%25' stop-color='%23F7C948'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23g)'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55' font-weight='bold' fill='white' font-family='Arial,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = { id:'5grc', title:'5G e o Futuro da Conectividade', subtitle:'Entenda a tecnologia que vai transformar o mundo', free: false, freeModules: 1 };
+var MODS = [
+{
+  id: 0,
+  title: 'Evolução das Telecomunicações',
+  free: true,
+  topics: [
+    {
+      id: 'HSTL',
+      title: 'Histórico de Gerações de Redes',
+      html: `<h4>Do 1G ao 5G: a revolução contínua</h4><p><strong>Cada geração de rede móvel trouxe mudanças fundamentais</strong>. Você está vivendo a quarta revolução; a quinta está aqui. Compreender história ajuda entender futuro.</p><p><strong>1G (1981)</strong>: Primeiros telefones celulares. Analógicos, volumosos, baterias fracas. Qualidade ruim, cobertura limitada. "Carro móvel" era melhor nome que celular.</p><p><strong>2G (1991)</strong>: GSM (Global System for Mobile). Voz digital, SMS. Revolucionário: SMS permitiu comunicação assíncrona. Telefones menores. Roaming internacional.</p><blockquote class="tip">Dica: SMS foi subproduto inesperado. Ninguém estimou demanda; adolescentes criaram mercado de mensagens.</blockquote><p><strong>3G (2001)</strong>: UMTS. Dados em tempo real. Primeiros smartphones. Você poderia acessar internet "móvel", não só voz. Lento (0.5-2 Mbps), mas revolucionário.</p><p><strong>4G/LTE (2009)</strong>: Long Term Evolution. 5-100 Mbps. Mudança qualitativa: streaming de vídeo, apps, redes sociais. Smartphone como computador principal se tornou realidade.</p><blockquote class="example">Exemplo: 3G permitia email, mas lento. 4G permitia YouTube. Essa diferença de velocidade transformou comportamento: 3G era funcional, 4G era experiência.</blockquote><p><strong>5G (2019+)</strong>: Até 10 Gbps. Latência ultra-baixa (1ms). Densidade de dispositivos altíssima (1 milhão/km²). Não é só mais rápido; é diferente. Habilita IoT, drones, carros autônomos.</p><p><strong>Padrão**: cada geração 10x mais rápida e 10x menor latência. Espectro muda, arquitetura muda, aplicações mudam. Não é upgrade; é revolução.</p><blockquote class="quote">\"5G não é 4G melhorado. É arquitetura completamente nova que habilita coisas impossíveis antes.\"</blockquote><p>Você aprenderá que evolução contínua é motor de tecnologia móvel.</p>`},
+    {
+      id: 'FNDM',
+      title: 'Fundamentos de Telecomunicações',
+      html: `<h4>O ABC das redes sem fio</h4><p><strong>Redes móveis usam ondas eletromagnéticas</strong>. Frequência, comprimento de onda, potência, modulação são fundamentais. Sem entender, 5G é mágica; com entender, é engenharia.</p><p><strong>Espectro eletromagnético</strong>: Rádio (MHz), Micro-ondas (GHz), Infrared, UV, etc. Redes móveis usam bandas específicas: LTE em 700MHz-2.6GHz, 5G em 2.6GHz-28GHz+.</p><p><strong>Frequência e comprimento de onda**: Inversamente relacionados. Frequência alta = comprimento curto = viaja menos longe = precisa mais antenas. 5G (28GHz) viaja menos que 4G (2GHz), por isso precisa células menores.</p><blockquote class="tip">Dica: Frequência alta é "caro" em distância, mas "barato" em latência e capacidade. Trade-off fundamental.</blockquote><p><strong>Modulação**: Forma como informação é codificada na onda. 4G usa OFDM. 5G usa OFDM melhorado. Modulação melhor = capacidade maior com mesma energia.</p><p><strong>Antenas e MIMO</strong>: Multiple Input Multiple Output. 4G tem 2x2 ou 4x4. 5G tem 64x64 ou mais. Múltiplas antenas significam múltiplos streams de dados simultâneos = capacidade exponencial.</p><blockquote class="example">Exemplo: Célula 4G com 4x4 MIMO = 4 streams. Se cada stream é 100Mbps = 400Mbps total. Célula 5G com 64x64 MIMO = 64 streams. Se cada é mesmo 100Mbps = 6.4 Gbps. Diferença: MIMO.</blockquote><p><strong>Codificação e modulação**: Técnicas para comprimir mais dados em mesma banda. Shannon limit diz qual é máximo teórico; técnicas novas se aproximam desse limite.</p><p><strong>Duplex e duplexação**: Full-duplex (falar e ouvir simultaneamente) vs Half-duplex (alternancia). 4G é hybrid; 5G tende Full-duplex com TDD (time division duplex).</p><blockquote class="quote">\"Entender espectro é entender limitações e possibilidades de redes móveis.\"</blockquote><p>Você aprenderá física e engenharia por trás das redes que você usa diariamente.</p>`},
+    {
+      id: 'ARCH',
+      title: 'Arquitetura de Redes Móveis',
+      html: `<h4>Como redes móveis são organizadas</h4><p><strong>Rede móvel tem três partes: dispositivo, rede acesso, rede core</strong>. Compreender arquitetura revela por que 5G é melhor.</p><p><strong>Dispositivo (UE)</strong>: Seu telefone. Tem antenas, rádio, SIM. Comunica com base station mais próxima usando espectro alocado.</p><p><strong>Rede de acesso (RAN - Radio Access Network)</strong>: Base stations (torres celulares). Cada célula cobre ~1km (cidade) a 10km (rural). Quando você se move entre células, handoff automático acontece.</p><p><strong>4G vs 5G RAN**: 4G tem arquitetura centralizada. 5G é distribuída (Distributed RAN ou DU). Fronthaul (conexão entre DU e CU) precisa alta performance. Isso permite latência menor.</p><blockquote class="tip">Dica: Menor latência em 5G vem de arquitetura distribuída, não só frequência. Design de rede importa tanto quanto espectro.</blockquote><p><strong>Rede Core**: Switches, routers, bancos de dados. Conecta todas as células. Roteia chamadas, gerencia dados, executa policy (QoS, throttling). 5G Core é completamente novo, cloud-native, baseado em containers.</p><p><strong>Backhaul</strong>: Fibra/microondas conectando base station ao core. 4G usava fibra ou microondas. 5G também, mas requisitos de latência são rígidos.</p><blockquote class="example">Exemplo: Call de vídeo entre dois smartphones. 1) Teu phone → base station (RAN). 2) RAN → Core. 3) Core → base station destino. 4) Base station → phone destino. Qualquer gargalo quebra qualidade. 5G otimiza cada etapa.</blockquote><p><strong>Slicing**: Fatiar rede virtual. Banco pode ter slice crítico (ultra-confiável), video pode ter slice relaxado. Mesmo espectro, diferentes serviços, diferentes QoS. Novo em 5G.</p><p><strong>Edge Computing**: Computação perto do usuário, não em data center remoto. 5G + MEC (Multi-Access Edge Computing) = latência ainda menor, aplicações locais possíveis.</p><blockquote class="quote">\"Arquitetura 5G não é upgrade de 4G; é redesenho completo baseado em princípios novos.\"</blockquote><p>Você aprenderá como redes trabalham por trás da cortina.</p>`},
+    {
+      id: 'CMPR',
+      title: 'Comparação: 4G vs 5G vs 6G',
+      html: `<h4>Números que contam história</h4><p><strong>Comparação técnica revela o quão maior é o passo 5G</strong>. Não é upgrade linear; é mudança qualitativa.</p><p><strong>Latência**: 4G: 50ms. 5G: 1ms. 6G teórico: 0.1ms. Diferença: 4G é "sentir" delay em chamada. 5G é "instantâneo" em aplicações críticas (cirurgia remota). 6G é imperceptível humano.</p><p><strong>Velocidade**: 4G: até 100 Mbps prático. 5G: até 10 Gbps prático. 6G: teórico 100+ Gbps. Diferença: 4G para streaming. 5G para download de filme em segundos. 6G para hologramas live.</p><p><strong>Densidade de conexão**: 4G: 60 mil/km². 5G: 1 milhão/km². 6G: indefinido, mas esperado 100+ milhões/km². Diferença: 4G para cidades. 5G para estádio lotado. 6G para "smart dust" (sensores minúsculos ubíquos).</p><blockquote class="tip">Dica: Latência é métrica mais importante, não velocidade. Velocidade importa para download; latência importa para interatividade.</blockquote><p><strong>Espectro usado**: 4G: até 3 GHz. 5G: até 100 GHz (mmWave). 6G: até 300+ GHz (terahertz). Frequência alta = capacidade exponencial, mas alcance reduzido.</p><p><strong>Eficiência energética**: 4G: ~1 byte/joule. 5G: ~10 bytes/joule. 6G: esperado 100+. Significado: 5G transmite mesmo volume com menos bateria. Importante para IoT.</p><blockquote class="example">Exemplo: Teleconferência em 4G é pixelado, lag notável. 5G é clara, zero lag. 6G seria holograma 3D em tempo real. Diferença em latência faz aplicações completamente diferentes viáveis.</blockquote><p><strong>Banda disponível**: 4G: ~100 MHz por banda. 5G: até 400 MHz (FR1) ou 800 MHz (FR2 mmWave). Mais banda = capacidade maior.</p><p><strong>Alcance**: 4G: 2-10km típico. 5G: 300m-1.5km típico (mmWave menor, sub-6GHz parecido com 4G). 6G: incerto. Frequência alta viaja menos, precisa mais cells.</p><blockquote class="quote">\"5G não é revolucionário por velocidade. É por latência ultra-baixa que habilita novas aplicações.\"</blockquote><p>Você aprenderá que números revelam capacidades, não só velocidade do download.</p>`}
+  ],
+  flashcards: [
+    {q: 'Qual é a sequência de gerações de redes?', a: '1G (analógico, voz) → 2G (digital, SMS) → 3G (dados baixos) → 4G (streaming) → 5G (ultra-baixa latência).'},
+    {q: 'Qual é principal diferença 2G e 3G?', a: '2G adicionou SMS. 3G adicionou dados em tempo real (internet móvel).'},
+    {q: 'Qual é principal diferença 4G e 5G?', a: '4G é velocidade (Mbps). 5G é latência (1ms) e capacidade (MIMO 64x64).'},
+    {q: 'Por que frequência alta em 5G?', a: 'Frequência alta = mais capacidade, mas viaja menos longe. Trade-off entre capacidade e cobertura.'},
+    {q: 'O que é MIMO?', a: 'Multiple Input Multiple Output. Múltiplas antenas = múltiplos streams = capacidade maior.'},
+    {q: 'Como 5G é distribuído diferente de 4G?', a: '5G tem RAN distribuído (DU) vs 4G centralizado. Permite latência menor.'},
+    {q: 'O que é Network Slicing?', a: 'Dividir rede virtual em múltiplas fatias com diferentes QoS. Banco crítico, video relaxado.'},
+    {q: 'Qual é latência em 4G vs 5G?', a: '4G: 50ms. 5G: 1ms. Diferença habilita aplicações críticas (cirurgia remota, carros autônomos).'},
+    {q: 'Qual é alcance típico de 5G mmWave?', a: '300-500 metros. Frequência alta = menos distância. Por isso precisa mais cells.'},
+    {q: 'O que é a métrica mais importante em 5G?', a: 'Latência, não velocidade. Latência baixa habilita interatividade real-time.'},
+    {q: 'Como 6G diferencia de 5G?', a: 'Frequência terahertz (300+ GHz), latência 0.1ms, densidade 100M+ por km², aplicações desconhecidas.'},
+    {q: 'Por que 5G Core é cloud-native?', a: 'Permite flexibilidade, escalamento, slicing. Legacy 4G Core era monolítico.'}
+  ],
+  quizzes: [
+    {q: 'Qual geração adicionou SMS?', opts: ['1G', '2G', '3G', '4G'], correct: 1},
+    {q: 'Qual é latência 5G?', opts: ['50ms', '10ms', '1ms', '0.1ms'], correct: 2},
+    {q: 'Por que 5G precisa de mais cells que 4G?', opts: ['Custo', 'Frequência alta = alcance menor', 'Governo exige', 'Nenhuma razão'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo: Evolução das Telecomunicações',
+    points: [
+      'Cada geração traz 10x mais velocidade e 10x menor latência. 4G é streaming; 5G é instantâneo.',
+      'Espectro, modulação, MIMO determinam capacidade. 5G combina frequência alta + MIMO 64x64 + arquitetura distribuída.',
+      'Arquitetura 5G é cloud-native, slicing, edge computing. Não é upgrade de 4G; é redesenho completo.',
+      'Latência é mais importante que velocidade. 5G habilita aplicações impossíveis em 4G: carros autônomos, cirurgia remota.'
+    ]
+  }
+},
+{
+  id: 1,
+  title: 'Como Funciona o 5G',
+  free: false,
+  topics: [
+    {
+      id: 'FRQN',
+      title: 'Frequências e Bandas 5G',
+      html: `<h4>Onde 5G transmite</h4><p><strong>5G usa duas principais faixas: FR1 (Sub-6 GHz) e FR2 (mmWave acima de 24 GHz)</strong>. Cada uma tem trade-offs únicos.</p><p><strong>FR1 (Sub-6 GHz)</strong>: 450MHz a 6GHz. Alcance excelente (1-2km). Viaja através paredes. Velocidade moderada (até 1 Gbps real). Desvantagem: menos banda disponível, espectro congestionado.</p><p><strong>Bandas FR1 comuns**: n78 (3.5 GHz, Brasil), n77 (3.5 GHz, China), n79 (4.5 GHz, vários países). Estas são "primeira onda" de 5G.</p><blockquote class="tip">Dica: BR usa principalmente n78 em 3.5 GHz. Seu telefone 5G precisa suportar n78 para funcionar bem.</blockquote><p><strong>FR2 (mmWave)</strong>: 24-100 GHz. Alcance curto (300m-1km). NÃO penetra paredes bem. Velocidade extrema (até 10 Gbps real). Vantagem: banda ENORME disponível (não congestionada).</p><p><strong>Bandas FR2 comuns**: n257 (28 GHz), n258 (26 GHz), n260 (39 GHz). EUA usa 28 e 39 GHz. Brasil está explorando, mas não implementado em massa.</p><p><strong>Vantagem Sub-6**: Cobertura, penetração. "Real" 5G que chega em casa. Desvantagem: velocidade moderada, menos especial que mmWave.</p><blockquote class="example">Exemplo: Você está em rua. Smartphone conecta Sub-6 5G (n78), obtém ~500 Mbps, funciona bem em qualquer lugar. Em estádio com mmWave, obtém ~5 Gbps, mas só em linha de visão com antena.</blockquote><p><strong>Desvantagem mmWave**: Alcance curto, penetração pobre. Mas latência é melhor. Ideal para indoor de alta densidade (estádios, aeroportos) ou links ponto-a-ponto.</p><p><strong>Mid-band**: Termo não-oficial para 3.5-6 GHz. Melhor compromisso entre cobertura e capacidade. "Ouro" de 5G. Brasil investe aqui.</p><blockquote class="quote">\"Sub-6 5G é para massa. mmWave é para hotspots. Ambos são 5G; contextos diferentes.\"</blockquote><p>Você aprenderá que frequência determina aplicação.</p>`},
+    {
+      id: 'TXEC',
+      title: 'Transmissão e Codificação',
+      html: `<h4>Como dados viajam pelo ar</h4><p><strong>5G otimiza cada bit</strong>. Modulação, codificação, MIMO work together para máxima capacidade em espectro disponível.</p><p><strong>OFDM (Orthogonal Frequency Division Multiplexing)</strong>: Divide banda em múltiplas sub-carriers. Cada sub-carrier é portadora de dados. Ortogonal significa sem interferência. 4G usa OFDM. 5G usa OFDM-A (melhorado).</p><p><strong>Modulação em 5G</strong>: QPSK (4 estados), 16-QAM, 64-QAM, 256-QAM. Quanto mais estados, mais bits por símbolo, mas requer sinal mais limpo. 4G para a em 256-QAM; 5G continua aí. Não é diferença maior.</p><blockquote class="tip">Dica: Modulação alta (256-QAM) requer sinal bom. Se sinal ruim, automático degrada para QPSK. Adaptativo baseado qualidade.</blockquote><p><strong>Codificação (FEC - Forward Error Correction)</strong>: Adiciona redundância. Se alguns bits são perdidos, pode recuperar. LDPC é novo código em 5G (vs Turbo code em 4G). LDPC é mais eficiente em latência baixa.</p><p><strong>MIMO (Multiple-Input Multiple-Output)</strong>: 4G tipicamente 4x4. 5G pode ser 64x64 (ou até 256x256 em futuro). 64 antenas = 64 streams simultâneos = 16x capacidade de 4x4. Diferença é gigante.</p><p><strong>Beamforming**: Antenas apuntam sinal direto a usuário, não dispersa. Melhora SNR (signal-to-noise ratio). Essencial para mmWave pois sinal é fraco.</p><blockquote class="example">Exemplo: Antena transmite em 28 GHz mmWave. Sem beamforming, sinal se dispersa, atenuação enorme. Com beamforming (256 antenas apontando você), sinal concentrado, recepção boa. Diferença é dia/noite.</blockquote><p><strong>Massive MIMO e hybrid precoding**: 64x64 MIMO em frequência alta (mmWave) requer muita circuitaria. Solução: hybrid—alguns beamforming em RF (analog), depois processamento digital. Reduz complexidade.</p><p><strong>Spatial Multiplexing**: Transmite múltiplos streams para mesmo usuário simultaneamente. Usuario tem múltiplas antenas, recebe múltiplos streams, combina. Capacidade linear com número de antenas (até limite de canais).</p><blockquote class="quote">\"5G multiplica capacidade via MIMO. 64 antenas vs 4 é diferença entre gridlock e autoestrada vazia.\"</blockquote><p>Você aprenderá que transmissão em 5G é orquestração complexa de técnicas.</p>`},
+    {
+      id: 'QOS',
+      title: 'Qualidade de Serviço e Latência',
+      html: `<h4>Garantindo experiência</h4><p><strong>QoS (Quality of Service) é promessa: você obtém X Mbps, Y ms latência, Z% confiabilidade</strong>. Antes, era "melhor esforço". 5G é diferente.</p><p><strong>Ultra-Reliable Low-Latency Communication (URLLC)</strong>: Até 99.999% confiabilidade, 1ms latência. Para cirurgias, carros autônomos, drones. Trade-off: menos throughput para mais confiabilidade.</p><p><strong>Enhanced Mobile Broadband (eMBB)</strong>: Velocidade alta (até 10 Gbps), latência moderada (10ms OK). Para streaming, download. Volume alto, confiabilidade moderada.</p><p><strong>Massive Machine Type Communication (mMTC)</strong>: Bilhões de dispositivos IoT, latência relaxada (100ms OK), pouca dados por device. Densidade extrema, não velocidade.</p><blockquote class="tip">Dica: 5G tem múltiplas "sabores". URLLC é diferente de eMBB. Escolha certo para aplicação.</blockquote><p><strong>Network Slicing viabiliza isto</strong>. Operador cria slice URLLC com garantia, slice eMBB com melhor esforço, slice mMTC com densidade. Mesmo espectro, diferentes contratos.</p><p><strong>Latência em 5G**: RAN contribui ~1ms (vs 50ms em 4G). Core contribui ~5-10ms (fiber speed of light). Total: ~10ms possível (vs 50-100ms em 4G). Gigante diferença.</p><blockquote class="example">Exemplo: Cirurgia remota. Médico em São Paulo, paciente em Rio. Câmera → São Paulo (5ms), feedback → Rio (5ms), total ~10ms round-trip. Imperceptível. Em 4G (100ms), seria desconcertante.</blockquote><p><strong>Redundância e failover**: Para URLLC, dados viajam múltiplos caminhos. Se um falha, outro continua. Overhead, mas confiabilidade aumenta exponencialmente.</p><p><strong>Orchestration e SDN**: Software-Defined Network permite roteamento dinâmico. Se caminho A está congestionado, muda para B. Inteligência em software, não hardware.</p><blockquote class="quote">\"QoS em 5G é diferença entre "hope for best" e "guarantee performance\".\"</blockquote><p>Você aprenderá que confiabilidade é planejada, não acidental.</p>`},
+    {
+      id: 'SEC',
+      title: 'Segurança em 5G',
+      html: `<h4>Proteção contra ameaças modernas</h4><p><strong>5G é mais vulnerável que 4G</strong>—maior superfície de ataque. Mitigações incorporadas, mas complexidade aumenta risco.</p><p><strong>Aumentos de atacantes</strong>: Mais dispositivos IoT = mais pontos de entrada. mmWave e frequências altas permitem direcionamento de sinal (menos espionagem?). Mas SDN e cloud core = novo vetor de ataque.</p><p><strong>Authentication e encryption**: 5G reforça. SIM authentication obrigatória (4G era optional). Criptografia em camadas (PHY, MAC, RLC). Mas chaves devem ser gerenciadas bem.</p><blockquote class="tip">Dica: 5G é tão seguro quanto sua implementação. Backdoors em hardware (chips), protocols fracos em software, configuração pobre = inseguro.</blockquote><p><strong>Geopolitics**: China vs. EUA batalhando sobre Huawei/ZTE equipment. Preocupação: backdoors em RAN. Brasil navegando tensão—Huawei fez muito de 4G, compete em 5G.</p><p><strong>Network slicing security**: Isolação entre slices. URLLC slice isolado de mMTC. Se um violado, outros protegidos. Mas orquestrator é ponto crítico.</p><p><strong>API security**: 5G expõe muitas APIs (MEC, edge). APIs abertas = conveniência, mas também risco. Autenticação, autorização, throttling são críticos.</p><blockquote class="example">Exemplo: Banco usa 5G URLLC para transações. Ataque em slice de video não afeta slice de banco. Isolação funciona. Mas se ataque direto em slice de banco, falha (requer autenticação forte, cifrado).</blockquote><p><strong>Quantum resistance**: Criptografia atual (RSA) será quebrada por computador quântico. 5G deve migrar para PQC (Post-Quantum Crypto) nos próximos anos. Pesquisa ativa.</p><p><strong>Zero trust**: Modelo de segurança. Não confie em rede. Autentique tudo sempre. 5G permite granular zero trust via slicing e API management.</p><blockquote class="quote">\"5G mais rápido é óbvio. 5G mais seguro é hard. Vigilância constante é necessária.\"</blockquote><p>Você aprenderá que segurança é processo contínuo, não destino.</p>`}
+  ],
+  flashcards: [
+    {q: 'Qual é a diferença entre FR1 e FR2 em 5G?', a: 'FR1 (sub-6 GHz): alcance bom, menos capacidade. FR2 (mmWave): alcance curto, enorme capacidade.'},
+    {q: 'Qual banda 5G é usada no Brasil?', a: 'Principalmente n78 em 3.5 GHz (FR1/Mid-band).'},
+    {q: 'O que é OFDM-A?', a: 'Orthogonal FDM melhorado para 5G. Divide banda em múltiplas sub-carriers ortogonais.'},
+    {q: 'Como 64x64 MIMO melhora capacidade?', a: '64 antenas = 64 streams simultâneos vs 4 em MIMO 4x4 = 16x capacidade.'},
+    {q: 'O que é URLLC?', a: 'Ultra-Reliable Low-Latency Communication. 99.999% confiabilidade, 1ms latência. Para cirurgia, carros autônomos.'},
+    {q: 'Como Network Slicing funciona?', a: 'Divide rede em múltiplas fatias virtuais. Slice URLLC garantido, slice eMBB melhor esforço.'},
+    {q: 'Qual é latência em 5G vs 4G?', a: '5G: ~10ms. 4G: ~50-100ms. Diferença habilita aplicações críticas.'},
+    {q: 'O que é beamforming?', a: 'Antenas apuntam sinal diretamente a usuário. Melhora sinal em mmWave onde transmissão é fraca.'},
+    {q: 'Por que 5G é mais vulnerável que 4G?', a: 'Maior superfície de ataque (IoT), SDN core novo, APIs abertas. Mas mitigações incorporadas.'},
+    {q: 'O que é eMBB em 5G?', a: 'Enhanced Mobile Broadband. Velocidade alta, latência moderada. Para streaming, download.'},
+    {q: 'O que é mMTC?', a: 'Massive Machine Type Communication. Bilhões de IoT, latência relaxada, pouca dados.'},
+    {q: 'Por que quantum resistance é importante?', a: 'Computadores quânticos quebrarão RSA. 5G deve migrar para PQC nos próximos anos.'}
+  ],
+  quizzes: [
+    {q: 'Qual é frequência mmWave 5G?', opts: ['2-4 GHz', '10-20 GHz', '24-100 GHz', '> 300 GHz'], correct: 2},
+    {q: 'MIMO 64x64 vs MIMO 4x4 melhora capacidade por quanto?', opts: ['2x', '8x', '16x', '64x'], correct: 2},
+    {q: 'Latência alvo URLLC é?', opts: ['50ms', '10ms', '1ms', '100ms'], correct: 2}
+  ],
+  summary: {
+    title: 'Resumo: Como Funciona 5G',
+    points: [
+      'FR1 (sub-6) para cobertura, FR2 (mmWave) para capacidade. Brasil usa FR1 3.5 GHz (n78).',
+      'MIMO 64x64, OFDM-A, beamforming multiplicam capacidade. Técnicas trabalham em harmonia.',
+      'URLLC (crítico), eMBB (velocidade), mMTC (IoT). Network slicing aloca recursos por caso de uso.',
+      'Latência 10ms 5G vs 100ms 4G habilita aplicações impossíveis: cirurgia remota, carros autônomos.'
+    ]
+  }
+},
+{
+  id: 2,
+  title: 'Edge Computing',
+  free: false,
+  topics: [
+    {
+      id: 'EDCM',
+      title: 'Computação de Borda',
+      html: `<h4>Trazer processamento perto do usuário</h4><p><strong>Edge computing é paradigma onde processamento acontece perto da fonte de dados</strong>. Em vez de enviar tudo para data center remoto (10-100ms), processa localmente (1-5ms).</p><p><strong>Motivações</strong>: Latência (data center distante é lento). Bandwidth (enviar 4K video para cloud é caro). Privacidade (dados sensíveis não deixam local). Resiliência (offline still works).</p><p><strong>Arquitetura**: Cloud (centrado, poderoso) → Fog (intermediário) → Edge (local). Histórico reverso: Cloud era tudo; agora, inteligência distribuída.</p><p><strong>MEC (Multi-Access Edge Computing)</strong>: Computação no RAN, perto das base stations. Sub-6 GHz pode suportar MEC (mais latência tolerante). mmWave requer MEC (latência crítica).</p><blockquote class="tip">Dica: Edge não substitui cloud. É complemento. Crítico/local em edge; bulk/histórico em cloud.</blockquote><p><strong>Casos de uso**</strong>: 1) Análise de vídeo local (face recognition, crowd detection sem enviar para cloud). 2) Jogos (servidor local para latência <10ms). 3) AR/VR (processamento local de sensor fusion). 4) Automação (robôs decidem localmente).</p><p><strong>Implementação**: Containerização (Docker) para rodar microservices em edge. Orquestração (Kubernetes) para escalar. Importante: resources limitados, deve ser eficiente.</p><blockquote class="example">Exemplo: Câmera de segurança em loja. Modelo ML roda em edge device (Raspberry Pi). Detecta roubo localmente, alerta imediatamente. Se enviasse para cloud, latência 100ms+, muito tarde. Edge resolve em 50ms.</blockquote><p><strong>Latência edge**: ~5-10ms vs cloud ~100ms. Diferença é crítica em aplicações tempo-real.</p><p><strong>Persistência de dados**: Edge pode cachear dados, servir offline. Quando reconecta, sincroniza com cloud. Resiliência aumenta.</p><blockquote class="quote">\"Edge computing é não perguntar 'posso processar em cloud?' mas 'deve processar em edge?'.\"</blockquote><p>Você aprenderá arquitetura distribuída moderna.</p>`},
+    {
+      id: 'MEC',
+      title: 'MEC e 5G',
+      html: `<h4>Sinergia natural</h4><p><strong>5G e MEC são feitos um para outro</strong>. 5G fornece bandwidth/latência; MEC fornece processamento local. Juntos, aplicações impossíveis se tornam viáveis.</p><p><strong>Por que 5G+MEC</strong>: 1) RAN latência 1ms. 2) Processamento local 5ms. 3) Total: ~6ms. Em 4G+cloud seria ~150ms. Gigante diferença.</p><p><strong>Casos 5G+MEC</strong>: 1) Cirurgia remota (1ms latência crítica). 2) Carros autônomos (decisão local em <50ms). 3) Drones em ambiente complexo (feedback imediato). 4) Industrial IoT (máquinas decidem localmente).</p><blockquote class="tip">Dica: MEC não é apenas máquinas. É arquitetura onde inteligência está distribuída, não centralizada.</blockquote><p><strong>Arquitetura 5G+MEC**: UE → gNB (5G base station) com MEC co-localizado → cloud. UE obtém latência ultra-baixa para local, pode usar cloud para bulk.</p><p><strong>Orquestração**: Operador decide: este aplicativo roda no edge, esse na cloud. Policy-based. Pode mudar dinamicamente.</p><p><strong>Exemplo prático: Jogos online</strong>. Servidor game em MEC local (1ms latência). Conteúdo (assets, texturas) em cloud CDN (batching OK, latência não importa). Game client em edge envia commands (baixa bandwidth), recebe estado (stream contínua).</p><blockquote class="example">Exemplo: Carro autônomo em São Paulo. LTE base station tem MEC (servidor local). Câmeras → edge ML model → decisão (frenar) em <50ms. Sem MEC, latência seria 150ms, muito tarde se criança corre rua.</blockquote><p><strong>Segurança em MEC**: Dados processados localmente = privacidade melhor. Face recognition em edge phone vs cloud. Mas, edge devices são mais vulneráveis. Trade-off.</p><p><strong>Custonomia**: MEC pode operar offline. Se 5G desconecta, edge continua servindo. Resiliência aumenta.</p><blockquote class="quote">\"5G+MEC é computação distribuída para era de IoT. Não há volta para cliente-servidor centralizado.\"</blockquote><p>Você aprenderá que latência baixa habilita sistemas autônomos.</p>`},
+    {
+      id: 'APLI',
+      title: 'Aplicações Práticas',
+      html: `<h4>Exemplos no mundo real</h4><p><strong>Edge computing não é teoria. Já está sendo usado em produção em vários setores</strong>. Exemplos mostram impacto real.</p><p><strong>Logística**: Sensores em containers, processamento local detecta roubo/damage imediatamente. Operador sabe em segundos, não horas.</p><p><strong>Manufatura**: Máquinas CNC com sensores, detecção de anomalia local. Se vibração anormal, máquina para antes danificar. Prevenção vs reação.</p><p><strong>Varejo**: Câmeras na loja, análise de footfall local. "Quantos clientes estão na seção X?" Inventário inteligente, não contagem manual.</p><blockquote class="tip">Dica: Edge viável começou com 5G. 4G latência não permitia. 5G habilita, mas é aplicação + tecnologia.</blockquote><p><strong>Saúde**: Wearables com análise local. Queda detectada imediatamente sem enviar para cloud. Privacidade mantida, latência zero.</p><p><strong>Telecomunicações**: Operador oferece "edge as a service". Desenvolvedor sobe aplicação no edge, atinge latência ultra-baixa.</p><blockquote class="example">Exemplo: Startup de AR realidade aumentada. App roda no edge device de usuário. ML roda em MEC local. Latência <10ms permite AR responsivo. Sem edge, seria 100ms+, desastroso para AR (faz ficar tonto).</blockquote><p><strong>Desafio**: Fragmentação. Cada operador, cada device, diferentes specs. Portabilidade é difícil. Kubernetes ajuda, mas ainda é challenge.</p><p><strong>Futuro**: "Composable edge" onde você encadeia múltiplos edge nodes. Aplicação distribuída entre plusieurs edges. Mais complexo, mas mais poderoso.</p><blockquote class="quote">\"Edge computing é invisível quando funciona bem. Você não sente latência, só pensa 'funciona'.\"</blockquote><p>Você aprenderá que tecnologia é apenas ferramenta; aplicação importa.</p>`},
+    {
+      id: 'ARQD',
+      title: 'Arquitetura de Edge',
+      html: `<h4>Desenho de sistemas distribuídos</h4><p><strong>Arquitetura edge requer pensamento diferente de cloud tradicional</strong>. Recursos limitados, latência crítica, resiliência essencial.</p><p><strong>Modelo de carga**: Decisão: esta função roda onde? Local, edge, cloud? Baseado em: latência requerida, recursos disponíveis, data sensitivity.</p><p><strong>Orquestração**: Sistema decide onde rodar workload. Baseado em disponibilidade, load, latência. Kubernetes, OpenStack, ou propietário.</p><p><strong>Resiliência**: Edge desconecta? Sistema funciona offline em modo degradado. Quando reconecta, sincroniza. Eventual consistency, não strong consistency.</p><blockquote class="tip">Dica: Offline-first design é diferente de cloud. Você assume desconexão, planeja recovery. Difícil psicologicamente mas essencial.</blockquote><p><strong>Sincronização de estado**: Se edge processa, cloud deve sincronizar. Conflitos podem ocorrer (versão A e B ambos atualizaram). Resolução é complexa. CRDTs ajudam.</p><p><strong>Observabilidade**: Com múltiplos edges, debugging é hard. Logs, traces, metrics devem ser agregados. ELK stack, Prometheus são padrão.</p><blockquote class="example">Exemplo: Aplicação de delivery. Edge (phone driver) decide rota localmente (GPS, ML, offline). Envia decision para cloud (assíncrono). Cloud verifica, atualiza mapa global. Conflito: driver foi para A, mas cloud recomendou B. Resolução: "driver local sabe melhor", usa decisão local.</blockquote><p><strong>Security**: Edge é mais vulnerável. Criptografia, attestation, secure boot críticos. Mas edge é resource-constrained, trade-off é real.</p><p><strong>Networking**: Latência entre edges pode ser variável. Aplicação deve tolerar jitter. Protocols como QUIC (vs TCP) ajudam tolerância a pacotes perdidos.</p><blockquote class="quote">\"Arquitetura edge é puzzel. Cada peça tem trade-offs. Design holístico é essencial.\"</blockquote><p>Você aprenderá a desenhar sistemas robusto</p>`}
+  ],
+  flashcards: [
+    {q: 'O que é edge computing?', a: 'Processamento perto da fonte de dados (local/base station) em vez de cloud remoto.'},
+    {q: 'Qual é a vantagem principal de edge?', a: 'Latência baixa (~5ms vs cloud ~100ms) e privacidade (dados não deixam local).'},
+    {q: 'O que é MEC?', a: 'Multi-Access Edge Computing. Computação no RAN (base station), co-localizado com 5G.'},
+    {q: 'Por que 5G+MEC são naturalmente sinérgicos?', a: 'RAN latência 1ms + processamento local 5ms = ~6ms total. Crítico para carros autônomos, cirurgia.'},
+    {q: 'Qual é exemplo perfeito para edge?', a: 'Câmera segurança detecta roubo localmente (<50ms) vs enviando para cloud (>100ms).'},
+    {q: 'O que é "offline-first design"?', a: 'Design assumindo desconexão. Edge funciona offline, sincroniza quando conecta. Resiliência.'},
+    {q: 'Qual é desafio em sincronização de edge-cloud?', a: 'Conflitos de versão. Se ambos atualizaram, qual vence? Resolução é complexa.'},
+    {q: 'Por que fragmentação é desafio em edge?', a: 'Cada operador/device diferente. Portabilidade é difícil. Kubernetes ajuda, mas ainda é problema.'},
+    {q: 'Qual é latência alvo em aplicações críticas?', a: '<50ms para carros autônomos, <1ms para cirurgia remota.'},
+    {q: 'Como edge melhora privacidade?', a: 'Dados sensíveis processados localmente, não enviados para cloud.'},
+    {q: 'O que é "composable edge"?', a: 'Encadear múltiplos edge nodes. Aplicação distribuída entre vários edges.'},
+    {q: 'Por que TCP é ruim para edge, QUIC é melhor?', a: 'TCP sensível a jitter e perda de pacotes. QUIC tolera melhor, latência menor.'}
+  ],
+  quizzes: [
+    {q: 'Latência edge vs cloud?', opts: ['Mesma', 'Edge ~5ms, cloud ~100ms', 'Cloud rápido', 'Depende'], correct: 1},
+    {q: 'Qual é melhor caso de uso para edge?', opts: ['Download de arquivo', 'Análise em tempo real', 'Armazenamento de dados', 'Nenhum'], correct: 1},
+    {q: '5G latência + MEC latência ≈?', opts: ['50ms', '10ms', '6ms', '100ms'], correct: 2}
+  ],
+  summary: {
+    title: 'Resumo: Edge Computing',
+    points: [
+      'Edge computing move processamento perto do usuário. Latência ~5ms vs cloud ~100ms.',
+      '5G+MEC natural: RAN latência ultra-baixa + processamento local = aplicações críticas viáveis.',
+      'Offline-first design: edge funciona desconectado, sincroniza quando reconecta.',
+      'Casos: carros autônomos, cirurgia remota, analytics em tempo real, privacidade sensível.'
+    ]
+  }
+},
+{
+  id: 3,
+  title: 'Impacto na Indústria',
+  free: false,
+  topics: [
+    {
+      id: 'MANU',
+      title: 'Manufatura e Indústria 4.0',
+      html: `<h4>5G transformando fábricas</h4><p><strong>Indústria 4.0 é sonho de 30 anos. 5G o torna viável</strong>. Latência ultra-baixa, confiabilidade 99.999%, densidade conexão permitem automação completa.</p><p><strong>Wireless em fábrica**: Historicamente, fábricas usavam cabos. Wireless é disruptivo porque máquinas podem mover. Antes: máquina instalada, nunca muda. Depois: máquinas móveis, reconfiguráveis.</p><p><strong>URLLC crítico para manufatura**: Braço robótico precisa latência <50ms para segurança. Produtividade requer uptime >99.99%. Banda larga para vídeo HD de sensores.</p><blockquote class="tip">Dica: Fábrica 5G não é science fiction. Siemens, Samsung, outras iniciativas piloto já em produção.</blockquote><p><strong>Aplicações manufatura**</strong>: 1) AGV (autonomous guided vehicles) em fábrica, navegam sem cabos. 2) Sensores em máquinas, detecção preditiva de falhas. 3) Robots colaborativos com humans, comunicação instantânea. 4) Qualidade via visão computacional em tempo real.</p><p><strong>ROI**: Minimizar downtime, maximizar uptime. Exemplo: fábrica de chips, downtime custa R$1M/hora. Confiabilidade 5G economiza centenas de milhões.</p><blockquote class="example">Exemplo: Montadora de carros. Esteira de produção com 50 robôs, cada um com câmera 4K, sensores diversos. Processamento via MEC, decisões locais <1ms. Antes 4G: latência varia 50-500ms, produção para frequentemente. Depois 5G: latência consistente <10ms, uptime cresce 5%.</blockquote><p><strong>Desafios**: Implementação é cara. Interoperabilidade entre máquinas antigas e 5G é hard. Segurança é crítico (sabotagem via wireless é risco).</p><p><strong>Visão futuro**: "Lights-out" fabricas onde poucos humanos (só supervisão). Robots e ML fazem tudo. Não fiction, mas 10-20 anos.</p><blockquote class="quote">\"Manufatura 5G não é over-hype. Economia é real, implementação está começando.\"</blockquote><p>Você aprenderá que 5G habilita eficiência industrial.</p>`},
+    {
+      id: 'AUTONOM',
+      title: 'Veículos Autônomos',
+      html: `<h4>Carros que se dirigem sozinhos</h4><p><strong>Carros autônomos não são possíveis sem 5G</strong>. Latência de decisão <50ms é crítico. 4G é incapaz.</p><p><strong>Sensor fusion**: Carro tem câmeras, LiDAR, radar, GPS. Dados fusionados em MEC local (nem sempre). Decisão: acelerar, frenar, virar. Tudo em <50ms.</p><p><strong>Comunicação V2X (Vehicle-to-Everything)</strong>: Carro fala com infraestrutura, outros carros, pedestres. Carro A freando → alerta carro B → freio automático. Sem demora, sem latência. 5G é enabler.</p><blockquote class="tip">Dica: Carros autônomos dependem em parte de conectividade. Sem 5G, ficam somente em trajetos programados (não dinâmicos).</blockquote><p><strong>Casos de uso**: 1) Taxis autônomos em cidades. 2) Trucks autônomos em rodovia. 3) Shuttle em campus/aeroporto. Cada um tem diferentes requisitos.</p><p><strong>Confiabilidade requerida**: Falha significa acidente. Requisito é "falha ultra-rara". 5G URLLC promete, mas implementação requer redundância (dual 5G, backup 4G).</p><blockquote class="example">Exemplo: Uber, Waymo testando carros autônomos em cidades. Dependem de maps, dados tempo real, comunicação. 5G reduce latência de sensor→decision→action. Sem ele, experiência é desconfortável (lag perceptível).</blockquote><p><strong>Regulação**: Governos ainda definem regras. "Quem é responsável se carro autônomo bate? Dono? Fabricante? Operadora 5G?" Resposta afeta viabilidade.</p><p><strong>Privacidade**: Carro coleta muitos dados (localização, câmeras). Onde dados vão? Quem acessa? Regulation tipo GDPR/LGPD aplicável.</p><blockquote class="quote">\"Carros autônomos com 5G é próximo passo da revolução de transporte. Impacto societal é gigante.\"</blockquote><p>Você aprenderá impacto de latência em segurança de transporte.</p>`},
+    {
+      id: 'SAUD',
+      title: 'Saúde Remota e Telemedicina',
+      html: `<h4>5G levando healthcare para casa</h4><p><strong>Telemedicina foi limited pela latência e banda</strong>. 5G libera novo tipos de intervenção remota.</p><p><strong>Cirurgia remota**: Cirurgião em São Paulo, paciente em região remota. Câmeras 4K no OR local, robô controlado remotamente pelo cirurgião. 5G latência <1ms faz impossível ficar imperceptível, quase como estar lá.</p><p><strong>Monitoramento contínuo**: Wearables com sensores (ECG, temperatura, O2). 5G permite streaming contínuo para hospital. Médico alerta se anormalidade. Prevenção vs reação.</p><blockquote class="tip">Dica: Regulação em saúde é rigorosa. Telemedicina cirurgia requer certificação, treinamento, responsabilidade legal.</blockquote><p><strong>Diagnóstico remoto**: Paciente em casa, câmera examina. AI análise junto com médico remoto. Diagnóstico, sem ir ao hospital. Reduz congestionamento hospitalar.</p><p><strong>Ambulância conectada**: Paciente em ambulância, vital signs streamed para hospital. Hospital sabe situação antes ambulância chegar. Preparação prévia salva tempo crítico.</p><blockquote class="example">Exemplo: Acidente em rodovia. Ambulância com 5G envia ECG, pressão, pulso em tempo real. Hospital vê, inicia preparo (chamada cirurgião, prepara sala). Ambulância chega, cirurgião já pronto. Reduz "golden hour" delay.</blockquote><p><strong>Mental health**: Terapia remota com vídeo claro, áudio cristalino (5G assegura). Pacientes em regiões rurais têm acesso. Destigmatiza telemedicina.</p><p><strong>Desafios**: Privacidade de dados médicos é crítica. Criptografia end-to-end essencial. Regulação varia por país. Brasil tem LGPD, EUA HIPAA, etc.</p><blockquote class="quote">\"5G em saúde salva vidas, não porque é medicina melhor, mas porque leva medicina a lugares antes inacessível.\"</blockquote><p>Você aprenderá que tecnologia é apenas enabler; aplicação importa.</p>`},
+    {
+      id: 'SMART',
+      title: 'Smart Cities',
+      html: `<h4>Cidades inteligentes conectadas</h4><p><strong>Smart city usa IoT+5G para otimizar vida urbana</strong>. Tráfego, segurança, energia, água—tudo otimizado via dados em tempo real.</p><p><strong>Controle de tráfego**: Câmeras em semáforos, análise em tempo real. Sistema ajusta semáforos dinamicamente. Fluxo otimizado, congestionamento reduzido.</p><p><strong>Policiamento inteligente**: Câmeras com reconhecimento facial. Pessoa procurada? Alerta automático. Patrulha não precisa dirigir sem alvo, sabe para onde vai.</p><blockquote class="tip">Dica: Privacidade em smart cities é tensão. Vigilância é efetiva, mas invasiva. Regulação devem balancear segurança e liberdade.</blockquote><p><strong>Estacionamento inteligente**: Sensores em vagas. App mostra vagas livres, dirige motorista direto. Reduz tempo procurando, reduz emissões.</p><p><strong>Gerenciamento de resíduos**: Bins com sensores, coleta quando cheios (vs schedule fixa). Eficiência, redução de vermes/mau cheiro.</p><blockquote class="example">Exemplo: Seoul implementou smart city. Tráfego reduziram 20%, segurança melhorou 15%, eficiência energética +5%. Custo implementação R$1B, economizado R$500M/ano. Payback 2 anos.</blockquote><p><strong>5G vs WiFi**: WiFi é local, requer infra. 5G é ubíquo, móvel. Para smart city dinâmico, 5G melhor.</p><p><strong>Desafio integração**: Múltiplas vendors (semáforo A, câmera B, sensor C). Interoperabilidade é pesadelo. Padrões e APIs abertas ajudam.</p><blockquote class="quote">\"Smart cities é visão bonita, mas implementação é complexo. 5G é enabler, não solução.\"</blockquote><p>Você aprenderá que tecnologia é ferramenta; design de cidade importa.</p>`}
+  ],
+  flashcards: [
+    {q: 'Por que 5G é crítico para manufatura?', a: 'URLLC (<50ms) e confiabilidade 99.999% permitem automação completa, robots colaborativos.'},
+    {q: 'O que é Indústria 4.0?', a: 'Manufatura totalmente automatizada com máquinas conectadas, decisões em tempo real, produção flexible.'},
+    {q: 'Como carros autônomos dependem de 5G?', a: 'Latência <50ms crítico para decisão sensor→action. V2X comunicação requer conectividade confiável.'},
+    {q: 'O que é V2X?', a: 'Vehicle-to-Everything. Carros falam com infraestrutura, outros carros, pedestres. 5G habilita.'},
+    {q: 'Qual é aplicação cirurgia remota?', a: 'Cirurgião remoto controla robô no paciente. 5G latência <1ms faz transparente para cirurgião.'},
+    {q: 'Como 5G melhora saúde?', a: 'Telemedicina remota, monitoramento contínuo, ambulância conectada, diagnóstico em casa.'},
+    {q: 'O que é smart city?', a: 'Cidade usando IoT+5G para otimizar tráfego, segurança, energia, água via dados tempo real.'},
+    {q: 'Por que smart city precisa 5G vs WiFi?', a: 'WiFi é local; 5G é ubíquo e móvel. Para cidade dinâmica, 5G melhor.'},
+    {q: 'Qual é desafio maior em carros autônomos?', a: 'Regulação e responsabilidade legal. Quem culpado se carro bate?'},
+    {q: 'Qual é desafio maior em smart city?', a: 'Integração de múltiplos vendors. Interoperabilidade é pesadelo.'},
+    {q: 'ROI de manufatura 5G?', a: 'Minimizar downtime. Fábrica de chips, downtime = R$1M/hora. Confiabilidade economiza centenas M.'},
+    {q: 'Qual é grande risco de smart city com cameras?', a: 'Privacidade. Vigilância é efetiva mas invasiva. Regulação deve balancear.'}
+  ],
+  quizzes: [
+    {q: 'Qual é requisito latência para carros autônomos?', opts: ['50ms', '100ms', '<50ms', '>500ms'], correct: 2},
+    {q: 'Qual é aplicação telemedicina mais crítica?', opts: ['Email com médico', 'Cirurgia remota', 'Consulta video', 'Nenhuma'], correct: 1},
+    {q: 'Por que manufatura 5G economiza dinheiro?', opts: ['Custa menos', 'Reduz downtime', 'Menos funcionários', 'Tudo acima'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo: Impacto na Indústria',
+    points: [
+      'Manufatura: Indústria 4.0 viável com URLLC 5G. Robots, AGVs, detecção preditiva.',
+      'Carros autônomos: Latência <50ms crítico. V2X comunicação requer 5G. Regulação ainda em evolução.',
+      'Saúde: Cirurgia remota, monitoramento contínuo, diagnóstico remoto. Telemedicina não ópção, é realidade.',
+      'Smart cities: Tráfego, segurança, energia otimizados. Tensão privacidade vs vigilância deve ser regulada.'
+    ]
+  }
+},
+{
+  id: 4,
+  title: '5G no Brasil',
+  free: false,
+  topics: [
+    {
+      id: 'IMPL',
+      title: 'Implementação e Roadmap',
+      html: `<h4>5G chegando ao país</h4><p><strong>Brasil iniciou 5G em 2021 com espectro alocado. Implementação acelerada, mas em ritmo brasileiro</strong>. Desafios únicos como grandes distâncias, diversidade de contextos.</p><p><strong>Timeline</strong>: 2021 primeiros pilotos em São Paulo. 2023 expansão para principais cidades. 2024+ cobertura regional. Completa cobertura (como 4G) é 10+ anos.</p><p><strong>Operadoras**: Claro, Vivo, TIM, Oi disputam. Claro/Vivo têm more spectrum (mais investimento esperado). Competição beneficia consumidor.</p><blockquote class="tip">Dica: 5G no Brasil começará nas capitais/cidades grandes. Cobertura rural é problema histórico (4G ainda chega parcialmente em regiões).</blockquote><p><strong>Espectro alocado**: Principalmente n78 (3.5 GHz, mid-band). Alguns pilotos em mmWave. Banda baixa (<1 GHz) será mantida para cobertura, banda alta para capacidade.</p><p><strong>Infraestrutura existente**: Operadoras devem compartilhar torres, fibra. Regulação do Anatel estabelece regras. Compartilhamento reduz custo, acelera expansão.</p><blockquote class="example">Exemplo: Vivo licencia 200 MHz em n78, Claro 100 MHz. Ambos precisam cobertura em Rio. Solução: compartilham torre RJ. Claro coloca antena própria, Vivo também mesma torre. Custo reduzido, cobertura igual para ambos.</blockquote><p><strong>Investimento total**: Estimado R$50B+ em 5 anos para cobertura nacional. Operadoras distribuem custo (usuários pagarão mais? talvez gradualmente).</p><p><strong>Desafios brasileiros**: 1) Dimensão geográfica (grande e sparsely populated em regiões). 2) Pobreza (muitos não pagam premium 5G). 3) Energia (regiões com faltas frequentes). 4) Segurança (latrocínios de equipment).</p><blockquote class="quote">\"5G no Brasil é viável, mas contexto é diferente de EUA/Europa. Pragmatismo é necessário.\"</blockquote><p>Você aprenderá que 5G não é uniforme globalmente.</p>`},
+    {
+      id: 'OPORT',
+      title: 'Oportunidades Comerciais',
+      html: `<h4>5G abre novo mercados</h4><p><strong>5G no Brasil cria oportunidades para startups e empresas</strong>. Mercado está nascendo, há espaço para inovadores.</p><p><strong>Startups de aplicação**: Software que rodava em 4G agora roda melhor em 5G. Carros autônomos, drone delivery, telemedicina. Viabilidades mudam com 5G.</p><p><strong>Infraestrutura local**: Empresas podem montar MEC local, oferecer serviços de edge computing. Operadora não faz, terceiros fazem. Novo negócio.</p><blockquote class="tip">Dica: Melhor oportunidade é onde 5G resolve problema real. "5G porque 5G" é startup fracassa.</blockquote><p><strong>SIM local**: Operador oferece "5G como serviço". Startup compra banda, oferece conectividade local (universidade, fábrica, shopping). Novo modelo negócio.</p><p><strong>Consultoria**: Empresas tradicionais não sabem 5G. Consultores que conhecem arquitetura, casos de uso, implementação são procurados.</p><blockquote class="example">Exemplo: Banco quer implementar URLLC para transações críticas. Paga consultoria R$500k para design e implementação. Consultoria estuda, especifica, valida. Banco economiza R$10M em falhas evitadas.</blockquote><p><strong>Educação**: Universidades, escolas profissionais precisam cursos 5G. Professores, materiais, labs. Mercado nascente de educação.</p><p><strong>Venture capital**: Fundos estão olhando para 5G entrepreneurs. Cheques maiores (não gigantes, mas sérios) para teams que mostrem tração.</p><blockquote class="quote">\"Primeira onda 5G no Brasil é infraestrutura (operadoras). Segunda onda é aplicação (startups). Oportunidade é na segunda onda.\"</blockquote><p>Você aprenderá que nova tecnologia cria novo mercados.</p>`},
+    {
+      id: 'FOCO',
+      title: 'Focos Estratégicos',
+      html: `<h4>Onde Brasil pode liderar</h4><p><strong>Brasil não competirá em chips (China, Coreia, Taiwan dominam). Mas pode competir em aplicações</strong>. Focos estratégicos multiplicam ROI.</p><p><strong>Agro-tech**: Brasil é potência agrícola. 5G em plantação (drones, sensores, análise preditiva) é ouro. Produtividade x 2, custo reduzido 30%. Mercado gigante.</p><p><strong>IoT industrial**: Manufatura, logística. Fábricas Indústria 4.0 usando 5G. Mais valor agregado que simples commodity.</p><blockquote class="tip">Dica: Agro é foco forte. Brasil tem vantagem comparativa (terra, clima, experiência). 5G amplifica.</blockquote><p><strong>Saúde telemedicina**: Região com menos médicos, 5G telemedicina resolve. Mercado interno gigante, depois export expertise.</p><p><strong>Educação remota**: COVID mostrou demanda. 5G melhora experiência (video claro, latência zero). Escolas online melhoram.</p><blockquote class="example">Exemplo: Startup brasileira Agtech que usa drones+5G para análise de plantas. Modelo ML detecta doenças cedo. Venda para produtores. Depois export para Argentina, Paraguai. Receita R$10M/ano potencial.</blockquote><p><strong>Soft power**: Expertise brasileiro em 5G dev aumenta influência. Talento localizado, problemas únicos solucionados locally. Isso atrai investimento.</p><p><strong>Educação STEM**: Invista em jovens. Cursos de 5G em escolas técnicas. Pipeline de talent local garante sustentabilidade.</p><blockquote class="quote">\"Brasil com 5G pode competir em aplicação, não fabricação. Focar onde tem vantagem.\"</blockquote><p>Você aprenderá que estratégia importa mais que tecnologia.</p>`},
+    {
+      id: 'DEBS',
+      title: 'Desafios e Barreiras',
+      html: `<h4>Obstacles no caminho</h4><p><strong>5G no Brasil enfrenta barreiras reais. Entender e superar é chave para sucesso</strong>.</p><p><strong>Econômico**: Implementação é cara (R$50B+). Operadoras precisam retorno rápido. Se usuários não pagam premium 5G, modelo quebra. Brasil renda média é baixa.</p><p><strong>Regulatória**: Anatel define regras. Atrasos em decisões afetam roadmap. Exemplo: mmWave spectrum foi leiloado em 2023, muito atrasado vs outros países.</p><blockquote class="tip">Dica: Acompanhe decisões Anatel. Afetam viabilidade de aplicações.</blockquote><p><strong>Infraestrutura**: Energia é problema. Muitas regiões têm falhas frequentes. Base station sem energia não funciona. Backup é caro.</p><p><strong>Segurança**: Roubo de equipment é endêmico em Brasil. Antenas de 5G caras. Segurança contra vandalismo é overhead.</p><blockquote class="example">Exemplo: Operadora instala base station em periferia Rio. Semana depois, cabo de fibra roubado. Comunicação cai. Novo cabo instalado, de novo roubado. Solução: equipamento mais caro, roubo cai mas custo aumenta.</blockquote><p><strong>Demanda de talent**: Poucos brasileiros com expertise 5G. Precisa importar ou educar. Ambos custam.</p><p><strong>Geopolítica**: Questão Huawei ainda nebulosa. Brasil pode banir? Isso afeta operadoras que usam Huawei.</p><blockquote class="quote">\"Desafios no Brasil são reais, mas surmountable. Pragmatismo resolve.\"</blockquote><p>Você aprenderá que tecnologia não é suficiente; contexto importa.</p>`}
+  ],
+  flashcards: [
+    {q: 'Quando 5G iniciou no Brasil?', a: '2021 com primeiros pilotos, expansão 2023+, cobertura nacional 10+ anos.'},
+    {q: 'Qual banda 5G é usada no Brasil?', a: 'Principalmente n78 em 3.5 GHz (mid-band FR1).'},
+    {q: 'Qual é operadora com mais spectrum 5G BR?', a: 'Claro e Vivo têm mais (competição forte).'},
+    {q: 'Por que compartilhamento de towers acelera 5G?', a: 'Reduz custo por operadora, acelera expansão. Regulação Anatel permite.'},
+    {q: 'Qual é maior desafio 5G no Brasil?', a: 'Dimensão geográfica (regiões sparsely populated), pobreza (não pagam premium), energia.'},
+    {q: 'Qual setor Brasil pode liderar em 5G?', a: 'Agro-tech (drones, sensores). Brasil tem vantagem comparativa.'},
+    {q: 'Quanto investimento em 5G no Brasil?', a: 'Estimado R$50B+ em 5 anos.'},
+    {q: 'Por que cobertura rural é problema?', a: '4G ainda é parcial em regiões. 5G ainda mais caro. Viabilidade baixa.'},
+    {q: 'Qual aplicação telemedicina prioritária BR?', a: 'Regiões com menos médicos. 5G telemedicina resolve acesso.'},
+    {q: 'O que é oportunidade de startup 5G BR?', a: 'Aplicação (carros autônomos, drones), MEC local, consultoria, educação.'},
+    {q: 'Como Anatel afeta 5G BR?', a: 'Define espectro, regras, competição. Atrasos em decisão afetam roadmap.'},
+    {q: 'Qual é risco geopolítico 5G BR?', a: 'Huawei—Brasil pode banir? Operadoras dependem, mudança disruptiva.'}
+  ],
+  quizzes: [
+    {q: 'Quando cobertura 5G será nacional no Brasil?', opts: ['2024', '2025', '2030', '10+ anos'], correct: 3},
+    {q: 'Qual é maior oportunidade 5G BR?', opts: ['Chips', 'Agro-tech', 'Infraestrutura', 'Nenhuma'], correct: 1},
+    {q: 'Qual é maior barreia 5G BR?', opts: ['Tecnologia', 'Custo + renda baixa', 'Concorrência', 'Nada'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo: 5G no Brasil',
+    points: [
+      '5G iniciou 2021, expansão acelerada em cidades grandes. Cobertura completa 10+ anos.',
+      'Banda n78 (3.5 GHz) é principal. Operadoras compartilham infra para reduzir custo.',
+      'Oportunidade maior é agro-tech, telemedicina, educação remota. Brasil tem vantagem nesses setores.',
+      'Desafios: custo, renda baixa, infraestrutura (energia), segurança. Pragmatismo resolve.'
+    ]
+  }
+},
+{
+  id: 5,
+  title: 'Saúde e Smart Cities com 5G',
+  free: false,
+  topics: [
+    {
+      id: 'SAUDT',
+      title: 'Transformação da Saúde',
+      html: `<h4>5G revolucionando healthcare</h4><p><strong>5G em saúde não é melhoria incremental; é transformação</strong>. Aplicações impossíveis antes viram rotina.</p><p><strong>Monitoramento contínuo de crônicos**: Paciente diabético com sensor glucose, transmite em tempo real para aplicativo. Médico recebe alerta se anormal. Prevenção vs reação. Reduz hospitalizações 20%+.</p><p><strong>Ambulância conectada como mini-hospital**: Equipamento diagnóstico em ambulância (ECG, ultrassom), todos conectados 5G. Hospital recebe dados em tempo real, prepara antes ambulância chegar. Salvam vidas.</p><blockquote class="tip">Dica: Telemedicina é ópcion agora; será padrão depois. Patients esperam opção remota.</blockquote><p><strong>Cirurgia remota**: Cirurgião em SP, paciente no Amazonas. Câmera 4K, braço robótico, haptic feedback (sente resistência). 5G latência <1ms permite. Especial em emergências em regiões remotas.</p><p><strong>Reabilitação remota**: Paciente pós-AVE em casa, terapeuta remoto guia exercícios via vídeo 5G. Frequent acompanhamento, melhor resultado. Reduz readmissão hospital.</p><blockquote class="example">Exemplo: Hospital em São Paulo equipa ambulâncias com 5G. Paramédico faz ultrassom pré-hospitalar, envia para cardiologista remotamente. Cardiologista vê, interpreta, guia paramédico. Diagnóstico cardíaco em ambulância (não esperando ER). Salvam 50 vidas/ano.</blockquote><p><strong>Mental health escalado**: Psicólogo atende 10x mais pacientes via video 5G (sem latência, sem delay). Acesso aumenta, custo por sessão reduz. Destigmatiza.</p><p><strong>Treinamento de médicos**: Cirurgia rara acontece em hospital A. Médicos em hospital B assistem via vídeo ao vivo 5G (câmera 4K, latência zero). Aprendem sem viajar.</p><blockquote class="quote">\"5G em saúde não é tech gimmick; economiza vidas e reduz custo. ROI é óbvio.\"</blockquote><p>Você aprenderá que tecnologia muda medicina.</p>`},
+    {
+      id: 'SMART2',
+      title: 'Cidades Inteligentes Avançadas',
+      html: `<h4>Urbanism 5G</h4><p><strong>Smart city + 5G multiplica eficiência</strong>. Tráfego, energia, água, segurança—tudo otimizado via dados.</p><p><strong>Tráfego adaptativo**: Semáforos ajustam baseado fluxo real (não schedule fixa). Congestionamento reduz 15-25%. Emissões caem. Pessoas felizes.</p><p><strong>Estacionamento inteligente**: Motorista procura 20 min vaga. Com smart parking, 2 min. App mostra vagas livres. Reduz tempo, reduz emissão, reduz stress.</p><blockquote class="tip">Dica: Smart city benefício de smart traffic é gigante economicamente. Reduz tempo gasto em trânsito = produtividade ganha.</blockquote><p><strong>Iluminação dinâmica**: Ruas com sensors que detectam movimento. Luz dimmer quando vazio, bright quando passam pessoas. Economia energética 40%.</p><p><strong>Lixo inteligente**: Bins têm sensores, coleta quando cheios (não schedule fixa). Reduz flies/cheiro, coleta mais eficiente.</p><blockquote class="example">Exemplo: Barcelona smart city. Tráfego reduziram 20%, estacionamento achado 30% mais rápido, economia energética R$50M/ano. Investimento inicial R$200M, payback 4 anos. Agora é modelo para mundo.</blockquote><p><strong>Segurança pública**: Cameras com reconhecimento facial, placas de veiculo. Alertas em tempo real policia. Crime reduz (pessoas sabem vigilância existe).</p><p><strong>Gestão ambiental**: Sensores de poluição, qualidade ar. Dados em tempo real. Governo reage (restringe traffic, etc). Saúde pública melhora.</p><blockquote class="quote">\"Smart city é visão bonita; implementação é complexo, mas ROI é real quando feito bem.\"</blockquote><p>Você aprenderá que 5G é enabler, design de cidade é chave.</p>`},
+    {
+      id: 'COMBI',
+      title: 'Sinergia: Saúde + Smart City',
+      html: `<h4>Impacto combinado</h4><p><strong>Quando saúde e smart city se combinam, impacto é multiplicado</strong>. Exemplos mostram sinergia real.</p><p><strong>Ambulância em smart city**: 1) Paciente chama 911. 2) Sistema sabe localização ambulância mais próxima (GPS real-time). 3) Semáforos na rota ficam verde para ambulância (automático). 4) Ambulância chegaa 2 min (vs 8 min tradicional). 5) Dados vitais enviados hospital antes chegada. Hospital prepara. 6) Salvam vida.</p><p><strong>Queda de idoso em smart city**: 1) Wearable detecta queda. 2) Envia para smart city system. 3) Sistem identifica localização exata (GPS). 4) Chama ambulância + vizinhos registrados. 5) Vizinho chega em 1 min, aplica primeiro socorros. 6) Ambulância chega 3 min preparada com dados médico. 7) Hospital aguardando. Idoso salvo.</p><blockquote class="tip">Dica: Sinergia acontece quando sistemas conversam. APIs abertas, dados compartilhados, decision making coordenado.</blockquote><p><strong>Epidemiologia em smart city**: Sensores distribuídos detectam padrão de doença (ex: tosse = possível COVID). Sistema alerta autoridades. Outbreak detectado cedo, contido. Vidas salvas.</p><p><strong>Saúde mental via smart city**: Lights na rua ajustam baseado em padrão de pessoas (se vazio, reduz=menos seguro). Se muita gente, aumenta=seguro. Psychological safety aumenta, depressão reduz (light affects mood).</p><blockquote class="example">Exemplo: Seoul smart city+saúde integrado. 1) Traffic reduz congestionamento = menos stress. 2) Air quality monitored = menos problemas respiratórios. 3) Parks iluminados, seguros = mais exercise. 4) Telemedicina integrada = acesso fácil. Resultado: felicidade média aumenta 12%, crime cai 25%, saúde pública melhora. ROI gigante.</blockquote><p><strong>Futura: Predictive health city**: Cidade prediz epidemias antes acontecer. Pessoas em risco recebem intervenção preventiva. Saúde é proativa, não reativa.</p><blockquote class="quote">\"Saúde + smart city integrados é futuro. Cidades que não integram ficam para trás.\"</blockquote><p>Você aprenderá sistemas integrados são mais que partes.</p>`},
+    {
+      id: 'ETHC',
+      title: 'Ética, Privacidade, Governança',
+      html: `<h4>Desafios não-técnicos</h4><p><strong>5G saúde + smart city habilita, mas também ameaça privacidade. Governança é crítica</strong>.</p><p><strong>Privacidade médica**: Dados médicos de paciente fluem. Quem acessa? Seguro (nega cobertura se pre-existing conhecido)? Employer (discrimina sick workers)? Gov (controle)? Proteção é essencial.</p><p><strong>Surveillance state**: Câmeras smart city monitoram movimento. Quem acessa? Por quê? Chantagem? Dissident oppression? Safeguards são necessárias.</p><blockquote class="tip">Dica: Tecnologia não é neutra. Mesma sistema pode salvar vidas ou oprimir. Governance importa.</blockquote><p><strong>Consent**: Paciente consente dados usados para telemedicina. Mas dados também usados para pesquisa? Para treinamento AI? Consentimento informado é difícil.</p><p><strong>Algoritmo bias**: AI em saúde pode discriminar raça/gênero se treino é biased. Exemplo: algoritmo de risco cardíaco menos acurado em mulheres (treino com homens). Resultados são desiguais.</p><blockquote class="example">Exemplo: Câmeras smart city com reconhecimento facial discriminam rostos escuros. Possível inocente é erroneously arrested. Blame é tecnologia, mas culpado é falta de oversight.</blockquote><p><strong>Transparency**: Sistema de saúde usa algoritmo preditivo. Qual critério? Porque? Paciente pode questionar? Transparency é direito.</p><p><strong>Accountability**: Se sistema falha, quem é responsável? Médico? Hospital? Vendor? Lei é vaga. Clareza é necessária.</p><blockquote class="quote">\"5G saúde+city é poderoso. Com poder vem responsabilidade. Governance não é opcional.\"</blockquote><p>Você aprenderá que ética é parte integral de tecnologia.</p>`}
+  ],
+  flashcards: [
+    {q: 'Como 5G transforma monitoramento de crônicos?', a: 'Sensores contínuos streamam dados. Médico recebe alerts se anormal. Prevenção vs reação.'},
+    {q: 'O que é "ambulância mini-hospital"?', a: 'Ambulância com diagnóstico equipment (ECG, ultrassom) conectado 5G ao hospital.'},
+    {q: 'Por que cirurgia remota é crítica?', a: '5G latência <1ms permite transparência. Especial em emergências em regiões remotas.'},
+    {q: 'Como smart city reduz tráfego?', a: 'Semáforos adaptam baseado fluxo real. Congestionamento reduz 15-25%.'},
+    {q: 'Como estacionamento inteligente ajuda?', a: 'App mostra vagas livres. Motorista encontra em 2min (vs 20min). Menos emissão.'},
+    {q: 'Como saúde + smart city se sinergizam?', a: 'Ambulância chega rápido (semáforos green + rota ótima). Hospital prepara com dados vitais.'},
+    {q: 'Como smart city pode prever epidemias?', a: 'Sensores detectam padrão (tosse, febre). Sistema alerta autoridades antes outbreak grande.'},
+    {q: 'Qual é maior risco privacidade em saúde 5G?', a: 'Dados médicos fluem. Quem acessa? Seguro discrimina? Gov controla?'},
+    {q: 'Qual é maior risco privacidade em smart city?', a: 'Câmeras monitoram. Surveillance state possível. Safeguards necessários.'},
+    {q: 'Como algorithmic bias prejudica saúde?', a: 'AI treino com homens menos acurado em mulheres. Resultados desiguais.'},
+    {q: 'O que é consentimento informado?', a: 'Paciente consente dados telemedicina, mas também pesquisa? Difícil comunicar todos usos.'},
+    {q: 'Por que governance é crítico?', a: 'Mesma tecnologia pode salvar vidas ou oprimir. Oversight é essencial.'}
+  ],
+  quizzes: [
+    {q: 'Latência crítica para cirurgia remota?', opts: ['50ms', '<1ms', '100ms', '10ms'], correct: 1},
+    {q: 'Tráfico em smart city reduz em quanto?', opts: ['5%', '15-25%', '50%', '1%'], correct: 1},
+    {q: 'Qual é maior desafio saúde+city?', opts: ['Custo', 'Privacidade e ética', 'Tecnologia', 'Nada'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo: Saúde e Smart Cities com 5G',
+    points: [
+      'Saúde: Monitoramento contínuo, ambulância conectada, cirurgia remota, reabilitação remota. Transformação real.',
+      'Smart cities: Traffic adaptativo, parking inteligente, iluminação dinâmica, segurança, poluição monitorada.',
+      'Sinergia: Ambulância em smart city + saúde integrada multiplica impacto. Cidades inteligentes salvam vidas.',
+      'Ética: Privacidade, surveillance, algoritmo bias, governance não são opcionais. Tecnologia é ferramenta; uso importa.'
+    ]
+  }
+},
+{
+  id: 6,
+  title: '6G e Futuro da Conectividade',
+  free: false,
+  topics: [
+    {
+      id: 'FUTV',
+      title: 'Visão do Futuro: 6G',
+      html: `<h4>Próximo horizonte da conectividade</h4><p><strong>5G é presente. 6G é futuro próximo (2030s). Visualizar 6G ajuda entender trajetória</strong>.</p><p><strong>Especificações teóricas 6G**</strong>: Frequência terahertz (100-300 GHz). Latência 0.1ms (vs 1ms em 5G). Velocidade 100+ Gbps (vs 10 Gbps 5G). Densidade 100M+ connections/km² (vs 1M em 5G).</p><p><strong>Aplicações 6G desconhecidas**: Holoframas imersivas. AI distribuída ubíqua. Quantumcomputing acessível. Brain-computer interfaces (BCI) wireless. Tudo especulativo, mas possível.</p><blockquote class="tip">Dica: 6G está em pesquisa acadêmica, não comercial. 10-15 anos antes mainstream.</blockquote><p><strong>Habilitadores de 6G**: 1) Terahertz transmission. 2) Quantum technology (quantum computing, quantum sensing). 3) AI nativa na rede. 4) Holographic communication. 5) Semantic communication (envia significado, não bits).</p><p><strong>Desafios 6G**: Terahertz penetração é má (millimeters). Consumo energético é gigante. Quantum tech é experimental. Semantic comm é cutting edge research.</p><blockquote class="example">Exemplo: 6G hologram. Você está em reunião, avatar 3D de colega em outro país é holograficamente presente (não 2D video). Conversam como se estivessem na mesma sala. Latência <1ms faz imperceptível. Revoluciona trabalho remoto.</blockquote><p><strong>Implicações sociais**: 6G libera aplicações desconhecidas (como internet mobile em 2005 não imaginou smartphones, apps, social media). Prudência em predição é sábia.</p><p><strong>Preparação atual**: Brasil (e mundo) deve investir em educação 6G. Pesquisa. Infraestrutura. Não esperar até 2030 para começar.</p><blockquote class="quote">\"6G é distant, mas trajectory é set now. Escolhas hoje afetam viabilidade amanhã.\"</blockquote><p>Você aprenderá que imaginar futuro é parte de construir.</p>`},
+    {
+      id: 'BYD',
+      title: 'Beyond 5G: Tecnologias Emergentes',
+      html: `<h4>Evolução contínua</h4><p><strong>Entre 5G e 6G, várias tecnologias emergem que melhoram conectividade</strong>.</p><p><strong>Satellite internet (Starlink, Amazon Kuiper)**: Constelação de satélites oferece conectividade global. Latência ~30ms (vs <10ms 5G). Mas coverages reach tudo, não só cidades.</p><p><strong>Free-space optical (FSO)**: Comunica via laser. Alta velocidade (100 Gbps+), baixa latência, sem espectro RF. Desafios: weather (chuva bloqueia), alineamento.</p><blockquote class="tip">Dica: Satélite + 5G é combinação poderosa. 5G em cidades, satélite em rural. Cobertura completa.</blockquote><p><strong>Visible Light Communication (VLC)**: Modular luz visível (LED) para comunicar. Latência ultra-baixa, eficiência energética, segurança (luz viaja poucos metros). Aplicações indoor.</p><p><strong>Millimetre wave (mmWave) avançado**: Frequências acima 100 GHz. 5G usa até 100 GHz. 6G+ uso terahertz (0.1-10 THz). Trade-offs penetração vs capacidade.</p><p><strong>AI nativa em rede**: Não rodar AI em servidores remotos; rodar na rede mesma. Otimização em tempo real. Roteamento inteligente. Detecção de anomalia automática.</p><blockquote class="example">Exemplo: Network com AI nativa. Detecta padrão de attack em tempo real. Automaticamente isolava slice afetada, protegendo outros. Sem humano intervenção.</blockquote><p><strong>Quantum-enhanced sensing**: Quantum sensores detectam signals fracos. Melhora recepção. Especial em mmWave/terahertz onde sinal é fraco naturalmente.</p><p><strong>RIS (Reconfigurable Intelligent Surface)**: Superfícies que refletem sinais de forma controlada. Melhora propagação. Promissor para indoor onde walls bloqueiam sinal.</p><blockquote class="quote">\"Futuro da conectividade é diverso. Não é uma tecnologia; é ecosystem de complementários.\"</blockquote><p>Você aprenderá que inovação é contínua.</p>`},
+    {
+      id: 'GLOB',
+      title: 'Perspectiva Global de 5G/6G',
+      html: `<h4>Competição global por supremacia</h4><p><strong>5G/6G é não só tecnologia; é geopolítica</strong>. Países que dominam têm poder econômico e estratégico.</p><p><strong>EUA vs China</strong>: China avançada em 5G (Huawei, ZTE). EUA teme backdoors, bane Huawei. Competição acirrada. 6G? China também avança (Huawei pesquisando).</p><p><strong>Europa tenta ficar relevante**: Nokia, Ericsson competem globalmente. EU investindo em "strategic autonomy" para não depender China/EUA.</p><blockquote class="tip">Dica: Geopolitics afeta oportunidades comerciais. Alinhamento importa.</blockquote><p><strong>Desenvolvedora countries**: Índia, Brasil, outros tentam participar. Mas força de engenharia é China/EUA/Korea/Japão. Difícil competir em hardware.</p><p><strong>Brasil posição**: Não faz chips (economicamente inviável). Pode competir em aplicações (software, serviços, expertise). Foco pragmático é melhor estratégia.</p><blockquote class="example">Exemplo: Brasil não compete com Huawei em 5G equipment. Mas pode oferecer "5G para agriculture" expertise (que China não tem). Vender soluções, não hardware.</blockquote><p><strong>Standard setting**: 3GPP (global body) define standards. Quem influencia 3GPP tem vantagem. China tem mais votes que Brasil.</p><p><strong>Open standards vs proprietary**: Open (3GPP) permite competição, reduz custo. Proprietary (Huawei) permite diferenciação, margem maior. Tensão é real.</p><blockquote class="quote">\"5G/6G geopolítica é tão importante quanto tecnologia. Estratégia importa.\"</blockquote><p>Você aprenderá que tecnologia é arena política.</p>`},
+    {
+      id: 'SUGT',
+      title: 'Sustentabilidade e 6G',
+      html: `<h4>Tecnologia verde para futuro verde</h4><p><strong>5G usa mais energia que 4G. 6G deve ser mais eficiente, não menos</strong>. Sustentabilidade é imperativo.</p><p><strong>Eficiência energética em 5G**: Técnicas como sleep modes (antenas desativam à noite), dynamic power scaling (usam menos potência quando traffic baixo). Reduz 30% consumo vs naive implementation.</p><p><strong>6G energia**: Estimada <0.1 nJ/bit (vs 10 nJ em 5G). Gigante eficiência. Necessário para economical deployment em escala.</p><blockquote class="tip">Dica: Eficiência energética não é ambiental; é econômico. Reduz OPEX de operadora enormemente.</blockquote><p><strong>Renewable energy em towers**: Solar, vento alimentam base stations. Especial em rural onde grid é fraco. Win-win: ambiente + operacional.</p><p><strong>Circular economy**: Hardware 5G reciclado, matérias recovered. Electronics waste é problema crescente. Infraestrutura deve ser resposável.</p><blockquote class="example">Exemplo: Operadora BR instala solar em 80% de towers. Economia R$100M/ano em eletricidade. Emissão reduzida 50k toneladas CO2/ano. ROI 3-5 anos.</blockquote><p><strong>Indirect effects**: 5G habilita smart cities, eficiência energética urbana. Redução indireta de emissão é maior que construção da própria rede.</p><p><strong>Carbon-aware networking**: Rotear traffic baseado em fonte de energia. Se renewables estão high, rote mais traffic. Se fossil combustion, rote menos. Smart carbon management.</p><blockquote class="quote">\"5G/6G pode ser green se desenhado bem. Não é trade-off: eficiência é viabilidade.\"</blockquote><p>Você aprenderá que sustentabilidade é business imperative.</p>`}
+  ],
+  flashcards: [
+    {q: 'Qual é frequência alvo para 6G?', a: 'Terahertz (100-300 GHz). Muito maior que 5G (até 100 GHz).'},
+    {q: 'Qual é latência alvo 6G?', a: '0.1ms (vs 1ms em 5G). 10x melhoria.'},
+    {q: 'Qual é velocidade alvo 6G?', a: '100+ Gbps (vs 10 Gbps em 5G). 10x+ melhoria.'},
+    {q: 'O que é RIS (Reconfigurable Intelligent Surface)?', a: 'Superfícies que refletem sinais de forma controlada. Melhora propagação indoor.'},
+    {q: 'O que é satellite internet?', a: 'Constelação de satélites (Starlink, Kuiper) oferece conectividade global. ~30ms latência.'},
+    {q: 'Como IA nativa melhora rede?', a: 'Otimização em tempo real, roteamento inteligente, detecção de anomalia automática.'},
+    {q: 'Por que China é ameaça em 5G?', a: 'Huawei avançada. EUA teme backdoors. Competição acirrada por dominância.'},
+    {q: 'Por que Brasil não competir em hardware?', a: 'Economicamente inviável (China/Korea dominam). Melhor focar aplicações/serviços.'},
+    {q: 'Como melhorar eficiência energética 5G?', a: 'Sleep modes, dynamic scaling, renewable energy em towers.'},
+    {q: 'O que é "carbon-aware networking"?', a: 'Rotear traffic baseado fonte de energia. Renewables high = rote mais.'},
+    {q: 'Qual é impacto indireto de 5G em sustentabilidade?', a: 'Smart cities, eficiência urbana reduzem emissão indireta (maior que construção rede).'},
+    {q: 'Quando 6G será comercial?', a: '2030s (10-15 anos). Pesquisa acadêmica agora.'}
+  ],
+  quizzes: [
+    {q: 'Latência 6G alvo?', opts: ['1ms', '0.1ms', '10ms', '100ms'], correct: 1},
+    {q: 'Qual aplicação 6G é especulativa?', opts: ['Video call', 'Hologram 3D', 'Download arquivo', 'Nada'], correct: 1},
+    {q: 'Por que eficiência energética é imperativo?', opts: ['Ambiente', 'Custo operacional', 'Viabilidade econômica', 'Tudo'], correct: 2}
+  ],
+  summary: {
+    title: 'Resumo: 6G e Futuro da Conectividade',
+    points: [
+      '6G terahertz, latência 0.1ms, velocidade 100+ Gbps. Pesquisa acadêmica agora, comercial 2030s.',
+      'Tecnologias emergentes: satélite, FSO, VLC, quantum sensing, RIS complementam 5G/6G.',
+      'Geopolítica é crítica. China avançada, EUA teme, Brasil foca aplicações (não hardware).',
+      'Sustentabilidade: eficiência energética não é opção; é viabilidade econômica e ambiental.'
+    ]
+  }
+}
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
