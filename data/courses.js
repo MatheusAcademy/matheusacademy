@@ -5987,3 +5987,141 @@ var MA_COURSES = [
     "active": true
   }
 ];
+
+var MA_CATS = [
+  /* ═══ 1. NOTÍCIAS (sempre primeiro) ═══ */
+  {name:'Atualize-se! Notícias Mais Relevantes da Semana', sub:'Os acontecimentos mais relevantes do momento explicados em detalhes', courses:[], soon:['Eleições 2026: Em Quem Votar?','Crise Hídrica no Brasil 2026','Guerra Rússia x Ucrânia: O Desfecho','Novo Acordo Comercial BRICS','Colapso do Dólar: Mito ou Realidade?'], isSpecial:true},
+  /* ═══ 2. NEGÓCIOS / EMPRESAS ═══ */
+  {name:'Negócios / Empresas', sub:'Aqui você encontra as aulas exclusivas do Matheus Academy', courses:[], soon:['Empreendedorismo do Zero','Modelo de Negócio Digital','Gestão Financeira Empresarial','Franquias: Como Escolher a Sua','Negociação de Alto Impacto']},
+  /* ═══ 3. GEOPOLÍTICA ═══ */
+  {name:'Geopolítica', sub:'Entenda o mundo como ele realmente funciona, além das notícias', courses:[], soon:['Relações Internacionais','Geopolítica da América do Sul','Geopolítica do Oriente Médio','Nova Ordem Mundial','Guerra Econômica: EUA x China']},
+  /* ═══ 4. CONSPIRAÇÕES & MISTÉRIOS ═══ */
+  {name:'Conspirações & Mistérios', sub:'O que não querem que você saiba — investigue, questione, descubra', courses:[], soon:['Illuminati e Sociedades Secretas','Teorias da Conspiração: Verdade ou Mentira?','MKUltra e Controle Mental','Área 51 e Encobrimentos Governamentais','O Clube Bilderberg e a Elite Global']},
+  /* ═══ 5. FINANÇAS & ECONOMIA ═══ */
+  {name:'Finanças & Economia', sub:'Domine seu dinheiro antes que ele domine você', courses:[], soon:['Educação Financeira do Zero','Investimentos para Iniciantes','Criptomoedas Além do Bitcoin','Economia Brasileira Descomplicada','Bolsa de Valores na Prática']},
+  /* ═══ 6. POLÍTICA BRASILEIRA ═══ */
+  {name:'Política Brasileira', sub:'Entenda o jogo político que decide o futuro do país', courses:[], soon:['Como Funciona a Política no Brasil','Eleições 2026: Guia Completo','Corrupção no Brasil: História e Mecanismos','Reformas que Mudaram o Brasil','O Poder das Fake News na Política']},
+  /* ═══ 7. PNL ═══ */
+  {name:'PNL', sub:'Domine a arte de comunicar, persuadir e influenciar pessoas', courses:[], soon:['Oratória e Comunicação Assertiva','PNL — Programação Neurolinguística','Hipnose Conversacional','Linguagem Corporal Avançada','Influência e Poder Pessoal']},
+  /* ═══ 8. MARKETING & VENDAS ═══ */
+  {name:'Marketing & Vendas', sub:'Aprenda a vender qualquer coisa para qualquer pessoa', courses:[], soon:['Marketing Digital do Zero','Copywriting que Converte','Funil de Vendas na Prática','Instagram para Negócios','TikTok para Negócios']},
+  /* ═══ 9. DESENVOLVIMENTO ═══ */
+  {name:'Desenvolvimento', sub:'Transforme sua mentalidade e atinja o próximo nível', courses:[], soon:['Produtividade e Gestão do Tempo','Liderança na Prática','Mentalidade de Sucesso','Disciplina e Hábitos de Alto Desempenho','Autoconhecimento Profundo']},
+  /* ═══ 10. PSICOLOGIA ═══ */
+  {name:'Psicologia', sub:'Compreenda o comportamento humano e use isso a seu favor', courses:[], soon:['Psicologia Comportamental','Neurociência e Comportamento','Psicologia das Relações','Psicologia da Persuasão','Perfis Comportamentais: DISC e MBTI']},
+  /* ═══ 11. DIREITO & CIDADANIA ═══ */
+  {name:'Direito & Cidadania', sub:'Conheça seus direitos e nunca mais seja enganado', courses:[], soon:['Direitos do Consumidor','Direito Trabalhista na Prática','Como Funciona o Judiciário Brasileiro','Constituição Federal Descomplicada','Direito Penal para Leigos']},
+  /* ═══ 12. FILOSOFIA ═══ */
+  {name:'Filosofia', sub:'Pense melhor, decida melhor, viva melhor', courses:[], soon:['Filosofia para a Vida Real','Grandes Filósofos da História','Ética e Pensamento Crítico','Estoicismo na Prática','Filosofia Política: De Platão a Marx']},
+  /* ═══ 13. HISTÓRIA ═══ */
+  {name:'História', sub:'Quem não conhece a história está condenado a repeti-la', courses:[], soon:['História do Brasil Completa','Grandes Civilizações Antigas','História Contemporânea','Guerras que Mudaram o Mundo','A Era dos Impérios']},
+  /* ═══ 14. BÍBLIA / TEOLOGIA ═══ */
+  {name:'Bíblia / Teologia', sub:'Aprofunde sua fé com estudo sério e contextualizado', courses:[], soon:['Estudo Bíblico Completo','Teologia Sistemática','Panorama do Antigo Testamento','Apocalipse Descomplicado','Arqueologia Bíblica']},
+  /* ═══ 15. BIOGRAFIAS ═══ */
+  {name:'Biografias', sub:'Aprenda com quem construiu história e mudou o mundo', courses:[], soon:['Líderes que Mudaram o Mundo','Empreendedores Visionários','Gênios da Ciência','Ditadores: Como Chegaram ao Poder','Mulheres que Fizeram História']},
+  /* ═══ 16. FAMÍLIA & RELACIONAMENTOS ═══ */
+  {name:'Família & Relacionamentos', sub:'Construa relações sólidas que duram a vida toda', courses:[], soon:['Casamento Blindado','Educação de Filhos com Inteligência','Linguagens do Amor na Prática','Relacionamentos Tóxicos: Como Sair','Comunicação em Casal']},
+  /* ═══ 17. SEGURANÇA & SOBREVIVÊNCIA ═══ */
+  {name:'Segurança & Sobrevivência', sub:'Esteja preparado para qualquer cenário — do digital ao real', courses:[], soon:['Sobrevivencialismo Urbano','Segurança Digital e Privacidade','Defesa Pessoal Estratégica','Preparação para Crises','Primeiros Socorros Essenciais']},
+  /* ═══ 18. ESPORTES & ALTA PERFORMANCE ═══ */
+  {name:'Esportes & Alta Performance', sub:'Mentalidade de campeão dentro e fora do campo', courses:[], soon:['Psicologia Esportiva','Mentalidade de Alta Performance','Grandes Lendas do Esporte','Treinamento Físico Inteligente','Nutrição Esportiva']},
+  /* ═══ 19. TECNOLOGIA ═══ */
+  {name:'Tecnologia', sub:'A tecnologia chegou para ficar — aprenda a lucrar com ela', courses:[], soon:['Inteligência Artificial na Prática','Programação para Iniciantes','Automação Digital','Excel do Zero ao Avançado','Robótica e o Futuro do Trabalho']},
+  /* ═══ 20. SAÚDE & CIÊNCIA ═══ */
+  {name:'Saúde & Ciência', sub:'Seu corpo é seu maior patrimônio — cuide dele com conhecimento', courses:[], soon:['Nutrição e Alimentação Inteligente','Saúde Mental na Prática','Medicina Preventiva','Neurociência do Dia a Dia','Longevidade: Viver Mais e Melhor']},
+  /* ═══ 21. INGLÊS ═══ */
+  {name:'Inglês', sub:'O idioma que abre portas no mundo inteiro', courses:[], soon:['Inglês do Zero ao Fluente','Business English','Inglês para Viagens','Pronúncia Perfeita','Inglês com Filmes e Séries']},
+  /* ═══ 22. MEIO AMBIENTE & SUSTENTABILIDADE ═══ */
+  {name:'Meio Ambiente & Sustentabilidade', sub:'O planeta precisa de você — entenda os desafios e as soluções', courses:[], soon:['Mudanças Climáticas Descomplicadas','Energias Renováveis','Sustentabilidade nos Negócios','Amazônia: O Pulmão do Mundo','Água: O Recurso Mais Valioso']},
+  /* ═══ 23. EBOOKS (sempre por último) ═══ */
+  {name:'Ebooks', sub:'Materiais de leitura aprofundados sobre os temas que mais importam', courses:[], soon:[], isEbook:true}
+];
+
+var MA_TRAILS = [
+  {
+    id: 'empreendedor',
+    icon: '🚀',
+    color: 'rgba(91,127,255,.1)',
+    borderColor: 'rgba(91,127,255,.4)',
+    name: 'Trilha Empreendedor Digital',
+    desc: 'Do zero ao negócio digital lucrativo.',
+    badge: '🚀 Empreendedor Digital',
+    courseIds: ['em', 'mdd', 'educa', 'ml', 'ec']
+  },
+  {
+    id: 'estrategista',
+    icon: '🌍',
+    color: 'rgba(34,197,94,.1)',
+    borderColor: 'rgba(34,197,94,.35)',
+    name: 'Trilha Estrategista Global',
+    desc: 'Geopolítica + Negócios para uma visão estratégica completa.',
+    badge: '🌍 Estrategista Global',
+    courseIds: ['gm', 'gsqw', 'ri', 'gmed', 'educa']
+  },
+  {
+    id: 'cidadao',
+    icon: '🏛️',
+    color: 'rgba(59,130,246,.1)',
+    borderColor: 'rgba(59,130,246,.35)',
+    name: 'Trilha Cidadão Consciente',
+    desc: 'Política Brasileira + Geopolítica para uma visão crítica completa.',
+    badge: '🏛️ Cidadão Consciente',
+    courseIds: ['pbba', 'gm', 'novao', 'ri']
+  },
+  {
+    id: 'completa',
+    icon: '👑',
+    color: 'rgba(245,158,11,.1)',
+    borderColor: 'rgba(245,158,11,.35)',
+    name: 'Trilha Completa Matheus Academy',
+    desc: 'O percurso definitivo. Todos os cursos principais.',
+    badge: '👑 Mestre Academy',
+    courseIds: ['em', 'mdd', 'educa', 'gm', 'pbba', 'novao', 'pco', 'oco', 'gf']
+  }
+];
+
+function MA_getActiveCourses() {
+  return MA_COURSES.filter(function(c) { return c.active !== false; });
+}
+
+function MA_getCourseById(id) {
+  return MA_COURSES.find(function(c) { return c.id === id; }) || null;
+}
+
+function MA_buildCats() {
+  var cats = MA_CATS.map(function(cat) {
+    return {
+      name: cat.name,
+      sub: cat.sub,
+      courses: [],
+      soon: cat.soon || [],
+      isSpecial: !!cat.isSpecial,
+      isEbook: !!cat.isEbook
+    };
+  });
+  MA_getActiveCourses().forEach(function(c) {
+    var cat = cats.find(function(k) { return k.name === c.cat; });
+    if (cat) cat.courses.push(c);
+  });
+  return cats.filter(function(cat) { return cat.courses.length > 0 || cat.soon.length > 0; });
+}
+
+function MA_buildTrails() {
+  return MA_TRAILS.map(function(trail) {
+    var resolved = [];
+    trail.courseIds.forEach(function(cid) {
+      var c = MA_COURSES.find(function(x){ return x.id === cid; });
+      if (c) resolved.push({ key: c.id, icon: c.icon, name: c.name, file: c.file });
+    });
+    return {
+      id: trail.id,
+      icon: trail.icon,
+      color: trail.color,
+      borderColor: trail.borderColor,
+      name: trail.name,
+      desc: trail.desc,
+      badge: trail.badge,
+      courses: resolved
+    };
+  }).filter(function(t){ return t.courses.length > 0; });
+}
