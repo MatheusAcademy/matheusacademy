@@ -1440,6 +1440,103 @@ body {
   margin: 8px 0 4px 8px !important;
   font-weight: 600 !important;
 }
+
+/* ══ NETFLIX MOBILE LAYOUT - OVERRIDE TUDO ══ */
+@media (max-width: 768px) {
+  /* Container: wrap em grid de 3 colunas */
+  .row-inner,
+  .section-wrap .row-inner,
+  #continuarSection .row-inner {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    padding: 0 6px !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  /* Cards: ocupam 100% da coluna do grid */
+  .cc,
+  #continuarSection .cc,
+  .section-wrap .cc,
+  .ebook-card {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    border-radius: 4px !important;
+    margin: 0 !important;
+  }
+  /* Imagem: poster vertical compacto */
+  .cc-img,
+  .ebook-card .cc-img {
+    aspect-ratio: 2/3 !important;
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 4px 4px 0 0 !important;
+  }
+  .cc-img img,
+  .ebook-card .cc-img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  /* Nome do curso: bem pequeno */
+  .cc-name {
+    font-size: 0.6rem !important;
+    line-height: 1.15 !important;
+    padding: 3px 3px 1px !important;
+    max-height: 2.4em !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+  }
+  /* Esconder stats e categoria nos cards (Netflix não mostra) */
+  .cc-cat,
+  .cc-stats,
+  .cc-badge,
+  .cc .badge-free,
+  .cc .badge-new {
+    display: none !important;
+  }
+  /* Botão de acesso: esconder nos cards (Netflix não tem) */
+  .cc .cc-btn,
+  .cc a.cc-btn {
+    display: none !important;
+  }
+  /* Titulo da seção/categoria: compacto */
+  .section-hdr,
+  .section-hdr h2,
+  .cat-sec-title,
+  .cat-sec .section-hdr h2 {
+    font-size: 0.85rem !important;
+    margin: 6px 0 3px 6px !important;
+    padding: 0 !important;
+    font-weight: 600 !important;
+  }
+  /* Seções: sem espaço entre elas */
+  .cat-sec,
+  .section-wrap {
+    margin-bottom: 2px !important;
+    padding: 0 !important;
+  }
+  /* Scroll container: sem scroll horizontal */
+  .scroll-container,
+  .row-scroll {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+  /* Esconder setas de navegação do carrossel */
+  .scroll-arrow,
+  .row-arrow,
+  .arrow-left,
+  .arrow-right {
+    display: none !important;
+  }
+}
+/* ══ FIM NETFLIX MOBILE ══ */
+
 </style>
 <!-- ═══ DADOS CENTRALIZADOS — não edite cursos aqui, edite em data/courses.js ═══ -->
 <script src="data/courses.js?v=CB_TS"></script>
