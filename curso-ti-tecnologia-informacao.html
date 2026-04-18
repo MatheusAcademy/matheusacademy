@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnologia da Informação | Matheus Academy</title>
+    <link rel="stylesheet" href="../../shared/course.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:rgb(255,165,0);stop-opacity:1' /><stop offset='100%' style='stop-color:rgb(255,255,0);stop-opacity:1' /></linearGradient></defs><rect width='100' height='100' fill='url(%23grad)'/></svg>">
+</head>
+<body>
+    <div class="course-container">
+        <script>
+            var COURSE = {
+                id: 'ti',
+                name: 'Tecnologia da Informação',
+                desc: 'Dominar os fundamentos de TI, infraestrutura, redes, sistemas e gestão de projetos tecnológicos.',
+                hours: 40,
+                modules: 7,
+                topics: 28,
+                icon: 'LAPTOP'
+            };
+            var MODS = [
+                {
+                    id: 0,
+                    title: 'Fundamentos de TI e Infraestrutura',
+                    free: true,
+                    topics: [
+                        {
+                            id: 'ti00',
+                            title: 'Componentes Essenciais de TI',
+                            content: `<h2>Entendendo Componentes Fundamentais de Tecnologia da Informação</h2><p>Tecnologia da Informação é backbone de organização moderna. Você precisa entender seus componentes básicos: hardware, software, redes, dados, e as pessoas que mantêm tudo funcionando.</p><blockquote class="tip">TI não é apenas "fazer computers funcionar". TI é sobre usar tecnologia para habilitar objetivos de negócio. Se você não entende o objetivo de negócio, você não consegue fazer boas decisões técnicas.</blockquote><p>Hardware é a parte física: computadores, servidores, impressoras, routers, storage. Software é a parte lógica: sistemas operacionais, aplicações, bancos de dados. Redes conectam tudo junto. Dados é tudo que você armazena e processa. Pessoas executam tudo isso.</p><p>Você deveria entender a diferença entre on-premise (você tem servidores no seu prédio) e cloud (você usa servidores de alguém na internet). Cada abordagem tem vantagens: on-premise oferece controle total, cloud oferece flexibilidade e escalabilidade.</p><blockquote class="example">Uma empresa de manufatura tinha sistema ERP em servidor on-premise que era 10 anos atrás. Quando precisavam de capacidade, tinham que comprar hardware novo. Quando mudaram para cloud ERP, conseguiram escalar para cima ou baixo sob demanda, economizando dinheiro.</blockquote><blockquote class="news">Em 2025-2026, 75% das workloads corporativas estão rodando em nuvem em alguma forma, demonstrando mudança fundamental em como TI é entregue.</blockquote><p>Portanto, você deve pensar em TI como habilitador de estratégia de negócio, não como custo a ser minimizado.</p>`
+                        },
+                        {
+                            id: 'ti01',
+                            title: 'Redes e Conectividade',
+                            content: `<h2>Fundamentos de Redes Corporativas e Conectividade</h2><p>Redes são sistema nervoso da sua organização. Se rede cai, negócio para. Você deve entender como redes funcionam em nível básico: tipos de redes, protocolo, segurança de rede, gerenciamento de banda.</p><blockquote class="tip">Você não precisa ser network engineer, mas você deveria entender: LAN (local area network) vs WAN (wide area network), IP addresses, firewalls, VPN. Se você entender esses conceitos, você consegue conversar com network engineers de forma inteligente.</blockquote><p>Bandwidth é velocidade de rede. Quanto maior bandwidth, mais dados você consegue transmitir por segundo. Você deveria monitorar uso de bandwidth: se você consistently está usando 80% de capacity, você precisa upgrade antes que rede fique saturada.</p><p>Você também deveria pensar em redundância. Se seu único link para internet falha, você fica offline. Muitas organizações têm dual internet links: um primário, um backup. Se um falha, você continua conectado.</p><blockquote class="example">Um banco foi alvo de DDoS attack onde hackers inundaram redes com tráfego fake. Porque banco tinha redundância de ISP e equipamento de anti-DDoS, conseguiram mitigar ataque. Banco continuou operacional enquanto alguns concorrentes ficaram offline.</blockquote><p>WiFi é convenience, mas segurança deve ser prioridade. WiFi de empresa deveria ter encriptação forte (WPA3), senhas fortes, e separação entre rede de visitante e rede corporativa.</p><blockquote class="news">Trabalho remoto massivamente aumentou demanda por conectividade robusta. Muitas empresas tiveram que investir em rede para suportar milhares de VPN connections simultâneas.</blockquote><p>Portanto, rede é fundação de TI moderna e você deveria não negligenciar qualidade e redundância.</p>`
+                        },
+                        {
+                            id: 'ti02',
+                            title: 'Sistemas Operacionais e Software',
+                            content: `<h2>Escolhendo e Gerenciando Sistemas Operacionais Apropriados</h2><p>Sistema operacional é software base que tudo roda em cima. Você tem escolha: Windows, Linux, macOS, e vários outros. Escolha depende de necessidade, custo, experiência, e ecossistema.</p><blockquote class="tip">Não existe "melhor" sistema operacional universalmente. Windows é dominante em desktop corporativo mas caro. Linux é open source e gratuito mas pode exigir mais experiência técnica. macOS é premium mas caro. Você escolhe baseado em trade-offs.</blockquote><p>Você também deveria gerenciar updates de sistema operacional. Updates incluem correções de segurança e melhorias de performance. Você não deveria atrasar updates indefinidamente, mas você também não deveria fazer update de máquinas de produção sem testar antes.</p><p>Software licenses são área crítica. Você deveria manter track de quantas licenças você tem versus quantas máquinas estão usando software. Violação de licença pode resultar em multas. Muitas organizações usam license management tools para monitorar conformidade.</p><blockquote class="example">Uma empresa descobriu que estava usando 500 licenças de software quando só tinha 200 compradas. Consequência foi auditoria do vendor, multa de 100.000, e exigência de comprar licenças adicionais. Agora mantêm controle rigorous de softwares e licenças.</blockquote><p>Você também deveria pensar sobre standardização. Se você tem 10 diferentes versões de Windows em sua organização, você tem complexidade e risco de segurança aumentado. Standardização em versões menos reduz suporte e aumenta segurança.</p><blockquote class="news">Open source está crescendo em uso corporativo, com Linux agora representando maior que 50% de workloads em nuvem.</blockquote><p>Portanto, gestão apropriada de sistemas operacionais e software é crítica para operação eficiente e conformidade legal.</p>`
+                        },
+                        {
+                            id: 'ti03',
+                            title: 'Gerenciamento de Dados e Armazenamento',
+                            content: `<h2>Estratégias de Armazenamento e Gestão de Dados</h2><p>Dados é ativo mais valioso de muitas organizações. Você deveria ter estratégia clara de como armazenar, proteger, acessar, e eventualmente deletar dados.</p><blockquote class="tip">Você deveria categorizar seus dados: qual é crítico (sem ele negócio para), qual é importante (você quer preservar mas não é emergência se temporariamente indisponível), qual é suplementar (é bom ter mas não essencial)?Essa categorização informa sua estratégia de backup.</blockquote><p>Você precisa de backup de dados. Backup não é optional. Se você perde dados críticos sem backup, você está em grande problema. Você deveria fazer backups regularmente (diariamente para dados críticos), armazenar backups em local distante, e testar regularmente que você consegue restaurar.</p><p>Você também deveria usar storage tiers: dados "quentes" que você acessa frequentemente em storage rápido (mais caro), dados "frios" que rara vez acessa em storage lento (mais barato). Isso otimiza custo enquanto mantém performance.</p><blockquote class="example">Uma empresa de mídia gerou terabytes de video por dia. Armazenar tudo em storage premium era impossível de custo. Implementaram estratégia: video quente (útil hoje) em storage rápido, video morno (útil próximos meses) em storage mais lento, video frio (arquivo histórico) em storage muito lento e barato. Reduziram custos 70% enquanto mantinham acesso quando necessário.</blockquote><p>Você também deveria pensar em redundância de storage. Se você tem um único disco que contém dados críticos e disco falha, você perde tudo. Storage enterprise tipicamente usa RAID ou replicação para redundância.</p><blockquote class="news">Volume global de dados criado anualmente é agora acima de 100 zettabytes. Gestão eficiente de dados é desafio crescente.</blockquote><p>Portanto, estratégia de armazenamento bem-pensada protege seus dados mais valiosos e otimiza custos.</p>`
+                        }
+                    ],
+                    flashcards: [
+                        { q: 'Qual é o objetivo fundamental de TI em uma organização?', a: 'Usar tecnologia para habilitar objetivos de negócio, não apenas "fazer computers funcionar".' },
+                        { q: 'Qual é a diferença entre on-premise e cloud?', a: 'On-premise: você tem servidores no seu prédio (controle total, complexo). Cloud: você usa servidores na internet (flexível, escalável).' },
+                        { q: 'O que é bandwidth e por que importa?', a: 'Bandwidth é velocidade de rede (megabits por segundo). Importante porque se você usa 80% da capacity, você precisa upgrade.' },
+                        { q: 'Por que redundância de internet link é importante?', a: 'Se seu único link falha, você fica offline. Dual links mantêm você online mesmo se um falha.' },
+                        { q: 'Qual é o maior risco de não ter backup de dados?', a: 'Perda de dados críticos permanentemente, o que pode resultar em falha de negócio.' },
+                        { q: 'O que é storage tier?', a: 'Estratégia de usar storage diferentes para diferentes tipos de dados: rápido caro para dados quentes, lento barato para dados frios.' },
+                        { q: 'Por que standardização de sistema operacional importa?', a: 'Reduz complexidade, melhora segurança, facilita suporte, e reduz custo de licencing.' },
+                        { q: 'O que é RAID?', a: 'Redundant Array of Independent Disks: técnica de usar múltiplos discos para redundância de dados.' },
+                        { q: 'Qual é a consequência de violar licença de software?', a: 'Multas do vendor, auditoria, exigência de comprar licenças adicionais retroativamente.' },
+                        { q: 'Por que você deveria testar backup regularmente?', a: 'Para garantir que você realmente consegue restaurar de backup se necessário. Backup teórico é inútil.' },
+                        { q: 'Qual é a percentagem de workloads corporativas em cloud em 2025-2026?', a: '75% de workloads estão em nuvem em alguma forma.' },
+                        { q: 'O que significa "dados quentes", "mornos", e "frios"?', a: 'Quentes: acessados frequentemente. Mornos: acessados ocasionalmente. Frios: raramente ou nunca acessados.' }
+                    ],
+                    quizzes: [
+                        {
+                            q: 'Qual é o risco se você não tem redundância de conexão internet?',
+                            opts: [
+                                'Pequeno risco',
+                                'Risco crítico: se link único falha, você fica completamente offline',
+                                'Nenhum risco, redundância não importa',
+                                'Apenas risco em cloud'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Como você deveria estruturar backup de dados críticos?',
+                            opts: [
+                                'Backup semanal é suficiente',
+                                'Backup diário, armazenado remotamente, testado regularmente para restauração',
+                                'Backup apenas uma vez ao ano',
+                                'Backup não é necessário'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Qual é o propósito de storage tiers?',
+                            opts: [
+                                'Complicar gerenciamento de dados',
+                                'Otimizar custo colocando dados quentes em storage rápido caro e dados frios em storage lento barato',
+                                'Nenhum propósito real',
+                                'Apenas para grandes corporações'
+                            ],
+                            correct: 1
+                        }
+                    ],
+                    summary: {
+                        title: 'Resumo do Módulo',
+                        points: [
+                            'TI é habilitador de estratégia de negócio: hardware, software, redes, dados devem ser alinhados com objetivos.',
+                            'Redes robustas com redundância são fundação de operação moderna e devem receber investimento apropriado.',
+                            'Gestão apropriada de sistema operacional e licenças garante conformidade legal e reduz risco de segurança.',
+                            'Estratégia de backup e armazenamento bem-planejada protege dados críticos com custo otimizado.'
+                        ]
+                    }
+                },
+                {
+                    id: 1,
+                    title: 'Infraestrutura de Servidor e Cloud Computing',
+                    free: false,
+                    topics: [
+                        {
+                            id: 'ti10',
+                            title: 'Arquitetura de Servidor',
+                            content: `<h2>Projetando Arquitetura Robusta de Servidor</h2><p>Servidores são computadores potentes que rodam aplicações críticas de negócio. Você deveria estar familiarizado com tipos de servidores, como escalá-los, e como manter alta disponibilidade.</p><blockquote class="tip">Servidores devem ser "cattle, not pets". Você não deveria ter um único servidor que ninguém consegue substituir. Servidores devem ser tratados como componentes substituíveis em uma arquitetura maior. Se um servidor falha, outro pode tomar o lugar.</blockquote><p>Você pode usar load balancers para distribuir tráfego entre múltiplos servidores. Isso garante que nenhum servidor fica sobrecarregado e que se um servidor falha, outros continuam servindo. Load balancer é crítico para alta disponibilidade.</p><p>Você também deveria monitorar saúde de servidores: CPU usage, memory usage, disk space, network connectivity. Se metrics indicam problema, você quer saber antes que servidor falha completamente.</p><blockquote class="example">Uma loja online teve um servidor que era "special" - ele tinha configuração customizada que ninguém conhecia bem. Quando servidor falhou, levou 6 horas para restaurar porque ninguém sabia exatamente como replicar configuração. Agora, todos servidores têm documentação clara e configuração controlada por Infrastructure as Code.</blockquote><p>Você também deveria pensar sobre capacity planning: quantos usuários você pode suportar? Se você espera crescimento 50%, você precisa começar a adicionar capacity agora ou esperar até performance degrade? Planejamento proativo evita crises de performance.</p><blockquote class="news">Virtualization e containerization mudaram drasticamente arquitetura de servidor moderno, permitindo múltiplos servidores virtuais em single hardware físico.</blockquote><p>Portanto, arquitetura de servidor bem-projetada suporta crescimento, alta disponibilidade, e fácil manutenção.</p>`
+                        },
+                        {
+                            id: 'ti11',
+                            title: 'Cloud Computing e SaaS',
+                            content: `<h2>Entendendo Cloud Computing e Software as a Service</h2><p>Cloud computing permite que você execute aplicações e armazene dados em servidores de terceiros na internet, em vez de em seu próprio data center. Você tem opções: IaaS (Infrastructure), PaaS (Platform), ou SaaS (Software).</p><blockquote class="tip">Escolha entre on-premise, IaaS, PaaS, ou SaaS depende de seu nível de controle desejado versus nível de conveniência desejado. On-premise oferece controle máximo mas mais responsabilidade. SaaS oferece conveniência máxima mas menos controle.</blockquote><p>IaaS (Amazon AWS, Microsoft Azure, Google Cloud) fornece servidores virtuais. Você responsável por sistema operacional, aplicações, dados. Você tem muito controle mas também muita responsabilidade.</p><p>PaaS (Heroku, Google App Engine) fornece plataforma para desenvolver e rodar aplicações. Você não se preocupa com servidores ou sistema operacional, apenas com seu código.</p><p>SaaS (Salesforce, Microsoft 365, Slack) fornece aplicação completa. Você apenas usa ela. Vendor gerencia tudo: servers, updates, security.</p><blockquote class="example">Uma empresa de startup tinha que escolher entre construir infraestrutura própria (IaaS), usar plataforma gerenciada (PaaS), ou usar aplicação SaaS. Como startup pequena sem team de DevOps, decidiram usar SaaS (Salesforce) para CRM, PaaS (Heroku) para aplicação web, e IaaS (AWS) para alguns workloads especializados. Essa abordagem híbrida balanceou controle com velocidade de desenvolvimento.</blockquote><p>Você também deveria considerar "cloud-native": aplicações designadas desde o começo para rodar em cloud, com características como auto-scaling, containerization, e microservices.</p><blockquote class="news">Gasto global em cloud infrastructure services vai exceder 600 bilhões em 2025-2026, crescendo 15% anualmente.</blockquote><p>Portanto, cloud oferece flexibilidade, escalabilidade, e redução de capital expense, tornando-a escolha cada vez mais comum.</p>`
+                        },
+                        {
+                            id: 'ti12',
+                            title: 'Containerização e DevOps',
+                            content: `<h2>Modernizando Desenvolvimento com Containers e DevOps</h2><p>Containerização (Docker) e DevOps são transformando como você desenvolve e deploy aplicações. Containers empacotam aplicação com todas dependências em pacote que roda igual em qualquer lugar. DevOps integra desenvolvimento e operações para delivery mais rápido.</p><blockquote class="tip">Você não precisa ser expert em Docker ou Kubernetes para entender conceito. Container é como caixa que contém aplicação + tudo que ela precisa. Em vez de instalar coisas manualmente em servidor, você cria container, testa localmente, e então deploy container em produção. Muito mais confiável.</blockquote><p>DevOps filosofia é que developers e operations devem trabalhar junto, não em silos. Developer não deve "throw code over wall" para operations. Devem trabalhar colaborativamente em deployment, monitoring, e troubleshooting.</p><p>CI/CD (Continuous Integration/Continuous Deployment) significa que código novo é testado automaticamente e deployado para produção rapidamente (horas, não meses). Isso permite feedback mais rápido e release de features mais frequentes.</p><blockquote class="example">Uma empresa antiga tinha release cycle de 6 meses: feature era desenvolvida durante 4 meses, depois 2 meses de testing, depois deploy. Com DevOps e CI/CD, conseguem fazer release a cada 2 semanas. Isso significa que feedback de usuário é incorporado muito mais rápido, bugs são fixados rápido, e company pode responder a market changes rapidamente.</blockquote><p>Você também deveria estar familiarizado com Infrastructure as Code: ao invés de clicking no cloud console para criar recursos, você escreve código que descreve sua infraestrutura. Isso torna infraestrutura versionada, testável, e reproduzível.</p><blockquote class="news">DevOps adoption cresceu 35% no último ano, com 75% de organizações globais adotando DevOps practices.</blockquote><p>Portanto, containers e DevOps transformam velocidade e confiabilidade de software delivery.</p>`
+                        },
+                        {
+                            id: 'ti13',
+                            title: 'Monitoramento e Performance',
+                            content: `<h2>Monitorando Saúde da Infraestrutura e Performance de Aplicações</h2><p>Se você não monitora, você não sabe quando problem ocorre até que usuário reclama. Monitoramento proativo permite que você identifique problem cedo, antes que usuário seja afetado.</p><blockquote class="tip">Você deveria monitorar metrics que realmente importam (server health, aplicação responsiveness, usuário satisfação) versus metrics que parecem importante (ex: disk I/O que ninguém se importa). Foque em "golden signals": latency, traffic, errors, saturation.</blockquote><p>Alerting é parte critica de monitoramento. Você deveria configurar alerts que notificam você quando algo está ruim. Mas você deveria ter cuidado com "alert fatigue": se você tem 1000 alerts por dia e a maioria é falso positivo, você ignora legítimos alerts. Ser seletivo em quais alerts você cria.</p><p>Você também deveria ter dashboards que mostram status de seus sistemas. Um bom dashboard mostra que está saudável, qual está degradado, qual está falhando. Isso permite que você compreenda rapidamente saúde de infraestrutura.</p><blockquote class="example">Uma empresa tinha 500 métricas siendo monitoradas. Operador estava constantemente "fighting alerts" e nunca conseguia resolver problemas antes que usuário fosse afetado. Simplificaram para 20 métricas mais críticas e criaram dashboard que mostra saúde em vista de alto nível. Agora conseguem ser proativos.</blockquote><p>Você também deveria fazer load testing regularmente: simular milhares de usuários acessando seu sistema simultaneamente para ver como sistema se comporta sob stress. Isso identifica bottlenecks antes que se tornem problema em produção.</p><blockquote class="news">Observability (capacidade de entender estado de sistema através de externa outputs) é emergindo como novo padrão, indo além de tradicional monitoring.</blockquote><p>Portanto, monitoramento bem-estruturado permite que você mantenha aplicações rodando bem e usuários felizes.</p>`
+                        }
+                    ],
+                    flashcards: [
+                        { q: 'O que significa "cattle, not pets" em arquitetura de servidor?', a: 'Servidores devem ser substituíveis, documentados, padronizados, não servidores especiais que ninguém consegue substituir.' },
+                        { q: 'Qual é o propósito de um load balancer?', a: 'Distribuir tráfego entre múltiplos servidores para garantir nenhum fica sobrecarregado e high availability.' },
+                        { q: 'Qual é a diferença entre IaaS, PaaS, e SaaS?', a: 'IaaS: você gerencia app/OS/dados. PaaS: vendor gerencia servers/OS, você gerencia app. SaaS: vendor gerencia tudo, você usa app.' },
+                        { q: 'O que é container e por que é útil?', a: 'Package que contém app + dependências. Útil porque roda igual em qualquer lugar, mais confiável que instalar manualmente.' },
+                        { q: 'Qual é a filosofia DevOps?', a: 'Developers e Operations trabalham junto, não em silos, para delivery mais rápido e confiável.' },
+                        { q: 'O que é CI/CD?', a: 'Continuous Integration (testar automaticamente código novo) + Continuous Deployment (deploy automático para produção).' },
+                        { q: 'O que é Infrastructure as Code?', a: 'Escrever código que descreve infraestrutura em vez de clicking na console. Torna infraestrutura versionada, testável, reproduzível.' },
+                        { q: 'Quais são os "golden signals" de monitoramento?', a: 'Latency, traffic, errors, saturation: as métricas que realmente importam.' },
+                        { q: 'Por que alert fatigue é problema?', a: 'Se muitos false positive alerts, você ignora alerts legítimos quando realmente important alguma coisa está errado.' },
+                        { q: 'O que é load testing?', a: 'Simular milhares de usuários acessando sistema para ver como se comporta sob stress e identificar bottlenecks.' },
+                        { q: 'Qual é o percentual de organizações globais que adotaram DevOps?', a: '75% adotaram DevOps practices.' },
+                        { q: 'O que é observability?', a: 'Capacidade de entender estado interno de sistema através de externa outputs (logs, metrics, traces).' }
+                    ],
+                    quizzes: [
+                        {
+                            q: 'Se você tiver servidor único que é "especial" e ninguém consegue substituir, qual é o risco?',
+                            opts: [
+                                'Nenhum risco',
+                                'Se servidor falha, você pode ficar offline por horas/dias enquanto tenta restaurar',
+                                'Apenas risco menor',
+                                'Não afeta negócio'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Qual é a vantagem de CI/CD versus processo tradicional de release?',
+                            opts: [
+                                'Nenhuma vantagem',
+                                'Features são deployadas frequentemente (dias/semanas), feedback é rápido, bugs são fixados rápido',
+                                'Leva mais tempo',
+                                'Apenas para startups'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'O que você deveria fazer se receber muitos alerts que são false positives?',
+                            opts: [
+                                'Ignorar todos os alerts',
+                                'Ajustar thresholds de alerts para reduzir false positives e focar em alerts que realmente importam',
+                                'Desabilitar todos os alerts',
+                                'Nada pode ser feito'
+                            ],
+                            correct: 1
+                        }
+                    ],
+                    summary: {
+                        title: 'Resumo do Módulo',
+                        points: [
+                            'Servidores devem ser tratados como cattle (substituível) não pets (único), com documentação e padronização.',
+                            'Cloud oferece flexibilidade com escolha entre IaaS, PaaS, SaaS baseado em controle versus conveniência desejada.',
+                            'Containerização e DevOps aceleram delivery de software com integração de desenvolvimento e operações.',
+                            'Monitoramento e alerting bem-estruturados permitem detecção proativa e resposta a problemas antes que usuário seja afetado.'
+                        ]
+                    }
+                },
+                {
+                    id: 2,
+                    title: 'Segurança em TI e Compliance',
+                    free: false,
+                    topics: [
+                        {
+                            id: 'ti20',
+                            title: 'Segurança de Aplicações',
+                            content: `<h2>Construindo Aplicações Seguras desde o Design</h2><p>Segurança não deveria ser "bolted on" ao final. Deveria ser considerada desde o começo do design. Aplicações seguras reduzem risco de violação e custo de remediar vulnerabilidades depois.</p><blockquote class="tip">Vulnerabilidades comuns em aplicações incluem: SQL injection (inserir código malicioso em queries), cross-site scripting (XSS), insecure deserialization, broken authentication. Você deveria educar developers sobre essas vulnerabilidades e melhores práticas para evitá-las.</blockquote><p>Você deveria usar security libraries e frameworks que já têm proteções built-in. Em vez de implementar cryptografia você mesmo (difícil e propenso a erro), use libraries estabelecidas. Em vez de construir seu próprio authentication, use frameworks que já tratam casos de edge.</p><p>Você deveria fazer security code review: alguém experiente em segurança revisa código antes de ir para produção, procurando por vulnerabilidades. Code review é primeira linha de defesa.</p><blockquote class="example">Uma startup desenvolveu aplicação e deployou sem security review. Meses depois, hackers descobriram SQL injection vulnerability e roubaram dados de 100.000 usuários. Depois disso, startup implementou security code review, penetration testing, e security training para developers. Custo de ser proativo teria sido 10 vezes menor que custo de remediação.</blockquote><p>Você também deveria fazer penetration testing: hire security expert para tentar quebrar seu sistema. Esse adversarial testing identifica vulnerabilidades que você pode ter missed.</p><blockquote class="news">OWASP Top 10 lista as 10 vulnerabilidades mais comuns em web applications. Todos developers deviam estar familiarizados com essa lista.</blockquote><p>Portanto, incorporar segurança no ciclo de desenvolvimento é muito mais efetivo que adicionar depois.</p>`
+                        },
+                        {
+                            id: 'ti21',
+                            title: 'Gestão de Configuração e Segredos',
+                            content: `<h2>Gerenciando Configurações Seguras e Credenciais</h2><p>Aplicações têm configurações e credenciais: senhas de banco de dados, API keys, certificados. Você deve guardar essas coisas securas e não deixar hardcoded em código.</p><blockquote class="tip">Hardcoded secrets é grande problema de segurança. Se secret está no código fonte, e código fonte é versionado em GitHub, secret pode ser encontrado por hackers (sim, eles scanam GitHub para secrets). Você deveria sempre usar external secret management.</blockquote><p>Você deveria usar secret management tool (como AWS Secrets Manager, HashiCorp Vault, Kubernetes Secrets) que armazena credenciais de forma segura. Aplicação faz request a secret manager para obter credencial em tempo de runtime.</p><p>Você também deveria rotacionar secrets periodicamente: mudar senhas de banco de dados, regenerar API keys, atualizar certificados. Se secret é comprometida, rotation limita "window of exposure".</p><blockquote class="example">Uma empresa tinha API key em arquivo de configuração. Developer acidentalmente commitou arquivo para GitHub público. Hacker descobriu key e usou API para fazer requests malicioso. Dano: múltiplos dias fora de serviço, custos de investigação, custo de rebuilding confiança. Depois, implementaram secrets manager e rotation automática.</blockquote><p>Você deveria também rastrear quem tem acesso a secrets: apenas pessoas que realmente precisam devem ter acesso. Audit logs devem mostrar quem acessou qual secret quando.</p><blockquote class="news">Hardcoded secrets descoberto no código público é principal fonte de compromised credentials em estudo recente.</blockquote><p>Portanto, gestão segura de configuração e secrets é crítica para prevenir violação de segurança.</p>`
+                        },
+                        {
+                            id: 'ti22',
+                            title: 'Compliance e Auditoria',
+                            content: `<h2>Atendendo Requisitos de Compliance em Sistemas de TI</h2><p>Dependendo da indústria e localização, você pode ter requisitos de compliance regulatória. Você deveria entender quais regulações aplicam e como seus sistemas precisam atender.</p><blockquote class="tip">Compliance comum incluem: LGPD (Brasil - dados pessoais), HIPAA (USA - dados de saúde), PCI-DSS (dados de cartão de crédito), SOX (auditoria financeira). Requisitos variam, mas tipicamente você deve: manter audit logs, encriptar dados sensíveis, controlar acesso, fazer backup de dados, responder a violações.</blockquote><p>Auditoria de compliance devem ser regular: você deveria ter processo que verifica periodicamente que seus sistemas estão em compliance. Auditoria pode ser interna ou externa. Auditoria identifica gaps que você pode corrigir.</p><p>Você também deveria documentar tudo: políticas de segurança, controlos implementados, resultado de auditorias. Documentação é prova de que você está sendo responsável e está fazendo best effort para estar em compliance.</p><blockquote class="example">Uma empresa de fintech teve auditoria de compliance. Auditoria descobriu que logs de acesso não eram retenidos por tempo apropriado (regulação exigida). Empresa teve que implementar log retention policy e fazer auditoria de histórico. Depois, implementaram automated log archival para garantir compliance contínua.</blockquote><p>Você também deveria implementar segregação de funções: pessoa que aprovar transação não deveria ser mesma pessoa que executa. Isso previne fraude e é requerimento em muita regulações.</p><blockquote class="news">Compliance violations podem resultar em multas significantes: GDPR pode ser até 4% de receita global, HIPAA viola até 1,5 milhão por violation.</blockquote><p>Portanto, compliance apropriada protege negócio e confiança de clientes.</p>`
+                        },
+                        {
+                            id: 'ti23',
+                            title: 'Disaster Recovery e Business Continuity',
+                            content: `<h2>Planejando Recuperação de Desastres e Continuidade de Negócio</h2><p>Você deveria estar preparado para quando desastre ocorrer: data center falha, hackers conseguem acesso, natural disaster destrói infraestrutura. Disaster recovery (DR) é plano técnico de como restaurar sistemas rapidamente.</p><blockquote class="tip">RTO (Recovery Time Objective) é quanto tempo você pode estar offline antes que negócio sofre dano não aceitável. RPO (Recovery Point Objective) é quanto dados você pode perder. RPO de 1 hora significa que você backup de dados a cada hora, e se disaster ocorre, você perde no máximo 1 hora de dados.</blockquote><p>Você deveria ter plano DR que define: onde você vai restaurar systems se data center primário falha? Como você vai restaurar dados? Qual é ordem de restauração (qual aplicação é mais crítica)?</p><p>Você deveria testar plano DR periodicamente. Teste real onde você simula disaster: desligue data center primário, mude para secundário, verifique que tudo funciona. Você vai descobrir problemas durante teste, melhor que durante disaster real.</p><blockquote class="example">Um banco tinha plano DR que nunca foi testado. Quando disaster real ocorreu (equipamento em data center primário queimou), descobriram que documentação de plano estava desatualizado, passwords de acesso secundário haviam expirado, e restauração levou 12 horas. Agora, testam DR a cada trimestre.</blockquote><p>Você também deveria considerar multi-region architecture: ao invés de rodar tudo em single data center, rodar em múltiplos data centers geográficos. Se um data center falha, outro continua. Custo é maior mas criticidade justifica.</p><blockquote class="news">Organizações sem plano DR testado levam 3-6 meses para se recuperar de data center failure. Aquelas com plano testado levam horas.</blockquote><p>Portanto, disaster recovery bem-planejado e testado é insurance contra worst-case scenarios.</p>`
+                        }
+                    ],
+                    flashcards: [
+                        { q: 'Por que segurança deveria ser considerada desde o começo do design?', a: 'Porque incorporar segurança no ciclo de desenvolvimento é 10x mais barato que remediar vulnerabilidades depois.' },
+                        { q: 'Qual é a maioria común vulnerabilidade em aplicações web?', a: 'SQL injection: inserir código malicioso em queries de banco de dados.' },
+                        { q: 'O que é code review de segurança?', a: 'Alguém experiente em segurança revisa código antes de produção procurando por vulnerabilidades.' },
+                        { q: 'Por que hardcoded secrets é problema?', a: 'Porque se code é versionado publicamente, secrets podem ser descobertas por hackers.' },
+                        { q: 'O que é secret rotation?', a: 'Mudar secrets periodicamente (senhas, API keys). Limita "window of exposure" se secret foi comprometida.' },
+                        { q: 'Qual é a multa máxima por GDPR violation?', a: '4% de receita global.' },
+                        { q: 'O que é RTO (Recovery Time Objective)?', a: 'Quanto tempo você pode estar offline antes que negócio sofre dano não aceitável.' },
+                        { q: 'O que é RPO (Recovery Point Objective)?', a: 'Quanto dados você pode perder (tipicamente em termos de tempo desde último backup).' },
+                        { q: 'Por que você deveria testar plano DR periodicamente?', a: 'Porque descobrir problemas durante teste é melhor que descobrir durante disaster real.' },
+                        { q: 'Qual é a lista mais importante de vulnerabilidades web?', a: 'OWASP Top 10: as 10 vulnerabilidades mais comuns em web applications.' },
+                        { q: 'O que é segregação de funções?', a: 'Pessoa que aprova ação não é mesma pessoa que executa. Previne fraude e é requerimento de compliance.' },
+                        { q: 'Qual é a diferença entre regiões de data center primário versus secundário?', a: 'Primário: onde você normalmente roda. Secundário: backup, ativado se primário falha. Multi-region ativa ambos.' }
+                    ],
+                    quizzes: [
+                        {
+                            q: 'O que você deveria fazer se descobrir vulnerabilidade em código em produção?',
+                            opts: [
+                                'Ignorar se ninguém descobriu ainda',
+                                'Patch imediatamente, fazer rollback se necessário, investigar se foi explorada',
+                                'Esperar até próximo release scheduled',
+                                'Apenas avisar usuários para não usar feature'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Qual é a melhor forma de guardar API keys?',
+                            opts: [
+                                'Hardcoded no código fonte',
+                                'Em arquivo de configuração não-versionado',
+                                'Em secret management tool que provê acesso controlado e audit logs',
+                                'Não importa, desde que alguém sabe'
+                            ],
+                            correct: 2
+                        },
+                        {
+                            q: 'Por qual motivo você deveria testar plano de Disaster Recovery?',
+                            opts: [
+                                'Não é necessário',
+                                'Para descobrir problemas antes que disaster real aconteça e garante que team sabe como executar',
+                                'Apenas para compliance',
+                                'Plano teoricamente funciona'
+                            ],
+                            correct: 1
+                        }
+                    ],
+                    summary: {
+                        title: 'Resumo do Módulo',
+                        points: [
+                            'Segurança deve ser incorporada no ciclo de desenvolvimento desde o design, não adicionada depois.',
+                            'Credenciais e secrets devem ser gerenciadas usando secret management tools, não hardcoded em código.',
+                            'Compliance regulatória requer auditoria regular, documentação, controles apropriados, e segregação de funções.',
+                            'Disaster recovery bem-planejado e testado permite recuperação rápida de cenários worst-case.'
+                        ]
+                    }
+                },
+                {
+                    id: 3,
+                    title: 'Gestão de Projetos e Pessoas em TI',
+                    free: false,
+                    topics: [
+                        {
+                            id: 'ti30',
+                            title: 'Metodologias Ágeis e Waterfall',
+                            content: `<h2>Escolhendo e Implementando Metodologia de Desenvolvimento Apropriada</h2><p>Projetos de TI podem ser gerenciados usando diferentes metodologias: Waterfall (linear), Agile (iterativo), ou híbrido. Escolha depende de natureza do projeto, requisitos, e preferência de time.</p><blockquote class="tip">Waterfall funciona bem quando requisitos são bem-definidos antecipadamente e mudanças são raras. Agile funciona bem quando requisitos evolvem e você quer feedback frequente. Não existe "melhor", existe "melhor para situação específica".</blockquote><p>Waterfall segue: definir requisitos completos → design → implementação → testing → deployment. Vantagem: planejamento claro antecipadamente. Desvantagem: mudanças são caras porque você descobrir problema late.</p><p>Agile segue: requisitos incrementalmente, desenvolvimento em sprints (semanas), feedback contínuo, ajuste baseado em feedback. Vantagem: adaptável a mudanças. Desvantagem: difícil estimar custo/timeline completo.</p><blockquote class="example">Uma empresa de government construía sistema usando Waterfall. Requisitos levaram 6 meses, desenvolvimento 12 meses. Quando finalmente foi deployado, ambiente regulatório tinha mudado e sistema era parcialmente obsoleto. Agora, usam Agile para projetos similares, entregando incrementos a cada 3 meses que podem ser ajustados baseado em feedback regulatório.</blockquote><p>Você também deveria considerar frameworks específicos como Scrum (eventos estruturados, papéis definidos), Kanban (foco em workflow contínuo), ou SAFe (scaling Agile para grandes programas).</p><blockquote class="news">Agile adoption em projetos de TI cresceu de 40% em 2015 para 80%+ em 2025, demonstrando preferência de industry para abordagem iterativa.</blockquote><p>Portanto, escolher metodologia apropriada para seu contexto permite delivery mais eficiente.</p>`
+                        },
+                        {
+                            id: 'ti31',
+                            title: 'Estimação e Planejamento',
+                            content: `<h2>Estimando Corretamente e Planejando Projetos Realistas</h2><p>Estimação é uma das coisas mais difíceis em TI. Frequentemente projetos levam o dobro do tempo/custo estimado. Boas estimações dependem em compreender trabalho, considerar riscos, e não ser otimista demais.</p><blockquote class="tip">Regra 2x: qualquer coisa que você estima para tomar 1 dia provavelmente vai tomar 2. Qualquer coisa que você estima para tomar 1 semana provavelmente vai tomar 2. Deixe margem para desconhecidos: bugs, blockers inesperados, interruptions.</blockquote><p>Você deveria usar múltiplos técnicas de estimação: story points (estimação relativa), planning poker (time conversa sobre estimação), historical data (quanto tempo coisas similares levaram antes?), e risk buffer (quanto buffer você precisa para riscos conhecidos?).</p><p>Você deveria também "estimate the estimate": quanto seguro você está na sua estimação? Se você tem 80% de certeza, você deveria ter 20% de buffer. Se você tem 50% de certeza, você deveria ter 50% de buffer.</p><blockquote class="example">Uma empresa estimou que migração de sistema legado para cloud levaria 6 meses. Porque não consideraram que era seu primeiro projeto cloud, tinha pouco conhecimento da plataforma, discovery estava incompleto, estimação era otimista. Projeto levou 15 meses. Agora, usam "cone of uncertainty": estimações iniciais têm 50% buffer, estimações refinadas têm 20% buffer.</blockquote><p>Você também deveria rastrear estimações versus realidade: você estimou 2 semanas, levou 3, qual foi razão? Aprender de misses anteriores melhora futuras estimações.</p><blockquote class="news">Projetos de TI têm taxa de sucesso de apenas 34% em prazo, com maioria terminando atrasada.</blockquote><p>Portanto, estimação realista com buffers apropriados evita crises de timeline.</p>`
+                        },
+                        {
+                            id: 'ti32',
+                            title: 'Gestão de Mudanças Técnicas',
+                            content: `<h2>Gerenciando Mudanças de Sistema com Mínimo de Disrupção</h2><p>Mudanças em sistemas (upgrades de software, updates de infraestrutura, migrações) podem ser perigosas se não feitas cuidadosamente. Má mudança pode derrubar sistema inteiro.</p><blockquote class="tip">Change management começa com: planejar mudança em detalhe, comunicar com stakeholders, ter rollback plan, testar mudança em environment de teste similar a produção, fazer mudança em janela pré-combinada com downtime mínimo, monitorar durante mudança para issues, validar que tudo funciona depois.</blockquote><p>Você deveria ter "change advisory board" que revisa mudanças propostas, identifica riscos, e aprova ou rejeita. CAB previne mudanças mal-pensadas que prejudicam sistema.</p><p>Você também deveria usar canary deployment: ao invés de colocar mudança para todos de uma vez, coloque para pequeno grupo primeiro (5% usuários), monitore por problemas, e se tudo vai bem, role out para resto. Se problema ocorre, você detecta e corrige antes que afete todos.</p><blockquote class="example">Uma empresa deployou novo version de aplicação web que tinha bug crítico. Porque fizeram deployment para 100% usuários ao mesmo tempo, aplicação ficou down para todos por 4 horas enquanto fixavam. Se tivessem feito canary deployment para 5%, teriam detectado bug em 10 minutos, rollback, e impacto teria sido mínimo.</blockquote><p>Você também deveria ter rollback plan: se mudança não funciona, você sabe como reverter rapidamente? Você testou rollback? Rollback test é tão importante quanto forward deployment test.</p><blockquote class="news">Change management apropriado reduz incidentes relacionados a mudanças em 60%, maior impacto que qualquer iniciativa de operações.</blockquote><p>Portanto, processo de change management rigoroso protege estabilidade de sistemas críticos.</p>`
+                        },
+                        {
+                            id: 'ti33',
+                            title: 'Desenvolvimento de Time e Retenção de Talento',
+                            content: `<h2>Construindo e Mantendo Time Técnico de Alto Desempenho</h2><p>Talento técnico é recurso mais escasso em TI. Se você não investe em desenvolvimento e retenção de team, você perde melhores pessoas para concorrentes.</p><blockquote class="tip">Desenvolvedores e engineers querem: trabalho significativo (não apenas manutenção de sistema legado), oportunidade de aprender coisas novas, autonomia para tomar decisões técnicas, reconhecimento por contribuições, ambiente agradável, flexibilidade de trabalho. Se você não oferece esses, você perde talento.</blockquote><p>Você deveria investir em treinamento e desenvolvimento técnico: permita que engenheiros passem tempo aprendendo coisas novas, ofereça budget para conferências, suporte para certificações, tempo para "20% projects" (projeto que engineer escolhe).</p><p>Você também deveria ter comunicação clara de carreira: qual é próximo passo para um engineer? Pode crescer como individual contributor (specialist), como manager (liderança), ou como architect (especialização técnica elevada)? Caminhos diferentes trabalham para diferentes pessoas.</p><blockquote class="example">Uma empresa de software tinha taxa alta de turnover de engenheiros sênior. Exit interviews mostraram que engenheiros sentiam que não havia oportunidade de crescimento, tudo era manutenção, e não havia flexibilidade. Empresa implementou: programa de mentorship, tempo dedicado para learning, opportunity de liderar projetos novos, work from anywhere policy. Turnover caiu 60%.</blockquote><p>Você também deveria oferecer compensação competitiva e benefícios. Se você paga 20% abaixo de mercado, você não vai atrair melhor talento.</p><blockquote class="news">60% de engenheiros dizem que oportunidade de trabalhar em projetos interessantes é mais importante que salário incremental.</blockquote><p>Portanto, investimento em desenvolvimento e retenção de time técnico é ROI mais alto que qualquer investimento em infraestrutura.</p>`
+                        }
+                    ],
+                    flashcards: [
+                        { q: 'Qual é a diferença entre Waterfall e Agile?', a: 'Waterfall: linear, requisitos antecipados, mudanças caras. Agile: iterativo, requisitos evolvem, feedback frequente.' },
+                        { q: 'O que é "regra 2x"?', a: 'Qualquer coisa que você estima levar X tempo provavelmente vai levar 2X. Deixe margem para desconhecidos.' },
+                        { q: 'O que é "cone of uncertainty"?', a: 'Estimações iniciais têm grande incerteza (50% buffer), mas com mais informação, incerteza reduz (20% buffer).' },
+                        { q: 'Qual é a taxa de sucesso de projetos de TI em prazo?', a: '34%: maioria de projetos terminam atrasada.' },
+                        { q: 'O que é canary deployment?', a: 'Deploy mudança para pequeno grupo de usuários (5%) primeiro, monitore por problemas, então roll out para resto.' },
+                        { q: 'Por que rollback plan é importante?', a: 'Se mudança não funciona, você precisa reverter rapidamente. Você deveria testar rollback tão bem quanto deployment.' },
+                        { q: 'Qual é o propósito de Change Advisory Board?', a: 'Revisar mudanças propostas, identificar riscos, aprovar/rejeitar. Previne mudanças mal-pensadas.' },
+                        { q: 'Por que Agile adoption cresceu tanto?', a: 'Porque adaptabilidade é importante em mercado dinâmico, Agile permite mudanças e feedback frequente.' },
+                        { q: 'O que é story point?', a: 'Estimação relativa: comparar dificuldade de task com outras tasks, em vez de estimar tempo absoluto.' },
+                        { q: 'Qual é o impacto de change management apropriado?', a: '60% redução em incidentes relacionados a mudanças, maior impacto que qualquer iniciativa de operações.' },
+                        { q: 'O que motivam engenheiros mais: dinheiro ou oportunidades?', a: '60% dizem que trabalho em projetos interessantes é mais importante que salário incremental.' },
+                        { q: 'Qual é a turnover rate em empresas sem programa de desenvolvimento de team?', a: 'Taxa alta (40%+ anualmente) porque engenheiros saem para concorrentes com melhores oportunidades.' }
+                    ],
+                    quizzes: [
+                        {
+                            q: 'Qual metodologia você deveria usar se requisitos estão bem-definidos e mudanças são raras?',
+                            opts: [
+                                'Agile',
+                                'Waterfall',
+                                'Kanban',
+                                'Depende'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Como você deveria estimar projeto novo com muita incerteza?',
+                            opts: [
+                                'Usar valor de ponto e confiar é acurado',
+                                'Usar estimação inicial com grande buffer (50%+) e refinar com tempo',
+                                'Assumir time conhece exatamente quanto vai levar',
+                                'Não importa, sempre vai atrasar'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Qual é a razão principal de alta turnover em times técnicos?',
+                            opts: [
+                                'Salário baixo apenas',
+                                'Falta de oportunidade de aprendizagem, trabalho não-significante, falta de autonomia',
+                                'Horário de trabalho',
+                                'Não há razão clara'
+                            ],
+                            correct: 1
+                        }
+                    ],
+                    summary: {
+                        title: 'Resumo do Módulo',
+                        points: [
+                            'Escolha de metodologia (Waterfall vs Agile) deve ser baseada em natureza do projeto e requisitos.',
+                            'Estimação realista com buffers apropriados é crítica para évitar crises de timeline.',
+                            'Change management rigoroso com testing, rollback plans, e canary deployments minimiza disrupção de mudanças.',
+                            'Investimento em desenvolvimento de team técnico tem maior ROI que qualquer investimento em infraestrutura.'
+                        ]
+                    }
+                },
+                {
+                    id: 4,
+                    title: 'Arquitetura de Sistemas e Escalabilidade',
+                    free: false,
+                    topics: [
+                        {
+                            id: 'ti40',
+                            title: 'Desenho de Arquitetura Escalável',
+                            content: `<h2>Projetando Sistemas que Crescem com Seu Negócio</h2><p>Quando sistema está no startup, você pode ter tudo em single server. Mas quando negócio cresce, você precisa arquitetura que escala. Escalabilidade deveria ser considerada desde o design.</p><blockquote class="tip">Escalabilidade horizontal significa adicionar mais servidores (mais fácil). Escalabilidade vertical significa adicionar mais recursos a servidor existente (mais simples inicialmente, mas limitado). Você deveria desenhar para escalabilidade horizontal.</blockquote><p>Você deveria separar concerns: em vez de monolith (tudo em uma aplicação), usar microservices (aplicações pequenas que se comunicam). Isso permite que você escale diferentes partes independentemente: se traffic em search cresce, você aumenta search service, não tudo.</p><p>Você também deveria pensar sobre caching: ao invés de fazer database query para cada request, cache resultado. Cache pode ser in-memory (rápido mas limitado), distributed (Redis, Memcached), ou em edge (CloudFlare, CDN). Bom caching pode reduzir database load em 10x.</p><blockquote class="example">Um e-commerce startup começou com single application server e database. Funcionava bem até que viral video dirigiu 100x traffic normalmente. Sistema ficou timeout. Eles rapidamente adicionaram load balancer, múltiplos application servers, cache de página, e database replication. Em 1 semana, conseguiram escalar de 100 request/segundo para 10.000. Sistema que não era designado para escalabilidade levou muita work para alcançar.</blockquote><p>Você também deveria monitorar capacity: quando você está usando 70% de capacidade, você deveria planejar próximo crescimento. Você não quer ser surprised by growth que sobrepassa capacity.</p><blockquote class="news">Netflix, um exemplo clássico de escalabilidade, roda em centenas de servidores distribuídos globalmente, servindo milhões de usuários simultaneamente.</blockquote><p>Portanto, arquitetura designada para escalabilidade permite negócio crescer sem major refactoring.</p>`
+                        },
+                        {
+                            id: 'ti41',
+                            title: 'Performance Optimization',
+                            content: `<h2>Otimizando Performance de Aplicações e Sistemas</h2><p>Mesmo com infraestrutura robusta, aplicação lenta prejudica experiência de usuário. Você deveria estar focado em otimizar performance.</p><blockquote class="tip">Performance optimization começa com medição: qual é latência de request típica? Qual é 95th percentile latency? Onde está o bottleneck? Você não consegue otimizar o que você não mede.</blockquote><p>Bottlenecks comuns incluem: database queries ineficientes, N+1 queries (fazer múltiplas queries quando uma batched query seria suficiente), synchronous operations que devem ser asynchronous, falta de indexing no database.</p><p>Você pode otimizar usando: indexing no database (faz queries rápidas), query optimization (reescrever queries ineficientes), caching (reduz database queries), asynchronous processing (não bloquear em operações lentas), CDN (serve conteúdo estático de locais próximos a usuários).</p><blockquote class="example">Uma aplicação web tinha latência média de 2 segundos. Profiling mostrou que aplicação estava fazendo 50 database queries por request, muitas redundantes. Batching queries reduziram para 10. Adicionando caching reduziram para 3. Latência final: 200ms. 10x improvement apenas com otimização, sem infraestrutura changes.</blockquote><p>Você deveria também considerar "premature optimization is root of all evil": otimize onde realmente importa (bottlenecks medidos), não onde você pensa que pode importar.</p><blockquote class="news">Cada 100ms de latência adicional reduz conversion em e-commerce em 1%. Performance importa.</blockquote><p>Portanto, medição e otimização de performance cria melhor experiência de usuário e pode diretamente impactar negócio.</p>`
+                        },
+                        {
+                            id: 'ti42',
+                            title: 'Microserviços e Arquitetura Distribuída',
+                            content: `<h2>Entendendo Microserviços e Sistemas Distribuídos</h2><p>Arquitetura monolítica (tudo em uma aplicação) tem problemas: se um componente falha, tudo falha. Mudança em um componente requer redeployment de tudo. Microserviços (aplicações pequenas que se comunicam) resolvem esses problemas.</p><blockquote class="tip">Microserviços tem vantagens: independente deployments (você pode atualizar search service sem atualizar checkout), escalabilidade independente (você pode escalar payment service sem escalar catalog), tecnologia diversa (você pode usar Python para um service, Go para outro). Desvantagens: complexidade de coordenação, latência de rede entre services, dificuldade de debugging distribuído.</blockquote><p>Com microserviços você precisar de "service mesh" (Kubernetes, Istio) para gerenciar comunicação entre serviços, lidar com failures, e balancear load.</p><p>Você também deve ser cuidadoso sobre "distributed monolith": você quebrou monolith em múltiplos serviços, mas eles estão tão acoplados que você ainda precisa coordenar releases cuidadosamente. Verdadeiro microservices deveria ser loosely coupled.</p><blockquote class="example">Uma empresa começou com monolith. Conforme crescia, qualquer mudança levava horas para testar e deploy. Mudaram para microserviços: catalog service, payment service, inventory service, etc. Agora, team de payment pode fazer changes e deploy em minutos sem afetar outros teams. Velocidade de desenvolvimento aumentou significativamente.</blockquote><p>Você também deve considerar complexidade introduzida por microserviços: logging distribuído, rastreamento distribuído, debugging distribuído é tudo mais difícil. Você precisa de tooling e expertise para gerenciar.</p><blockquote class="news">Microserviços adoption entre large organizations cresceu de 30% em 2015 para 80%+ em 2025.</blockquote><p>Portanto, microserviços são poderoso padrão para grande sistemas, mas requerem significante expertise para implementar bem.</p>`
+                        },
+                        {
+                            id: 'ti43',
+                            title: 'Evolução Técnica e Modernização',
+                            content: `<h2>Modernizando Sistemas Legados e Evoluindo Arquitetura Técnica</h2><p>Muitas organizações têm sistemas legados que são críticos para negócio mas cada vez mais difíceis de manter. Modernização é processo de evoluir esses sistemas para arquitetura moderna.</p><blockquote class="tip">Você não pode reescrever tudo overnight. Estratégia comum é "strangler pattern": você cria nova aplicação que gradualmente toma funcionalidade de aplicação antiga. Ao longo de tempo, aplicação antiga é completamente substituída.</blockquote><p>Modernização não é apenas sobre tecnologia. É também sobre: processos (como você desenvolve?), pessoas (você tem expertise em nova tecnologia?), arquitetura (como você organiza código?), operações (como você monitora/suporta?).</p><p>Você deveria priorizar qual partes modernizar primeiro: quais estão causando mais pain? Quais têm maior ROI? Começar com wins rápidas que demonstram valor de modernização.</p><blockquote class="example">Um banco teve sistema legado que foi escrito em COBOL em 1980s. Código era crítico para operações mas cada vez mais difícil de encontrar experts em COBOL. Banco não podia reescrever tudo, então usaram strangler pattern: novas features foram em Java, comunicando com sistema legado através de APIs. Gradualmente, mais funcionalidade foi movida para novo sistema. 10 anos depois, sistema legado era apenas data store, 90% de funcionalidade novo.</blockquote><p>Você também deveria considerar "technical debt": quando você cut corners para velocity rápida, você acumula technical debt. Debt que não for pago eventualmente vai impedir progresso. Você deveria dedicar tempo regularmente a pagar technical debt.</p><blockquote class="news">Modernização de sistemas legados é um dos maiores investimentos que large organizations fazem, com some projects custar bilhões.</blockquote><p>Portanto, modernização é processo longo que requer planejamento estratégico e dedicação contínua.</p>`
+                        }
+                    ],
+                    flashcards: [
+                        { q: 'O que é escalabilidade horizontal versus vertical?', a: 'Horizontal: adicionar mais servidores (melhor para grandes sistemas). Vertical: adicionar recursos a servidor existente (mais simples, limitado).' },
+                        { q: 'O que é microserviços?', a: 'Aplicações pequenas independentes que se comunicam, permitindo deploy independente e escalabilidade independente.' },
+                        { q: 'Qual é o benefício de caching?', a: 'Reduz database load (às vezes 10x) armazenando resultados em cache, servindo de cache ao invés de fazer database query.' },
+                        { q: 'O que é "N+1 queries problem"?', a: 'Fazer múltiplas queries quando uma batched query seria suficiente, causando performance ruim.' },
+                        { q: 'O que é CDN (Content Delivery Network)?', a: 'Rede de servidores que servem conteúdo estático de localizações próximas a usuários, reduzindo latência.' },
+                        { q: 'O que significa "distributed monolith"?', a: 'Você quebroumonolith em múltiplos services, mas eles estão tão acoplados que ainda requerem coordenação de releases.' },
+                        { q: 'O que é "strangler pattern"?', a: 'Modernização gradual: nova aplicação substitui lentamente funcionalidade de aplicação legada até que legada é completamente substituída.' },
+                        { q: 'Por que debugging em sistemas distribuídos é difícil?', a: 'Porque problema pode ser em um de múltiplos services, comunicação entre services, ou network. Difícil de rastrear.' },
+                        { q: 'O que é technical debt?', a: 'Resulta de cut corners para velocity rápida. Debt não pago eventualmente impede progresso.' },
+                        { q: 'Qual é a percentagem de large organizations usando microserviços em 2025?', a: '80%+.' },
+                        { q: 'Como você deve começar a otimizar performance?', a: 'Com medição: qual é latência típica? Qual é 95th percentile? Onde está o bottleneck?' },
+                        { q: 'Por qual motivo cada 100ms de latência importa em e-commerce?', a: 'Reduz conversion em 1% para cada 100ms adicional.' }
+                    ],
+                    quizzes: [
+                        {
+                            q: 'Qual é o maior desafio de microserviços?',
+                            opts: [
+                                'Tecnologia é muito nova',
+                                'Complexidade de coordenação, latência de rede, dificuldade de debugging distribuído',
+                                'Não há desafio real',
+                                'Apenas para grandes empresas'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Se aplicação está lenta, qual é o primeiro passo que você deveria tomar?',
+                            opts: [
+                                'Adicionar mais servidores',
+                                'Medir: qual é latência? Qual é bottleneck? Otimize baseado em medição',
+                                'Reescrever aplicação completamente',
+                                'Esperar que melhore sozinho'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Como você deveria modernizar sistema legado crítico?',
+                            opts: [
+                                'Reescrever tudo overnight',
+                                'Usar strangler pattern: gradualmente substituir funcionalidade legada com novo código',
+                                'Deixar como é porque é crítico',
+                                'Não há forma de modernizar'
+                            ],
+                            correct: 1
+                        }
+                    ],
+                    summary: {
+                        title: 'Resumo do Módulo',
+                        points: [
+                            'Escalabilidade horizontal é fundamental para sistemas que crescem: desenhe para adicionar servidores, não apenas recursos a um servidor.',
+                            'Performance optimization começa com medição de bottlenecks reais, não assunções sobre onde problemas estão.',
+                            'Microserviços oferecem deploy independente e escalabilidade, mas introduzem complexidade que requer expertise para gerenciar.',
+                            'Modernização de sistemas legados é processo longo que usa patterns como strangler para evolução gradual.'
+                        ]
+                    }
+                },
+                {
+                    id: 5,
+                    title: 'Tendências Futuras em TI',
+                    free: false,
+                    topics: [
+                        {
+                            id: 'ti50',
+                            title: 'IA e Machine Learning na TI',
+                            content: `<h2>Impacto de IA e Machine Learning em Operações de TI</h2><p>AI e ML estão transformando como você gerencia infraestrutura: previsão de falhas, otimização automática, detecção de anomalias, automação de tarefas repetitivas.</p><blockquote class="tip">AIOps (AI for Operations) usa machine learning para analisar dados enormes de operação: logs, metrics, eventos. IA pode detectar problemas antes de afetar usuários, sugerir soluções, e até executar remediação automática.</blockquote><p>Você pode usar IA para: capacity planning (prever quando você vai ficar sem capacidade), anomaly detection (detectar comportamento anormal que indica problem), root cause analysis (qual é causa verdadeira de problema?), auto-remediation (automaticamente executar ação para corrigir problem).</p><p>ML também está sendo usado para otimização: otimizar spend em cloud, otimizar allocation de recursos, otimizar network traffic. Em escala suficiente, essas otimizações podem economizar milhões.</p><blockquote class="example">Uma empresa com 50.000 servidores implementou AIOps. IA pode prever que um servidor vai falhar em próximas 24 horas com 85% acurácia, permitindo proactive migration de workloads. Redução em incidentes: 40%. Redução em MTTR (mean time to recovery): 60%. Economia em avoided downtime: 10 milhões anuais.</blockquote><p>Você também deveria estar preparado para que IA vai mudar trabalho de operations: tarefas repetitivas vão ser automatizadas, skills necessários vão mudar, você vai precisar entender IA/ML para gerenciar sistemas.</p><blockquote class="news">Adoção de AIOps em large organizations cresceu 300% nos últimos 2 anos.</blockquote><p>Portanto, AI é transformando operações de TI e você deveria começar a explorar como AI pode melhorar seus processos.</p>`
+                        },
+                        {
+                            id: 'ti51',
+                            title: 'Edge Computing e IoT',
+                            content: `<h2>Computação na Edge e Internet das Coisas</h2><p>Edge computing significa processar dados perto de onde são gerados (em dispositivos, ou em servidores próximos) em vez de enviar tudo para cloud central. IoT significa devices conectados gerando dados constantemente.</p><blockquote class="tip">Edge computing reduz latência (não precisa enviar para cloud), reduz bandwidth (processa localmente), melhora privacy (dados sensíveis não deixam local). Desvantagem: mais computação distribuída é mais complexo de gerenciar.</blockquote><p>Você vai ter IoT em seus ambientes: sensors em prédio, câmeras de segurança, dispositivos no chão de fabrica. Todos esses estão gerando dados. Edge computing permite processar dados localmente ao invés de centralizar tudo.</p><p>Use cases incluem: manufacturing (sensors em máquinas detectam problemas antes de quebra), healthcare (wearables monitoram paciente continuamente), smart cities (sensors de tráfego otimizam fluxo em tempo real), agricultura (sensors monitoram saúde das plantas).</p><blockquote class="example">Uma fábrica tem 1000 máquinas, cada gerando 100MB de dados por hora. Enviar tudo para cloud central (100GB/hora) era impraticável. Implementaram edge computing: máquinas processam dados localmente, identificam anomalias, e enviam apenas 1GB/hora de dados críticos para cloud. Real-time problem detection melhorou, latência foi eliminada.</blockquote><p>Você também deveria considerar "5G": conexão mobile muito mais rápida que 4G. 5G será crítico para IoT porque permite transmissão de mais dados mais rapidamente.</p><blockquote class="news">Número global de IoT devices vai crescer de 15 bilhões em 2025 para 30+ bilhões em 2030.</blockquote><p>Portanto, edge computing e IoT vão ser cada vez mais presentes na infraestrutura corporativa.</p>`
+                        },
+                        {
+                            id: 'ti52',
+                            title: 'Quantum Computing',
+                            content: `<h2>Preparando-se para Quantum Computing</h2><p>Quantum computers processam informação de forma fundamentalmente diferente de computers clássicos. Quando quantum computers se tornam mainstream, terão impacto dramático em criptografia e otimização.</p><blockquote class="tip">Quantum computers podem quebrar criptografia RSA que você usa hoje para proteger dados sensíveis. Você deveria começar a migrar para "post-quantum cryptography" que resiste quantum attacks, mesmo que quantum computers ainda não existem em escala.</blockquote><p>Quantum vai ser revolucionário para: criptografia (quebrar current, mas também criar quantum-safe encryption), otimização (resolver problemas de otimização intratáveis para computers clássicos), simulação (simular moleculas e comportamento físico).</p><p>Você não precisa fazer nada hoje, mas você deveria estar ciente de que quantum está vindo. Você deveria: acompanhar progress de quantum, planejar migração de criptografia nos próximos 10 anos, considerar quantum risk em long-term strategy.</p><blockquote class="example">Uma empresa que armazenou dados sensíveis 10 anos atrás pensou que era seguro porque encriptado com RSA. Agora, sabem que quando quantum computers chegam, aquele data pode ser descriptografado. Eles não podem "unencrypt" dados do passado. Isso mostra por que migração antecipada para quantum-safe cryptography é importante.</blockquote><p>Você também deveria estar ciente de "harvest now, decrypt later" attacks: hackers coletam dados encriptados hoje, esperando que quantum computers chegam para descriptografar. Dados que você quer proteger por 20+ anos deveria estar com quantum-safe encryption hoje.</p><blockquote class="news">NIST finalizou padrão para "post-quantum cryptography" em 2022, começando transição global.</blockquote><p>Portanto, quantum computing é decades away mas impacto é tão dramático que você deveria começar preparação agora.</p>`
+                        },
+                        {
+                            id: 'ti53',
+                            title: 'Sustentabilidade e Green Computing',
+                            content: `<h2>Reduzindo Pegada Ambiental de Operações de TI</h2><p>Operações de TI consomem muita eletricidade: data centers, servidores, redes. Você pode reduzir consumo de energia através de práticas de green computing.</p><blockquote class="tip">Green computing não é apenas sobre ambiente. Reduzindo energia reduz custos. Data center típico pode economizar 20-30% em custo de eletricidade com eficiência de energia.</blockquote><p>Você pode fazer: usar servidores eficientes de energia, ligar off servidores que não estão em uso, usar virtualization para rodar mais em menos hardware, usar refrigeração eficiente em data center, usar renewable energy para power data center.</p><p>Cloud providers estão investindo em renewable energy: Google roda 100% renewable, Microsoft commitment 100% renewable por 2025. Você pode leverage isso escolhendo cloud provider com bom environmental commitment.</p><blockquote class="example">Uma empresa tinha 10 data centers antigos com PUE (Power Usage Effectiveness) de 2.0 (significava que por cada 1W usado por IT, 1W era gasto em cooling/power infrastructure). Consolidaram para 2 data centers modernos com PUE 1.2. Resultado: 40% redução em consumo de energia, economia de 5 milhões por ano.</blockquote><p>Você também deveria medir e track environmental impact: quantos watts você usa? Quantos ton de CO2 gerado? Medir permite melhorar.</p><blockquote class="news">Data centers globalmente usam 1-2% de eletricidade global, e cresce conforme mais computação vai para cloud.</blockquote><p>Portanto, green computing reduz custos e environmental impact, gerando vantagem competitiva.</p>`
+                        }
+                    ],
+                    flashcards: [
+                        { q: 'O que é AIOps?', a: 'AI for Operations: usar machine learning para analisar logs/metrics/events, detectar problemas, sugerir soluções, executar remediação automática.' },
+                        { q: 'O que é edge computing?', a: 'Processar dados perto de onde são gerados (em devices ou servidores próximos) em vez de enviar para cloud central.' },
+                        { q: 'Qual é a vantagem de edge computing?', a: 'Reduz latência, reduz bandwidth, melhora privacy, permite real-time processing.' },
+                        { q: 'O que é IoT?', a: 'Internet of Things: devices conectados gerando dados continuamente (sensors, câmeras, wearables, etc.).' },
+                        { q: 'Por que quantum computers são ameaça para criptografia?', a: 'Porque quantum computers podem quebrar RSA encryption que você usa hoje para proteger dados sensíveis.' },
+                        { q: 'O que é "post-quantum cryptography"?', a: 'Criptografia que resiste quantum attacks, desenvolvida em preparação para quando quantum computers chegam.' },
+                        { q: 'Qual é o risco de "harvest now, decrypt later"?', a: 'Hackers coletam dados encriptados hoje, esperando quantum computers para descriptografar. Dados protegidos por 20+ anos devem estar quantum-safe hoje.' },
+                        { q: 'Qual é a vantagem de cloud providers usando renewable energy?', a: 'Reduz environmental impact, alinha com corporate sustainability goals, pode melhorar brand reputation.' },
+                        { q: 'O que é PUE (Power Usage Effectiveness)?', a: 'Métrica de eficiência de energia em data center: energia total / energia de IT. Menor é melhor (1.0 é ideal, 2.0 é ineficiente).' },
+                        { q: 'Quantos percent de eletricidade global usam data centers?', a: '1-2% e crescendo.' },
+                        { q: 'Qual foi a redução de AIOps no exemplo da empresa?', a: '40% redução em incidentes, 60% redução em MTTR, economia de 10 milhões anuais.' },
+                        { q: 'Qual é o número esperado de IoT devices em 2030?', a: '30+ bilhões, dobrando de 15 bilhões em 2025.' }
+                    ],
+                    quizzes: [
+                        {
+                            q: 'Qual é o maior potencial de AI/ML em operações de TI?',
+                            opts: [
+                                'Apenas para grandes companies',
+                                'Detecção proativa de problemas, otimização automática, redução de incidentes, economia significante',
+                                'Não há real potencial',
+                                'Apenas para security'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Como você deveria se preparar para quantum computing?',
+                            opts: [
+                                'Fazer nada, quantum não vai chegar',
+                                'Começar migração para post-quantum cryptography agora, acompanhar progress, planejar long-term',
+                                'Esperar até quantum computers existem',
+                                'Nada pode ser feito'
+                            ],
+                            correct: 1
+                        },
+                        {
+                            q: 'Qual é a vantagem de green computing para empresa?',
+                            opts: [
+                                'Apenas reduz environmental impact, sem benefício financeiro',
+                                'Reduz custo de eletricidade (20-30%), alinha com sustainability goals, melhora brand',
+                                'Nenhuma vantagem',
+                                'Apenas para tech companies'
+                            ],
+                            correct: 1
+                        }
+                    ],
+                    summary: {
+                        title: 'Resumo do Módulo',
+                        points: [
+                            'AIOps transforma operações permitindo detecção proativa, otimização automática, e remediação automática com IA/ML.',
+                            'Edge computing e IoT levam computação para perto de onde dados são gerados, reduzindo latência e bandwidth.',
+                            'Quantum computing vai quebrar criptografia atual: você deveria começar migração para post-quantum cryptography agora.',
+                            'Green computing reduz custos de energia e environmental impact, gerando vantagem competitiva e sustainability.'
+                        ]
+                    }
+                }
+            ];
+        </script>
+    </div>
+    <script src="../../shared/course-engine.js"></script>
+</body>
+</html>
