@@ -2184,6 +2184,7 @@ function _mlBindTopicClicks(mi,ti){
     }
   });
   document.body.appendChild(fab);
+  setTimeout(_mlUpdateFAB,100);
 })();
 
 function _mlUpdateFAB(){
@@ -2227,9 +2228,7 @@ function _mlUpdateFAB(){
 }
 
 // Atualiza o FAB periodicamente quando tocando
-setInterval(function(){
-  if(_mlAudioEl||_mlLoading||(_mlPipe&&_mlPipe.active))_mlUpdateFAB();
-},500);
+setInterval(_mlUpdateFAB,500);
 
 function mlChangeModSpeed(mi,val){
   var spd=parseFloat(val)||1;
