@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Internet das Coisas (IoT) — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6B35'/%3E%3Cstop offset='100%25' stop-color='%23F7C948'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23g)'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55' font-weight='bold' fill='white' font-family='Arial,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = { id:'iotc', title:'Internet das Coisas (IoT): Conectando o Mundo Físico', subtitle:'Sensores, protocolos e aplicações que conectam bilhões de dispositivos', free: false, freeModules: 1 };
+var MODS = [
+{
+  id: 0,
+  title: 'Fundamentos de IoT',
+  free: true,
+  topics: [
+    {
+      id: 'iot1',
+      title: 'O que é IoT e sua importância',
+      html: `<h4>Objetos Inteligentes Conectados</h4>
+<p>Você já parou para pensar em quantos dispositivos ao seu redor estão conectados à internet? Seu relógio inteligente, sua geladeira, seu carro, seu termostato. Isto é IoT (Internet of Things).</p>
+<p><strong>IoT</strong> é a rede de objetos físicos embarcados com sensores, software, e conectividade que permite que troquem dados com outros dispositivos e sistemas via internet.</p>
+<p>A diferença crucial entre IoT e computadores tradicionais:</p>
+<blockquote class="example">
+Um computador tradicional: você interage com teclado/mouse, vê resultado em tela. Você está no controle ativo.
+
+Um dispositivo IoT: é autônomo. Um sensor de temperatura coleta temperatura a cada minuto, envia para nuvem, nuvem processa, toma decisão (ligar/desligar ar), tudo sem você fazer nada. Você é passivo.
+</blockquote>
+<p>Por que IoT importa?</p>
+<p><strong>1. Dados em tempo real:</strong> Você tem visibilidade instantânea em qualquer coisa que importa. Sabe que seu refrigerador está em 4°C mesmo que você está no trabalho.</p>
+<p><strong>2. Automação:</strong> Sistemas respondem automaticamente sem intervenção humana. Temperatura sobe, ar liga sozinho.</p>
+<p><strong>3. Eficiência:</strong> Você pode otimizar sistemas. Luz liga apenas quando sala tem movimento.</p>
+<p><strong>4. Dados para AI/ML:</strong> Com trilhões de dados de sensores, você treina algoritmos que predizem falhas antes de acontecerem.</p>
+<blockquote class="tip">
+Uma fábrica com sensores IoT sabe que uma máquina vai quebrar em 3 dias (algoritmo prevê) e programa manutenção preventiva. Fábrica sem IoT descobre quando máquina quebra de repente, causando shutdown de produção. A diferença é bilhões em economia/lucro.
+</blockquote>
+<p>Tamanho do mercado IoT:</p>
+<p>Em 2023, havia ~15 bilhões de dispositivos IoT conectados. Em 2030, expectativa é 35 bilhões. É crescimento explosivo.</p>
+<p>Valor do mercado: >$400 bilhões/ano e crescendo 15% ao ano.</p>
+<blockquote class="news">
+Em 2024, IoT deixou de ser "o futuro" para ser "o presente". Praticamente toda indústria está implementando IoT. Saúde (dispositivos wearable monitoram pacientes), manufatura (máquinas reportam saúde), agricultura (sensores de umidade), cidades (semáforos inteligentes).
+</blockquote>
+<p>Os desafios principais de IoT são:</p>
+<p>• <strong>Segurança:</strong> Bilhões de dispositivos, cada um é vetor de ataque potencial</p>
+<p>• <strong>Privacidade:</strong> Você está coletando dados intrusivos sobre pessoas</p>
+<p>• <strong>Escalabilidade:</strong> Como lidar com bilhões de mensagens por segundo?</p>
+<p>• <strong>Energia:</strong> Dispositivos frequentemente rodam em bateria com orçamento de energia rigoroso</p>
+<p>• <strong>Conectividade:</strong> Nem todo lugar tem wi-fi ou 5G</p>
+<p>Você verá que IoT é mais complexo que computação tradicional porque você está lidando com mundo físico com latências, falhas, energia limitada.</p>`
+    },
+    {
+      id: 'iot2',
+      title: 'Arquitetura IoT: Camadas e fluxo de dados',
+      html: `<h4>Como Dados Fluem de Sensores a Insights</h4>
+<p>Uma arquitetura IoT típica tem camadas:</p>
+<p><strong>Camada 1 - Sensores/Atuadores:</strong> Dispositivos físicos que coletam dados ou controlam coisas. Termostato coleta temperatura, luz muda brilho.</p>
+<p><strong>Camada 2 - Gateway/Edge:</strong> Dispositivo local que coleta dados de sensores, faz pré-processamento, e envia para nuvem. Pode ser um Raspberry Pi em sua casa.</p>
+<blockquote class="example">
+Seu termostato inteligente coleta temperatura cada 30 segundos. Ao invés de enviar cada medição para nuvem (consumo de energia/banda enorme), o gateway agrupa dados, calcula média/média móvel, envia resumo a cada 10 minutos. Isto reduz transmissão em 20x.
+</blockquote>
+<p><strong>Camada 3 - Conectividade:</strong> Transmissão de dados. WiFi, 4G/5G, LoRaWAN, Sigfox, NB-IoT. Diferentes tecnologias para diferentes necessidades.</p>
+<p><strong>Camada 4 - Cloud/Backend:</strong> Servidores que recebem dados, armazenam, processam. AWS IoT Core, Azure IoT Hub, Google Cloud IoT.</p>
+<p><strong>Camada 5 - Análise/Aplicação:</strong> Software que transforma dados em insights. Dashboards, alertas, ML models.</p>
+<p>Fluxo de dados:</p>
+<blockquote class="example">
+Sensor de temperatura → Lê 28°C → Envia para gateway → Gateway envia para AWS IoT Core → Função Lambda processa → Se >27°C, publica para SNS → SNS notifica App mobile → App mostra "Ar ligou" → Usuário vê no telefone.
+
+Tudo acontece em <2 segundos. Este é um "feedback loop" em tempo real.
+</blockquote>
+<p>Padrões de fluxo de dados:</p>
+<p><strong>Pull (Polling):</strong> Aplicação periodicamente pergunta ao dispositivo "qual é sua temperatura?". Simples mas ineficiente se dados mudam raramente.</p>
+<p><strong>Push (Event-driven):</strong> Dispositivo envia dados apenas quando algo importante acontece. Temperatura mudou mais de 1°C, envia. Eficiente se eventos são raros.</p>
+<p><strong>Hybrid:</strong> Dispositivo envia importante imediatamente, menos importante a cada 10 minutos. Balanço de eficiência e real-time.</p>
+<blockquote class="tip">
+Escolher padrão certo economiza bateria. Um dispositivo com bateria de 10 anos não pode estar enviando dados constantemente. Precisa ser inteligente: enviar apenas quando necessário.
+</blockquote>
+<p>Latência vs Energia:</p>
+<p>Uma temperatura menor latência (1 segundo) vs bateria que dura 1 ano. Você precisa escolher trade-off.</p>
+<blockquote class="news">
+Em 2024, "edge AI" está emergindo. Ao invés de enviar todos dados para nuvem para processar, o gateway executa modelo de AI localmente. Isto reduz latência a millisegundos, reduz banda, reduz privacidade (dados nunca deixam o local).
+</blockquote>
+<p>Você aprenderá que arquitetura IoT é fundamentalmente sobre eficiência e trade-offs.</p>`
+    },
+    {
+      id: 'iot3',
+      title: 'Sensores e Hardware: Tipos e características',
+      html: `<h4>Coletando Dados do Mundo Físico</h4>
+<p>Sensores são o coração de IoT. Eles convertem mundo físico em dados digitais.</p>
+<p><strong>Sensor de Temperatura:</strong> DHT22, LM35. Mede temperatura ambiente. Custa $5-10.</p>
+<blockquote class="example">
+Uma estufa inteligente precisa monitorar temperatura. Instala DHT22 na estufa. Sensor mede -40 a 80°C com precisão de 0.5°C. Conecta a Arduino ou Raspberry Pi. Dados são lidos cada minuto, enviados para nuvem.
+</blockquote>
+<p><strong>Sensor de Umidade:</strong> Mede umidade relativa. Importante para agricultura, armazenamento.</p>
+<p><strong>Sensor de Distância/Proximidade:</strong> HC-SR04 (ultrassônico), sensor PIR (infrared). Detecta movimento ou distância. $2-5.</p>
+<blockquote name="example">
+Uma lâmpada inteligente usa sensor PIR. Quando detecta movimento, liga. Quando ninguém detectado por 10 minutos, desliga. Isto economiza eletricidade se você esquece de desligar.
+</blockquote>
+<p><strong>Sensor de Pressão:</strong> BMP280, BMP390. Mede pressão barométrica. Útil para previsão de tempo.</p>
+<p><strong>Sensor de Qualidade do Ar:</strong> MQ-135, SDS011. Detecta CO2, particulate matter. Importante em cidades inteligentes para alertar sobre poluição.</p>
+<p><strong>Sensor de Umidade do Solo:</strong> Capacitive soil moisture sensor. Agricultor sabe quando irrigar. Bateria dura 2-3 anos.</p>
+<blockquote class="tip">
+Escolher sensor certo é crítico. Um sensor impreciso dá dados ruins. Um sensor muito preciso custa 100x mais. Você deve entender necessidade antes de comprar.
+</blockquote>
+<p><strong>Placas de Desenvolvimento:</strong></p>
+<p><strong>Arduino:</strong> Microcontrolador simples. Léo programação, $15-30. Perfeito para iniciantes. Limitado em poder de processamento.</p>
+<p><strong>Raspberry Pi:</strong> Mini computador completo. Linux inteiro. ~$50. Mais poder que Arduino, mais energia.</p>
+<p><strong>Microcontroladores especia lizados:</strong> STM32, ARM Cortex. Barato, eficiente, usado em produção.</p>
+<p><strong>Processadores Edge:</strong> NVIDIA Jetson, Intel Movidius. Rodam AI/ML localmente. Caros (~$500-1000) mas poderosos.</p>
+<blockquote name="example">
+Um produto IoT em produção não usa Raspberry Pi (caro, alto consumo). Usa chip STM32 customizado (~$5 em massa) que faz apenas o que precisa. Isto permite vender produto por $50 em vez de $200.
+</blockquote>
+<p><strong>Eficiência de Energia:</strong></p>
+<p>Muitos dispositivos IoT rodam em bateria. Sleep modes são críticos.</p>
+<blockquote name="example">
+Um sensor de temperatura em bateria:
+- Acorda a cada 10 minutos
+- Lê temperatura (1ms, consome pouco)
+- Envia dados via WiFi (100ms, consome bastante)
+- Volta a dormir por 9:59
+
+A maioria do tempo o dispositivo dorme, consumindo apenas leakage current (~1-10µA). WiFi é ativado apenas 100ms a cada 10 minutos.
+
+Com bateria de 2000mAh, isto dura ~2 anos.
+</blockquote>
+<blockquote class="news">
+Em 2024, novo protocolo chamado Wi-Fi HaLow oferece até 1km range com 1/10 da energia de WiFi normal. Isto abre possibilidade de colocar sensores em lugares remotos com bateria que dura 10+ anos.
+</blockquote>
+<p>Você aprenderá que hardware IoT é equilíbrio fino entre capacidade, custo, e consumo de energia.</p>`
+    },
+    {
+      id: 'iot4',
+      title: 'Protocolos de Comunicação: WiFi, Bluetooth, LoRaWAN',
+      html: `<h4>Como Dispositivos Conversam</h4>
+<p>Sensores precisam comunicar com gateway/nuvem. Diferentes protocolos servem diferentes necessidades.</p>
+<p><strong>WiFi:</strong> O mais comum. Range ~100m, velocidade alta (10-100 Mbps), consome bastante energia.</p>
+<blockquote name="example">
+Sua câmera de segurança em casa usa WiFi. Range cobre a casa, bandwidth é suficiente para stream de vídeo. Poder é OK porque plugado em tomada.
+</blockquote>
+<p>WiFi é bom para: aplicações próximas que precisam banda alta, plugadas em poder.</p>
+<p><strong>Bluetooth/BLE:</strong> Low Energy. Range ~100m, velocidade média (~1 Mbps), consome pouco.</p>
+<blockquote name="example">
+Seu relógio inteligente usa BLE para conectar ao telefone. Precisa ser próximo (< 10m típico), mas bateria dura dias. Dados são heartbeat, passos, isto não precisa alta velocidade.
+</blockquote>
+<p>BLE é bom para: dispositivos portáteis, próximos um do outro, pouca banda.</p>
+<p><strong>LoRaWAN:</strong> Long Range, Wide Area Network. Range ~10km em área aberta, velocidade baixa (~50 kbps), consome muito pouco.</p>
+<blockquote name="example">
+Uma utilidade elétrica tem smart meters espalhados pela cidade. LoRaWAN permite que cada meter envie consumo uma vez por dia para gateway central no telhado do prédio administrativo. Range cobre toda cidade, bateria dura 10 anos, dados são pequenos (apenas número).
+</blockquote>
+<p>LoRaWAN é bom para: redes de larga escala, baixa frequência de dados, bateria de longa duração.</p>
+<p><strong>Sigfox:</strong> Similar a LoRaWAN mas proprietary. Range ~10km, velocidade ~100 bps (muito lenta). Caro porque paga a operador Sigfox.</p>
+<p><strong>NB-IoT / LTE-M:</strong> Celular otimizado para IoT. Range ~1km (através de torres celulares), velocidade ~250 kbps. Paga operadora celular.</p>
+<blockquote name="tip">
+Escolher protocolo é decisão estratégica:
+- Precisa banda alta? WiFi
+- Portátil perto de outro dispositivo? BLE
+- Espalhado geograficamente, bateria longa? LoRaWAN
+- Já tem cobertura celular? NB-IoT
+</blockquote>
+<p><strong>Topologias de Rede:</strong></p>
+<p><strong>Star:</strong> Todos dispositivos conectam a hub central. Simples, mais fácil gerenciar. Hub é ponto de falha único.</p>
+<p><strong>Mesh:</strong> Cada dispositivo pode retransmitir para outro. Se um falha, mensagem toma rota alternativa. Mais resiliente mas mais complexo.</p>
+<blockquote name="example">
+Zigbee (protocolo mesh) é usado em casas inteligentes. Cada luz smart é repetidor. Se uma luz cai, rede continua através de caminhos alternativos. Este é resilência de mesh.
+</blockquote>
+<p><strong>Segurança em Transmissão:</strong></p>
+<p>Dados IoT frequentemente é sensível. Você quer:</p>
+<p>• <strong>Criptografia:</strong> Dados são encriptados em trânsito (TLS/SSL)</p>
+<p>• <strong>Autenticação:</strong> Saber que é realmente seu dispositivo enviando</p>
+<p>• <strong>Integridade:</strong> Verificar que mensagem não foi adulterada</p>
+<blockquote name="news">
+Em 2024, padrão MQTT (Message Queuing Telemetry Transport) é dominante para IoT por ser leve e eficiente. CoAP (Constrained Application Protocol) é alternativa para dispositivos muito limitados.
+</blockquote>
+<p>Você aprenderá que protocolo certo é fundamental para sucesso de sistema IoT.</p>`
+    }
+  ],
+  flashcards: [
+    {q: 'O que é IoT?', a: 'Rede de objetos físicos com sensores que coletam e compartilham dados via internet.'},
+    {q: 'Qual é a vantagem principal de IoT?', a: 'Dados em tempo real, automação, eficiência, dados para AI/ML.'},
+    {q: 'Qual é o maior desafio de IoT?', a: 'Segurança (bilhões de vetores de ataque) e escalabilidade.'},
+    {q: 'O que é um sensor?', a: 'Dispositivo que converte medições do mundo físico em dados digitais.'},
+    {q: 'Qual protocolo tem maior range mas menor velocidade?', a: 'LoRaWAN (~10km, ~50 kbps).'},
+    {q: 'Qual protocolo é melhor para portátil próximo a outro?', a: 'BLE (Bluetooth Low Energy).'},
+    {q: 'O que é Arduino?', a: 'Microcontrolador simples para projetos IoT, fácil programação.'},
+    {q: 'O que é Raspberry Pi?', a: 'Mini computador completo com Linux, mais poder que Arduino.'},
+    {q: 'Qual é o trade-off principal em IoT?', a: 'Latência vs energia. Dados em tempo real consome mais bateria.'},
+    {q: 'O que é topologia mesh?', a: 'Cada dispositivo retransmite para outro, oferecendo resiliência.'},
+    {q: 'Quantos dispositivos IoT existem estimadamente em 2024?', a: '~15 bilhões, esperado 35 bilhões em 2030.'},
+    {q: 'O que é edge AI?', a: 'AI executado localmente no gateway, não em nuvem, reduz latência e privacidade.'}
+  ],
+  quizzes: [
+    {q: 'Para um sensor em bateria que lê temperatura 1x por dia, qual protocolo é melhor?', opts: ['WiFi', 'LoRaWAN', 'BLE', 'Nenhum funciona'], correct: 1},
+    {q: 'Por que IoT é complexo diferente de computação tradicional?', opts: ['Porque usa internet', 'Porque envolve objetos físicos com latências, falhas, energia limitada', 'Porque é novo', 'Porque é mais fácil'], correct: 1},
+    {q: 'Qual é vantagem de topologia mesh sobre star?', opts: ['Mais simples', 'Mais resiliente se um dispositivo cai', 'Mais rápido', 'Mais barato'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo: Fundamentos de IoT',
+    points: [
+      'IoT conecta objetos físicos com sensores e software para trocar dados automaticamente.',
+      'Arquitetura tem camadas: sensores → gateway → conectividade → cloud → análise.',
+      'Sensores coletam dados do mundo físico (temperatura, umidade, movimento).',
+      'Protocolos diferentes servem diferentes necessidades (WiFi, BLE, LoRaWAN).'
+    ]
+  }
+},
+{
+  id: 1,
+  title: 'IoT Residencial: Smart Homes',
+  free: false,
+  topics: [
+    {
+      id: 'iot5',
+      title: 'Casas Inteligentes: Automação Residencial',
+      html: `<h4>Vivendo com IoT</h4>
+<p>Smart homes são talvez a primeira aplicação de IoT que maioria das pessoas encontra. Você liga luz com voz, termostato aprende sua preferência, câmera notifica quando alguém na porta.</p>
+<p>Uma casa inteligente típica tem:</p>
+<p><strong>Iluminação:</strong> Lâmpadas inteligentes (Philips Hue, LIFX) que mudam cor, brilho, agendamento. Você controla via app ou voz (Alexa, Google Home).</p>
+<blockquote name="example">
+Você programa sua lâmpada de quarto para:
+- 7 AM: aumentar gradualmente para 100% branco legal (simula nascer do sol, ajuda acordar)
+- 22:00: diminuir para 10% tom quente (prepara corpo para dormir)
+- 23:00: desligar
+- Feriados: não acorda em 7 AM
+
+Isto é automação. Você não precisa fazer nada. Além disso, usa ~70% menos eletricidade porque lâmpadas são LED.
+</blockquote>
+<p><strong>Clima:</strong> Termostatos inteligentes (Nest, Ecobee) aprendem seu padrão de temperatura, ajustam automaticamente, e economizam ~10% em aquecimento/resfriamento.</p>
+<blockquote name="example">
+Termostato Nest vê que você sai de casa as 8 AM, abaixa temperatura para economizar. Volta às 17:00, reaquece antes de você chegar. Você não toca no termostato há meses. Tudo automático.
+</blockquote>
+<p><strong>Segurança:</strong> Câmeras (Ring, Wyze), locks inteligentes (Yale, August). Você vê quem está na porta sem estar em casa, desbloqueia remotamente.</p>
+<p><strong>Energia:</strong> Smart plugs monitoram consumo, ligar/desligar por agenda ou automação. Por exemplo, desligar TV em standby à noite economiza. Smart meters monitoram consumo total.</p>
+<p><strong>Entretenimento:</strong> TV inteligente, speakers inteligentes. Um comando "Movie time" desliga luzes, fecha cortinas, diminui temperatura, começa Netflix.</p>
+<p><strong>Automações Úteis:</strong></p>
+<blockquote name="example">
+"Se é 22:00, desligar todas luzes exceto banheiro em 20%, e trancar porta"
+"Se detecta movimento fora da casa às 23:00, acender floodlight e enviar notificação"
+"Se alguém chega em casa (geolocation do celular), acender luzes de entrada"
+"Se lareira está acesa, diminuir ar para economizar"
+"Se umidade >60%, ligar exaustores"
+</blockquote>
+<p><strong>Plataformas Principais:</strong></p>
+<p><strong>Amazon Alexa:</strong> Voz, integra com maioria dos dispositivos. Fraco em privacidade (Amazon ouve tudo).</p>
+<p><strong>Google Home:</strong> Voz, bom em inteligência. Também fraco em privacidade.</p>
+<p><strong>Apple HomeKit:</strong> Privacidade primeiro, criptografia end-to-end. Menos integração, mais caro.</p>
+<p><strong>Home Assistant:</strong> Open source, roda localmente, privacidade máxima, mas requer technical expertise.</p>
+<blockquote class="tip">
+Para privacidade máxima, use Home Assistant com dispositivos local-first. Para conveniência máxima, use Alexa ou Google. Trade-off típico.
+</blockquote>
+<p><strong>Benefícios de Smart Home:</strong></p>
+<p>• <strong>Conveniência:</strong> Controle tudo com voz ou app</p>
+<p>• <strong>Economia:</strong> 10-30% economia em energia</p>
+<p>• <strong>Segurança:</strong> Monitoramento 24/7, alertas</p>
+<p>• <strong>Acessibilidade:</strong> Pessoas com mobilidade limitada podem controlar sem sair de cama</p>
+<p><strong>Desafios:</strong></p>
+<p>• <strong>Privacidade:</strong> Assistentes de voz ouvem tudo</p>
+<p>• <strong>Custo:</strong> Dispositivos inteligentes custam 3-5x mais que tradicionais</p>
+<p>• <strong>Compatibilidade:</strong> Nem todos dispositivos funcionam juntos</p>
+<p>• <strong>Internet:</strong> Dependência de Wi-Fi sempre funcionando</p>
+<blockquote class="news">
+Em 2024, >30% dos lares norte-americanos têm algum dispositivo smart home. Expectativa é 50%+ em 2026. Aí está explosão de IoT residencial.
+</blockquote>
+<p>Você verá que smart homes são a ponta de lança de IoT que toca pessoas normais.</p>`
+    },
+    {
+      id: 'iot6',
+      title: 'IoT de Consumo: Wearables e Dispositivos Pessoais',
+      html: `<h4>IoT Que Você Carrega</h4>
+<p>Wearables são IoT que você veste. Relógio inteligente, fone, pulseira de fitness, anel.</p>
+<p>Um relógio inteligente coleta:</p>
+<p>• Heart rate (24/7, passivamente)</p>
+<p>• Steps (acelerômetro)</p>
+<p>• Sleep patterns (movimento durante noite)</p>
+<p>• Stress (via variabilidade do coração)</p>
+<p>• Oxygen saturation (SpO2)</p>
+<blockquote name="example">
+Apple Watch detecta quando você está em fibrilação atrial (batida irregular de coração) e envia notificação "vá ao médico". Tem salvo vidas de pessoas que não sabiam que tinham condição cardíaca.
+</blockquote>
+<p><strong>Smartwatches Populares:</strong></p>
+<p>• <strong>Apple Watch:</strong> Melhor na categoria, caro, funciona só com iPhone</p>
+<p>• <strong>Garmin:</strong> Excelente para fitness/triathlon, bateria durável</p>
+<p>• <strong>Fitbit:</strong> Bom para fitness básico, agora owned por Google</p>
+<p>• <strong>Wear OS:</strong> Android para relógios, compatível com muitos telefones</p>
+<p><strong>Fones Inteligentes (Smart Earbuds):</strong> AirPods Pro, Sony WF-1000XM5. Monitoram heart rate, ambiente, atividade.</p>
+<p><strong>Anéis Inteligentes (Smart Rings):</strong> Oura Ring, Samsung Ring. Muito pequeno, bom para dormir (não cai como relógio), bateria ~7 dias.</p>
+<blockquote name="example">
+Oura Ring coleta dados de saúde muito precisamente porque está em dedo (perto de artérias). Detecta início de doença antes de sintomas aparecerem (temperatura, HRV muda). Você pode não saber que está ficando doente, mas anel sabe.
+</blockquote>
+<p><strong>Fitness Trackers:</strong> Simples, focados em steps, calorias, atividade.</p>
+<p><strong>Medical Devices:</strong> Glucose monitors (diabetes), blood pressure monitors. Agora muitos são connected e enviam dados para médico.</p>
+<p><strong>Dados de Saúde:</strong></p>
+<p>Todos esses wearables coletam dados imensamente pessoais:</p>
+<p>• Quando você dorme/acorda</p>
+<p>• Quando você está ativo</p>
+<p>• Sua saúde cardíaca</p>
+<p>• Seu local (via GPS no relógio)</p>
+<blockquote class="tip">
+Isto é ouro para seguro de saúde. Se seu relógio mostra que você dorme pouco e não se exercita, seguro pode aumentar prima ou recusar cobertura. Isto é razão para privacidade em dados de wearable.
+</blockquote>
+<p><strong>Aplicações Médicas:</strong></p>
+<blockquote name="example">
+Um paciente com insuficiência cardíaca coloca patch (adesivo IoT) no peito. Patch monitora atividade elétrica do coração 24/7, via Bluetooth envia dados a aplicativo. Aplicativo usa AI para detectar sinais de deterioração e alerta médico. Médico intervém antes que paciente tem crise. Isto economiza vida e hospitalizações.
+</blockquote>
+<p><strong>Benefícios:</strong></p>
+<p>• <strong>Monitoramento Contínuo:</strong> Dados 24/7, não apenas quando em médico</p>
+<p>• <strong>Detecção Precoce:</strong> AI detecta problemas antes de sintomas</p>
+<p>• <strong>Empowerment:</strong> Você vê seus dados, pode fazer mudanças</p>
+<p><strong>Desafios:</strong></p>
+<p>• <strong>Privacidade:</strong> Dados de saúde são extremamente sensíveis</p>
+<p>• <strong>Precisão:</strong> Nem todos sensores são tão precisos quanto médico-grade</p>
+<p>• <strong>Battery:</strong> Relógio precisa carregar todo dia, inconveniente</p>
+<blockquote class="news">
+Em 2024, FDA começou reconhecer wearables como dispositivos médicos. Isto quer dizer regulação, mas também significa de fato médicos podem confiar dados para tomar decisões clínicas.
+</blockquote>
+<p>Você verá que wearables são IoT mais íntimo que você tem — literalmente no seu corpo.</p>`
+    },
+    {
+      id: 'iot7',
+      title: 'Integração: Dashboards, Alertas e Automações',
+      html: `<h4>Transformando Dados em Ações</h4>
+<p>Ter sensores coletando dados é início. Transformar dados em ações úteis é arte.</p>
+<p><strong>Dashboards:</strong> Visualização de dados em tempo real. Um painel mostra temperatura de cada cômodo, consumo de energia, status de cada dispositivo.</p>
+<blockquote name="example">
+Sua dashboard Home Assistant mostra:
+- Temperatura: Sala 24°C, Quarto 22°C, Cozinha 26°C
+- Umidade: Banheiro 60% (úmido demais, ventilar)
+- Energia: 500W consumindo agora (ar está ligado)
+- Câmeras: Última pessoa na porta 2 horas atrás
+- Segurança: Todas portas trancadas, sistema armado
+
+Você vê tudo num relance, identifica problemas rapidamente.
+</blockquote>
+<p><strong>Alertas:</strong> Notificações quando algo excepcional acontece.</p>
+<p>• Temperatura >28°C por >1 hora? Alerta.</p>
+<p>• Movimento detectado entre 22:00-06:00? Alerta.</p>
+<p>• Porta aberta mas ninguém deveria estar em casa? Alerta.</p>
+<p>• Consumo de energia acima de normal? Alerta.</p>
+<blockquote name="tip">
+Alertas bem-calibrados são críticos. Muito poucos e você perde eventos importantes. Muitos e você ignora (alerta fatigue). O ponto certo é diferente para cada pessoa.
+</blockquote>
+<p><strong>Automações Complexas:</strong> Lógica "Se isto, então aquilo".</p>
+<blockquote name="example">
+"Se (hora é 19:00) E (ninguém em casa segundo geolocation) ENTÃO (acender lâmpadas de entrada e sala à 50% brilho para parecer alguém está em casa)"
+
+Isto é home security sem estar em casa.
+</blockquote>
+<p>Outro exemplo:</p>
+<blockquote name="example">
+"Se (alguém na cama, segundo motion detector) E (horário é 21:00) ENTÃO (diminuir temperatura para 20°C, desligar TV, desligar luzes principal, ligar lâmpada de banheiro a 1% vermelho)"
+
+Isto é rotina de dormir automática.
+</blockquote>
+<p><strong>Inteligência Contextual:</strong> Automações que sabem sua contexto (onde você está, que horas são, que dia é).</p>
+<blockquote name="example">
+"Se tempo é segunda-feira-sexta 7 AM E está chovendo E você é geolocation está a casa, ENTÃO disparar alarme 10 minutos antes porque vai pegar trânsito mais pesado."
+</blockquote>
+<p><strong>Plataformas de Automação:</strong></p>
+<p><strong>Home Assistant:</strong> Open-source, roda localmente, privado, mais controle. Requer tech knowledge.</p>
+<p><strong>SmartThings (Samsung):</strong> Cloud-based, simples, menos privacidade.</p>
+<p><strong>Hubitat:</strong> Local-first, privado, bom balanço de poder e simplicidade.</p>
+<p><strong>IFTTT (If This Then That):</strong> Cloud-based, muito simples, integra tudo. Menos poder.</p>
+<blockquote name="example">
+"Se temperatura em quarto >28°C ENTÃO enviar push notification"
+
+Sem programação, configuração visual.
+</blockquote>
+<p><strong>Histórico de Dados:</strong> Guardar dados históricos permite aprendizado.</p>
+<blockquote name="example">
+Seu sistema sabe que vocês dorme 22:00-7:00 em weekdays, mas 22:30-8:00 nos fins de semana. Ele ajusta seu padrão de temperatura automático baseado nisto. Você não programou; aprendeu pelo histórico.
+</blockquote>
+<p><strong>Integração com Calendário:</strong> Automações baseadas em seu calendário.</p>
+<blockquote name="example">
+"Se meu calendário mostra 'traveling' e há evento de vários dias, ENTÃO ligar 'away mode': luz aleatória para parecer alguém em casa, fechar todos os serviços, baixar temperatura."
+</blockquote>
+<blockquote class="news">
+Em 2024, Matter (novo padrão) está emergindo para unificar smart homes. Ao invés de cada dispositivo usar seu próprio protocolo, todos usariam Matter. Isto simplificaria integração drasticamente.
+</blockquote>
+<p>Você verá que inteligência em smart homes vem da combinação de sensores + lógica + histórico.</p>`
+    },
+    {
+      id: 'iot8',
+      title: 'Segurança e Privacidade em IoT Residencial',
+      html: `<h4>Protegendo Sua Casa Conectada</h4>
+<p>Quanto mais dispositivos conectados, mais vetores de ataque. Sua casa inteligente pode se tornar fraca se não é segura.</p>
+<p><strong>Ataques Comuns:</strong></p>
+<p><strong>Força Bruta:</strong> Alguém tenta adivinhar sua senha ao hub. Se você usa "password123", ele entrará.</p>
+<blockquote name="example">
+Hacker tem lista de 10 milhões senhas comuns. Tenta cada uma contra seu hub até uma funciona (5% das vezes funciona). Entra no sistema, desativa segurança, e rouba coisas.
+</blockquote>
+<p><strong>Man-in-the-Middle:</strong> Intercepta comunicação entre dispositivo e hub. Se não é encriptada, ele vê dados ou muda comandos.</p>
+<p><strong>Exploit de Software:</strong> Dispositivo tem bug de segurança. Hacker usa exploit para conseguir acesso.</p>
+<p><strong>Botnet:</strong> Seu dispositivo é comprometido e usado para atacar outros sistemas (DDoS attack). Você não sabe porque não há sintomas óbvios.</p>
+<blockquote class="tip">
+Uma câmera de segurança hackeada pode: espiar você, usar banda para ataque DDoS em outra rede, ser controlada remotamente.
+</blockquote>
+<p><strong>Boas Práticas:</strong></p>
+<p><strong>1. Senhas Fortes:</strong> Use senhas únicas, 20+ caracteres, um gerenciador de senhas.</p>
+<p><strong>2. Atualizações:</strong> Atualize dispositivos assim que novos patches saem. Bugs de segurança são explorados em horas.</p>
+<p><strong>3. Rede Separada:</strong> Coloque dispositivos IoT em rede Wi-Fi separada de computador/dados pessoais. Se IoT é hackeado, não acessa seus dados importantes.</p>
+<blockquote name="example">
+Dois Wi-Fi: "Home-Devices" (IoT) e "Home-Personal" (computador, telefone). Hacker entra "Home-Devices", vê que câmera está ligada. Mas não consegue acessar "Home-Personal" porque são redes diferentes.
+</blockquote>
+<p><strong>4. Firewall:</strong> Seu roteador tem firewall. Configure para bloquear acesso incoming a menos que necessário.</p>
+<p><strong>5. Desabilitar UPnP:</strong> UPnP automático abre portas, útil mas perigoso. Desabilite se não precisa.</p>
+<p><strong>6. Local-First:</strong> Quando possível, use hub local (Home Assistant, Hubitat) em vez de cloud. Dados nunca deixam casa.</p>
+<p><strong>Privacidade:</strong></p>
+<p>Mesmo se hub é seguro, você confia os dados a alguém?</p>
+<p><strong>Cloud Privacidade:</strong></p>
+<p>Amazon Alexa, Google Home enviamáudio para nuvem para processar. Humanos ouvem algumas gravações (para melhorar). Isto é invasivo.</p>
+<p><strong>Local Privacidade:</strong></p>
+<p>Home Assistant processa tudo localmente. Dados nunca deixam sua casa. Ninguém sabe quantas vezes você vai ao banheiro (dado de motion sensor).</p>
+<blockquote class="example">
+Uma pessoa carregou Home Assistant. Seu relógio inteligente envia dados de dormir localmente. Sua câmera processa faces localmente (não envia video). Seu termostato aprende preferências localmente.
+
+Zero dados deixam casa. Privacidade máxima.
+</blockquote>
+<p><strong>Regulamentação:</strong></p>
+<p>GDPR na Europa requer que você saiba que dados é coletado e poder excluir. Muitos dispositivos violam isto.</p>
+<blockquote class="news">
+Em 2024, regulação está aumentando. EUA está considerando standards de segurança para IoT. Expectativa é que em 5 anos, IoT inseguro não possa ser vendido.
+</blockquote>
+<p>Você aprenderá que segurança e privacidade devem estar em forefront quando escolhe dispositivos.</p>`
+    }
+  ],
+  flashcards: [
+    {q: 'O que é um smartwatch?', a: 'Relógio inteligente que coleta dados de saúde (heart rate, steps, sleep) e conecta a smartphone.'},
+    {q: 'Qual é a vantagem de topologia mesh em casa inteligente?', a: 'Se um dispositivo cai, rede continua através de caminhos alternativos via retransmissão.'},
+    {q: 'O que é automação em smart home?', a: 'Lógica "Se isto, então aquilo" que executa ações automaticamente.'},
+    {q: 'Qual plataforma de smart home é mais privada?', a: 'Home Assistant porque processa localmente, dados não saem da casa.'},
+    {q: 'O que é um wearable?', a: 'Dispositivo IoT que você veste, como relógio ou fone, que coleta dados pessoais.'},
+    {q: 'Qual é o desafio principal de smart homes?', a: 'Integração de muitos dispositivos de fabricantes diferentes.'},
+    {q: 'O que é Home Assistant?', a: 'Plataforma open-source local-first para automação residencial.'},
+    {q: 'Por que Matter é importante?', a: 'Novo padrão que unificaria smart homes, permitindo melhor integração entre dispositivos.'},
+    {q: 'O que é Man-in-the-Middle attack?', a: 'Hacker intercepta comunicação entre dispositivo e hub, potencialmente roubando/mudando dados.'},
+    {q: 'O que é rede separada em smart home?', a: 'Colocar IoT em Wi-Fi diferente de computador para isolar se um é hackeado.'},
+    {q: 'Como Apple Watch detecta fibrilação atrial?', a: 'Monitora variabilidade do coração; padrão irregular ativa alerta.'},
+    {q: 'O que é UPnP e por que é risco?', a: 'Automático abre portas, útil mas pode ser explorado; desabilite se não precisa.'}
+  ],
+  quizzes: [
+    {q: 'Para máxima privacidade em smart home, qual é melhor escolha?', opts: ['Amazon Alexa', 'Google Home', 'Home Assistant local-first', 'Todos igual'], correct: 2},
+    {q: 'Se sua câmera é hackeada, qual é dano potencial?', opts: ['Nenhum', 'Espiação + uso em botnet + controle remoto', 'Apenas espiação', 'Apenas botnet'], correct: 1},
+    {q: 'Qual prática reduz risco se um dispositivo IoT é hackeado?', opts: ['Senha forte', 'Rede separada para IoT', 'Firewall', 'Todas acima'], correct: 3}
+  ],
+  summary: {
+    title: 'Resumo: IoT Residencial',
+    points: [
+      'Smart homes automatizam iluminação, clima, segurança, energia através de integração de sensores.',
+      'Wearables coletam dados de saúde contínuamente, possibilitando detecção precoce de problemas.',
+      'Automações combinam dados, contexto, e histórico para executar ações inteligentes.',
+      'Segurança e privacidade são críticas; local-first é melhor que cloud-dependent.'
+    ]
+  }
+}
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
