@@ -4756,7 +4756,7 @@ function MA_buildCats() {
     };
   });
   MA_getActiveCourses().forEach(function(c) {
-    var cat = cats.find(function(k) { returnh k.name === c.cat; });
+    var cat = cats.find(function(k) { return k.name === c.cat; });
     if (cat) cat.courses.push(c);
   });
   return cats.filter(function(cat) { return cat.courses.length > 0 || cat.soon.length > 0; });
