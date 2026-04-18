@@ -2230,6 +2230,64 @@ function _mlUpdateFAB(){
 // Atualiza o FAB periodicamente quando tocando
 setInterval(_mlUpdateFAB,500);
 
+/* ── GLOBAL DBLCLICK: narrar qualquer texto na tela ── */
+document.addEventListener('dblclick',function(e){
+  var el=e.target;
+  // Só reage a elementos de texto (p, h3, h4, li, blockquote, span, em, strong)
+  var textTags=['P','H3','H4','LI','BLOCKQUOTE','SPAN','EM','STRONG','TD','TH'];
+  // Sobe até encontrar um elemento de texto ou parar
+  var found=null;
+  var node=el;
+  for(var i=0;i<5;i++){
+    if(!node||node===document.body)break;
+    if(textTags.indexOf(node.tagName)>-1){found=node;break;}
+    node=node.parentElement;
+  }
+  if(!found)return;
+  // Não interfere em inputs, botões, links
+  if(el.tagName==='INPUT'||el.tagName==='BUTTON'||el.tagName==='A'||el.tagName==='SELECT')return;
+  // Limpa seleção de texto
+  try{window.getSelection().removeAllRanges();}catch(ex){}
+  // Extrai texto do parágrafo clicado + todos os irmãos seguintes
+  var textos=[];
+  var sibling=found;
+  while(sibling){
+    var t=sibling.textContent||sibling.innerText||'';
+    t=t.trim();
+    if(t.length>5)textos.push(t);
+    sibling=sibling.nextElementSibling;
+  }
+  if(textos.length===0)return;
+  var textoCompleto=textos.join('. ');
+  if(textoCompleto.length<10)return;
+  // Para narração anterior
+  _mlStopTudo(false);
+  if(typeof _mlModMi!=='undefined'&&_mlModMi>=0)_mlSetBtn(_mlModMi,'idle');
+  // Detecta módulo/tópico ativo
+  var mi=typeof _mlModMi!=='undefined'?_mlModMi:0;
+  var ti=typeof _mlTopIdx!=='undefined'?_mlTopIdx:0;
+  _mlModMi=mi;
+  // Inicia narração do texto
+  _mlLoading=true;
+  if(typeof _mlUpdateFAB==='function')_mlUpdateFAB();
+  // Divide em chunks de ~300 chars
+  var chunks=[];
+  var palavras=textoCompleto.split(' ');
+  var chunk='';
+  for(var j=0;j<palavras.length;j++){
+    chunk+=palavras[j]+' ';
+    if(chunk.length>300){chunks.push(chunk.trim());chunk='';}
+  }
+  if(chunk.trim())chunks.push(chunk.trim());
+  // Usa pipeline simplificado
+  _mlPipe={active:true,chunks:chunks,idx:0,cache:{},aborts:[],mi:mi,ti:ti,spd:_mlPipe.spd||1};
+  _mlPipeFetchChunk(0);
+  if(chunks.length>1)_mlPipeFetchChunk(1);
+  _mlPipePlayCurrent();
+  showToast('Narrando a partir do parágrafo clicado','success');
+});
+
+
 function mlChangeModSpeed(mi,val){
   var spd=parseFloat(val)||1;
   if(_mlAudioEl&&_mlModMi===mi)_mlAudioEl.playbackRate=spd;
