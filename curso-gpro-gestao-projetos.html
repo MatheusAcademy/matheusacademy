@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gestão de Projetos: Do Planejamento à Entrega — Matheus Academy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6B35'/%3E%3Cstop offset='100%25' stop-color='%23F7C948'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23g)'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55' font-weight='bold' fill='white' font-family='Arial,sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/course.css">
+</head>
+<body>
+<script>
+var COURSE = { id:'gpro', title:'Gestão de Projetos: Do Planejamento à Entrega', subtitle:'Metodologias ágeis e tradicionais para projetos bem-sucedidos', free: false, freeModules: 1 };
+var MODS = [
+{
+  id: 'fund',
+  title: 'Fundamentos (PMI/PMBOK)',
+  free: true,
+  topics: [
+    {
+      id: 'proj',
+      title: 'O que é Um Projeto? Escopo, Cronograma, Orçamento',
+      html: '<h4>Definição de Projeto</h4><p>Um projeto é um esforço temporário com objetivo claro, recursos definidos e resultado esperado. Não é operação rotineira. É início, meio e fim. Você gerencia projetos todos dias: reformar casa, lançar produto novo, implementar sistema. Cada um precisa de planejamento.</p><blockquote class="tip">A maior parte dos projetos falham não porque são difíceis, mas porque ninguém os planejou direito. Você pensa que vai virar ao longo do caminho. Errado. Planejamento salva tudo.</blockquote><p><strong>Escopo</strong> é o que você vai fazer. Quais features o produto tem? Quantas páginas o site tem? Claro é melhor. Se escopo é vago, projeto fica sem fim, todo mundo insatisfeito.</p><blockquote class="example">Projeto: "Fazer um app". Vago. Escopo claro: "App com login, 5 telas principais (feed, perfil, mensagens, notificações, settings), integração com Google Maps, suporta iOS e Android, não suporta offline mode."</blockquote><p><strong>Cronograma</strong> é quando você vai fazer. Qual é prazo? Você quebrá o projeto em fases, atribui duração, identifica dependências (tarefa X precisa ser feita antes de Y). Cronograma realista é chave.</p><p><strong>Orçamento</strong> é quanto vai gastar. Quanto em salários? Ferramentas? Licenças? Um projeto que estrapola orçamento é projeto fracassado, mesmo que funcione bem tecnicamente.</p><blockquote class="quote">Projeto bem-sucedido: entregue no prazo, dentro do orçamento, com qualidade, e cliente satisfeito. Se um desses falha, projeto tem problema.</blockquote>'
+    },
+    {
+      id: 'trpl',
+      title: 'Tríplice Restrição: Tempo, Custo, Qualidade',
+      html: '<h4>Você Não Pode Ter Tudo</h4><p>Existe trade-off entre tempo, custo e qualidade. Você quer projeto rápido, barato e perfeito? Impossível. Escolha 2 de 3. Rápido e barato = qualidade ruim. Rápido e qualidade = caro. Barato e qualidade = lento.</p><blockquote class="tip">Escopo também entra. Você pode mudar qualquer dos 4: escopo, tempo, custo, qualidade. Mas mude um e os outros mudam também.</blockquote><blockquote class="example">Cliente quer app em 3 meses (rápido), R$ 50 mil (barato), perfeito (qualidade). Você diz: "Escolha. App em 3 meses e R$ 50 mil = 50% funcionalidade ou qualidade baixa. App completo e perfeito = 6 meses ou R$ 150 mil."</blockquote><p><strong>Gerente de projeto negocia esses trade-offs</strong>. Você entende restrições, alinha expectativas, comunica trade-offs. "Se você quer mais features (escopo), preciso ou mais tempo ou mais pessoas (custo)."</p><p>Documentar essas decisões é importante. Escopo acordado, cronograma realista, orçamento claro. Assim não tem confusão depois.</p><blockquote class="quote">O erro maior é aceitar tudo sem questionar trade-offs. Cliente pede 100 features em 2 meses com 1 pessoa. Você diz ok. Projeto falha. Culpa é sua por não ter negociado.</blockquote>'
+    },
+    {
+      id: 'grup',
+      title: 'Estrutura da Equipe de Projeto',
+      html: '<h4>Papéis e Responsabilidades</h4><p>Um projeto precisa de estrutura clara. Quem é o dono do projeto (Project Owner)? Quem é o gerente (Project Manager)? Quem executa (equipe)? Quem valida (cliente)? Sem isso, confusão reina.</p><blockquote class="tip">Menor projeto precisa de estrutura. Grande projeto precisa ainda mais. Clareza de papéis evita work de duplicado, buracos de responsabilidade, conflitos.</blockquote><p><strong>Project Manager</strong> coordena tudo. Cronograma, orçamento, comunicação, riscos. Não necessariamente faz trabalho executivo, mas coordena quem faz.</p><p><strong>Product Owner</strong> (em contextos ágeis) representa cliente. Decide prioridade de features, valida trabalho, toma decisões sobre produto.</p><p><strong>Stakeholders</strong> são interessados: cliente que paga, usuários que vão usar, diretores que dependem do resultado. Você precisa gerenciar expectativas deles.</p><blockquote class="example">Projeto: website novo. Project Manager: coordena timeline, orçamento, comunicação. Product Owner: decide quais features, valida designs. Cliente Stakeholder: aprova budget, quer updates regulares. Desenvolvedores: executam código. Designer: faz interfaces. Sem clareza, caos.</blockquote>'
+    },
+    {
+      id: 'fase',
+      title: 'Fases de Um Projeto: Iniciação, Planejamento, Execução, Monitoramento',
+      html: '<h4>O Ciclo de Vida de Projeto</h4><p>Projeto passa por fases. <strong>Iniciação</strong>: você define objetivo, caso de negócio, aloca recursos iniciais. <strong>Planejamento</strong>: você detalha escopo, cronograma, orçamento, riscos. <strong>Execução</strong>: equipe faz o trabalho. <strong>Monitoramento</strong>: você acompanha se está no trilho. <strong>Encerramento</strong>: você fecha, docenta aprendizados, entrega projeto.</p><blockquote class="tip">Muitos iniciantes querem pular planejamento. "Vamos começar e descobrir ao longo." Isso é suicídio. Planejamento é investimento que economiza 10x depois.</blockquote><blockquote class="example">Projeto sem planejamento: "Bora fazer." Começa. Descobre que faltava informação. Para. Pede informação. Continua. Descobre que timeline não funciona. Pede extensão. Descobre que orçamento não é suficiente. Pede mais. Projeto atrasa 6 meses, estrapola orçamento 3x. Projeto com planejamento: "Vamos gastar 2 semanas em planejamento." Faz planejamento. Timeline realista. Orçamento bem calculado. Execução corre tranquila. Entrega no prazo, dentro do budget.</blockquote><p><strong>Monitoramento contínuo</strong>. Você não planeja e depois só executa. Você acompanha: o cronograma está certo? Vai entregar no prazo? Custos estão dentro? Se algo desviar, você ajusta rápido.</p>'
+    }
+  ],
+  flashcards: [
+    {q: 'O que define um projeto?', a: 'Esforço temporário com objetivo claro, recursos definidos e resultado esperado.'},
+    {q: 'Quais são as 3 restrições principais?', a: 'Tempo, Custo, Qualidade. Você não consegue ter os 3 otimizados; deve escolher prioridades.'},
+    {q: 'O que é escopo de projeto?', a: 'O que você vai fazer. Funcionalidades, deliverables, limites do projeto.'},
+    {q: 'Por que planejamento é importante?', a: 'Porque 2 semanas de planejamento economizam 6 meses de atrasos depois.'},
+    {q: 'Qual é papel do Project Manager?', a: 'Coordenar cronograma, orçamento, comunicação, riscos. Garantir que projeto fica no trilho.'},
+    {q: 'O que significa "dentro do orçamento"?', a: 'Gastar apenas o valor acordado. Menos é bom; mais significa fracasso de planejamento.'},
+    {q: 'Qual é fase mais importante de um projeto?', a: 'Planejamento. Uma hora investida em planejamento economiza 10 horas em execução.'},
+    {q: 'Qual é cronograma realista?', a: 'Aquele que você consegue cumprir. Otimista demais e falha. Pessimista e desanima.'},
+    {q: 'O que é Product Owner?', a: 'Pessoa que representa cliente/usuário. Decide prioridades, valida trabalho.'},
+    {q: 'Por que monitoramento contínuo importa?', a: 'Para detectar desvios cedo e ajustar antes que vire desastre.'},
+    {q: 'Qual é diferença entre Gerente de Projeto e Product Owner?', a: 'PM cuida de processo/execução. PO cuida de produto/decisões sobre o que fazer.'},
+    {q: 'O que é caso de negócio?', a: 'Justificativa para fazer projeto. Por que vale gastar tempo/dinheiro? Qual é o retorno?'}
+  ],
+  quizzes: [
+    {q: 'Você pode ter projeto rápido, barato e de qualidade perfeita?', opts: ['Sim', 'Não, tem trade-off entre tempo, custo e qualidade', 'Depende do mercado', 'Sempre'], correct: 1},
+    {q: 'Qual é melhor abordagem: planejar 2 semanas ou começar direto?', opts: ['Começar direto economiza tempo', 'Planejar 2 semanas economiza 6 meses depois', 'Não importa', 'Depende'], correct: 1},
+    {q: 'Se orçamento está apertado e você precisa escolher, qual é prioridade?', opts: ['Mais features (escopo)', 'Prazo garantido', 'Qualidade aceitável', 'Tudo ao mesmo tempo'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo do Módulo',
+    points: [
+      'Projeto é esforço temporário com objetivo claro. Precisa de planejamento em escopo, cronograma e orçamento.',
+      'Tríplice restrição: não consegue ter tempo, custo e qualidade otimizados. Escolha prioridades e negocue trade-offs.',
+      'Estrutura clara: PM coordena, Product Owner decide, equipe executa, stakeholders validam.',
+      'Fases: Iniciação > Planejamento (crítico) > Execução > Monitoramento > Encerramento. Monitoramento contínuo detecta problemas cedo.'
+    ]
+  }
+},
+{
+  id: 'agil',
+  title: 'Metodologias Ágeis e Scrum',
+  free: false,
+  topics: [
+    {
+      id: 'agi1',
+      title: 'Quando Usar Ágil vs Waterfall',
+      html: '<h4>Ágil vs Waterfall</h4><p><strong>Waterfall</strong> é sequencial: você planeja tudo, depois executa fase por fase, sem voltar. Bom para projetos previsíveis, requisitos claros, pouca mudança.</p><blockquote class="tip">Ágil é iterativo: você planeja pouco, começa executar, aprende, ajusta, repete. Bom para projetos com muita incerteza, mudanças frequentes, cliente envolvido.</blockquote><blockquote class="example">Waterfall: "Vamos construir ponte. Arquitetura clara, engenharia bem entendida, requisitos não mudam. Planejar 6 meses, construir 2 anos." Ágil: "Vamos fazer app. Mercado muda rápido, não sabemos exatamente o que usuário quer. Planejamos 1 sprint, entregamos, aprendemos com feedback, ajustamos próximo sprint."</blockquote><p>Maioria dos projetos modernos usa ágil porque mundo é incerto. Mesmo em construção agora tem ágil (design iterativo).</p>'
+    },
+    {
+      id: 'scr1',
+      title: 'Scrum Framework na Prática',
+      html: '<h4>Como Funciona Scrum</h4><p><strong>Sprint</strong> é período fixo (1-4 semanas, geralmente 2) onde equipe trabalha em um conjunto de tarefas. Objetivo é entregar incremento de produto ao final do sprint.</p><blockquote class="tip">Scrum funciona em ciclos. Sprint planeja, executa, revisa, reflete. Próximo sprint repete com aprendizados anteriores.</blockquote><p><strong>Product Backlog</strong> é lista de tudo que precisa ser feito. Priorizado. <strong>Sprint Backlog</strong> é subset do Product Backlog que equipe vai fazer neste sprint. <strong>Increment</strong> é o que entregou.</p><blockquote class="example">Product Backlog: "Login, perfil de usuário, feed, mensagens, notificações, admin panel, analytics." Sprint 1 Backlog: "Login e perfil." Sprint 2: "Feed e notificações." Cada sprint tem increment que funciona.</blockquote><p><strong>Daily standup</strong> é 15 min todos dias onde cada um diz: o que fez ontem, o que vai fazer hoje, o que está blocado. Mantém equipe sincronizada.</p><p><strong>Sprint review</strong> ao final do sprint: equipe mostra incremento pronto para cliente. Cliente dá feedback.</p><p><strong>Sprint retrospective</strong>: equipe reflete: o que funcionou? O que não funcionou? O que melhorar próximo sprint?</p><blockquote class="quote">Scrum é simples em teoria mas difícil na prática. Chave é disciplina: sprints fixos, dailies todos dias, entrega real ao final do sprint.</blockquote>'
+    },
+    {
+      id: 'sto1',
+      title: 'User Stories e Product Backlog',
+      html: '<h4>Como Descrever Trabalho</h4><p><strong>User Story</strong> é formato para descrever funcionalidade do ponto de vista do usuário. "Como [pessoa], quero [funcionalidade] para que [benefício]."</p><blockquote class="tip">User stories focam em benefício, não em solução técnica. Isso deixa espaço para criatividade técnica.</blockquote><blockquote class="example">Ruim: "Backend precisa validar email." Bom: "Como usuário, quero validação de email para que não receba emails de contas fake." Ou: "Como desenvolvedor, quero validação de email para que dados fiquem limpos."</blockquote><p><strong>Critério de aceitação</strong> é condição que precisa ser verdade para story estar pronta. "Email valida: 1) field obrigatório, 2) formato correto (@), 3) message de erro claro se inválido."</p><p><strong>Estimation</strong> em ágil não é horas, é story points. 1 point = simples. 3 = médio. 8 = complexo. Você estima relativo, não absoluto. Isso é mais realista.</p><blockquote class="quote">User stories escritas bem deixam claro o que fazer sem prescrever como. Isso permite que devs/designers resolvam criativamente.</blockquote>'
+    },
+    {
+      id: 'burn1',
+      title: 'Burndown, Velocity e Métricas Ágeis',
+      html: '<h4>Acompanhando Progresso</h4><p><strong>Burndown chart</strong> mostra quanto trabalho falta ao longo do sprint. Início = 20 points. Dia 1 = 18. Dia 2 = 15. Dia 5 = 8. Final = 0. Você vê se está no trilho (linha ideal) ou atrasado.</p><blockquote class="tip">Se burndown está muito acima da linha ideal no meio do sprint, você tem problema. Você precisa ajustar: reduzir scope, adicionar pessoas, estender sprint.</blockquote><blockquote class="example">Burndown mostra que hoje (dia 7 de 10) faltam 12 points. Linha ideal seria 6. Você está atrasado 6 points = 1 dia. Você tem 3 dias para recuperar. Você acelera, remove distrações, consegue recuperar.</blockquote><p><strong>Velocity</strong> é quantos points equipe consegue fazer por sprint. Sprint 1: 20 points. Sprint 2: 22. Sprint 3: 18. Você usa velocity para planejar futuros sprints: se velocity é 20 e backlog tem 100 points, vai levar 5 sprints.</p><p><strong>Burn-up chart</strong> é oposto: mostra quanto foi completo, não quanto falta. Bom para ver progresso acumulado.</p><blockquote class="quote">Métricas ágeis não são punitivas. São diagnóstico. Se velocity caiu, por quê? Muitas interrupções? Equipe cansada? Você identifica e arruma.</blockquote>'
+    }
+  ],
+  flashcards: [
+    {q: 'Qual é diferença entre Waterfall e Ágil?', a: 'Waterfall: sequencial, planejamento completo antes. Ágil: iterativo, planejamento por sprint, ajusta conforme aprende.'},
+    {q: 'O que é Sprint?', a: 'Período fixo (geralmente 2 semanas) onde equipe trabalha em conjunto de tarefas e entrega increment.'},
+    {q: 'O que é Product Backlog?', a: 'Lista priorizada de tudo que precisa ser feito no projeto.'},
+    {q: 'O que é Sprint Backlog?', a: 'Subset do Product Backlog que equipe vai fazer neste sprint específico.'},
+    {q: 'Qual é duração típica de um Sprint?', a: '2 semanas é padrão. Pode variar de 1-4 semanas.'},
+    {q: 'O que é User Story?', a: '"Como [pessoa], quero [funcionalidade] para que [benefício]." Descreve funcionalidade do ponto de vista do usuário.'},
+    {q: 'Qual é propósito do Daily Standup?', a: 'Sincronizar equipe: o que cada um fez, o que vai fazer, o que está blocado. 15 min todos dias.'},
+    {q: 'O que é Sprint Review?', a: 'Reunião ao final do sprint onde equipe mostra increment pronto para cliente dar feedback.'},
+    {q: 'O que é Sprint Retrospective?', a: 'Reunião onde equipe reflete: o que funcionou? O que não funcionou? Como melhorar próximo sprint?'},
+    {q: 'O que é Burndown Chart?', a: 'Gráfico mostrando quanto trabalho falta ao longo do sprint. Ajuda ver se está no trilho.'},
+    {q: 'O que é Velocity?', a: 'Quantos story points equipe consegue completar por sprint. Usado para planejar futuros sprints.'},
+    {q: 'Qual é unidade de estimativa em Ágil?', a: 'Story points (1, 3, 8, etc), não horas. Relativo, não absoluto.'}
+  ],
+  quizzes: [
+    {q: 'Quando usar Ágil vs Waterfall?', opts: ['Sempre Ágil', 'Sempre Waterfall', 'Ágil para incerteza/mudança; Waterfall para previsível', 'Não importa'], correct: 2},
+    {q: 'Se seu Burndown está acima da linha ideal, você está:', opts: ['Atrasado', 'No trilho', 'Adiantado', 'Normal'], correct: 0},
+    {q: 'Qual é propósito de Daily Standup?', opts: ['Reportar horas trabalhadas', 'Sincronizar equipe e identificar blockers', 'Conversa informal', 'Não importante'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo do Módulo',
+    points: [
+      'Ágil funciona em sprints: planejamento curto, execução, aprendizado, ajuste. Bom para projetos incertos.',
+      'Scrum é framework ágil com Sprint de 2 sem, Daily Standup, Sprint Review e Retrospective. Disciplina é chave.',
+      'User Stories descrevem funcionalidade do ponto de vista do usuário. Critério de aceitação deixa claro quando está pronto.',
+      'Burndown chart, Velocity e métricas ágeis são diagnóstico, não punição. Ajudam ajustar e melhorar continuamente.'
+    ]
+  }
+},
+{
+  id: 'plan',
+  title: 'Planejamento e Escopo',
+  free: false,
+  topics: [
+    {
+      id: 'pla1',
+      title: 'Definição e Validação de Escopo',
+      html: '<h4>Se Escopo é Vago, Projeto Falha</h4><p>Escopo é o que você vai fazer. Claro, acordado, documentado. Se escopo é vago, projeto fica sem fim: cliente pede mais, equipe não sabe até onde vai, orçamento estoura.</p><blockquote class="tip">Escopo creep (aumento não planejado de escopo) é causa #1 de atrasos. Você precisa dizer "não" a coisas fora do escopo.</blockquote><blockquote class="example">Cliente: "Quero um website." Vago. Você: "Website com quanto?" Cliente: "Não sei, tipo 20 páginas?" Você: "Ok, dessas 20, quais?" Cliente: "Página inicial, sobre, contato, blog, loja...". Agora está ficando claro. Você documenta cada página e o que tem nela.</blockquote><p><strong>Work Breakdown Structure (WBS)</strong> quebra projeto em pedaços menores. Projeto > Fases > Deliverables > Tarefas. Cada nível fica mais específico. Assim você nada esquece.</p><p><strong>Validação com cliente</strong>. Você documenta escopo, mostra para cliente, cliente assina concordando. Assim não tem ambiguidade depois.</p>'
+    },
+    {
+      id: 'pla2',
+      title: 'Estimativa e Cronograma Realista',
+      html: '<h4>Como Não Prometer Impossível</h4><p>Erro comum: cliente pede prazo otimista, você promete, falha. Verdade é que estimativa é difícil. Você pode estar 30% errado e isso é ok.</p><blockquote class="tip">Estimativa ruim é causa comum de atrasos. Você precisa de metodologia, não adivinhação.</blockquote><p><strong>3-point estimate</strong>: você estima 3 cenários. Otimista (melhor caso), realista (mais provável), pessimista (pior caso). Média ponderada dá estimativa melhor que só uma.</p><blockquote class="example">Task: integrar API de pagamento. Otimista: 2 dias (tudo corre bem). Realista: 5 dias (alguns problemas, algumas idas e vindas). Pessimista: 10 dias (API tem bugs, documentação ruim). Você usa 5 dias como estimativa (realista).</blockquote><p><strong>Contingência</strong>. Seu cronograma nunca é 100% utilizado. Alguém fica doente. Tem reunião inesperada. Você coloca buffer (20-30%) no cronograma.</p><p><strong>Dependências</strong>. Tarefa A precisa estar pronta antes de B. Você identifica e sequencia. Se A atrasa, B atrasa. Tarefas paralelas reduzem tempo total.</p><blockquote class="quote">Cronograma realista é melhor que otimista. Otimista quebra confiança; realista você entrega no prazo e cliente fica surpreso positivamente.</blockquote>'
+    },
+    {
+      id: 'pla3',
+      title: 'Alocação de Recursos e Orçamento',
+      html: '<h4>Quanto Vai Custar?</h4><p>Orçamento é soma de custos: salários, ferramentas, licenças, infraestrutura. Você precisa estimar realista, não otimista.</p><blockquote class="tip">Não pergunte "quanto você quer gastar?" Calcule "quanto realmente custa?" e proponha.</blockquote><blockquote class="example">Projeto: "App para empresa." Você calcula: Dev Sr (60h @ R$ 200/h) = R$ 12k. Dev Jr (100h @ R$ 80/h) = R$ 8k. Designer (40h @ R$ 150/h) = R$ 6k. Server (3 meses) = R$ 1.5k. Total = R$ 27.5k. Você propõe R$ 30k (buffer). Cliente queria R$ 15k. Você negocia escopo ou preço.</p><p><strong>Alocação de recursos</strong>. Quantas pessoas? Qual nível? Período inteiro ou parte? Você calendário recursos para que não fiquem ociosos e nem sobrecarregados.</p><p><strong>ROI (Return on Investment)</strong>. Quanto projeto vai trazer de volta? Se custa R$ 30k e projeto vai gerar R$ 100k de receita, vale. Se vai gerar R$ 20k, não vale.</p><blockquote class="quote">Melhor é ser honesto sobre custo upfront do que prometer barato e depois pedir mais grana todo mês.</blockquote>'
+    },
+    {
+      id: 'pla4',
+      title: 'Change Management e Scope Creep',
+      html: '<h4>Quando Coisas Mudam</h4><p>Mundo muda. Cliente muda ideia. Requisitos mudam. Isso é normal. Mas você não pode só aceitar tudo sem controlar. Você precisa de processo de mudança.</p><blockquote class="tip">Sem processo de mudança, você termina com escopo 3x maior que original e ninguém sabe por quê.</blockquote><p><strong>Change request formal</strong>. Alguém pede mudança. Você analisa: que impacto tem? Cronograma? Orçamento? Você quantifica. Cliente decide se vale pagar a mais ou esperar.</p><blockquote class="example">Cliente: "Quer adicionar feature X." Você: "Feature X vai adicionar 30h de trabalho = R$ 6k extra e 2 semanas no cronograma. Vale?" Cliente: "Sim, paga" ou "Não, deixa pra depois."</blockquote><p><strong>Diga não educadamente</strong>. "Isso está fora do escopo acordado. Pode fazer? Sim. Quanto vai custar? R$ 8k e 3 semanas." Cliente pode mudar ideia quando vê custo real.</p><p><strong>Baseline de escopo</strong>. Uma vez que cliente assina escopo, isso é baseline. Qualquer mudança precisa de approval formal e é paid change.</p><blockquote class="quote">Escopo creep não é culpa do cliente. É sua falha em comunicar trade-offs e dizer não. Controle sua comunicação e você controla projeto.</blockquote>'
+    }
+  ],
+  flashcards: [
+    {q: 'O que é Work Breakdown Structure (WBS)?', a: 'Divisão de projeto em partes menores: Projeto > Fases > Deliverables > Tarefas. Nada fica de fora.'},
+    {q: 'Como fazer estimativa melhor?', a: '3-point estimate: otimista, realista, pessimista. Média ponderada é mais acurado que uma estimativa.'},
+    {q: 'Por que colocar contingência no cronograma?', a: 'Porque coisas inesperadas acontecem. 20-30% buffer evita que fique apertado.'},
+    {q: 'O que é escopo creep?', a: 'Aumento não planejado de funcionalidades. Causa #1 de atrasos e estouros de orçamento.'},
+    {q: 'Como controlar escopo creep?', a: 'Change request formal: alguém pede mudança, você analisa impacto, cliente aprova e paga se quiser.'},
+    {q: 'Como calcular orçamento realista?', a: 'Soma todos custos: salários (horas x taxa), ferramentas, licenças, infraestrutura, buffer.'},
+    {q: 'O que é dependência em cronograma?', a: 'Quando tarefa A precisa estar pronta antes de B. Você sequencia e identifica caminho crítico.'},
+    {q: 'Como saber se projeto vale o investimento?', a: 'Calcule ROI: quanto vai trazer de receita/benefício versus quanto custa.'},
+    {q: 'O que fazer se cliente pede mudança?', a: 'Diga não educadamente: "Está fora do escopo. Posso fazer? Sim. Quanto custa? R$ X, demora Y."'},
+    {q: 'Por que assinar escopo com cliente importa?', a: 'Para que baseline fique claro. Mudanças depois precisam de approval e pagamento adicional.'},
+    {q: 'Qual é maior erro em estimativa?', a: 'Ser otimista. Otimista quebra confiança; realista deixa você entregar no prazo.'},
+    {q: 'Como alocar recursos?', a: 'Quantas pessoas, qual nível, período todo ou parte. Calendário para não deixar ociosos nem sobrecarregados.'}
+  ],
+  quizzes: [
+    {q: 'Se escopo é vago, o que vai acontecer?', opts: ['Nada', 'Projeto fica sem fim, cliente quer mais, orçamento estoura', 'Projeto fica excelente', 'Depende'], correct: 1},
+    {q: 'Como responder quando cliente pede mudança?', opts: ['Sim, sem problema', 'Não, nunca', 'Analisa impacto, quantifica, cliente decide', 'Ignora'], correct: 2},
+    {q: 'Qual é melhor: estimativa otimista ou realista?', opts: ['Otimista, mais bonito', 'Realista, você entrega no prazo', 'Não importa', 'Pessimista'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo do Módulo',
+    points: [
+      'Escopo claro e validado com cliente evita projeto sem fim. WBS quebra em pedaços menores que nada fica de fora.',
+      'Estimativa realista usa 3 cenários. Cronograma precisa de contingência (20-30%) para atrasos inesperados.',
+      'Orçamento é soma de todos custos. ROI mostra se projeto vale o investimento.',
+      'Controle de mudança: formal, análise de impacto, cliente aprova e paga. Sem controle, escopo explode.'
+    ]
+  }
+},
+{
+  id: 'risco',
+  title: 'Gestão de Riscos',
+  free: false,
+  topics: [
+    {
+      id: 'ris1',
+      title: 'Identificação e Avaliação de Riscos',
+      html: '<h4>Que Pode Dar Errado?</h4><p>Risco é algo que pode acontecer que afetaria projeto. Dev chave fica doente. Ferramental escolhida não funciona bem. Requisito muda. Cliente desaparece. Você precisa identificar riscos cedo e planejar.</p><blockquote class="tip">Risco que você não identifica é risco que te mata. Risco que você identifica e planeja pode virar não-problema.</blockquote><blockquote class="example">Projeto: "Integrar sistema X com Y." Riscos: API de X muda (frequente), equipe não tem experiência com X (risco técnico), cliente muda de ideia sobre requisitos (risco de escopo).</blockquote><p><strong>Probabilidade x Impacto</strong>. Risco tem probabilidade (alta/média/baixa) e impacto (alto/médio/baixo). Você prioriza riscos de alta prob + alto impacto.</p><p><strong>Risk Register</strong>. Você lista todos riscos, estima prob/impacto, plano de mitigação. Documento vivo que você revisa regularmente.</p><blockquote class="quote">Identificação de riscos é trabalho em time. Devs veem riscos técnicos. PM vê riscos de cronograma. Cliente vê riscos de negócio. Escute todos.</blockquote>'
+    },
+    {
+      id: 'ris2',
+      title: 'Estratégias de Mitigação',
+      html: '<h4>Preparando-se Para o Pior</h4><p>Uma vez identificado risco, você prepara. <strong>Evitar</strong>: elimina risco. Usar ferramenta comprovada ao invés de nova. <strong>Mitigar</strong>: reduz prob/impacto. Treinar equipe. <strong>Aceitar</strong>: conviver com risco e ter plano B. <strong>Transferir</strong>: passar risco para outro (segurador, vendor).</p><blockquote class="tip">Melhor é evitar. Se não consegue, mitiga. Se não consegue, aceita com plano B.</blockquote><blockquote class="example">Risco: "Dev chave deixa projeto". Evitar: não dá, rotatividade é fato. Mitigar: documentação clara, pair programming, conhecimento distribuído. Aceitar: tem conhecimento em outro dev. Se primeiro dev sai, segundo toma.</blockquote><p><strong>Contingency plan</strong>. Se risco acontecer, aqui está o que você faz. Planejado != improvisado. Improvisado quebra tudo.</p><p><strong>Custo e tempo de contingência</strong>. Você aloca orçamento e cronograma para "se algo der errado". Não é desperdício; é seguro.</p><blockquote class="quote">Risco bem gerenciado não vira problema. Risco ignorado se torna desastre.</blockquote>'
+    },
+    {
+      id: 'ris3',
+      title: 'Monitoramento de Riscos Ao Longo do Projeto',
+      html: '<h4>Riscos Evoluem</h4><p>Risk register não é documento "faça uma vez". Você revisa regularmente. Riscos que eram altos viram baixos. Novos riscos aparecem. Você monitora e ajusta.</p><blockquote class="tip">Revisar riscos todo sprint (em ágil) ou todo mês (em waterfall) é disciplina que previne surpresas.</blockquote><blockquote class="example">Sprint 1: risco "API não documentada" era alto. Sprint 2: você documentou, virou baixo. Novo risco: "Cliente não aprova design" apareceu. Você prioriza mitigar.</blockquote><p><strong>Triggers</strong>. Você identifica sinais que risco está acontecendo. Dev ficando doente? Trigger. Teste quebrando frequente? Trigger. Você reage rápido ao trigger.</p>'
+    },
+    {
+      id: 'ris4',
+      title: 'Comunicação de Risco com Stakeholders',
+      html: '<h4>Sejam Honesto Sobre Riscos</h4><p>Stakeholders (cliente, líderes) querem saber riscos. Transparência constrói confiança. Se escondes riscos e depois explodem, você perde credibilidade.</p><blockquote class="tip">Comunicar risco cedo permite que stakeholders ajudem mitigar ou aceitem risco informado.</blockquote><blockquote class="example">Você identifica: "Mudança de requisito é risco alto." Você comunica: "Cliente pode mudar ideia. Se acontecer, cronograma muda." Cliente entende. Se depois muda, não é surpresa.</blockquote><p><strong>Status regular</strong>. Você reporta riscos em status updates: novos riscos, riscos que evoluíram, planos de mitigação atualizados.</p><blockquote class="quote">Mais honesto você for sobre riscos, mais tempo stakeholders têm pra se preparar. Surpresas são ruins.</blockquote>'
+    }
+  ],
+  flashcards: [
+    {q: 'O que é um risco de projeto?', a: 'Algo que pode acontecer que afeta projeto. Você precisa identificar, avaliar, mitigar.'},
+    {q: 'Qual é diferença entre probabilidade e impacto?', a: 'Probabilidade = chance que aconteça. Impacto = o quanto prejudicaria se acontecer.'},
+    {q: 'O que fazer com risco de alta prob + alto impacto?', a: 'Priorizar mitigação. É crítico.'},
+    {q: 'O que é Risk Register?', a: 'Documento que lista todos riscos, prob/impacto, e plano de mitigação. Vive durante projeto.'},
+    {q: 'Qual é diferença entre evitar, mitigar, aceitar risco?', a: 'Evitar: elimina risco. Mitigar: reduz prob/impacto. Aceitar: conviver com plano B.'},
+    {q: 'O que é contingency plan?', a: 'Plano B se risco acontecer. Preparado antecipadamente, não improvisado no momento.'},
+    {q: 'Por que alocar buffer de tempo/orçamento importa?', a: 'Para cobrir se riscos se materializarem. Não é desperdício; é seguro.'},
+    {q: 'Quanto frequência revisar Risk Register?', a: 'Todo sprint (ágil) ou todo mês (waterfall). Riscos evoluem, novos aparecem.'},
+    {q: 'O que é trigger de risco?', a: 'Sinal que risco está começando a acontecer. Você reage rápido ao trigger.'},
+    {q: 'Por que comunicar risco com stakeholders?', a: 'Transparência constrói confiança. Permite que ajudem mitigar ou aceitem informado.'},
+    {q: 'Qual é risco ignorado?', a: 'Se torna desastre. Por isso identificar cedo é crítico.'},
+    {q: 'O que fazer com risco novo que aparece?', a: 'Adicionar ao Risk Register, avaliar prob/impacto, planejar mitigação, comunicar.'}
+  ],
+  quizzes: [
+    {q: 'Qual tipo de risco priorizar?', opts: ['Alta prob + baixo impacto', 'Baixa prob + alto impacto', 'Alta prob + alto impacto', 'Nenhum'], correct: 2},
+    {q: 'O que fazer se risco acontecer sem você ter plano B?', opts: ['Improvisa', 'Tudo bem', 'Desastre = você estava unprepared', 'Culpa cliente'], correct: 2},
+    {q: 'Qual é melhor: esconder riscos ou comunicar?', opts: ['Esconder é melhor', 'Comunicar constrói confiança', 'Não importa', 'Depende'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo do Módulo',
+    points: [
+      'Identifique riscos cedo. Avalie probabilidade x impacto. Priorize altos de ambos.',
+      'Estratégias: evitar (eliminar), mitigar (reduzir), aceitar (plano B), transferir (segurador).',
+      'Contingency plan é preparado antecipadamente. Aloque buffer de tempo/orçamento para riscos.',
+      'Revise riscos regularmente. Novos aparecem, evoluem. Comunique transparentemente com stakeholders.'
+    ]
+  }
+},
+{
+  id: 'fere',
+  title: 'Ferramentas e Liderança de Projetos',
+  free: false,
+  topics: [
+    {
+      id: 'fer1',
+      title: 'Ferramentas: Jira, Asana, Monday, Notion',
+      html: '<h4>Qual Ferramenta Escolher?</h4><p>Ferramentas de gestão de projetos ajudam organizar trabalho, cronograma, comunicação. <strong>Jira</strong> é para Scrum/ágil, muito técnica. <strong>Asana</strong> é mais simples, bom para times não-técnico. <strong>Monday</strong> é flexível, bom para customize. <strong>Notion</strong> é versátil, tudo em um lugar.</p><blockquote class="tip">Ferramenta certa depende de time, tipo de projeto, orçamento. Não existe ferramenta "perfeita".</blockquote><blockquote class="example">Time de devs: Jira. Time de marketing: Monday ou Asana. Startup sem budget: Notion. Empresa com budget: qualquer uma funciona.</blockquote><p><strong>Não confunda ferramenta com processo</strong>. Ferramenta implementa processo, não cria. Se seu processo é ruim, ferramenta não salva.</p>'
+    },
+    {
+      id: 'fer2',
+      title: 'Gestão de Comunicação e Documentação',
+      html: '<h4>Comunicação Clara = Projeto Bem</h4><p>Comunicação é 80% de sucesso de projeto. Você precisa: comunicação síncrona (reuniões) para decisões, comunicação assíncrona (docs, email) para informação, status updates regulares.</p><blockquote class="tip">Documente. Não confie em conversas ou memória. Documentado é real.</blockquote><blockquote class="example">Decisão tomada em meeting. Se não documentar em email/doc, semana depois alguém lembra diferente. Caos. Você documenta: "Acordamos que X vai fazer Y até Z."</blockquote><p><strong>Status reports</strong> regulares (semanal/bi-semanal) para stakeholders. O que foi feito. O que vem. O que está blocado. Mantém todos alinhados.</p><p><strong>Documentação de projeto</strong>: requisitos, cronograma, riscos, decisões importantes. Tudo em um lugar que pessoas conseguem achar.</p><blockquote class="quote">Projeto bem documentado pode ser passado para outro PM se necessário. Projeto sem documentação morre com quem o liderava.</blockquote>'
+    },
+    {
+      id: 'fer3',
+      title: 'Liderança de Equipe de Projeto',
+      html: '<h4>PM Precisa Ser Líder</h4><p>PM não é boss. PM é coordenador, facilitador. Você não manda; você alinha, remove bloqueios, mantém equipe focada e motivada.</p><blockquote class="tip">PM que grita ordens virar rápido ineficaz. PM que escuta, facilita e apoia fica respeitado e eficaz.</blockquote><blockquote class="example">Dev não vai fazer task porque não acredita que é importante. Você: conversa, explica por quê é importante, ouve perspectiva dele, ajusta se faz sentido. Dev passa a acreditar e faz bem feito.</blockquote><p><strong>Remover blockers</strong>. Se equipe está presa esperando input, você pressiona cliente. Se estão sem ferramenta, você consegue. Seu trabalho é tirar fricção.</p><p><strong>Reconhecimento</strong>. Quando alguém faz bom trabalho, você fala. Em reunião, em email, público. Isso motiva.</p><blockquote class="quote">Melhor PM é aquele que equipe não vê como adversário, mas como aliado que está ali para ajudar eles terem sucesso.</blockquote>'
+    },
+    {
+      id: 'fer4',
+      title: 'Encerramento de Projeto e Lições Aprendidas',
+      html: '<h4>Quando Projeto Termina</h4><p>Projeto termina. Entrega feita. Não é fim. Você precisa: validar que está tudo pronto, documentar lições aprendidas, arquivar documentação, celebrar.</p><blockquote class="tip">Lições aprendidas é ouro. Que funcionou? Que não? O que você faria diferente? Próximo projeto usa esse conhecimento.</blockquote><blockquote class="example">Projeto A: "Estimativa de dev foi otimista, trabalho foi 2x mais. Próximo projeto, multiplicamos estimativa de dev por 1.5." Lição aprendida, implementada.</blockquote><p><strong>Retrospective pós-projeto</strong> (maior que retrospective de sprint). O que foi bem? O que foi mal? Que mudanças você faria no processo?</p><p><strong>Celebração</strong>. Projeto foi difícil. Equipe trabalhou duro. Você celebra. Pode ser almoço, drinks, reconhecimento público. Importa.</p><blockquote class="quote">Projeto bem encerrado deixa equipe motivada para próximo. Projeto mal encerrado deixa amargor.</blockquote>'
+    }
+  ],
+  flashcards: [
+    {q: 'Qual ferramenta para time ágil/dev?', a: 'Jira. Feita para Scrum, muito técnica.'},
+    {q: 'Qual ferramenta para time não-técnico?', a: 'Asana ou Notion. Mais simples, intuitiva.'},
+    {q: 'Qual é maior fator de sucesso em projeto?', a: 'Comunicação. 80% de sucesso é comunicação clara.'},
+    {q: 'Por que documentar é importante?', a: 'Porque documentado é real. Sem documentação, conflito de perspectivas.'},
+    {q: 'O que é status report?', a: 'Comunicação regular (semanal) com stakeholders: o que foi feito, o que vem, o que está blocado.'},
+    {q: 'Qual é papel de PM?', a: 'Coordenador, facilitador. Não manda; alinha, remove blockers, mantém equipe focada.'},
+    {q: 'O que é "remover blockers"?', a: 'Quando equipe está presa, você pressiona cliente ou consegue recursos para destravar.'},
+    {q: 'Por que celebrar ao final do projeto?', a: 'Porque equipe trabalhou duro. Celebração deixa motivada para próximo projeto.'},
+    {q: 'O que é lições aprendidas?', a: 'O que funcionou? Que não? O que fazer diferente próximo? Documentado e implementado.'},
+    {q: 'Por que retrospective pós-projeto importa?', a: 'Para extrair aprendizado e melhorar processo para próximos projetos.'},
+    {q: 'O que fazer com documentação após projeto terminar?', a: 'Arquivar de forma que próximos projetos possam achar e aprender.'},
+    {q: 'Qual é maior erro de PM?', a: 'Não comunicar até project está em fogo. Comunicação regular evita surpresas.'}
+  ],
+  quizzes: [
+    {q: 'Qual é maior causa de conflito em projetos?', opts: ['Recursos insuficientes', 'Falta de comunicação clara', 'Cronograma apertado', 'Equipe ruim'], correct: 1},
+    {q: 'O que fazer com lições aprendidas?', opts: ['Documentar e esquecer', 'Documentar e implementar em próximos projetos', 'Ignorar', 'Culpar pessoas'], correct: 1},
+    {q: 'Qual é melhor: ferramenta ótima com processo ruim ou processo ótimo com ferramenta simples?', opts: ['Ferramenta ótima', 'Processo ótimo com ferramenta simples', 'Não importa', 'Depende'], correct: 1}
+  ],
+  summary: {
+    title: 'Resumo do Módulo',
+    points: [
+      'Escolha ferramenta conforme time: Jira para ágil/dev, Asana/Notion para outros. Ferramenta implementa processo, não cria.',
+      'Comunicação síncrona (reuniões) para decisões, assíncrona (docs) para informação. Status updates regulares mantém alinhamento.',
+      'PM é facilitador, não boss. Escuta, alinha, remove blockers. Equipe respeitado respeita PM.',
+      'Encerramento: validar pronto, lições aprendidas, arquivar docs, celebrar. Projeto bem encerrado motiva próximo.'
+    ]
+  }
+}
+];
+</script>
+<script src="shared/course-engine.js"></script>
+</body>
+</html>
