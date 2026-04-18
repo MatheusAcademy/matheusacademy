@@ -5094,22 +5094,51 @@ on:.2s}
 
 
 
-<style id="netflix-mobile-clean">
+
+
+<style id="netflix-mobile-final">
 @media(max-width:767px){
-  /* Somente cards de curso dentro das categorias - NÃO afeta hero/banner */
+  /* Fix overflow/shift */
+  html,body{overflow-x:hidden !important;max-width:100vw !important;}
+  
+  /* ALL card types: .cc, ebook-card, etc */
+  .cc,
+  .ebook-card,
+  #continuarSection .cc,
+  .section-wrap .cc,
+  .cat-sec .cc,
   .cat-sec .row-inner .cc,
-  .section-wrap .row-inner .cc {
+  .section-wrap .row-inner .cc,
+  .cat-sec:has(.cat-sec-title.special) .cc,
+  .cat-sec:not(:has(.cat-sec-title.special)) .cc {
     flex: 0 0 30vw !important;
     width: 30vw !important;
     max-width: 30vw !important;
+    min-width: 0 !important;
     border-radius: 4px !important;
   }
-  .cat-sec .row-inner .cc .cc-img,
-  .section-wrap .row-inner .cc .cc-img {
-    aspect-ratio: 2/3 !important;
+  /* Ebook cards specifically */
+  .ebook-card,
+  .ebook-cover {
+    flex: 0 0 30vw !important;
+    width: 30vw !important;
+    max-width: 30vw !important;
   }
-  .cat-sec .row-inner .cc .cc-name,
-  .section-wrap .row-inner .cc .cc-name {
+  /* ALL images: poster 2:3 */
+  .cc-img,
+  .ebook-cover,
+  .cat-sec .cc .cc-img,
+  .section-wrap .cc .cc-img,
+  .cat-sec:has(.cat-sec-title.special) .cc .cc-img,
+  .cat-sec:not(:has(.cat-sec-title.special)) .cc .cc-img {
+    aspect-ratio: 2/3 !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+  /* Titles: tiny */
+  .cc-name,
+  .ebook-card .cc-name,
+  .ebook-card .p-name-bar {
     font-size: 0.55rem !important;
     line-height: 1.15 !important;
     padding: 2px 3px !important;
@@ -5117,24 +5146,29 @@ on:.2s}
     overflow: hidden !important;
     text-overflow: ellipsis !important;
   }
-  .cat-sec .row-inner .cc .cc-cat,
-  .cat-sec .row-inner .cc .cc-stats,
-  .section-wrap .row-inner .cc .cc-cat,
-  .section-wrap .row-inner .cc .cc-stats {
+  /* Hide extras */
+  .cc-cat,.cc-stats,.cc .cc-btn,.cc a.cc-btn,
+  .ebook-card .cc-cat,.ebook-card .cc-stats,
+  .ebook-card .cc-btn,.ebook-card a.cc-btn {
     display: none !important;
   }
-  .cat-sec .row-inner,
-  .section-wrap .row-inner {
+  /* Row spacing */
+  .row-inner,
+  .section-wrap .row-inner,
+  #continuarSection .row-inner {
     gap: 6px !important;
     padding: 0 6px !important;
   }
-  .cat-sec .section-hdr h2,
-  .cat-sec-title {
+  /* Section headers */
+  .section-hdr,.section-hdr h2,.cat-sec-title {
     font-size: 0.85rem !important;
     margin: 6px 0 3px 6px !important;
+    padding: 0 !important;
   }
-  .cat-sec {
+  /* Sections spacing */
+  .cat-sec,.section-wrap {
     margin-bottom: 4px !important;
+    padding: 0 !important;
   }
 }
 </style>
