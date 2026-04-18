@@ -1,4 +1,4 @@
-hvar MA_COURSES = [
+var MA_COURSES = [
   {
     id: 'oz',
     coverImg: 'assets/capas/oz.jpg',
