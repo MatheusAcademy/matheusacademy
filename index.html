@@ -483,7 +483,7 @@ body {
    ══════════════════════════════════════════════════════════════════════════════ */
 #continuarSection .row-outer,
 .section-wrap .row-outer {
-  overflow-x: auto !important;
+  overflow-x: auto !important; -webkit-overflow-scrolling: touch !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch !important;
   scrollbar-width: none !important;
@@ -1414,6 +1414,16 @@ body {
 <style id="hide-floats">
 #mae-btn,#maeChatBtn,#maeChatWin,.ma-fpts,#maFpts,.points-badge,#fBadge,.f-badge{display:none!important}
 
+
+/* Fix ebook carousel scroll */
+#ebookDedicatedOuter {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-snap-type: x mandatory;
+}
+#ebookDedicatedOuter .cc, #ebookDedicatedOuter .ebook-card {
+  scroll-snap-align: start;
+}
 </style>
 <!-- ═══ DADOS CENTRALIZADOS — não edite cursos aqui, edite em data/courses.js ═══ -->
 <script src="data/courses.js?v=1776518934"></script>
@@ -2514,7 +2524,7 @@ function makeCard(c) {
   var _nowTs=Date.now();
   var _isNew=(c.addedTs&&(_nowTs-c.addedTs)<7*24*60*60*1000);
   // Se for ebook, abrir a landing page (NÃO o PDF direto)
-  var isEbook = (c.type === 'ebook' && c.pdfFile);
+  var isEbook = ((c.cat === 'Ebooks' || c.type === 'ebook') && c.pdfFile);
   var fileTarget = c.file;
   var h = '<div class="cc" data-file="' + fileTarget + '"' + (isEbook ? ' data-ebook="1"' : '') + '>';
   h += '<div class="cc-img"><img src="' + img + '" alt="' + c.name + '" loading="lazy">';
@@ -2650,7 +2660,7 @@ function rC() {
   var ebookSec = document.getElementById('ebookDedicatedSection');
   var ebookRow = document.getElementById('ebookDedicatedRow');
   if (ebookSec && ebookRow) {
-    var ebooks = COURSES.filter(function(c) { return c.type === 'ebook'; });
+    var ebooks = COURSES.filter(function(c) { return (c.cat === 'Ebooks' || c.type === 'ebook'); });
     if (ebooks.length > 0) {
       ebookSec.style.display = 'block';
       ebookRow.innerHTML = ebooks.map(function(c) { return makeCard(c); }).join('');
