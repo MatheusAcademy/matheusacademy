@@ -4426,20 +4426,37 @@ async function carregarCursosEditor(){
 
 function parseCursosCompleto(content){
   var cursos = [];
-  // ── CORREÇÃO: divide pelo início de qualquer objeto { do array MA_COURSES,
-  //    independente de qual campo vem primeiro (coverImg, id, name, etc.)
-  //    A regex detecta "  {" precedido de newline, que é o padrão de indentação
-  //    dos objetos no array — funciona tanto para id: primeiro quanto coverImg: primeiro.
+  // ── PARSER v3 (FIX 22/04/2026): aceita AMBOS formatos
+  //    formato JS literal:  { id: "x", salt: "y" }
+  //    formato JSON:        { "id": "x", "salt": "y" }
+  //    A regex usa ["']? para tornar as aspas das chaves OPCIONAIS.
   var blocos = content.split(/(?=\n\s*\{)/);
   blocos.forEach(function(b){
-    // Ignora blocos que não contenham um campo id: (não são cursos)
-    if(b.indexOf("id:") === -1) return;
-    // Ignora blocos de template ou que não tenham salt (não são cursos reais)
+    // Aceita id: ou "id": ou 'id':
+    if(!/["']?id["']?\s*:/.test(b)) return;
+    // Ignora blocos de template
     if(b.indexOf('TEMPLATE') !== -1) return;
-    if(b.indexOf("salt:") === -1) return;
-    function gStr(keys){ for(var i=0;i<keys.length;i++){ var m=b.match(new RegExp(keys[i]+":\\s*['\"]([^'\"]*)['\"]")); if(m) return m[1]; } return ''; }
-    function gNum(k,def){ var m=b.match(new RegExp(k+":\\s*(\\d+)")); return m?parseInt(m[1]):def; }
-    function gBool(k,def){ var m=b.match(new RegExp(k+":\\s*(true|false)")); return m?(m[1]==='true'):def; }
+    // Aceita salt: ou "salt": ou 'salt':
+    if(!/["']?salt["']?\s*:/.test(b)) return;
+
+    function gStr(keys){
+      for(var i=0;i<keys.length;i++){
+        var re = new RegExp('["\\\']?'+keys[i]+'["\\\']?\\s*:\\s*[\'"]([^\'"]*)[\'"]');
+        var m = b.match(re);
+        if(m) return m[1];
+      }
+      return '';
+    }
+    function gNum(k,def){
+      var re = new RegExp('["\\\']?'+k+'["\\\']?\\s*:\\s*(\\d+)');
+      var m = b.match(re);
+      return m?parseInt(m[1]):def;
+    }
+    function gBool(k,def){
+      var re = new RegExp('["\\\']?'+k+'["\\\']?\\s*:\\s*(true|false)');
+      var m = b.match(re);
+      return m?(m[1]==='true'):def;
+    }
     var id=gStr(['id']);
     if(!id) return;
     cursos.push({
