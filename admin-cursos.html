@@ -8135,14 +8135,15 @@ async function loteDiagnostico() {
       html += '</div>';
 
       // Chips dos cursos sem capa — CLICAVEIS para editar individualmente
-      html += '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px">';
+      // FIX 22/04/2026: nome COMPLETO sem corte, layout em coluna unica para legibilidade
+      html += '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">';
       semCapa.forEach(function(c) {
-        html += '<span style="padding:4px 10px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.3);border-radius:6px;font-size:10px;color:#fde047;font-family:var(--mono);cursor:pointer;transition:all .15s;user-select:none" '
+        html += '<span style="padding:6px 12px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.3);border-radius:6px;font-size:11px;color:#fde047;font-family:var(--mono);cursor:pointer;transition:all .15s;user-select:none;display:inline-block;line-height:1.4;word-break:break-word;white-space:normal;max-width:100%" '
           + 'onmouseover="this.style.background=\'rgba(234,179,8,.25)\';this.style.borderColor=\'#fde047\';this.style.transform=\'translateY(-1px)\'" '
           + 'onmouseout="this.style.background=\'rgba(234,179,8,.12)\';this.style.borderColor=\'rgba(234,179,8,.3)\';this.style.transform=\'none\'" '
           + 'onclick="diagCapaAbrirModal(\'' + escH(c.id) + '\',\'' + escH(c.name).replace(/'/g, "\\'") + '\')" '
           + 'title="Clique para enviar a capa de ' + escH(c.name) + '">'
-          + '📸 ' + escH(c.id) + ' · ' + escH(c.name).substring(0,30) + '</span>';
+          + '📸 <b>' + escH(c.id) + '</b> · ' + escH(c.name) + '</span>';
       });
       html += '</div>';
       html += '<div style="font-size:10px;color:var(--t3);margin-bottom:10px">👆 Clique em qualquer curso acima para enviar a capa individualmente, ou arraste varias imagens abaixo para upload em lote.</div>';
@@ -8529,62 +8530,142 @@ function _getAllCourseNames() {
 
 // ── Pre-processamento de imagem para OCR mais preciso ──
 // Converte para escala de cinza com alto contraste + binarizacao + upscale
+// ════════════════════════════════════════════════════════════════
+// OCR v2 (FIX 22/04/2026): Pre-processamento avancado de imagem
+// Retorna ARRAY de variantes para tentar OCR em cada uma:
+//   1. Original com upscale
+//   2. Binarizacao Otsu (threshold automatico)
+//   3. Binarizacao Otsu invertida (texto branco em fundo escuro)
+//   4. Alto contraste sem binarizacao
+// ════════════════════════════════════════════════════════════════
 function _preprocessImageForOCR(dataUrl) {
+  return _preprocessImageMultiVariant(dataUrl).then(function(variants) {
+    // Retorna a versao binarizada Otsu como fallback compativel
+    return variants.length > 1 ? variants[1].dataUrl : variants[0].dataUrl;
+  });
+}
+
+// Calcula o threshold otimo via metodo Otsu (analise de histograma)
+function _otsuThreshold(grays) {
+  var hist = new Array(256).fill(0);
+  for (var i = 0; i < grays.length; i++) hist[grays[i] | 0]++;
+  var total = grays.length;
+  var sum = 0;
+  for (var t = 0; t < 256; t++) sum += t * hist[t];
+  var sumB = 0, wB = 0, wF = 0, mB, mF, max = 0, between, threshold = 128;
+  for (var t2 = 0; t2 < 256; t2++) {
+    wB += hist[t2];
+    if (wB === 0) continue;
+    wF = total - wB;
+    if (wF === 0) break;
+    sumB += t2 * hist[t2];
+    mB = sumB / wB;
+    mF = (sum - sumB) / wF;
+    between = wB * wF * (mB - mF) * (mB - mF);
+    if (between > max) { max = between; threshold = t2; }
+  }
+  return threshold;
+}
+
+// Retorna varias variantes pre-processadas da imagem
+function _preprocessImageMultiVariant(dataUrl) {
   return new Promise(function(resolve) {
     var img = new Image();
     img.onload = function() {
       try {
-        // Upscale: garantir que a imagem tenha pelo menos 1200px de largura para OCR
-        var scale = Math.max(1, 1200 / img.width);
+        // Upscale agressivo: minimo 1600px de largura (melhor para OCR)
+        var scale = Math.max(1, 1600 / img.width);
         var w = Math.round(img.width * scale);
         var h = Math.round(img.height * scale);
 
-        var canvas = document.createElement('canvas');
-        canvas.width = w;
-        canvas.height = h;
-        var ctx = canvas.getContext('2d');
+        var variants = [];
 
-        // Desenhar imagem escalada
-        ctx.drawImage(img, 0, 0, w, h);
+        // VARIANTE 0: Original com alto contraste (sem binarizar)
+        var c0 = document.createElement('canvas');
+        c0.width = w; c0.height = h;
+        var ctx0 = c0.getContext('2d');
+        ctx0.filter = 'contrast(1.4) brightness(1.05) saturate(0)';
+        ctx0.drawImage(img, 0, 0, w, h);
+        variants.push({ name: 'contrast', dataUrl: c0.toDataURL('image/png') });
 
-        // Pegar pixels para processamento
-        var imageData = ctx.getImageData(0, 0, w, h);
-        var data = imageData.data;
-
-        // Converter para escala de cinza com alto contraste
-        for (var i = 0; i < data.length; i += 4) {
-          // Luminancia ponderada
-          var gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
-
-          // Aumentar contraste (esticar o histograma)
-          gray = ((gray - 128) * 1.8) + 128;
-          gray = Math.max(0, Math.min(255, gray));
-
-          // Binarizacao com threshold adaptativo (Otsu simples)
-          var bin = gray > 140 ? 255 : 0;
-
-          data[i] = bin;
-          data[i+1] = bin;
-          data[i+2] = bin;
+        // Pegar pixels em escala de cinza para Otsu
+        var cGray = document.createElement('canvas');
+        cGray.width = w; cGray.height = h;
+        var ctxGray = cGray.getContext('2d');
+        ctxGray.drawImage(img, 0, 0, w, h);
+        var imgData = ctxGray.getImageData(0, 0, w, h);
+        var data = imgData.data;
+        var grays = new Uint8Array(w * h);
+        for (var i = 0, j = 0; i < data.length; i += 4, j++) {
+          grays[j] = (0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2]) | 0;
         }
 
-        ctx.putImageData(imageData, 0, 0);
+        var threshold = _otsuThreshold(grays);
 
-        // Tambem aplicar um filtro de sharpening via segundo canvas
-        var canvas2 = document.createElement('canvas');
-        canvas2.width = w;
-        canvas2.height = h;
-        var ctx2 = canvas2.getContext('2d');
-        ctx2.filter = 'contrast(1.5) brightness(1.1)';
-        ctx2.drawImage(canvas, 0, 0);
+        // VARIANTE 1: Binarizacao Otsu (texto preto em fundo branco)
+        var c1 = document.createElement('canvas');
+        c1.width = w; c1.height = h;
+        var ctx1 = c1.getContext('2d');
+        var d1 = ctx1.createImageData(w, h);
+        var dd1 = d1.data;
+        for (var k = 0, p = 0; k < grays.length; k++, p += 4) {
+          var bin = grays[k] > threshold ? 255 : 0;
+          dd1[p] = bin; dd1[p+1] = bin; dd1[p+2] = bin; dd1[p+3] = 255;
+        }
+        ctx1.putImageData(d1, 0, 0);
+        variants.push({ name: 'otsu', dataUrl: c1.toDataURL('image/png') });
 
-        resolve(canvas2.toDataURL('image/png'));
+        // VARIANTE 2: Binarizacao invertida (para textos brancos em fundo escuro)
+        var c2 = document.createElement('canvas');
+        c2.width = w; c2.height = h;
+        var ctx2 = c2.getContext('2d');
+        var d2 = ctx2.createImageData(w, h);
+        var dd2 = d2.data;
+        for (var k2 = 0, p2 = 0; k2 < grays.length; k2++, p2 += 4) {
+          var bin2 = grays[k2] > threshold ? 0 : 255;
+          dd2[p2] = bin2; dd2[p2+1] = bin2; dd2[p2+2] = bin2; dd2[p2+3] = 255;
+        }
+        ctx2.putImageData(d2, 0, 0);
+        variants.push({ name: 'otsu-inv', dataUrl: c2.toDataURL('image/png') });
+
+        // VARIANTE 3: Threshold adaptativo local (mais robusto para iluminacao desigual)
+        var c3 = document.createElement('canvas');
+        c3.width = w; c3.height = h;
+        var ctx3 = c3.getContext('2d');
+        var d3 = ctx3.createImageData(w, h);
+        var dd3 = d3.data;
+        var blockSize = 25;
+        for (var y = 0; y < h; y++) {
+          for (var x = 0; x < w; x++) {
+            // Media local (janela ao redor)
+            var sumL = 0, count = 0;
+            var x0 = Math.max(0, x - blockSize), x1 = Math.min(w, x + blockSize);
+            var y0 = Math.max(0, y - blockSize), y1 = Math.min(h, y + blockSize);
+            // Sample ralo para nao travar (cada 5 pixels)
+            for (var yy = y0; yy < y1; yy += 5) {
+              for (var xx = x0; xx < x1; xx += 5) {
+                sumL += grays[yy * w + xx]; count++;
+              }
+            }
+            var localT = (sumL / count) - 10;
+            var idx = y * w + x;
+            var bin3 = grays[idx] > localT ? 255 : 0;
+            var pp = idx * 4;
+            dd3[pp] = bin3; dd3[pp+1] = bin3; dd3[pp+2] = bin3; dd3[pp+3] = 255;
+          }
+        }
+        ctx3.putImageData(d3, 0, 0);
+        variants.push({ name: 'adaptive', dataUrl: c3.toDataURL('image/png') });
+
+        resolve(variants);
       } catch(e) {
-        // Fallback: retorna imagem original
-        resolve(dataUrl);
+        // Fallback total: retorna apenas original
+        resolve([{ name: 'original', dataUrl: dataUrl }]);
       }
     };
-    img.onerror = function() { resolve(dataUrl); };
+    img.onerror = function() {
+      resolve([{ name: 'original', dataUrl: dataUrl }]);
+    };
     img.src = dataUrl;
   });
 }
@@ -8648,41 +8729,132 @@ function _levenshtein(a, b) {
 }
 
 // ── Encontrar melhor match para texto OCR ──
-function _findBestMatch(ocrText, courseList) {
-  var best = { id: '', name: '', score: 0 };
+// ════════════════════════════════════════════════════════════════
+// MATCHING v2 (FIX 22/04/2026): Algoritmo aprimorado de correspondencia
+// Combina: Dice bigramas, Jaccard trigramas, palavras inteiras com fuzzy,
+//          substring continua, palavras raras (TF-IDF), bonus por ID embutido
+// ════════════════════════════════════════════════════════════════
+
+// Cache global de IDF (calcula 1x por sessao)
+var _idfCache = null;
+function _calcIDF(courseList) {
+  if (_idfCache && _idfCache.size === courseList.length) return _idfCache.idf;
+  var docFreq = {};
   courseList.forEach(function(c) {
-    // Score 1: Dice coefficient (similaridade de bigramas)
-    var dice = _similarity(ocrText, c.name);
-    // Score 2: Palavras inteiras encontradas (com fuzzy)
-    var wordBonus = _wordMatchBonus(ocrText, c.name);
-    // Score 3: Substring direto — se o nome do curso aparece inteiro no OCR
-    var substringBonus = 0;
-    var ocrNorm = _normTxt(ocrText);
+    var seen = {};
+    _normTxt(c.name).split(' ').filter(function(w){return w.length>2;}).forEach(function(w){
+      if (!seen[w]) { docFreq[w] = (docFreq[w] || 0) + 1; seen[w] = 1; }
+    });
+  });
+  var N = courseList.length;
+  var idf = {};
+  Object.keys(docFreq).forEach(function(w){ idf[w] = Math.log(N / (1 + docFreq[w])); });
+  _idfCache = { size: courseList.length, idf: idf };
+  return idf;
+}
+
+// Jaccard trigrama
+function _jaccardTrigrams(a, b) {
+  a = _normTxt(a); b = _normTxt(b);
+  if (a.length < 3 || b.length < 3) return 0;
+  var aSet = {}, bSet = {};
+  for (var i = 0; i < a.length - 2; i++) aSet[a.substring(i, i+3)] = 1;
+  for (var j = 0; j < b.length - 2; j++) bSet[b.substring(j, j+3)] = 1;
+  var inter = 0, union = 0;
+  for (var k in aSet) { if (bSet[k]) inter++; union++; }
+  for (var k2 in bSet) { if (!aSet[k2]) union++; }
+  return union ? inter / union : 0;
+}
+
+// Encontra TOP N matches (default 3) ordenados por score
+function _findTopMatches(ocrText, courseList, topN) {
+  topN = topN || 3;
+  var idf = _calcIDF(courseList);
+  var ocrNorm = _normTxt(ocrText);
+  var scores = [];
+
+  courseList.forEach(function(c) {
     var nameNorm = _normTxt(c.name);
+
+    // Score 1: Dice bigramas (similaridade geral)
+    var dice = _similarity(ocrText, c.name);
+
+    // Score 2: Jaccard trigramas (similaridade mais especifica)
+    var jaccard = _jaccardTrigrams(ocrText, c.name);
+
+    // Score 3: Palavras inteiras com fuzzy (toleram erro de OCR)
+    var wordBonus = _wordMatchBonus(ocrText, c.name);
+
+    // Score 4: Substring continua
+    var substringBonus = 0;
     if (ocrNorm.indexOf(nameNorm) !== -1) substringBonus = 1.0;
     else {
-      // Verificar se pelo menos 60% do nome aparece como substring continua
-      var nameWords = nameNorm.split(' ').filter(function(w) { return w.length > 2; });
+      var nameWords = nameNorm.split(' ').filter(function(w){return w.length>2;});
       if (nameWords.length >= 2) {
-        // Tentar pares e trios consecutivos
         for (var k = 0; k < nameWords.length - 1; k++) {
           var pair = nameWords[k] + ' ' + nameWords[k+1];
-          if (ocrNorm.indexOf(pair) !== -1) { substringBonus = Math.max(substringBonus, 0.6); }
+          if (ocrNorm.indexOf(pair) !== -1) substringBonus = Math.max(substringBonus, 0.55);
           if (k < nameWords.length - 2) {
             var trio = pair + ' ' + nameWords[k+2];
-            if (ocrNorm.indexOf(trio) !== -1) { substringBonus = Math.max(substringBonus, 0.85); }
+            if (ocrNorm.indexOf(trio) !== -1) substringBonus = Math.max(substringBonus, 0.85);
+          }
+          if (k < nameWords.length - 3) {
+            var quad = pair + ' ' + nameWords[k+2] + ' ' + nameWords[k+3];
+            if (ocrNorm.indexOf(quad) !== -1) substringBonus = Math.max(substringBonus, 0.98);
           }
         }
       }
     }
 
-    // Score composto: peso maior para palavras inteiras e substring
-    var score = (dice * 0.25) + (wordBonus * 0.45) + (substringBonus * 0.30);
-    if (score > best.score) {
-      best = { id: c.id, name: c.name, score: score };
+    // Score 5: Palavras raras (TF-IDF) — pondera pela raridade da palavra
+    var rareScore = 0;
+    var nameWordsArr = nameNorm.split(' ').filter(function(w){return w.length>3;});
+    var totalIdf = 0, matchedIdf = 0;
+    nameWordsArr.forEach(function(w) {
+      var w_idf = idf[w] || 0;
+      totalIdf += w_idf;
+      if (ocrNorm.indexOf(w) !== -1) matchedIdf += w_idf;
+      else {
+        // fuzzy match nas palavras do OCR
+        var ocrWords = ocrNorm.split(' ');
+        for (var i = 0; i < ocrWords.length; i++) {
+          if (w.length > 4 && _levenshtein(w, ocrWords[i]) <= 1) {
+            matchedIdf += w_idf * 0.7;
+            break;
+          }
+        }
+      }
+    });
+    if (totalIdf > 0) rareScore = matchedIdf / totalIdf;
+
+    // Score 6: Bonus por ID curto embutido no OCR (ex: "Curso XYZ123")
+    var idBonus = 0;
+    if (c.id && c.id.length >= 3 && ocrNorm.indexOf(_normTxt(c.id)) !== -1) {
+      idBonus = 0.3;
     }
+
+    // Score composto FINAL — pesos otimizados
+    var score = (dice * 0.10)
+              + (jaccard * 0.15)
+              + (wordBonus * 0.25)
+              + (substringBonus * 0.25)
+              + (rareScore * 0.25);
+    score = Math.min(1.0, score + idBonus);
+
+    scores.push({ id: c.id, name: c.name, score: score, breakdown: {
+      dice: dice, jaccard: jaccard, words: wordBonus,
+      substr: substringBonus, rare: rareScore, idBonus: idBonus
+    }});
   });
-  return best;
+
+  scores.sort(function(a, b) { return b.score - a.score; });
+  return scores.slice(0, topN);
+}
+
+// Mantem compatibilidade: retorna apenas o melhor
+function _findBestMatch(ocrText, courseList) {
+  var top = _findTopMatches(ocrText, courseList, 1);
+  return top[0] || { id: '', name: '', score: 0 };
 }
 
 function capaLoteDrop(e) {
@@ -8712,10 +8884,10 @@ function capaLoteChosen(files) {
   if (courses.length) {
     el('capas-cursos-info').style.display = 'block';
     el('capas-cursos-chips').innerHTML = courses.map(function(c) {
-      return '<span style="background:var(--card);border:1px solid rgba(34,197,94,.3);border-radius:5px;padding:2px 7px;font-size:10px;cursor:default" title="ID: ' + c.id + '">'
+      return '<span style="background:var(--card);border:1px solid rgba(34,197,94,.3);border-radius:5px;padding:4px 9px;font-size:11px;cursor:default;display:inline-block;line-height:1.4;word-break:break-word;white-space:normal" title="ID: ' + c.id + '">'
         + '<span style="color:var(--acc2);font-family:var(--mono);font-weight:700">' + c.id + '</span>'
         + '<span style="color:var(--t3);margin:0 3px">·</span>'
-        + '<span style="color:var(--t2)">' + escH(c.name.substring(0, 30)) + '</span></span>';
+        + '<span style="color:var(--t2)">' + escH(c.name) + '</span></span>';
     }).join('');
   }
 
@@ -8887,12 +9059,17 @@ function _renderDupes() {
     if (cf) courseName = cf.name;
 
     html += '<div style="background:var(--card);border:1px solid rgba(167,139,250,.3);border-radius:10px;padding:14px;margin-bottom:12px">'
-      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'
+      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">'
       + '<span style="font-size:10px;font-weight:800;color:#c4b5fd;font-family:var(--mono);background:rgba(167,139,250,.15);padding:2px 8px;border-radius:4px">' + id + '</span>'
       + '<span style="font-size:12px;font-weight:700;color:var(--txt)">' + escH(courseName) + '</span>'
       + '<span style="font-size:10px;color:#fca5a5;font-weight:700;margin-left:auto">' + indices.length + ' capas para o mesmo curso</span>'
+      // ── NOVO: Botao rejeitar todas as sugestoes para esse curso ──
+      + '<button onclick="capaRejeitarSugestoes(\'' + escH(id) + '\')" '
+      + 'style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#fca5a5;'
+      + 'font-size:10px;font-weight:700;padding:5px 10px;border-radius:6px;cursor:pointer" '
+      + 'title="Nenhuma das opcoes serve — descartar todas para este curso">❌ Nenhuma serve</button>'
       + '</div>'
-      + '<div style="font-size:10px;color:var(--t2);margin-bottom:10px">Clique na imagem que voce quer usar. As outras serao descartadas.</div>'
+      + '<div style="font-size:10px;color:var(--t2);margin-bottom:10px">Clique na imagem que voce quer usar. Use o botao 🗑 para remover uma especifica, ou ❌ Nenhuma serve para descartar todas.</div>'
       + '<div style="display:flex;gap:10px;flex-wrap:wrap">';
 
     indices.forEach(function(idx) {
@@ -8904,7 +9081,15 @@ function _renderDupes() {
         ? '<div style="text-align:center;font-size:10px;font-weight:800;color:#86efac;margin-top:4px">SELECIONADA</div>'
         : '<div style="text-align:center;font-size:10px;color:var(--t3);margin-top:4px">Clique para usar esta</div>';
 
-      html += '<div style="cursor:pointer;border:' + border + ';border-radius:8px;overflow:hidden;width:130px;opacity:' + opacity + ';transition:.2s" '
+      html += '<div style="position:relative;width:130px">'
+        // ── NOVO: Botao remover este upload (X no canto) ──
+        + '<button onclick="event.stopPropagation();capaRemoverUpload(' + idx + ')" '
+        + 'style="position:absolute;top:-6px;right:-6px;z-index:10;width:24px;height:24px;'
+        + 'border-radius:50%;background:#ef4444;color:#fff;border:2px solid #080c14;'
+        + 'font-size:13px;font-weight:900;cursor:pointer;display:flex;align-items:center;'
+        + 'justify-content:center;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.5)" '
+        + 'title="Remover este upload">×</button>'
+        + '<div style="cursor:pointer;border:' + border + ';border-radius:8px;overflow:hidden;opacity:' + opacity + ';transition:.2s" '
         + 'onclick="capaDupeChoose(\'' + escH(id) + '\',' + idx + ')" '
         + 'onmouseover="this.style.opacity=\'1\';this.style.transform=\'scale(1.03)\'" '
         + 'onmouseout="this.style.opacity=\'' + opacity + '\';this.style.transform=\'none\'">'
@@ -8913,7 +9098,7 @@ function _renderDupes() {
         + '<div style="font-size:8px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escH(item.origName) + '</div>'
         + (item.confidence ? '<div style="font-size:8px;color:var(--acc2)">OCR: ' + item.confidence + '%</div>' : '')
         + label
-        + '</div></div>';
+        + '</div></div></div>';
     });
 
     html += '</div></div>';
@@ -8938,6 +9123,157 @@ function capaDupeChoose(courseId, chosenIdx) {
   });
   _renderDupes();
   capaLoteRenderGrid();
+}
+
+// ════════════════════════════════════════════════════════════════
+// REJEICAO v1 (FIX 22/04/2026): rejeitar sugestoes / remover uploads
+// ════════════════════════════════════════════════════════════════
+
+// Rejeita TODAS as sugestoes para um curso especifico (nenhuma serve)
+// Limpa o newId — as imagens ficam disponiveis para escolha manual de outro curso
+function capaRejeitarSugestoes(courseId) {
+  if (!confirm('Tem certeza que NENHUMA das capas sugeridas eh do curso "' + courseId + '"?\n\nAs imagens vao ficar sem curso atribuido (voce pode escolher manualmente depois ou remover).')) return;
+  _capaLoteItems.forEach(function(item) {
+    if (item.newId === courseId && item.status !== 'ok') {
+      item.newId = '';
+      item.matchedName = '';
+      item.confidence = 0;
+      item._dupeChosen = false;
+      item.status = 'pendente';
+      // Marcar para feedback visual
+      item._rejeitada = true;
+    }
+  });
+  _renderDupes();
+  capaLoteRenderGrid();
+}
+
+// Remove COMPLETAMENTE um upload da lista (nao serve para nenhum curso)
+function capaRemoverUpload(idx) {
+  var item = _capaLoteItems[idx];
+  if (!item) return;
+  if (!confirm('Remover esta imagem da lista?\n\n"' + (item.origName || 'sem nome') + '"\n\nIsso NAO apaga a imagem do seu computador, apenas remove deste upload em lote.')) return;
+  // Marcar como descartada (nao remove do array para nao bagunar indices)
+  item.status = 'descartada';
+  item._dupeChosen = false;
+  _renderDupes();
+  capaLoteRenderGrid();
+  // Atualizar contador
+  var ativos = _capaLoteItems.filter(function(it){ return it.status !== 'descartada'; }).length;
+  if (el('capas-count')) el('capas-count').textContent = ativos + ' imagem(ns) ativa(s)';
+}
+
+// Remove TODOS os uploads descartados (limpeza)
+function capaLimparDescartadas() {
+  var antes = _capaLoteItems.length;
+  _capaLoteItems = _capaLoteItems.filter(function(it){ return it.status !== 'descartada'; });
+  var depois = _capaLoteItems.length;
+  if (antes !== depois) {
+    _renderDupes();
+    capaLoteRenderGrid();
+    alert('Removidas ' + (antes - depois) + ' imagem(ns) descartada(s).');
+  }
+}
+
+// Rejeitar UMA sugestao individual (limpa newId mantendo a imagem na lista)
+function capaRejeitarMatch(idx) {
+  var item = _capaLoteItems[idx];
+  if (!item) return;
+  item.newId = '';
+  item.matchedName = '';
+  item.confidence = 0;
+  item._dupeChosen = false;
+  item._rejeitadoIds = item._rejeitadoIds || [];
+  // Lembra qual ID foi rejeitado pra nao sugerir de novo
+  // (a logica nova pode reaproveitar essa info)
+  _renderDupes();
+  capaLoteRenderGrid();
+}
+
+// ════════════════════════════════════════════════════════════════
+// MATCHING v3 (FIX 22/04/2026): Por PALAVRA-CHAVE EXATA do titulo
+// Le o texto OCR da capa e busca cursos cujo titulo contenha
+// alguma das palavras-chave significativas (>3 chars, sem stopwords).
+// A MESMA capa pode ser sugerida para MULTIPLOS cursos
+// quando compartilham palavras em comum.
+// ════════════════════════════════════════════════════════════════
+
+// Stopwords portuguesas/inglesas a ignorar
+var _STOPWORDS = {
+  'a':1,'o':1,'e':1,'de':1,'do':1,'da':1,'dos':1,'das':1,'no':1,'na':1,'nos':1,'nas':1,
+  'em':1,'um':1,'uma':1,'uns':1,'umas':1,'para':1,'por':1,'com':1,'sem':1,'que':1,
+  'os':1,'as':1,'se':1,'ou':1,'ao':1,'aos':1,'esta':1,'este':1,'isso':1,'isto':1,
+  'sua':1,'seu':1,'suas':1,'seus':1,'mais':1,'menos':1,'muito':1,'pouco':1,
+  'curso':1,'cursos':1,'aula':1,'aulas':1,'modulo':1,'modulos':1,
+  'the':1,'and':1,'of':1,'to':1,'in':1,'for':1,'on':1,'with':1,'at':1,'by':1,
+  'is':1,'are':1,'was':1,'be':1,'this':1,'that':1
+};
+
+// Extrai palavras-chave significativas de um texto OCR
+function _extrairPalavrasChave(texto) {
+  if (!texto) return [];
+  var norm = _normTxt(texto);
+  var palavras = norm.split(/\s+/);
+  var unicas = {};
+  var resultado = [];
+  palavras.forEach(function(w) {
+    if (w.length < 4) return;          // muito curta
+    if (_STOPWORDS[w]) return;          // stopword
+    if (/^\d+$/.test(w)) return;        // so numero
+    if (unicas[w]) return;              // duplicada
+    unicas[w] = 1;
+    resultado.push(w);
+  });
+  return resultado;
+}
+
+// Para cada PALAVRA da capa, encontra TODOS os cursos cujo
+// titulo contem essa palavra. Retorna array de sugestoes:
+//   [ { courseId, courseName, palavras: ['x','y'], score: 0-1 }, ... ]
+// Cada par (capa, curso) que compartilha palavras vira uma sugestao.
+function _sugerirCursosPorPalavraChave(ocrText, courseList) {
+  var palavrasOCR = _extrairPalavrasChave(ocrText);
+  if (!palavrasOCR.length) return [];
+
+  var sugestoes = [];
+  courseList.forEach(function(c) {
+    var palavrasCurso = _extrairPalavrasChave(c.name);
+    var compartilhadas = [];
+    palavrasOCR.forEach(function(pOcr) {
+      // Match exato
+      if (palavrasCurso.indexOf(pOcr) !== -1) {
+        compartilhadas.push(pOcr);
+        return;
+      }
+      // Match fuzzy: tolerar 1 letra de erro de OCR (palavras com 5+ chars)
+      if (pOcr.length >= 5) {
+        for (var i = 0; i < palavrasCurso.length; i++) {
+          if (_levenshtein(pOcr, palavrasCurso[i]) <= 1) {
+            compartilhadas.push(palavrasCurso[i]);
+            return;
+          }
+        }
+      }
+    });
+    if (compartilhadas.length > 0) {
+      // Score = (palavras compartilhadas / palavras do curso)
+      // valoriza match mais completo
+      var score = compartilhadas.length / Math.max(1, palavrasCurso.length);
+      sugestoes.push({
+        courseId: c.id,
+        courseName: c.name,
+        palavras: compartilhadas,
+        score: score,
+        confidence: Math.round(score * 100)
+      });
+    }
+  });
+  // Ordena: mais palavras em comum primeiro, depois maior score
+  sugestoes.sort(function(a, b) {
+    if (b.palavras.length !== a.palavras.length) return b.palavras.length - a.palavras.length;
+    return b.score - a.score;
+  });
+  return sugestoes;
 }
 
 function capaLoteRenderGrid() {
@@ -9007,7 +9343,7 @@ function capaLoteRenderGrid() {
     } else if (hasMatch && item.confidence > 0 && item.confidence <= 51) {
       matchInfo = '<div style="font-size:10px;color:#fca5a5;font-weight:700;margin-top:4px">⛔ Match ' + item.confidence + '% — minimo 51% para aprovar</div>';
     } else if (hasMatch && isValid) {
-      matchInfo = '<div style="font-size:10px;color:#86efac;font-weight:700;margin-top:4px">✅ Aprovado: ' + escH(item.matchedName.substring(0, 35)) + '</div>';
+      matchInfo = '<div style="font-size:10px;color:#86efac;font-weight:700;margin-top:4px;line-height:1.4;word-break:break-word">✅ Aprovado: ' + escH(item.matchedName) + '</div>';
     } else if (item.newId && !isValid) {
       matchInfo = '<div style="font-size:10px;color:#fcd34d;font-weight:700;margin-top:4px">ID nao encontrado — edite</div>';
     } else if (!item.newId) {
@@ -9019,10 +9355,27 @@ function capaLoteRenderGrid() {
     var selectOptions = '<option value="">-- Selecione o curso --</option>';
     courseList.forEach(function(c) {
       var sel = (c.id === item.newId) ? ' selected' : '';
-      selectOptions += '<option value="' + escH(c.id) + '"' + sel + '>' + escH(c.id) + ' · ' + escH(c.name.substring(0, 30)) + '</option>';
+      // FIX 22/04/2026: nome COMPLETO no select (sem corte)
+      selectOptions += '<option value="' + escH(c.id) + '"' + sel + '>' + escH(c.id) + ' · ' + escH(c.name) + '</option>';
     });
 
+    // ── Botoes de acao no canto superior esquerdo (X = remover, ⊘ = rejeitar match) ──
+    var botoesAcao = '<div style="position:absolute;top:6px;left:6px;z-index:10;display:flex;gap:4px">'
+      + '<button onclick="event.stopPropagation();capaRemoverUpload(' + idx + ')" '
+      + 'style="width:24px;height:24px;border-radius:50%;background:#ef4444;color:#fff;border:2px solid #080c14;'
+      + 'font-size:13px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;'
+      + 'line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.5)" title="Remover este upload da lista">×</button>';
+
+    if (item.newId) {
+      botoesAcao += '<button onclick="event.stopPropagation();capaRejeitarMatch(' + idx + ')" '
+        + 'style="width:24px;height:24px;border-radius:50%;background:#f59e0b;color:#fff;border:2px solid #080c14;'
+        + 'font-size:11px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;'
+        + 'line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.5)" title="Rejeitar esta sugestao (limpa o curso atribuido)">⊘</button>';
+    }
+    botoesAcao += '</div>';
+
     html += '<div style="background:' + bgColor + ';border:2px solid ' + borderColor + ';border-radius:10px;overflow:hidden;position:relative" id="capa-card-' + idx + '">'
+      + botoesAcao
       + confBadge + statusBadge
       + '<img src="' + item.dataUrl + '" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block;cursor:zoom-in" onclick="event.stopPropagation();capaLightboxOpen(\'' + item.dataUrl.replace(/\x27/g, "\\'") + '\',\'' + escH(item.origName).replace(/\x27/g, "\\'") + '\')" title="Clique para expandir">'
       + '<div style="padding:10px">'
