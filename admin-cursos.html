@@ -550,6 +550,7 @@ textarea{resize:vertical;min-height:54px}
     <div class="tab" onclick="swTab('fe')">⚙️ Ferramentas</div>
     <div class="tab" onclick="swTab('lt')">📦 Lote HTMLs</div>
     <div class="tab" onclick="swTab('cl')">🖼️ Capas</div>
+    <div class="tab" onclick="swTab('eb')">📚 Ebooks</div>
   </div>
 
   <!-- TAB UPLOAD -->
@@ -1996,6 +1997,64 @@ textarea{resize:vertical;min-height:54px}
         <button class="btns" onclick="capaModalFechar()">Cancelar</button>
       </div>
       <div class="res" id="capaModalRes" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       TAB EBOOKS — gerenciar ebooks (PDF) e suas capas
+       ════════════════════════════════════════════════════════════════ -->
+  <div class="tc" id="tc-eb">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--txt)">📚 Ebooks Postados</div>
+          <div style="font-size:11px;color:var(--t2);margin-top:2px">Visualize todos os ebooks (PDF), troque capas e abra o PDF.</div>
+        </div>
+        <button class="btns" onclick="ebooksCarregar()" style="white-space:nowrap;background:rgba(245,158,11,.15);color:#fde047;border-color:rgba(245,158,11,.3)">🔄 Atualizar Lista</button>
+      </div>
+
+      <!-- Stats -->
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+        <div id="ebooks-stat-total" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:#fde047;font-weight:700">📚 Total: —</div>
+        <div id="ebooks-stat-com" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:#86efac;font-weight:700">✅ Com capa: —</div>
+        <div id="ebooks-stat-sem" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:#fca5a5;font-weight:700">⚠️ Sem capa: —</div>
+        <div id="ebooks-stat-pdf" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);border-radius:8px;padding:6px 12px;font-size:11px;color:var(--acc2);font-weight:700">📄 PDFs OK: —</div>
+      </div>
+
+      <!-- Busca -->
+      <div style="margin-bottom:14px">
+        <input type="text" id="ebooks-busca" placeholder="Buscar ebook por nome ou ID..." oninput="ebooksFiltrar()" style="width:100%;background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:10px 14px;color:var(--txt);font-size:13px">
+      </div>
+
+      <!-- Grid de ebooks -->
+      <div id="ebooks-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">
+        <div style="color:var(--t3);font-size:12px;padding:16px;text-align:center;grid-column:1/-1">Conecte o token GitHub e clique em Atualizar Lista...</div>
+      </div>
+    </div>
+
+    <!-- Modal de troca de capa do ebook -->
+    <div id="ebookModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);z-index:9999;justify-content:center;align-items:center;padding:20px">
+      <div style="background:var(--bg);border:1px solid var(--brd);border-radius:14px;padding:24px;max-width:520px;width:100%;max-height:92vh;overflow-y:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="font-size:14px;font-weight:800;color:var(--txt)">📚 Trocar capa do ebook</div>
+          <button onclick="ebookModalFechar()" style="background:transparent;border:none;color:var(--t2);font-size:22px;cursor:pointer;padding:0;line-height:1">×</button>
+        </div>
+        <div id="ebookModalInfo" style="background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:12px;margin-bottom:12px"></div>
+        <div id="ebookModalDrop" style="border:2px dashed var(--brd);border-radius:10px;padding:30px;text-align:center;cursor:pointer;transition:all .2s" onclick="el('ebookModalInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--acc2)';this.style.background='rgba(96,165,250,.06)'" ondragleave="this.style.borderColor='var(--brd)';this.style.background='transparent'" ondrop="event.preventDefault();this.style.borderColor='var(--brd)';this.style.background='transparent';ebookModalSetFile(event.dataTransfer.files[0])">
+          <div style="font-size:13px;color:var(--t2);margin-bottom:6px">Arraste aqui ou clique para escolher</div>
+          <div style="font-size:10px;color:var(--t3)">PNG, JPG, WebP — recomendado 600×800px</div>
+          <input type="file" id="ebookModalInput" accept="image/*" style="display:none" onchange="ebookModalSetFile(this.files[0])">
+        </div>
+        <div id="ebookModalPreview" style="display:none;margin-top:12px;text-align:center">
+          <img id="ebookModalImg" style="max-width:200px;max-height:280px;border-radius:8px;border:2px solid var(--brd)">
+          <div id="ebookModalFn" style="font-size:11px;color:var(--t2);margin-top:6px"></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button class="btns" onclick="ebookModalSalvar()" id="ebookModalBtn" style="flex:1;background:var(--acc);color:#fff;font-weight:700" disabled>💾 Salvar Capa</button>
+          <button class="btns" onclick="ebookModalFechar()">Cancelar</button>
+        </div>
+        <div class="res" id="ebookModalRes" style="margin-top:10px"></div>
+      </div>
     </div>
   </div>
 
@@ -4059,7 +4118,7 @@ function abrirAudit(){ swTab('fe'); setTimeout(function(){ var c=el('audit-card'
 function abrirBackup(){ swTab('fe'); setTimeout(function(){ baixarCoursesJs(); },200); }
 
 // ── ATUALIZAR TABORDER ──
-var _tabOrder=['up','mn','ed','al','ms','st','ia','ag','cp','fe','lt','cl'];
+var _tabOrder=['up','mn','ed','al','ms','st','ia','ag','cp','fe','lt','cl','eb'];
 function swTab(n){
   document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('on',_tabOrder[i]===n);});
   document.querySelectorAll('.tc').forEach(function(c){c.classList.remove('on');});
@@ -4071,6 +4130,7 @@ function swTab(n){
   if(n==='ag') renderAgendamentos();
   if(n==='cp') renderCupons();
   if(n==='fe'){ renderAudit(); carregarConfigs(); }
+  if(n==='eb') ebooksCarregar();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -7974,7 +8034,36 @@ async function loteDiagnostico() {
     el('lote-diag-label').textContent = 'Encontrados ' + total + ' cursos no courses.js' + extraLabel + '. Verificando arquivos...';
     el('lote-diag-bar').style.width = '15%';
 
-    // 2. Verificar HTMLs e capas em lotes de 5 (paralelo controlado)
+    // 2. Buscar TODAS as capas existentes em assets/capas DE UMA VEZ (mais eficiente)
+    // ── DETECCAO v3 (FIX 22/04/2026): rejeita capas auto-geradas
+    //    REGRA: SVG = sempre auto-gerado | PNG <= 80KB = auto-gerado (template)
+    //           JPG = sempre real | PNG > 80KB = real (foto/ebook)
+    el('lote-diag-label').textContent = 'Buscando capas existentes...';
+    el('lote-diag-bar').style.width = '20%';
+    var PNG_AUTO_LIMIT = 80 * 1024; // 80 KB
+    var capasIdx = {}; // id -> { ext, size } capa REAL (nao auto-gerada)
+    try {
+      var capasRes = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/assets/capas?t=' + Date.now(), { headers: gh(), cache: 'no-store' });
+      if (capasRes.ok) {
+        var capasArr = await capasRes.json();
+        capasArr.forEach(function(f) {
+          var m = f.name.match(/^(.+)\.(jpg|jpeg|png|gif|webp|svg)$/i);
+          if (!m) return;
+          var cid = m[1];
+          var ext = m[2].toLowerCase();
+          var size = f.size || 0;
+          // ⚠️ SVG = sempre auto-gerado (template do site) — NAO conta como capa
+          if (ext === 'svg') return;
+          // ⚠️ PNG pequeno = template auto-gerado — NAO conta como capa
+          if (ext === 'png' && size <= PNG_AUTO_LIMIT) return;
+          // Prioridade: jpg > png > webp > outras
+          if (capasIdx[cid] && capasIdx[cid].ext === 'jpg' && ext !== 'jpg') return;
+          capasIdx[cid] = { ext: ext, size: size };
+        });
+      }
+    } catch(e) { /* silencioso, vai usar fallback HEAD por curso */ }
+
+    // 3. Verificar HTMLs em lotes (capas ja foram buscadas acima)
     var checked = 0;
     var batchSize = 5;
     for (var i = 0; i < ids.length; i += batchSize) {
@@ -7982,26 +8071,21 @@ async function loteDiagnostico() {
       var promises = [];
       batch.forEach(function(id) {
         var course = registrados[id];
+        // Capa: existe se foi indexada acima (e nao eh SVG)
+        course.capaExists = !!capasIdx[id];
         // Check HTML
         promises.push(
           fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/' + course.file, { headers: gh(), method: 'HEAD' })
             .then(function(r) { course.htmlExists = r.ok; })
             .catch(function() { course.htmlExists = false; })
         );
-        // Check capa
-        promises.push(
-          fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/assets/capas/' + id + '.jpg', { headers: gh(), method: 'HEAD' })
-            .then(function(r) { course.capaExists = r.ok; })
-            .catch(function() { course.capaExists = false; })
-        );
       });
       await Promise.all(promises);
       checked += batch.length;
       el('lote-diag-pct').textContent = checked + '/' + total;
-      el('lote-diag-bar').style.width = (15 + (checked / total) * 80).toFixed(0) + '%';
+      el('lote-diag-bar').style.width = (20 + (checked / total) * 75).toFixed(0) + '%';
       el('lote-diag-label').textContent = 'Verificando ' + checked + ' de ' + total + '...';
-      // Pequeno delay entre lotes
-      if (i + batchSize < ids.length) await _sleep(300);
+      if (i + batchSize < ids.length) await _sleep(150);
     }
 
     // 3. Verificar se existem HTMLs do lote que NAO estao no courses.js
@@ -8114,6 +8198,18 @@ async function loteDiagnostico() {
     html += '</tbody></table></div>';
 
     // Guardar cursos sem capa para uso no upload inline
+    // ── ORDEM ALFABETICA v1 (FIX 22/04/2026): ordenar por NOME (nao por ID) ──
+    var _ordPorNome = function(a, b){
+      var na = (a.name || '').toLowerCase();
+      var nb = (b.name || '').toLowerCase();
+      return na.localeCompare(nb, 'pt-BR');
+    };
+    semCapa.sort(_ordPorNome);
+    semHtml.sort(_ordPorNome);
+    completos.sort(_ordPorNome);
+    semNada.sort(_ordPorNome);
+    naoRegistrados.sort(_ordPorNome);
+
     window._diagSemCapa = semCapa;
     window._diagRegistrados = registrados;
 
@@ -8135,15 +8231,15 @@ async function loteDiagnostico() {
       html += '</div>';
 
       // Chips dos cursos sem capa — CLICAVEIS para editar individualmente
-      // FIX 22/04/2026: nome COMPLETO sem corte, layout em coluna unica para legibilidade
+      // FIX 22/04/2026: nome COMPLETO sem corte, NOME PRIMEIRO + ID por ultimo, ordem alfabetica por NOME
       html += '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">';
       semCapa.forEach(function(c) {
-        html += '<span style="padding:6px 12px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.3);border-radius:6px;font-size:11px;color:#fde047;font-family:var(--mono);cursor:pointer;transition:all .15s;user-select:none;display:inline-block;line-height:1.4;word-break:break-word;white-space:normal;max-width:100%" '
+        html += '<span style="padding:6px 12px;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.3);border-radius:6px;font-size:11px;color:#fde047;cursor:pointer;transition:all .15s;user-select:none;display:inline-block;line-height:1.4;word-break:break-word;white-space:normal;max-width:100%" '
           + 'onmouseover="this.style.background=\'rgba(234,179,8,.25)\';this.style.borderColor=\'#fde047\';this.style.transform=\'translateY(-1px)\'" '
           + 'onmouseout="this.style.background=\'rgba(234,179,8,.12)\';this.style.borderColor=\'rgba(234,179,8,.3)\';this.style.transform=\'none\'" '
           + 'onclick="diagCapaAbrirModal(\'' + escH(c.id) + '\',\'' + escH(c.name).replace(/'/g, "\\'") + '\')" '
           + 'title="Clique para enviar a capa de ' + escH(c.name) + '">'
-          + '📸 <b>' + escH(c.id) + '</b> · ' + escH(c.name) + '</span>';
+          + '📸 <b>' + escH(c.name) + '</b> <span style="color:var(--t3);font-family:var(--mono);font-size:10px">· ' + escH(c.id) + '</span></span>';
       });
       html += '</div>';
       html += '<div style="font-size:10px;color:var(--t3);margin-bottom:10px">👆 Clique em qualquer curso acima para enviar a capa individualmente, ou arraste varias imagens abaixo para upload em lote.</div>';
@@ -9353,10 +9449,13 @@ function capaLoteRenderGrid() {
     // Select com todos os cursos disponiveis
     var courseList = _getAllCourseNames();
     var selectOptions = '<option value="">-- Selecione o curso --</option>';
-    courseList.forEach(function(c) {
+    // FIX 22/04/2026: ordenar por NOME alfabeticamente, mostrar NOME primeiro + ID por ultimo
+    var courseListOrd = courseList.slice().sort(function(a, b){
+      return (a.name||'').toLowerCase().localeCompare((b.name||'').toLowerCase(), 'pt-BR');
+    });
+    courseListOrd.forEach(function(c) {
       var sel = (c.id === item.newId) ? ' selected' : '';
-      // FIX 22/04/2026: nome COMPLETO no select (sem corte)
-      selectOptions += '<option value="' + escH(c.id) + '"' + sel + '>' + escH(c.id) + ' · ' + escH(c.name) + '</option>';
+      selectOptions += '<option value="' + escH(c.id) + '"' + sel + '>' + escH(c.name) + '  (' + escH(c.id) + ')</option>';
     });
 
     // ── Botoes de acao no canto superior esquerdo (X = remover, ⊘ = rejeitar match) ──
@@ -9598,21 +9697,41 @@ async function capaCursoCarregar() {
       if (typeof carregarCursosEditor === 'function') await carregarCursosEditor();
     }
 
-    _capaCursos = (_cursosCarregados || []).slice();
-
-    // Verificar quais cursos tem capa no GitHub
-    var capaCheckPromises = _capaCursos.map(function(curso) {
-      var capaPath = curso.coverImg || ('assets/capas/' + curso.id + '.jpg');
-      var url = 'https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/' + capaPath;
-      return fetch(url, { headers: gh() })
-        .then(function(r) {
-          curso._temCapa = r.ok;
-          if (r.ok) return r.json().then(function(d) { curso._capaUrl = 'https://raw.githubusercontent.com/' + c.o + '/' + c.r + '/main/' + capaPath + '?t=' + Date.now(); });
-        })
-        .catch(function() { curso._temCapa = false; });
+    // ── ORDEM ALFABETICA v1 (FIX 22/04/2026): galeria de capas ordenada por NOME ──
+    _capaCursos = (_cursosCarregados || []).slice().sort(function(a, b){
+      return (a.name||'').toLowerCase().localeCompare((b.name||'').toLowerCase(), 'pt-BR');
     });
 
-    await Promise.all(capaCheckPromises);
+    // ── DETECCAO v3 (FIX 22/04/2026): rejeita capas auto-geradas ──
+    //    SVG = sempre auto | PNG <= 80KB = template auto-gerado
+    var capasReais = {};
+    var PNG_AUTO_LIMIT = 80 * 1024;
+    try {
+      var capasRes = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/assets/capas?t=' + Date.now(), { headers: gh(), cache: 'no-store' });
+      if (capasRes.ok) {
+        var capasArr = await capasRes.json();
+        capasArr.forEach(function(f) {
+          var m = f.name.match(/^(.+)\.(jpg|jpeg|png|gif|webp|svg)$/i);
+          if (!m) return;
+          var ext = m[2].toLowerCase();
+          var size = f.size || 0;
+          if (ext === 'svg') return;                                  // SVG = template auto
+          if (ext === 'png' && size <= PNG_AUTO_LIMIT) return;        // PNG pequeno = template auto
+          if (capasReais[m[1]] && capasReais[m[1]].ext === 'jpg' && ext !== 'jpg') return;
+          capasReais[m[1]] = { ext: ext, sha: f.sha, path: f.path, size: size };
+        });
+      }
+    } catch(e) { /* se falhar, fallback no HEAD por curso */ }
+
+    _capaCursos.forEach(function(curso) {
+      if (capasReais[curso.id]) {
+        curso._temCapa = true;
+        curso._capaUrl = 'https://raw.githubusercontent.com/' + c.o + '/' + c.r + '/main/' + capasReais[curso.id].path + '?v=' + capasReais[curso.id].sha;
+      } else {
+        curso._temCapa = false;
+      }
+    });
+
     capaCursoRenderGrid();
   } catch (e) {
     el('capas-curso-grid').innerHTML = '<div style="color:#fca5a5;font-size:12px;padding:16px;text-align:center;grid-column:1/-1">Erro ao carregar: ' + escH(e.message) + '</div>';
@@ -9800,6 +9919,250 @@ var _origSwTab = typeof swTab === 'function' ? swTab : null;
     }
   };
 })();
+
+// ════════════════════════════════════════════════════════════════
+// EBOOKS v1 (FIX 22/04/2026): Aba dedicada para listar e gerenciar
+// ebooks postados (entradas com type: "ebook" no courses.js).
+// Permite visualizar, abrir PDF e trocar capa de cada ebook.
+// ════════════════════════════════════════════════════════════════
+
+var _ebooksData = [];
+var _ebookEditando = null;
+var _ebookCapaFile = null;
+
+// Carrega lista de ebooks do courses.js
+async function ebooksCarregar() {
+  var c = g();
+  if (!c.t) {
+    el('ebooks-grid').innerHTML = '<div style="color:#fca5a5;font-size:12px;padding:16px;text-align:center;grid-column:1/-1">⚠️ Configure o token GitHub primeiro.</div>';
+    return;
+  }
+  el('ebooks-grid').innerHTML = '<div style="color:var(--t3);font-size:12px;padding:16px;text-align:center;grid-column:1/-1"><span class="sp" style="display:inline-block;margin-right:6px"></span>Carregando ebooks do GitHub...</div>';
+
+  try {
+    var _ts = '?t=' + Date.now();
+    var hd = gh(); hd['If-None-Match'] = '';
+    var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js' + _ts, { headers: hd, cache: 'no-store' });
+    if (!res.ok) {
+      el('ebooks-grid').innerHTML = '<div style="color:#fca5a5;font-size:12px;padding:16px;text-align:center;grid-column:1/-1">❌ Erro ao carregar courses.js (HTTP ' + res.status + ')</div>';
+      return;
+    }
+    var fd = await res.json();
+    var content = _normalizarCoursesContent(b64d(fd.content));
+
+    // Parsear todos cursos e filtrar so type:"ebook"
+    var todos = parseCursosCompleto(content);
+    _ebooksData = todos.filter(function(c2) {
+      // Verificar se eh ebook (type: "ebook" no bloco original)
+      // O parser nao captura "type" diretamente, entao reconstruimos por busca no content
+      var blocoRe = new RegExp('\\bid:\\s*[\'"]' + c2.id + '[\'"][\\s\\S]{0,2000}?\\}');
+      var bm = content.match(blocoRe);
+      if (!bm) return false;
+      return /["\']?type["\']?\s*:\s*[\'"]ebook[\'"]/.test(bm[0]);
+    });
+
+    // Para cada ebook, extrair tambem o pdfFile do bloco
+    _ebooksData.forEach(function(eb) {
+      var blocoRe = new RegExp('\\bid:\\s*[\'"]' + eb.id + '[\'"][\\s\\S]{0,2000}?\\}');
+      var bm = content.match(blocoRe);
+      if (bm) {
+        var pdfM = bm[0].match(/["\']?pdfFile["\']?\s*:\s*[\'"]([^\'"]+)[\'"]/);
+        eb.pdfFile = pdfM ? pdfM[1] : '';
+      }
+    });
+
+    // Verificar quais capas existem no GitHub
+    try {
+      var capasRes = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/assets/capas?t=' + Date.now(), { headers: gh(), cache: 'no-store' });
+      if (capasRes.ok) {
+        var capas = await capasRes.json();
+        var capasIdx = {};
+        capas.forEach(function(f) {
+          var m = f.name.match(/^(.+)\.(jpg|jpeg|png|gif|webp)$/i);
+          if (m) capasIdx[m[1]] = { ext: m[2].toLowerCase(), sha: f.sha, path: f.path };
+        });
+        _ebooksData.forEach(function(eb) {
+          if (capasIdx[eb.id]) {
+            eb.capaUrl = 'https://raw.githubusercontent.com/' + c.o + '/' + c.r + '/main/' + capasIdx[eb.id].path + '?v=' + capasIdx[eb.id].sha;
+            eb.capaExists = true;
+          } else {
+            eb.capaExists = false;
+          }
+        });
+      }
+    } catch(e) { /* silencioso */ }
+
+    ebooksRender();
+  } catch (err) {
+    el('ebooks-grid').innerHTML = '<div style="color:#fca5a5;font-size:12px;padding:16px;text-align:center;grid-column:1/-1">❌ Erro: ' + escH(err.message) + '</div>';
+  }
+}
+
+function ebooksFiltrar() { ebooksRender(); }
+
+function ebooksRender() {
+  var grid = el('ebooks-grid');
+  var filtro = _normTxt((el('ebooks-busca') ? el('ebooks-busca').value : ''));
+  var lista = _ebooksData;
+  if (filtro && filtro.length >= 2) {
+    lista = lista.filter(function(eb) {
+      return _normTxt(eb.name).indexOf(filtro) !== -1 ||
+             _normTxt(eb.id).indexOf(filtro) !== -1;
+    });
+  }
+
+  // Stats
+  var total = _ebooksData.length;
+  var comCapa = _ebooksData.filter(function(eb){ return eb.capaExists; }).length;
+  var semCapa = total - comCapa;
+  var comPdf = _ebooksData.filter(function(eb){ return eb.pdfFile; }).length;
+  if (el('ebooks-stat-total')) el('ebooks-stat-total').textContent = '📚 Total: ' + total;
+  if (el('ebooks-stat-com')) el('ebooks-stat-com').textContent = '✅ Com capa: ' + comCapa;
+  if (el('ebooks-stat-sem')) el('ebooks-stat-sem').textContent = '⚠️ Sem capa: ' + semCapa;
+  if (el('ebooks-stat-pdf')) el('ebooks-stat-pdf').textContent = '📄 PDFs: ' + comPdf;
+
+  if (!lista.length) {
+    grid.innerHTML = '<div style="color:var(--t3);font-size:12px;padding:16px;text-align:center;grid-column:1/-1">' +
+      (filtro ? 'Nenhum ebook encontrado com esse termo de busca.' : 'Nenhum ebook cadastrado. Eles tem o campo type: "ebook" no courses.js.') +
+      '</div>';
+    return;
+  }
+
+  var c = g();
+  var html = '';
+  lista.forEach(function(eb) {
+    var capaHtml = eb.capaUrl
+      ? '<img src="' + escH(eb.capaUrl) + '" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block" alt="Capa ' + escH(eb.id) + '" onerror="this.parentNode.innerHTML=\'<div style=&quot;width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:rgba(239,68,68,.08);color:#fca5a5;font-size:11px&quot;>❌ Capa quebrada</div>\'">'
+      : '<div style="width:100%;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(245,158,11,.08);color:#fde047;font-size:11px;gap:6px"><div style="font-size:32px">📷</div><div style="font-weight:700">SEM CAPA</div></div>';
+
+    var pdfUrl = eb.pdfFile
+      ? 'https://raw.githubusercontent.com/' + c.o + '/' + c.r + '/main/' + eb.pdfFile
+      : '';
+
+    html += '<div style="background:var(--card);border:1px solid var(--brd);border-radius:10px;overflow:hidden;display:flex;flex-direction:column">'
+      + '<div style="position:relative;cursor:pointer" onclick="ebookAbrirModal(\'' + escH(eb.id) + '\')" title="Clique para trocar a capa">'
+      + capaHtml
+      + '<div style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.75);color:#fde047;font-size:10px;font-weight:800;padding:3px 8px;border-radius:5px">📚 EBOOK</div>'
+      + '<div style="position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.75);color:#fff;font-family:var(--mono);font-size:9px;font-weight:700;padding:3px 7px;border-radius:5px">' + escH(eb.id) + '</div>'
+      + '</div>'
+      + '<div style="padding:12px;flex:1;display:flex;flex-direction:column;gap:8px">'
+      + '<div style="font-size:13px;font-weight:700;color:var(--txt);line-height:1.35;word-break:break-word">' + escH(eb.name) + '</div>'
+      + (eb.cat ? '<div style="font-size:10px;color:var(--t2)">📂 ' + escH(eb.cat) + '</div>' : '')
+      + (eb.pdfFile ? '<div style="font-size:9px;color:var(--t3);font-family:var(--mono);word-break:break-all">📄 ' + escH(eb.pdfFile) + '</div>' : '<div style="font-size:9px;color:#fca5a5">⚠️ PDF nao definido</div>')
+      + '<div style="display:flex;gap:6px;margin-top:auto;flex-wrap:wrap">'
+      + '<button onclick="ebookAbrirModal(\'' + escH(eb.id) + '\')" style="flex:1;background:var(--acc);color:#fff;border:none;border-radius:6px;padding:8px 10px;font-size:11px;font-weight:700;cursor:pointer">📷 Trocar capa</button>'
+      + (pdfUrl ? '<a href="' + escH(pdfUrl) + '" target="_blank" style="flex:1;background:rgba(96,165,250,.15);color:var(--acc2);border:1px solid rgba(96,165,250,.3);border-radius:6px;padding:8px 10px;font-size:11px;font-weight:700;text-align:center;text-decoration:none;display:inline-block">📄 Abrir PDF</a>' : '')
+      + '</div>'
+      + '</div>'
+      + '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+// Abrir modal de troca de capa
+function ebookAbrirModal(ebookId) {
+  var eb = _ebooksData.find(function(x){ return x.id === ebookId; });
+  if (!eb) return;
+  _ebookEditando = eb;
+  _ebookCapaFile = null;
+  el('ebookModalInfo').innerHTML =
+    '<div style="display:flex;gap:12px;align-items:center">'
+    + (eb.capaUrl ? '<img src="' + escH(eb.capaUrl) + '" style="width:60px;height:80px;object-fit:cover;border-radius:6px;flex-shrink:0">' : '<div style="width:60px;height:80px;background:rgba(245,158,11,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">📷</div>')
+    + '<div style="flex:1;min-width:0">'
+    + '<div style="font-size:13px;font-weight:700;color:var(--txt);line-height:1.3;word-break:break-word">' + escH(eb.name) + '</div>'
+    + '<div style="font-size:11px;color:var(--t2);font-family:var(--mono);margin-top:4px">id: ' + escH(eb.id) + '</div>'
+    + '</div></div>';
+  el('ebookModalPreview').style.display = 'none';
+  el('ebookModalBtn').disabled = true;
+  el('ebookModalRes').className = 'res';
+  el('ebookModalRes').textContent = '';
+  el('ebookModal').style.display = 'flex';
+}
+
+function ebookModalFechar() {
+  el('ebookModal').style.display = 'none';
+  _ebookEditando = null;
+  _ebookCapaFile = null;
+}
+
+function ebookModalSetFile(file) {
+  if (!file || !file.type.startsWith('image/')) {
+    alert('Selecione um arquivo de imagem (PNG, JPG, WebP).');
+    return;
+  }
+  _ebookCapaFile = file;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    el('ebookModalImg').src = e.target.result;
+    el('ebookModalFn').textContent = file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
+    el('ebookModalPreview').style.display = 'block';
+    el('ebookModalBtn').disabled = false;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function ebookModalSalvar() {
+  if (!_ebookEditando || !_ebookCapaFile) return;
+  var c = g();
+  if (!c.t) { alert('Configure o token GitHub primeiro.'); return; }
+
+  var btn = el('ebookModalBtn');
+  var res = el('ebookModalRes');
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  res.className = 'res ld'; res.style.display='flex'; res.textContent = 'Subindo capa para GitHub...';
+
+  try {
+    // Ler arquivo como base64
+    var dataUrl = el('ebookModalImg').src;
+    var base64 = dataUrl.split(',')[1];
+
+    var ext = _ebookCapaFile.name.match(/\.(\w+)$/);
+    ext = ext ? ext[1].toLowerCase() : 'jpg';
+    if (ext === 'jpeg') ext = 'jpg';
+    var capaPath = 'assets/capas/' + _ebookEditando.id + '.' + ext;
+
+    // Verificar se ja existe (pegar SHA)
+    var sha = '';
+    try {
+      var chk = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/' + capaPath + '?t=' + Date.now(), { headers: gh(), cache: 'no-store' });
+      if (chk.ok) {
+        var j = await chk.json();
+        sha = j.sha || '';
+      }
+    } catch(e){}
+
+    // Subir/atualizar
+    var body = { message: 'admin: trocar capa do ebook ' + _ebookEditando.id, content: base64 };
+    if (sha) body.sha = sha;
+    var put = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/' + capaPath, {
+      method: 'PUT', headers: gh(), body: JSON.stringify(body)
+    });
+    if (!put.ok) {
+      var t = await put.text();
+      throw new Error('GitHub HTTP ' + put.status + ': ' + t.substring(0,150));
+    }
+
+    // Tambem atualizar coverImg no courses.js (se for outra extensao)
+    try {
+      await hlAtualizarCoverImg(_ebookEditando.id);
+    } catch(e) { /* opcional */ }
+
+    res.className = 'res ok'; res.style.display='flex';
+    res.textContent = '✅ Capa atualizada! Pode demorar 1-2 min para aparecer no GitHub Pages.';
+    btn.textContent = '💾 Salvar Capa';
+
+    // Atualizar local
+    setTimeout(function(){
+      ebooksCarregar();
+      ebookModalFechar();
+    }, 1500);
+  } catch (err) {
+    res.className = 'res er'; res.style.display='flex';
+    res.textContent = '❌ Erro: ' + err.message;
+    btn.textContent = '💾 Salvar Capa';
+    btn.disabled = false;
+  }
+}
 
 </script>
 
