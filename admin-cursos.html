@@ -2464,7 +2464,7 @@ async function loadCoursesData(){
   if(!res.ok) return;
   var fd=await res.json();
   _coursesSha=fd.sha;
-  _coursesContent=b64d(fd.content);
+  _coursesContent=_normalizarCoursesContent(b64d(fd.content));
   // Extrair todos os IDs existentes + nomes + arquivos para matching
   var ids=[];
   _existCourses=[];
@@ -2554,6 +2554,30 @@ function insertSafe(content, block){
 function b64d(s){return decodeURIComponent(escape(atob(s.replace(/\n/g,''))));}
 function b64e(s){return btoa(unescape(encodeURIComponent(s)));}
 
+// ════════════════════════════════════════════════════════════════
+// NORMALIZADOR v1 (FIX 22/04/2026): converte courses.js do formato
+// JSON ("id":"x") para formato JS literal (id:"x") para que TODAS
+// as regex internas funcionem em ambos os formatos.
+// ════════════════════════════════════════════════════════════════
+function _normalizarCoursesContent(content) {
+  if (!content) return content;
+  // Lista de chaves possiveis no array MA_COURSES
+  var chaves = ['id','name','desc','file','cat','modules','topics','hours','quizzes',
+                'salt','ak','storagePrefix','icon','color','coverImg','courseKey',
+                'active','free','addedTs','longdesc','longDesc','nivel','instrutor',
+                'badge','preco','price','kiwify','idioma'];
+  // Substitui "chave": por chave: (remove aspas das chaves)
+  chaves.forEach(function(k){
+    var re = new RegExp('"' + k + '"\\s*:', 'g');
+    content = content.replace(re, k + ':');
+    var re2 = new RegExp("'" + k + "'\\s*:", 'g');
+    content = content.replace(re2, k + ':');
+  });
+  return content;
+}
+
+
+
 // UTILIDADES DE RETRY E DELAY PARA API GITHUB
 function _sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
 async function _ghFetchRetry(url, opts, maxRetries) {
@@ -2617,7 +2641,7 @@ async function registerInCourses(meta, rId, sfx){
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   if(!res.ok){showRes(rId,'er','❌ Não encontrei data/courses.js. Verifique o repositório.');return false;}
   var fd=await res.json();
-  var content=b64d(fd.content);
+  var content=_normalizarCoursesContent(b64d(fd.content));
   var sha=fd.sha;
 
   // Verificar duplicata com conteúdo atualizado
@@ -2732,7 +2756,7 @@ async function updCourse(id,field,val,btn2){
   if(btn2){btn2.textContent='⏳';btn2.disabled=true;}
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   var fd=await res.json();
-  var content=b64d(fd.content), sha=fd.sha;
+  var content=_normalizarCoursesContent(b64d(fd.content)), sha=fd.sha;
   var re=new RegExp("(id:\\s*['\"]"+id+"['\"][\\s\\S]{0,500}?"+field+":\\s*)(true|false)");
   var nc=content.replace(re,'$1'+val);
   if(nc===content){showRes('rUp','er','❌ Campo não encontrado.');if(btn2)btn2.disabled=false;return;}
@@ -2751,7 +2775,7 @@ async function delCourse(id,name){
   showRes('rUp','ld','<div class="sp"></div> Removendo...');
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   var fd=await res.json();
-  var content=b64d(fd.content), sha=fd.sha;
+  var content=_normalizarCoursesContent(b64d(fd.content)), sha=fd.sha;
   // Encontrar e remover o bloco do objeto
   var pat="id: '"+id+"'"; var alt='id: "'+id+'"';
   var pos=content.indexOf(pat); if(pos===-1) pos=content.indexOf(alt);
@@ -2777,7 +2801,7 @@ async function loadList(){
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   if(!res.ok)return;
   var fd=await res.json();
-  var content=b64d(fd.content);
+  var content=_normalizarCoursesContent(b64d(fd.content));
   var courses=[];
   var re2=new RegExp('{([^{}]*)}','g'),m2;
   while((m2=re2.exec(content))!==null){
@@ -4072,7 +4096,7 @@ async function homeListaCarregar() {
     var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js' + _ts, { headers: hd, cache: 'no-store' });
     if (!res.ok) { el('hl-container').innerHTML = '<div style="color:#fca5a5;font-size:12px;padding:8px">❌ Erro ao carregar courses.js (HTTP ' + res.status + ')</div>'; return; }
     var fd = await res.json();
-    _coursesContent = b64d(fd.content);
+    _coursesContent = _normalizarCoursesContent(b64d(fd.content));
     _coursesSha = fd.sha;
     _homeListaCursos = parseCursosCompleto(_coursesContent);
     _cursosCarregados = _homeListaCursos;
@@ -4291,7 +4315,7 @@ async function hlAtualizarCoverImg(id) {
     var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js' + _ts, { headers: hd, cache: 'no-store' });
     if (!res.ok) return;
     var fd = await res.json();
-    var content = b64d(fd.content);
+    var content = _normalizarCoursesContent(b64d(fd.content));
     var sha = fd.sha;
 
     var idEsc = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -4335,7 +4359,7 @@ async function hlSalvar(id) {
     var hd = gh(); hd['If-None-Match'] = '';
     var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js' + _ts, { headers: hd, cache: 'no-store' });
     var fd = await res.json();
-    var content = b64d(fd.content);
+    var content = _normalizarCoursesContent(b64d(fd.content));
     var sha = fd.sha;
 
     // ═══ VALIDAÇÃO PRÉ ═══
@@ -4418,7 +4442,7 @@ async function carregarCursosEditor(){
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   if(!res.ok){ el('ed-list').innerHTML='<div style="color:#fca5a5;font-size:12px;padding:8px">❌ Não foi possível carregar o courses.js.</div>'; return; }
   var fd=await res.json();
-  var content=b64d(fd.content);
+  var content=_normalizarCoursesContent(b64d(fd.content));
   _coursesContent=content; _coursesSha=fd.sha;
   _cursosCarregados = parseCursosCompleto(content);
   renderEdList();
@@ -4556,7 +4580,7 @@ async function salvarEdicaoCurso(){
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   if(!res.ok){ showRes('rEd','er','❌ Erro ao carregar courses.js'); return; }
   var fd=await res.json();
-  var content=b64d(fd.content), sha=fd.sha;
+  var content=_normalizarCoursesContent(b64d(fd.content)), sha=fd.sha;
   // Encontrar o bloco do curso
   var pat="id: '"+id+"'"; var alt='id: "'+id+'"';
   var pos=content.indexOf(pat); if(pos===-1) pos=content.indexOf(alt);
@@ -4717,7 +4741,7 @@ async function analisarCourses(){
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   if(!res.ok){ el('analise-result').innerHTML='<div style="color:#fca5a5;font-size:11px">❌ Erro ao carregar courses.js</div>'; return; }
   var fd=await res.json();
-  var content=b64d(fd.content);
+  var content=_normalizarCoursesContent(b64d(fd.content));
   var cursos=parseCursosCompleto(content);
   var problemas=[];
   var ids={};
@@ -4779,7 +4803,7 @@ async function salvarOrdem(){
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   if(!res.ok){ showRes('rOrdem','er','❌ Erro ao carregar'); return; }
   var fd=await res.json();
-  var content=b64d(fd.content), sha=fd.sha;
+  var content=_normalizarCoursesContent(b64d(fd.content)), sha=fd.sha;
   // Reconstruir array na nova ordem
   var oldCursos=parseCursosCompleto(content);
   var idOrder=_cursosCarregados.map(function(x){ return x.id; });
@@ -4904,7 +4928,7 @@ async function baixarCoursesJs(){
   var res=await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js',{headers:gh()});
   if(!res.ok){ if(div){ div.style.background='rgba(239,68,68,.1)'; div.style.border='1px solid rgba(239,68,68,.25)'; div.style.color='#fca5a5'; div.textContent='❌ Erro ao carregar'; } return; }
   var fd=await res.json();
-  var content=b64d(fd.content);
+  var content=_normalizarCoursesContent(b64d(fd.content));
   var blob=new Blob([content],{type:'text/javascript'});
   var url=URL.createObjectURL(blob);
   var a=document.createElement('a'); a.href=url;
@@ -5546,7 +5570,7 @@ async function verificarAgendamentos() {
       var res = await fetch('https://api.github.com/repos/'+cfg.o+'/'+cfg.r+'/contents/data/courses.js', {headers: gh()});
       if (!res.ok) continue;
       var fd = await res.json();
-      var ct = b64d(fd.content), sha = fd.sha;
+      var ct = _normalizarCoursesContent(b64d(fd.content)), sha = fd.sha;
       var re = new RegExp("(id:\\s*['\"]" + ag.id + "['\"][\\s\\S]{0,500}?active:\\s*)(false)");
       var nc = ct.replace(re, '$1true');
       if (nc !== ct) {
@@ -5714,7 +5738,7 @@ async function salvarOrdemCursos() {
   try {
     var res = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js', {headers: gh()});
     var fd = await res.json();
-    var ct = b64d(fd.content), sha = fd.sha;
+    var ct = _normalizarCoursesContent(b64d(fd.content)), sha = fd.sha;
     // Atualizar addedTs de cada curso no arquivo
     _cursosCarregados.forEach(function(curso) {
       ct = ct.replace(
@@ -5750,7 +5774,7 @@ async function carregarOrdemCursos() {
   try {
     var res = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js', {headers: gh()});
     var fd = await res.json();
-    var ct = b64d(fd.content);
+    var ct = _normalizarCoursesContent(b64d(fd.content));
     _coursesContent = ct; _coursesSha = fd.sha;
     var match = ct.match(/var\s+MA_COURSES\s*=\s*(\[[\s\S]*?\]);/);
     if (match) {
@@ -6047,7 +6071,7 @@ async function duplicarCurso(id) {
   var c = g(); if (!c.t) { alert('Configure o token GitHub.'); return; }
   var res = await fetch('https://api.github.com/repos/'+c.o+'/'+c.r+'/contents/data/courses.js', {headers: gh()});
   var fd = await res.json();
-  var ct = b64d(fd.content), sha = fd.sha;
+  var ct = _normalizarCoursesContent(b64d(fd.content)), sha = fd.sha;
 
   var block = buildBlock(novo);
   ct = insertSafe(ct, block);
@@ -6422,7 +6446,7 @@ async function aplicarReorganizacao() {
     var res = await fetch('https://api.github.com/repos/' + c.o + '/' + c.r + '/contents/data/courses.js' + _ts, { headers: ghHeaders, cache: 'no-store' });
     if (!res.ok) { showRes('reorg-apply-res', 'er', '❌ Erro ao buscar courses.js: HTTP ' + res.status); return; }
     var fd = await res.json();
-    var contentOriginal = b64d(fd.content);
+    var contentOriginal = _normalizarCoursesContent(b64d(fd.content));
     var sha = fd.sha;
     var content = contentOriginal; // cópia para modificar
 
@@ -7092,7 +7116,7 @@ async function lotePublicar() {
     var freshCs = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/data/courses.js', { headers: gh() });
     if (freshCs.ok) {
       var freshData = await freshCs.json();
-      var freshContent = b64d(freshData.content);
+      var freshContent = _normalizarCoursesContent(b64d(freshData.content));
       var freshIds = [];
       var idRx = /id:\s*['"]([^'"]+)['"]/g;
       var m; while ((m = idRx.exec(freshContent)) !== null) freshIds.push(m[1]);
@@ -7212,7 +7236,7 @@ async function lotePublicar() {
         var csRes = await _ghFetchRetry('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/data/courses.js', { headers: gh() }, 2);
         if (!csRes.ok) throw new Error('Erro ao ler courses.js: ' + csRes.status);
         var csFd = await csRes.json();
-        var csContent = b64d(csFd.content);
+        var csContent = _normalizarCoursesContent(b64d(csFd.content));
         var csSha = csFd.sha;
 
         var block = buildBlock(item.meta);
@@ -7912,21 +7936,25 @@ async function loteDiagnostico() {
     var csRes = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/data/courses.js', { headers: gh() });
     if (!csRes.ok) throw new Error('Nao conseguiu ler courses.js');
     var csFd = await csRes.json();
-    var csContent = b64d(csFd.content);
+    var csContent = _normalizarCoursesContent(b64d(csFd.content));
 
     // Extrair todos os cursos registrados no courses.js
-    // Usa MESMA logica da lista de cursos ({([^{}]*)}) para evitar divergencia
+    // ── DIAGNOSTICO v2 (FIX 22/04/2026): aceita formato JS literal e JSON
+    //    formato JS:    { id: "x", name: "y", salt: "z" }
+    //    formato JSON:  { "id": "x", "name": "y", "salt": "z" }
+    //    Tambem usa o mesmo split por linha do parseCursosCompleto v3
+    //    ao inves de regex {([^{}]*)} que falha em JSON com strings contendo chaves
     var registrados = {};
-    var reBlock = new RegExp('{([^{}]*)}','g'), bm;
-    while ((bm = reBlock.exec(csContent)) !== null) {
-      var blk = bm[1];
-      var idM = blk.match(/id:\s*['"]([^'"]+)['"]/);
-      var nameM = blk.match(/name:\s*['"]([^'"]+)['"]/);
-      var fileM = blk.match(/file:\s*['"]([^'"]+)['"]/);
-      if (!idM || !nameM) continue;
-      if (blk.indexOf('TEMPLATE') !== -1) continue;
-      if (!blk.match(/salt:\s*['"]/)) continue;
-      var actM = blk.match(/active:\s*(true|false)/);
+    var blocosDiag = csContent.split(/(?=\n\s*\{)/);
+    blocosDiag.forEach(function(blk){
+      // Aceita id: ou "id": ou 'id':
+      var idM = blk.match(/["']?id["']?\s*:\s*['"]([^'"]+)['"]/);
+      var nameM = blk.match(/["']?name["']?\s*:\s*['"]([^'"]+)['"]/);
+      var fileM = blk.match(/["']?file["']?\s*:\s*['"]([^'"]+)['"]/);
+      if (!idM || !nameM) return;
+      if (blk.indexOf('TEMPLATE') !== -1) return;
+      if (!blk.match(/["']?salt["']?\s*:\s*['"]/)) return;
+      var actM = blk.match(/["']?active["']?\s*:\s*(true|false)/);
       registrados[idM[1]] = {
         id: idM[1],
         name: nameM ? nameM[1] : '?',
@@ -7936,7 +7964,7 @@ async function loteDiagnostico() {
         htmlExists: null,
         capaExists: null
       };
-    }
+    });
 
     var ids = Object.keys(registrados);
     var total = ids.length;
