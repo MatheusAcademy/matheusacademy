@@ -1949,6 +1949,57 @@ textarea{resize:vertical;min-height:54px}
         <input type="text" id="capas-busca-input" placeholder="Buscar curso por nome ou ID..." oninput="capaCursoFiltrar()">
       </div>
 
+      <!-- ════════════════════════════════════════════════════════════════
+           UPLOAD EM LOTE v1 (FIX 22/04/2026)
+           Sobe ate 300 capas, OCR detecta o titulo e sugere o curso
+           sem capa. Usuario aprova/rejeita/substitui cada uma.
+           ════════════════════════════════════════════════════════════════ -->
+      <div style="margin:16px 0;padding:14px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.25);border-radius:10px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#fde047">📥 Upload em LOTE de Capas (até 300 imagens)</div>
+            <div style="font-size:10px;color:var(--t2);margin-top:2px">O OCR vai ler cada capa e sugerir o curso SEM capa correspondente. Você aprova cada uma antes de publicar.</div>
+          </div>
+        </div>
+
+        <!-- Dropzone -->
+        <div id="cl-drop" style="border:2px dashed rgba(245,158,11,.35);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(245,158,11,.02)" onclick="el('cl-input').click()" ondragover="event.preventDefault();this.style.borderColor='#fde047';this.style.background='rgba(245,158,11,.08)'" ondragleave="this.style.borderColor='rgba(245,158,11,.35)';this.style.background='rgba(245,158,11,.02)'" ondrop="event.preventDefault();this.style.borderColor='rgba(245,158,11,.35)';this.style.background='rgba(245,158,11,.02)';clLoteChosen(event.dataTransfer.files)">
+          <div style="font-size:13px;font-weight:700;color:#fde047">📷 Arraste até 300 imagens aqui</div>
+          <div style="font-size:10px;color:var(--t3);margin-top:4px">ou clique para selecionar — PNG, JPG, WebP</div>
+          <input type="file" id="cl-input" accept="image/*" multiple style="display:none" onchange="clLoteChosen(this.files)">
+        </div>
+
+        <!-- Progresso OCR -->
+        <div id="cl-ocr-prog" style="display:none;margin-top:10px;padding:10px;background:var(--card);border:1px solid var(--brd);border-radius:8px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--acc2);font-weight:700;margin-bottom:5px">
+            <span id="cl-ocr-label">Lendo imagens...</span>
+            <span id="cl-ocr-pct">0%</span>
+          </div>
+          <div style="height:6px;background:rgba(96,165,250,.15);border-radius:3px;overflow:hidden">
+            <div id="cl-ocr-bar" style="height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0%;transition:width .3s"></div>
+          </div>
+          <div id="cl-ocr-detail" style="font-size:10px;color:var(--t3);margin-top:5px"></div>
+        </div>
+
+        <!-- Stats apos OCR -->
+        <div id="cl-stats" style="display:none;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <div id="cl-stat-total" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);border-radius:6px;padding:5px 10px;font-size:11px;color:var(--acc2);font-weight:700"></div>
+          <div id="cl-stat-aprov" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:6px;padding:5px 10px;font-size:11px;color:#86efac;font-weight:700"></div>
+          <div id="cl-stat-rev" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:6px;padding:5px 10px;font-size:11px;color:#fde047;font-weight:700"></div>
+          <div id="cl-stat-sem" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:6px;padding:5px 10px;font-size:11px;color:#fca5a5;font-weight:700"></div>
+        </div>
+
+        <!-- Botoes acao em lote -->
+        <div id="cl-actions" style="display:none;margin-top:12px;gap:8px;flex-wrap:wrap" >
+          <button class="btns" onclick="clAprovarTodos()" style="background:rgba(34,197,94,.15);color:#86efac;border-color:rgba(34,197,94,.4);font-weight:700">✅ Aprovar todas as sugestões</button>
+          <button class="btns" onclick="clPublicarAprovadas()" id="cl-pub-btn" style="background:var(--acc);color:#fff;font-weight:700;border:none">🚀 Publicar capas APROVADAS</button>
+          <button class="btns" onclick="clLimparTudo()" style="background:rgba(239,68,68,.12);color:#fca5a5;border-color:rgba(239,68,68,.3)">🗑 Limpar lote</button>
+        </div>
+
+        <!-- Grid de revisao -->
+        <div id="cl-review-grid" style="display:none;margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px"></div>
+      </div>
+
       <!-- Grid de cursos -->
       <div id="capas-curso-grid" class="capas-curso-grid">
         <div style="color:var(--t3);font-size:12px;padding:16px;text-align:center;grid-column:1/-1">Clique em Atualizar para carregar os cursos...</div>
@@ -10000,6 +10051,453 @@ var _origSwTab = typeof swTab === 'function' ? swTab : null;
     }
   };
 })();
+
+// ════════════════════════════════════════════════════════════════
+// UPLOAD EM LOTE v1 (FIX 22/04/2026): Aba 🖼️ Capas
+// Sobe ate 300 capas de uma vez. OCR le cada uma e sugere o curso
+// SEM CAPA correspondente. Usuario aprova/rejeita/substitui antes
+// de publicar de fato no GitHub.
+// ════════════════════════════════════════════════════════════════
+
+var _clItems = []; // [{file, dataUrl, ocrText, sugestoes:[], escolhido:'', status:'pendente'|'aprovada'|'rejeitada'|'subida'|'erro', confidence}]
+var _clCursosSemCapa = []; // [{id, name, cat}]
+
+// Recebe arquivos do drag & drop ou file input
+async function clLoteChosen(files) {
+  if (!files || !files.length) return;
+  if (files.length > 300) {
+    alert('Maximo 300 imagens por vez. Voce selecionou ' + files.length + '.');
+    return;
+  }
+  // Primeiro: garantir que sabemos quem esta sem capa
+  el('cl-ocr-prog').style.display = 'block';
+  el('cl-ocr-label').textContent = 'Identificando cursos sem capa...';
+  el('cl-ocr-bar').style.width = '5%';
+  el('cl-ocr-pct').textContent = '5%';
+  el('cl-ocr-detail').textContent = '';
+
+  await clCarregarSemCapa();
+
+  if (!_clCursosSemCapa.length) {
+    el('cl-ocr-prog').style.display = 'none';
+    alert('Nenhum curso sem capa encontrado. Carregue a aba primeiro clicando em Atualizar.');
+    return;
+  }
+
+  // Carrega arquivos como dataUrl
+  _clItems = [];
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    if (!file.type.startsWith('image/')) continue;
+    el('cl-ocr-label').textContent = 'Carregando imagens...';
+    el('cl-ocr-detail').textContent = (i+1) + ' de ' + files.length + ': ' + file.name;
+    var dataUrl = await _readFileAsDataURL(file);
+    _clItems.push({
+      file: file,
+      origName: file.name,
+      dataUrl: dataUrl,
+      ocrText: '',
+      sugestoes: [],
+      escolhido: '',
+      escolhidoNome: '',
+      confidence: 0,
+      status: 'pendente'
+    });
+  }
+
+  // Inicia OCR
+  await clRunOCR();
+}
+
+function _readFileAsDataURL(file) {
+  return new Promise(function(resolve){
+    var r = new FileReader();
+    r.onload = function(e){ resolve(e.target.result); };
+    r.onerror = function(){ resolve(''); };
+    r.readAsDataURL(file);
+  });
+}
+
+// Carrega lista de cursos SEM CAPA usando a mesma logica de deteccao v3
+async function clCarregarSemCapa() {
+  var c = g();
+  if (!c.t) { _clCursosSemCapa = []; return; }
+  try {
+    // Usar _capaCursos se ja foi carregado (mais rapido)
+    if (window._capaCursos && _capaCursos.length) {
+      _clCursosSemCapa = _capaCursos.filter(function(curso){ return !curso._temCapa; })
+        .map(function(c){ return {id:c.id, name:c.name, cat:c.cat||''}; });
+      return;
+    }
+    // Fallback: carregar do zero
+    if (typeof capaCursoCarregar === 'function') await capaCursoCarregar();
+    if (window._capaCursos) {
+      _clCursosSemCapa = _capaCursos.filter(function(curso){ return !curso._temCapa; })
+        .map(function(c){ return {id:c.id, name:c.name, cat:c.cat||''}; });
+    }
+  } catch(e) { _clCursosSemCapa = []; }
+}
+
+// Roda OCR em todas as imagens com pre-processamento avancado
+async function clRunOCR() {
+  var total = _clItems.length;
+  if (!total) return;
+
+  el('cl-ocr-label').textContent = 'Carregando Tesseract.js...';
+  el('cl-ocr-detail').textContent = '(primeira vez pode levar 10-20s)';
+  el('cl-ocr-bar').style.width = '10%';
+
+  try {
+    var worker = await Tesseract.createWorker('por+eng', 1, { logger: function(){} });
+    await worker.setParameters({
+      tessedit_pageseg_mode: '6',
+      tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜàáâãäçèéêëìíîïñòóôõöùúûü0123456789 .:,-—·()&!?/\n'
+    });
+
+    for (var i = 0; i < total; i++) {
+      var item = _clItems[i];
+      var pct = 10 + Math.round((i / total) * 85);
+      el('cl-ocr-pct').textContent = pct + '%';
+      el('cl-ocr-bar').style.width = pct + '%';
+      el('cl-ocr-label').textContent = 'Lendo capa ' + (i+1) + ' de ' + total;
+      el('cl-ocr-detail').textContent = item.origName;
+
+      try {
+        // Pre-processar (binarizacao Otsu)
+        var processedImg = await _preprocessImageForOCR(item.dataUrl);
+        var result = await worker.recognize(processedImg);
+        var ocrRaw = (result.data && result.data.text) ? result.data.text.trim() : '';
+        // Fallback: imagem original
+        if (ocrRaw.length < 5) {
+          var result2 = await worker.recognize(item.dataUrl);
+          if (result2.data && result2.data.text && result2.data.text.length > ocrRaw.length) {
+            ocrRaw = result2.data.text.trim();
+          }
+        }
+        item.ocrText = ocrRaw;
+
+        // ── MATCHING SO ENTRE CURSOS SEM CAPA ──
+        // Combina OCR + nome do arquivo, busca palavras-chave nos cursos sem capa
+        var textoBusca = ocrRaw + ' ' + item.origName.replace(/\.\w+$/, '').replace(/[_-]/g, ' ');
+        var sugest = _sugerirCursosPorPalavraChave(textoBusca, _clCursosSemCapa);
+        // Tambem tentar similaridade tradicional (top 5)
+        var topSim = _findTopMatches(textoBusca, _clCursosSemCapa, 5);
+
+        // Combinar e deduplicar
+        var seen = {};
+        var combinadas = [];
+        sugest.slice(0, 3).forEach(function(s){
+          if (seen[s.courseId]) return;
+          seen[s.courseId] = 1;
+          combinadas.push({ id: s.courseId, name: s.courseName, score: s.score, palavras: s.palavras });
+        });
+        topSim.forEach(function(s){
+          if (seen[s.id]) return;
+          if (combinadas.length >= 5) return;
+          seen[s.id] = 1;
+          combinadas.push({ id: s.id, name: s.name, score: s.score, palavras: [] });
+        });
+
+        item.sugestoes = combinadas;
+        if (combinadas.length > 0) {
+          item.escolhido = combinadas[0].id;
+          item.escolhidoNome = combinadas[0].name;
+          item.confidence = Math.round(combinadas[0].score * 100);
+        }
+      } catch (oerr) {
+        item.ocrText = '';
+        item.sugestoes = [];
+      }
+    }
+
+    await worker.terminate();
+  } catch (e) {
+    el('cl-ocr-label').textContent = 'Erro no OCR: ' + e.message;
+    setTimeout(function(){ el('cl-ocr-prog').style.display = 'none'; }, 3000);
+    return;
+  }
+
+  el('cl-ocr-prog').style.display = 'none';
+  el('cl-stats').style.display = 'flex';
+  el('cl-actions').style.display = 'flex';
+  el('cl-review-grid').style.display = 'grid';
+  clRenderReview();
+}
+
+// Renderiza grid de revisao manual
+function clRenderReview() {
+  var grid = el('cl-review-grid');
+
+  // Stats
+  var total = _clItems.filter(function(x){return x.status !== 'descartada'}).length;
+  var aprov = _clItems.filter(function(x){return x.status === 'aprovada'}).length;
+  var rev = _clItems.filter(function(x){return x.status === 'pendente' && x.escolhido}).length;
+  var sem = _clItems.filter(function(x){return x.status === 'pendente' && !x.escolhido}).length;
+  el('cl-stat-total').textContent = '📦 Total: ' + total;
+  el('cl-stat-aprov').textContent = '✅ Aprovadas: ' + aprov;
+  el('cl-stat-rev').textContent = '🔍 A revisar: ' + rev;
+  el('cl-stat-sem').textContent = '⚠️ Sem sugestão: ' + sem;
+
+  if (!_clItems.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;color:var(--t3);font-size:11px;text-align:center;padding:14px">Nenhuma imagem no lote.</div>';
+    return;
+  }
+
+  // Cursos sem capa ordenados por nome (para o dropdown)
+  var dropOpts = '<option value="">— Escolher curso —</option>';
+  var ordSemCapa = _clCursosSemCapa.slice().sort(function(a,b){
+    return (a.name||'').toLowerCase().localeCompare((b.name||'').toLowerCase(), 'pt-BR');
+  });
+  ordSemCapa.forEach(function(c){
+    dropOpts += '<option value="' + escH(c.id) + '">' + escH(c.name) + '</option>';
+  });
+
+  var html = '';
+  _clItems.forEach(function(item, idx) {
+    if (item.status === 'descartada') return;
+    var border, bg, statusBadge = '';
+    if (item.status === 'subida') {
+      border = '#22c55e'; bg = 'rgba(34,197,94,.06)';
+      statusBadge = '<div style="position:absolute;top:5px;right:5px;background:#22c55e;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px">SUBIDA</div>';
+    } else if (item.status === 'erro') {
+      border = '#ef4444'; bg = 'rgba(239,68,68,.06)';
+      statusBadge = '<div style="position:absolute;top:5px;right:5px;background:#ef4444;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;cursor:help" title="' + escH(item.errorMsg||'') + '">ERRO</div>';
+    } else if (item.status === 'aprovada') {
+      border = '#22c55e'; bg = 'rgba(34,197,94,.05)';
+      statusBadge = '<div style="position:absolute;top:5px;right:5px;background:#22c55e;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px">✅ APROVADA</div>';
+    } else if (item.escolhido) {
+      var corConf = item.confidence > 60 ? '#86efac' : (item.confidence > 30 ? '#fde047' : '#fca5a5');
+      border = item.confidence > 60 ? 'rgba(245,158,11,.5)' : 'rgba(245,158,11,.3)';
+      bg = 'rgba(245,158,11,.04)';
+      statusBadge = '<div style="position:absolute;top:5px;right:5px;background:rgba(0,0,0,.7);color:' + corConf + ';font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px">' + item.confidence + '% match</div>';
+    } else {
+      border = 'rgba(239,68,68,.4)'; bg = 'rgba(239,68,68,.04)';
+      statusBadge = '<div style="position:absolute;top:5px;right:5px;background:#ef4444;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px">SEM MATCH</div>';
+    }
+
+    // Botoes acao (canto superior esquerdo)
+    var btnsAcao = '<div style="position:absolute;top:5px;left:5px;z-index:10;display:flex;gap:4px">'
+      + '<button onclick="clRemover(' + idx + ')" style="width:22px;height:22px;border-radius:50%;background:#ef4444;color:#fff;border:1.5px solid #080c14;font-size:12px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;box-shadow:0 2px 4px rgba(0,0,0,.5)" title="Remover este upload">×</button>'
+      + '<button onclick="clTrocarImagem(' + idx + ')" style="width:22px;height:22px;border-radius:50%;background:#3b82f6;color:#fff;border:1.5px solid #080c14;font-size:10px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;box-shadow:0 2px 4px rgba(0,0,0,.5)" title="Trocar imagem (mantem o curso)">🔄</button>'
+      + '</div>'
+      + '<input type="file" accept="image/*" id="cl-troca-' + idx + '" style="display:none" onchange="clTrocarImagemFile(' + idx + ',this.files)">';
+
+    // Sugestoes top 3
+    var sugHtml = '';
+    if (item.sugestoes && item.sugestoes.length) {
+      sugHtml = '<div style="font-size:9px;color:var(--t2);margin-top:6px;font-weight:700">Top sugestões:</div>';
+      item.sugestoes.slice(0, 3).forEach(function(s, si) {
+        var ativa = (s.id === item.escolhido);
+        var conf = Math.round(s.score * 100);
+        sugHtml += '<div onclick="clEscolherSugestao(' + idx + ',\'' + escH(s.id) + '\')" '
+          + 'style="cursor:pointer;padding:5px 7px;margin-top:3px;border-radius:5px;font-size:10px;line-height:1.3;'
+          + 'background:' + (ativa ? 'rgba(34,197,94,.18)' : 'var(--card)') + ';'
+          + 'border:1px solid ' + (ativa ? 'rgba(34,197,94,.5)' : 'var(--brd)') + ';'
+          + 'color:' + (ativa ? '#86efac' : 'var(--t2)') + ';transition:.15s">'
+          + '<span style="font-weight:700">' + conf + '%</span> · ' + escH(s.name)
+          + '</div>';
+      });
+    } else if (!item.escolhido) {
+      sugHtml = '<div style="font-size:10px;color:#fca5a5;margin-top:6px">Nenhuma sugestão. Escolha manualmente abaixo.</div>';
+    }
+
+    // OCR text resumido
+    var ocrTxt = item.ocrText
+      ? '<div style="font-size:9px;color:var(--t3);margin-top:5px;max-height:32px;overflow:hidden;line-height:1.3" title="' + escH(item.ocrText) + '">📝 ' + escH(item.ocrText.substring(0,60)) + (item.ocrText.length>60?'...':'') + '</div>'
+      : '<div style="font-size:9px;color:#fca5a5;margin-top:5px">Sem texto OCR</div>';
+
+    // Botoes principais (aprovar/rejeitar)
+    var btnsAprov = '';
+    if (item.status === 'pendente' && item.escolhido) {
+      btnsAprov = '<div style="display:flex;gap:4px;margin-top:8px">'
+        + '<button onclick="clAprovar(' + idx + ')" style="flex:1;background:#22c55e;color:#fff;border:none;border-radius:5px;padding:7px;font-size:11px;font-weight:700;cursor:pointer">✅ Aprovar</button>'
+        + '<button onclick="clRejeitar(' + idx + ')" style="background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3);border-radius:5px;padding:7px 10px;font-size:11px;font-weight:700;cursor:pointer">⊘</button>'
+        + '</div>';
+    } else if (item.status === 'aprovada') {
+      btnsAprov = '<button onclick="clDesaprovar(' + idx + ')" style="width:100%;margin-top:8px;background:rgba(245,158,11,.15);color:#fde047;border:1px solid rgba(245,158,11,.3);border-radius:5px;padding:6px;font-size:10px;font-weight:700;cursor:pointer">↩ Voltar a revisar</button>';
+    }
+
+    html += '<div style="position:relative;background:' + bg + ';border:2px solid ' + border + ';border-radius:10px;overflow:hidden">'
+      + btnsAcao
+      + statusBadge
+      + '<img src="' + item.dataUrl + '" style="width:100%;aspect-ratio:3/4;object-fit:cover;cursor:zoom-in" onclick="capaLightboxOpen(\'' + item.dataUrl.replace(/\x27/g,"\\'") + '\',\'' + escH(item.origName).replace(/\x27/g,"\\'") + '\')">'
+      + '<div style="padding:10px">'
+      + '<div style="font-size:9px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + escH(item.origName) + '">' + escH(item.origName) + '</div>'
+      + ocrTxt
+      + sugHtml
+      + '<select onchange="clSelecionarManual(' + idx + ',this.value)" style="width:100%;font-size:10px;padding:5px 6px;margin-top:6px;background:var(--card);border:1px solid var(--brd);color:var(--txt);border-radius:5px">'
+      + dropOpts.replace('value="' + escH(item.escolhido) + '"', 'value="' + escH(item.escolhido) + '" selected')
+      + '</select>'
+      + btnsAprov
+      + '</div>'
+      + '</div>';
+  });
+
+  grid.innerHTML = html;
+}
+
+function clEscolherSugestao(idx, courseId) {
+  var item = _clItems[idx];
+  if (!item) return;
+  var sug = item.sugestoes.find(function(s){return s.id === courseId});
+  if (sug) {
+    item.escolhido = courseId;
+    item.escolhidoNome = sug.name;
+    item.confidence = Math.round(sug.score * 100);
+  }
+  clRenderReview();
+}
+
+function clSelecionarManual(idx, courseId) {
+  var item = _clItems[idx];
+  if (!item) return;
+  if (!courseId) {
+    item.escolhido = ''; item.escolhidoNome = ''; item.confidence = 0;
+  } else {
+    var c = _clCursosSemCapa.find(function(x){return x.id === courseId});
+    if (c) {
+      item.escolhido = courseId;
+      item.escolhidoNome = c.name;
+      item.confidence = 100; // selecao manual = 100%
+    }
+  }
+  clRenderReview();
+}
+
+function clAprovar(idx) {
+  var item = _clItems[idx];
+  if (!item || !item.escolhido) return;
+  item.status = 'aprovada';
+  clRenderReview();
+}
+
+function clDesaprovar(idx) {
+  var item = _clItems[idx];
+  if (!item) return;
+  item.status = 'pendente';
+  clRenderReview();
+}
+
+function clRejeitar(idx) {
+  var item = _clItems[idx];
+  if (!item) return;
+  item.escolhido = ''; item.escolhidoNome = ''; item.confidence = 0;
+  clRenderReview();
+}
+
+function clRemover(idx) {
+  if (!confirm('Remover esta imagem do lote?')) return;
+  _clItems[idx].status = 'descartada';
+  clRenderReview();
+}
+
+function clTrocarImagem(idx) {
+  var inp = el('cl-troca-' + idx);
+  if (inp) inp.click();
+}
+
+function clTrocarImagemFile(idx, files) {
+  if (!files || !files[0]) return;
+  var item = _clItems[idx];
+  if (!item) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    item.dataUrl = e.target.result;
+    item.origName = files[0].name;
+    item.file = files[0];
+    item.ocrText = '';
+    item.sugestoes = [];
+    item.escolhido = '';
+    item.confidence = 0;
+    item.status = 'pendente';
+    clRenderReview();
+    alert('Imagem trocada. Para re-analisar, clique em Limpar e suba de novo (ou aprove manualmente pelo dropdown).');
+  };
+  reader.readAsDataURL(files[0]);
+}
+
+function clAprovarTodos() {
+  var n = 0;
+  _clItems.forEach(function(item) {
+    if (item.status === 'pendente' && item.escolhido) {
+      item.status = 'aprovada';
+      n++;
+    }
+  });
+  if (n === 0) { alert('Nenhuma sugestão pendente para aprovar.'); return; }
+  alert('✅ ' + n + ' capa(s) aprovada(s).\n\nRevise as outras manualmente e depois clique em "🚀 Publicar capas APROVADAS".');
+  clRenderReview();
+}
+
+function clLimparTudo() {
+  if (!confirm('Apagar todo o lote? Esta operacao nao publica nada.')) return;
+  _clItems = [];
+  el('cl-stats').style.display = 'none';
+  el('cl-actions').style.display = 'none';
+  el('cl-review-grid').style.display = 'none';
+}
+
+// Publica APENAS as capas aprovadas pelo usuario
+async function clPublicarAprovadas() {
+  var cfg = g();
+  if (!cfg.t) { alert('Configure o token GitHub primeiro.'); return; }
+
+  var aprovadas = _clItems.filter(function(x){ return x.status === 'aprovada' && x.escolhido; });
+  if (!aprovadas.length) {
+    alert('Nenhuma capa APROVADA para publicar.\n\nPara aprovar, clique em ✅ Aprovar em cada card que voce confirmou.');
+    return;
+  }
+
+  if (!confirm('Publicar ' + aprovadas.length + ' capa(s) aprovada(s) no GitHub?\n\nElas serao salvas em assets/capas/{id}.jpg')) return;
+
+  var btn = el('cl-pub-btn');
+  btn.disabled = true;
+
+  var ok = 0, err = 0;
+  for (var i = 0; i < aprovadas.length; i++) {
+    var item = aprovadas[i];
+    btn.textContent = 'Subindo ' + (i+1) + '/' + aprovadas.length + '...';
+    try {
+      var base64 = item.dataUrl.split(',')[1];
+      var ext = (item.origName.match(/\.(\w+)$/)||[null,'jpg'])[1].toLowerCase();
+      if (ext === 'jpeg') ext = 'jpg';
+      var path = 'assets/capas/' + item.escolhido + '.' + ext;
+      // Pegar SHA se ja existir
+      var sha = '';
+      try {
+        var chk = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/' + path + '?t=' + Date.now(), { headers: gh(), cache: 'no-store' });
+        if (chk.ok) { var j = await chk.json(); sha = j.sha || ''; }
+      } catch(e){}
+      var body = { message: 'admin: capa em lote para ' + item.escolhido, content: base64 };
+      if (sha) body.sha = sha;
+      var put = await fetch('https://api.github.com/repos/' + cfg.o + '/' + cfg.r + '/contents/' + path, {
+        method: 'PUT', headers: gh(), body: JSON.stringify(body)
+      });
+      if (put.ok) {
+        item.status = 'subida';
+        ok++;
+      } else {
+        var t = await put.text();
+        item.status = 'erro';
+        item.errorMsg = 'HTTP ' + put.status + ': ' + t.substring(0,150);
+        err++;
+      }
+    } catch (e) {
+      item.status = 'erro';
+      item.errorMsg = e.message;
+      err++;
+    }
+    clRenderReview();
+    await _sleep(200); // evitar rate limit
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🚀 Publicar capas APROVADAS';
+  alert('✅ Publicacao concluida!\n\n' + ok + ' capa(s) subida(s) com sucesso.' + (err ? '\n⚠️ ' + err + ' erro(s).' : '') + '\n\nVai demorar 1-2 min para aparecer no site.');
+
+  // Recarregar a galeria principal
+  if (typeof capaCursoCarregar === 'function') setTimeout(capaCursoCarregar, 2000);
+}
 
 // ════════════════════════════════════════════════════════════════
 // EBOOKS v1 (FIX 22/04/2026): Aba dedicada para listar e gerenciar
