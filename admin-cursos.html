@@ -9432,12 +9432,19 @@ function capaLoteRenderGrid() {
       ? '<div style="font-size:9px;color:var(--t3);margin-bottom:4px;max-height:28px;overflow:hidden;line-height:1.3" title="' + escH(item.ocrText) + '">OCR: ' + escH(item.ocrText.substring(0, 60)) + (item.ocrText.length > 60 ? '...' : '') + '</div>'
       : '<div style="font-size:9px;color:#fca5a5;margin-bottom:4px">Nenhum texto detectado na imagem</div>';
 
-    // Match info
+    // ── DESBLOQUEIO v1 (FIX 22/04/2026): permite forcar publicacao manual ──
+    // Match info + botao "Aprovar manualmente" se estiver bloqueada
     var matchInfo = '';
     if (isDupeUnresolved) {
       matchInfo = '<div style="font-size:10px;color:#c4b5fd;font-weight:700;margin-top:4px">Escolha acima qual capa usar</div>';
     } else if (hasMatch && item.confidence > 0 && item.confidence <= 51) {
-      matchInfo = '<div style="font-size:10px;color:#fca5a5;font-weight:700;margin-top:4px">⛔ Match ' + item.confidence + '% — minimo 51% para aprovar</div>';
+      matchInfo = '<div style="margin-top:4px">'
+        + '<div style="font-size:10px;color:#fca5a5;font-weight:700;margin-bottom:6px">⛔ Match ' + item.confidence + '% — abaixo do minimo</div>'
+        + '<div style="font-size:9px;color:var(--t2);line-height:1.4;margin-bottom:6px">Confira se o curso atribuido eh o correto. Se sim, clique abaixo para forcar publicacao:</div>'
+        + '<button onclick="capaAprovarManual(' + idx + ')" '
+        + 'style="width:100%;background:#22c55e;color:#fff;border:none;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">'
+        + '✅ Confirmar e Aprovar (forcar)</button>'
+        + '</div>';
     } else if (hasMatch && isValid) {
       matchInfo = '<div style="font-size:10px;color:#86efac;font-weight:700;margin-top:4px;line-height:1.4;word-break:break-word">✅ Aprovado: ' + escH(item.matchedName) + '</div>';
     } else if (item.newId && !isValid) {
@@ -9458,12 +9465,17 @@ function capaLoteRenderGrid() {
       selectOptions += '<option value="' + escH(c.id) + '"' + sel + '>' + escH(c.name) + '  (' + escH(c.id) + ')</option>';
     });
 
-    // ── Botoes de acao no canto superior esquerdo (X = remover, ⊘ = rejeitar match) ──
+    // ── EDICAO v1 (FIX 22/04/2026): botoes sempre disponiveis (mesmo apos publicar) ──
+    // × = remover upload | ⊘ = rejeitar curso atribuido | 🔄 = trocar imagem
     var botoesAcao = '<div style="position:absolute;top:6px;left:6px;z-index:10;display:flex;gap:4px">'
       + '<button onclick="event.stopPropagation();capaRemoverUpload(' + idx + ')" '
       + 'style="width:24px;height:24px;border-radius:50%;background:#ef4444;color:#fff;border:2px solid #080c14;'
       + 'font-size:13px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;'
-      + 'line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.5)" title="Remover este upload da lista">×</button>';
+      + 'line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.5)" title="Remover este upload da lista">×</button>'
+      + '<button onclick="event.stopPropagation();capaTrocarImagem(' + idx + ')" '
+      + 'style="width:24px;height:24px;border-radius:50%;background:#3b82f6;color:#fff;border:2px solid #080c14;'
+      + 'font-size:11px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;'
+      + 'line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.5)" title="Trocar a IMAGEM (mantem o curso atribuido)">🔄</button>';
 
     if (item.newId) {
       botoesAcao += '<button onclick="event.stopPropagation();capaRejeitarMatch(' + idx + ')" '
@@ -9473,8 +9485,12 @@ function capaLoteRenderGrid() {
     }
     botoesAcao += '</div>';
 
+    // ── EDICAO v1: input file invisivel para trocar imagem deste card ──
+    var inputTroca = '<input type="file" accept="image/*" id="capa-troca-' + idx + '" style="display:none" onchange="capaTrocarImagemFile(' + idx + ', this.files)">';
+
     html += '<div style="background:' + bgColor + ';border:2px solid ' + borderColor + ';border-radius:10px;overflow:hidden;position:relative" id="capa-card-' + idx + '">'
       + botoesAcao
+      + inputTroca
       + confBadge + statusBadge
       + '<img src="' + item.dataUrl + '" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block;cursor:zoom-in" onclick="event.stopPropagation();capaLightboxOpen(\'' + item.dataUrl.replace(/\x27/g, "\\'") + '\',\'' + escH(item.origName).replace(/\x27/g, "\\'") + '\')" title="Clique para expandir">'
       + '<div style="padding:10px">'
@@ -9509,6 +9525,63 @@ function capaLoteSelectCourse(idx, courseId) {
     _capaLoteItems[idx].confidence = 100; // manual = 100%
   }
   capaLoteRenderGrid();
+}
+
+// ════════════════════════════════════════════════════════════════
+// EDICAO v1 + DESBLOQUEIO v1 (FIX 22/04/2026)
+// Permite: trocar imagem do card / forcar publicacao mesmo com match baixo
+// ════════════════════════════════════════════════════════════════
+
+// Aprovar manualmente uma capa que estava bloqueada (match <51%)
+function capaAprovarManual(idx) {
+  var item = _capaLoteItems[idx];
+  if (!item || !item.newId) return;
+  // Verifica se eh um curso valido
+  var courseList = _getAllCourseNames();
+  var found = courseList.find(function(c) { return c.id === item.newId; });
+  if (!found) {
+    alert('O curso "' + item.newId + '" nao existe. Selecione um curso valido pelo dropdown.');
+    return;
+  }
+  if (!confirm('Confirmar publicacao manual desta capa para o curso:\n\n"' + found.name + '" (' + item.newId + ')\n\nA capa sera marcada como aprovada e podera ser publicada.')) return;
+  item.matchedName = found.name;
+  item.confidence = 100; // forca aprovacao
+  item._aprovadoManualmente = true;
+  capaLoteRenderGrid();
+}
+
+// Trocar a IMAGEM de um card (mantem o curso atribuido)
+function capaTrocarImagem(idx) {
+  var input = el('capa-troca-' + idx);
+  if (input) input.click();
+}
+
+// Recebe o novo arquivo escolhido e atualiza o card
+function capaTrocarImagemFile(idx, files) {
+  if (!files || !files[0]) return;
+  var item = _capaLoteItems[idx];
+  if (!item) return;
+  var file = files[0];
+  if (!file.type.startsWith('image/')) {
+    alert('Selecione um arquivo de imagem (PNG, JPG, WebP).');
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    item.dataUrl = e.target.result;
+    item.file = file;
+    item.origName = file.name;
+    // Resetar status de OCR (a imagem mudou)
+    item.ocrText = '';
+    // Se ja estava marcada como subida, voltar pra pendente para subir de novo
+    if (item.status === 'ok') {
+      item.status = 'pendente';
+      delete item._sha; // forca novo upload
+    }
+    capaLoteRenderGrid();
+    alert('✅ Imagem trocada com sucesso!\n\nO curso atribuido foi mantido.\nClique em "Publicar capas" para subir a nova imagem.');
+  };
+  reader.readAsDataURL(file);
 }
 
 function capaLoteUpdateId(idx, val) {
@@ -9582,7 +9655,15 @@ async function capaLotePublicar() {
 
   var items = _capaLoteItems.filter(function(it) { return it.newId && it.status !== 'ok' && it.status !== 'descartada' && (it.confidence > 51 || it.confidence === 100); });
   var rejeitadas = _capaLoteItems.filter(function(it) { return it.newId && it.status !== 'ok' && it.status !== 'descartada' && it.confidence > 0 && it.confidence <= 51 && it.confidence !== 100; });
-  if (!items.length) { alert('Nenhuma capa aprovada para subir. Apenas capas com match acima de 51% podem ser publicadas.' + (rejeitadas.length ? '\n\n' + rejeitadas.length + ' capa(s) foram bloqueadas por match insuficiente (<=51%).' : '')); return; }
+  if (!items.length) {
+    var msg = 'Nenhuma capa aprovada para subir.';
+    if (rejeitadas.length) {
+      msg += '\n\n⚠️ ' + rejeitadas.length + ' capa(s) com match abaixo de 51%.\n\n'
+        + 'Para publicar mesmo assim, clique no botao verde\n"✅ Confirmar e Aprovar (forcar)" em cada card bloqueado.';
+    }
+    alert(msg);
+    return;
+  }
 
   // Validar IDs
   for (var i = 0; i < items.length; i++) {
